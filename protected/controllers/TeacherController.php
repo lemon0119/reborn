@@ -7,15 +7,18 @@
  */
 //crt by LC 2015-4-21
 
-class TeacherController extends Controller {
+class TeacherController extends CController {
+    
+    public $layout='//layouts/teacherBar';
+    
     public function actionlookExer(){
-        return $this->renderPartial('lookExer');
+        return $this->render('lookExer');
     }
     public function actioncourseMng(){
-        return $this->renderPartial('courseMng');
+        return $this->render('courseMng');
     }
     public function actionexerMng(){
-        return $this->renderPartial('exerMng');
+        return $this->render('exerMng');
     }
     public function actionIndex(){
         //$user_model = new User;
@@ -24,13 +27,13 @@ class TeacherController extends Controller {
         $this->render('index');//,['info'=>$info]);
     }
     public function actionHello(){
-        return $this->renderPartial('hello',array(null));
+        return $this->render('hello',array(null));
     }
     public function actionVirtualClass(){
         $user_model = new User;
         $username_now=Yii::app()->user->name;
         $info=$user_model->find("username='$username_now'");
-        return $this->renderPartial('virtualClass',array('info'=>$info));
+        return $this->render('virtualClass',array('info'=>$info));
     }
     
             
@@ -81,7 +84,7 @@ class TeacherController extends Controller {
                }else
                {
                    //用户输入参数不足
-                   $this->renderPartial('addLook',array(
+                   $this->render('addLook',array(
                                                 'shao'=>"输入全不能为空"
                                                 ));
                    return;
@@ -115,7 +118,7 @@ class TeacherController extends Controller {
         $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
         $result->bindValue(':limit', $pages->pageSize);
         $posts=$result->query();
-        $this->renderPartial('lookLst',array(
+        $this->render('lookLst',array(
         'posts'=>$posts,
         'pages'=>$pages,
         'teacher'=>$this->teaInClass(),
@@ -124,7 +127,7 @@ class TeacherController extends Controller {
     }
 
     public function actionAddLook(){
-        $this->renderPartial("addLook",array(
+        $this->render("addLook",array(
 
         ));
     }
@@ -134,7 +137,7 @@ class TeacherController extends Controller {
         $sql = "SELECT * FROM look_type WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result =$result->read();
-        $this->renderPartial("editLook",array(
+        $this->render("editLook",array(
             'exerciseID'=>$result['exerciseID'],
             'title' =>$result['title'],
             'content'=>$result['content']
@@ -175,7 +178,7 @@ class TeacherController extends Controller {
                }else
                {
                    //输入参数不足
-                   $this->renderPartial('addKey',array(
+                   $this->render('addKey',array(
                                                 'shao'=>"输入全不能为空"
                                                 ));
                    return;
@@ -209,7 +212,7 @@ class TeacherController extends Controller {
         $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
         $result->bindValue(':limit', $pages->pageSize);
         $posts=$result->query();
-        $this->renderPartial('keyLst',array(
+        $this->render('keyLst',array(
         'posts'=>$posts,
         'pages'=>$pages,
         'teacher'=>$this->teaInClass(),
@@ -218,7 +221,7 @@ class TeacherController extends Controller {
     }
 
     public function actionAddKey(){
-        $this->renderPartial("addKey",array(
+        $this->render("addKey",array(
 
         ));
     }
@@ -228,7 +231,7 @@ class TeacherController extends Controller {
         $sql = "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result =$result->read();
-        $this->renderPartial("editKey",array(
+        $this->render("editKey",array(
             'exerciseID'=>$result['exerciseID'],
             'title' =>$result['title'],
             'content'=>$result['content']
@@ -296,7 +299,7 @@ class TeacherController extends Controller {
                    unset($_GET['action']);
                    }else {
                          //文件出现问题
-                         $this->renderPartial('addListen',array(
+                         $this->render('addListen',array(
                                                 'shao'=>$shao
                                                 ));
                    return;
@@ -304,7 +307,7 @@ class TeacherController extends Controller {
                }else
                {
                    //用户输入参数不足
-                   $this->renderPartial('addListen',array(
+                   $this->render('addListen',array(
                                                 'shao'=>"输入全不能为空"
                                                 ));
                    return;
@@ -352,7 +355,7 @@ class TeacherController extends Controller {
                         $sql = "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
                         $result = Yii::app()->db->createCommand($sql)->query();
                         $result =$result->read();
-                        $this->renderPartial("editListen",array(
+                        $this->render("editListen",array(
                             'shao'=>$shao,
                             'exerciseID'=>$result['exerciseID'],
                             'title' =>$result['title'],
@@ -394,7 +397,7 @@ class TeacherController extends Controller {
         $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
         $result->bindValue(':limit', $pages->pageSize);
         $posts=$result->query();
-        $this->renderPartial('listenLst',array(
+        $this->render('listenLst',array(
         'posts'=>$posts,
         'pages'=>$pages,
         'teacher'=>$this->teaInClass(),
@@ -403,7 +406,7 @@ class TeacherController extends Controller {
     }
 
     public function actionAddListen(){
-        $this->renderPartial("addListen",array(
+        $this->render("addListen",array(
 
         ));
     }
@@ -413,7 +416,7 @@ class TeacherController extends Controller {
         $sql = "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result =$result->read();
-        $this->renderPartial("editListen",array(
+        $this->render("editListen",array(
             'exerciseID'=>$result['exerciseID'],
             'title' =>$result['title'],
             'content'=>$result['content'],
@@ -454,7 +457,7 @@ class TeacherController extends Controller {
                }else
                {
                    //用户输入参数不足
-                   $this->renderPartial('addFill',array(
+                   $this->render('addFill',array(
                                                 'shao'=>"输入全不能为空"
                                                 ));
                    return;
@@ -488,7 +491,7 @@ class TeacherController extends Controller {
         $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
         $result->bindValue(':limit', $pages->pageSize);
         $posts=$result->query();
-        $this->renderPartial('fillLst',array(
+        $this->render('fillLst',array(
         'posts'=>$posts,
         'pages'=>$pages,
         'teacher'=>$this->teaInClass(),
@@ -501,7 +504,7 @@ class TeacherController extends Controller {
         $sql = "SELECT * FROM filling WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result =$result->read();
-        $this->renderPartial("editFill",array(
+        $this->render("editFill",array(
             'exerciseID'=>$result['exerciseID'],
             'requirements' =>$result['requirements'],
             'answer' =>$result['answer']
@@ -509,7 +512,7 @@ class TeacherController extends Controller {
     }
 
     public function actionAddFill(){
-        $this->renderPartial("addFill",array(
+        $this->render("addFill",array(
 
         ));
     }
@@ -547,7 +550,7 @@ class TeacherController extends Controller {
                }else
                {
                    //用户输入参数不足
-                   $this->renderPartial('addChoice',array(
+                   $this->render('addChoice',array(
                                                 'shao'=>"输入全不能为空"
                                                 ));
                    return;
@@ -581,7 +584,7 @@ class TeacherController extends Controller {
         $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
         $result->bindValue(':limit', $pages->pageSize);
         $posts=$result->query();
-        $this->renderPartial('choiceLst',array(
+        $this->render('choiceLst',array(
         'posts'=>$posts,
         'pages'=>$pages,
         'teacher'=>$this->teaInClass(),
@@ -595,7 +598,7 @@ class TeacherController extends Controller {
         $sql = "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result =$result->read();
-        $this->renderPartial("editChoice",array(
+        $this->render("editChoice",array(
             'exerciseID'=>$result['exerciseID'],
             'requirements' =>$result['requirements'],
             'options'=>$result['options'],
@@ -604,7 +607,7 @@ class TeacherController extends Controller {
     }
 
     public function actionAddChoice(){
-        $this->renderPartial("addChoice",array(
+        $this->render("addChoice",array(
 
         ));
     }
@@ -643,7 +646,7 @@ class TeacherController extends Controller {
                }else
                {
                    //用户输入参数不足
-                   $this->renderPartial('addLook',array(
+                   $this->render('addLook',array(
                                                 'shao'=>"输入全不能为空"
                                                 ));
                    return;
@@ -677,7 +680,7 @@ class TeacherController extends Controller {
         $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
         $result->bindValue(':limit', $pages->pageSize);
         $posts=$result->query();
-        $this->renderPartial('questionLst',array(
+        $this->render('questionLst',array(
         'posts'=>$posts,
         'pages'=>$pages,
         'teacher'=>$this->teaInClass(),
@@ -690,7 +693,7 @@ class TeacherController extends Controller {
         $sql = "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result =$result->read();
-        $this->renderPartial("editQuestion",array(
+        $this->render("editQuestion",array(
             'exerciseID'=>$result['exerciseID'],
             'requirements' =>$result['requirements'],
             'answer'=>$result['answer']
@@ -698,7 +701,7 @@ class TeacherController extends Controller {
     }
 
     public function actionAddQuestion(){
-        $this->renderPartial("addQuestion",array(
+        $this->render("addQuestion",array(
 
         ));
     }

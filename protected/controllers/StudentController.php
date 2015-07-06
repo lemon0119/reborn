@@ -7,10 +7,12 @@
  */
 //crt by LC 2015-4-9
 
-class StudentController extends Controller {
+class StudentController extends CController {
     protected $courseID = '';
     protected $suiteID = '';
     protected $exerType = '';
+    
+    public $layout='//layouts/studentBar';
     
     public function actionProDetail(){
         $suiteID = $_GET['suiteID'];
