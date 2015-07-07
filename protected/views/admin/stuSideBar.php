@@ -20,8 +20,8 @@
                         <li class="divider"></li>
                         <li class="nav-header">管理</li>
                         <li id="li-stuLst"><a href="./index.php?r=admin/stuLst"><i class="icon-list-alt"></i> 学生列表</a></li>
-                        <li><a href="#new-project"><i class="icon-plus"></i> 添加学生</a></li>
-                        <li><a href="#new-project"><i class="icon-trash"></i> 回收站</a></li>
+                        <li id="li-addStu"><a href="./index.php?r=admin/addStu"><i class="icon-plus"></i> 添加学生</a></li>
+                        <li id="li-recycleStu"><a href="./index.php?r=admin/recycleStu"><i class="icon-trash"></i> 回收站</a></li>
                 </ul>
         </div>
 </div>

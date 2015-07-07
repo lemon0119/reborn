@@ -11,14 +11,27 @@
  */
 class Student extends CActiveRecord
 {
+    public function insertStu($userID,$userName,$pass,$classID){
+        $newStu = new Student();
+        $newStu->userID = $userID;
+        $newStu->userName = $userName;
+        $newStu->password = $pass;
+        $newStu->classID = $classID;
+        $oldstu = Student::model()->findAll("userID = '$userID'");
+        if(count($oldstu) > 0)
+            return 'no';
+        else
+            return $newStu->insert();
+    }
+    
         public function getStuLst($type,$value){
         $order = " order by userID ASC";
         if($type!=""&&$type!="is_delete")
             $condition = " WHERE $type = '$value' AND is_delete = 0";
         else if($type=="is_delete")
-            $condition= "WHERE is_delete = 1";
+            $condition= " WHERE is_delete = 1";
         else
-            $condition= "WHERE is_delete = 0";
+            $condition= " WHERE is_delete = 0";
         $select = "SELECT * FROM student";
         $sql = $select.$condition.$order;
         $criteria=new CDbCriteria();

@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/wamp/www/reborn/protected/views/layouts/adminBar.php</file>
-            <file>file:/D:/wamp/www/reborn/protected/views/admin/stuLst.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/admin/recycleStu.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/admin/addStuClass.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/controllers/AdminController.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/admin/stuSideBar.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/admin/editStu.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/admin/addStu.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/models/Student.php</file>
         </group>
     </open-files>
 </project-private>

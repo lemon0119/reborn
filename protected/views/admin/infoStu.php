@@ -1,38 +1,24 @@
-<script>
-    $(document).ready(function(){
-            $("div.span9").find("a").click(function(){
-                var url = $(this).attr("href");
-                //$(this).attr("href","#");
-                if(url.indexOf("index.php") > 0){
-                    $("#cont").load(url);
-                    return false;//阻止链接跳转
-                }
-            });
-    });
-</script>
+<?php require 'stuSideBar.php';?>
 <div class="span9">
-        <div class="hero-unit">
-            
-        <h3>学生信息</h3>
-        
-        <p>学号:<?php echo $id;?></p>
-        <br>
-        <p>姓名:<?php echo $name;?></p>
-        <br>
-        <p>班级:<?php if($class=="0")
-                        echo "无";
-                        else echo $class;
-               ?></p>
-        <br>
-        <button type="button" onclick="back()">确定</button>
-        <script>
-        function back()
-        {
-             $("#cont").load("./index.php?r=admin/stuLst");
-        }
-        </script>
-        
-            
-        </div>
-        </div>
+    <h3>学生信息</h3>
+    <div class="hero-unit">
+    <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <td width="30%">学号:</td>
+                    <td><?php echo $id;?></td>
+                </tr>
+                <tr>
+                    <td>姓名:</td>
+                    <td><?php echo $name;?></td>
+                </tr>
+                <tr>
+                    <td>班级:</td>
+                    <td><?php if($class=="0") echo "无"; else echo $class;?></td>
+                </tr>
+            </tbody>
+    </table>
+        <a href="./index.php?r=admin/stuLst" class="btn">返回</a>
+    </div>
+</div>
 

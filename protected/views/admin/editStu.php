@@ -1,54 +1,108 @@
- <script src="<?php echo JS_URL;?>jquery-form.js"></script>
-<script>
-    $(document).ready(function(){
-            $("div.span9").find("a").click(function(){
-                var url = $(this).attr("href");
-                //$(this).attr("href","#");
-                if(url.indexOf("index.php") > 0){
-                    $("#cont").load(url);
-                    return false;//阻止链接跳转
-                }
-            });
-        var options = {   
-        target:'#cont',   // 需要刷新的区域 
-        //type:'post',
-        //dataType:'json',
-        //resetForm:false,
-       // timeout:10000
-    };
-
-    $("#myForm").submit(function(){ 
-          $(this).ajaxSubmit(options);   
-      // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
-           return false;   
-      });  
-    });
-</script>
+<?php require 'stuSideBar.php';?>
 <div class="span9">
-        <div class="hero-unit">
-            
-        <h3>更改学生信息</h3>
-        <p>学号:<?php echo $id;?></p>
-        <p>姓名:<?php echo $name;?></p>
-        <p>班级:<?php if($class=="0")
-                        echo "无";
-                        else echo $class;?></p>
-        <br>
-        <form id="myForm" method="post" action="./index.php?r=admin/stuLst&&action=edit&&id=<?php echo $id;?>&&name=<?php echo $name;?>&&class=<?php echo $class;?>" onkeydown="if(event.keyCode==13){return false;}"> 
-        密码：<input type="text" name="password">
-        <br>
-        <input type="submit" name="submit" value="提交"> 
-        </form>   
-        <?php
-        if(isset($shao))
-        {
-            if($shao=='null')
-            {
-                echo "输入全不能为空";
+    <h2>编 辑 学 生</h2>
+    <form action="./index.php?r=admin/editStuInfo&&id=<?php echo $userID?>" class="form-horizontal" method="post" id="form-addStu">
+        <fieldset>
+            <legend>学生信息</legend>
+            <div class="control-group">
+                    <label class="control-label" for="input01">学号</label>
+                    <div class="controls">
+                        <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID?>" />
+                    </div>
+            </div>
+            <div class="control-group">
+                    <label class="control-label" for="input02">姓名</label>
+                    <div class="controls">
+                            <input name="userName" type="text" class="input-xlarge" id="input02" value="<?php echo $userName?>" />
+                    </div>
+            </div>
+            <div class="control-group">
+                    <label class="control-label" for="input03">班级</label>
+                    <div class="controls">
+                            <input name="classID" type="text" class="input-xlarge" id="input03" value="<?php echo $classID?>" />
+                    </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">提交</button>　　　
+                <a href="./index.php?r=admin/stuLst" class="btn">取消</a>　　　
+                <button  class="btn btn-primary" onclick="resetPass();">重置密码</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script>
+<?php 
+    if(isset($result)){
+        echo "alert('$result');";
+    }
+?>
+function resetPass(){
+    if(confirm("这将会重置这名学生的密码为：000，您确定这样吗？")){
+        window.location.href = "./index.php?r=admin/resetPass&&id=<?php echo $userID;?>";
+    }
+}
+function getUserID(){
+    var result = new Array();
+    <?php
+        $i=0;
+        foreach ($userAll as $key => $value) {
+            $stuID = $value['userID'];
+            if($userID==$value['userID'])
+                $i=1;
+            else {
+               $j=$key-$i;
+                echo "result[$j] = '$stuID';";  
             }
-        }
-        ?>
-        
-        </div>
-        </div>
-
+            }
+    ?>
+   return result;
+}
+function getclassID(){
+    var result = new Array();
+<?php foreach ($classAll as $key => $value) {
+    $classID = $value['classID'];
+    echo "result[$key] = '$classID';";
+}?>
+   return result;
+}
+$("#form-addStu").submit(function(){
+    var userID = $("#input01")[0].value;
+    if(userID === ""){
+        alert('学生学号不能为空');
+        return false;
+    }
+    if(getUserID().indexOf(userID) >= 0){
+        alert('学生学号已存在！');
+        return false;
+    }
+    var userName = $("#input02")[0].value;
+    if(userName === ""){
+        alert('学生姓名不能为空');
+        return false;
+    }
+    var classID = $("#input03")[0].value;
+    if(classID === ""){
+        alert('学生班级不能为空');
+        return false;
+    }
+    var classAll = getclassID();
+    if(classAll.indexOf(classID) < 0){
+        alert('学生班级不存在！');
+        return false;
+    }
+    var pass1 = $("#input04")[0].value;
+    if(pass1 === ""){
+        alert('密码不能为空');
+        return false;
+    }
+    var pass2 = $("#input05")[0].value;
+    if(pass2 === ""){
+        alert('确认密码不能为空');
+        return false;
+    }
+    if(pass1 !== pass2){
+        alert('密码两次输入不相同！');
+        return false;
+    }
+});
+</script>

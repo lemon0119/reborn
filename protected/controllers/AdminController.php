@@ -3,12 +3,12 @@
 class AdminController extends CController
 {
     public $layout='//layouts/adminBar';
-	public function actionIndex()
-	{        
-	    $this->render('index');
-	}
-     
-        
+    public function actionIndex()
+    {        
+        $this->render('index');
+    }
+    
+    
         public function actionChangeLog()
 	{           
             $sql = "SELECT changeLog FROM course WHERE courseID=".$_GET['courseID'];
@@ -21,122 +21,23 @@ class AdminController extends CController
                 ));
         }
         
+        public function actionRecycleStu()
+        {
+            $stuLst = Student::model()->findAll("is_delete = '1'");
+            $this->render('recycleStu',array(
+            'stuLst'=>$stuLst,
+            ));
+        }
+        
     	public function actionStuLst()
 	{       
-            //定义动作
-            $act_result="";
-            
-            //搜索动作
-            if(isset($_POST['which']))
-            {   
-                if(!empty($_POST['name']))
-                {
-                    if($_POST['which']=='classID'&&$_POST['name']=="无")
-                        $ex_sq =" WHERE ". $_POST['which'].  " = '0'";
-                    else $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-                }
-                else  $ex_sq = "";
-            }
-            else  $ex_sq = "";
-            
-            //删除动作
-            if(isset($_GET['flag']))
-            {
-                if($_GET['flag']=='delete')
-                {
-                    $sql ="DELETE FROM student WHERE userID =" . $_GET['id'];
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="删除成功！";
-                    unset($_GET['flag']);
-                }
-            }
-            
-            //添加动作
-            if(isset($_GET['action']))
-            {
-                //添加学生
-                 if($_GET['action']=='add')
-                {
-                    if(!empty($_POST['userName']) and !empty($_POST['password']))
-                    {
-                         if(empty($_POST['classID'])||$this->exClass($_POST['classID']))
-                         {
-                        //得到当前最大的学生ID
-                             $sql="select max(userID) as id from student";
-                             $max_id = Yii::app()->db->createCommand($sql)->query();
-                             $temp=$max_id->read();
-                             if(empty($temp))
-                             {
-                                 $new_id=1;
-                             }
-                             else
-                             {
-                                 $new_id = $temp['id'] + 1;
-                             }
-                             if(!empty($_POST['classID']))
-                             $sql= "INSERT INTO student VALUES ('".$new_id ."','" .$_POST['userName'] ."','".$_POST['password'] ."','" .$_POST['classID']."')";
-                             else
-                             $sql= "INSERT INTO student VALUES ('".$new_id ."','" .$_POST['userName'] ."','".$_POST['password'] ."','0')";    
-                             Yii::app()->db->createCommand($sql)->query();
-                             $act_result="添加学生成功！";
-                             unset($_GET['action']);
-                         }  else {
-                             //不存在该班级
-                             $this->render('addStu',array(
-                                                     'shao'=>"不存在该班级"
-                                                     ));
-                             return;
-                         }
-                         
-                    }else
-                    {
-                        //用户输入参数不足
-                        $this->render('addStu',array(
-                                                     'shao'=>"输入全不能为空"
-                                                     ));
-                        return;
-                    }
-                } else if($_GET['action']=='edit')
-                {
-                    //更改学生信息
-                    if(!empty($_POST['password']))
-                    {
-                    //更新学生信息
-                    $sql= "UPDATE student SET password= '".$_POST['password'] ."' WHERE userID= '" .$_GET['id']."'" ;
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="编辑学生信息成功！";
-                    unset($_GET['action']);
-                    }else
-                    {
-                        //用户输入参数不足
-                        $this->render('editStu',array(
-                                                    'id'=>$_GET['id'],
-                                                    'name'=>$_GET['name'],
-                                                    'class'=>$_GET['class'],
-                                                     'shao'=>"null"
-                                                     ));
-                        return;
-                    }
-                }
-                
-            }
-            
-            //显示结果列表并分页
-	    $sql = "SELECT * FROM student ". $ex_sq;
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
+            $result = Student::model()->getStuLst("", "");
+            $stuLst=$result['stuLst'];
+            $pages=$result['pages'];
             $this->render('stuLst',array(
-            'posts'=>$posts,
+            'stuLst'=>$stuLst,
             'pages'=>$pages,
-            'result'=>$act_result,
-            ),false,true);
+            ));
 	}
         
         public function actionSearchStu()
@@ -159,27 +60,110 @@ class AdminController extends CController
                     );
         }
             
-         public function actionAddStu()
-	{        
-            $this->render('addStu');
+        public function actionAddStu(){
+            $result = 'no';
+            if(isset($_POST['userID'])){
+                $result = Student::model()->insertStu($_POST['userID'], $_POST['userName'], $_POST['password1'], $_POST['classID']);
+            }
+            $classAll = TbClass::model()->findAll("");
+            $userAll = Student::model()->findAll();
+            $this->render('addStu',['classAll'=>$classAll,'userAll'=>$userAll,'result'=>$result]);
         }
         
         public function actionInfoStu()
 	{        
             $this->render('infoStu',array(
-                                             'id'=>$_GET['id'],
-                                             'name'=>$_GET['name'],
-                                             'class'=>$_GET['class'],
-                    ));
+                'id'=>$_GET['id'],
+                'name'=>$_GET['name'],
+                'class'=>$_GET['class'],
+                ));
         }
 
-        public function actionEditStu()
-	{           
+        public function actionDeleteStuSearch()
+	{
+            $userID = $_GET['id'];
+            $thisStu = new Student();
+            $thisStu = $thisStu->find("userID = '$userID'");
+            $thisStu -> is_delete = '1';
+            $thisStu -> update();
+            $type = Yii::app()->session['searchStuType'];
+            $value = Yii::app()->session['searchStuValue'];
+            $result = Student::model()->getStuLst($type, $value);
+            $stuLst=$result['stuLst'];
+            $pages=$result['pages'];
+            $this->render('searchStu',array(
+                        'stuLst'=>$stuLst,
+                        'pages'=>$pages)
+                    );
+        }
+        
+        public function actionDeleteStu()
+	{
+            $userID = $_GET['id'];
+            $thisStu = new Student();
+            $thisStu = $thisStu->find("userID = '$userID'");
+            $thisStu -> is_delete = '1';
+            $thisStu -> update();
+            $result = Student::model()->getStuLst("", "");
+            $stuLst=$result['stuLst'];
+            $pages=$result['pages'];
+            $this->render('stuLst',array(
+            'stuLst'=>$stuLst,
+            'pages'=>$pages,
+            ));
+        }
+        
+        public function actionResetPass()
+	{
+            $userID = $_GET['id'];
+            $thisStu = new Student();
+            $thisStu = $thisStu->find("userID = '$userID'");
+            $thisStu -> password = '000';
+            $thisStu -> update();
+            $classAll = TbClass::model()->findAll();
+            $userAll = Student::model()->findAll();
             $this->render('editStu',array(
-                                             'id'=>$_GET['id'],
-                                             'name'=>$_GET['name'],
-                                            'class'=>$_GET['class']
-                                         ));
+                'userID'=>$_GET['id'],
+                'userName'=>$thisStu ->userName,
+                'classID'=>$thisStu ->classID,
+                'classAll'=>$classAll,
+                'userAll'=>$userAll,
+                'result'=>'密码重置成功！'
+                ));
+        }
+        
+        public function actionEditStuInfo()
+	{
+            $userID = $_GET['id'];
+            $thisStu = new Student();
+            $thisStu = $thisStu->find("userID = '$userID'");
+            $thisStu -> userID =$_POST['userID'];
+            $thisStu -> userName =$_POST['userName'];
+            $thisStu -> classID =$_POST['classID'];
+            $thisStu -> update();
+            $classAll = TbClass::model()->findAll();
+            $userAll = Student::model()->findAll();
+            $this->render('editStu',array(
+                'userID'=>$thisStu -> userID,
+                'userName'=>$thisStu ->userName,
+                'classID'=>$thisStu ->classID,
+                'classAll'=>$classAll,
+                'userAll'=>$userAll,
+                'result'=>'信息修改成功！'
+                ));
+        }
+        
+        public function actionEditStu()
+	{
+            $classAll = TbClass::model()->findAll();
+            $userAll = Student::model()->findAll();
+            $this->render('editStu',array(
+                'userID'=>$_GET['id'],
+                'userName'=>$_GET['name'],
+                'classID'=>$_GET['class'],
+                'classAll'=>$classAll,
+                'userAll'=>$userAll
+                ));
         }
         
         //是否存在指定班级
