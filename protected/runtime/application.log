@@ -355,3 +355,79 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=teacher/choiceLst
 HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=teacher/index
 ---
+2015/07/07 09:45:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "classLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('classLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('classLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/classLs...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/classLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/07 09:45:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "teaLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('teaLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('teaLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/teaLst')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/teaLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/07 11:29:15 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'studentID' in 'order clause'. The SQL statement executed was: SELECT * FROM student WHERE userID = '11' AND is_delete = 0 order by studentID ASC.
+in D:\wamp\www\reborn\protected\models\Student.php (25)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (146)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/07 11:29:15 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'studentID' in 'order clause'. The SQL statement executed was: SELECT * FROM student WHERE userID = '11' AND is_delete = 0 order by studentID ASC' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 D:\wamp\www\reborn\protected\models\Student.php(25): CDbCommand->query()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(146): Student->getStuLst('userID', '11')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionSearchStu()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchStu')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchStu')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchStu
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=admin/stuLst
+---
+2015/07/07 11:33:38 [error] [php] Undefined index: type (D:\wamp\www\reborn\protected\controllers\AdminController.php:144)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/searchStu&page=2
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (144)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/07 11:33:43 [error] [php] Undefined index: type (D:\wamp\www\reborn\protected\controllers\AdminController.php:144)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/searchStu&page=8
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (144)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/07 11:35:10 [error] [php] Undefined index: type (D:\wamp\www\reborn\protected\controllers\AdminController.php:144)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/searchStu&page=2
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (144)
+in D:\wamp\www\reborn\index.php (26)

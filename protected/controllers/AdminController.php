@@ -26,7 +26,6 @@ class AdminController extends CController
             //定义动作
             $act_result="";
             
-            
             //搜索动作
             if(isset($_POST['which']))
             {   
@@ -139,6 +138,26 @@ class AdminController extends CController
             'result'=>$act_result,
             ),false,true);
 	}
+        
+        public function actionSearchStu()
+        {
+            if(isset($_POST['type'])){
+                $type=$_POST['type'];
+                $value=$_POST['value'];
+                Yii::app()->session['searchStuType']=$type;
+                Yii::app()->session['searchStuValue']=$value;
+            } else {
+                $type = Yii::app()->session['searchStuType'];
+                $value = Yii::app()->session['searchStuValue'];
+            }
+            $result = Student::model()->getStuLst($type, $value);
+            $stuLst=$result['stuLst'];
+            $pages=$result['pages'];
+            $this->render('searchStu',array(
+                        'stuLst'=>$stuLst,
+                        'pages'=>$pages)
+                    );
+        }
             
          public function actionAddStu()
 	{        

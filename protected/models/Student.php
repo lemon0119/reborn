@@ -11,6 +11,29 @@
  */
 class Student extends CActiveRecord
 {
+        public function getStuLst($type,$value){
+        $order = " order by userID ASC";
+        if($type!=""&&$type!="is_delete")
+            $condition = " WHERE $type = '$value' AND is_delete = 0";
+        else if($type=="is_delete")
+            $condition= "WHERE is_delete = 1";
+        else
+            $condition= "WHERE is_delete = 0";
+        $select = "SELECT * FROM student";
+        $sql = $select.$condition.$order;
+        $criteria=new CDbCriteria();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages=new CPagination($result->rowCount);
+        $pages->pageSize=10; 
+        $pages->applyLimit($criteria); 
+        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $stuLst=$result->query();
+        
+        return ['stuLst'=>$stuLst,'pages'=>$pages,];
+    }
+    
     public function findClassByStudentID ($studentID) {
         $student = $this->find("userid = '$studentID'");
         return $student->classID;

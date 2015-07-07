@@ -1,7 +1,8 @@
 <?php require 'stuSideBar.php';?>
 <!-- 学生列表-->
 <div class="span9">
-    <h2>学生列表</h2>
+<?php if($stuLst->count()!=0){?>
+    <h2>查询结果</h2>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -12,7 +13,7 @@
         </tr>
     </thead>
             <tbody>        
-                <?php foreach($posts as $model):?>
+                <?php foreach($stuLst as $model):?>
                 <tr>
                     <td style="width: 75px"><?php echo $model['userID'];?></td>
                     <td><?php echo $model['userName'];?></td>
@@ -38,8 +39,8 @@
 </div>
 <!-- 翻页标签结束 -->
 <!-- 右侧内容展示结束-->
+<?php } else {?>
+    <h2>查询结果为空！</h2>
+<?php }?>
 </div>
-<script>
-    
-</script>
 
