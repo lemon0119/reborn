@@ -39,9 +39,11 @@ class TeacherController extends CController {
     public function actionStartCourse(){
         $classID=$_GET['classID'];
         $progress=$_GET['progress'];
+        $on=$_GET['on'];
         return $this->render('startCourse',[
             'classID'=>$classID,
-            'progress'=>$progress
+            'progress'=>$progress,
+            'on'=>$on
         ]);
     }
             

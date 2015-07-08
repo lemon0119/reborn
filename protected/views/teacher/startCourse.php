@@ -21,5 +21,9 @@
                 </ul>
         </div>
 </div>
-
+<script>
+    $(document).ready(function(){
+        $("#li-<?php echo $on;?>").attr("class","active");
+    });
+</script>
 
