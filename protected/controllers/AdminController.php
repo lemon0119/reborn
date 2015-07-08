@@ -8,6 +8,49 @@ class AdminController extends CController
         $this->render('index');
     }
     
+    public function actionHardDeleteStu()
+    {
+        $rows = 0;
+        if(isset($_GET['userID'])){
+            $userID = $_GET['userID'];
+            $rows = Student::model()->deleteByPK("$userID");
+        } else if(isset($_POST['checkbox'])){
+            $ids = $_POST['checkbox'];
+            $condition = '';
+            foreach ($ids as $value) {
+                $condition = $condition."'$value',";
+            }
+            $condition = $condition."''";
+            $rows = Student::model()->deleteAll("userID in ($condition)");
+        }
+        $stuLst = Student::model()->findAll("is_delete = '1'");
+        $this->render('recycleStu',array(
+        'stuLst'=>$stuLst,
+        'rows'=>$rows,
+        ));
+    }
+    
+    public function actionRevokeStu()
+    {
+        $rows = 0;
+        if(isset($_GET['userID'])){
+            $userID = $_GET['userID'];
+            $rows = Student::model()->updateAll(array('is_delete'=>'0'),'userID=:userID',array(':userID'=>$userID));
+        } else if(isset($_POST['checkbox'])){
+            $ids = $_POST['checkbox'];
+            $condition = '';
+            foreach ($ids as $value) {
+                $condition = $condition."'$value',";
+            }
+            $condition = $condition."''";
+            $rows = Student::model()->updateAll(array('is_delete'=>'0'),"userID in ($condition)");
+        }
+        $stuLst = Student::model()->findAll("is_delete = '1'");
+        $this->render('recycleStu',array(
+        'stuLst'=>$stuLst,
+        'rows'=>$rows,
+        ));
+    }
     
         public function actionChangeLog()
 	{           

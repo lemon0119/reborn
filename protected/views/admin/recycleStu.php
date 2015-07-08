@@ -3,9 +3,9 @@
 <div class="span9">
     <h2>被删除学生列表</h2>
 <form id="myForm" method="post" action="" onkeydown="if(event.keyCode==13){return false;}"> 
-<input type="checkbox" name="all" onclick="check_all(this,'checkbox[]')" />全选　　批量：</input>
-<a href="./index.php?r=admin/"><img src="<?php echo IMG_URL; ?>reborn.png">恢复</a>
-<a href="#" ><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+    <input type="checkbox" name="all" onclick="check_all(this,'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
+<a href="./index.php?r=admin/revokeStu" id="submit"><img src="<?php echo IMG_URL; ?>reborn.png">恢复</a>
+<a href="./index.php?r=admin/hardDeleteStu" id="submit"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -19,32 +19,61 @@
             <tbody>        
                 <?php foreach($stuLst as $model):?>
                 <tr>
-                     <td style="width: 75px"> <input type="checkbox" name="checkbox[]" value=<?php echo $model['userID'];?> /> </td>
+                    <td style="width: 75px"> <input type="checkbox" name="checkbox[]" value=<?php echo $model['userID'];?> /> </td>
                     <td style="width: 75px"><?php echo $model['userID'];?></td>
                     <td><?php echo $model['userName'];?></td>
-                    <td><?php if($model['classID']=="0")
-                                    echo "无";
-                                else echo $model['classID'];
-                        ?></td>
-                    <td> 
-                        <a href="./index.php?r=admin/"><img src="<?php echo IMG_URL; ?>reborn.png">恢复</a>
-                        <a href="#" ><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                    <td><?php if($model['classID']=="0") echo "无"; else echo $model['classID']; ?></td>
+                    <td>
+                        <a href="./index.php?r=admin/revokeStu&&userID=<?php echo $model['userID'];?>" id="submit"><img src="<?php echo IMG_URL; ?>reborn.png">恢复</a>
+                        <a href="./index.php?r=admin/hardDeleteStu&&userID=<?php echo $model['userID'];?>" id="submit"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                     </td>
-                </tr>            
+                </tr>
                 <?php endforeach;?> 
             </tbody>
 </table>
+</form>
 <!-- 学生列表结束 -->
 <!-- 右侧内容展示结束-->
 </div>
 
 <script>
-function check_all(obj,cName) 
+function check_all(obj,cName)
 {    
     var checkboxs = document.getElementsByName(cName); 
     for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;} 
 } 
+function confirmKey(){
+    var str=prompt("请输入您的密码","密码：");
+    if(str == 'admin'){
+        return true;
+    } else {
+        return false;
+    }
+    
+}
 $(document).ready(function(){
-    $("#lli-recycleStu").attr("class","active");
+    //侧边菜单选中变色
+    $("#li-recycleStu").attr("class","active");
+    //提交表单
+    $("a#submit").click(function(){
+        var url = $(this).attr("href");
+        if(url.indexOf("hardDeleteStu") > 0){
+            if(!confirm("此处的删除操作无法恢复，您确定要删除吗？"))
+                return false;
+            else if(!confirmKey())
+                return false;
+            else{
+                //$('#myForm').attr('action',url);
+                //$('#myForm').submit();
+                //return false;
+                alert('删除');
+                return false;
+            }
+        } else {
+            $('#myForm').attr('action',url);
+            $('#myForm').submit();
+            return false;
+        }
+    });
 });
 </script>
