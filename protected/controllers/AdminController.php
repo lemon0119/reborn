@@ -10,12 +10,18 @@ class AdminController extends CController
     
     public function actionHardDeleteStu()
     {
+        $pass = $_POST['password'];
+        $id = Yii::app()->session['userid_now'];
+        $admin = Admin::model()->findByPK($id);
+        if($admin->password !== $pass){
+            return $this->render('confirmPass',['wrong'=>'密码错误，请重新输入。']);
+        }
         $rows = 0;
-        if(isset($_GET['userID'])){
-            $userID = $_GET['userID'];
+        if(isset(Yii::app()->session['deleteStuID'])){
+            $userID = Yii::app()->session['deleteStuID'];
             $rows = Student::model()->deleteByPK("$userID");
-        } else if(isset($_POST['checkbox'])){
-            $ids = $_POST['checkbox'];
+        } else if(isset(Yii::app()->session['deleteStuBox'])){
+            $ids = Yii::app()->session['deleteStuBox'];
             $condition = '';
             foreach ($ids as $value) {
                 $condition = $condition."'$value',";
@@ -28,6 +34,15 @@ class AdminController extends CController
         'stuLst'=>$stuLst,
         'rows'=>$rows,
         ));
+    }
+    public function actionConfirmPass()
+    {
+        if(isset($_GET['userID'])){
+            Yii::app()->session['deleteStuID'] = $_GET['userID'];
+        } else if(isset($_POST['checkbox'])){
+            Yii::app()->session['deleteStuBox'] = $_POST['checkbox'];
+        }
+        return $this->render('confirmPass');
     }
     
     public function actionRevokeStu()
