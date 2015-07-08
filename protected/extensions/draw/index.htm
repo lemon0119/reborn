@@ -1,0 +1,37 @@
+﻿<!--
+author:wenqiming
+-->
+<!doctype html>
+<html>
+	<title>Shared DrawPad</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
+	<link type="text/css" href="css/drawpad.css" rel="stylesheet"/>
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/drawing.js"></script>
+	<script src="http://192.168.101.235:4000/socket.io/socket.io.js"></script>
+	
+        
+        <style>
+           
+        </style>
+	<body>
+		<div id="drawingPad">
+			<!-- This is where all the code will be place dynamically -->
+		</div>
+	</body>
+	<script>
+		$(document).bind("touchmove", function(e) {
+			e.preventDefault();
+		});
+		// overriding default options
+		var options = {
+			width:840,
+			height:760
+		},
+		//init the drawpad
+		dp = new DrawingPad(options);
+		dp.init("#drawingPad");
+	</script>
+</html>

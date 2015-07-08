@@ -817,3 +817,347 @@ REQUEST_URI=/reborn/index.php?r=admin/recycleStu
 in D:\wamp\www\reborn\protected\views\admin\recycleStu.php (5)
 in D:\wamp\www\reborn\protected\controllers\AdminController.php (29)
 in D:\wamp\www\reborn\index.php (26)
+2015/07/08 15:48:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=teacher/index
+---
+2015/07/08 15:48:36 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=teacher/index
+---
+2015/07/08 16:08:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "stuLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('stuLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('stuLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/stuLst')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/stuLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/08 16:08:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "teaLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('teaLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('teaLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/teaLst')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/teaLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/08 16:08:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "classLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('classLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('classLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/classLs...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/classLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/08 16:08:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/courseL...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/courseLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/08 16:12:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "stuLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('stuLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('stuLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/stuLst')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/stuLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/08 16:13:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "teaLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('teaLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('teaLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/teaLst')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/teaLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/08 16:16:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "webrtc" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('webrtc')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('webrtc')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/webrtc')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/08 16:17:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "teaLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('teaLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('teaLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/teaLst')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/teaLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/index
+---
+2015/07/08 16:18:04 [error] [php] Undefined variable: info (D:\wamp\www\reborn\protected\views\student\webrtc.php:150)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(18): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionWebrtc()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\views\student\webrtc.php (150)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (18)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 16:23:50 [error] [php] Undefined variable: info (D:\wamp\www\reborn\protected\views\student\webrtc.php:150)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(20): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionWebrtc()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\views\student\webrtc.php (150)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (20)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 16:24:17 [error] [php] Undefined variable: info (D:\wamp\www\reborn\protected\views\student\webrtc.php:150)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(20): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionWebrtc()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\views\student\webrtc.php (150)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (20)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 16:24:20 [error] [php] Undefined variable: info (D:\wamp\www\reborn\protected\views\student\webrtc.php:150)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(20): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionWebrtc()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\views\student\webrtc.php (150)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (20)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 16:24:21 [error] [php] Undefined variable: info (D:\wamp\www\reborn\protected\views\student\webrtc.php:150)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(20): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionWebrtc()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\views\student\webrtc.php (150)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (20)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 16:25:38 [error] [php] Undefined variable: info (D:\wamp\www\reborn\protected\views\student\webrtc.php:165)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(20): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionWebrtc()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\views\student\webrtc.php (165)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (20)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 16:27:23 [error] [php] Undefined variable: info (D:\wamp\www\reborn\protected\views\student\webrtc.php:186)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(20): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionWebrtc()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\views\student\webrtc.php (186)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (20)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 16:27:56 [error] [php] Undefined variable: info (D:\wamp\www\reborn\protected\views\student\webrtc.php:266)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(20): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionWebrtc()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\views\student\webrtc.php (266)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (20)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 16:55:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "teaLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('teaLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('teaLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/teaLst')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/teaLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/webrtc
+---
+2015/07/08 17:18:24 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\models\Student.php:52)
+Stack trace:
+#0 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionClasswork()
+#1 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#3 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#4 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#5 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#6 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#7 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/classwork
+in D:\wamp\www\reborn\protected\models\Student.php (52)
+in D:\wamp\www\reborn\protected\models\Suite.php (19)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (63)
+2015/07/08 17:18:51 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\StudentController.php:19)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/webrtc
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (19)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 17:24:46 [error] [php] Use of undefined constant EXER_CSS_URL - assumed 'EXER_CSS_URL' (D:\wamp\www\reborn\protected\views\student\classwork.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(60): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionClasswork()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/classwork
+in D:\wamp\www\reborn\protected\views\student\classwork.php (39)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (60)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 17:25:33 [error] [php] Use of undefined constant EXER_CSS_URL - assumed 'EXER_CSS_URL' (D:\wamp\www\reborn\protected\views\student\classwork.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(58): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionClasswork()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/classwork
+in D:\wamp\www\reborn\protected\views\student\classwork.php (39)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (58)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 17:25:35 [error] [php] Use of undefined constant EXER_CSS_URL - assumed 'EXER_CSS_URL' (D:\wamp\www\reborn\protected\views\student\classwork.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\StudentController.php(58): StudentController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionClasswork()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/classwork
+in D:\wamp\www\reborn\protected\views\student\classwork.php (39)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (58)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 17:39:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "classwork" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('classwork')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('classwork')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/classwork')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/classwork&&lessonID=2
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classwork
+---

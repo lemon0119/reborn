@@ -14,12 +14,18 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionWebrtc(){
+        $studentID = Yii::app()->session['userid_now'];
+        $studentName = Student::model()->findByPK($studentID)->userName;
+        return $this->render('webrtc',['studentName'=>$studentName]);
+    }
+    
     public function actionProDetail(){
         $suiteID = $_GET['suiteID'];
         Yii::app()->session['recordID'] = $_GET['recordID'];
         $suiteName = Suite::model()->find('suiteID=?',[$suiteID])['suiteName'];
         $result = Student::model()-> getAnswerRecordAll($suiteID);
-        return $this->renderPartial('proDetail',['result'=>$result,'suiteName'=>$suiteName]);
+        return $this->render('proDetail',['result'=>$result,'suiteName'=>$suiteName]);
     }
     public function actionSaveAnswer(){
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -46,9 +52,25 @@ class StudentController extends CController {
         $exer = Exercise::getExerise($exerID, $type);
         $modAns = $exer['content'];
         $answer = Yii::app()->session['answer'];
-        return $this ->renderPartial('ansDetail',['exer'=>$exer, 'answer'=>$answer]);
+        return $this ->render('ansDetail',['exer'=>$exer, 'answer'=>$answer]);
     }
     public function actionClasswork(){
+        $studentID = Yii::app()->session['userid_now'];
+        $classID = Student::model()->findClassByStudentID($studentID);
+        $lessons = Lesson::model()->findAll("classID = '$classID'");
+        $currentLesn = isset($_GET['lessonID'])?
+        if()
+        
+        
+        
+        
+        
+        
+        
+        return $this->render('classwork',['lessons'=>$lessons]);
+        
+        
+        /*
         $this->saveParam();
         Yii::app()->session['type'] = 'classwork';
         Yii::app()->session['progress'] = 'false';
@@ -57,28 +79,28 @@ class StudentController extends CController {
         $suite = Suite::model()->getClassworkNow();
         $record = $suite->read();
         if($record == FALSE){
-            return $this->renderPartial('classwork',array(
+            return $this->render('classwork',array(
                 'noExer'=>"true",
             ));
         }
         $suiteID = $record['suiteID'];
         Yii::app()->session['suiteID'] = $suiteID;
-        //echo "8888888888888888888$suiteID 88888888888888888888";
+        
         //判断内部选择的题型，以便包含不同的页面。
         if($exerType == 'listenExer') {
             $result = ListenType::model()->getListenExer($suiteID);
-            return $this->renderPartial('classwork',array(
+            return $this->render('classwork',array(
                 'exercise'=>$result["exercise"],
                 'pages'=>$result["pages"],
             ),false,true);
         } else if ($exerType == 'lookExer') {
             $result = LookType::model()->getLookExer($suiteID);
-            return $this->renderPartial('classwork',  ['exercise'=>$result["exercise"],
+            return $this->render('classwork',  ['exercise'=>$result["exercise"],
                 'pages'=>$result['pages'],
                 ],false,true);
         } else if ($exerType == 'keyExer') {
             $result = KeyType::model()->getKeyExer($suiteID);
-            return $this->renderPartial('classwork',array(
+            return $this->render('classwork',array(
                 'exercise'=>$result["exercise"],
                 'pages'=>$result['pages'],
             ),false,true);
@@ -86,12 +108,14 @@ class StudentController extends CController {
             $choice = Suite::model()->getchoice($suiteID);
             $filling = Suite::model()->getFilling($suiteID);
             $question = Suite::model()->getQuestion($suiteID);
-            return $this->renderPartial('classwork',array( 
+            return $this->render('classwork',array( 
                 'choice'=>$choice, 
                 'filling'=>$filling, 
                 'question'=>$question, 
             ));
         }
+         * 
+         */
     }
     
     public function actionProgress(){
@@ -99,7 +123,7 @@ class StudentController extends CController {
         Yii::app()->session['type'] = $type;
         Yii::app()->session['progress'] = 'true';
         $result = Student::model()-> getAnswerRecordSub();
-        return $this->renderPartial('progress',['result'=>$result]);
+        return $this->render('progress',['result'=>$result]);
     }
     public function actionPreExer(){
         $type = Yii::app()->session['type'];
@@ -132,7 +156,7 @@ class StudentController extends CController {
             return $this->doKnlgExer($suiteID);
         }
         
-        return $this->renderPartial('Exer');
+        return $this->render('Exer');
     }
     public function saveAnswer(){
         //查看是否有answer，即是否是用户提交了答案。
@@ -169,7 +193,7 @@ class StudentController extends CController {
     
     public function doListenExer($suiteID) {
         $result = ListenType::model()->getListenExer($suiteID);
-        return $this->renderPartial('Exer',array(
+        return $this->render('Exer',array(
             'exercise'=>$result["exercise"],
             'pages'=>$result["pages"],
         ),false,true);
@@ -179,7 +203,7 @@ class StudentController extends CController {
         $choice = Suite::model()->getchoice($suiteID);
         $filling = Suite::model()->getFilling($suiteID);
         $question = Suite::model()->getQuestion($suiteID);
-        return $this->renderPartial('Exer',array( 
+        return $this->render('Exer',array( 
             'choice'=>$choice, 
             'filling'=>$filling, 
             'question'=>$question, 
@@ -188,7 +212,7 @@ class StudentController extends CController {
     
     public function doLookExer($suiteID) {
         $result = LookType::model()->getLookExer($suiteID);
-        return $this->renderPartial('Exer',array( 
+        return $this->render('Exer',array( 
                 'exercise'=>$result["exercise"],
                 'pages'=>$result["pages"],
         ),false,true);
@@ -196,7 +220,7 @@ class StudentController extends CController {
     
     public function doKeyExer($suiteID) {
         $result = KeyType::model()->getKeyExer($suiteID);
-        return $this->renderPartial('Exer',array( 
+        return $this->render('Exer',array( 
                 'exercise'=>$result["exercise"],
                 'pages'=>$result["pages"],
         ),false,true);
@@ -205,6 +229,6 @@ class StudentController extends CController {
         $this->render('index');
     }
     public function actionHello(){
-        return $this->renderPartial('hello',array(null));
+        return $this->render('hello',array(null));
     }
 }

@@ -25,8 +25,8 @@
                                                         <li class="dropdown">
                                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">在线课堂<b class="caret"></b></a>
                                                             <ul class="dropdown-menu">
-                                                                <li><a href="./index.php?r=student/stuLst">虚拟课堂</a></li>
-                                                                <li><a href="./index.php?r=student/teaLst">课堂作业</a></li>
+                                                                <li><a href="./index.php?r=student/webrtc">虚拟课堂</a></li>
+                                                                <li><a href="./index.php?r=student/classwork">课堂作业</a></li>
                                                             </ul>
                                                         </li>
                                                             <li><a href="./index.php?r=student/classLst">我的课程</a></li>
