@@ -36,6 +36,14 @@ class TeacherController extends CController {
         return $this->render('virtualClass',array('info'=>$info));
     }
     
+    public function actionStartCourse(){
+        $classID=$_GET['classID'];
+        $progress=$_GET['progress'];
+        return $this->render('startCourse',[
+            'classID'=>$classID,
+            'progress'=>$progress
+        ]);
+    }
             
     public function teaInClass(){
         $sql="SELECT * FROM teacher order by userID ASC";

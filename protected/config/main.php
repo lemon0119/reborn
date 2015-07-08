@@ -58,7 +58,7 @@ return array(
 			'connectionString' => 'mysql:host='.'localhost'.';dbname=yawei001',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'yawei',
+			'password' => '',
 			'charset' => 'utf8',
                         //配置toolbar:输出详细的SQL信息
                         'enableProfiling'=>true,  
