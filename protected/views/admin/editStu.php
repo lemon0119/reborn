@@ -32,7 +32,7 @@
                 <?php }else{?>
                 <a href="./index.php?r=admin/stuLst" class="btn">返回</a>
                 <?php }?>　　
-                <button  class="btn btn-primary" onclick="resetPass();">重置密码</button>
+                <button  class="btn btn-primary" onclick="resetPass()">重置密码</button>
             </div>
         </fieldset>
     </form>
@@ -41,6 +41,7 @@
 <?php 
     if(isset($result)){
         echo "alert('$result');";
+        unset($result);
     }
 ?>
 function resetPass(){
@@ -98,20 +99,6 @@ $("#form-addStu").submit(function(){
     var classAll = getclassID();
     if(classAll.indexOf(classID) < 0){
         alert('学生班级不存在！');
-        return false;
-    }
-    var pass1 = $("#input04")[0].value;
-    if(pass1 === ""){
-        alert('密码不能为空');
-        return false;
-    }
-    var pass2 = $("#input05")[0].value;
-    if(pass2 === ""){
-        alert('确认密码不能为空');
-        return false;
-    }
-    if(pass1 !== pass2){
-        alert('密码两次输入不相同！');
         return false;
     }
 });

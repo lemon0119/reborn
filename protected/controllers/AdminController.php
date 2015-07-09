@@ -183,10 +183,12 @@ class AdminController extends CController
         
         public function actionResetPass()
 	{
+            echo '000';
             $userID = $_GET['id'];
             $thisStu = new Student();
             $thisStu = $thisStu->find("userID = '$userID'");
             $thisStu -> password = '000';
+            
             $thisStu -> update();
             $classAll = TbClass::model()->findAll();
             $userAll = Student::model()->findAll();
