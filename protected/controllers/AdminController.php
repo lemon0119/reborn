@@ -451,6 +451,73 @@ class AdminController extends CController
             ));
         }
         
+    public function actionHardDeleteTea()
+    {
+        $pass = $_POST['password'];
+        $id = Yii::app()->session['userid_now'];
+        $admin = Admin::model()->findByPK($id);
+        if($admin->password !== $pass){
+            return $this->render('confirmTeaPass',['wrong'=>'密码错误，请重新输入。']);
+        }
+        $rows = 0;
+        if(isset(Yii::app()->session['deleteTeaID'])){
+            $userID = Yii::app()->session['deleteTeaID'];
+            $rows = Teacher::model()->deleteByPK("$userID");
+        } else if(isset(Yii::app()->session['deleteTeaBox'])){
+            $ids = Yii::app()->session['deleteTeaBox'];
+            $condition = '';
+            foreach ($ids as $value) {
+                $condition = $condition."'$value',";
+            }
+            $condition = $condition."''";
+            $rows = Teacher::model()->deleteAll("userID in ($condition)");
+        }
+        $teaLst = Teacher::model()->findAll("is_delete = '1'");
+        $this->render('recycleTea',array(
+        'teaLst'=>$teaLst,
+        'rows'=>$rows,
+        ));
+    }
+    public function actionConfirmTeaPass()
+    {
+        if(isset($_GET['userID'])){
+            Yii::app()->session['deleteTeaID'] = $_GET['userID'];
+        } else if(isset($_POST['checkbox'])){
+            Yii::app()->session['deleteTeaBox'] = $_POST['checkbox'];
+        }
+        return $this->render('confirmTeaPass');
+    }
+    
+    public function actionRevokeTea()
+    {
+        $rows = 0;
+        if(isset($_GET['userID'])){
+            $userID = $_GET['userID'];
+            $rows = Teacher::model()->updateAll(array('is_delete'=>'0'),'userID=:userID',array(':userID'=>$userID));
+        } else if(isset($_POST['checkbox'])){
+            $ids = $_POST['checkbox'];
+            $condition = '';
+            foreach ($ids as $value) {
+                $condition = $condition."'$value',";
+            }
+            $condition = $condition."''";
+            $rows = Teacher::model()->updateAll(array('is_delete'=>'0'),"userID in ($condition)");
+        }
+        $teaLst = Teacher::model()->findAll("is_delete = '1'");
+        $this->render('recycleTea',array(
+        'teaLst'=>$teaLst,
+        'rows'=>$rows,
+        ));
+    }
+        
+    public function actionRecycleTea()
+    {
+        $teaLst = Teacher::model()->findAll("is_delete = '1'");
+        $this->render('recycleTea',array(
+        'teaLst'=>$teaLst,
+        ));
+    }
+        
         
         //查看班级人数
         public function numInClass() {

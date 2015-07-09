@@ -20,7 +20,7 @@
                         <li class="nav-header">管理</li>
                         <li id="li-stuLst"><a href="./index.php?r=admin/teaLst"><i class="icon-list-alt"></i> 老师列表</a></li>
                         <li id="li-addStu"><a href="./index.php?r=admin/addTea"><i class="icon-plus"></i> 添加老师</a></li>
-                        <li id="li-recycleStu"><a href="./index.php?r=admin/recycleStu"><i class="icon-trash"></i> 回收站</a></li>
+                        <li id="li-recycleStu"><a href="./index.php?r=admin/recycleTea"><i class="icon-trash"></i> 回收站</a></li>
                 </ul>
         </div>
 </div>
