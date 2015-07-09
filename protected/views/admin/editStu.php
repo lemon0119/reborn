@@ -32,7 +32,7 @@
                 <?php }else{?>
                 <a href="./index.php?r=admin/stuLst" class="btn">返回</a>
                 <?php }?>　　
-                <button  class="btn btn-primary" onclick="resetPass()">重置密码</button>
+                <a  class="btn btn-primary" onclick="resetPass()">重置密码</a>
             </div>
         </fieldset>
     </form>
@@ -50,7 +50,8 @@ function resetPass(){
                                                                         if(isset($flag))
                                                                             echo "&&flag=search";
                                                                     ?>";
-    }
+    } else 
+        return false;
 }
 function getUserID(){
     var result = new Array();
