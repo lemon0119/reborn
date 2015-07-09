@@ -1,14 +1,14 @@
-<?php require 'stuSideBar.php';?>
+<?php require 'teaSideBar.php';?>
 <div class="span9">
-    <h2>编 辑 学 生</h2>
+    <h2>编 辑 老 师</h2>
     <form action="./index.php?r=admin/editTeaInfo&&id=<?php echo $userID;
                                                              if(isset($flag))
                                                                 echo "&&flag=search";
-                            ?>" class="form-horizontal" method="post" id="form-addStu">
+                            ?>" class="form-horizontal" method="post" id="form-addTea">
         <fieldset>
-            <legend>学生信息</legend>
+            <legend>老师信息</legend>
             <div class="control-group">
-                    <label class="control-label" for="input01">学号</label>
+                    <label class="control-label" for="input01">工号</label>
                     <div class="controls">
                         <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID?>" />
                     </div>
@@ -40,7 +40,7 @@
 ?>
 function resetPass(){
     if(confirm("这将会重置这名老师的密码为：000，您确定这样吗？")){
-        window.location.href = "./index.php?r=admin/resetPass&&id=<?php echo $userID;
+        window.location.href = "./index.php?r=admin/resetTeaPass&&id=<?php echo $userID;
                                                                         if(isset($flag))
                                                                             echo "&&flag=search";
                                                                     ?>";
@@ -63,37 +63,20 @@ function getUserID(){
     ?>
    return result;
 }
-function getclassID(){
-    var result = new Array();
-<?php foreach ($classAll as $key => $value) {
-    $classID = $value['classID'];
-    echo "result[$key] = '$classID';";
-}?>
-   return result;
-}
-$("#form-addStu").submit(function(){
+
+$("#form-addTea").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        alert('学生学号不能为空');
+        alert('老师工号不能为空');
         return false;
     }
     if(getUserID().indexOf(userID) >= 0){
-        alert('学生学号已存在！');
+        alert('老师工号已存在！');
         return false;
     }
     var userName = $("#input02")[0].value;
     if(userName === ""){
-        alert('学生姓名不能为空');
-        return false;
-    }
-    var classID = $("#input03")[0].value;
-    if(classID === ""){
-        alert('学生班级不能为空');
-        return false;
-    }
-    var classAll = getclassID();
-    if(classAll.indexOf(classID) < 0){
-        alert('学生班级不存在！');
+        alert('老师姓名不能为空');
         return false;
     }
 });

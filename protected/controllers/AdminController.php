@@ -183,7 +183,6 @@ class AdminController extends CController
         
         public function actionResetPass()
 	{
-            echo '000';
             $userID = $_GET['id'];
             $thisStu = new Student();
             $thisStu = $thisStu->find("userID = '$userID'");
@@ -301,11 +300,11 @@ class AdminController extends CController
             if(isset($_POST['type'])){
                 $type=$_POST['type'];
                 $value=$_POST['value'];
-                Yii::app()->session['searchStuType']=$type;
-                Yii::app()->session['searchStuValue']=$value;
+                Yii::app()->session['searchTeaType']=$type;
+                Yii::app()->session['searchTeaValue']=$value;
             } else {
-                $type = Yii::app()->session['searchStuType'];
-                $value = Yii::app()->session['searchStuValue'];
+                $type = Yii::app()->session['searchTeaType'];
+                $value = Yii::app()->session['searchTeaValue'];
             }
             $result = Teacher::model()->getTeaLst($type, $value);
             $teaLst=$result['teaLst'];
@@ -342,13 +341,116 @@ class AdminController extends CController
             $this->render('addTea',['userAll'=>$userAll,'result'=>$result]);
         }
         
-        public function actionEditTea()
-	{        
+        public function actionResetTeaPass()
+	{
+            $userID = $_GET['id'];
+            $thisTea = new Teacher();
+            $thisTea = $thisTea->find("userID = '$userID'");
+            $thisTea -> password = '000';
+            
+            $thisTea -> update();
+            $userAll = Teacher::model()->findAll();
+            if(isset($_GET['flag']))
+            {
+                 $this->render('editTea',array(
+                'userID'=>$_GET['id'],
+                'userName'=>$thisTea ->userName,
+                'userAll'=>$userAll,
+                'result'=>'密码重置成功！',
+                'flag'=>'search'
+                ));
+            }else{
             $this->render('editTea',array(
-                                             'id'=>$_GET['id'],
-                                             'name'=>$_GET['name'],
-                                         ));
+                'userID'=>$_GET['id'],
+                'userName'=>$thisTea ->userName,
+                'userAll'=>$userAll,
+                'result'=>'密码重置成功！'
+                ));
+            }
         }
+        
+        public function actionEditTeaInfo()
+	{
+            $userID = $_GET['id'];
+            $thisTea = new Teacher();
+            $thisTea = $thisTea->find("userID = '$userID'");
+            $thisTea -> userID =$_POST['userID'];
+            $thisTea -> userName =$_POST['userName'];
+            $thisTea -> update();
+            $userAll = Teacher::model()->findAll();
+            if(isset($_GET['flag']))
+            {
+                $this->render('editTea',array(
+                'userID'=>$thisTea -> userID,
+                'userName'=>$thisTea ->userName,
+                'userAll'=>$userAll,
+                'result'=>'信息修改成功！',
+                'flag'=>$_GET['flag']
+                ));
+            }  else {
+                $this->render('editTea',array(
+                'userID'=>$thisTea -> userID,
+                'userName'=>$thisTea ->userName,
+                'userAll'=>$userAll,
+                'result'=>'信息修改成功！'
+                ));
+            }      
+        }
+        
+        public function actionEditTea()
+	{
+            $userAll = Teacher::model()->findAll();
+            if(isset($_GET['flag']))
+            {
+                $this->render('editTea',array(
+                'userID'=>$_GET['id'],
+                'userName'=>$_GET['name'],
+                'userAll'=>$userAll,
+                'flag'=>'search'
+                ));
+            }else{
+            $this->render('editTea',array(
+                'userID'=>$_GET['id'],
+                'userName'=>$_GET['name'],
+                'userAll'=>$userAll
+                ));
+            }
+        }
+        
+        public function actionDeleteTeaSearch()
+	{
+            $userID = $_GET['id'];
+            $thisTea = new Teacher();
+            $thisTea = $thisTea->find("userID = '$userID'");
+            $thisTea -> is_delete = '1';
+            $thisTea -> update();
+            $type = Yii::app()->session['searchTeaType'];
+            $value = Yii::app()->session['searchTeaValue'];
+            $result = Teacher::model()->getTeaLst($type, $value);
+            $teaLst=$result['teaLst'];
+            $pages=$result['pages'];
+            $this->render('searchTea',array(
+                        'teaLst'=>$teaLst,
+                        'pages'=>$pages)
+                    );
+        }
+        
+        public function actionDeleteTea()
+	{
+            $userID = $_GET['id'];
+            $thisTea = new Teacher();
+            $thisTea = $thisTea->find("userID = '$userID'");
+            $thisTea -> is_delete = '1';
+            $thisTea -> update();
+            $result = Teacher::model()->getTeaLst("", "");
+            $teaLst=$result['teaLst'];
+            $pages=$result['pages'];
+            $this->render('teaLst',array(
+            'teaLst'=>$teaLst,
+            'pages'=>$pages,
+            ));
+        }
+        
         
         //查看班级人数
         public function numInClass() {
