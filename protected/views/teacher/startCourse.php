@@ -30,7 +30,7 @@
                 点击虚拟课堂开始本课.
         </p>
         <p>
-                <a href="help.htm" class="btn btn-primary btn-large">虚拟课堂</a> <a class="btn btn-large">课堂作业</a>
+                <a href="./index.php?r=webrtc/index" class="btn btn-primary btn-large">虚拟课堂</a> <a class="btn btn-large">课堂作业</a>
         </p>
     </div>
     <h1>

@@ -11,6 +11,11 @@ class TeacherController extends CController {
     
     public $layout='//layouts/teacherBar';
     
+    public function actionWebrtc(){
+        $teacherID = Yii::app()->session['userid_now'];
+        $teacherName = Student::model()->findByPK($teacherID)->userName;
+        return $this->render('webrtc',['teacherName'=>$teacherName]);
+    }
     public function actionlookExer(){
         return $this->render('lookExer');
     }

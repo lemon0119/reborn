@@ -654,6 +654,7 @@ echo "<script>var role='$role';</script>";
 
                             document.getElementById('share-screen').disabled = false;
                             document.getElementById('room-name').disabled = false;
+                            
                         };
                         iframe.src = 'https://www.webrtc-experiment.com/getSourceId/';
                         iframe.style.display = 'none';
@@ -947,6 +948,7 @@ echo "<script>var role='$role';</script>";
                 <!-- sunpy: dianbo start script-->
                 <script>
                     var absl_path;
+                    
                     
                     $("#teacher-dianbo").click(function() {   
                         console.log("sunpy: role = " + role);

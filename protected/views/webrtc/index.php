@@ -20,15 +20,21 @@
 
 <style>
     .left{
-        margin:10px;
-        border:1px solid;
+        border: 1px solid #d4d4d4;
+        -webkit-border-radius: 4px;
+           -moz-border-radius: 4px;
+                border-radius: 4px;
+        margin-left:30px;
         width:61%;
         height:600px;
         float:left;
     }
     .right{
-        margin:10px;
-        border:1px solid;
+        border: 1px solid #d4d4d4;
+        -webkit-border-radius: 4px;
+           -moz-border-radius: 4px;
+                border-radius: 4px;
+        margin-right: 0px;
         width:31%;
         height:600px;
         float:right;
@@ -156,26 +162,7 @@ echo "<script>var role='$role';</script>";
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
 
-<body style="overflow-x:hidden;">
-
-    <!-- BEGIN CONTAINER -->
-    <div class="page-container">
-        <!-- BEGIN SIDEBAR 学生-->
-        <?php /*
-         * 原来侧面菜单的包含，现在先不要了。
-            if ($role == 1) { 
-                require(Yii::app()->basePath."\\views\\student\\menuIndex.php");
-            } else { 
-                require(Yii::app()->basePath."\\views\\teacher\\menuIndex.php");
-            }
-         * 
-         */
-        ?>
-        <!-- BEGIN PAGE -->
-        <div class="page-content">								
-            <!-- 右侧内容展示开始-->
-            <div class="container-fluid">
-                <section class="left">
+                <div class="left">
                     <span style="display:none">
                         <a href="/Pluginfree-Screen-Sharing/" target="_blank" title="Open this link for private screen sharing!">
                             <code style="display:none"><strong id="unique-token">#123456789</strong></code>
@@ -210,12 +197,15 @@ echo "<script>var role='$role';</script>";
                                     <td align="center" height=8 id="sw-show-dianbo">点播文件</td>
                                 </tr>
                             </table>
-                        </div> 
+                        </div>
                         
-                        <div id="videos-container" style="display:none">
+                        <div id="videos-container" style="width: 100%; display:none">
+                            
                         </div>
-                        <div id="dianbo-videos-container" style="margin-top:18px;display:none">
-                        </div>
+                        <div id="dianbo-videos-container" style="margin-top:18px;display:none">  
+
+                        </div>                                      
+                                                   
                         <!-- sunpy: if students -->    
                     <?php } else { ?>
                         <!-- sunpy: video start -->
@@ -236,7 +226,7 @@ echo "<script>var role='$role';</script>";
                             </table>
                         </div>
                         
-                        <div id="videos-container" style="display:none">  
+                        <div id="videos-container" style="height: 100%; margin-top:0px; width: 100%; display:none">
 
                         </div>
                         
@@ -244,9 +234,9 @@ echo "<script>var role='$role';</script>";
 
                         </div>                                                
                     <?php } ?>    
-                </section>
+                </div>
 
-                <section class="right">
+                <div class="right">
                     <div>
                         <div style="margin-left:auto;margin-right:auto;width:80%;border:none;">
                             <table style="border-style:dashed;" border="0">
@@ -273,7 +263,7 @@ echo "<script>var role='$role';</script>";
                             <button id="send-msg" style="padding-top:4px;padding-bottom:4px;height:30px;width:25%;font-size:10px">发送</button>
                         </div>
                     </div>
-                </section>
+                </div>
 
                 <!-- sunpy: chatroom -->
                 <script>
@@ -616,6 +606,8 @@ echo "<script>var role='$role';</script>";
                                 roomName: myRoomName
                             });
                         });
+                        $("#videos-container").show();
+                        $("#dianbo-videos-container").hide();
                         //this.disabled = true;
                     };
 
@@ -1148,15 +1140,7 @@ echo "<script>var role='$role';</script>";
                         return true;
                     }
                 </script>
-            </div>                         
-        </div>
-    </div>
-
-</div>
 <!-- END PAGE -->
-</div>
-<!-- END CONTAINER -->
-</body>
 
 <script>
     var $$ = jQuery;

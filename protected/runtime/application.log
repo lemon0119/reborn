@@ -1429,3 +1429,175 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=student/clswkOne&&suiteID=7
 HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classwork&&lessonID=1
 ---
+2015/07/09 15:23:28 [error] [php] Undefined offset: 3 (D:\wamp\www\reborn\protected\views\teacher\startCourse.php:11)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\TeacherController.php(47): TeacherController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionStartCourse()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/startCourse&&classID=2&&progress=3&&on=3
+in D:\wamp\www\reborn\protected\views\teacher\startCourse.php (11)
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (47)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/09 15:24:22 [error] [php] Undefined offset: 3 (D:\wamp\www\reborn\protected\views\teacher\startCourse.php:11)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\TeacherController.php(47): TeacherController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionStartCourse()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/startCourse&&classID=2&&progress=3&&on=3
+in D:\wamp\www\reborn\protected\views\teacher\startCourse.php (11)
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (47)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/09 15:25:08 [error] [php] Undefined offset: 3 (D:\wamp\www\reborn\protected\views\teacher\startCourse.php:11)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\TeacherController.php(47): TeacherController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionStartCourse()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/startCourse&&classID=2&&progress=3&&on=3
+in D:\wamp\www\reborn\protected\views\teacher\startCourse.php (11)
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (47)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/09 15:25:10 [error] [php] Undefined offset: 3 (D:\wamp\www\reborn\protected\views\teacher\startCourse.php:11)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\TeacherController.php(47): TeacherController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionStartCourse()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/startCourse&&classID=2&&progress=3&&on=3
+in D:\wamp\www\reborn\protected\views\teacher\startCourse.php (11)
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (47)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/09 15:25:11 [error] [php] Undefined offset: 3 (D:\wamp\www\reborn\protected\views\teacher\startCourse.php:11)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\TeacherController.php(47): TeacherController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionStartCourse()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/startCourse&&classID=2&&progress=3&&on=3
+in D:\wamp\www\reborn\protected\views\teacher\startCourse.php (11)
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (47)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/09 15:45:15 [error] [php] require(D:\wamp\www\reborn\protected\views\student\menuIndex.php): failed to open stream: No such file or directory (D:\wamp\www\reborn\protected\views\webrtc\index.php:166)
+Stack trace:
+#0 D:\wamp\www\framework\web\CBaseController.php(95): WebrtcController->renderInternal()
+#1 D:\wamp\www\framework\web\CController.php(869): WebrtcController->renderFile()
+#2 D:\wamp\www\framework\web\CController.php(782): WebrtcController->renderPartial()
+#3 D:\wamp\www\reborn\protected\controllers\WebrtcController.php(30): WebrtcController->render()
+#4 D:\wamp\www\framework\web\actions\CInlineAction.php(49): WebrtcController->actionIndex()
+#5 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#7 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#8 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#9 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\views\webrtc\index.php (166)
+in D:\wamp\www\reborn\protected\views\webrtc\index.php (166)
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (30)
+2015/07/09 15:45:15 [error] [php] require(D:\wamp\www\reborn\protected\views\student\menuIndex.php): failed to open stream: No such file or directory (D:\wamp\www\reborn\protected\views\webrtc\index.php:166)
+Stack trace:
+#0 D:\wamp\www\framework\web\CBaseController.php(95): WebrtcController->renderInternal()
+#1 D:\wamp\www\framework\web\CController.php(869): WebrtcController->renderFile()
+#2 D:\wamp\www\framework\web\CController.php(782): WebrtcController->renderPartial()
+#3 D:\wamp\www\reborn\protected\controllers\WebrtcController.php(30): WebrtcController->render()
+#4 D:\wamp\www\framework\web\actions\CInlineAction.php(49): WebrtcController->actionIndex()
+#5 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#7 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#8 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#9 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\views\webrtc\index.php (166)
+in D:\wamp\www\reborn\protected\views\webrtc\index.php (166)
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (30)
+2015/07/09 15:45:18 [error] [php] require(D:\wamp\www\reborn\protected\views\teacher\menuIndex.php): failed to open stream: No such file or directory (D:\wamp\www\reborn\protected\views\webrtc\index.php:168)
+Stack trace:
+#0 D:\wamp\www\framework\web\CBaseController.php(95): WebrtcController->renderInternal()
+#1 D:\wamp\www\framework\web\CController.php(869): WebrtcController->renderFile()
+#2 D:\wamp\www\framework\web\CController.php(782): WebrtcController->renderPartial()
+#3 D:\wamp\www\reborn\protected\controllers\WebrtcController.php(30): WebrtcController->render()
+#4 D:\wamp\www\framework\web\actions\CInlineAction.php(49): WebrtcController->actionIndex()
+#5 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#7 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#8 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#9 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\views\webrtc\index.php (168)
+in D:\wamp\www\reborn\protected\views\webrtc\index.php (168)
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (30)
+2015/07/09 16:20:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=teacher/index
+---
+2015/07/09 16:40:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "classLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('classLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('classLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/classLs...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/classLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classwork
+---
+2015/07/09 16:40:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/courseL...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/courseLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classwork
+---

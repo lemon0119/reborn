@@ -1,5 +1,6 @@
 <?php
-class WebrtcController extends Controller{
+class WebrtcController extends CController{
+    public $layout='//layouts/studentBar';
     public function actionCourse(){
         $classID = $_GET['classid'];
         $course = TbClass::model()->findCourseByClassID($classID);
@@ -24,10 +25,14 @@ class WebrtcController extends Controller{
         $this->render('index',array('userID'=>$userid,'userRole'=>Yii::app()->session['role_now'],'userName'=>$userName));
     }*/
     public function actionIndex(){   
-        $user_model = new User;
-        $username_now=Yii::app()->user->name;
-        $info=$user_model->find("username='$username_now'");
-        $this->render('index',array('info'=>$info));
+        $userID = Yii::app()->session['userid_now'];
+        $userName = Student::model()->findByPK($userID)->userName;
+        $role = Yii::app()->session['role_now'];
+        if($role == 'student')
+            $layout='//layouts/studentBar';
+        else
+            $layout='//layouts/teacherBar';
+        $this->render('index',['userName'=>$userName]);
     }
 //        public function actionDianbo()
 //        {       $user_model = new User;
