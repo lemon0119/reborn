@@ -1161,3 +1161,48 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=admin/classwork&&lessonID=2
 HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classwork
 ---
+2015/07/08 20:42:28 [error] [php] Undefined variable: stuLst (D:\wamp\www\reborn\protected\controllers\AdminController.php:244)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/teaLst
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (244)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 20:42:48 [error] [php] Undefined variable: stuLst (D:\wamp\www\reborn\protected\views\admin\teaLst.php:15)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(246): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionTeaLst()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/teaLst
+in D:\wamp\www\reborn\protected\views\admin\teaLst.php (15)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (246)
+in D:\wamp\www\reborn\index.php (26)
+2015/07/08 20:44:43 [error] [php] Undefined index: classID (D:\wamp\www\reborn\protected\views\admin\teaLst.php:19)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(246): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionTeaLst()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(26): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/teaLst
+in D:\wamp\www\reborn\protected\views\admin\teaLst.php (19)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (246)
+in D:\wamp\www\reborn\index.php (26)

@@ -18,7 +18,11 @@
                 </tr>
             </tbody>
     </table>
+        <?php if(isset($flag)){?>
+        <a href="./index.php?r=admin/searchStu" class="btn">返回</a>
+        <?php }else{?>
         <a href="./index.php?r=admin/stuLst" class="btn">返回</a>
+        <?php }?>
     </div>
 </div>
 

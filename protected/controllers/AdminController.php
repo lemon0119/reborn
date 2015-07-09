@@ -130,11 +130,21 @@ class AdminController extends CController
         
         public function actionInfoStu()
 	{        
-            $this->render('infoStu',array(
-                'id'=>$_GET['id'],
-                'name'=>$_GET['name'],
-                'class'=>$_GET['class'],
-                ));
+            if(isset($_GET['flag']))
+            {
+                $this->render('infoStu',array(
+                   'id'=>$_GET['id'],
+                   'name'=>$_GET['name'],
+                    'class'=>$_GET['class'],
+                    'flag'=>$_GET['flag']
+                    ));
+            }else{
+                $this->render('infoStu',array(
+                   'id'=>$_GET['id'],
+                   'name'=>$_GET['name'],
+                    'class'=>$_GET['class']
+                    ));
+            }
         }
 
         public function actionDeleteStuSearch()
@@ -180,6 +190,18 @@ class AdminController extends CController
             $thisStu -> update();
             $classAll = TbClass::model()->findAll();
             $userAll = Student::model()->findAll();
+            if(isset($_GET['flag']))
+            {
+                 $this->render('editStu',array(
+                'userID'=>$_GET['id'],
+                'userName'=>$thisStu ->userName,
+                'classID'=>$thisStu ->classID,
+                'classAll'=>$classAll,
+                'userAll'=>$userAll,
+                'result'=>'密码重置成功！',
+                'flag'=>'search'
+                ));
+            }else{
             $this->render('editStu',array(
                 'userID'=>$_GET['id'],
                 'userName'=>$thisStu ->userName,
@@ -188,6 +210,7 @@ class AdminController extends CController
                 'userAll'=>$userAll,
                 'result'=>'密码重置成功！'
                 ));
+            }
         }
         
         public function actionEditStuInfo()
@@ -201,7 +224,19 @@ class AdminController extends CController
             $thisStu -> update();
             $classAll = TbClass::model()->findAll();
             $userAll = Student::model()->findAll();
-            $this->render('editStu',array(
+            if(isset($_GET['flag']))
+            {
+                $this->render('editStu',array(
+                'userID'=>$thisStu -> userID,
+                'userName'=>$thisStu ->userName,
+                'classID'=>$thisStu ->classID,
+                'classAll'=>$classAll,
+                'userAll'=>$userAll,
+                'result'=>'信息修改成功！',
+                'flag'=>$_GET['flag']
+                ));
+            }  else {
+                $this->render('editStu',array(
                 'userID'=>$thisStu -> userID,
                 'userName'=>$thisStu ->userName,
                 'classID'=>$thisStu ->classID,
@@ -209,12 +244,24 @@ class AdminController extends CController
                 'userAll'=>$userAll,
                 'result'=>'信息修改成功！'
                 ));
+            }      
         }
         
         public function actionEditStu()
 	{
             $classAll = TbClass::model()->findAll();
             $userAll = Student::model()->findAll();
+            if(isset($_GET['flag']))
+            {
+                $this->render('editStu',array(
+                'userID'=>$_GET['id'],
+                'userName'=>$_GET['name'],
+                'classID'=>$_GET['class'],
+                'classAll'=>$classAll,
+                'userAll'=>$userAll,
+                'flag'=>'search'
+                ));
+            }else{
             $this->render('editStu',array(
                 'userID'=>$_GET['id'],
                 'userName'=>$_GET['name'],
@@ -222,6 +269,7 @@ class AdminController extends CController
                 'classAll'=>$classAll,
                 'userAll'=>$userAll
                 ));
+            }
         }
         
         //是否存在指定班级
@@ -237,104 +285,13 @@ class AdminController extends CController
         
         public function actionTeaLst()
 	{        
-            $act_result="";
-                        
-            //删除老师
-            if(isset($_GET['flag']))
-            {
-                if($_GET['flag']=='delete')
-                {
-                    $sql ="DELETE FROM teacher WHERE userID =" . $_GET['id'];
-                    Yii::app()->db->createCommand($sql)->query();
-                    $sql ="DELETE FROM teacher_class WHERE teacherID =" . $_GET['id'];
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="删除老师成功！";
-                }         
-            }    
-            
-            
-            //添加动作
-            if(isset($_GET['action']))
-            {
-                //添加老师
-                 if($_GET['action']=='add')
-                {
-                    if(!empty($_POST['userName']) and !empty($_POST['password']))
-                    {
-                    //得到当前最大的老师ID
-                    $sql="select max(userID) as id from teacher";
-                    $max_id = Yii::app()->db->createCommand($sql)->query();
-                    $temp=$max_id->read();
-                    if(empty($temp))
-                    {
-                        $new_id=1;
-                    }
-                    else
-                    {
-                        $new_id = $temp['id'] + 1;
-                    }
-                    $sql= "INSERT INTO teacher VALUES ('".$new_id ."','" .$_POST['userName'] ."','".$_POST['password'] ."')";
-                    
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="添加老师成功！";
-                    unset($_GET['action']);
-                    }else
-                    {
-                        //用户输入参数不足
-                        $this->render('addTea',array(
-                                                     'shao'=>"null"
-                                                     ));
-                        return;
-                    }
-                } else if($_GET['action']=='edit')
-                {
-                    //更改老师信息
-                    if(!empty($_POST['password']))
-                    {
-                    //更新老师信息
-                    $sql= "UPDATE teacher SET password= '".$_POST['password']."' WHERE userID= '" .$_GET['id']."'" ;
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="编辑老师信息成功！";
-                    unset($_GET['action']);
-                    }else
-                    {
-                        //用户输入参数不足
-                        $this->render('editTea',array(
-                                                    'id'=>$_GET['id'],
-                                                    'name'=>$_GET['name'],
-                                                     'shao'=>"null"
-                                                     ));
-                        return;
-                    }
-                }
-                
-            }
-            
-            //搜索老师
-            if(isset($_POST['which']))
-            {   
-                if(!empty($_POST['name']))
-                $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-                else  $ex_sq = "";
-            }
-            else  $ex_sq = "";
-            
-        
-	    $sql = "SELECT * FROM teacher " . $ex_sq;
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
+            $result = Teacher::model()->getTeaLst("", "");
+            $teaLst=$result['teaLst'];
+            $pages=$result['pages'];
             $this->render('teaLst',array(
-            'posts'=>$posts,
+            'teaLst'=>$teaLst,
             'pages'=>$pages,
-            'result'=>$act_result,
-            ),false,true);
+            ));
 	}
         
          public function actionInfoTea()

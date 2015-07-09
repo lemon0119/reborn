@@ -18,7 +18,7 @@ class Teacher extends CActiveRecord
             $condition= " WHERE is_delete = 1";
         else
             $condition= " WHERE is_delete = 0";
-        $select = "SELECT * FROM student";
+        $select = "SELECT * FROM teacher"; 
         $sql = $select.$condition.$order;
         $criteria=new CDbCriteria();
         $result = Yii::app()->db->createCommand($sql)->query();
@@ -30,7 +30,7 @@ class Teacher extends CActiveRecord
         $result->bindValue(':limit', $pages->pageSize); 
         $stuLst=$result->query();
         
-        return ['stuLst'=>$stuLst,'pages'=>$pages,];
+        return ['teaLst'=>$stuLst,'pages'=>$pages,];
     }
     
     function getClassNow(){
