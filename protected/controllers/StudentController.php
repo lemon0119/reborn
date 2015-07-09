@@ -14,10 +14,23 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionChoice(){
+        $suiteID = Yii::app()->session['curSuite'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        return $this->render('choiceExer',['exercise'=>$classwork]);
+    }
+    
     public function actionClswkOne(){
-        $studentID = Yii::app()->session['userid_now'];
-        $studentName = Student::model()->findByPK($studentID)->userName;
-        return $this->render('suiteDetail',['studentName'=>$studentName]);
+        $suiteID = $_GET['suiteID'];
+        Yii::app()->session['curSuite'] = $suiteID;
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        return $this->render('suiteDetail',['exercise'=>$classwork]);
     }
     
     public function actionWebrtc(){
