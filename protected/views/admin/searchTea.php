@@ -1,4 +1,4 @@
-<?php require 'stuSideBar.php';?>
+<?php require 'teaSideBar.php';?>
 <!-- 老师列表-->
 <div class="span9">
 <?php if($teaLst->count()!=0){?>
@@ -17,8 +17,8 @@
                     <td style="width: 75px"><?php echo $model['userID'];?></td>
                     <td><?php echo $model['userName'];?></td>
                     <td>  
-                        <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>&&flag=search"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
-                        <a href="./index.php?r=admin/editStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>&&flag=search"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                        <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&flag=search"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
+                        <a href="./index.php?r=admin/editTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&flag=search"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
                         <a href="#" onclick="dele(<?php $userID=$model['userID'];
                                                          echo "'$userID'"; ?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                     </td>
@@ -40,9 +40,9 @@
 <?php }?>
 </div>
 <script>
-    function dele(stuID){
-        if(confirm("这将会移动该学生至回收站，您确定这样吗？")){
-            window.location.href = "./index.php?r=admin/deleteStuSearch&&id="+stuID+"&&flag=search";
+    function dele(teaID){
+        if(confirm("这将会移动该老师至回收站，您确定这样吗？")){
+            window.location.href = "./index.php?r=admin/deleteStuSearch&&id="+teaID+"&&flag=search";
         }
     }  
 </script>

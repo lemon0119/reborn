@@ -1,50 +1,100 @@
- <script src="<?php echo JS_URL;?>jquery-form.js"></script>
+<?php require 'stuSideBar.php';?>
+<div class="span9">
+    <h2>编 辑 学 生</h2>
+    <form action="./index.php?r=admin/editTeaInfo&&id=<?php echo $userID;
+                                                             if(isset($flag))
+                                                                echo "&&flag=search";
+                            ?>" class="form-horizontal" method="post" id="form-addStu">
+        <fieldset>
+            <legend>学生信息</legend>
+            <div class="control-group">
+                    <label class="control-label" for="input01">学号</label>
+                    <div class="controls">
+                        <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID?>" />
+                    </div>
+            </div>
+            <div class="control-group">
+                    <label class="control-label" for="input02">姓名</label>
+                    <div class="controls">
+                            <input name="userName" type="text" class="input-xlarge" id="input02" value="<?php echo $userName?>" />
+                    </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">提交</button>　　　
+                <?php if(isset($flag)){?>
+                <a href="./index.php?r=admin/searchTea" class="btn">返回</a>
+                <?php }else{?>
+                <a href="./index.php?r=admin/teaLst" class="btn">返回</a>
+                <?php }?>　　
+                <a  class="btn btn-primary" onclick="resetPass()">重置密码</a>
+            </div>
+        </fieldset>
+    </form>
+</div>
 <script>
-    $(document).ready(function(){
-            $("div.span9").find("a").click(function(){
-                var url = $(this).attr("href");
-                //$(this).attr("href","#");
-                if(url.indexOf("index.php") > 0){
-                    $("#cont").load(url);
-                    return false;//阻止链接跳转
-                }
-            });
-                var options = {   
-        target:'#cont',   // 需要刷新的区域 
-        //type:'post',
-        //dataType:'json',
-        //resetForm:false,
-       // timeout:10000
-    };
-
-    $("#myForm").submit(function(){ 
-          $(this).ajaxSubmit(options);   
-      // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
-           return false;   
-      });  
-    });
-</script>
-        <div class="span9">
-        <div class="hero-unit">
-            
-        <h3>更改老师信息</h3>
-        <p>学号:<?php echo $id;?></p>
-        <p>姓名:<?php echo $name;?></p>
-        <br>
-        <form id="myForm" method="post" action="./index.php?r=admin/teaLst&&action=edit&&id=<?php echo $id;?>&&name=<?php echo $name;?>" onkeydown="if(event.keyCode==13){return false;}"> 
-        密码：<input type="text" name="password">
-        <br>
-        <input type="submit" name="submit" value="提交"> 
-        </form>   
-        <?php
-        if(isset($shao))
-        {
-            if($shao=='null')
-            {
-                echo "输入全不能为空";
+<?php 
+    if(isset($result)){
+        echo "alert('$result');";
+        unset($result);
+    }
+?>
+function resetPass(){
+    if(confirm("这将会重置这名老师的密码为：000，您确定这样吗？")){
+        window.location.href = "./index.php?r=admin/resetPass&&id=<?php echo $userID;
+                                                                        if(isset($flag))
+                                                                            echo "&&flag=search";
+                                                                    ?>";
+    } else 
+        return false;
+}
+function getUserID(){
+    var result = new Array();
+    <?php
+        $i=0;
+        foreach ($userAll as $key => $value) {
+            $stuID = $value['userID'];
+            if($userID==$value['userID'])
+                $i=1;
+            else {
+               $j=$key-$i;
+                echo "result[$j] = '$stuID';";  
             }
-        }
-        ?>
-        
-        </div>
-        </div>
+            }
+    ?>
+   return result;
+}
+function getclassID(){
+    var result = new Array();
+<?php foreach ($classAll as $key => $value) {
+    $classID = $value['classID'];
+    echo "result[$key] = '$classID';";
+}?>
+   return result;
+}
+$("#form-addStu").submit(function(){
+    var userID = $("#input01")[0].value;
+    if(userID === ""){
+        alert('学生学号不能为空');
+        return false;
+    }
+    if(getUserID().indexOf(userID) >= 0){
+        alert('学生学号已存在！');
+        return false;
+    }
+    var userName = $("#input02")[0].value;
+    if(userName === ""){
+        alert('学生姓名不能为空');
+        return false;
+    }
+    var classID = $("#input03")[0].value;
+    if(classID === ""){
+        alert('学生班级不能为空');
+        return false;
+    }
+    var classAll = getclassID();
+    if(classAll.indexOf(classID) < 0){
+        alert('学生班级不存在！');
+        return false;
+    }
+});
+</script>

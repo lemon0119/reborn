@@ -21,6 +21,35 @@
                 </ul>
         </div>
 </div>
+<div class="span9">
+    <h1>
+       <?php  echo $lessonsName[$progress];?>
+    </h1>
+    <div class="hero-unit">
+        <p>
+                点击虚拟课堂开始本课.
+        </p>
+        <p>
+                <a href="help.htm" class="btn btn-primary btn-large">虚拟课堂</a> <a class="btn btn-large">课堂作业</a>
+        </p>
+    </div>
+    <h1>
+       本课资源
+    </h1>
+    <div class="well summary">
+        <ul>
+                <li>
+                        <a href="#"><span class="count">3</span> 视频</a>
+                </li>
+                <li>
+                        <a href="#"><span class="count">27</span> ppt</a>
+                </li>
+                <li class="last">
+                        <a href="#"><span class="count">5</span> 习题</a>
+                </li>
+        </ul>
+    </div>
+<div>
 <script>
     $(document).ready(function(){
         $("#li-<?php echo $on;?>").attr("class","active");

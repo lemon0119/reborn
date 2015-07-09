@@ -296,54 +296,41 @@ class AdminController extends CController
             ));
 	}
         
-         public function actionInfoTea()
-	{   
-            $act_result="";
-             
-            $teaID=$_GET['id'];
-             
-             if(isset($_GET['action'])){
-                 if($_GET['action']=="delete"){
-                    $sql= "DELETE FROM teacher_class WHERE teacherID = '$teaID' AND classID = '".$_GET['classID']."'";
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="删除成功！";
-                 }
-             }
-             
-             
-
-            //显示所带班级结果列表并分页
-	    $sql = "SELECT * FROM tb_class WHERE classID IN (SELECT classID FROM teacher_class WHERE teacherID = '$teaID')";
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=6;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
-             
-             if(isset($_GET['classID'])){
-                  $this->render('infoTea',array(
-                                    'posts'=>$posts,
-                                    'pages'=>$pages,
-                                    'id'=>$teaID,
-                                    'name'=>$_GET['name'],
-                                    'flag'=>$_GET['flag'],
-                                    'classID'=>$_GET['classID'],
-                                    'result'=>$act_result,
-                                ));
-             }  else {
-                    $this->render('infoTea',array(
-                                    'posts'=>$posts,
-                                    'pages'=>$pages,
-                                    'id'=>$teaID,
-                                    'name'=>$_GET['name'],
-                                    'flag'=>$_GET['flag'],
-                                    'result'=>$act_result
-                                ));
-             }
+        public function actionSearchTea()
+        {
+            if(isset($_POST['type'])){
+                $type=$_POST['type'];
+                $value=$_POST['value'];
+                Yii::app()->session['searchStuType']=$type;
+                Yii::app()->session['searchStuValue']=$value;
+            } else {
+                $type = Yii::app()->session['searchStuType'];
+                $value = Yii::app()->session['searchStuValue'];
+            }
+            $result = Teacher::model()->getTeaLst($type, $value);
+            $teaLst=$result['teaLst'];
+            $pages=$result['pages'];
+            $this->render('searchTea',array(
+                        'teaLst'=>$teaLst,
+                        'pages'=>$pages)
+                    );
+        }
+        
+        public function actionInfoTea()
+	{        
+            if(isset($_GET['flag']))
+            {
+                $this->render('infoTea',array(
+                   'id'=>$_GET['id'],
+                   'name'=>$_GET['name'],
+                    'flag'=>$_GET['flag']
+                    ));
+            }else{
+                $this->render('infoTea',array(
+                   'id'=>$_GET['id'],
+                   'name'=>$_GET['name'],
+                    ));
+            }
         }
         
         public function actionAddTea()
