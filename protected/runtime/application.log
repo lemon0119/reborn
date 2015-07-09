@@ -1601,3 +1601,14 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=student/courseLst
 HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classwork
 ---
+2015/07/09 20:21:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/courseL...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(26): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=student/courseLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=webrtc/index
+---

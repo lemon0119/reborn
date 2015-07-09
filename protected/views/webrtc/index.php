@@ -12,11 +12,15 @@
 </style>
 <!--点播end-->
 
+
 <!--
 <link rel="stylesheet" href="//cdn.webrtc-experiment.com/style.css">
 -->
 
+<!--
 <link rel="stylesheet" href="<?php echo CSS_URL; ?>cdn-style.css">
+-->
+
 
 <style>
     .left{
@@ -26,7 +30,9 @@
                 border-radius: 4px;
         margin-left:30px;
         width:61%;
-        height:600px;
+        min-height: 47px;
+        max-height: 600px;
+        overflow-y:hidden;
         float:left;
     }
     .right{
@@ -36,7 +42,8 @@
                 border-radius: 4px;
         margin-right: 0px;
         width:31%;
-        height:600px;
+        max-height: 600px;
+        overflow-y: auto;
         float:right;
     }
 
@@ -188,18 +195,8 @@ echo "<script>var role='$role';</script>";
                             <input type="file" placeholder="选择点播文件" id="teacher-choose-file" style="font-size:20px;width:30%"></input>                           
                             <!-- <button id="teacher-stop-dianbo">停止点播</button> -->                        
                         </div>
-
-                        <!-- local/remote videos container -->
-                        <div style="padding-top:2px;font-size:15px;margin-left:auto;margin-right:auto;height:10px;width:100%;border:none;">
-                            <table style="border-style:dashed;" height=8 border="1">
-                                <tr height="8">
-                                    <td align="center" height=8 id="sw-show-screen">屏幕共享</td>
-                                    <td align="center" height=8 id="sw-show-dianbo">点播文件</td>
-                                </tr>
-                            </table>
-                        </div>
                         
-                        <div id="videos-container" style="width: 100%; display:none">
+                        <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px; display:none">
                             
                         </div>
                         <div id="dianbo-videos-container" style="margin-top:18px;display:none">  
@@ -217,50 +214,39 @@ echo "<script>var role='$role';</script>";
                         <table style="width: 100%;" id="rooms-list"></table>
 
                         <!-- local/remote videos container -->
-                        <div style="display:block;padding-top:2px;font-size:15px;margin-left:auto;margin-right:auto;height:10px;width:100%;border:none;">
-                            <table style="border-style:dashed;" height=8 border="1">
-                                <tr height="8">
-                                    <td align="center" height=8 id="sw-show-screen">屏幕共享</td>
-                                    <td align="center" height=8 id="sw-show-dianbo">点播文件</td>
+                        <div style="display:block;padding-top:2px;font-size:15px;margin-left:1%;margin-right:1%;height:10px;width:98%;border:none;">
+                            <table style="border: 1px solid #d9d9d9;" height="15px">
+                                <tr height="15px">
+                                    <td align="center" height="15px" id="sw-show-screen">屏幕共享</td>
+                                    <td align="center" height="15px" id="sw-show-dianbo">点播文件</td>
                                 </tr>
                             </table>
                         </div>
                         
-                        <div id="videos-container" style="height: 100%; margin-top:0px; width: 100%; display:none">
-
-                        </div>
+                        <div id="videos-container" style="height: 100%; width: 100%; margin-top:45px; display:none"></div>
                         
-                        <div id="dianbo-videos-container" style="margin-top:18px;display:none">  
-
-                        </div>                                                
+                        <div id="dianbo-videos-container" style="margin-top:45px;display:none">  </div>                                                
                     <?php } ?>    
                 </div>
 
                 <div class="right">
                     <div>
-                        <div style="margin-left:auto;margin-right:auto;width:80%;border:none;">
-                            <table style="border-style:dashed;" border="0">
-                                <tr>
-                                    <td align="center" id="sw-teacher-camera">教师视频</td>
-                                    <td align="center" id="sw-bulletin">通知公告</td>
-                                </tr>
-                            </table>
-                        </div>
-
+                        <div align="center" id="sw-teacher-camera"><h4>教 师 视 频</h4></div>
                         <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;"></div>
+                        <div align="center" id="sw-bulletin"><h4>通 知 公 告</h4></div>
                         <div id="bulletin" class="bulletin" style="display:none">
                             <textarea id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
                             <?php if ($role == 'student') { ?>
                                 <button id="postnotice" name="发布公告"/>
                                 <?php } ?>
                         </div>
-
-                        <div id="chatroom" class="chatroom">
-
-                        </div>
+                        <div align="center" id="sw-chat"><h4>课 堂 问 答</h4></div>
+                        <div id="chat-box">
+                        <div id="chatroom" class="chatroom"></div>
                         <div class="sendfoot">
-                            <input type='text' id='messageInput' style="width:65%;margin-top:0px;margin-bottom:0px">
+                            <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px">
                             <button id="send-msg" style="padding-top:4px;padding-bottom:4px;height:30px;width:25%;font-size:10px">发送</button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -367,28 +353,30 @@ echo "<script>var role='$role';</script>";
 
                 <!-- sunpy: switch camera and bulletin -->
                 <script>
-                    $("#sw-teacher-camera").hover(function() {
-                        $("#teacher-camera").show();
-                        $("#bulletin").hide();
+                    $("#sw-teacher-camera").click(function() {
+                        $("#teacher-camera").toggle('slow');
                     });
-
-                    $("#sw-bulletin").hover(function() {
-                        $("#teacher-camera").hide();
-                        $("#bulletin").show();
+                    $("#sw-chat").click(function() {
+                        $("#chat-box").toggle('slow');
+                    });
+                    $("#sw-bulletin").click(function() {
+                        $("#bulletin").toggle('slow');
                     });
                 </script>
                 
                 <!-- sunpy: switch dianbo and screen -->
                 <script>
                     $("#sw-show-dianbo").click(function() {
-                        $("#sw-show-dianbo").css("background-color", "gray");
+                        $("#sw-show-dianbo").css("background-color", "#d9d9d9");
+                        $("#sw-show-screen").css("background-color", "white");
                         $("#sw-show-screen").css("filter", "Alpha(opacity=50)");
                         $("#videos-container").hide();
                         $("#dianbo-videos-container").show();
                     });
 
                     $("#sw-show-screen").click(function() {
-                        $("#sw-show-screen").css("background-color", "gray");
+                        $("#sw-show-screen").css("background-color", "#d9d9d9");
+                        $("#sw-show-dianbo").css("background-color", "white");
                         $("#sw-show-dianbo").css("filter", "Alpha(opacity=50)");
                         $("#videos-container").show();
                         $("#dianbo-videos-container").hide();
@@ -486,8 +474,8 @@ echo "<script>var role='$role';</script>";
                         var screen_constraints = {
                             mandatory: {
                                 chromeMediaSource: DetectRTC.screen.chromeMediaSource,
-                                maxWidth: screen.width > 1920 ? screen.width : 1920,
-                                maxHeight: screen.height > 1080 ? screen.height : 1080
+                                maxWidth: screen.width > 720 ? screen.width : 720,
+                                maxHeight: screen.height > 540 ? screen.height : 540
                             },
                             optional: [{// non-official Google-only optional constraints
                                     googTemporalLayeredScreencast: true
@@ -554,8 +542,8 @@ echo "<script>var role='$role';</script>";
                             constraints.video = {
                                 mozMediaSource: 'window',
                                 mediaSource: 'window',
-                                maxWidth: 1920,
-                                maxHeight: 1080,
+                                maxWidth: 720,
+                                maxHeight: 540,
                                 minAspectRatio: 1.77
                             };
                         }
