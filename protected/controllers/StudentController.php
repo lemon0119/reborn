@@ -14,6 +14,12 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionClswkOne(){
+        $studentID = Yii::app()->session['userid_now'];
+        $studentName = Student::model()->findByPK($studentID)->userName;
+        return $this->render('suiteDetail',['studentName'=>$studentName]);
+    }
+    
     public function actionWebrtc(){
         $studentID = Yii::app()->session['userid_now'];
         $studentName = Student::model()->findByPK($studentID)->userName;
@@ -58,18 +64,10 @@ class StudentController extends CController {
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
-        $currentLesn = isset($_GET['lessonID'])?
-        if()
-        
-        
-        
-        
-        
-        
-        
-        return $this->render('classwork',['lessons'=>$lessons]);
-        
-        
+        $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:0;
+        //if()
+        $classworks = Suite::model()->getClassworkAll($currentLesn);
+        return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classworks]);
         /*
         $this->saveParam();
         Yii::app()->session['type'] = 'classwork';

@@ -28,6 +28,18 @@ class Suite extends CActiveRecord
         return $result;
     }
     
+    public function getClassworkAll($lesnID){
+        $userid =Yii::app()->session['userid_now'];
+        $classID = Student::model()->findClassByStudentID($userid);
+        $select = 'select begintime , endtime , classwork.suiteID , suiteName from classwork , suite ';
+        $time = date("Y-m-d  H:i:s");
+        $condition = "where classwork.suiteID=suite.suiteID and suiteType = 'classwork' and lessonID = '$lesnID'";
+        $order = ' order by classwork.suiteID';
+        $sql = $select.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
+    
     public function getExerNum($suiteID){
         foreach (Tool::$EXER_TYPE as $type) {
             $record = $this->getSuiteExerByType( $suiteID, $type);
