@@ -10,7 +10,19 @@
  */
 class Teacher extends CActiveRecord
 {
-        public function getTeaLst($type,$value){
+    public function insertTea($userID,$userName,$pass){
+        $newTea = new Teacher();
+        $newTea->userID = $userID;
+        $newTea->userName = $userName;
+        $newTea->password = $pass;
+        $oldTea = Student::model()->findAll("userID = '$userID'");
+        if(count($oldTea) > 0)
+            return 'no';
+        else
+            return $newTea->insert();
+    }
+    
+    public function getTeaLst($type,$value){
         $order = " order by userID ASC";
         if($type!=""&&$type!="is_delete")
             $condition = " WHERE $type = '$value' AND is_delete = 0";

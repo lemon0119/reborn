@@ -333,9 +333,13 @@ class AdminController extends CController
             }
         }
         
-        public function actionAddTea()
-	{        
-            $this->render('addTea');
+        public function actionAddTea(){
+            $result = 'no';
+            if(isset($_POST['userID'])){
+                $result = Teacher::model()->insertTea($_POST['userID'], $_POST['userName'], $_POST['password1']);
+            }
+            $userAll = Teacher::model()->findAll();
+            $this->render('addTea',['userAll'=>$userAll,'result'=>$result]);
         }
         
         public function actionEditTea()
