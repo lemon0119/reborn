@@ -19,9 +19,11 @@ class AdminController extends CController
         $rows = 0;
         if(isset(Yii::app()->session['deleteStuID'])){
             $userID = Yii::app()->session['deleteStuID'];
+            unset(Yii::app()->session['deleteStuID']);
             $rows = Student::model()->deleteByPK("$userID");
         } else if(isset(Yii::app()->session['deleteStuBox'])){
             $ids = Yii::app()->session['deleteStuBox'];
+            unset(Yii::app()->session['deleteStuBox']);
             $condition = '';
             foreach ($ids as $value) {
                 $condition = $condition."'$value',";
@@ -462,9 +464,11 @@ class AdminController extends CController
         $rows = 0;
         if(isset(Yii::app()->session['deleteTeaID'])){
             $userID = Yii::app()->session['deleteTeaID'];
+            unset(Yii::app()->session['deleteTeaID']);
             $rows = Teacher::model()->deleteByPK("$userID");
         } else if(isset(Yii::app()->session['deleteTeaBox'])){
             $ids = Yii::app()->session['deleteTeaBox'];
+            unset(Yii::app()->session['deleteTeaBox']);
             $condition = '';
             foreach ($ids as $value) {
                 $condition = $condition."'$value',";
