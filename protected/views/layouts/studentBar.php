@@ -29,8 +29,8 @@
                                                                 <li><a href="./index.php?r=student/classwork">课堂作业</a></li>
                                                             </ul>
                                                         </li>
-                                                            <li><a href="./index.php?r=student/classLst">我的课程</a></li>
-                                                            <li><a href="./index.php?r=student/courseLst">课堂考试</a></li>
+                                                            <li><a href="./index.php?r=student/myCourse">我的课程</a></li>
+                                                            <li><a href="./index.php?r=student/classExam">课堂考试</a></li>
                                                     </ul>
                                                     <ul class="nav pull-right">
                                                         <li class="dropdown">

@@ -15,25 +15,20 @@ $SNum = 0;
 <div class="span9">
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host.$path.$page;?>">
         <div class="hero-unit">
-        <input name ="qType" type="hidden" value="knlg"/>
-        <?php 
-            foreach ($exercise['choice'] as $value) {
-                echo ($SNum+1).'. ';
-                echo $value['requirements'];
-                echo '<br/>';
-                $opt = $value['options'];
-                $optArr = explode("$$",$opt);
-                $mark = 'A';
-                foreach ($optArr as $aOpt) {
-                    echo '<input type="radio" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
-                    $mark++;
+            <input name ="qType" type="hidden" value="knlg"/>
+            <?php 
+                $SNum = 0;
+                foreach ($exercise['question'] as $value) {
+                    echo ($SNum+1).'. ';
+                    echo $value['requirements'];
+                    echo '<br/>';
+                    echo '<textarea style="width:600px; height:200px;" name = "quest'.$value["exerciseID"].'"></textarea>';
+                    echo '<br/>';
+                    $SNum++;
                 }
-                echo '<br/>';
-                $SNum++;
-            }
-        ?>
+            ?>
         </div>
-        <?php if(count($exercise['choice']) > 0){//this.submit()?>
+        <?php if(count($exercise['question']) > 0){?>
             <a type="button" class="btn btn-primary btn-large" onclick="document.getElementById('klgAnswer').submit();" style="margin-left: 200px">提交</a>
             <a class="btn btn-large" style="margin-left: 200px">暂存</a>
         <?php }?>
@@ -41,6 +36,6 @@ $SNum = 0;
 </div>
 <script>
 $(document).ready(function(){
-    $("li#li-choice").attr('class','active');
+    $("li#li-question").attr('class','active');
 });
 </script>

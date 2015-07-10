@@ -1,5 +1,4 @@
-<script src="<?php echo EXER_JS_URL;?>LCS.js"></script>
-<script src="<?php echo JS_URL;?>jquery-form.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script>
     function onSubmit(){
         if(!confirm("确定要提交答案？"))
@@ -42,6 +41,6 @@
     <input name="nm_answer" id="id_answer" type="hidden">
     <input name="nm_cost" id="id_cost" type="hidden">
     <input name="nm_correct" id="id_correct" type="hidden">
-    <a type="button" class="btn btn-primary btn-large" onclick="onSubmit();">提交</a>
-　　　　　　　　　　<a class="btn btn-large" onclick="restart();">重新计时</a>
+    <a type="button" class="btn btn-primary btn-large" onclick="onSubmit();" style="margin-left: 200px">提交</a>
+　　<a class="btn btn-large" onclick="restart();" style="margin-left: 200px">重新计时</a>
 </form>

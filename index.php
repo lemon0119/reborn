@@ -17,6 +17,8 @@ defined('SITE_URL') or define('SITE_URL','https://'.$host.dirname($_SERVER['PHP_
 defined('CSS_URL') or define('CSS_URL',SITE_URL.'css/default/');
 defined('IMG_URL') or define('IMG_URL',SITE_URL.'img/default/');
 defined('JS_URL') or define('JS_URL',SITE_URL.'js/');
+defined('EXER_LISTEN_URL') or define('EXER_LISTEN_URL',SITE_URL.'resources/');
+
 // remove the following lines when in production mode
 defined('YII_DEBUG') or define('YII_DEBUG',true);
 // specify how many levels of call stack should be shown in each log message

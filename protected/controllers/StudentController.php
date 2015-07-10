@@ -14,6 +14,66 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionMyCourse(){
+        $studentID = Yii::app()->session['userid_now'];
+        $classID = Student::model()->findClassByStudentID($studentID);
+        $lessons = Lesson::model()->findAll("classID = '$classID'");
+        $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:0;
+        return $this->render('myCourse',['lessons'=>$lessons,'currentLesn'=>$currentLesn]);
+    }
+    public function actionClassExam(){
+        return $this->render('classExam');
+    }
+    public function actionlistenType(){
+        $suiteID = Yii::app()->session['curSuite'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        $result = ListenType::model()->findByPK($exerID);
+        return $this->render('listenExer',array( 
+            'exercise'=>$classwork,
+            'exerOne'=>$result,
+        ));
+    }
+    
+    public function actionlookType(){
+        $suiteID = Yii::app()->session['curSuite'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        $result = LookType::model()->findByPK($exerID);
+        return $this->render('lookExer',array( 
+            'exercise'=>$classwork,
+            'exerOne'=>$result,
+        ));
+    }
+    
+    public function actionKeyType(){
+        $suiteID = Yii::app()->session['curSuite'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        $result = KeyType::model()->findByPK($exerID);
+        return $this->render('keyExer',array( 
+            'exercise'=>$classwork,
+                'exerOne'=>$result,
+        ));
+    }
+    public function actionQuestion(){
+        $suiteID = Yii::app()->session['curSuite'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        return $this->render('questionExer',['exercise'=>$classwork]);
+    }
+    
     public function actionChoice(){
         $suiteID = Yii::app()->session['curSuite'];
         $classwork = Array();
@@ -22,7 +82,14 @@ class StudentController extends CController {
         }
         return $this->render('choiceExer',['exercise'=>$classwork]);
     }
-    
+    public function actionfilling(){
+        $suiteID = Yii::app()->session['curSuite'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        return $this->render('fillingExer',['exercise'=>$classwork]);
+    }
     public function actionClswkOne(){
         $suiteID = $_GET['suiteID'];
         Yii::app()->session['curSuite'] = $suiteID;

@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 ?>
-<script src="<?php echo EXER_JS_URL;?>ocxJS.js"></script>
-<link href="<?php echo CSS_URL; ?>../exer/ywStyle.css" rel="stylesheet" type="text/css" />
+<script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
+<link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <table border="0">
     <tr>
       <td><div id="l_a" class = "key"><div>A</div></div></td>

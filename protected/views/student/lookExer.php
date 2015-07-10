@@ -1,60 +1,40 @@
-<script src="<?php echo EXER_JS_URL;?>ocxJS.js"></script>
-<script src="<?php echo EXER_JS_URL;?>time.js"></script>
-<link href="<?php echo CSS_URL; ?>../exer/ywStyle.css" rel="stylesheet" type="text/css" />
-<script>
-
-        $(document).ready(function(){	
-            $("div.span9").find("a").click(function(){
-                var url = $(this).attr("href");
-                //确实是连接跳转
-                if(url.indexOf("index.php") > 0){
-                    $("#cont").load(url);
-                    return false;//阻止链接跳转
-                }
-            });
-            
-        });
-</script>
+<script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
+<?php require 'suiteSideBar.php';?>
 <div class="span9">
     <div class="hero-unit">
             <?php 
-                $this->widget('CLinkPager',array('pages'=>$pages));
-                $i = 0;
-            ?>
-            <?php foreach($exercise as $row):?>
-            <?php 
-                $i++;
-                Yii::app()->session['exerID'] = $row['exerciseID'];
+                Yii::app()->session['exerID'] = $exerOne['exerciseID'];
             ?>
         <table border = '0px'>
             <tr>
-                <td width = '200px'><h3><?php echo $row['title']?></h3></td>
-                <td width = '200px'>时间：<span id="time">00:00:00</span></td>
-                <td width = '200px'>速度：<span id="wordps">0</span> 字/分</td>
+                <td width = '250px'><h3><?php echo $exerOne['title']?></h3></td>
+                <td width = '250px'>时间：<span id="time">00:00:00</span></td>
+                <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
             </tr>
         </table>
-            <br/>
-            <input id="content" type="hidden" value="<?php echo $row['content'];?>">
-            <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false">
-            </div>
-            <br/>
-            <object id="typeOCX" type="application/x-itst-activex" 
-                    clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                    width ='600' height='350' 
-                    event_OnChange="onChange">
-            </object>
-            <br/>
-            <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
-            <?php 
-                endforeach;
-                if($i == 0)
-                    echo '<h3>没有看打练习！</h3>';
-            ?>
+        <br/>
+        <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
+        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false">
+        </div>
+        <br/>
+        <object id="typeOCX" type="application/x-itst-activex" 
+                clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
+                width ='750' height='350' 
+                event_OnChange="onChange">
+        </object>
     </div>
+    <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
 </div>
 
-<script type="text/javascript">
-    createFont("#000000", document.getElementById("content").value);
+<script>
+    $(document).ready(function(){
+        //菜单栏变色
+        $("li#li-look-<?php echo $exerOne['exerciseID'];?>").attr('class','active');
+        //显示题目
+        createFont("#000000", document.getElementById("content").value);
+    });
     //document.getElementById("templet").style.font_size = "25px";
     function createFont(color, text){
         var father = document.getElementById("templet");

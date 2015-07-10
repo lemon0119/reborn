@@ -6,8 +6,6 @@
  * and open the template in the editor.
  */
 ?>
-
-
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
@@ -24,7 +22,7 @@
                         <li class="nav-header">键位练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                    <a href="./index.php?r=student/keyType">
+                                    <a href="./index.php?r=student/keyType&&exerID=<?php echo $keyType['exerciseID'];?>">
                                         <i class="icon-th"></i>
                                         <?php echo $keyType['title']?>
                                     </a>
@@ -32,17 +30,17 @@
                         <?php endforeach;?>
                         <li class="nav-header">看打练习</li>
                         <?php foreach ($exercise['look'] as $lookType) :?>
-                            <li id="li-look-<?php echo $keyType['exerciseID'];?>">
-                                    <a href="./index.php?r=student/lookType">
-                                        <i class="icon-th"></i>
+                            <li id="li-look-<?php echo $lookType['exerciseID'];?>">
+                                    <a href="./index.php?r=student/lookType&&exerID=<?php echo $lookType['exerciseID'];?>">
+                                        <i class="icon-eye-open"></i>
                                         <?php echo $lookType['title']?>
                                     </a>
                             </li>
                         <?php endforeach;?>
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
-                        <li id="li-look-<?php echo $keyType['exerciseID'];?>">
-                                <a href="./index.php?r=student/listenType">
+                        <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
+                                <a href="./index.php?r=student/listenType&&exerID=<?php echo $listenType['exerciseID'];?>">
                                     <i class="icon-headphones"></i> 
                                     <?php echo $listenType['title']?>
                                 </a>
