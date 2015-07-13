@@ -1,32 +1,35 @@
- <script src="<?php echo JS_URL;?>jquery-form.js"></script>
-<script>
-    $(document).ready(function(){
-            $("div.span9").find("a").click(function(){
-                var url = $(this).attr("href");
-                //$(this).attr("href","#");
-                if(url.indexOf("index.php") > 0){
-                    $("#cont").load(url);
-                    return false;//阻止链接跳转
-                }
-            });
-            
-    var options = {   
-        target:'#cont',   // 需要刷新的区域 
-        //type:'post',
-        //dataType:'json',
-        //resetForm:false,
-       // timeout:10000
-    };
-
-    $("#myForm").submit(function(){ 
-          $(this).ajaxSubmit(options);   
-      // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
-           return false;   
-      }); 
-    });
-</script>
-<div class="span9">
-<div class="hero-unit">
+<div class="span3">
+    <div class="well" style="padding: 8px 0;">
+        <ul class="nav nav-list">
+        <li class="nav-header">查询</li>
+        <form action="./index.php?r=admin/searchChoice" method="post">
+            <li>
+                    <select name="type" style="width: 185px">
+                            <option value="exerciseID" selected="selected">编号</option>
+                            <option value="courseID" >课程号</option>
+                    </select>
+            </li>
+            <li>
+                    <input name="value" type="text" class="search-query span2" placeholder="Search" />
+            </li>
+            <li style="margin-top:10px">
+                    <button type="submit" class="btn btn-primary">查询</button>
+                    <a href="./index.php?r=admin/addChoice" class="btn">添加</a>
+            </li>
+        </form>
+            <li class="divider"></li>
+            <li class="nav-header">基础知识</li>
+            <li class="active"><a href="./index.php?r=admin/choiceLst"><i class="icon-font"></i> 选择</a></li>
+            <li ><a href="./index.php?r=admin/fillLst"><i class="icon-text-width"></i> 填空</a></li>
+            <li ><a href="./index.php?r=admin/questionLst"><i class="icon-align-left"></i> 简答</a></li>
+            <li class="divider"></li>
+            <li class="nav-header">打字练习</li>
+            <li ><a href="./index.php?r=admin/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+            <li ><a href="./index.php?r=admin/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
+            <li ><a href="./index.php?r=admin/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
+        </ul>
+    </div>
+</div>
 
 <h3>添加看打练习</h3>
 <form id="myForm" method="post" action="./index.php?r=admin/choiceLst&&action=add"> 

@@ -1241,79 +1241,40 @@ class AdminController extends CController
         }
         
         public function actionChoiceLst()
-	{       
-            //定义动作
-            $act_result="";
-            
-           //添加动作
-           if(isset($_GET['action']))
-           {
-                   //添加班级
-                if($_GET['action']=='add')
-               {
-                   if(!empty($_POST['requirements'])&&!empty($_POST['answer'])&&!empty($_POST['A'])&&!empty($_POST['B'])&&!empty($_POST['C'])&&!empty($_POST['D']))
-                   {
-                       //得到当前最大的班级ID
-                       $sql="select max(exerciseID) as id from choice";
-                       $max_id = Yii::app()->db->createCommand($sql)->query();
-                       $temp=$max_id->read();
-                       if(empty($temp))
-                       {
-                           $new_id=1;
-                       }
-                       else
-                       {
-                           $new_id = $temp['id'] + 1;
-                       }
-                       $sql= "INSERT INTO choice VALUES ('".$new_id ."','danxuan','0','" .$_POST['requirements']."','".$_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'] ."','".$_POST['answer']."','0','". date('y-m-d H:i:s',time()) ."','')";
-
-                       Yii::app()->db->createCommand($sql)->query();
-                       $act_result="添加习题成功！";
-                       unset($_GET['action']);
-                   }else
-                   {
-                       //用户输入参数不足
-                       $this->render('addChoice',array(
-                                                    'shao'=>"输入全不能为空"
-                                                    ));
-                       return;
-                   }
-               }else if($_GET['action']=='edit'){
-                    $sql= "UPDATE choice SET requirements= '".$_POST['requirements'] ."',options = '".$_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'] ."',answer ='".$_POST['answer']."'  WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="编辑习题成功！";
-                    unset($_GET['action']);
-               }
-           }
-            
-            
-            //搜索习题
-            if(isset($_POST['which']))
-            {   
-                if(!empty($_POST['name']))
-                $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-                else  $ex_sq = "";
-            }
-            else  $ex_sq = "";
-            
-            //显示结果列表并分页
-	    $sql = "SELECT * FROM choice ".$ex_sq;
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
+	{     
+            $result = Choice::model()->getChoiceLst("", "");
+            $choiceLst=$result['choiceLst'];
+            $pages=$result['pages'];
+            Yii::app()->session['lastUrl']="choiceLst";
             $this->render('choiceLst',array(
-            'posts'=>$posts,
+            'choiceLst'=>$choiceLst,
             'pages'=>$pages,
-            'teacher'=>$this->teaInClass(),
-            'result'=>$act_result,
-            ),false,true);
+            'teacher'=>  Teacher::model()->findall()
+            ));
 	}
+        
+        public function actionSearchChoice()
+        {
+            if(isset($_POST['type'])){
+                $type=$_POST['type'];
+                $value=$_POST['value'];
+                Yii::app()->session['searchChoiceType']=$type;
+                Yii::app()->session['searchChoiceValue']=$value;
+            } else {
+                $type = Yii::app()->session['searchChoiceType'];
+                $value = Yii::app()->session['searchChoiceValue'];
+            }
+            Yii::app()->session['lastUrl']="searchChoice";
+            $result = Choice::model()->getChoiceLst($type, $value);
+            $choiceLst=$result['choiceLst'];
+            $pages=$result['pages'];
+            $this->render('searchChoice',array(
+                        'choiceLst'=>$choiceLst,
+                        'pages'=>$pages,
+                        'teacher'=>  Teacher::model()->findall()
+                    )
+                    );
+        }
         
         
         public function actionEditChoice(){

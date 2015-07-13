@@ -30,7 +30,7 @@
                 </ul>
         </div>
 </div>
-    
+
     <?php
         //得到老师ID对应的名称
         foreach ($teacher as $model):
@@ -38,12 +38,13 @@
         $teachers["$teacherID"]=$model['userName'];
         endforeach;
     ?>
-    
+
+<!-- 选择题列表-->
 <div class="span9">
-    <!-- 键位习题列表-->
-    <div class="hero-unit">
-    <table class="table table-bordered table-striped">
-        <thead>
+<?php if($choiceLst->count()!=0){?>
+    <h2>查询结果</h2>
+<table class="table table-bordered table-striped">
+            <thead>
             <tr>
                 <th>编号</th>
                 <th>课程号</th>
@@ -74,16 +75,19 @@
                     </tr>            
                     <?php endforeach;?> 
                 </tbody>
-    </table>
-    <!-- 学生列表结束 -->
-    <!-- 显示翻页标签 -->
-    <div align=center>
-    <?php   
-        $this->widget('CLinkPager',array('pages'=>$pages));
-    ?>
-    </div>
-    <!-- 翻页标签结束 -->
-   
-    </div>
-    </div>
+</table>
+<!-- 学生列表结束 -->
+<!-- 显示翻页标签 -->
+<div align=center>
+<?php   
+    $this->widget('CLinkPager',array('pages'=>$pages));
+?>
 </div>
+<!-- 翻页标签结束 -->
+<!-- 右侧内容展示结束-->
+<?php } else {?>
+    <h2>查询结果为空！</h2>
+<?php }?>
+</div>
+
+
