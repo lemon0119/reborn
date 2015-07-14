@@ -49,8 +49,7 @@ $(document).ready(function(){
     if(result === '1')
         alert('添加学生成功！');
     else if(result === '0')
-        alert('添加学生失败！');
-        
+        alert('添加学生失败！');  
 });
 function getUserID(){
     var result = new Array();

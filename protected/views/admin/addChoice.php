@@ -33,65 +33,91 @@
 
 <div class="span9">
     <h2>添加看打练习</h2>
-    <form id="myForm" class="form-horizontal" method="post" action="./index.php?r=admin/choiceLst&&action=add"> 
+    <form class="form-horizontal" method="post" action="./index.php?r=admin/addChoice" id="myForm"> 
         <fieldset>
         <legend>填写题目</legend>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="requirements" style="width:600px; height:50px;"></textarea>
+                <textarea name="requirements" style="width:600px; height:50px;" id="input01"></textarea>
             </div>
         </div>
         <div class="control-group">
-            <input type="radio"  value="A" name="answer" for="input01">A</input>
+            <label class="control-label" for="input02">A</label>
             <div class="controls">
+                <input type="radio"  value="A" name="answer"></input>
                 <input name="A" type="text" class="input-xlarge" id="input02" value="" />
             </div>
         </div>
-    <br/>
-    <input type="radio" value="B"  name="answer">B</input>&nbsp&nbsp
-    <input type="text" name="B" style="width: 120px">
-    <br/>
-
-    <input type="radio" value="C"  name="answer">C</input>&nbsp&nbsp
-    <input type="text" name="C" style="width: 120px">
-    <br/>
-    
-    <input type="radio" value="D"  name="answer">D</input>&nbsp&nbsp
-    <input type="text" name="D" style="width: 120px">
-    <br/>
+        <div class="control-group">
+            <label class="control-label" for="input03">B</label>
+            <div class="controls">
+                <input type="radio"  value="B" name="answer"></input>
+                <input name="B" type="text" class="input-xlarge" id="input03" value="" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="input04">C</label>
+            <div class="controls">
+                <input type="radio"  value="C" name="answer"></input>
+                <input name="C" type="text" class="input-xlarge" id="input04" value="" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="input05">D</label>
+            <div class="controls">
+                <input type="radio"  value="D" name="answer"></input>
+                <input name="D" type="text" class="input-xlarge" id="input05" value="" />
+            </div>
+        </div>
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=admin/returnFromAddChoice" class="btn">取消</a>
     </div>
     </fieldset>
 </form>   
-<?php
-if(isset($shao))
-{
-     echo $shao;
-}
-?>
-
-</div>
-</div>
 </div>
 
-<?php
-//显示操作结果
-if(isset($result))
-{
-   if(!empty($result))
-   {
-       echo "<script>var result = '$result';</script>";
-   }
-}
-?>
-<script>
-if(result != null){
-    alert(result);
-    result = null;
-}
+<script>     
+$(document).ready(function(){
+    var result = <?php echo "'$result'";?>;
+    if(result === '1')
+        alert('添加选择题成功！');
+    else if(result === '0')
+        alert('添加选择题失败！');  
+});
+$("#myForm").submit(function(){
+    var requirements = $("#input01")[0].value;
+    if(requirements === ""){
+        alert('题目内容不能为空');
+        return false;
+    }
+    var A = $("#input02")[0].value;
+    if(A === ""){
+        alert('选项A内容不能为空');
+        return false;
+    }
+    var B = $("#input03")[0].value;
+    if(B === ""){
+        alert('选项B内容不能为空');
+        return false;
+    }
+    var C = $("#input04")[0].value;
+    if(C === ""){
+        alert('选项C内容不能为空');
+        return false;
+    }
+    var D = $("#input05")[0].value;
+    if(D === ""){
+        alert('选项D内容不能为空');
+        return false;
+    }
+    var answer = document.getElementByName("answer").value;
+    if(answer === ""){
+        alert('请选择一个答案选项');
+        return false;
+    }
+
+});
 </script>
-
 
 

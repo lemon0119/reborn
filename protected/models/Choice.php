@@ -17,6 +17,30 @@
 class Choice extends CActiveRecord
 {
     
+        public function insertChoice($requirements,$options,$answer,$createPerson){
+            //得到当前最大的exerciseID
+            $sql="select max(exerciseID) as id from choice";
+            $max_id = Yii::app()->db->createCommand($sql)->query();
+            $temp=$max_id->read();
+            if(empty($temp))
+            {
+                $new_id=1;
+            }
+            else
+            {
+                $new_id = $temp['id'] + 1;
+            }
+            $newCh = new Choice();
+            $newCh->exerciseID = $new_id;
+            $newCh->type = "danxuan";
+            $newCh->requirements = $requirements;
+            $newCh->options = $options;
+            $newCh->answer =$answer;
+            $newCh->createPerson =$createPerson;
+            $newCh->createTime = date('y-m-d H:i:s',time());
+            return $newCh->insert();
+    }
+    
     public function getChoiceLst($type,$value){
         $order = " order by exerciseID ASC";
         if($type!="")

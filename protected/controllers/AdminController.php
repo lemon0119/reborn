@@ -1319,8 +1319,11 @@ class AdminController extends CController
         }
         
         public function actionAddChoice(){
-            $this->render("addChoice",array(
-            ));
+            $result = 'no';
+            if(isset($_POST['requirements'])){
+                $result = Choice::model()->insertChoice($_POST['requirements'], $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'], $_POST['answer'], 0);
+            }
+            $this->render('addChoice',['result'=>$result]);
         }
         
         
