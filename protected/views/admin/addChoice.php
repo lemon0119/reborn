@@ -31,27 +31,39 @@
     </div>
 </div>
 
-<h3>添加看打练习</h3>
-<form id="myForm" method="post" action="./index.php?r=admin/choiceLst&&action=add"> 
-题目：    <textarea name="requirements" style="width:600px; height:50px;"></textarea>
-<br/>
-<input type="radio" value="A" name="answer">A</input>&nbsp&nbsp
-<input type="text" name="A" style="width: 120px">
-<br/>
+<div class="span9">
+    <h2>添加看打练习</h2>
+    <form id="myForm" class="form-horizontal" method="post" action="./index.php?r=admin/choiceLst&&action=add"> 
+        <fieldset>
+        <legend>填写题目</legend>
+        <div class="control-group">
+            <label class="control-label" for="input01">题目</label>
+            <div class="controls">
+                <textarea name="requirements" style="width:600px; height:50px;"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <input type="radio"  value="A" name="answer" for="input01">A</input>
+            <div class="controls">
+                <input name="A" type="text" class="input-xlarge" id="input02" value="" />
+            </div>
+        </div>
+    <br/>
+    <input type="radio" value="B"  name="answer">B</input>&nbsp&nbsp
+    <input type="text" name="B" style="width: 120px">
+    <br/>
 
-<input type="radio" value="B"  name="answer">B</input>&nbsp&nbsp
-<input type="text" name="B" style="width: 120px">
-<br/>
-
-<input type="radio" value="C"  name="answer">C</input>&nbsp&nbsp
-<input type="text" name="C" style="width: 120px">
-<br/>
-
-<input type="radio" value="D"  name="answer">D</input>&nbsp&nbsp
-<input type="text" name="D" style="width: 120px">
-<br/>
-
-<input type="submit" name="submit" value="提交"> 
+    <input type="radio" value="C"  name="answer">C</input>&nbsp&nbsp
+    <input type="text" name="C" style="width: 120px">
+    <br/>
+    
+    <input type="radio" value="D"  name="answer">D</input>&nbsp&nbsp
+    <input type="text" name="D" style="width: 120px">
+    <br/>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=admin/returnFromAddChoice" class="btn">取消</a>
+    </div>
+    </fieldset>
 </form>   
 <?php
 if(isset($shao))
@@ -60,6 +72,7 @@ if(isset($shao))
 }
 ?>
 
+</div>
 </div>
 </div>
 

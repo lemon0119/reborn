@@ -1276,6 +1276,34 @@ class AdminController extends CController
                     );
         }
         
+        public function actionReturnFromAddChoice()
+        {
+            if(Yii::app()->session['lastUrl']=="searchChoice")
+            {
+                $type = Yii::app()->session['searchChoiceType'];
+                $value = Yii::app()->session['searchChoiceValue'];
+                $result = Choice::model()->getChoiceLst($type, $value);
+                $choiceLst=$result['choiceLst'];
+                $pages=$result['pages'];
+                $this->render('searchChoice',array(
+                        'choiceLst'=>$choiceLst,
+                        'pages'=>$pages,
+                        'teacher'=>  Teacher::model()->findall()
+                    )
+                    );
+            }else {
+                $result = Choice::model()->getChoiceLst("", "");
+                $choiceLst=$result['choiceLst'];
+                $pages=$result['pages'];
+                Yii::app()->session['lastUrl']="choiceLst";
+                $this->render('choiceLst',array(
+                             'choiceLst'=>$choiceLst,
+                             'pages'=>$pages,
+                             'teacher'=>  Teacher::model()->findall()
+                ));
+            }
+        }
+                
         
         public function actionEditChoice(){
             $exerciseID=$_GET["exerciseID"];
@@ -1292,7 +1320,6 @@ class AdminController extends CController
         
         public function actionAddChoice(){
             $this->render("addChoice",array(
-                
             ));
         }
         
