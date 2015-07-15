@@ -1304,6 +1304,24 @@ class AdminController extends CController
             }
         }
                 
+         public function actionEditChoiceInfo()
+	{
+            $exerciseID = $_GET['exerciseID'];
+            $thisCh= new Choice();
+            $thisCh = $thisCh->find("exerciseID = '$exerciseID'");
+            $thisCh -> requirements =$_POST['requirements'];
+            $thisCh -> options =$_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'];
+            $thisCh -> answer =$_POST['answer'];
+            $thisCh -> update();
+            $this->render("editChoice",array(
+                'exerciseID'=>$exerciseID,
+                'requirements' =>$thisCh -> requirements,
+                'options'=> $thisCh -> options,
+                'answer' =>$thisCh -> answer,
+                'result' => "修改习题成功"
+            ));
+        }
+        
         
         public function actionEditChoice(){
             $exerciseID=$_GET["exerciseID"];

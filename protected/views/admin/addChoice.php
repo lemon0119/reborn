@@ -111,8 +111,8 @@ $("#myForm").submit(function(){
         alert('选项D内容不能为空');
         return false;
     }
-    var answer = document.getElementByName("answer").value;
-    if(answer === ""){
+    var answer = $('input:radio[name="answer"]:checked').val();
+    if(answer == null){
         alert('请选择一个答案选项');
         return false;
     }
