@@ -41,7 +41,6 @@
     
 <div class="span9">
     <!-- 键位习题列表-->
-    <div class="hero-unit">
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -84,6 +83,5 @@
     </div>
     <!-- 翻页标签结束 -->
    
-    </div>
     </div>
 </div>
