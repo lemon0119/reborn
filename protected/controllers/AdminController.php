@@ -540,44 +540,6 @@ class AdminController extends CController
         
         public function actionClassLst()
         {
-         
-//         //添加动作
-//        if(isset($_GET['action']))
-//        {
-//                //添加班级
-//             if($_GET['action']=='add')
-//            {
-//                if(!empty($_POST['className']))
-//                {
-//                    //得到当前最大的班级ID
-//                    $sql="select max(classID) as id from tb_class";
-//                    $max_id = Yii::app()->db->createCommand($sql)->query();
-//                    $temp=$max_id->read();
-//                    if(empty($temp))
-//                    {
-//                        $new_id=1;
-//                    }
-//                    else
-//                    {
-//                        $new_id = $temp['id'] + 1;
-//                    }
-//                    $sql= "INSERT INTO tb_class VALUES ('".$new_id ."','" .$_POST['className']."','" ."')";
-//
-//                    Yii::app()->db->createCommand($sql)->query();
-//                    $act_result="添加班级成功！";
-//                    unset($_GET['action']);
-//                }else
-//                {
-//                    //用户输入参数不足
-//                    $this->render('addStu',array(
-//                                                 'shao'=>"输入班级名不能为空"
-//                                                 ));
-//                    return;
-//                }
-//            }
-//        }
-//            
-
              //显示结果列表并分页
             Yii::app()->session['lastUrl']="classLst";
 	    $result = TbClass::model()->getClassLst();
@@ -657,7 +619,11 @@ class AdminController extends CController
         
         public function actionAddClass()
 	{        
-            $this->render('addClass');
+            $result = 'no';
+            if(isset($_POST['className'])){
+                $result = TbClass::model()->insertClass($_POST['className'], $_POST['courseID']);
+            }
+            $this->render('addClass',['result'=>$result]);
         }
         
         public function actionInfoClass()

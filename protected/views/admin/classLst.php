@@ -12,6 +12,11 @@
         endforeach;
         //老师与班级对应的量
         $corr=$teacherOfClass->read();
+        $courses= Course::model()->findall();
+        foreach ($courses as $key => $value) {
+            $couID = $value['courseID'];
+            $courseName[$couID]=$value["courseName"];
+        }
         ?>
 
 <div class="span9">
@@ -24,7 +29,7 @@
                 <th>班级名</th>
                 <th>老师</th>
                 <th>人数</th>
-                <th>当前进度</th>
+                <th>课程</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -33,7 +38,7 @@
                     <tr>
                         <td style="width: 75px"><?php echo $model['classID'];?></td>
                         <td><?php echo $model['className'];?></td>
-                        <td><?php 
+                        <td ><?php 
                                 while (!empty($corr)&&$corr['classID']<=$model['classID'])
                                 {
                                     if($corr['classID']<$model['classID'])
@@ -52,7 +57,7 @@
                                         echo  $numOfClass[$model['classID']];
                                     else echo "0";
                             ?></td>
-                        <td><?php echo $model['currentCourse'];?></td>
+                        <td><?php $couID = $model['currentCourse']; echo $courseName[$couID];?></td>
                         <td>  
                             <a href="./index.php?r=admin/infoClass&&classID=<?php echo $model['classID']; ?>"><img src="<?php echo IMG_URL; ?>detail.png">管理</a>
                         </td>

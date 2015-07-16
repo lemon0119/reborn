@@ -14,6 +14,28 @@
 class TbClass extends CActiveRecord
 {
     
+    public function insertClass($courseName,$currentCourse){
+        
+        //添加班级
+        //得到当前最大的班级ID
+        $sql="select max(classID) as id from tb_class";
+        $max_id = Yii::app()->db->createCommand($sql)->query();
+        $temp=$max_id->read();
+        if(empty($temp))
+        {
+            $new_id=1;
+        }
+        else
+        {
+            $new_id = $temp['id'] + 1;
+        }  
+        $newClass = new TbClass();
+        $newClass->classID = $new_id;
+        $newClass->className=$courseName;
+        $newClass->currentCourse=$currentCourse;
+        return $newClass->insert();
+    }
+    
     //查看班级人数
     public function numInClass() {
          $sql="SELECT classID,count(classID) FROM student WHERE is_delete = '0' GROUP BY classID;";

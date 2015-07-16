@@ -30,7 +30,14 @@
     </form>   
 </div>
 
-<script>     
+<script>
+$(document).ready(function(){
+    var result = <?php echo "'$result'";?>;
+    if(result === '1')
+        alert('添加班级成功！');
+    else if(result === '0')
+        alert('添加班级失败！');  
+});    
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
