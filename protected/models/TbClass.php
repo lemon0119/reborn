@@ -13,6 +13,41 @@
  */
 class TbClass extends CActiveRecord
 {
+    
+    //查看班级人数
+    public function numInClass() {
+         $sql="SELECT classID,count(classID) FROM student WHERE is_delete = '0' GROUP BY classID;";
+         $an = Yii::app()->db->createCommand($sql)->query();
+         return $an;
+    }
+    
+        public function teaInClass(){
+            $sql="SELECT * FROM teacher order by userID ASC";
+            $an = Yii::app()->db->createCommand($sql)->query();
+            return $an;
+        }
+        
+        public function teaByClass(){
+            $sql="SELECT * FROM teacher_class order by classID ASC";
+            $an = Yii::app()->db->createCommand($sql)->query();
+            return $an;
+        }
+    
+    public function getClassLst(){
+        //显示结果列表并分页
+        $sql = "SELECT * FROM tb_class ";
+        $criteria=new CDbCriteria();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages=new CPagination($result->rowCount);
+        $pages->pageSize=10;
+        $pages->applyLimit($criteria);
+        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
+        $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
+        $result->bindValue(':limit', $pages->pageSize);
+        $posts=$result->query();
+        return ['classLst'=>$posts,'pages'=>$pages,];
+    }
+    
     public function findCourseByClassID($classID) {
         $courseID = "select currentCourse from tb_class where classID = '$classID'";
         $sql = "select * from course where courseID in ( $courseID ) order by courseID asc;";

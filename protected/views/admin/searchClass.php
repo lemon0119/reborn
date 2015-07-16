@@ -1,20 +1,21 @@
 <?php require 'classLstSideBar.php';?>
 
-        <?php
-        //得到每个班级的对应人数
-        foreach ($nums as $model):
-        $numOfClass[$model['classID']]=$model['count(classID)'];
-        endforeach;
-        //得到老师ID对应的名称
-        foreach ($teacher as $model):
-        $teacherID=$model['userID'];
-        $teachers["$teacherID"]=$model['userName'];
-        endforeach;
-        //老师与班级对应的量
-        $corr=$teacherOfClass->read();
-        ?>
+    <?php
+    //得到每个班级的对应人数
+    foreach ($nums as $model):
+    $numOfClass[$model['classID']]=$model['count(classID)'];
+    endforeach;
+    //得到老师ID对应的名称
+    foreach ($teacher as $model):
+    $teacherID=$model['userID'];
+    $teachers["$teacherID"]=$model['userName'];
+    endforeach;
+    //老师与班级对应的量
+    $corr=$teacherOfClass->read();
+    ?>
 
 <div class="span9">
+    <?php if($posts->count()!=0){?>
     <h2>班级列表</h2>
     <!-- 班级列表-->
     <table class="table table-bordered table-striped">
@@ -42,7 +43,7 @@
                                     }else if ($corr['classID'] = $model['classID']) {
                                         $teacherID = $corr['teacherID'];
                                         $teacherName = $teachers["$teacherID"];
-                                        echo "<a href=\"./index.php?r=admin/infoTea&&id=$teacherID&&name=$teacherName\">$teacherName</a>";
+                                        echo "<a href=\"./index.php?r=admin/infoTea&&id=$teacherID&&name=$teacherName&&flag=2\">$teacherName</a>";
                                         echo '&nbsp;';
                                         $corr = $teacherOfClass->read();
                                     }
@@ -71,6 +72,9 @@
     </div>
 
     <!-- 右侧内容展示结束-->
+    <?php } else {?>
+    <h2>查询结果为空！</h2>
+    <?php }?>
     </div>
 
 <script>

@@ -91,6 +91,7 @@ class AdminController extends CController
         
     	public function actionStuLst()
 	{       
+            Yii::app()->session['lastUrl']="stuLst";
             $result = Student::model()->getStuLst("", "");
             $stuLst=$result['stuLst'];
             $pages=$result['pages'];
@@ -102,6 +103,7 @@ class AdminController extends CController
         
         public function actionSearchStu()
         {
+            Yii::app()->session['lastUrl']="searchStu";
             if(isset($_POST['type'])){
                 $type=$_POST['type'];
                 $value=$_POST['value'];
@@ -181,6 +183,18 @@ class AdminController extends CController
             'stuLst'=>$stuLst,
             'pages'=>$pages,
             ));
+        }
+        
+        public function actionDeleteStuDontHaveClass()
+	{
+            $userID = $_GET['id'];
+            $thisStu = new Student();
+            $thisStu = $thisStu->find("userID = '$userID'");
+            $thisStu -> is_delete = '1';
+            $thisStu -> update();
+            Yii::app()->session['lastUrl']="stuDontHaveClass";
+            $result = Student::model()->getStuLst("classID", 0);
+            $this->render("stuDontHaveClass",["stuLst"=>$result["stuLst"],"pages"=>$result['pages']]);
         }
         
         public function actionResetPass()
@@ -287,7 +301,8 @@ class AdminController extends CController
         }
         
         public function actionTeaLst()
-	{        
+	{    
+            Yii::app()->session['lastUrl']="=teaLst";
             $result = Teacher::model()->getTeaLst("", "");
             $teaLst=$result['teaLst'];
             $pages=$result['pages'];
@@ -299,6 +314,7 @@ class AdminController extends CController
         
         public function actionSearchTea()
         {
+            Yii::app()->session['lastUrl']="=searchTea";
             if(isset($_POST['type'])){
                 $type=$_POST['type'];
                 $value=$_POST['value'];
@@ -522,119 +538,104 @@ class AdminController extends CController
         ));
     }
         
-        
-        //查看班级人数
-        public function numInClass() {
-             $sql="SELECT classID,count(classID) FROM student GROUP BY classID;";
-             $an = Yii::app()->db->createCommand($sql)->query();
-             return $an;
-        }
-        
-        public function teaInClass(){
-            $sql="SELECT * FROM teacher order by userID ASC";
-            $an = Yii::app()->db->createCommand($sql)->query();
-            return $an;
-        }
-        
-        public function teaByClass(){
-            $sql="SELECT * FROM teacher_class order by classID ASC";
-            $an = Yii::app()->db->createCommand($sql)->query();
-            return $an;
-        }
-
-
-        
         public function actionClassLst()
         {
          
-        $act_result="";
-            
-         //添加动作
-        if(isset($_GET['action']))
-        {
-                //添加班级
-             if($_GET['action']=='add')
-            {
-                if(!empty($_POST['className']))
-                {
-                    //得到当前最大的班级ID
-                    $sql="select max(classID) as id from tb_class";
-                    $max_id = Yii::app()->db->createCommand($sql)->query();
-                    $temp=$max_id->read();
-                    if(empty($temp))
-                    {
-                        $new_id=1;
-                    }
-                    else
-                    {
-                        $new_id = $temp['id'] + 1;
-                    }
-                    $sql= "INSERT INTO tb_class VALUES ('".$new_id ."','" .$_POST['className']."','" ."')";
+//         //添加动作
+//        if(isset($_GET['action']))
+//        {
+//                //添加班级
+//             if($_GET['action']=='add')
+//            {
+//                if(!empty($_POST['className']))
+//                {
+//                    //得到当前最大的班级ID
+//                    $sql="select max(classID) as id from tb_class";
+//                    $max_id = Yii::app()->db->createCommand($sql)->query();
+//                    $temp=$max_id->read();
+//                    if(empty($temp))
+//                    {
+//                        $new_id=1;
+//                    }
+//                    else
+//                    {
+//                        $new_id = $temp['id'] + 1;
+//                    }
+//                    $sql= "INSERT INTO tb_class VALUES ('".$new_id ."','" .$_POST['className']."','" ."')";
+//
+//                    Yii::app()->db->createCommand($sql)->query();
+//                    $act_result="添加班级成功！";
+//                    unset($_GET['action']);
+//                }else
+//                {
+//                    //用户输入参数不足
+//                    $this->render('addStu',array(
+//                                                 'shao'=>"输入班级名不能为空"
+//                                                 ));
+//                    return;
+//                }
+//            }
+//        }
+//            
 
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="添加班级成功！";
-                    unset($_GET['action']);
-                }else
-                {
-                    //用户输入参数不足
-                    $this->render('addStu',array(
-                                                 'shao'=>"输入班级名不能为空"
-                                                 ));
-                    return;
-                }
-            }
+             //显示结果列表并分页
+            Yii::app()->session['lastUrl']="classLst";
+	    $result = TbClass::model()->getClassLst();
+            $this->render('classLst',array(
+            'posts'=>$result['classLst'],
+            'pages'=>$result['pages'],
+            'nums'=> TbClass::model()->numInClass(),
+            'teacher'=>TbClass::model()->teaInClass(),
+            'teacherOfClass' =>TbClass::model()->teaByClass(),
+            ));
         }
-            
-             //搜索动作
+        public function actionStuDontHaveClass()
+        {
+            Yii::app()->session['lastUrl']="stuDontHaveClass";
+            $result = Student::model()->getStuLst("classID", 0);
+            $this->render("stuDontHaveClass",["stuLst"=>$result["stuLst"],"pages"=>$result['pages']]);
+        }
+        
+        public function actionSearchClass()
+        {
             if(isset($_POST['which']))
             {   
-                if (!empty($_POST['name'])) {
-                    if ($_POST['which'] == "classID")
+                if ($_POST['which'] == "classID"||$_POST['which'] == "className")
+                {
+                    $ex_sq = " WHERE " . $_POST['which'] . " = '" . $_POST['value'] . "'";
+                }else if($_POST['which'] == "courseID"){
+                    $ex_sq = " WHERE currentCourse = '" . $_POST['value'] . "'";
+                } else if($_POST['which'] == "teaName")
+                {
+                    $sql="SELECT * FROM teacher WHERE userName ='". $_POST['value'] . "'";
+                    $an = Yii::app()->db->createCommand($sql)->query();
+                    $temp=$an->read();
+                    if(!empty($temp))
+                        $teaID=$temp['userID'];
+                    else $teaID=-1;
+                    $sql="SELECT * FROM teacher_class WHERE teacherID ='". $teaID . "'";
+                    $an = Yii::app()->db->createCommand($sql)->query();          
+                    $temp =$an->read();
+                    if(!empty($temp))
                     {
-                        $ex_sq = " WHERE " . $_POST['which'] . " = '" . $_POST['name'] . "'";
-                    }else{
-                 
-                        if($_POST['which'] == "teaName")
+                        $ex_sq= " WHERE ";
+                        $id=$temp['classID'];
+                        $ex_sq =$ex_sq ."classID = '$id'";
+                        $temp =$an->read(); 
+                        while(!empty($temp))
                         {
-                            $sql="SELECT * FROM teacher WHERE userName ='". $_POST['name'] . "'";
-                            $an = Yii::app()->db->createCommand($sql)->query();
-                            $temp=$an->read();
-                            if(!empty($temp))
-                                $teaID=$temp['userID'];
-                            else $teaID=-1;
-                        }
-                        else if($_POST['which'] == "teaID")
-                        {
-                            $teaID=$_POST['name'];
-                        }
-                        $sql="SELECT * FROM teacher_class WHERE teacherID ='". $teaID . "'";
-                        $an = Yii::app()->db->createCommand($sql)->query();          
-                        $temp =$an->read();
-                        if(!empty($temp))
-                        {
-                            $ex_sq= " WHERE ";
                             $id=$temp['classID'];
-                            $ex_sq =$ex_sq ."classID = '$id'";
-                            $temp =$an->read(); 
-                            while(!empty($temp))
-                            {
-                                $id=$temp['classID'];
-                                $ex_sq =$ex_sq ." OR classID = '$id'";
-                                $temp =$an->read();
-                            }
-                        }  else {
-                            $ex_sq=" WHERE classID = 0";    
+                            $ex_sq =$ex_sq ." OR classID = '$id'";
+                            $temp =$an->read();
                         }
-
+                    }  else {
+                        $ex_sq=" WHERE classID = 0";    
                     }
+                }else{
+                    $ex_sq="";
                 }
-                else
-                $ex_sq = "";
             }
-            else  $ex_sq = "";
-            
-             //显示结果列表并分页
-	    $sql = "SELECT * FROM tb_class " .$ex_sq;
+            $sql = "SELECT * FROM tb_class ".$ex_sq;
             $criteria=new CDbCriteria();
             $result = Yii::app()->db->createCommand($sql)->query();
             $pages=new CPagination($result->rowCount);
@@ -644,14 +645,14 @@ class AdminController extends CController
             $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
             $result->bindValue(':limit', $pages->pageSize);
             $posts=$result->query();
-            $this->render('classLst',array(
+            $this->render('searchClass',array(
             'posts'=>$posts,
             'pages'=>$pages,
-            'nums'=>$this->numInClass(),
-            'teacher'=>$this->teaInClass(),
-            'teacherOfClass' =>$this->teaByClass(),
-            'result'=>$act_result,
-            ),false,true);
+            'nums'=> TbClass::model()->numInClass(),
+            'teacher'=>TbClass::model()->teaInClass(),
+            'teacherOfClass' =>TbClass::model()->teaByClass(),
+            ));
+            
         }
         
         public function actionAddClass()

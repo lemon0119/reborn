@@ -1,4 +1,8 @@
-<?php require 'stuSideBar.php';?>
+<?php
+    if(Yii::app()->session['lastUrl']=="stuDontHaveClass")
+        require 'classLstSideBar.php';
+    else
+        require 'stuSideBar.php';?>
 <div class="span9">
     <h2>编 辑 学 生</h2>
     <form action="./index.php?r=admin/editStuInfo&&id=<?php echo $userID;
@@ -26,11 +30,13 @@
                     </div>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">提交</button>　　　
-                <?php if(isset($flag)){?>
-                <a href="./index.php?r=admin/searchStu" class="btn">返回</a>
+                <button type="submit" class="btn btn-primary">提交</button>
+                <?php if(Yii::app()->session['lastUrl']=="stuDontHaveClass"){?>
+                    <a href="./index.php?r=admin/stuDontHaveClass" class="btn">返回</a>
+                <?php }else if(isset($flag)){?>
+                    <a href="./index.php?r=admin/searchStu" class="btn">返回</a>
                 <?php }else{?>
-                <a href="./index.php?r=admin/stuLst" class="btn">返回</a>
+                    <a href="./index.php?r=admin/stuLst" class="btn">返回</a>
                 <?php }?>　　
                 <a  class="btn btn-primary" onclick="resetPass()">重置密码</a>
             </div>
@@ -38,6 +44,9 @@
     </form>
 </div>
 <script>
+$(document).ready(function(){
+    $("#stuLst").attr("class","active");
+});
 <?php 
     if(isset($result)){
         echo "alert('$result');";
