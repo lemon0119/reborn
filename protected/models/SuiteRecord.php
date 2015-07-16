@@ -30,7 +30,7 @@ class SuiteRecord extends CActiveRecord
         //if($result == NULL) echo $sql."<br/>";
         return $result;
     }
-    public static function saveSuiteRecord () {
+    public static function saveSuiteRecord (&$recordID) {
         $suiteID = Yii::app()->session['suiteID'];
         $createPerson = Yii::app()->session['userid_now'];
         $oldID = SuiteRecord::getRecord($suiteID, $createPerson);
@@ -44,15 +44,19 @@ class SuiteRecord extends CActiveRecord
             $newRecord->modifyTime = $newRecord->createTime;
             if(!($newRecord->insert())) {
                 echo Tool::jsLog('创建练习记录失败！');
+                return false;
             }
-            return $newID;
+            $recordID = $newID;
+            return true;
         } else {
             $oldRecord = SuiteRecord::model()->find('recordID=?', array($oldID));
             $oldRecord->modifyTime = date("Y-m-d H:i:s");
             if(!($oldRecord->upDate())) {
                 echo Tool::jsLog('更新练习记录失败！');
+                return false;
             }
-            return $oldRecord->recordID;
+            $recordID = $oldRecord->recordID;
+            return true;
         }
     }
 	/**

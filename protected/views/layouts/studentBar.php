@@ -9,7 +9,6 @@
 		<link href="<?php echo CSS_URL; ?>bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="<?php echo CSS_URL; ?>site.css" rel="stylesheet">
 		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-                
                 <script src="<?php echo JS_URL;?>jquery.min.js"></script>
                 <script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
                 <script src="<?php echo JS_URL;?>site.js"></script>

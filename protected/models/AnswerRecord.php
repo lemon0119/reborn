@@ -37,9 +37,12 @@ class AnswerRecord extends CActiveRecord
             $name = 'choice'.$record['exerciseID'];
             $answer = isset($_POST[$name]) ? $_POST[$name] : '';
             if($answer !== '') {
-                AnswerRecord::saveKnlgAnswer($recordID, $answer, "choice", $record['exerciseID']);
+                $res = AnswerRecord::saveKnlgAnswer($recordID, $answer, "choice", $record['exerciseID']);
+                if($res === false)
+                    return false;
             }
         }
+        return $res;
     }
     
     public static function saveQuestion($recordID){
@@ -77,8 +80,6 @@ class AnswerRecord extends CActiveRecord
         $result = [];
         foreach (Tool::$EXER_TYPE as $type) {
             $record = $this->getAnswerByType($recordID, $type);
-            //echo "asdflkadsagbn**************************<br/>\n";
-            //print_r($record);
             foreach ($record as $row){
                 $result[$type][] = $row['ratio_correct'];
             }
@@ -105,8 +106,6 @@ class AnswerRecord extends CActiveRecord
         $ratio['correct'] = $_POST['nm_correct'];
         $accomp = strlen($answer) / strlen($str1);
         $ratio['accomplish'] = $accomp > 1 ? 1 : $accomp;
-        //echo Tool::jsLog(strlen($answer));
-        //echo Tool::jsLog(strlen($str1));
         return $ratio;
     }
     
@@ -156,13 +155,17 @@ class AnswerRecord extends CActiveRecord
             $newAnswer -> createTime = date("Y-m-d  H:i:s");
             if(!($newAnswer->insert())) {
                 echo Tool::jsLog('创建答案记录失败！');
-            }
+                return false;
+            } else 
+                return true;
         }else {
             $oldAnswer -> answer = $answer;
             $oldAnswer -> createTime = date("Y-m-d  H:i:s");
             if(!($oldAnswer->upDate())) {
                 echo Tool::jsLog('更新答案记录失败！');
-            }
+                return false;
+            } else 
+                return true;
         }
     }
 	/**

@@ -14,6 +14,19 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionSaveChoice(){
+        //查看是否有answer，即是否是用户提交了答案。
+        if(isset($_POST['qType']) && $_POST['qType']=="choice") {
+            SuiteRecord::saveSuiteRecord($recordID);
+            $result = AnswerRecord::saveChoice($recordID);
+            if($result == TRUE)
+                echo '保存答案成功！';
+            else
+                echo '保存答案失败，请重新提交!';
+            
+        }
+    }
+    
     public function actionMyCourse(){
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
@@ -25,7 +38,7 @@ class StudentController extends CController {
         return $this->render('classExam');
     }
     public function actionlistenType(){
-        $suiteID = Yii::app()->session['curSuite'];
+        $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -39,7 +52,7 @@ class StudentController extends CController {
     }
     
     public function actionlookType(){
-        $suiteID = Yii::app()->session['curSuite'];
+        $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -53,7 +66,7 @@ class StudentController extends CController {
     }
     
     public function actionKeyType(){
-        $suiteID = Yii::app()->session['curSuite'];
+        $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -66,7 +79,7 @@ class StudentController extends CController {
         ));
     }
     public function actionQuestion(){
-        $suiteID = Yii::app()->session['curSuite'];
+        $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -75,7 +88,7 @@ class StudentController extends CController {
     }
     
     public function actionChoice(){
-        $suiteID = Yii::app()->session['curSuite'];
+        $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -83,7 +96,7 @@ class StudentController extends CController {
         return $this->render('choiceExer',['exercise'=>$classwork]);
     }
     public function actionfilling(){
-        $suiteID = Yii::app()->session['curSuite'];
+        $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -92,7 +105,7 @@ class StudentController extends CController {
     }
     public function actionClswkOne(){
         $suiteID = $_GET['suiteID'];
-        Yii::app()->session['curSuite'] = $suiteID;
+        Yii::app()->session['suiteID'] = $suiteID;
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
