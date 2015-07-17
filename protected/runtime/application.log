@@ -2091,3 +2091,51 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=student/classExam
 HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classwork&&lessonID=4
 ---
+2015/07/16 21:12:31 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in D:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 D:\wamp\www\reborn\protected\controllers\AdminController.php(1187): CComponent->__call('teaInClass', Array)
+#1 D:\wamp\www\reborn\protected\controllers\AdminController.php(1187): AdminController->teaInClass()
+#2 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionFillLst()
+#3 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('fillLst')
+#7 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/fillLst')
+#8 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 D:\wamp\www\reborn\index.php(28): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/fillLst
+HTTP_REFERER=https://localhost/reborn/index.php?r=admin/choiceLst
+---
+2015/07/16 21:12:34 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in D:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 D:\wamp\www\reborn\protected\controllers\AdminController.php(1478): CComponent->__call('teaInClass', Array)
+#1 D:\wamp\www\reborn\protected\controllers\AdminController.php(1478): AdminController->teaInClass()
+#2 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionCourseLst()
+#3 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#7 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/courseLst')
+#8 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 D:\wamp\www\reborn\index.php(28): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/courseLst
+HTTP_REFERER=https://localhost/reborn/index.php?r=admin/choiceLst
+---
+2015/07/16 21:17:53 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in D:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 D:\wamp\www\reborn\protected\controllers\AdminController.php(1187): CComponent->__call('teaInClass', Array)
+#1 D:\wamp\www\reborn\protected\controllers\AdminController.php(1187): AdminController->teaInClass()
+#2 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionFillLst()
+#3 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('fillLst')
+#7 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/fillLst')
+#8 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 D:\wamp\www\reborn\index.php(28): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/fillLst
+HTTP_REFERER=https://localhost/reborn/index.php?r=admin/choiceLst
+---
