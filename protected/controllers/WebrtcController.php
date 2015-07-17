@@ -29,9 +29,9 @@ class WebrtcController extends CController{
         $userName = Student::model()->findByPK($userID)->userName;
         $role = Yii::app()->session['role_now'];
         if($role == 'student')
-            $layout='//layouts/studentBar';
+            $this->layout='//layouts/studentBar';
         else
-            $layout='//layouts/teacherBar';
+            $this->layout='//layouts/teacherBar';
         $this->render('index',['userName'=>$userName]);
     }
 //        public function actionDianbo()

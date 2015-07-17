@@ -14,6 +14,18 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionSaveQuestion(){
+        //查看是否有answer，即是否是用户提交了答案。
+        if(isset($_POST['qType']) && $_POST['qType']=="question") {
+            SuiteRecord::saveSuiteRecord($recordID);
+            $result = AnswerRecord::saveQuestion($recordID);
+            if($result == TRUE)
+                echo '保存答案成功！';
+            else
+                echo '保存答案失败，请重新提交!';
+        }
+    }
+    
     public function actionSaveChoice(){
         //查看是否有answer，即是否是用户提交了答案。
         if(isset($_POST['qType']) && $_POST['qType']=="choice") {
@@ -23,7 +35,18 @@ class StudentController extends CController {
                 echo '保存答案成功！';
             else
                 echo '保存答案失败，请重新提交!';
-            
+        }
+    }
+    
+    public function actionSaveFilling(){
+        //查看是否有answer，即是否是用户提交了答案。
+        if(isset($_POST['qType']) && $_POST['qType']=="filling") {
+            SuiteRecord::saveSuiteRecord($recordID);
+            $result = AnswerRecord::saveFilling($recordID);
+            if($result == TRUE)
+                echo '保存答案成功！';
+            else
+                echo '保存答案失败，请重新提交!';
         }
     }
     
@@ -72,6 +95,8 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $exerID = $_GET['exerID'];
+        Yii::app()->session['exerID'] = $exerID;
+        Yii::app()->session['exerType'] = 'key';
         $result = KeyType::model()->findByPK($exerID);
         return $this->render('keyExer',array( 
             'exercise'=>$classwork,
@@ -127,12 +152,10 @@ class StudentController extends CController {
         return $this->render('proDetail',['result'=>$result,'suiteName'=>$suiteName]);
     }
     public function actionSaveAnswer(){
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        Yii::app()->session['page'] = $page;
-        $answer = $_POST['nm_answer'];
-        Yii::app()->session['answer'] = $answer;
-        $this->saveAnswer();
-        $this->redirect(['/student/answerDetail']);
+        if($this->saveAnswer())
+            echo '提交答案成功！';
+        else
+            echo '对不起，提交答案失败。';
     }
     public function actionGotoDetail(){
         $recordID = Yii::app()->session['recordID'];
@@ -254,14 +277,9 @@ class StudentController extends CController {
         if(isset($_POST['nm_answer'])) {
             $answer = $_POST['nm_answer'];
             $seconds = $_POST['nm_cost'];
-            $recordID = SuiteRecord::saveSuiteRecord ();
-            $answerID = AnswerRecord::saveAnswer($recordID, $answer, $seconds);
-        }
-        if(isset($_POST['qType']) && $_POST['qType']=="knlg") {
-            $recordID = SuiteRecord::saveSuiteRecord ();
-            AnswerRecord::saveChoice($recordID);
-            AnswerRecord::saveFilling($recordID);
-            AnswerRecord::saveQuestion($recordID);
+            if(!SuiteRecord::saveSuiteRecord ($recordID))
+                return false;
+            return AnswerRecord::saveAnswer($recordID, $answer, $seconds);
         }
     }
     public function saveParam() {

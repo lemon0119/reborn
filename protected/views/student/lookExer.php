@@ -29,6 +29,12 @@
 </div>
 
 <script>
+    
+    function getWordLength(){
+        var input = getContent(document.getElementById("typeOCX"));
+        return input.length;
+    }
+    
     $(document).ready(function(){
         //菜单栏变色
         $("li#li-look-<?php echo $exerOne['exerciseID'];?>").attr('class','active');

@@ -74,22 +74,22 @@ class Tool {
 		$cs += $tmp % 10;
 		$tmp = (int) $tmp / 10;
 	}
-        echo("tm"."$tm\n");
-        echo("cs:$cs\n");
+        //echo("tm"."$tm\n");
+        //echo("cs:$cs\n");
         srand((double)microtime()*1000000);
         $rand_number= rand(0,99);
         $cs = $cs + $rand_number % 10 + (int)$rand_number / 10;
-        echo("rand:$rand_number\n");
-        echo("cs:$cs\n");
+        //echo("rand:$rand_number\n");
+        //echo("cs:$cs\n");
 	$tm = $tm + "";
 	$id = substr($tm, -7);
-        echo("id:$id\n");
+        //echo("id:$id\n");
         $str_rand = sprintf("%02d",$rand_number);
         $id =$id.$str_rand;
-        echo("id:$id\n");
+        //echo("id:$id\n");
         $cs = $cs % 10;
 	$id = $id . ($cs + "");
-        echo("id:$id\n");
+        //echo("id:$id\n");
 	return $id;
     }
 }

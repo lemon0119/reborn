@@ -192,8 +192,14 @@ echo "<script>var role='$role';</script>";
                         <div style="display:inline;">
                             <!-- sunpy: broadcast local video -->                                 
                             <button id="teacher-dianbo" style="font-size:20px;height:40px">点播</button>
-                            <input type="file" placeholder="选择点播文件" id="teacher-choose-file" style="font-size:20px;width:30%"></input>                           
-                            <!-- <button id="teacher-stop-dianbo">停止点播</button> -->                        
+                            <select id="teacher-choose-file">
+                                <option value ="1.mp4">速录演示视频</option>
+                                <option value="CB6601435D33002ECE7BAD33F79126D6.flv">MV-不见长安</option>
+                                <option value ="h0134j6z7lp.mp4">MV-时间都去哪了</option>
+                                <option value="l0015jn2cz8.mp4">MV-泡沫</option>
+                            </select>
+                            <!--<input type="file" placeholder="选择点播文件" id="teacher-choose-file" style="font-size:20px;width:30%"></input>-->
+                            <!-- <button id="teacher-stop-dianbo">停止点播</button> -->
                         </div>
                         
                         <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px; display:none">
@@ -235,10 +241,12 @@ echo "<script>var role='$role';</script>";
                         <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;"></div>
                         <div align="center" id="sw-bulletin"><h4>通 知 公 告</h4></div>
                         <div id="bulletin" class="bulletin" style="display:none">
-                            <textarea id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
-                            <?php if ($role == 'student') { ?>
-                                <button id="postnotice" name="发布公告"/>
-                                <?php } ?>
+                            <?php if ($role == 'teacher') { ?>
+                                <textarea id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+                                <button id="postnotice" name="发布公告" class="btn btn-primary" style="margin-left: 100px; margin-top: 5px;">发布公告</button>
+                            <?php } else {?>
+                                <textarea disabled id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+                            <?php }?>
                         </div>
                         <div align="center" id="sw-chat"><h4>课 堂 问 答</h4></div>
                         <div id="chat-box">
@@ -254,7 +262,11 @@ echo "<script>var role='$role';</script>";
                 <!-- sunpy: chatroom -->
                 <script>
                     // ------------------------------------------------------ publish bulletin
-                    $("#postnotice").hide();
+                    
+                    $(function(){
+                        if(role === 'student')
+                            $("#postnotice").hide();
+                    });
                     $(document).keypress(function(event) {
                         if (event.keyCode == 13) {
                             event.preventDefault();
@@ -267,13 +279,14 @@ echo "<script>var role='$role';</script>";
                         var current_time = current_date.toLocaleTimeString();
 
                         $("#postnotice").click(function() {
-                            var text = $("#bulletin-textarea").val()
-
+                            var text = $("#bulletin-textarea").val();
                             $.ajax({
                                 type: "POST",
                                 url: "index.php?r=api/putBulletin",
-                                data: {bulletin: '"' + text + '"', time: '"' + current_time + '"'}
-                            })
+                                data: {bulletin: '"' + text + '"', time: '"' + current_time + '"'},
+                                success: function(){alert('公告发布成功！');},
+                                error: function(){alert('出错了...');}
+                            });
                         })
                     })
 
@@ -932,22 +945,30 @@ echo "<script>var role='$role';</script>";
                         console.log("sunpy: role = " + role);
                         //$("#videos-container").empty();
 
-                        var server_root_path = "https://192.168.101.235/dianbo_video/";
-                        var filepath = $("#teacher-choose-file").val();
+                        var server_root_path = "<?php echo SITE_URL.'/resources/'?>video/";
+                        var filepath = $("#teacher-choose-file option:selected").val();
                         var absl_path = server_root_path + filepath;
                         var video_element;
                         var video_time_duration;
 
                         console.log("sunpy: choose file " + server_root_path + filepath);
-
-                        var html = "";
-                        html += '<video id="video1" width="100%" controls>';
-                        html += '<source src="' + absl_path + '">';
-                        html += '</video>';
-                        //html += '<button id="play">播放</button>';
-                        //html += '<button id="pause">暂停</button>';
-                        $("#dianbo-videos-container").empty();
-                        $("#dianbo-videos-container").append(html);
+                        
+                        var video = document.getElementById('video1');
+                        if(video===null){
+                            var html = "";
+                            html += '<video id="video1" width="100%" controls>';
+                            html += '<source src="' + absl_path + '">';
+                            html += '</video>';
+                            //html += '<button id="play">播放</button>';
+                            //html += '<button id="pause">暂停</button>';
+                            $("#dianbo-videos-container").empty();
+                            $("#dianbo-videos-container").append(html);
+                        } else {
+                            video.setAttribute("src", absl_path); 
+                        }
+                        
+                        
+                        
                         $("#dianbo-videos-container").show();
                         $("#videos-container").hide();
 
@@ -988,17 +1009,24 @@ echo "<script>var role='$role';</script>";
                                 } else if (msg.startWith('Path')) {
                                     var video_path = msg.substr(5);
                                     if (is_first_set_path === 1) {  
-                                       is_first_set_path = 0;
-                                       var html = "";
-                                       html += '<video id="video1" width="100%" controls>';
-                                       html += '<source src="' + video_path + '">';
-                                       html += '</video>';
-                                       $("#dianbo-videos-container").empty();
-                                       $("#dianbo-videos-container").append(html);
-                                       $("#dianbo-videos-container").show();
-                                       $("#videos-container").hide();
+                                        is_first_set_path = 0;
+                                        var video = document.getElementById('video1');
+                                        if(video===null){
+                                            var html = "";
+                                            html += '<video id="video1" width="100%" controls>';
+                                            html += '<source src="' + absl_path + '">';
+                                            html += '</video>';
+                                            //html += '<button id="play">播放</button>';
+                                            //html += '<button id="pause">暂停</button>';
+                                            $("#dianbo-videos-container").empty();
+                                            $("#dianbo-videos-container").append(html);
+                                        } else {
+                                            video.setAttribute("src", absl_path); 
+                                        }
+                                        $("#dianbo-videos-container").show();
+                                        $("#videos-container").hide();
                                        
-                                       local_my_video = document.getElementById("video1");    
+                                        local_my_video = document.getElementById("video1");    
                                     }                                    
                                 } /*
                                     else if (msg.startWith('psync')) {

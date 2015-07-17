@@ -25,9 +25,7 @@ function startTime(){
 	},1000);
 };
 function changWordPS(){
-    var input = getContent(document.getElementById("typeOCX"));
-    //console.log(input);
-    var length = input.length;
+    var length = getWordLength();
     var timeAll = ss / 60 + mm + hh * 60;
     var wps = Math.round(length / timeAll);
     if(timeAll !== 0)

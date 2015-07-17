@@ -26,9 +26,12 @@ class AnswerRecord extends CActiveRecord
                 $answer = isset($_POST[$name]) ? $answer.'$$'.$_POST[$name] : $answer.'$$'.'';
             }
             if($answer !== '') {
-                AnswerRecord::saveKnlgAnswer($recordID, $answer, "filling", $record['exerciseID']);
+                $res = AnswerRecord::saveKnlgAnswer($recordID, $answer, "filling", $record['exerciseID']);
+                if($res === false)
+                    return false;
             }
         }
+        return $res;
     }
     
     public static function saveChoice($recordID){
@@ -51,9 +54,12 @@ class AnswerRecord extends CActiveRecord
             $name = 'quest'.$record['exerciseID'];
             $answer = isset($_POST[$name]) ? $_POST[$name] : '';
             if($answer !== '') {
-                AnswerRecord::saveKnlgAnswer($recordID, $answer, "question", $record['exerciseID']);
+                $res = AnswerRecord::saveKnlgAnswer($recordID, $answer, "question", $record['exerciseID']);
+                if($res === false)
+                    return false;
             }
         }
+        return $res;
     }    
     public static function getAnswerID($recordID, $type, $exerID) {
         $userID = Yii::app()->session['userid_now'];
@@ -130,7 +136,9 @@ class AnswerRecord extends CActiveRecord
             $newAnswer -> createTime = date("Y-m-d  H:i:s");
             if(!($newAnswer->insert())) {
                 echo Tool::jsLog('创建答案记录失败！');
-            }
+                return false;
+            } else 
+                return true;
         }else {
             $oldAnswer -> answer = $answer;
             $oldAnswer -> costTime = $seconds;
@@ -139,7 +147,9 @@ class AnswerRecord extends CActiveRecord
             $oldAnswer -> createTime = date("Y-m-d  H:i:s");
             if(!($oldAnswer->upDate())) {
                 echo Tool::jsLog('更新答案记录失败！');
-            }
+                return false;
+            } else
+                return true;
         }
     }
     public static function saveKnlgAnswer($recordID, $answer, $type, $exerciseID) {

@@ -14,9 +14,10 @@
         
         var time = getSeconds();
         document.getElementById("id_cost").value = time;
-        //console.log("answer = "+theString);
-        var options = {target:'#cont'};
-        $("#id_answer_form").ajaxSubmit(options);
+        //console.log("answer = "+theString);\
+        $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
+            alert(result);
+        });
     }
     function restart(){
         var obj =  document.getElementById("typeOCX");

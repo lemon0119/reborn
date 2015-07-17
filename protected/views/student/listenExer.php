@@ -36,4 +36,9 @@
         //菜单栏变色
         $("li#li-listen-<?php echo $exerOne['exerciseID'];?>").attr('class','active');
     });
+    
+    function getWordLength(){
+        var input = getContent(document.getElementById("typeOCX"));
+        return input.length;
+    }
 </script>

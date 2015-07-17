@@ -34,6 +34,8 @@
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host.$path.$page.$param;?>">
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
         <input name="nm_answer" id="id_answer" type="hidden">
+        <input name="nm_cost" id="id_cost" type="hidden">
+        <input name="nm_correct" id="id_correct" type="hidden">
         <a aline="center" type="button" class="btn btn-primary btn-large" onclick="onSubmit()" style="margin-left: 250px">提交</a>
         <a class="btn btn-large" onclick="restart();" style="margin-left: 250px">重新计时</a>
     </form>
@@ -43,11 +45,49 @@
     $(document).ready(function(){
         $("li#li-key-<?php echo $exerOne['exerciseID'];?>").attr('class','active');
     });
+    
+    function getWordLength(){
+        var input = document.getElementById("id_answer");
+        var answer = input.value;
+        console.log(answer);
+        var reg = new RegExp(":", "g");
+        var res = answer.match(reg);
+        var length = res === null ? 0 : res.length;
+        console.log('length:'+length);
+        return length;
+    }
+    
+    function getCorrect(pattern , answer){
+        var ap = pattern.split(' ');
+        var aa = answer.split(' ');
+        var tl = ap.length;
+        var al = aa.length;
+        var i = 0 , j = 0;
+        var cnum = 0;
+        while(i < tl && j < al){
+            if(ap[i] == aa[j]){
+                cnum++;
+                i++;
+                j++;
+            } else{
+                i++;
+            }
+        }
+        return cnum / tl;
+    }
     function onSubmit(){
         if(!confirm("确定要提交答案？"))
             return ;
-        var options = {target:'#cont'};
-        $("#id_answer_form").ajaxSubmit(options);
+        var answer = document.getElementById("id_answer").value;
+        var modtext = document.getElementById("id_content").value;
+        var correct = getCorrect(answer , modtext);
+        document.getElementById("id_correct").value = correct;
+        var time = getSeconds();
+        document.getElementById("id_cost").value = time;
+        //$('#id_answer_form').submit();
+        $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
+            alert(result);
+        });
     }
     document.getElementById("id_new").firstChild.nodeValue = document.getElementById("id_content").value;
     function restart(){
@@ -60,5 +100,4 @@
             clearTemplate();
         }
     }
-    
 </script>
