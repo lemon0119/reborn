@@ -7,7 +7,7 @@
                                 <select name="type" style="width: 185px">
                                         <option value="exerciseID" selected="selected">编号</option>
                                         <option value="courseID" >课程号</option>
-                                        <option value="createPerson" >创建人</option>
+                                         <option value="createPerson" >创建人</option>
                                 </select>
                         </li>
                         <li>
@@ -43,7 +43,8 @@
 
 
 <div class="span9">
-<h2>填空题列表</h2>
+<?php if($fillLst->count()!=0){?>
+    <h2>查询结果</h2>
 <!-- 键位习题列表-->
 <table class="table table-bordered table-striped">
     <thead>
@@ -86,4 +87,7 @@
 ?>
 </div>
 <!-- 翻页标签结束 -->
+<?php } else {?>
+    <h2>查询结果为空！</h2>
+<?php }?>
 </div>
