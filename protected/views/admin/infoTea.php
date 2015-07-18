@@ -1,5 +1,5 @@
 <?php
-    if(Yii::app()->session['lastUrl']=="classLst")
+    if(Yii::app()->session['lastUrl']=="classLst"||Yii::app()->session['lastUrl']=="infoClass")
         require 'classLstSideBar.php';
     else
         require 'teaSideBar.php';?>
@@ -20,6 +20,8 @@
     </table>
         <?php if(Yii::app()->session['lastUrl']=="classLst"){?>
         <a href="./index.php?r=admin/classLst" class="btn">返回</a>
+        <?php }else if(Yii::app()->session['lastUrl']=="infoClass"){?>
+        <a href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" class="btn">返回</a>
         <?php }else if(isset($flag)){?>
         <a href="./index.php?r=admin/searchTea" class="btn">返回</a>
         <?php }else{?>
@@ -27,8 +29,3 @@
         <?php }?>
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-        $("#classLst").attr("class","active");
-    });
-</script>

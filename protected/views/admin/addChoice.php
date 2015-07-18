@@ -39,7 +39,7 @@
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="requirements" style="width:600px; height:50px;" id="input01"></textarea>
+                <textarea name="requirements" style="width:450px; height:50px;" id="input01"></textarea>
             </div>
         </div>
         <div class="control-group">

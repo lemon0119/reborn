@@ -1,20 +1,18 @@
- <script src="<?php echo JS_URL;?>jquery-form.js"></script>
-<script>
-    $(document).ready(function(){
-            $("div.span9").find("a").click(function(){
-                var url = $(this).attr("href");
-                //$(this).attr("href","#");
-                if(url.indexOf("index.php") > 0){
-                    $("#cont").load(url);
-                    return false;//阻止链接跳转
-                }
-            });
-    });
-   
-</script>
+<?php require 'classLstSideBar.php';?>
+
+
+    <?php
+    $course= Course::model()->find("courseID = '$curCourse'");
+    $courseName=$course['courseName'];
+    if($curLesson==0)
+        $lessonName="尚未开始";
+    else{
+        $lesson= Lesson::model()->find("classID = '$classID' AND number = '$curLesson'");
+        $lessonName=$lesson['lessonName'];
+    }
+    ?>
+
 <div class="span9">
-        <div class="hero-unit">
-            
         <?php
         //得到老师ID对应的名称
         foreach ($teacher as $model):
@@ -24,7 +22,7 @@
         ?>
             
         <h3><?php echo $classID; echo '&nbsp; &nbsp;'; echo $className;?></h3>
-        <p>人数：<?php echo $nums; echo '&nbsp; &nbsp;';?> 当前课程： <?php echo $curCourse; echo '&nbsp; &nbsp;';?>
+        <p>人数：<?php echo $nums; echo '&nbsp; &nbsp;';?> 课程： <?php echo $courseName; echo '&nbsp; &nbsp;';?> 当前进度： <?php echo $lessonName; echo '&nbsp; &nbsp;';?>   
         </p>
          <table class="table table-bordered table-striped">
         <thead>
@@ -40,7 +38,7 @@
                         <td style="width: 75px"><?php echo $model['teacherID'];?></td>
                         <td><?php echo $teachers[$model['teacherID']];?></td>
                         <td>
-                            <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['teacherID']; ?>&&name=<?php echo $teachers[$model['teacherID']]; ?>&&flag=3&&classID=<?php echo $classID; ?>"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
+                            <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['teacherID']; ?>&&name=<?php echo $teachers[$model['teacherID']]; ?>&&classID=<?php echo $classID; ?>"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
                             <a href="./index.php?r=admin/infoClass&&flag=deleteTea&&id=<?php echo $model['teacherID'];?>&&classID=<?php echo $classID;?>"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                         </td>
                     </tr>            
@@ -62,6 +60,7 @@
                         <td style="width: 75px"><?php echo $model['userID'];?></td>
                         <td><?php echo $model['userName'];?></td>
                         <td>  
+                            <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID']; ?>&&name=<?php echo $model['userName']; ?>&&classID=<?php echo $classID; ?>"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
                             <a href="./index.php?r=admin/infoClass&&flag=deleteStu&&id=<?php echo $model['userID'];?>&&classID=<?php echo $model['classID'];?>"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                         </td>
                     </tr>            
@@ -74,26 +73,26 @@
         ?>
         </div>
     <!-- 翻页标签结束 -->
-        <button type="button" onclick="back()">确定</button>
-        <button type="button" onclick="addStuClass()">添加学生</button>
-        <button type="button" onclick="addTeaClass()">添加老师</button>
+        <div class="form-actions">
+            <button class="btn btn-primary"  onclick="back()">确定</button>
+            <button class="btn" onclick="addStuClass()">添加学生</button>
+            <button class="btn" onclick="addTeaClass()">添加老师</button>
+        </div>
+
         <script>
         function back()
         {
-             $("#cont").load("./index.php?r=admin/classLst");
+             window.location.href="./index.php?r=admin/classLst";
         }
         function addStuClass()
         {
-             $("#cont").load("./index.php?r=admin/addStuClass&&classID=<?php echo $classID;?>");
+             window.location.href="./index.php?r=admin/addStuClass&&classID=<?php echo $classID;?>";
         }
         function addTeaClass()
         {
-             $("#cont").load("./index.php?r=admin/addTeaClass&&classID=<?php echo $classID;?>");
+            window.location.href="./index.php?r=admin/addTeaClass&&classID=<?php echo $classID;?>";
         }
         </script>
-        
-            
-        </div>
         </div>
 
     

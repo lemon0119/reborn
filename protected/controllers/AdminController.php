@@ -134,7 +134,14 @@ class AdminController extends CController
         
         public function actionInfoStu()
 	{        
-            if(isset($_GET['flag']))
+            if(Yii::app()->session['lastUrl']=="infoClass")
+            {
+                   $this->render('infoStu',array(
+                   'id'=>$_GET['id'],
+                   'name'=>$_GET['name'],
+                   'class'=>$_GET['classID']
+            ));
+            }else if(isset($_GET['flag']))
             {
                 $this->render('infoStu',array(
                    'id'=>$_GET['id'],
@@ -335,7 +342,14 @@ class AdminController extends CController
         
         public function actionInfoTea()
 	{        
-            if(isset($_GET['flag']))
+            if(Yii::app()->session['lastUrl']=="infoClass")
+            {
+                   $this->render('infoTea',array(
+                   'id'=>$_GET['id'],
+                   'name'=>$_GET['name'],
+                   'classID'=>$_GET['classID']
+                    ));
+            }else if(isset($_GET['flag']))
             {
                 $this->render('infoTea',array(
                    'id'=>$_GET['id'],
@@ -628,6 +642,8 @@ class AdminController extends CController
         
         public function actionInfoClass()
 	{   
+            
+            Yii::app()->session['lastUrl']="infoClass";
             $act_result="";
             $classID=$_GET["classID"];
             
@@ -683,9 +699,9 @@ class AdminController extends CController
              $class=$an->read();
              $className=$class['className'];
              $curCourse=$class['currentCourse'];
+             $curLesson=$class['currentLesson'];
              
-            //显示结果列表并分页
-	    $sql = "SELECT * FROM student WHERE classID = '$classID'";
+	    $sql = "SELECT * FROM student WHERE classID = '$classID' AND is_delete = 0";
             $criteria=new CDbCriteria();
             $result = Yii::app()->db->createCommand($sql)->query();
             $nums=$result->rowCount;
@@ -704,7 +720,8 @@ class AdminController extends CController
                                              'classID'=>$classID,
                                              'className'=>$className,
                                              'curCourse'=>$curCourse,
-                                             'teacher'=>$this->teaInClass(),
+                                             'curLesson'=>$curLesson,
+                                             'teacher'=>TbClass::model()->teaInClass(),
                                              'teacherOfClass' =>$teacherOfClass,
                                              'nums'=>$nums,        //学生人数
                                              'posts'=>$posts,      //学生
@@ -715,7 +732,7 @@ class AdminController extends CController
         
         public function actionAddStuClass()
 	{        
-            $sql = "SELECT * FROM student WHERE classID = '0'";
+            $sql = "SELECT * FROM student WHERE classID = '0' AND is_delete = 0";
             $result = Yii::app()->db->createCommand($sql)->query();
             $this->render('addStuClass',array(
                                                 'classID'=>$_GET["classID"],
@@ -731,7 +748,7 @@ class AdminController extends CController
             $this->render('addTeaClass',array(
                                                 'classID'=>$classID,
                                                 'posts'=>$result,
-                                                'teachers'=>$this->teaInClass(),
+                                                'teachers'=>TbClass::model()->teaInClass(),
                                                 
             ));
         }
@@ -901,7 +918,7 @@ class AdminController extends CController
             $this->render('keyLst',array(
             'posts'=>$posts,
             'pages'=>$pages,
-            'teacher'=>$this->teaInClass(),
+            'teacher'=>  TbClass::model()->teaInClass(),
             'result'=>$act_result,
             ),false,true);
 	}
@@ -1090,7 +1107,7 @@ class AdminController extends CController
             $this->render('listenLst',array(
             'posts'=>$posts,
             'pages'=>$pages,
-            'teacher'=>$this->teaInClass(),
+            'teacher'=>TbClass::model()->teaInClass(),
             'result'=>$act_result,
             ),false,true);
 	}
@@ -1184,7 +1201,7 @@ class AdminController extends CController
             $this->render('fillLst',array(
             'posts'=>$posts,
             'pages'=>$pages,
-            'teacher'=>$this->teaInClass(),
+            'teacher'=>  TbClass::model()->teaInClass(),
             'result'=>$act_result,
             ),false,true);
 	}
@@ -1382,7 +1399,7 @@ class AdminController extends CController
             $this->render('questionLst',array(
             'posts'=>$posts,
             'pages'=>$pages,
-            'teacher'=>$this->teaInClass(),
+            'teacher'=>  TbClass::model()->teaInClass(),
             'result'=>$act_result,
             ),false,true);
 	}

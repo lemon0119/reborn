@@ -1,5 +1,5 @@
 <?php
-    if(Yii::app()->session['lastUrl']=="stuDontHaveClass")
+    if(Yii::app()->session['lastUrl']=="stuDontHaveClass"||Yii::app()->session['lastUrl']=="infoClass")
         require 'classLstSideBar.php';
     else
         require 'stuSideBar.php';?>
@@ -24,6 +24,8 @@
     </table>
         <?php if(Yii::app()->session['lastUrl']=="stuDontHaveClass"){?>
         <a href="./index.php?r=admin/stuDontHaveClass" class="btn">返回</a>
+        <?php }else if(Yii::app()->session['lastUrl']=="infoClass"){?>
+        <a href="./index.php?r=admin/infoClass&&classID=<?php echo $class;?>" class="btn">返回</a>
         <?php } else if(isset($flag)){?>
         <a href="./index.php?r=admin/searchStu" class="btn">返回</a>
         <?php }else{?>
@@ -33,6 +35,8 @@
 </div>
 <script>
     $(document).ready(function(){
+       <?php if(Yii::app()->session['lastUrl']=="stuDontHaveClass") {?>
         $("#stuLst").attr("class","active");
+       <?php }?>
     });
 </script>
