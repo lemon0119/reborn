@@ -14,6 +14,27 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionAnsChoice(){
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $studentID = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::getRecord($suiteID, $studentID);
+        $ansChoice = AnswerRecord::model()->getAnswerByType($recordID, 'choice');
+        $ansArr = AnswerRecord::model()->ansToArray($ansChoice);
+        return $this->render('ansChoice',['exercise'=>$classwork,'ansChoice'=>$ansArr]);
+    }
+    public function actionViewAns(){
+        $suiteID = $_GET['suiteID'];
+        Yii::app()->session['suiteID'] = $suiteID;
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        return $this->render('suiteAns',['exercise'=>$classwork]);
+    }
     public function actionSaveQuestion(){
         //查看是否有answer，即是否是用户提交了答案。
         if(isset($_POST['qType']) && $_POST['qType']=="question") {
@@ -157,16 +178,17 @@ class StudentController extends CController {
         else
             echo '对不起，提交答案失败。';
     }
-    public function actionGotoDetail(){
-        $recordID = Yii::app()->session['recordID'];
-        $type = $_GET['exerType'];
-        $exerID = $_GET['exerID'];
-        Yii::app()->session['exerID'] = $exerID;
-        Yii::app()->session['exerType'] = $type;
-        $answer = AnswerRecord::getAnswerID($recordID, $type, $exerID);
-        Yii::app()->session['answer'] = $answer['answer'];
-        $this->redirect(['/student/answerDetail']);
-    }
+    
+//    public function actionGotoDetail(){
+//        $recordID = Yii::app()->session['recordID'];
+//        $type = $_GET['exerType'];
+//        $exerID = $_GET['exerID'];
+//        Yii::app()->session['exerID'] = $exerID;
+//        Yii::app()->session['exerType'] = $type;
+//        $answer = AnswerRecord::getAnswerID($recordID, $type, $exerID);
+//        Yii::app()->session['answer'] = $answer['answer'];
+//        $this->redirect(['/student/answerDetail']);
+//    }
     public function actionAnswerDetail(){
         $exerID = Yii::app()->session['exerID'];
         $type = Yii::app()->session['exerType'];

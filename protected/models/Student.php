@@ -50,42 +50,42 @@ class Student extends CActiveRecord
     public function findClassByStudentID ($studentID) {
         $student = $this->find("userid = '$studentID'");
         return $student->classID;
-    }
-    public function getAnswerRecordAll($suiteID){
-        $userID = Yii::app()->session['userid_now'];
-        foreach (Tool::$EXER_TYPE as $type) {
-            switch ($type) {
-                case 'choice':
-                    $result['choice']['0']['title'] = '选择题';
-                    break;
-                case 'filling':
-                    $result['filling']['0']['title'] = '填空题';
-                    break;
-                case 'question':
-                    $result['question']['0']['title'] = '问答题';
-                    break;
-                default:
-                    $exerAll = Suite::model()->getSuiteExerByType( $suiteID, $type);
-                    foreach ($exerAll as $row) {
-                        $result[$type][$row['exerciseID']]['title'] = $row['title'];
-                        $record = SuiteRecord::model()->find('suiteID=? and studentID=?',[$suiteID,$userID]);
-                        $theAns = AnswerRecord::getAnswerID($record->recordID, $type, $row['exerciseID']);
-
-                        if($theAns == NULL){
-                            //echo '************************************************';
-                            //echo $record->recordID;
-                            //echo $type;
-                            //echo $row['exerciseID'];
-                            $result[$type][$row['exerciseID']]['accomplish'] = 0;
-                            $result[$type][$row['exerciseID']]['correct'] = 0;
-                        } else{
-                            $result[$type][$row['exerciseID']]['accomplish'] = $theAns->ratio_accomplish;
-                            $result[$type][$row['exerciseID']]['correct'] = $theAns->ratio_correct;
-                        }
-                    }
-                    break;
-            }
-        }
+//    }
+//    public function getAnswerRecordAll($suiteID){
+//        $userID = Yii::app()->session['userid_now'];
+//        foreach (Tool::$EXER_TYPE as $type) {
+//            switch ($type) {
+//                case 'choice':
+//                    $result['choice']['0']['title'] = '选择题';
+//                    break;
+//                case 'filling':
+//                    $result['filling']['0']['title'] = '填空题';
+//                    break;
+//                case 'question':
+//                    $result['question']['0']['title'] = '问答题';
+//                    break;
+//                default:
+//                    $exerAll = Suite::model()->getSuiteExerByType( $suiteID, $type);
+//                    foreach ($exerAll as $row) {
+//                        $result[$type][$row['exerciseID']]['title'] = $row['title'];
+//                        $record = SuiteRecord::model()->find('suiteID=? and studentID=?',[$suiteID,$userID]);
+//                        $theAns = AnswerRecord::getAnswerID($record->recordID, $type, $row['exerciseID']);
+//
+//                        if($theAns == NULL){
+//                            //echo '************************************************';
+//                            //echo $record->recordID;
+//                            //echo $type;
+//                            //echo $row['exerciseID'];
+//                            $result[$type][$row['exerciseID']]['accomplish'] = 0;
+//                            $result[$type][$row['exerciseID']]['correct'] = 0;
+//                        } else{
+//                            $result[$type][$row['exerciseID']]['accomplish'] = $theAns->ratio_accomplish;
+//                            $result[$type][$row['exerciseID']]['correct'] = $theAns->ratio_correct;
+//                        }
+//                    }
+//                    break;
+//            }
+//        }
         //recordID, exerciseID, type
         
         
@@ -155,36 +155,36 @@ class Student extends CActiveRecord
         
         
     }
-    public function getAnswerRecordByType($type){
-        //返回页面progress需要的某题型所有信息,根据题型。type = listen 、look、key、knlg
-        $allClasswork = SuiteRecord::getClassworkAll();
-        foreach ($allClasswork as $classwork){
-            $recordID = $classwork['recordID'];
-            $suiteID = $classwork['suiteID'];
-            $exerAll = Suite::model()->getSuiteExerByType( $suiteID, $type);
-            foreach ($exerAll as $exer){
-                $exerID = $exer['exerciseID'];
-                $result["$suiteID"]["$type"]["$exerID"]['title'] = $exer['title'];
-                /*
-                echo '$recordID='.$recordID.' ';
-                echo '$type='.$type.' ';
-                echo '$exerID='.$exerID.' ';
-                echo "\n";
-                 *   for debug
-                 */
-                $answer = AnswerRecord::getAnswerID($recordID, $type, $exerID);
-                if($answer == NULL){
-                    $result["$suiteID"]["$type"]["$exerID"]['accomplish'] = 0;
-                    $result["$suiteID"]["$type"]["$exerID"]['correct'] = 0;
-                } else {
-                    $result["$suiteID"]["$type"]["$exerID"]['accomplish'] = $answer -> ratio_accomplish;
-                    $result["$suiteID"]["$type"]["$exerID"]['correct'] = $answer -> ratio_correct;
-                }
-            }
-        }
-        //$result['exer'] = get
-        return $result;
-    }
+//    public function getAnswerRecordByType($type){
+//        //返回页面progress需要的某题型所有信息,根据题型。type = listen 、look、key、knlg
+//        $allClasswork = SuiteRecord::getClassworkAll();
+//        foreach ($allClasswork as $classwork){
+//            $recordID = $classwork['recordID'];
+//            $suiteID = $classwork['suiteID'];
+//            $exerAll = Suite::model()->getSuiteExerByType( $suiteID, $type);
+//            foreach ($exerAll as $exer){
+//                $exerID = $exer['exerciseID'];
+//                $result["$suiteID"]["$type"]["$exerID"]['title'] = $exer['title'];
+//                
+//                echo '$recordID='.$recordID.' ';
+//                echo '$type='.$type.' ';
+//                echo '$exerID='.$exerID.' ';
+//                echo "\n";
+//                //for debug
+//                 
+//                $answer = AnswerRecord::getAnswer($recordID, $type, $exerID);
+//                if($answer == NULL){
+//                    $result["$suiteID"]["$type"]["$exerID"]['accomplish'] = 0;
+//                    $result["$suiteID"]["$type"]["$exerID"]['correct'] = 0;
+//                } else {
+//                    $result["$suiteID"]["$type"]["$exerID"]['accomplish'] = $answer -> ratio_accomplish;
+//                    $result["$suiteID"]["$type"]["$exerID"]['correct'] = $answer -> ratio_correct;
+//                }
+//            }
+//        }
+//        //$result['exer'] = get
+//        return $result;
+//    }
     
     
 	/**

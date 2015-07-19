@@ -14,6 +14,15 @@
  */
 class AnswerRecord extends CActiveRecord
 {
+    public static function ansToArray($answer){
+        $result = array();
+        foreach ($answer as $one) {
+            $key = $one['exerciseID'];
+            $value = $one['answer'];
+            $result[$key] = $value;
+        }
+        return $result;
+    }
     public static function saveFilling($recordID){
         $filling = Suite::model()->getFilling(Yii::app()->session['suiteID']);
         foreach ($filling as $record) {
@@ -61,7 +70,7 @@ class AnswerRecord extends CActiveRecord
         }
         return $res;
     }    
-    public static function getAnswerID($recordID, $type, $exerID) {
+    public static function getAnswer($recordID, $type, $exerID) {
         $userID = Yii::app()->session['userid_now'];
         $record = AnswerRecord::model()->find('recordID=? and exerciseID=? and type=? and createPerson =?', array($recordID, $exerID, $type, $userID));
         return $record;
@@ -121,7 +130,7 @@ class AnswerRecord extends CActiveRecord
         $type = Yii::app()->session['exerType'];
         $type = str_replace(["Exer"],"",$type);
         $ratio = self::getRatio($exerID, $type, $answer);
-        $oldAnswer = AnswerRecord::getAnswerID($recordID, $type, $exerID);
+        $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerID);
         if( $oldAnswer == null) {
             $newAnswer = new AnswerRecord();
             $newAnswer -> answerID = Tool::createID();
@@ -153,7 +162,7 @@ class AnswerRecord extends CActiveRecord
         }
     }
     public static function saveKnlgAnswer($recordID, $answer, $type, $exerciseID) {
-        $oldAnswer = AnswerRecord::getAnswerID($recordID, $type, $exerciseID);
+        $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerciseID);
         if( $oldAnswer == null) {
             $newAnswer = new AnswerRecord();
             $newAnswer -> answerID = Tool::createID();
