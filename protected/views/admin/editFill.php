@@ -103,7 +103,7 @@
          </div>
          <div class="form-actions">
             <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">添加</button>
+                <button type="submit" class="btn btn-primary">修改</button>
              <?php }?>
              <a href="./index.php?r=admin/returnFromAddFill" class="btn">取消</a>
          </div>

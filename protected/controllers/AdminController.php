@@ -1133,19 +1133,6 @@ class AdminController extends CController
 
         public function actionFillLst()
 	{       
-//                   {
-//                       //用户输入参数不足
-//                       $this->render('addFill',array(
-//                                                    'shao'=>"输入全不能为空"
-//                                                    ));
-//                       return;
-//                   }
-//               }else if($_GET['action']=='edit'){
-//                    $sql= "UPDATE filling SET requirements= '".$_POST['que1']."$$".$_POST['que2'] ."', answer ='".$_POST['answer']."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-//                    Yii::app()->db->createCommand($sql)->query();
-//                    $act_result="编辑习题成功！";
-//                    unset($_GET['action']);
-
             $result = Filling::model()->getFillLst("", "");
             $fillLst=$result['fillLst'];
             $pages=$result['pages'];
@@ -1194,20 +1181,20 @@ class AdminController extends CController
         }
         
         public function actionAddFill(){
-            $result = 'no';
+            $result =   'no';
             if(isset($_POST['requirements'])){
-                $i = 2;
-                $answer=$_POST['in1'];
+                $i      =   2;
+                $answer =   $_POST['in1'];
                 for(;$i<=5;$i++)
                 {
                     if($_POST['in'.$i]!="")
-                        $answer=$answer."$$".$_POST['in'.$i];
+                        $answer =   $answer."$$".$_POST['in'.$i];
                     else
                         break;
                 }
-                $result = Filling::model()->insertFill($_POST['requirements'], $answer, 0);
+                $result =   Filling::model()->insertFill($_POST['requirements'], $answer, 0);
             }
-            $this->render('addFill',['result'=>$result]);
+            $this->render('addFill',['result'   =>  $result]);
         }
         
         public function actionReturnFromAddFill(){
@@ -1251,42 +1238,42 @@ class AdminController extends CController
         }
         
         public function actionEditFill(){
-            $exerciseID=$_GET["exerciseID"];
-            $thisFill= new Filling();
-            $thisFill = $thisFill->find("exerciseID = '$exerciseID'");
+            $exerciseID =   $_GET["exerciseID"];
+            $thisFill   =   new Filling();
+            $thisFill   =   $thisFill->find("exerciseID = '$exerciseID'");
             if(!isset($_GET['action']))
             {
                 $this->render("editFill",array(
-                    'exerciseID'    =>  $exerciseID,
-                    'requirements'  =>  $thisFill->requirements,
-                    'answer'        =>  $thisFill->answer
+                        'exerciseID'    =>  $exerciseID,
+                        'requirements'  =>  $thisFill->requirements,
+                        'answer'        =>  $thisFill->answer
                 ));
             }else if($_GET['action']='look'){
                 $this->render("editFill",array(
-                    'exerciseID'    =>  $exerciseID,
-                    'requirements'  =>  $thisFill->requirements,
-                    'answer'        =>  $thisFill->answer,
-                    'action'        =>  'look'
+                        'exerciseID'    =>  $exerciseID,
+                        'requirements'  =>  $thisFill->requirements,
+                        'answer'        =>  $thisFill->answer,
+                        'action'        =>  'look'
                 ));
             }
         }
         
         public function actionEditFillInfo()
 	{
-            $exerciseID = $_GET['exerciseID'];
-            $thisFill= new Filling();
-            $thisFill = $thisFill->find("exerciseID = '$exerciseID'");
-            $i = 2;
-            $answer=$_POST['in1'];
+            $exerciseID     =   $_GET['exerciseID'];
+            $thisFill       =   new Filling();
+            $thisFill       =   $thisFill->find("exerciseID = '$exerciseID'");
+            $i      =   2;
+            $answer =   $_POST['in1'];
             for(;$i<=5;$i++)
             {
                 if($_POST['in'.$i]!="")
-                    $answer=$answer."$$".$_POST['in'.$i];
+                    $answer =    $answer."$$".$_POST['in'.$i];
                 else
                     break;
             }
-            $thisFill->requirements = $_POST['requirements'];
-            $thisFill->answer = $answer;
+            $thisFill->requirements =   $_POST['requirements'];
+            $thisFill->answer       =   $answer;
             $thisFill -> update();
             $this->render("editFill",array(
                 'exerciseID'      =>  $thisFill->exerciseID,
@@ -1298,49 +1285,49 @@ class AdminController extends CController
         
         public function actionChoiceLst()
 	{     
-            $result = Choice::model()->getChoiceLst("", "");
-            $choiceLst=$result['choiceLst'];
-            $pages=$result['pages'];
-            Yii::app()->session['lastUrl']="choiceLst";
+            $result     =   Choice::model()->getChoiceLst("", "");
+            $choiceLst  =   $result['choiceLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "choiceLst";
             $this->render('choiceLst',array(
-            'choiceLst'     =>  $choiceLst,
-            'pages'         =>  $pages,
-            'teacher'       =>  Teacher::model()->findall()
+                    'choiceLst'     =>  $choiceLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
             ));
 	}
         
         public function actionSearchChoice()
         {
             if(isset($_POST['type'])){
-                $type=$_POST['type'];
-                $value=$_POST['value'];
-                Yii::app()->session['searchChoiceType']=$type;
-                Yii::app()->session['searchChoiceValue']=$value;
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchChoiceType']     =   $type;
+                Yii::app()->session['searchChoiceValue']    =   $value;
             } else {
-                $type = Yii::app()->session['searchChoiceType'];
-                $value = Yii::app()->session['searchChoiceValue'];
+                $type   =   Yii::app()->session['searchChoiceType'];
+                $value  =   Yii::app()->session['searchChoiceValue'];
             }
-            Yii::app()->session['lastUrl']="searchChoice";
+            Yii::app()->session['lastUrl']  =   "searchChoice";
             if($type=='createPerson')
             {
-                if($value=="管理员")
-                    $vaule=0;
+                if($value   ==  "管理员")
+                    $vaule  =   0;
                 else
                 {
-                    $tea=  Teacher::model()->find("userName = '$value'");
+                    $tea    =  Teacher::model()->find("userName = '$value'");
                     if($tea['userID']!="")
                         $value =$tea['userID'];
                     else 
-                        $value = -1;
+                        $value  =    -1;
                 }
             }
-            $result = Choice::model()->getChoiceLst($type, $value);
-            $choiceLst=$result['choiceLst'];
-            $pages=$result['pages'];
+            $result     =   Choice::model()->getChoiceLst($type, $value);
+            $choiceLst  =   $result['choiceLst'];
+            $pages      =   $result['pages'];
             $this->render('searchChoice',array(
-                        'choiceLst'=>$choiceLst,
-                        'pages'=>$pages,
-                        'teacher'=>  Teacher::model()->findall()
+                            'choiceLst' =>  $choiceLst,
+                            'pages'     =>  $pages,
+                            'teacher'   =>  Teacher::model()->findall()
                     )
                     );
         }
@@ -1349,26 +1336,26 @@ class AdminController extends CController
         {
             if(Yii::app()->session['lastUrl']=="searchChoice")
             {
-                $type = Yii::app()->session['searchChoiceType'];
-                $value = Yii::app()->session['searchChoiceValue'];
-                $result = Choice::model()->getChoiceLst($type, $value);
-                $choiceLst=$result['choiceLst'];
-                $pages=$result['pages'];
+                $type       =   Yii::app()->session['searchChoiceType'];
+                $value      =   Yii::app()->session['searchChoiceValue'];
+                $result     =   Choice::model()->getChoiceLst($type, $value);
+                $choiceLst  =   $result['choiceLst'];
+                $pages      =   $result['pages'];
                 $this->render('searchChoice',array(
-                        'choiceLst'=>$choiceLst,
-                        'pages'=>$pages,
-                        'teacher'=>  Teacher::model()->findall()
+                            'choiceLst' =>  $choiceLst,
+                            'pages'     =>  $pages,
+                            'teacher'   =>  Teacher::model()->findall()
                     )
                     );
             }else {
-                $result = Choice::model()->getChoiceLst("", "");
-                $choiceLst=$result['choiceLst'];
-                $pages=$result['pages'];
-                Yii::app()->session['lastUrl']="choiceLst";
+                $result     =   Choice::model()->getChoiceLst("", "");
+                $choiceLst  =   $result['choiceLst'];
+                $pages      =   $result['pages'];
+                Yii::app()->session['lastUrl']  =   "choiceLst";
                 $this->render('choiceLst',array(
-                             'choiceLst'=>$choiceLst,
-                             'pages'=>$pages,
-                             'teacher'=>  Teacher::model()->findall()
+                        'choiceLst' =>  $choiceLst,
+                        'pages'     =>  $pages,
+                        'teacher'   =>  Teacher::model()->findall()
                 ));
             }
         }
@@ -1376,27 +1363,27 @@ class AdminController extends CController
          public function actionEditChoiceInfo()
 	{
             $exerciseID = $_GET['exerciseID'];
-            $thisCh= new Choice();
-            $thisCh = $thisCh->find("exerciseID = '$exerciseID'");
-            $thisCh -> requirements =$_POST['requirements'];
-            $thisCh -> options =$_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'];
-            $thisCh -> answer =$_POST['answer'];
+            $thisCh     = new Choice();
+            $thisCh     = $thisCh->find("exerciseID = '$exerciseID'");
+            $thisCh -> requirements =   $_POST['requirements'];
+            $thisCh -> options      =   $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'];
+            $thisCh -> answer       =   $_POST['answer'];
             $thisCh -> update();
             $this->render("editChoice",array(
-                'exerciseID'=>$exerciseID,
-                'requirements' =>$thisCh -> requirements,
-                'options'=> $thisCh -> options,
-                'answer' =>$thisCh -> answer,
-                'result' => "修改习题成功"
+                    'exerciseID'      =>    $exerciseID,
+                    'requirements'    =>    $thisCh -> requirements,
+                    'options'         =>    $thisCh -> options,
+                    'answer'          =>    $thisCh -> answer,
+                    'result'          =>    "修改习题成功"
             ));
         }
         
         
         public function actionEditChoice(){
-            $exerciseID=$_GET["exerciseID"];
-            $sql = "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $result =$result->read();
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
             if(!isset($_GET['action']))
             {
                 $this->render("editChoice",array(
@@ -1417,7 +1404,7 @@ class AdminController extends CController
         }
         
         public function actionAddChoice(){
-            $result = 'no';
+            $result =   'no';
             if(isset($_POST['requirements'])){
                 $result = Choice::model()->insertChoice($_POST['requirements'], $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'], $_POST['answer'], 0);
             }
@@ -1427,95 +1414,134 @@ class AdminController extends CController
         
         public function actionQuestionLst()
 	{       
-            //定义动作
-            $act_result="";
-            
-           //添加动作
-           if(isset($_GET['action']))
-           {
-                   //添加班级
-                if($_GET['action']=='add')
-               {
-                   if(!empty($_POST['requirements'])&&!empty($_POST['answer']))
-                   {
-                       //得到当前最大的ID
-                       $sql="select max(exerciseID) as id from question";
-                       $max_id = Yii::app()->db->createCommand($sql)->query();
-                       $temp=$max_id->read();
-                       if(empty($temp))
-                       {
-                           $new_id=1;
-                       }
-                       else
-                       {
-                           $new_id = $temp['id'] + 1;
-                       }
-                       $sql= "INSERT INTO question VALUES ('".$new_id ."','0','" .$_POST['requirements']."','".$_POST['answer']."','0','". date('y-m-d H:i:s',time()) ."','')";
-
-                       Yii::app()->db->createCommand($sql)->query();
-                       $act_result="添加习题成功！";
-                       unset($_GET['action']);
-                   }else
-                   {
-                       //用户输入参数不足
-                       $this->render('addQuestion',array(
-                                                    'shao'=>"输入全不能为空"
-                                                    ));
-                       return;
-                   }
-               }else if($_GET['action']=='edit'){
-                    $sql= "UPDATE question SET requirements= '".$_POST['requirements']."', answer='".$_POST['answer'] ."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="编辑习题成功！";
-                    unset($_GET['action']);
-               }
-           }
-            
-            
-            //搜索习题
-            if(isset($_POST['which']))
-            {   
-                if(!empty($_POST['name']))
-                $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-                else  $ex_sq = "";
-            }
-            else  $ex_sq = "";
-            
-            //显示结果列表并分页
-	    $sql = "SELECT * FROM question ".$ex_sq;
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
+            Yii::app()->session['lastUrl']  =   "questionLst";
+            $result      =  Question::model()->getQuestionLst("", "");
+            $questionLst =  $result['questionLst'];  
+            $pages       =  $result["pages"];
             $this->render('questionLst',array(
-            'posts'=>$posts,
-            'pages'=>$pages,
-            'teacher'=>  TbClass::model()->teaInClass(),
-            'result'=>$act_result,
-            ),false,true);
+                    'questionLst'   =>  $questionLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
 	}
         
+        public function actionSearchQuestion()
+        {
+            if(isset($_POST['type'])){
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchType']   =   $type;
+                Yii::app()->session['searchValue']  =   $value;
+            } else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+            }
+            Yii::app()->session['lastUrl']  =   "searchQuestion";
+            if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+            $result      =  Question::model()->getQuestionLst($type, $value);
+            $questionLst =  $result['questionLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchQuestion',array(
+                    'questionLst'   =>  $questionLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
+        }
+        
+        public function actionReturnFromAddQuestion(){
+            if(Yii::app()->session['lastUrl']=="questionLst")
+            {
+                $result      =  Question::model()->getQuestionLst("", "");
+                $questionLst =  $result['questionLst'];  
+                $pages       =  $result["pages"];
+                $this->render('questionLst',array(
+                        'questionLst'   =>  $questionLst,
+                        'pages'         =>  $pages,
+                        'teacher'       =>  TbClass::model()->teaInClass(),
+                ));
+            }  else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+                Yii::app()->session['lastUrl']  =   "searchQuestion";
+                if($type=='createPerson')
+                {
+                    if($value=="管理员")
+                        $vaule  =   0;
+                    else
+                    {
+                        $tea    =  Teacher::model()->find("userName = '$value'");
+                        if($tea['userID']!="")
+                            $value =    $tea['userID'];
+                        else 
+                            $value = -1;
+                    }
+                }
+                $result      =  Question::model()->getQuestionLst($type, $value);
+                $questionLst =  $result['questionLst'];  
+                $pages       =  $result["pages"];
+                $this->render('searchQuestion',array(
+                        'questionLst'   =>  $questionLst,
+                        'pages'         =>  $pages,
+                        'teacher'       =>  TbClass::model()->teaInClass(),
+                ));
+            }
+        }
+        
         public function actionEditQuestion(){
-            $exerciseID=$_GET["exerciseID"];
-            $sql = "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $result =$result->read();
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            if(!isset($_GET['action']))
+            {
+                $this->render("editQuestion",array(
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer']
+                ));
+            }else if($_GET['action'] =='look'){
+                $this->render("editQuestion",array(
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look'
+                ));         
+            }
+        }
+        
+        public function actionEditQuestionInfo(){
+            $exerciseID    =   $_GET['exerciseID'];
+            $thisQue       =   new Question();
+            $thisQue       =   $thisQue->find("exerciseID = '$exerciseID'");
+            $thisQue->requirements =   $_POST['requirements'];
+            $thisQue->answer       =   $_POST['answer'];
+            $thisQue -> update();
             $this->render("editQuestion",array(
-                'exerciseID'=>$result['exerciseID'],
-                'requirements' =>$result['requirements'],
-                'answer'=>$result['answer']
+                'exerciseID'      =>  $thisQue->exerciseID,
+                'requirements'    =>  $thisQue->requirements,
+                'answer'          =>  $thisQue->answer,
+                'result'          =>  "修改习题成功"
             ));
         }
         
         public function actionAddQuestion(){
-            $this->render("addQuestion",array(
-                
-            ));
+            $result =   'no';
+            if(isset($_POST['requirements'])){
+                $result =   Question::model()->insertQue($_POST['requirements'], $_POST['answer'], 0);
+            }
+            $this->render('addQuestion',['result'   =>  $result]);
         }
         
         public function actionCourseLst()

@@ -32,6 +32,7 @@
         </div>
 </div>
 
+
 <?php
     //得到老师ID对应的名称
     foreach ($teacher as $model):
@@ -40,8 +41,8 @@
     endforeach;
 ?>
 <div class="span9">
-<h2>简答题列表</h2>
-<!-- 键位习题列表-->
+<?php if($questionLst->count()!=0){?>
+    <h2>查询结果</h2>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -84,5 +85,8 @@
 ?>
 </div>
 <!-- 翻页标签结束 -->
+<?php } else {?>
+    <h2>查询结果为空！</h2>
+<?php }?>
 </div>
 
