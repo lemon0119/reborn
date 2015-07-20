@@ -11,7 +11,6 @@
         lcs.doLCS();
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
         document.getElementById("id_correct").value = correct;
-        
         var time = getSeconds();
         document.getElementById("id_cost").value = time;
         //console.log("answer = "+theString);\

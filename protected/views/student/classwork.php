@@ -35,12 +35,12 @@ require 'lessonSideBar.php';
                                     <?php echo '已完成';?>
                             </td>
                             <td>
-                                <?php if(time() > strtotime($work['begintime']) && time() < strtotime($work['endtime'])){?>
+                                <?php //if(time() > strtotime($work['begintime']) && time() < strtotime($work['endtime'])){?>
                                 <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['suiteID'];?>" class="view-link"><?php echo '进　　入';?></a>
-                                <?php } else { ?>
+                                <?php //} else { ?>
                                     <?php //echo '<font color="#ff0000">已经截止</span>'; ?>
                                 <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['suiteID'];?>" class="view-link"><?php echo '查看答案';?></a>
-                                <?php } ?>
+                                <?php //} ?>
                             </td>
                     </tr>
                 <?php }?>
