@@ -32,6 +32,7 @@
     </div>
 </div>
 
+
     <script type="text/javascript">
     var count = 2;
     function addIn()
@@ -101,6 +102,7 @@
             </div>
             </fieldset>
         </form>
+</div>
        
 
 
@@ -108,9 +110,9 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert('添加选择题成功！');
+        alert('添加填空题成功！');
     else if(result === '0')
-        alert('添加选择题失败！');  
+        alert('添加填空题失败！');  
 });
 $("#myForm").submit(function(){
     var requirements = $("#input1")[0].value;

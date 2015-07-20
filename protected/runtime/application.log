@@ -2530,3 +2530,81 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=student/ansFilling
 HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/ansChoice
 ---
+2015/07/20 10:48:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddFill" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddFi...')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddFi...')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(28): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddFill
+HTTP_REFERER=https://localhost/reborn/index.php?r=admin/addFill
+---
+2015/07/20 10:52:13 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddFill" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddFi...')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddFi...')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(28): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddFill
+HTTP_REFERER=https://localhost/reborn/index.php?r=admin/addFill
+---
+2015/07/20 10:52:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddFill" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddFi...')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddFi...')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(28): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddFill
+HTTP_REFERER=https://localhost/reborn/index.php?r=admin/addFill
+---
+2015/07/20 10:52:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddFill" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddFi...')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddFi...')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(28): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddFill
+HTTP_REFERER=https://localhost/reborn/index.php?r=admin/addFill
+---
+2015/07/20 11:05:34 [error] [php] Undefined offset: 1 (D:\wamp\www\reborn\protected\views\admin\editFill.php:77)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(1262): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditFill()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(28): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editFill&&exerciseID=5
+in D:\wamp\www\reborn\protected\views\admin\editFill.php (77)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1262)
+in D:\wamp\www\reborn\index.php (28)
+2015/07/20 11:20:01 [error] [php] Use of undefined constant count - assumed 'count' (D:\wamp\www\reborn\protected\views\admin\editFill.php:85)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(1262): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditFill()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(28): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editFill&&exerciseID=5
+in D:\wamp\www\reborn\protected\views\admin\editFill.php (85)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1262)
+in D:\wamp\www\reborn\index.php (28)

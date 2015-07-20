@@ -69,7 +69,8 @@
                                     else echo  $teachers[$model['createPerson']];
                             ?></td>
                         <td><?php echo $model['createTime'];?></td>
-                        <td>  
+                        <td>
+                            <a href="./index.php?r=admin/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                             <a href="./index.php?r=admin/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
                         </td>
                     </tr>            

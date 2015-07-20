@@ -15,6 +15,27 @@
 class Filling extends CActiveRecord
 {
     
+    public function insertFill($requirements,$answer,$createPerson){
+        $sql="select max(exerciseID) as id from filling";
+        $max_id = Yii::app()->db->createCommand($sql)->query();
+        $temp=$max_id->read();
+        if(empty($temp))
+        {
+            $new_id=1;
+        }
+        else
+        {
+            $new_id = $temp['id'] + 1;
+        }
+        $newFill = new Filling();
+        $newFill->exerciseID = $new_id;
+        $newFill->requirements = $requirements;
+        $newFill->answer =$answer;
+        $newFill->createPerson =$createPerson;
+        $newFill->createTime = date('y-m-d H:i:s',time());
+        return $newFill->insert();
+    }
+    
     public function getFillLst($type,$value){
         $order = " order by exerciseID ASC";
         if($type!="")

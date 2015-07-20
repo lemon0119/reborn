@@ -77,7 +77,10 @@
             </div>
         </div>
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">修改</button> <a href="./index.php?r=admin/returnFromAddChoice" class="btn">取消</a>
+        <?php if(!isset($action)) {?>
+            <button type="submit" class="btn btn-primary">修改</button> 
+        <?php }?>
+        <a href="./index.php?r=admin/returnFromAddChoice" class="btn">取消</a>
     </div>
     </fieldset>
 </form>   
