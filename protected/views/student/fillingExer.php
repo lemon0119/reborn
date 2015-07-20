@@ -21,12 +21,13 @@ $SNum = 0;
                 foreach ($exercise['filling'] as $value) {
                     echo ($SNum+1).'. ';
                     $str = $value['requirements'];
-                    $strArry = explode("$$",$str);
-                    echo $strArry[0];
+                    $answer = $value['answer'];
+                    $ansArr = explode('$$', $answer);
+                    echo $str.'<br/>';
                     $i = 1;
-                    while($i < count($strArry)){
-                        echo '<input type="text" name="'.$i.'filling'.$value["exerciseID"].'"></input>';
-                        echo $strArry[$i];
+                    while($i < count($ansArr)+1){
+                        echo '('.$i.') ';
+                        echo '<input type="text" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
                         $i++;
                     }
                     echo '<br/>';

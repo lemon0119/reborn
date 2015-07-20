@@ -46,6 +46,10 @@ $(document).ready(function(){
         var index = id.substring('view-answer-'.length);
         var checkID = '#answer-check-'+index;
         $(checkID).toggle(200);
+        if($(this).html() === '显示答案')
+            $(this).html('隐藏答案');
+        else
+            $(this).html('显示答案');
     });
 });
 </script>

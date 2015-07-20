@@ -14,6 +14,19 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionAnsFilling(){
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $studentID = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::getRecord($suiteID, $studentID);
+        $ansFilling = AnswerRecord::model()->getAnswerByType($recordID, 'filling');
+        $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
+        return $this->render('ansFilling',['exercise'=>$classwork,'ansFilling'=>$ansArr]);
+    }
+    
     public function actionAnsChoice(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
