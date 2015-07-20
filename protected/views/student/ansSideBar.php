@@ -31,7 +31,7 @@
                         <li class="nav-header">看打练习</li>
                         <?php foreach ($exercise['look'] as $lookType) :?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
-                                    <a href="./index.php?r=student/ansLookType&&exerID=<?php echo $lookType['exerciseID'];?>">
+                                    <a href="./index.php?r=student/ansLookType&&type=look&&exerID=<?php echo $lookType['exerciseID'];?>">
                                         <i class="icon-eye-open"></i>
                                         <?php echo $lookType['title']?>
                                     </a>
@@ -40,7 +40,7 @@
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                                <a href="./index.php?r=student/ansListenType&&exerID=<?php echo $listenType['exerciseID'];?>">
+                                <a href="./index.php?r=student/ansListenType&&type=listen&&exerID=<?php echo $listenType['exerciseID'];?>">
                                     <i class="icon-headphones"></i>
                                     <?php echo $listenType['title']?>
                                 </a>

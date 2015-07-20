@@ -14,6 +14,25 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionAnslookType(){
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        
+        $exerID = $_GET['exerID'];
+        $type = $_GET['type'];
+        $exer = Exercise::getExerise($exerID, $type);
+        $studentID = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::getRecord($suiteID, $studentID);
+        $answer = AnswerRecord::getAnswer($recordID, $type, $exerID);
+        return $this->render('ansDetail_1',['exercise' => $classwork,
+            'exer' => $exer,
+            'answer' => $answer['answer'],
+            'correct' => $answer['ratio_correct']]);
+    }
+    
     public function actionAnsKeyType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
@@ -243,7 +262,6 @@ class StudentController extends CController {
         $type = Yii::app()->session['exerType'];
         $type = str_replace(["Exer"],"",$type);
         $exer = Exercise::getExerise($exerID, $type);
-        $modAns = $exer['content'];
         $answer = Yii::app()->session['answer'];
         return $this ->render('ansDetail',['exer'=>$exer, 'answer'=>$answer]);
     }
