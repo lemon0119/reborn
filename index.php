@@ -3,12 +3,13 @@
 $yii=dirname(__FILE__).'/../framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/main.php';
 
-defined('HOST_IP') or define('HOST_IP', '192.168.101.235');
+$host = $_SERVER["HTTP_HOST"];
+defined('HOST_IP') or define('HOST_IP', $host);
 
 //设置时区
 date_default_timezone_set('PRC');
 
-$host = $_SERVER["HTTP_HOST"];
+
 
 defined('WWW') or define('WWW', 'https://'.$host.'/');
 defined('SITE_URL') or define('SITE_URL','https://'.$host.dirname($_SERVER['PHP_SELF']).'/');//网站根目录

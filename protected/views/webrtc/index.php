@@ -989,7 +989,7 @@ echo "<script>var role='$role';</script>";
                         var is_first_set_path = 1;
 
                         if (connection_state !== 1) { 
-                            var ws = new WebSocket("wss://192.168.101.235:8443", 'echo-protocol');                            
+                            var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');                            
                             
                             ws.onopen = function() {
                                 console.log("connect to websocket server");
@@ -1014,14 +1014,14 @@ echo "<script>var role='$role';</script>";
                                         if(video===null){
                                             var html = "";
                                             html += '<video id="video1" width="100%" controls>';
-                                            html += '<source src="' + absl_path + '">';
+                                            html += '<source src="' + video_path + '">';
                                             html += '</video>';
                                             //html += '<button id="play">播放</button>';
                                             //html += '<button id="pause">暂停</button>';
                                             $("#dianbo-videos-container").empty();
                                             $("#dianbo-videos-container").append(html);
                                         } else {
-                                            video.setAttribute("src", absl_path); 
+                                            video.setAttribute("src", video_path); 
                                         }
                                         $("#dianbo-videos-container").show();
                                         $("#videos-container").hide();
@@ -1066,7 +1066,7 @@ echo "<script>var role='$role';</script>";
 
                         if (connection_state !== 1) { //cheching is there is a live connection so we do not spam the server.
                             //if there is not live connection we create one
-                            var ws = new WebSocket("wss://192.168.101.235:8443", 'echo-protocol');// initializing the connection through the websocket api
+                            var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
                             ws.onopen = function() //creating the connection
                             {
                                 connection_state = 1;

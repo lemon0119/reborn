@@ -40,7 +40,7 @@ and open the template in the editor.
     display:block;
     height:30px;
     width:40px;
-    background:url("/reborn/img/right-small.png") left no-repeat;
+    background:url("../img/right-small.png") left no-repeat;
 }
 .answer-wrong{
     margin-left: -40px;
@@ -48,7 +48,7 @@ and open the template in the editor.
     display:block;
     height:30px;
     width:40px;
-    background:url("/reborn/img/wrong-small.png") left no-repeat;
+    background:url("../img/wrong-small.png") left no-repeat;
 }
 .answer-check{
     margin-left: 5px;
@@ -57,5 +57,5 @@ and open the template in the editor.
     display: inline-block;
     height:30px;
     width:40px;
-    background:url("/reborn/img/answer-small.png") left no-repeat;
+    background:url("../img/answer-small.png") left no-repeat;
 }
