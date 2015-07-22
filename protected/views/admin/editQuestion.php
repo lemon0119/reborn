@@ -33,10 +33,18 @@
 </div>
 
 <div class="span9">          
-    <h3>修改简单题目</h3>
+    <?php if(!isset($action)) {?>
+        <h3>修改简答题</h3>
+    <?php } else if($action == 'look') {?>
+        <h3>查看简答题</h3>
+    <?php }?>
     <form id="myForm" class="form-horizontal" method="post" action="./index.php?r=admin/editQuestionInfo&&exerciseID=<?php echo $exerciseID;?>">
         <fieldset>
+    <?php if(!isset($action)) {?>
         <legend>修改题目</legend>
+    <?php } else if($action == 'look') {?>
+        <legend>查看题目</legend>
+    <?php }?>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">

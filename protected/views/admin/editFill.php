@@ -60,11 +60,19 @@
     }
     </script>  
     
-<div class="span9">     
+<div class="span9">        
+<?php if(!isset($action)) {?>
 <h3>修改填空题</h3>
+<?php } else if($action == 'look') {?>
+<h3>查看填空题</h3>
+<?php }?>
 <form id="myForm" class="form-horizontal" method="post" action="./index.php?r=admin/editFillInfo&&exerciseID=<?php echo $exerciseID;?>"> 
         <fieldset>
-         <legend>填写题目</legend>
+        <?php if(!isset($action)) {?>
+            <legend>填写题目</legend>
+        <?php } else if($action == 'look') {?>
+            <legend>查看题目</legend>
+        <?php }?>
          <div class="control-group">
              <label class="control-label" for="input1">题目</label>
              <div class="controls">
