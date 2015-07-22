@@ -26,12 +26,16 @@ class WebrtcController extends CController{
     }*/
     public function actionIndex(){   
         $userID = Yii::app()->session['userid_now'];
-        $userName = Student::model()->findByPK($userID)->userName;
+        $userName = '';
         $role = Yii::app()->session['role_now'];
-        if($role == 'student')
+        if($role == 'student'){
             $this->layout='//layouts/studentBar';
-        else
+            $userName = Student::model()->findByPK($userID)->userName;
+        }
+        else{
+            $userName = Teacher::model()->findByPK($userID)->userName;
             $this->layout='//layouts/teacherBar';
+        }
         $this->render('index',['userName'=>$userName]);
     }
 //        public function actionDianbo()
