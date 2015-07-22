@@ -7,8 +7,8 @@
 function getContent(yaweiOCX) {
     var str;
     try {
-        yaweiOCX.UpdateView();
         str = yaweiOCX.GetContent();
+        console.log("getContent:"+'debug...');
     } catch(e) {
         console.log("getContent:"+e);
     }
@@ -37,7 +37,7 @@ function hideSecondToolBar( yaweiOCX) {
         console.log("hideSecondToolBar:"+e);
     }
 }
-
+/*
 //光标定位函数。
 function locate( yaweiOCX, index) {
     try {
@@ -97,12 +97,14 @@ function ffPrintOCX(objID) {
     str += "></object>";
     document.write(str);
 }
+
+*/
 /***********************************************************
  * 开始消息响应函数
  * @param {type} ppszLibPath
  * @returns {undefined}
  */
-
+/*
 function onSetLibPath(ppszLibPath) {
     console.log("Path:"+ppszLibPath);
 }
@@ -125,3 +127,4 @@ function onKeyPress(nChar, nRepCnt, nFlags) {
 }
 
 
+*/
