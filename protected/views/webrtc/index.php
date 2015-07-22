@@ -190,7 +190,7 @@ echo "<script>var role='$role';</script>";
                         </div>
 
                         <div style="display:inline;">
-                            <!-- sunpy: broadcast local video -->                                 
+                            <!-- sunpy: broadcast local video -->    
                             <button id="teacher-dianbo" style="font-size:20px;height:40px">点播</button>
                             <select id="teacher-choose-file">
                                 <option value ="1.mp4">速录演示视频</option>
@@ -261,19 +261,6 @@ echo "<script>var role='$role';</script>";
 
                 <!-- sunpy: chatroom -->
                 <script>
-                    // ------------------------------------------------------ publish bulletin
-                    
-                    $(function(){
-                        if(role === 'student')
-                            $("#postnotice").hide();
-                    });
-                    $(document).keypress(function(event) {
-                        if (event.keyCode == 13) {
-                            event.preventDefault();
-                            $("#postnotice").click();
-                        }
-                    });
-
                     $(function() {
                         var current_date = new Date();
                         var current_time = current_date.toLocaleTimeString();
