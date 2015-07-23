@@ -24,7 +24,7 @@
                                                         <li class="dropdown">
                                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">人员管理<b class="caret"></b></a>
                                                             <ul class="dropdown-menu">
-                                                                <li><a href="./index.php?r=admin/stuLst&&page=1">学生管理</a></li>
+                                                                <li><a href="./index.php?r=admin/stuLst">学生管理</a></li>
                                                                 <li><a href="./index.php?r=admin/teaLst">老师管理</a></li>
                                                             </ul>
                                                         </li>
