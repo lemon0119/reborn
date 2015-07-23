@@ -2,7 +2,7 @@
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header">查询</li>
-                <form action="./index.php?r=admin/searchStu" method="post">
+                <form action="./index.php?r=admin/searchStu&&page=1" method="post">
                         <li>
                                 <select name="type" style="width: 185px">
                                         <option value="userID" selected="selected">学号</option>
@@ -19,7 +19,7 @@
                 </form>
                         <li class="divider"></li>
                         <li class="nav-header">管理</li>
-                        <li id="li-stuLst"><a href="./index.php?r=admin/stuLst"><i class="icon-list-alt"></i> 学生列表</a></li>
+                        <li id="li-stuLst"><a href="./index.php?r=admin/stuLst&&page=1"><i class="icon-list-alt"></i> 学生列表</a></li>
                         <li id="li-addStu"><a href="./index.php?r=admin/addStu"><i class="icon-plus"></i> 添加学生</a></li>
                         <li id="li-recycleStu"><a href="./index.php?r=admin/recycleStu"><i class="icon-trash"></i> 回收站</a></li>
                 </ul>

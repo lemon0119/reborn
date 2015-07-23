@@ -91,6 +91,8 @@ class AdminController extends CController
         
     	public function actionStuLst()
 	{       
+            if(isset($_GET['page']))
+                Yii::app()->session['lastPage']=$_GET['page'];
             Yii::app()->session['lastUrl']="stuLst";
             $result = Student::model()->getStuLst("", "");
             $stuLst=$result['stuLst'];
@@ -103,6 +105,8 @@ class AdminController extends CController
         
         public function actionSearchStu()
         {
+            if(isset($_GET['page']))
+                Yii::app()->session['lastPage']=$_GET['page'];
             Yii::app()->session['lastUrl']="searchStu";
             if(isset($_POST['type'])){
                 $type=$_POST['type'];

@@ -14,7 +14,7 @@
             <tbody>        
                 <?php foreach($stuLst as $model):?>
                 <tr>
-                    <td style="width: 75px"><?php echo $model['userID'];?></td>
+                    <td style="width: 125px"><?php echo $model['userID'];?></td>
                     <td><?php echo $model['userName'];?></td>
                     <td><?php if($model['classID']=="0")
                                     echo "无";
