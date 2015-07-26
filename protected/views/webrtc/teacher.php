@@ -19,7 +19,7 @@
 <script src="<?php echo JS_URL; ?>Screen-Capturing.js"></script>         <!-- optional -->
 
 <script src="<?php echo JS_URL; ?>socket.io.js"></script>
-
+<script src="<?php echo JS_URL; ?>MyMultiConnection.js"></script>        <!-- required -->
 <!--直播begin-->
 <link href="<?php echo CSS_URL; ?>braodcast_style.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo CSS_URL; ?>getMediaElement.css" rel="stylesheet" type="text/css" />
@@ -105,148 +105,7 @@ echo "<script>var role='$role';</script>";
 // ......................................................
 
 document.getElementById('share-screen').onclick = function() {
-    this.disabled = true;
-    connection.open("lichao");
-};
-
-// ......................................................
-// ..................RTCMultiConnection Code.............
-// ......................................................
-
-var connection = new RTCMultiConnection();
-
-connection.session = {
-    screen: true,
-    oneway: true
-};
-
-connection.sdpConstraints.mandatory = {
-    OfferToReceiveAudio: false,
-    OfferToReceiveVideo: false
-};
-
-connection.onstream = function(event) {
-    document.body.appendChild(event.mediaElement);
+    //this.disabled = true;
+    connection.open("class");
 };
 </script>
-
-
-                <!-- sunpy: chatroom -->
-                <script>
-                    $(function() {
-                        var current_date = new Date();
-                        var current_time = current_date.toLocaleTimeString();
-
-                        $("#postnotice").click(function() {
-                            var text = $("#bulletin-textarea").val();
-                            $.ajax({
-                                type: "POST",
-                                url: "index.php?r=api/putBulletin",
-                                data: {bulletin: '"' + text + '"', time: '"' + current_time + '"'},
-                                success: function(){alert('公告发布成功！');},
-                                error: function(){alert('出错了...');}
-                            });
-                        })
-                    })
-
-                    // ------------------------------------------------------ poll latest bulletin
-                    /*第一次读取最新通知*/
-                    setTimeout(function() {
-                        pollBulletin();
-                    }, 200);
-
-                    function pollBulletin() {
-                        $.ajax({
-                            type: "GET",
-                            dataType: "json",
-                            url: "index.php?r=api/GetLatestBulletin",
-                            success: function(data) {
-                                console.log(data[0].id);
-                                if (role === 'student') {
-                                    $("#bulletin-textarea").val(data[0].content);
-                                } else {
-                                    if ($("#bulletin-textarea").val() === "") {
-                                        $("#bulletin-textarea").val(data[0].content);
-                                    }
-                                }
-                            }
-                        });
-                    }
-
-                    // ------------------------------------------------------ poll chat
-                    setInterval(function() {
-                        pollChatRoom();
-                    }, 1000);
-
-                    function pollChatRoom() {
-                        $.ajax({
-                            type: "GET",
-                            dataType: "json",
-                            url: "index.php?r=api/getlatestchat",
-                            success: function(data) {
-                                $("#chatroom").empty();
-                                var html = "";
-                                var obj = eval(data);
-                                $.each(obj, function(entryIndex, entry) {
-                                    html += entry['username'] + "：" + entry['chat'] + "<br>";
-                                });
-                                $("#chatroom").append(html);
-                                //$("#chatroom").scrollTop($("#chatroom").height);
-                            }
-                        });
-                    }
-
-                    // ------------------------------------------------------ send chat
-                    $(function() {
-                        $("#send-msg").click(function() {
-                            var messageField = $('#messageInput');
-                            var msg = messageField.val();
-                            messageField.val('');
-
-                            var current_date = new Date();
-                            var current_time = current_date.toLocaleTimeString();
-
-                            $.ajax({
-                                type: "POST",
-                                url: "index.php?r=api/putChat",
-                                data: {
-                                    username: '"' + current_username + '"',
-                                    chat: '"' + msg + '"',
-                                    time: '"' + current_time + '"'
-                                }
-                            })
-                        })
-                    })
-                </script>
-
-                <!-- sunpy: switch camera and bulletin -->
-                <script>
-                    $("#sw-teacher-camera").click(function() {
-                        $("#teacher-camera").toggle('slow');
-                    });
-                    $("#sw-chat").click(function() {
-                        $("#chat-box").toggle('slow');
-                    });
-                    $("#sw-bulletin").click(function() {
-                        $("#bulletin").toggle('slow');
-                    });
-                </script>
-                
-                <!-- sunpy: switch dianbo and screen -->
-                <script>
-                    $("#sw-show-dianbo").click(function() {
-                        $("#sw-show-dianbo").css("background-color", "#d9d9d9");
-                        $("#sw-show-screen").css("background-color", "white");
-                        $("#sw-show-screen").css("filter", "Alpha(opacity=50)");
-                        $("#videos-container").hide();
-                        $("#dianbo-videos-container").show();
-                    });
-
-                    $("#sw-show-screen").click(function() {
-                        $("#sw-show-screen").css("background-color", "#d9d9d9");
-                        $("#sw-show-dianbo").css("background-color", "white");
-                        $("#sw-show-dianbo").css("filter", "Alpha(opacity=50)");
-                        $("#videos-container").show();
-                        $("#dianbo-videos-container").hide();
-                    });
-                </script>                

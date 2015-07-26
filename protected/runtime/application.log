@@ -3037,3 +3037,14 @@ Stack trace:
 REQUEST_URI=/yawei/index.php?r=teacher/courseLst
 HTTP_REFERER=https://192.168.0.102/yawei/index.php?r=teacher/startCourse&&classID=1&&progress=2&&on=2
 ---
+2015/07/26 14:25:12 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:37)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (37)
+in D:\wamp\www\reborn\index.php (29)

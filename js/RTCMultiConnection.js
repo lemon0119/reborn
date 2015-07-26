@@ -103,8 +103,8 @@ function RTCMultiConnection(roomid) {
             connectCallback();
             return;
         }
-
-        socket = io.connect('https://192.168.101.235:9001/?userid=' + connection.userid);
+        var host = window.location.host;
+        socket = io.connect('https://'+host+':9001/?userid=' + connection.userid);
 
         socket.on('extra-data-updated', function(remoteUserId, extra) {
             if (!connection.peers[remoteUserId]) return;
