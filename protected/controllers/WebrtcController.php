@@ -31,38 +31,13 @@ class WebrtcController extends CController{
         if($role == 'student'){
             $this->layout='//layouts/studentBar';
             $userName = Student::model()->findByPK($userID)->userName;
+            return $this->render('student',['userName'=>$userName]);
         }
         else{
             $userName = Teacher::model()->findByPK($userID)->userName;
             $this->layout='//layouts/teacherBar';
+            return $this->render('teacher',['userName'=>$userName]);
         }
         $this->render('index',['userName'=>$userName]);
     }
-//        public function actionDianbo()
-//        {       $user_model = new User;
-//                $username_now=Yii::app()->user->name;
-//                $info=$user_model->find("username='$username_now'");
-//                $this->render('dianbo',array('info'=>$info));
-//        }
-//        public function actionBroadcast(){
-//            $user_model = new User;
-//            $username_now=Yii::app()->user->name;
-//            $info=$user_model->find("username='$username_now'");
-//            $this->render('broadcast',array('info'=>$info));
-//        }
-//        public function actionDraw(){
-//            $user_model = new User;
-//            $username_now=Yii::app()->user->name;
-//            $info=$user_model->find("username='$username_now'");
-//            $this->render('draw',array('info'=>$info));
-//        }
-//        public function actionPpt(){
-//            $user_model = new User;
-//            $username_now=Yii::app()->user->name;
-//            $info=$user_model->find("username='$username_now'");
-//            $this->render('ppt',array('info'=>$info));
-//        }
-//        public function actionTest(){
-//            $this->render('test');
-//        }
 }
