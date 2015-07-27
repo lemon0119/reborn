@@ -38,7 +38,7 @@
 <script>
     function dele(stuID){
         if(confirm("这将会移动该老师至回收站，您确定这样吗？")){
-            window.location.href = "./index.php?r=admin/deleteTea&&id="+stuID;
+            window.location.href = "./index.php?r=admin/deleteTea&&id="+stuID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
         }
     } 
     $(document).ready(function(){

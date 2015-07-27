@@ -113,7 +113,7 @@
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">修改</button>
              <?php }?>
-             <a href="./index.php?r=admin/returnFromAddFill" class="btn">取消</a>
+             <a href="./index.php?r=admin/returnFromAddFill&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">取消</a>
          </div>
          </fieldset>
 </form>

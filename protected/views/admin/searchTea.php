@@ -42,7 +42,7 @@
 <script>
     function dele(teaID){
         if(confirm("这将会移动该老师至回收站，您确定这样吗？")){
-            window.location.href = "./index.php?r=admin/deleteTeaSearch&&id="+teaID;
+            window.location.href = "./index.php?r=admin/deleteTeaSearch&&id="+teaID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
         }
     }  
 </script>
