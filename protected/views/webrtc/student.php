@@ -21,14 +21,8 @@
 <script src="<?php echo JS_URL; ?>Screen-Capturing.js"></script>         <!-- optional -->
 
 <script src="<?php echo JS_URL; ?>socket.io.js"></script>
-
-<script src="<?php echo JS_URL; ?>MyMultiConnection.js"></script>        <!-- required -->
 <!--直播begin-->
-<link href="<?php echo CSS_URL; ?>braodcast_style.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo CSS_URL; ?>getMediaElement.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo CSS_URL; ?>index.css" rel="stylesheet" type="text/css" />
 <!--点播 begin-->
-<link href="<?php echo CSS_URL; ?>webrtc_style.css" rel="stylesheet" type="text/css"/>
 <!--点播end-->
 
 <?php
@@ -59,29 +53,27 @@ echo "<script>var role='$role';</script>";
                         <table style="width: 100%;" id="rooms-list"></table>
 
                         <!-- local/remote videos container -->
-                        <div style="display:block;padding-top:2px;font-size:15px;margin-left:1%;margin-right:1%;height:10px;width:98%;border:none;">
-                            <table style="border: 1px solid #d9d9d9;" height="15px">
-                                <tr height="15px">
-                                    <td align="center" height="15px" id="sw-show-screen">屏幕共享</td>
-                                    <td align="center" height="15px" id="sw-show-dianbo">点播文件</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <table class="student-video-head-table">
+                            <tr>
+                                <td class="student-video-head-td" id="share-button"><a href="#" id="sw-show-screen">屏幕共享</a></td>
+                                <td class="student-video-head-td" id="video-button"><a href="#" id="sw-show-dianbo">点播文件</a></td>
+                            </tr>
+                        </table>
                         
-                        <div id="videos-container" style="height: 100%; width: 100%; margin-top:45px; display:none"></div>
+                        <div id="videos-container" style="height: 100%; width: 100%; margin-top:5px; display:none"></div>
                         
-                        <div id="dianbo-videos-container" style="margin-top:45px;display:none">  </div>
+                        <div id="dianbo-videos-container" style="margin-top:5px;display:none">  </div>
                 </div>
 
                 <div class="right">
                     <div>
-                        <div align="center" id="sw-teacher-camera"><h4>教 师 视 频</h4></div>
+                        <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
                         <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;"></div>
-                        <div align="center" id="sw-bulletin"><h4>通 知 公 告</h4></div>
+                        <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
                         <div id="bulletin" class="bulletin" style="display:none">
                                 <textarea disabled id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
                         </div>
-                        <div align="center" id="sw-chat"><h4>课 堂 问 答</h4></div>
+                        <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
                         <div id="chat-box">
                         <div id="chatroom" class="chatroom"></div>
                         <div class="sendfoot">
@@ -93,14 +85,152 @@ echo "<script>var role='$role';</script>";
                 </div>
 
 <script>
-    
 // ......................................................
 // ......................screen-sharing..................
 // .......................UI Code........................
 // ......................................................
+$(document).ready(function(){
+    document.getElementById('sw-show-screen').onclick = function() {
+        //this.disabled = true;
+        connection.join("class");
+    };
 
-document.getElementById('sw-show-screen').onclick = function() {
-    //this.disabled = true;
-    var conDes = connection.join("class");
-};
+    var connection = new RTCMultiConnection('screen-sharing-id-1');
+
+    connection.session = {
+        screen: true,
+        oneway: true
+    };
+
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: false,
+        OfferToReceiveVideo: false
+    };
+
+    connection.onstream = function(event) {
+        var container = document.getElementById("videos-container");
+        $("#videos-container").show();
+        container.insertBefore(event.mediaElement, container.firstChild);
+    };
+});
+</script>
+
+<script>
+    //chat and bulletin
+$(document).ready(function(){
+    var current_date = new Date();
+    var current_time = current_date.toLocaleTimeString();
+
+    $("#postnotice").click(function() {
+        var text = $("#bulletin-textarea").val();
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putBulletin",
+            data: {bulletin: '"' + text + '"', time: '"' + current_time + '"'},
+            success: function(){alert('公告发布成功！');},
+            error: function(){alert('出错了...');}
+        });
+    });
+    // ------------------------------------------------------ poll latest bulletin
+    /*第一次读取最新通知*/
+    setTimeout(function() {
+        pollBulletin();
+    }, 200);
+    /*30轮询读取函数*/
+    setInterval(function() {
+        pollBulletin();
+    }, 10000);
+    // ------------------------------------------------------ poll chat
+    setInterval(function() {
+        pollChatRoom();
+    }, 1000);
+
+    // ------------------------------------------------------ send chat
+    $("#send-msg").click(function() {
+        var messageField = $('#messageInput');
+        var msg = messageField.val();
+        messageField.val('');
+
+        var current_date = new Date();
+        var current_time = current_date.toLocaleTimeString();
+
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putChat",
+            data: {
+                username: '"' + current_username + '"',
+                chat: '"' + msg + '"',
+                time: '"' + current_time + '"'
+            }
+        });
+    });
+});
+
+function pollChatRoom() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "index.php?r=api/getlatestchat",
+        success: function(data) {
+            $("#chatroom").empty();
+            var html = "";
+            var obj = eval(data);
+            $.each(obj, function(entryIndex, entry) {
+                html += entry['username'] + "：" + entry['chat'] + "<br>";
+            });
+            $("#chatroom").append(html);
+            //$("#chatroom").scrollTop($("#chatroom").height);
+        }
+    });
+}
+
+function pollBulletin() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "index.php?r=api/GetLatestBulletin",
+        success: function(data) {
+            console.log(data[0].id);
+            if (role === 'student') {
+                $("#bulletin-textarea").val(data[0].content);
+            } else {
+                if ($("#bulletin-textarea").val() === "") {
+                    $("#bulletin-textarea").val(data[0].content);
+                }
+            }
+        }
+    });
+}
+
+</script>
+
+<script>
+    //sunpy: switch camera and bulletin
+$(document).ready(function(){
+    $("#sw-teacher-camera").click(function() {
+        $("#teacher-camera").toggle(200);
+    });
+    $("#sw-chat").click(function() {
+        $("#chat-box").toggle(200);
+    });
+    $("#sw-bulletin").click(function() {
+        $("#bulletin").toggle(200);
+    });
+
+    //switch dianbo and screen
+    $("#sw-show-dianbo").click(function() {
+        $("#video-button").css("background-color", "#d9d9d9");
+        $("#share-button").css("background-color", "white");
+        $("#videos-container").hide();
+        $("#dianbo-videos-container").show();
+    });
+
+    $("#sw-show-screen").click(function() {
+        $("#share-button").css("background-color", "#d9d9d9");
+        $("#video-button").css("background-color", "white");
+        $("#sw-show-dianbo").css("filter", "Alpha(opacity=50)");
+        $("#videos-container").show();
+        $("#dianbo-videos-container").hide();
+    });
+});
 </script>

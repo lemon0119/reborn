@@ -19,7 +19,6 @@
 <script src="<?php echo JS_URL; ?>Screen-Capturing.js"></script>         <!-- optional -->
 
 <script src="<?php echo JS_URL; ?>socket.io.js"></script>
-<script src="<?php echo JS_URL; ?>MyMultiConnection.js"></script>        <!-- required -->
 <!--直播begin-->
 <link href="<?php echo CSS_URL; ?>braodcast_style.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo CSS_URL; ?>getMediaElement.css" rel="stylesheet" type="text/css" />
@@ -47,7 +46,7 @@ echo "<script>var role='$role';</script>";
                     </span>
                     
                         <div style="display:inline;padding-right:60px;">
-                            <button id="share-screen" style="font-size:20px;height:40px">屏幕</button>
+                            <button id="share-screen" class=" btn-large btn-primary">屏幕共享</button>
                         </div>
 
                         <div style="display:inline;padding-right:60px;">
@@ -77,16 +76,16 @@ echo "<script>var role='$role';</script>";
 
                 <div class="right">
                     <div>
-                        <div align="center" id="sw-teacher-camera"><h4>教 师 视 频</h4></div>
+                        <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
                         <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;"></div>
-                        <div align="center" id="sw-bulletin"><h4>通 知 公 告</h4></div>
+                        <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
                         <div id="bulletin" class="bulletin" style="display:none">
                             
                         <textarea id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
                         <button id="postnotice" name="发布公告" class="btn btn-primary" style="margin-left: 100px; margin-top: 5px;">发布公告</button>
 
                         </div>
-                        <div align="center" id="sw-chat"><h4>课 堂 问 答</h4></div>
+                        <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
                         <div id="chat-box">
                         <div id="chatroom" class="chatroom"></div>
                         <div class="sendfoot">
@@ -103,9 +102,42 @@ echo "<script>var role='$role';</script>";
 // ......................screen-sharing..................
 // .......................UI Code........................
 // ......................................................
-
-document.getElementById('share-screen').onclick = function() {
-    //this.disabled = true;
-    connection.open("class");
-};
+$(document).ready(function(){
+    var connection ;
+    var streamid;
+    $('#share-screen').click(function(){
+        var cls = $(this).attr('class');
+        if(cls.indexOf('btn-primary') > 0){//按钮是共享
+            connection = new RTCMultiConnection('screen-sharing-id-1');
+            connection.session = {
+                screen: true,
+                oneway: true
+            };
+            connection.sdpConstraints.mandatory = {
+                OfferToReceiveAudio: false,
+                OfferToReceiveVideo: false
+            };
+            connection.onstream = function(event) {
+                streamid = event.streamid;
+                var container = document.getElementById("videos-container");
+                $("#videos-container").show();
+                container.insertBefore(event.mediaElement, container.firstChild);
+            };
+            
+            connection.open("class");
+            $(this).attr('class','btn btn-large');
+            $(this).html('关闭共享');
+        } else {
+            //按钮是关闭
+            connection.leave();
+            connection.removeStream(streamid);
+            connection = null;
+            var container = document.getElementById("videos-container");
+            $("#videos-container").hide();
+            $("#videos-container").empty();
+            $(this).attr('class','btn-large btn-primary');
+            $(this).html('共享屏幕');
+        }
+    });
+});
 </script>

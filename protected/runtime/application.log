@@ -3048,3 +3048,14 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=webrtc/index
 in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (37)
 in D:\wamp\www\reborn\index.php (29)
+2015/07/27 14:48:28 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:37)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (37)
+in D:\wamp\www\reborn\index.php (29)
