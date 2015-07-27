@@ -90,28 +90,60 @@ echo "<script>var role='$role';</script>";
 // .......................UI Code........................
 // ......................................................
 $(document).ready(function(){
-    document.getElementById('sw-show-screen').onclick = function() {
-        //this.disabled = true;
-        connection.join("class");
-    };
-
-    var connection = new RTCMultiConnection('screen-sharing-id-1');
-
-    connection.session = {
+    var share_conn = new RTCMultiConnection('screen-sharing-id-1');
+    var share_state = false;
+    var video_state = false;
+    share_conn.session = {
         screen: true,
         oneway: true
     };
-
-    connection.sdpConstraints.mandatory = {
+    
+    share_conn.sdpConstraints.mandatory = {
         OfferToReceiveAudio: false,
         OfferToReceiveVideo: false
     };
-
-    connection.onstream = function(event) {
+    share_conn.autoCloseEntireSession = true;
+    share_conn.onstream = function(event) {
         var container = document.getElementById("videos-container");
-        $("#videos-container").show();
+        share_state = true;
         container.insertBefore(event.mediaElement, container.firstChild);
+        //$("#videos-container").show();
+        $("#sw-show-screen").click();
     };
+    var join_interval = setInterval(function () {
+        if (!share_state) {
+            share_conn.join("class");
+        } else {
+            clearInterval(join_interval);
+            console.log('stop join share!');
+        }
+    }, 500);
+    
+    var video_conn = new RTCMultiConnection('video-sharing-id-1');
+    video_conn.session = {
+        audio: true,
+        video: true,
+        data : true,
+        oneway: true
+    };
+    video_conn.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: true
+    };
+    video_conn.onstream = function(event) {
+        video_state = true;
+        var teacherCamera = document.getElementById("teacher-camera");
+        teacherCamera.insertBefore(event.mediaElement, teacherCamera.firstChild);
+    };
+    video_conn.autoCloseEntireSession = true;
+    var join_video_interval = setInterval(function () {
+        if (!video_state) {
+            video_conn.join("video-classid");
+        } else {
+            clearInterval(join_video_interval);
+            console.log('stop join video!');
+        }
+    }, 500);
 });
 </script>
 
@@ -120,17 +152,6 @@ $(document).ready(function(){
 $(document).ready(function(){
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
-
-    $("#postnotice").click(function() {
-        var text = $("#bulletin-textarea").val();
-        $.ajax({
-            type: "POST",
-            url: "index.php?r=api/putBulletin",
-            data: {bulletin: '"' + text + '"', time: '"' + current_time + '"'},
-            success: function(){alert('公告发布成功！');},
-            error: function(){alert('出错了...');}
-        });
-    });
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -233,4 +254,129 @@ $(document).ready(function(){
         $("#dianbo-videos-container").hide();
     });
 });
+</script>
+
+<script>
+    //点播
+$(document).ready(function(){
+    var myVideo = document.getElementById("video1");
+    var connection_state = 0;
+    var is_first_connection = 1;
+    var is_first_set_path = 1;
+
+    if (connection_state !== 1) { 
+        var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');                            
+
+        ws.onopen = function() {
+            console.log("connect to websocket server");
+        };
+
+        ws.addEventListener("message", function(e){
+            var msg = e.data;
+            var local_my_video = document.getElementById("video1");
+
+            if (msg === "Play" && local_my_video !== null && local_my_video.paused) {
+                local_my_video = document.getElementById("video1");
+                local_my_video.play();
+            } else if (msg === "Pause" && local_my_video !== null) {
+                local_my_video = document.getElementById("video1");
+                local_my_video.pause();
+            } else if (msg.indexOf('Path') >= 0) {
+                var video_path = msg.substr(5);
+                if (is_first_set_path === 1) {  
+                    is_first_set_path = 0;
+                    var video = document.getElementById('video1');
+                    if(video===null){
+                        var html = "";
+                        html += '<video id="video1" width="100%" controls>';
+                        html += '<source src="' + video_path + '">';
+                        html += '</video>';
+                        //html += '<button id="play">播放</button>';
+                        //html += '<button id="pause">暂停</button>';
+                        $("#dianbo-videos-container").empty();
+                        $("#dianbo-videos-container").append(html);
+                    } else {
+                        video.setAttribute("src", video_path); 
+                    }
+                    $("#dianbo-videos-container").show();
+                    $("#videos-container").hide();
+                }                                    
+            }                
+        });
+    }
+});
+                            
+function WebSocketConnect(absl_path){
+    console.log("sunpy [WebSocketConnect]");
+    var myVideo = document.getElementById("video1");
+    var connection_state = 0;
+    var is_first_connection = 1;
+    var is_first_set_path = 1;
+
+    if (connection_state !== 1) { //cheching is there is a live connection so we do not spam the server.
+        //if there is not live connection we create one
+        var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
+        ws.onopen = function() //creating the connection
+        {
+            connection_state = 1;
+            /*
+            if (document.getElementById("video1") !== null) {
+                $("#teacher-stop-dianbo").click(function() {
+                    ws.close();
+                });
+            } */                               
+
+            myVideo.addEventListener("play", function() {
+                console.log("sunpy: btn play");
+                var message_sent = "Play";
+                ws.send(message_sent); 
+                message_sent = "Path " + absl_path;
+                ws.send(message_sent);                                    
+            });
+
+            myVideo.addEventListener("pause", function() {
+                console.log("sunpy: btn pause");
+                var message_sent = "Pause";
+                ws.send(message_sent);                                    
+            });                                
+
+            // sunpy: teacher side broadcasts sync msg
+            //        progress + path
+            setInterval(function() {
+                broadcast_video_time(absl_path);
+            }, 1000);
+
+            function broadcast_video_time(absl_path)
+            {
+                var syn_msg;
+                var video_current_time = myVideo.currentTime;                                    
+
+                if (myVideo.paused) {
+                    syn_msg = "sync " + video_current_time;                                        
+                } else {
+                    syn_msg = "psync " + video_current_time;
+                }                                    
+
+                var syn_path_msg = "Path " + absl_path;
+                ws.send(syn_path_msg);
+                ws.send(syn_msg);
+            }
+        };
+
+        ws.addEventListener("message", function(e) 
+        {                                
+            var msg = e.data;
+
+            if (msg === "Play" && myVideo.paused) {
+                myVideo.play();
+            } else if (msg === "Pause") {
+                myVideo.pause();
+            }                               
+        });
+
+        ws.onclose = function(event) {
+            alert("与点播服务器的连接断开...");
+        };
+    }
+}
 </script>

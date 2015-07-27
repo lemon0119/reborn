@@ -6,7 +6,6 @@
 <script src="<?php echo JS_URL; ?>OnIceCandidateHandler.js"></script>    <!-- required -->
 <script src="<?php echo JS_URL; ?>IceServersHandler.js"></script>        <!-- required -->
 
-
 <script src="<?php echo JS_URL; ?>Plugin.EveryWhere.js"></script>        <!-- optional -->
 <script src="<?php echo JS_URL; ?>getUserMedia.js"></script>             <!-- optional -->
 <script src="<?php echo JS_URL; ?>BandwidthHandler.js"></script>         <!-- optional -->
@@ -46,13 +45,12 @@ echo "<script>var role='$role';</script>";
                     </span>
                     
                         <div style="display:inline;padding-right:60px;">
-                            <button id="share-screen" class=" btn-large btn-primary">屏幕共享</button>
+                            <button id="share-screen" class="btn-large btn-primary">屏幕共享</button>
                         </div>
 
                         <div style="display:inline;padding-right:60px;">
                             <!-- sunpy: video start -->
-                            <button id="setup-new-broadcast" style="font-size:20px;height:40px">视频</button>                        
-                            <button id="teacher-close-camera" style="font-size:20px;height:40px" disabled="true">关闭视频</button>
+                            <button id="setup-new-broadcast" class="btn-large btn-primary">直播视频</button>
                         </div>
 
                         <div style="display:inline;">
@@ -103,41 +101,276 @@ echo "<script>var role='$role';</script>";
 // .......................UI Code........................
 // ......................................................
 $(document).ready(function(){
-    var connection ;
-    var streamid;
+    var share_conn;
     $('#share-screen').click(function(){
         var cls = $(this).attr('class');
         if(cls.indexOf('btn-primary') > 0){//按钮是共享
-            connection = new RTCMultiConnection('screen-sharing-id-1');
-            connection.session = {
+            share_conn = new RTCMultiConnection('screen-sharing-id-1');
+            share_conn.session = {
                 screen: true,
                 oneway: true
             };
-            connection.sdpConstraints.mandatory = {
+            share_conn.sdpConstraints.mandatory = {
                 OfferToReceiveAudio: false,
                 OfferToReceiveVideo: false
             };
-            connection.onstream = function(event) {
-                streamid = event.streamid;
+            share_conn.autoCloseEntireSession = true;
+            share_conn.onstream = function(event) {
                 var container = document.getElementById("videos-container");
                 $("#videos-container").show();
                 container.insertBefore(event.mediaElement, container.firstChild);
             };
-            
-            connection.open("class");
+            share_conn.open("class");
             $(this).attr('class','btn btn-large');
             $(this).html('关闭共享');
         } else {
             //按钮是关闭
-            connection.leave();
-            connection.removeStream(streamid);
-            connection = null;
-            var container = document.getElementById("videos-container");
+            share_conn.close();
+            share_conn = null;
             $("#videos-container").hide();
             $("#videos-container").empty();
             $(this).attr('class','btn-large btn-primary');
             $(this).html('共享屏幕');
         }
     });
+    
+    $('#setup-new-broadcast').click(function(){
+        var video_conn = new RTCMultiConnection('video-sharing-id-1');
+        video_conn.session = {
+            audio: true,
+            video: true,
+            data : true,
+            oneway: true
+        };
+        video_conn.sdpConstraints.mandatory = {
+            OfferToReceiveAudio: true,
+            OfferToReceiveVideo: true
+        };
+        video_conn.onstream = function(event) {
+            var teacherCamera = document.getElementById("teacher-camera");
+            teacherCamera.insertBefore(event.mediaElement, teacherCamera.firstChild);
+        };
+        video_conn.autoCloseEntireSession = true;
+        video_conn.open('video-classid');
+    });
 });
+</script>
+
+<script>
+    //chat and bulletin
+$(document).ready(function(){
+    var current_date = new Date();
+    var current_time = current_date.toLocaleTimeString();
+
+    $("#postnotice").click(function() {
+        var text = $("#bulletin-textarea").val();
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putBulletin",
+            data: {bulletin: '"' + text + '"', time: '"' + current_time + '"'},
+            success: function(){alert('公告发布成功！');},
+            error: function(){alert('出错了...');}
+        });
+    });
+    // ------------------------------------------------------ poll latest bulletin
+    /*第一次读取最新通知*/
+    setTimeout(function() {
+        pollBulletin();
+    }, 200);
+    /*30轮询读取函数*/
+    setInterval(function() {
+        pollBulletin();
+    }, 10000);
+    // ------------------------------------------------------ poll chat
+    setInterval(function() {
+        pollChatRoom();
+    }, 1000);
+
+    // ------------------------------------------------------ send chat
+    $("#send-msg").click(function() {
+        var messageField = $('#messageInput');
+        var msg = messageField.val();
+        messageField.val('');
+
+        var current_date = new Date();
+        var current_time = current_date.toLocaleTimeString();
+
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putChat",
+            data: {
+                username: '"' + current_username + '"',
+                chat: '"' + msg + '"',
+                time: '"' + current_time + '"'
+            }
+        });
+    });
+});
+
+function pollChatRoom() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "index.php?r=api/getlatestchat",
+        success: function(data) {
+            $("#chatroom").empty();
+            var html = "";
+            var obj = eval(data);
+            $.each(obj, function(entryIndex, entry) {
+                html += entry['username'] + "：" + entry['chat'] + "<br>";
+            });
+            $("#chatroom").append(html);
+            //$("#chatroom").scrollTop($("#chatroom").height);
+        }
+    });
+}
+
+function pollBulletin() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "index.php?r=api/GetLatestBulletin",
+        success: function(data) {
+            console.log(data[0].id);
+            if (role === 'student') {
+                $("#bulletin-textarea").val(data[0].content);
+            } else {
+                if ($("#bulletin-textarea").val() === "") {
+                    $("#bulletin-textarea").val(data[0].content);
+                }
+            }
+        }
+    });
+}
+
+</script>
+
+<script>
+    //sunpy: switch camera and bulletin
+$(document).ready(function(){
+    $("#sw-teacher-camera").click(function() {
+        $("#teacher-camera").toggle(200);
+    });
+    $("#sw-chat").click(function() {
+        $("#chat-box").toggle(200);
+    });
+    $("#sw-bulletin").click(function() {
+        $("#bulletin").toggle(200);
+    });
+});
+</script>
+
+<script>
+    //点播
+$(document).ready(function(){
+    $("#teacher-dianbo").click(function() {   
+        console.log("sunpy: role = " + role);
+        //$("#videos-container").empty();
+
+        var server_root_path = "<?php echo SITE_URL.'/resources/'?>video/";
+        var filepath = $("#teacher-choose-file option:selected").val();
+        var absl_path = server_root_path + filepath;
+        var video_element;
+        var video_time_duration;
+
+        console.log("sunpy: choose file " + server_root_path + filepath);
+
+        var video = document.getElementById('video1');
+        if(video===null){
+            var html = "";
+            html += '<video id="video1" width="100%" controls>';
+            html += '<source src="' + absl_path + '">';
+            html += '</video>';
+            //html += '<button id="play">播放</button>';
+            //html += '<button id="pause">暂停</button>';
+            $("#dianbo-videos-container").empty();
+            $("#dianbo-videos-container").append(html);
+        } else {
+            video.setAttribute("src", absl_path); 
+        }
+        $("#dianbo-videos-container").show();
+        $("#videos-container").hide();
+        video_element = document.getElementById("video1");
+        video_element.onloadedmetadata = function() {
+            video_time_duration = video_element.duration;
+            console.log("sunpy: video duration " + video_time_duration);
+        };
+        WebSocketConnect(absl_path);
+    });
+});
+
+
+function WebSocketConnect(absl_path){
+    console.log("sunpy [WebSocketConnect]");
+    var myVideo = document.getElementById("video1");
+    var connection_state = 0;
+    var is_first_connection = 1;
+    var is_first_set_path = 1;
+
+    if (connection_state !== 1) { //cheching is there is a live connection so we do not spam the server.
+        //if there is not live connection we create one
+        var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
+        ws.onopen = function() //creating the connection
+        {
+            connection_state = 1;
+            /*
+            if (document.getElementById("video1") !== null) {
+                $("#teacher-stop-dianbo").click(function() {
+                    ws.close();
+                });
+            } */                               
+
+            myVideo.addEventListener("play", function() {
+                console.log("sunpy: btn play");
+                var message_sent = "Play";
+                ws.send(message_sent); 
+                message_sent = "Path " + absl_path;
+                ws.send(message_sent);                                    
+            });
+
+            myVideo.addEventListener("pause", function() {
+                console.log("sunpy: btn pause");
+                var message_sent = "Pause";
+                ws.send(message_sent);                                    
+            });                                
+
+            // sunpy: teacher side broadcasts sync msg
+            //        progress + path
+            setInterval(function() {
+                broadcast_video_time(absl_path);
+            }, 1000);
+
+            function broadcast_video_time(absl_path)
+            {
+                var syn_msg;
+                var video_current_time = myVideo.currentTime;                                    
+
+                if (myVideo.paused) {
+                    syn_msg = "sync " + video_current_time;                                        
+                } else {
+                    syn_msg = "psync " + video_current_time;
+                }                                    
+
+                var syn_path_msg = "Path " + absl_path;
+                ws.send(syn_path_msg);
+                ws.send(syn_msg);
+            }
+        };
+
+        ws.addEventListener("message", function(e) 
+        {                                
+            var msg = e.data;
+
+            if (msg === "Play" && myVideo.paused) {
+                myVideo.play();
+            } else if (msg === "Pause") {
+                myVideo.pause();
+            }                               
+        });
+
+        ws.onclose = function(event) {
+            alert("与点播服务器的连接断开...");
+        };
+    }
+}
 </script>

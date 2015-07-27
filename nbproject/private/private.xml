@@ -5,10 +5,9 @@
         <group>
             <file>file:/D:/wamp/www/reborn/protected/views/webrtc/student.php</file>
             <file>file:/D:/wamp/www/reborn/protected/views/webrtc/index.php</file>
-            <file>file:/D:/wamp/www/reborn/protected/controllers/WebrtcController.php</file>
-            <file>file:/D:/wamp/www/reborn/js/MyMultiConnection.js</file>
-            <file>file:/D:/wamp/www/reborn/protected/views/teacher/startCourse.php</file>
+            <file>file:/D:/wamp/www/reborn/css/default/my_style.css</file>
             <file>file:/D:/wamp/www/reborn/protected/views/webrtc/teacher.php</file>
+            <file>file:/D:/wamp/www/reborn/js/RTCMultiConnection.js</file>
         </group>
     </open-files>
 </project-private>
