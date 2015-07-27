@@ -76,9 +76,3 @@
     <h2>查询结果为空！</h2>
     <?php }?>
     </div>
-
-<script>
-    $(document).ready(function(){
-        $("#classLst").attr("class","active");
-    });
-</script>

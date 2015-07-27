@@ -55,7 +55,7 @@
             </tr>
         </thead>
                 <tbody>        
-                    <?php foreach($posts as $model):?>
+                    <?php foreach($stus as $model):?>
                     <tr>
                         <td style="width: 75px"><?php echo $model['userID'];?></td>
                         <td><?php echo $model['userName'];?></td>
@@ -67,11 +67,6 @@
                     <?php endforeach;?> 
                 </tbody>
         </table>
-        <div align=center>
-        <?php   
-        $this->widget('CLinkPager',array('pages'=>$pages));
-        ?>
-        </div>
     <!-- 翻页标签结束 -->
         <div class="form-actions">
             <button class="btn btn-primary"  onclick="back()">确定</button>
@@ -82,7 +77,11 @@
         <script>
         function back()
         {
-             window.location.href="./index.php?r=admin/classLst";
+             <?php if(Yii::app()->session['lastUrl']=="classLst"){?>
+                window.location.href="./index.php?r=admin/classLst&&page=<?php echo Yii::app()->session['lastPage'];?>";
+             <?php } else { ?>
+                window.location.href="./index.php?r=admin/searchClass&&page=<?php echo Yii::app()->session['lastPage'];?>";
+             <?php }?>
         }
         function addStuClass()
         {

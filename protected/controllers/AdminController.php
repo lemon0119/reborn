@@ -90,7 +90,13 @@ class AdminController extends CController
         }
         
     	public function actionStuLst()
-	{       
+	{   
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             Yii::app()->session['lastUrl']="stuLst";
             $result = Student::model()->getStuLst("", "");
             $stuLst=$result['stuLst'];
@@ -103,6 +109,12 @@ class AdminController extends CController
         
         public function actionSearchStu()
         {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             Yii::app()->session['lastUrl']="searchStu";
             if(isset($_POST['type'])){
                 $type=$_POST['type'];
@@ -309,6 +321,12 @@ class AdminController extends CController
         
         public function actionTeaLst()
 	{    
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             Yii::app()->session['lastUrl']="=teaLst";
             $result = Teacher::model()->getTeaLst("", "");
             $teaLst=$result['teaLst'];
@@ -321,6 +339,12 @@ class AdminController extends CController
         
         public function actionSearchTea()
         {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             Yii::app()->session['lastUrl']="=searchTea";
             if(isset($_POST['type'])){
                 $type=$_POST['type'];
@@ -495,6 +519,7 @@ class AdminController extends CController
         if(isset(Yii::app()->session['deleteTeaID'])){
             $userID = Yii::app()->session['deleteTeaID'];
             unset(Yii::app()->session['deleteTeaID']);
+            TeacherClass::model()->deleteAll("teacherID = '$userID'");
             $rows = Teacher::model()->deleteByPK("$userID");
         } else if(isset(Yii::app()->session['deleteTeaBox'])){
             $ids = Yii::app()->session['deleteTeaBox'];
@@ -504,6 +529,7 @@ class AdminController extends CController
                 $condition = $condition."'$value',";
             }
             $condition = $condition."''";
+            TeacherClass::model()->deleteAll("teacherID in ($condition)");
             $rows = Teacher::model()->deleteAll("userID in ($condition)");
         }
         $teaLst = Teacher::model()->findAll("is_delete = '1'");
@@ -554,6 +580,12 @@ class AdminController extends CController
         
         public function actionClassLst()
         {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
              //显示结果列表并分页
             Yii::app()->session['lastUrl']="classLst";
 	    $result = TbClass::model()->getClassLst();
@@ -567,6 +599,12 @@ class AdminController extends CController
         }
         public function actionStuDontHaveClass()
         {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             Yii::app()->session['lastUrl']="stuDontHaveClass";
             $result = Student::model()->getStuLst("classID", 0);
             $this->render("stuDontHaveClass",["stuLst"=>$result["stuLst"],"pages"=>$result['pages']]);
@@ -574,16 +612,32 @@ class AdminController extends CController
         
         public function actionSearchClass()
         {
-            if(isset($_POST['which']))
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
+            Yii::app()->session['lastUrl']="searchClass";
+            if(isset($_POST['which'])){
+                $type=$_POST['which'];
+                $value=$_POST['value'];
+                Yii::app()->session['searchType']=$type;
+                Yii::app()->session['searchValue']=$value;
+            } else {
+                $type = Yii::app()->session['searchType'];
+                $value = Yii::app()->session['searchValue'];
+            }
+            if(isset($type))
             {   
-                if ($_POST['which'] == "classID"||$_POST['which'] == "className")
+                if ($type == "classID"||$type == "className")
                 {
-                    $ex_sq = " WHERE " . $_POST['which'] . " = '" . $_POST['value'] . "'";
-                }else if($_POST['which'] == "courseID"){
-                    $ex_sq = " WHERE currentCourse = '" . $_POST['value'] . "'";
-                } else if($_POST['which'] == "teaName")
+                    $ex_sq = " WHERE " . $type . " = '" . $value . "'";
+                }else if($type == "courseID"){
+                    $ex_sq = " WHERE currentCourse = '" . $value . "'";
+                } else if($type == "teaName")
                 {
-                    $sql="SELECT * FROM teacher WHERE userName ='". $_POST['value'] . "'";
+                    $sql="SELECT * FROM teacher WHERE userName ='". $value . "'";
                     $an = Yii::app()->db->createCommand($sql)->query();
                     $temp=$an->read();
                     if(!empty($temp))
@@ -703,15 +757,8 @@ class AdminController extends CController
              
 	    $sql = "SELECT * FROM student WHERE classID = '$classID' AND is_delete = 0";
             $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $nums=$result->rowCount;
-            $pages=new CPagination($nums);
-            $pages->pageSize=8;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
+            $stus = Yii::app()->db->createCommand($sql)->query();
+            $nums=$stus->rowCount;
             
             $sql="SELECT * FROM teacher_class WHERE classID =$classID";
             $teacherOfClass = Yii::app()->db->createCommand($sql)->query();
@@ -724,8 +771,7 @@ class AdminController extends CController
                                              'teacher'=>TbClass::model()->teaInClass(),
                                              'teacherOfClass' =>$teacherOfClass,
                                              'nums'=>$nums,        //学生人数
-                                             'posts'=>$posts,      //学生
-                                             'pages'=>$pages,      //分页
+                                             'stus'=>$stus,      //学生
                                             'result'=>$act_result,
                     ),false,true);
         }
@@ -1133,6 +1179,12 @@ class AdminController extends CController
 
         public function actionFillLst()
 	{       
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             $result = Filling::model()->getFillLst("", "");
             $fillLst=$result['fillLst'];
             $pages=$result['pages'];
@@ -1146,6 +1198,12 @@ class AdminController extends CController
         
         public function actionSearchFill()
         {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             if(isset($_POST['type'])){
                 $type=$_POST['type'];
                 $value=$_POST['value'];
@@ -1285,6 +1343,12 @@ class AdminController extends CController
         
         public function actionChoiceLst()
 	{     
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             $result     =   Choice::model()->getChoiceLst("", "");
             $choiceLst  =   $result['choiceLst'];
             $pages      =   $result['pages'];
@@ -1298,6 +1362,12 @@ class AdminController extends CController
         
         public function actionSearchChoice()
         {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             if(isset($_POST['type'])){
                 $type   =   $_POST['type'];
                 $value  =   $_POST['value'];
@@ -1414,6 +1484,12 @@ class AdminController extends CController
         
         public function actionQuestionLst()
 	{       
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             Yii::app()->session['lastUrl']  =   "questionLst";
             $result      =  Question::model()->getQuestionLst("", "");
             $questionLst =  $result['questionLst'];  
@@ -1427,6 +1503,12 @@ class AdminController extends CController
         
         public function actionSearchQuestion()
         {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
             if(isset($_POST['type'])){
                 $type   =   $_POST['type'];
                 $value  =   $_POST['value'];

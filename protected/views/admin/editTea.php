@@ -22,9 +22,9 @@
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">提交</button>　　　
                 <?php if(isset($flag)){?>
-                <a href="./index.php?r=admin/searchTea" class="btn">返回</a>
+                <a href="./index.php?r=admin/searchTea&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
                 <?php }else{?>
-                <a href="./index.php?r=admin/teaLst" class="btn">返回</a>
+                <a href="./index.php?r=admin/teaLst&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
                 <?php }?>　　
                 <a  class="btn btn-primary" onclick="resetPass()">重置密码</a>
             </div>
