@@ -519,6 +519,7 @@ class AdminController extends CController
         if(isset(Yii::app()->session['deleteTeaID'])){
             $userID = Yii::app()->session['deleteTeaID'];
             unset(Yii::app()->session['deleteTeaID']);
+            TeacherClass::model()->deleteAll("teacherID = '$userID'");
             $rows = Teacher::model()->deleteByPK("$userID");
         } else if(isset(Yii::app()->session['deleteTeaBox'])){
             $ids = Yii::app()->session['deleteTeaBox'];
@@ -528,6 +529,7 @@ class AdminController extends CController
                 $condition = $condition."'$value',";
             }
             $condition = $condition."''";
+            TeacherClass::model()->deleteAll("teacherID in ($condition)");
             $rows = Teacher::model()->deleteAll("userID in ($condition)");
         }
         $teaLst = Teacher::model()->findAll("is_delete = '1'");
