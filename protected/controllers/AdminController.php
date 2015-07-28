@@ -989,176 +989,194 @@ class AdminController extends CController
 
         
         public function actionListenLst()
-	{       
-            //定义动作
-            $act_result="";
-            
-           //添加动作
-           if(isset($_GET['action']))
-           {
-                   //添加班级
-                if($_GET['action']=='add')
-               {                  
-                   if(!empty($_POST['title'])&&!empty($_POST['content']))
-                   {
-                       //得到当前最大的ID
-                       $sql="select max(exerciseID) as id from listen_type";
-                       $max_id = Yii::app()->db->createCommand($sql)->query();
-                       $temp=$max_id->read();
-                       if(empty($temp))
-                       {
-                           $new_id=1;
-                       }
-                       else
-                       {
-                           $new_id = $temp['id'] + 1;
-                       }
-                            
-                       if($_FILES['file']['type']!='audio/mpeg')
-                       {
-                           $shao='文件格式错误，应为MP3文件';
-                        }else if ($_FILES["file"]["size"] < 200000000)
-                        {
-                          if ($_FILES["file"]["error"] > 0)
-                            {
-                              $shao='文件上传失败';
-                            }
-                          else
-                            {
-                            if (!file_exists($_FILES["file"]["tmp_name"]))
-                              {
-                                 $shao='服务器上存在相同文件';
-                              }
-                            else
-                              {
-                                 move_uploaded_file($_FILES["file"]["tmp_name"],'resources/'.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-                                $shao='成功';
-                              }
-                            }
-                          }else
-                          {
-                          echo "无效文件";
-                          }
-                       
-                       if($shao=='成功')
-                       {
-                       $sql= "INSERT INTO listen_type VALUES ('".$new_id ."','0','" .$_POST['content']."','','".$_FILES["file"]["name"]."','".$_POST['title']."','0','". date('y-m-d H:i:s',time()) ."','')";
-                       Yii::app()->db->createCommand($sql)->query();
-                       $act_result="添加习题成功！";
-                       unset($_GET['action']);
-                       }else {
-                             //文件出现问题
-                             $this->render('addListen',array(
-                                                    'shao'=>$shao
-                                                    ));
-                       return;
-                       }
-                   }else
-                   {
-                       //用户输入参数不足
-                       $this->render('addListen',array(
-                                                    'shao'=>"输入全不能为空"
-                                                    ));
-                       return;
-                   }
-               }else if($_GET['action']=='edit'){
-                   
-                   if(isset($_POST['checkbox']))
-                   {
-                       if($_FILES['file']['type']!='audio/mpeg')
-                       {
-                           $shao='文件格式错误，应为MP3文件';
-                        }else if ($_FILES["file"]["size"] < 200000000)
-                          {
-                          if ($_FILES["file"]["error"] > 0)
-                            {
-                              $shao='文件上传失败';
-                            }
-                          else
-                            {
-                            if (!file_exists($_FILES["file"]["tmp_name"]))
-                              {
-                                 $shao='服务器上存在相同文件';
-                              }
-                            else
-                              {
-                                 move_uploaded_file($_FILES["file"]["tmp_name"],'resources/'.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));  
-                                $shao='成功';
-                              }
-                            }
-                          }
-                        else
-                          {
-                          echo "无效文件";
-                          }
-                          
-                       if($shao=='成功')
-                       {
-                       $sql="select * from listen_type WHERE exerciseID='".$_GET['exerciseID']."'";
-                       $result = Yii::app()->db->createCommand($sql)->query();
-                       $result=$result->read();
-                       unlink('resources/'.$result['fileName']);
-                       $sql= "UPDATE listen_type SET content= '".$_POST['content'] ."', fileName = '".$_FILES["file"]["name"]."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                       Yii::app()->db->createCommand($sql)->query();
-                       $act_result="编辑习题成功！";
-                       unset($_GET['action']);
-                       }else {
-                           //文件出现问题
-                            $exerciseID=$_GET["exerciseID"];
-                            $sql = "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
-                            $result = Yii::app()->db->createCommand($sql)->query();
-                            $result =$result->read();
-                            $this->render("editListen",array(
-                                'shao'=>$shao,
-                                'exerciseID'=>$result['exerciseID'],
-                                'title' =>$result['title'],
-                                'content'=>$result['content'],
-                                'filename'=>$result['fileName']      
-                            ));
-                             
-
-                       return;
-                       }
-                       
-                   }else{
-                    $sql= "UPDATE listen_type SET content= '".$_POST['content'] ."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="编辑习题成功！";
-                    unset($_GET['action']);
-                   }
-               }
-           }
-            
-            
-            //搜索习题
-            if(isset($_POST['which']))
-            {   
-                if(!empty($_POST['name']))
-                $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-                else  $ex_sq = "";
+	{    
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
             }
-            else  $ex_sq = "";
-            
-            //显示结果列表并分页
-	    $sql = "SELECT * FROM listen_type ".$ex_sq;
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
+            $result     =   ListenType::model()->getListenLst("", "");
+            $listenLst  =   $result['listenLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "listenLst";
             $this->render('listenLst',array(
-            'posts'=>$posts,
-            'pages'=>$pages,
-            'teacher'=>TbClass::model()->teaInClass(),
-            'result'=>$act_result,
-            ),false,true);
+                    'listenLst'     =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
+            ));
+
+      
+//           //添加动作
+//           if(isset($_GET['action']))
+//           {
+//                   //添加班级
+//                if($_GET['action']=='add')
+//               {                  
+//                   if(!empty($_POST['title'])&&!empty($_POST['content']))
+//                   {
+//                       //得到当前最大的ID
+//                       $sql="select max(exerciseID) as id from listen_type";
+//                       $max_id = Yii::app()->db->createCommand($sql)->query();
+//                       $temp=$max_id->read();
+//                       if(empty($temp))
+//                       {
+//                           $new_id=1;
+//                       }
+//                       else
+//                       {
+//                           $new_id = $temp['id'] + 1;
+//                       }
+//                            
+//                       if($_FILES['file']['type']!='audio/mpeg')
+//                       {
+//                           $shao='文件格式错误，应为MP3文件';
+//                        }else if ($_FILES["file"]["size"] < 200000000)
+//                        {
+//                          if ($_FILES["file"]["error"] > 0)
+//                            {
+//                              $shao='文件上传失败';
+//                            }
+//                          else
+//                            {
+//                            if (!file_exists($_FILES["file"]["tmp_name"]))
+//                              {
+//                                 $shao='服务器上存在相同文件';
+//                              }
+//                            else
+//                              {
+//                                 move_uploaded_file($_FILES["file"]["tmp_name"],'resources/'.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+//                                $shao='成功';
+//                              }
+//                            }
+//                          }else
+//                          {
+//                          echo "无效文件";
+//                          }
+//                       
+//                       if($shao=='成功')
+//                       {
+//                       $sql= "INSERT INTO listen_type VALUES ('".$new_id ."','0','" .$_POST['content']."','','".$_FILES["file"]["name"]."','".$_POST['title']."','0','". date('y-m-d H:i:s',time()) ."','')";
+//                       Yii::app()->db->createCommand($sql)->query();
+//                       $act_result="添加习题成功！";
+//                       unset($_GET['action']);
+//                       }else {
+//                             //文件出现问题
+//                             $this->render('addListen',array(
+//                                                    'shao'=>$shao
+//                                                    ));
+//                       return;
+//                       }
+//                   }else
+//                   {
+//                       //用户输入参数不足
+//                       $this->render('addListen',array(
+//                                                    'shao'=>"输入全不能为空"
+//                                                    ));
+//                       return;
+//                   }
+//               }else if($_GET['action']=='edit'){
+//                   
+//                   if(isset($_POST['checkbox']))
+//                   {
+//                       if($_FILES['file']['type']!='audio/mpeg')
+//                       {
+//                           $shao='文件格式错误，应为MP3文件';
+//                        }else if ($_FILES["file"]["size"] < 200000000)
+//                          {
+//                          if ($_FILES["file"]["error"] > 0)
+//                            {
+//                              $shao='文件上传失败';
+//                            }
+//                          else
+//                            {
+//                            if (!file_exists($_FILES["file"]["tmp_name"]))
+//                              {
+//                                 $shao='服务器上存在相同文件';
+//                              }
+//                            else
+//                              {
+//                                 move_uploaded_file($_FILES["file"]["tmp_name"],'resources/'.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));  
+//                                $shao='成功';
+//                              }
+//                            }
+//                          }
+//                        else
+//                          {
+//                          echo "无效文件";
+//                          }
+//                          
+//                       if($shao=='成功')
+//                       {
+//                       $sql="select * from listen_type WHERE exerciseID='".$_GET['exerciseID']."'";
+//                       $result = Yii::app()->db->createCommand($sql)->query();
+//                       $result=$result->read();
+//                       unlink('resources/'.$result['fileName']);
+//                       $sql= "UPDATE listen_type SET content= '".$_POST['content'] ."', fileName = '".$_FILES["file"]["name"]."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
+//                       Yii::app()->db->createCommand($sql)->query();
+//                       $act_result="编辑习题成功！";
+//                       unset($_GET['action']);
+//                       }else {
+//                           //文件出现问题
+//                            $exerciseID=$_GET["exerciseID"];
+//                            $sql = "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
+//                            $result = Yii::app()->db->createCommand($sql)->query();
+//                            $result =$result->read();
+//                            $this->render("editListen",array(
+//                                'shao'=>$shao,
+//                                'exerciseID'=>$result['exerciseID'],
+//                                'title' =>$result['title'],
+//                                'content'=>$result['content'],
+//                                'filename'=>$result['fileName']      
+//                            ));
+//                             
+//
+//                       return;
+//                       }
+//                       
+//                   }else{
+//                    $sql= "UPDATE listen_type SET content= '".$_POST['content'] ."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
+//                    Yii::app()->db->createCommand($sql)->query();
+//                    $act_result="编辑习题成功！";
+//                    unset($_GET['action']);
+//                   }
+//               }
+//           }
+//            
+//            
+//            //搜索习题
+//            if(isset($_POST['which']))
+//            {   
+//                if(!empty($_POST['name']))
+//                $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
+//                else  $ex_sq = "";
+//            }
+//            else  $ex_sq = "";
+//            
+//            //显示结果列表并分页
+//	    $sql = "SELECT * FROM listen_type ".$ex_sq;
+//            $criteria=new CDbCriteria();
+//            $result = Yii::app()->db->createCommand($sql)->query();
+//            $pages=new CPagination($result->rowCount);
+//            $pages->pageSize=10;
+//            $pages->applyLimit($criteria);
+//            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
+//            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
+//            $result->bindValue(':limit', $pages->pageSize);
+//            $posts=$result->query();
+//            $this->render('listenLst',array(
+//            'posts'=>$posts,
+//            'pages'=>$pages,
+//            'teacher'=>TbClass::model()->teaInClass(),
+//            'result'=>$act_result,
+//            ),false,true);
 	}
           
         public function actionAddListen(){
+            $result =   'no';
+            if(isset($_POST['content'])){
+//                $result = Choice::model()->insertChoice($_POST['requirements'], $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'], $_POST['answer'], 0);
+            }
             $this->render("addListen",array(
                 
             ));

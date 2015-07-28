@@ -13,6 +13,27 @@
  */
 class ListenType extends CActiveRecord
 {
+        public function getListenLst($type,$value){
+        $order  =   " order by exerciseID ASC";
+        if($type!="")
+            $condition = " WHERE $type = '$value'";
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM listen_type";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $listenLst  =   $result->query();
+        
+        return ['listenLst'=>$listenLst,'pages'=>$pages,];
+    }
+    
     public function getListenExer($suiteID){
         $order = " order by exerciseID ASC";
         $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='listen')";
