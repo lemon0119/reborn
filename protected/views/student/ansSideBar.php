@@ -40,7 +40,7 @@
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                                <a href="./index.php?r=student/ansListenType&&type=listen&&exerID=<?php echo $listenType['exerciseID'];?>">
+                                <a href="./index.php?r=student/ansLookType&&type=listen&&exerID=<?php echo $listenType['exerciseID'];?>">
                                     <i class="icon-headphones"></i>
                                     <?php echo $listenType['title']?>
                                 </a>

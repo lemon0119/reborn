@@ -1,21 +1,25 @@
 <?php require 'ansSideBar.php';?>
+<link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
+<script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/accounting.js"></script>
 <div class="span9">
-    <div class="hero-unit" style="width: 900px">
-        <table border = '0px' width="900px">
+    <div class="hero-unit">
+        <table border = '0px' width="100%">
             <tr>
-                <td width = '100px' align='center'><h3><?php echo $exer['title']?></h3></td>
-                <td>　</td>
-                <td width = '100px' align='center'><h3>您的答案</h3></td>
+                <td width = '100px' align='center'><?php echo $exer['title']?></td>
+                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct * 100);echo '%';?></span></td>
             </tr>
             <tr>
-                <td><div id ="templet" class="compareBlock" onselectstart="return false" onscroll="doScrollLeft()"></div></td>
-                <td>　</td>
-                <td><div id ="answer" class="compareBlock" onselectstart="return false" onscroll="doScrollRight()"></div></td>
+                <td colspan='3'>
+                    <div class='answer-tip-text1'>您的回答：</div>
+                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
+                </td>
             </tr>
             <tr>
-                <td align='center'> 正确率：<span id="correct"></span></td> 
-                <td > </td>
-                <td align='center'> <button class="btn btn-primary btn-cont" onclick="load()"> 确定</button></td>
+                <td colspan='3'>
+                    <div class='answer-tip-text2'>正确答案：</div>
+                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
+                </td>
             </tr>
         </table>
     </div>
@@ -56,7 +60,6 @@
         var modTem = lcs.getSubString(1);
         var modAns = lcs.getSubString(2);
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
-        createFont('correct','#000000',100 * accounting.toFixed(correct, 3) + '%');
         displayTemp('templet', tem, modTem);
         displayTemp('answer', ans, modAns);
     }

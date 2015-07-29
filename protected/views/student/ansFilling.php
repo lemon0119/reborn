@@ -15,7 +15,7 @@ require 'ansSideBar.php';
                 foreach ($exercise['filling'] as $value) {
                     echo ($SNum+1).'. ';
                     $str = $value['requirements'];
-                    $answer = $value['answer'];
+                    $answer = $ansFilling[$value['exerciseID']];
                     $ansArr = explode('$$', $answer);
                     echo $str.'<br/>';
                     $i = 1;
@@ -31,7 +31,7 @@ require 'ansSideBar.php';
                     echo '</div>';
                     echo '<div class=\'answer-tip-text2\'>正确答案：</div>';
                     echo '<div>';
-                    $right = $ansFilling[$value['exerciseID']];
+                    $right = $value['answer'];
                     $rightArr = explode('$$', $right);
                     $i = 1;
                     while($i < count($rightArr)+1){
