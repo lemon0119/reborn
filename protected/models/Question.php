@@ -56,6 +56,30 @@ class Question extends CActiveRecord
         return ['questionLst'=>$questionLst,'pages'=>$pages,];
     }
     
+    
+    //宋杰 2015-7-30 获取登录老师写的简单题
+        public function getTeaQuestionLst($type,$value){
+        $order = " order by exerciseID ASC";
+        $teacher_id = Yii::app()->session['userid_now'];
+        if($type!="")
+            $condition = " WHERE $type = '$value' and createPerson = '$teacher_id'";
+        else
+            $condition= " WHERE createPerson = '$teacher_id'";
+        $select = "SELECT * FROM question";
+        $sql = $select.$condition.$order;
+        $criteria=new CDbCriteria();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages=new CPagination($result->rowCount);
+        $pages->pageSize=10; 
+        $pages->applyLimit($criteria); 
+        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $questionLst=$result->query();
+        
+        return ['questionLst'=>$questionLst,'pages'=>$pages,];
+    }
+    
 	/**
 	 * @return string the associated database table name
 	 */
