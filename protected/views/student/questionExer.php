@@ -5,7 +5,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+ if($isExam == false){ 
 require 'suiteSideBar.php';
+ }else{ 
+    require 'examSideBar.php';
+ } 
 $host = Yii::app()->request->hostInfo;
 $path = Yii::app()->request->baseUrl;
 $rout = 'student/saveQuestion';

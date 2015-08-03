@@ -1,7 +1,11 @@
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<?php require 'suiteSideBar.php';?>
+<?php  if($isExam == false){ 
+require 'suiteSideBar.php';
+ }else{ 
+    require 'examSideBar.php';
+ } ;?>
 <div class="span9">
     <div class="hero-unit">
             <?php 

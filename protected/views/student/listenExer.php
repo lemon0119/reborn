@@ -4,7 +4,14 @@
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <!--打字计时-->
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
-<?php require 'suiteSideBar.php';?>
+
+<?php
+//2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar
+if($isExam == false){ 
+require 'suiteSideBar.php';
+ }else{ 
+    require 'examSideBar.php';
+ } ;?>
 <div class="span9">
         <div class="hero-unit"  align="center">
             <table border = '0px'>

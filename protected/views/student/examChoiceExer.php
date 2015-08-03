@@ -6,11 +6,7 @@
  * and open the template in the editor.
  */
 
- if($isExam == FALSE){ 
 require 'suiteSideBar.php';
- }else{ 
-    require 'examSideBar.php';
- } 
 $host = Yii::app()->request->hostInfo;
 $path = Yii::app()->request->baseUrl;
 $rout = 'student/saveChoice';

@@ -1,5 +1,9 @@
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
-<?php require 'suiteSideBar.php';?>
+<?php  if($isExam == false){ 
+require 'suiteSideBar.php';
+ }else{ 
+    require 'examSideBar.php';
+ } ?>
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
