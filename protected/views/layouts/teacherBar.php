@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
-<?php $class = Teacher::model() -> getClassNow();
+<?php
+    if(isset(Yii::app()->session['userid_now']))
+    {
+?>
+    
+ <?php $class = Teacher::model() -> getClassNow();
     foreach ($class as $key => $value) {
         $classNameInfo[$value['classID']]=$value['className'];
         $classProgress[$value['classID']]=$value['currentLesson'];
@@ -80,4 +85,6 @@
             </div>
 	</body>
 </html>
-
+<?php   }  else { ?>
+<script>    window.location.href = "./index.php?r=user/login" </script>
+<?php  } ?>

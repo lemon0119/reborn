@@ -11,6 +11,28 @@
  */
 class Course extends CActiveRecord
 {
+    
+    public function getCourseLst($type,$value){
+        $order  =   " order by courseID ASC";
+        if($type!="")
+            $condition = " WHERE $type = '$value'";
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM course";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $courseLst  =   $result->query();
+        
+        return ['courseLst'=>$courseLst,'pages'=>$pages,];
+    }
+    
 	/**
 	 * @return string the associated database table name
 	 */

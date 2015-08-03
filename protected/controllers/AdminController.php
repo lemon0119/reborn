@@ -1645,77 +1645,40 @@ class AdminController extends CController
         }
         
         public function actionCourseLst()
-	{       
-            //定义动作
-            $act_result="";
-            
-            
-            //搜索动作
-            if(isset($_POST['which']))
-            {   
-                if(!empty($_POST['name']))
-                {
-                     $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-                }
-                else  $ex_sq = "";
-            }
-            else  $ex_sq = "";
-            
-            //添加动作
-            if(isset($_GET['action']))
+	{ 
+//                    if(!empty($_POST['courseName'])) 
+//                        //得到当前最大的学生ID
+//                        $sql="select max(courseID) as id from course";
+//                        $max_id = Yii::app()->db->createCommand($sql)->query();
+//                        $temp=$max_id->read();
+//                        if(empty($temp))
+//                        {
+//                            $new_id=1;
+//                        }
+//                        else
+//                        {
+//                            $new_id = $temp['id'] + 1;
+//                        }
+//                        $sql= "INSERT INTO course VALUES ('".$new_id ."','" .$_POST['courseName'] ."','0','".date('y-m-d H:i:s',time()) ."','')";    
+//                        Yii::app()->db->createCommand($sql)->query();
+//                        $act_result="新建课程成功！";
+//                        unset($_GET['action']); 
+            if(isset($_GET['page']))
             {
-                //添加课程
-                 if($_GET['action']=='add')
-                {
-                    if(!empty($_POST['courseName']))
-                    {
-   
-                        //得到当前最大的学生ID
-                        $sql="select max(courseID) as id from course";
-                        $max_id = Yii::app()->db->createCommand($sql)->query();
-                        $temp=$max_id->read();
-                        if(empty($temp))
-                        {
-                            $new_id=1;
-                        }
-                        else
-                        {
-                            $new_id = $temp['id'] + 1;
-                        }
-                        $sql= "INSERT INTO course VALUES ('".$new_id ."','" .$_POST['courseName'] ."','0','".date('y-m-d H:i:s',time()) ."','')";    
-                        Yii::app()->db->createCommand($sql)->query();
-                        $act_result="新建课程成功！";
-                        unset($_GET['action']); 
-                         
-                    }else
-                    {
-                        //用户输入参数不足
-                        $this->render('addCourse',array(
-                                                     'shao'=>"输入不能为空"
-                                                     ));
-                        return;
-                    }
-                } 
-                
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
             }
-            
-            //显示结果列表并分页
-	    $sql = "SELECT * FROM course ". $ex_sq;
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
-            $this->render('courseLst',array(
-            'posts'=>$posts,
-            'pages'=>$pages,
-            'result'=>$act_result,
-            'teacher'=>  TbClass::model()->teaInClass(),
-            ),false,true);
+            $result     =   Course::model()->getCourseLst("", "");
+            $choiceLst  =   $result['choiceLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "choiceLst";
+            $this->render('choiceLst',array(
+                    'choiceLst'     =>  $choiceLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
+            ));             
+      
 	}
             
          public function actionAddCourse()

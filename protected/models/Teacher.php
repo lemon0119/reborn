@@ -48,7 +48,7 @@ class Teacher extends CActiveRecord
     function getClassNow(){
         $teacherID = Yii::app()->session['userid_now'];
         $order = " order by classID ASC ";
-        $condition = " where teacherID = $teacherID ";
+        $condition = " where teacherID = '$teacherID' ";
         $select=" SELECT classID FROM teacher_class ";
         $classid = $select.$condition;
         $sql = "select * from tb_class where classID in (".$classid.")".$order;

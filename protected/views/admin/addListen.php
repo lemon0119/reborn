@@ -33,9 +33,7 @@
         </div>
 </div>
 
-<div class="span9">
-        <div class="hero-unit">
-            
+<div class="span9"> 
             
         <h3>添加听打练习</h3>
         <form id="myForm" method="post" action="./index.php?r=admin/listenLst&&action=add" enctype="multipart/form-data"> 
@@ -56,8 +54,6 @@
              echo $shao;
         }
         ?>
-        
-        </div>
         </div>
 
     
