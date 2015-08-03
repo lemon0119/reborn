@@ -42,22 +42,22 @@ class Choice extends CActiveRecord
     }
     
     public function getChoiceLst($type,$value){
-        $order = " order by exerciseID ASC";
+        $order  =   " order by exerciseID ASC";
         if($type!="")
             $condition = " WHERE $type = '$value'";
         else
             $condition= "";
-        $select = "SELECT * FROM choice";
-        $sql = $select.$condition.$order;
-        $criteria=new CDbCriteria();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10; 
+        $select     =   "SELECT * FROM choice";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
         $pages->applyLimit($criteria); 
-        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
         $result->bindValue(':limit', $pages->pageSize); 
-        $choiceLst=$result->query();
+        $choiceLst  =   $result->query();
         
         return ['choiceLst'=>$choiceLst,'pages'=>$pages,];
     }
