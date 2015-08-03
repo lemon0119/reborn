@@ -144,9 +144,6 @@ class StudentController extends CController {
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:0;
         return $this->render('myCourse',['lessons'=>$lessons,'currentLesn'=>$currentLesn]);
     }
-    public function actionClassExam(){
-        return $this->render('classExam');
-    }
     public function actionlistenType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
@@ -156,12 +153,33 @@ class StudentController extends CController {
         $exerID = $_GET['exerID'];
         Yii::app()->session['exerType'] = 'listen';
         $result = ListenType::model()->findByPK($exerID);
+        $isExam = false;
         return $this->render('listenExer',array( 
             'exercise'=>$classwork,
             'exerOne'=>$result,
+            'isExam' =>$isExam
         ));
     }
     
+    //2015-8-3 宋杰 获取考试听打练习
+        public function actionExamlistenType(){
+        $suiteID = Yii::app()->session['examsuiteID'];
+        $classexam = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerType'] = 'listen';
+        $result = ListenType::model()->findByPK($exerID);
+        $isExam = true;
+        return $this->render('listenExer',array( 
+            'exercise'=>$classexam,
+            'exerOne'=>$result,
+            'isExam' =>$isExam
+        ));
+    }
+    
+   
     public function actionlookType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
@@ -171,13 +189,35 @@ class StudentController extends CController {
         $exerID = $_GET['exerID'];
         Yii::app()->session['exerType'] = 'look';
         $result = LookType::model()->findByPK($exerID);
+        $isExam = false;
         return $this->render('lookExer',array( 
-            'exercise'=>$classwork,
+            'exercise'=>$classexam,
             'exerOne'=>$result,
+            'isExam' =>$isExam
         ));
     }
     
-    public function actionKeyType(){
+    //2015-8-3 宋杰 获取考试看打练习
+        public function actionExamlookType(){
+        $suiteID = Yii::app()->session['examsuiteID'];
+        $classexam = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerType'] = 'look';
+        $result = LookType::model()->findByPK($exerID);
+        $isExam = true;
+        return $this->render('lookExer',array( 
+            'exercise'=>$classexam,
+            'exerOne'=>$result,
+            'isExam' =>$isExam
+        ));
+    }
+    
+
+   
+        public function actionKeyType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
@@ -187,36 +227,102 @@ class StudentController extends CController {
         Yii::app()->session['exerID'] = $exerID;
         Yii::app()->session['exerType'] = 'key';
         $result = KeyType::model()->findByPK($exerID);
+        $isExam = false;
         return $this->render('keyExer',array( 
             'exercise'=>$classwork,
                 'exerOne'=>$result,
+            'isExam' => $isExam
         ));
     }
+    
+    //2015-8-3 宋杰 获取考试键位练习
+       public function actionExamKeyType(){
+        $suiteID = Yii::app()->session['examsuiteID'];
+        $classexam = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerID'] = $exerID;
+        Yii::app()->session['exerType'] = 'key';
+        $result = KeyType::model()->findByPK($exerID);
+        $isExam = true;
+        return $this->render('keyExer',array( 
+            'exercise'=>$classexam,
+                'exerOne'=>$result,
+            'isExam'=>$isExam
+        ));
+    }
+    
+    
     public function actionQuestion(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-        return $this->render('questionExer',['exercise'=>$classwork]);
+        $isExam = FALSE;
+        return $this->render('questionExer',['exercise'=>$classwork , 'isExam' => $isExam]);
     }
     
+    //2015-8-3 宋杰 获取考试简答题
+        public function actionExamQuestion(){
+        $suiteID = Yii::app()->session['examsuiteID'];
+        $classexam = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+        }
+        $isExam = true;
+        return $this->render('questionExer',['exercise'=>$classexam , 'isExam' =>$isExam]);
+    }
+    
+    //2015-8-3 宋杰 isExam为false加载suitesidebar
     public function actionChoice(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-        return $this->render('choiceExer',['exercise'=>$classwork]);
+        $isExam = FALSE;
+        return $this->render('choiceExer',['exercise'=>$classwork , 'isExam' =>$isExam ]);
     }
+    
+   //2015-8-3 宋杰 获取试题，跳转到选择题页面 isExam为true加载examsidebar
+    public function actionExamChoice(){
+       $suiteID = Yii::app()->session['examsuiteID'];
+        $classexam = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+        }
+        $isExam = true;
+        return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' =>$isExam]);
+    }
+    
+    
+    
     public function actionfilling(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-        return $this->render('fillingExer',['exercise'=>$classwork]);
+        $isExam = false;
+        return $this->render('fillingExer',['exercise'=>$classwork , 'isExam' =>$isExam]);
     }
+    
+    //2015-8-3 宋杰 加载考试填空题
+        public function actionExamfilling(){
+       $suiteID = Yii::app()->session['examsuiteID'];
+        $classexam = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+        }
+        $isExam = true;
+        return $this->render('fillingExer',['exercise'=>$classexam , 'isExam' =>$isExam]);
+    }
+    
+    
+    
     public function actionClswkOne(){
         $suiteID = $_GET['suiteID'];
         Yii::app()->session['suiteID'] = $suiteID;
@@ -224,7 +330,20 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-        return $this->render('suiteDetail',['exercise'=>$classwork]);
+        $isExam = false;
+        return $this->render('suiteDetail',['exercise'=>$classwork , 'isExam' => $isExam]);
+    }
+    
+    //获取考试套题
+    public function actionClsexamOne(){
+        $suiteID = $_GET['suiteID'];
+        Yii::app()->session['examsuiteID'] = $suiteID;
+        $classexam = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+        }
+        $isExam = true;
+        return $this->render('suiteDetail',['exercise'=>$classexam , 'isExam' => $isExam]);
     }
     
     public function actionWebrtc(){
@@ -321,6 +440,15 @@ class StudentController extends CController {
          */
     }
     
+    //宋杰 2015-7-30 课堂考试
+    public function actionClassExam(){
+                $studentID = Yii::app()->session['userid_now'];
+        $classID = Student::model()->findClassByStudentID($studentID);     
+        $classexams = Exam::model()->getClassexamAll($classID);
+        return $this->render('classexam',['classexams'=>$classexams]);
+    }
+
+
     public function actionProgress(){
         $type = $_GET['type'];
         Yii::app()->session['type'] = $type;
