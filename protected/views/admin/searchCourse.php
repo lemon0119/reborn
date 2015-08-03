@@ -32,7 +32,8 @@ $teacherID=$model['userID'];
 $teachers["$teacherID"]=$model['userName'];
 endforeach;
 ?>
-
+<?php if($courseLst->count()!=0){?>
+    <h2>查询结果</h2>
 <!-- 课程列表-->
 <table class="table table-bordered table-striped">
     <thead>
@@ -79,5 +80,7 @@ endforeach;
 <!-- 翻页标签结束 -->
 
 <!-- 右侧内容展示结束-->
+<?php } else {?>
+    <h2>查询结果为空！</h2>
+<?php }?>
 </div>
-

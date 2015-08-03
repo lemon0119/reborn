@@ -1670,16 +1670,57 @@ class AdminController extends CController
                 Yii::app()->session['lastPage'] = 1;
             }
             $result     =   Course::model()->getCourseLst("", "");
-            $choiceLst  =   $result['choiceLst'];
+            $courseLst  =   $result['courseLst'];
             $pages      =   $result['pages'];
-            Yii::app()->session['lastUrl']  =   "choiceLst";
-            $this->render('choiceLst',array(
-                    'choiceLst'     =>  $choiceLst,
+            Yii::app()->session['lastUrl']  =   "courseLst";
+            $this->render('courseLst',array(
+                    'courseLst'     =>  $courseLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  Teacher::model()->findall()
             ));             
-      
 	}
+        
+        public function actionSearchCourse()
+        {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
+            if(isset($_POST['type'])){
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchType']     =   $type;
+                Yii::app()->session['searchValue']    =   $value;
+            } else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+            }
+            Yii::app()->session['lastUrl']  =   "searchCourse";
+            if($type=='createPerson')
+            {
+                if($value   ==  "管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =$tea['userID'];
+                    else 
+                        $value  =    -1;
+                }
+            }
+            $result     =   Course::model()->getCourseLst($type, $value);
+            $courseLst  =   $result['courseLst'];
+            $pages      =   $result['pages'];
+            $this->render('searchCourse',array(
+                            'courseLst' =>  $courseLst,
+                            'pages'     =>  $pages,
+                            'teacher'   =>  Teacher::model()->findall()
+                    )
+                );
+        }
             
          public function actionAddCourse()
 	{        
