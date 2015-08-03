@@ -440,285 +440,313 @@ class TeacherController extends CController {
     }
 
     public function actionFillLst()
-    {       
-        //定义动作
-        $act_result="";
-
-       //添加动作
-       if(isset($_GET['action']))
-       {
-               //添加班级
-            if($_GET['action']=='add')
-           {
-               if(!empty($_POST['que1'])&&!empty($_POST['que2'])&&!empty($_POST['answer']))
-               {
-                   //得到当前最大的班级ID
-                   $sql="select max(exerciseID) as id from filling";
-                   $max_id = Yii::app()->db->createCommand($sql)->query();
-                   $temp=$max_id->read();
-                   if(empty($temp))
-                   {
-                       $new_id=1;
-                   }
-                   else
-                   {
-                       $new_id = $temp['id'] + 1;
-                   }
-                   $sql= "INSERT INTO filling VALUES ('".$new_id ."','0','" .$_POST['que1']."$$".$_POST['que2']."','".$_POST['answer']."','".Yii::app()->session['userid_now']."','". date('y-m-d H:i:s',time()) ."','')";
-
-                   Yii::app()->db->createCommand($sql)->query();
-                   $act_result="添加习题成功！";
-                   unset($_GET['action']);
-               }else
-               {
-                   //用户输入参数不足
-                   $this->render('addFill',array(
-                                                'shao'=>"输入全不能为空"
-                                                ));
-                   return;
-               }
-           }else if($_GET['action']=='edit'){
-                $sql= "UPDATE filling SET requirements= '".$_POST['que1']."$$".$_POST['que2'] ."', answer ='".$_POST['answer']."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                Yii::app()->db->createCommand($sql)->query();
-                $act_result="编辑习题成功！";
-                unset($_GET['action']);
-           }
-       }
-
-
-        //搜索习题
-        if(isset($_POST['which']))
-        {   
-            if(!empty($_POST['name']))
-            $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-            else  $ex_sq = "";
-        }
-        else  $ex_sq = "";
-
-        //显示结果列表并分页
-        $sql = "SELECT * FROM filling ".$ex_sq;
-        $criteria=new CDbCriteria();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10;
-        $pages->applyLimit($criteria);
-        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-        $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-        $result->bindValue(':limit', $pages->pageSize);
-        $posts=$result->query();
-        $this->render('fillLst',array(
-        'posts'=>$posts,
-        'pages'=>$pages,
-        'teacher'=>$this->teaInClass(),
-        'result'=>$act_result,
-        ),false,true);
-    }
-
-    public function actionEditFill(){
-        $exerciseID=$_GET["exerciseID"];
-        $sql = "SELECT * FROM filling WHERE exerciseID = '$exerciseID'";
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $result =$result->read();
-        $this->render("editFill",array(
-            'exerciseID'=>$result['exerciseID'],
-            'requirements' =>$result['requirements'],
-            'answer' =>$result['answer']
-        ));
-    }
-
-    public function actionAddFill(){
-        $this->render("addFill",array(
-
-        ));
-    }
-
-    public function actionChoiceLst()
-    {       
-        //定义动作
-        $act_result="";
-
-       //添加动作
-       if(isset($_GET['action']))
-       {
-               //添加班级
-            if($_GET['action']=='add')
-           {
-               if(!empty($_POST['requirements'])&&!empty($_POST['answer'])&&!empty($_POST['A'])&&!empty($_POST['B'])&&!empty($_POST['C'])&&!empty($_POST['D']))
-               {
-                   //得到当前最大的班级ID
-                   $sql="select max(exerciseID) as id from choice";
-                   $max_id = Yii::app()->db->createCommand($sql)->query();
-                   $temp=$max_id->read();
-                   if(empty($temp))
-                   {
-                       $new_id=1;
-                   }
-                   else
-                   {
-                       $new_id = $temp['id'] + 1;
-                   }
-                   $sql= "INSERT INTO choice VALUES ('".$new_id ."','danxuan','0','" .$_POST['requirements']."','".$_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'] ."','".$_POST['answer']."','".Yii::app()->session['userid_now']."','". date('y-m-d H:i:s',time()) ."','')";
-
-                   Yii::app()->db->createCommand($sql)->query();
-                   $act_result="添加习题成功！";
-                   unset($_GET['action']);
-               }else
-               {
-                   //用户输入参数不足
-                   $this->render('addChoice',array(
-                                                'shao'=>"输入全不能为空"
-                                                ));
-                   return;
-               }
-           }else if($_GET['action']=='edit'){
-                $sql= "UPDATE choice SET requirements= '".$_POST['requirements'] ."',options = '".$_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'] ."',answer ='".$_POST['answer']."'  WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                Yii::app()->db->createCommand($sql)->query();
-                $act_result="编辑习题成功！";
-                unset($_GET['action']);
-           }
-       }
-
-
-        //搜索习题
-        if(isset($_POST['which']))
-        {   
-            if(!empty($_POST['name']))
-            $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-            else  $ex_sq = "";
-        }
-        else  $ex_sq = "";
-
-        //显示结果列表并分页
-        $sql = "SELECT * FROM choice ".$ex_sq;
-        $criteria=new CDbCriteria();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10;
-        $pages->applyLimit($criteria);
-        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-        $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-        $result->bindValue(':limit', $pages->pageSize);
-        $posts=$result->query();
-        $this->render('choiceLst',array(
-        'posts'=>$posts,
-        'pages'=>$pages,
-        'teacher'=>$this->teaInClass(),
-        'result'=>$act_result,
-        ),false,true);
-    }
-
-
-    public function actionEditChoice(){
-        $exerciseID=$_GET["exerciseID"];
-        $sql = "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $result =$result->read();
-        $this->render("editChoice",array(
-            'exerciseID'=>$result['exerciseID'],
-            'requirements' =>$result['requirements'],
-            'options'=>$result['options'],
-            'answer' =>$result['answer']
-        ));
-    }
-
-    public function actionAddChoice(){
-        $this->render("addChoice",array(
-
-        ));
-    }
-
-
-    public function actionQuestionLst()
-    {       
-        //定义动作
-        $act_result="";
-
-       //添加动作
-       if(isset($_GET['action']))
-       {
-               //添加班级
-            if($_GET['action']=='add')
-           {
-               if(!empty($_POST['requirements'])&&!empty($_POST['answer']))
-               {
-                   //得到当前最大的ID
-                   $sql="select max(exerciseID) as id from listen_type";
-                   $max_id = Yii::app()->db->createCommand($sql)->query();
-                   $temp=$max_id->read();
-                   if(empty($temp))
-                   {
-                       $new_id=1;
-                   }
-                   else
-                   {
-                       $new_id = $temp['id'] + 1;
-                   }
-                   $sql= "INSERT INTO question VALUES ('".$new_id ."','0','" .$_POST['requirements']."','".$_POST['answer']."','".Yii::app()->session['userid_now']."','". date('y-m-d H:i:s',time()) ."','')";
-
-                   Yii::app()->db->createCommand($sql)->query();
-                   $act_result="添加习题成功！";
-                   unset($_GET['action']);
-               }else
-               {
-                   //用户输入参数不足
-                   $this->render('addLook',array(
-                                                'shao'=>"输入全不能为空"
-                                                ));
-                   return;
-               }
-           }else if($_GET['action']=='edit'){
-                $sql= "UPDATE question SET requirements= '".$_POST['requirements']."', answer='".$_POST['answer'] ."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                Yii::app()->db->createCommand($sql)->query();
-                $act_result="编辑习题成功！";
-                unset($_GET['action']);
-           }
-       }
-
-
-        //搜索习题
-        if(isset($_POST['which']))
-        {   
-            if(!empty($_POST['name']))
-            $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-            else  $ex_sq = "";
-        }
-        else  $ex_sq = "";
-
-        //显示结果列表并分页
-        $sql = "SELECT * FROM question ".$ex_sq;
-        $criteria=new CDbCriteria();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10;
-        $pages->applyLimit($criteria);
-        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-        $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-        $result->bindValue(':limit', $pages->pageSize);
-        $posts=$result->query();
-        $this->render('questionLst',array(
-        'posts'=>$posts,
-        'pages'=>$pages,
-        'teacher'=>$this->teaInClass(),
-        'result'=>$act_result,
-        ),false,true);
-    }
-
-    public function actionEditQuestion(){
-        $exerciseID=$_GET["exerciseID"];
-        $sql = "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $result =$result->read();
-        $this->render("editQuestion",array(
-            'exerciseID'=>$result['exerciseID'],
-            'requirements' =>$result['requirements'],
-            'answer'=>$result['answer']
-        ));
-    }
-
-    public function actionAddQuestion(){
-        $this->render("addQuestion",array(
-
-        ));
+    {       $result = Filling::model()->getTeaFillLst("", "");
+            $fillLst=$result['fillLst'];
+            $pages=$result['pages'];
+            Yii::app()->session['lastUrl']="fillLst";
+            $this->render('fillLst',array(
+            'fillLst'=>$fillLst,
+            'pages'=>$pages,          
+            ));
     }
     
+    //宋杰 2015-7-30 查找老师的填空题
+    public function actionSearchFill()
+        {
+            if(isset($_POST['type'])){
+                $type=$_POST['type'];
+                $value=$_POST['value'];
+                Yii::app()->session['searchFillType']=$type;
+                Yii::app()->session['searchFillValue']=$value;
+            } else {
+                $type = Yii::app()->session['searchFillType'];
+                $value = Yii::app()->session['searchFillValue'];
+            }
+            Yii::app()->session['lastUrl']="searchFill";        
+            $result = Filling::model()->getTeaFillLst($type, $value);
+            $fillLst=$result['fillLst'];
+            $pages=$result['pages'];
+            $this->render('searchFill',array(
+                        'fillLst'=>$fillLst,
+                        'pages'=>$pages,
+                        'teacher'=>  Teacher::model()->findall()
+                    )
+                    );
+        }
+    
+           public function actionReturnFromAddFill(){
+            if(Yii::app()->session['lastUrl']=="searchFill")
+            {
+                $type = Yii::app()->session['searchFillType'];
+                $value = Yii::app()->session['searchFillValue'];
+                $result = Filling::model()->getTeaFillLst($type, $value);
+                $fillLst=$result['fillLst'];
+                $pages=$result['pages'];
+                $this->render('searchFill',array(
+                        'fillLst'=>$fillLst,
+                        'pages'=>$pages,
+                        'teacher'=>  Teacher::model()->findall()
+                        )
+                    );
+            }else{
+                $result = Filling::model()->getTeaFillLst("", "");
+                $fillLst=$result['fillLst'];
+                $pages=$result['pages'];
+                Yii::app()->session['lastUrl']="fillLst";
+                $this->render('fillLst',array(
+                    'fillLst'=>$fillLst,
+                    'pages'=>$pages,
+                    'teacher'=>  Teacher::model()->findall()
+                ));
+            }
+        }
+
+    public function actionAddFill(){
+            $result =   'no';
+            if(isset($_POST['requirements'])){
+                $i      =   2;
+                $answer =   $_POST['in1'];
+                for(;$i<=5;$i++)
+                {
+                    if($_POST['in'.$i]!="")
+                        $answer =   $answer."$$".$_POST['in'.$i];
+                    else
+                        break;
+                }
+                $result =   Filling::model()->insertFill($_POST['requirements'], $answer, Yii::app()->session['userid_now']);
+            }
+            $this->render('addFill',['result'   =>  $result]);
+    }
+
+    
+    //宋杰 2015-7-30 选择题列表
+    public function actionChoiceLst()
+    {       
+            
+            $teachr_id  =   Yii::app()->session['userid_now'];
+            $result     =   Choice::model()->getChoiceLst("createPerson", $teachr_id);
+            $choiceLst  =   $result['choiceLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "choiceLst";
+            $this->render('choiceLst',array(
+                    'choiceLst'     =>  $choiceLst,
+                    'pages'         =>  $pages,
+                    
+            ));
+    }
+
+
+   //宋杰 2015-7-30 点击查看/编辑按钮
+    public function actionEditChoice(){
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            if(!isset($_GET['action']))
+            {
+                $this->render("editChoice",array(
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'options'         =>    $result['options'],
+                    'answer'          =>    $result['answer']
+                ));
+            }else if($_GET['action'] =='look'){
+                $this->render("editChoice",array(
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'options'         =>    $result['options'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look'
+                ));         
+            }
+    }
+    
+    //宋杰 2015-7-30 编辑选择题信息
+             public function actionEditChoiceInfo()
+	{
+            $exerciseID = $_GET['exerciseID'];
+            $thisCh     = new Choice();
+            $thisCh     = $thisCh->find("exerciseID = '$exerciseID'");
+            $thisCh -> requirements =   $_POST['requirements'];
+            $thisCh -> options      =   $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'];
+            $thisCh -> answer       =   $_POST['answer'];
+            $thisCh -> update();
+            $this->render("editChoice",array(
+                    'exerciseID'      =>    $exerciseID,
+                    'requirements'    =>    $thisCh -> requirements,
+                    'options'         =>    $thisCh -> options,
+                    'answer'          =>    $thisCh -> answer,
+                    'result'          =>    "修改习题成功"
+            ));
+        }
+        
+       //宋杰 2015-7-30 添加/编辑选择题的返回
+      public function actionReturnFromAddChoice()
+        {
+            if(Yii::app()->session['lastUrl']=="searchChoice")
+            {
+                $type       =   Yii::app()->session['searchChoiceType'];
+                $value      =   Yii::app()->session['searchChoiceValue'];
+                $result     =   Choice::model()->getChoiceLst($type, $value);
+                $choiceLst  =   $result['choiceLst'];
+                $pages      =   $result['pages'];
+                $this->render('searchChoice',array(
+                            'choiceLst' =>  $choiceLst,
+                            'pages'     =>  $pages,
+                            'teacher'   =>  Teacher::model()->findall()
+                    )
+                    );
+            }else {
+                $result     =   Choice::model()->getChoiceLst("createPerson",Yii::app()->session['userid_now'] );
+                $choiceLst  =   $result['choiceLst'];
+                $pages      =   $result['pages'];
+                Yii::app()->session['lastUrl']  =   "choiceLst";
+                $this->render('choiceLst',array(
+                        'choiceLst' =>  $choiceLst,
+                        'pages'     =>  $pages,                     
+                ));
+            }
+        }
+    
+    //宋杰 2015-7-30 选择题查找按钮
+    public function actionSearchChoice()
+        {
+            if(isset($_POST['type'])){
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchChoiceType']     =   $type;
+                Yii::app()->session['searchChoiceValue']    =   $value;
+            } else {
+                $type   =   Yii::app()->session['searchChoiceType'];
+                $value  =   Yii::app()->session['searchChoiceValue'];
+            }
+            Yii::app()->session['lastUrl']  =   "searchChoice";
+     
+            $result     =   Choice::model()->getTeaChoiceLst($type, $value);
+            $choiceLst  =   $result['choiceLst'];
+            $pages      =   $result['pages'];
+            $this->render('searchChoice',array(
+                            'choiceLst' =>  $choiceLst,
+                            'pages'     =>  $pages                          
+                    )
+                    );
+        }
+    
+    
+    
+//宋杰 2015-7-30 老师添加选择题
+    public function actionAddChoice(){ 
+            $result =   'no';
+            if(isset($_POST['requirements'])){          
+                $result = Choice::model()->insertChoice($_POST['requirements'], $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'], $_POST['answer'], Yii::app()->session['userid_now']);
+            }
+            $this->render('addChoice',['result'=>$result]);
+    }
+    
+    
+            public function actionEditFill(){
+            $exerciseID =   $_GET["exerciseID"];
+            $thisFill   =   new Filling();
+            $thisFill   =   $thisFill->find("exerciseID = '$exerciseID'");
+            if(!isset($_GET['action']))
+            {
+                $this->render("editFill",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'requirements'  =>  $thisFill->requirements,
+                        'answer'        =>  $thisFill->answer
+                ));
+            }else if($_GET['action']='look'){
+                $this->render("editFill",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'requirements'  =>  $thisFill->requirements,
+                        'answer'        =>  $thisFill->answer,
+                        'action'        =>  'look'
+                ));
+            }
+        }
+    
+
+//宋杰 2015-7-30 简答题列表
+    public function actionQuestionLst()
+    {       
+                   Yii::app()->session['lastUrl']  =   "questionLst";
+            $result      =  Question::model()->getTeaQuestionLst("", "");
+            $questionLst =  $result['questionLst'];  
+            $pages       =  $result["pages"];
+            $this->render('questionLst',array(
+                    'questionLst'   =>  $questionLst,
+                    'pages'         =>  $pages,
+                    
+            ));
+    }
+    
+    
+            public function actionEditQuestionInfo(){
+            $exerciseID    =   $_GET['exerciseID'];
+            $thisQue       =   new Question();
+            $thisQue       =   $thisQue->find("exerciseID = '$exerciseID'");
+            $thisQue->requirements =   $_POST['requirements'];
+            $thisQue->answer       =   $_POST['answer'];
+            $thisQue -> update();
+            $this->render("editQuestion",array(
+                'exerciseID'      =>  $thisQue->exerciseID,
+                'requirements'    =>  $thisQue->requirements,
+                'answer'          =>  $thisQue->answer,
+                'result'          =>  "修改习题成功"
+            ));
+        }
+
+        //宋杰 2015-7-30 编辑/修改问题
+    public function actionEditQuestion(){
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            if(!isset($_GET['action']))
+            {
+                $this->render("editQuestion",array(
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer']
+                ));
+            }else if($_GET['action'] =='look'){
+                $this->render("editQuestion",array(
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look'
+                ));         
+            }
+    }
+    
+   //查找简单题
+            public function actionSearchQuestion()
+        {
+            if(isset($_POST['type'])){
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchType']   =   $type;
+                Yii::app()->session['searchValue']  =   $value;
+            } else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+            }
+            Yii::app()->session['lastUrl']  =   "searchQuestion";
+            $result      =  Question::model()->getTeaQuestionLst($type, $value);
+            $questionLst =  $result['questionLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchQuestion',array(
+                    'questionLst'   =>  $questionLst,
+                    'pages'         =>  $pages,
+            ));
+        }
+
+    public function actionAddQuestion(){
+            $result =   'no';
+            if(isset($_POST['requirements'])){
+                $result =   Question::model()->insertQue($_POST['requirements'], $_POST['answer'], Yii::app()->session['userid_now']);
+            }
+            $this->render('addQuestion',['result'   =>  $result]);
+    }
+     
 }

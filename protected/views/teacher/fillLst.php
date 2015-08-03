@@ -1,58 +1,41 @@
-<script>
-    $(document).ready(function(){
-            $("div.span9").find("a").click(function(){
-                var url = $(this).attr("href");
-                //$(this).attr("href","#");
-                if(url.indexOf("index.php") > 0){
-                    $("#cont").load(url);
-                    return false;//阻止链接跳转
-                }
-            });
-        var options = {   
-        target:'#cont',   // 需要刷新的区域 
-        //type:'post',
-        //dataType:'json',
-        //resetForm:false,
-       // timeout:10000
-    };
 
-    $("#myForm").submit(function(){ 
-          $(this).ajaxSubmit(options);   
-      // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
-           return false;   
-      });  
-    });
-</script>
-<div class="span9">
-<!-- 搜索框 -->
-<div  style="padding: 8px 0;" align=center>
-<form id="myForm" method="post" action="./index.php?r=admin/fillLst"> 
-    <select name="which" style="width: 75px">
-        <option value="exerciseID" selected="selected">编号</option>
-    </select>
-    <input type="text" name="name" style="width: 120px">
-<input type="submit" name="Submit" value="查询"> 
-<input type="button" value="添加题目" onclick="addStu()">
-<script>
-    function addStu()
-    {
-        $("#cont").load("./index.php?r=admin/addFill")
-    }
-</script>
-</form>
+<div class="span3">
+        <div class="well" style="padding: 8px 0;">
+                <ul class="nav nav-list">
+                <li class="nav-header">查询</li>
+                <form action="./index.php?r=teacher/searchFill" method="post">
+                        <li>
+                                <select name="type" style="width: 185px">
+                                        <option value="exerciseID" selected="selected">编号</option>
+                                        <option value="courseID" >课程号</option>
+                                </select>
+                        </li>
+                        <li>
+                                <input name="value" type="text" class="search-query span2" placeholder="Search" />
+                        </li>
+                        <li style="margin-top:10px">
+                                <button type="submit" class="btn btn-primary">查询</button>
+                                <a href="./index.php?r=teacher/addFill" class="btn">添加</a>
+                        </li>
+                </form>
+                        <li class="divider"></li>
+                        <li class="nav-header">基础知识</li>
+                        <li ><a href="./index.php?r=teacher/choiceLst"><i class="icon-font"></i> 选择</a></li>
+                        <li class="active"><a href="./index.php?r=teacher/fillLst"><i class="icon-text-width"></i> 填空</a></li>
+                        <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
+                        <li class="divider"></li>
+                        <li class="nav-header">打字练习</li>
+                        <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+                        <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
+                        <li ><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
+                </ul>
+        </div>
 </div>
-<!-- 搜索框结束 -->
 
-<?php
-    //得到老师ID对应的名称
-    foreach ($teacher as $model):
-    $teacherID=$model['userID'];
-    $teachers["$teacherID"]=$model['userName'];
-    endforeach;
-?>
 
+<div class="span9">
+<h2>填空题列表</h2>
 <!-- 键位习题列表-->
-<div class="hero-unit">
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -65,7 +48,7 @@
         </tr>
     </thead>
             <tbody>        
-                <?php foreach($posts as $model):?>
+                <?php foreach($fillLst as $model):?>
                 <tr>
                     <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                     <td><?php echo $model['courseID'];?></td>
@@ -74,13 +57,12 @@
                                else
                                    echo str_replace("$$","__",substr($model['requirements'], 0, 15)."...");
                    ?></td>
-                    <td><?php if($model['createPerson']=="0")
-                                    echo "管理员";
-                                else echo  $teachers[$model['createPerson']];
+                    <td><?php echo Yii::app()->user->name;
                         ?></td>
                     <td><?php echo $model['createTime'];?></td>
-                    <td>  
-                        <a href="./index.php?r=admin/editFill&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                    <td>
+                        <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                        <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 
@@ -94,25 +76,4 @@
 ?>
 </div>
 <!-- 翻页标签结束 -->
-
 </div>
-</div>
-
-
- <?php
-    //显示操作结果
-    if(isset($result))
-    {
-        if(!empty($result))
-        {
-            echo "<script>var result = '$result';</script>";
-        }
-    }
-?>
-<script>
-    if(result != null){
-        alert(result);
-        result = null;
-    }
-</script>
-

@@ -1,4 +1,4 @@
- <div class="span3">
+<div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header">查询</li>
@@ -7,7 +7,6 @@
                                 <select name="type" style="width: 185px">
                                         <option value="exerciseID" selected="selected">编号</option>
                                         <option value="courseID" >课程号</option>
-                                        
                                 </select>
                         </li>
                         <li>
@@ -33,12 +32,12 @@
 </div>
 
 
-    
+<!-- 选择题列表-->
 <div class="span9">
-    <h2>选择题列表</h2>
-    <!-- 键位习题列表-->
-    <table class="table table-bordered table-striped">
-        <thead>
+<?php if($choiceLst->count()!=0){?>
+    <h2>查询结果</h2>
+<table class="table table-bordered table-striped">
+            <thead>
             <tr>
                 <th>编号</th>
                 <th>课程号</th>
@@ -61,21 +60,26 @@
                         <td><?php echo Yii::app()->user->name;
                             ?></td>
                         <td><?php echo $model['createTime'];?></td>
-                        <td>
+                        <td> 
                             <a href="./index.php?r=teacher/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                             <a href="./index.php?r=teacher/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
                 </tbody>
-    </table>
-    <!-- 学生列表结束 -->
-    <!-- 显示翻页标签 -->
-    <div align=center>
-    <?php   
-        $this->widget('CLinkPager',array('pages'=>$pages));
-    ?>
-    </div>
-    <!-- 翻页标签结束 -->
-   
-    </div>
+</table>
+<!-- 学生列表结束 -->
+<!-- 显示翻页标签 -->
+<div align=center>
+<?php   
+    $this->widget('CLinkPager',array('pages'=>$pages));
+?>
+</div>
+<!-- 翻页标签结束 -->
+<!-- 右侧内容展示结束-->
+<?php } else {?>
+    <h2>查询结果为空！</h2>
+<?php }?>
+</div>
+
+
