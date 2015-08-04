@@ -43,6 +43,7 @@ class TeacherController extends CController {
     
     public function actionStartCourse(){
         $classID=$_GET['classID'];
+        Yii::app()->session['curClass'] =   $classID;
         $progress=$_GET['progress'];
         $on=$_GET['on'];
         return $this->render('startCourse',[

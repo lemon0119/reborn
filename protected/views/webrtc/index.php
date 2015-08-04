@@ -1080,25 +1080,25 @@ echo "<script>var role='$role';</script>";
 
                                 // sunpy: teacher side broadcasts sync msg
                                 //        progress + path
-                                setInterval(function() {
-                                    broadcast_video_time(absl_path);
-                                }, 1000);
+//                                setInterval(function() {
+//                                    broadcast_video_time(absl_path);
+//                                }, 1000);
 
-                                function broadcast_video_time(absl_path)
-                                {
-                                    var syn_msg;
-                                    var video_current_time = myVideo.currentTime;                                    
-                                    
-                                    if (myVideo.paused) {
-                                        syn_msg = "sync " + video_current_time;                                        
-                                    } else {
-                                        syn_msg = "psync " + video_current_time;
-                                    }                                    
-                                    
-                                    var syn_path_msg = "Path " + absl_path;
-                                    ws.send(syn_path_msg);
-                                    ws.send(syn_msg);
-                                }
+//                                function broadcast_video_time(absl_path)
+//                                {
+//                                    var syn_msg;
+//                                    var video_current_time = myVideo.currentTime;                                    
+//                                    
+//                                    if (myVideo.paused) {
+//                                        syn_msg = "sync " + video_current_time;                                        
+//                                    } else {
+//                                        syn_msg = "psync " + video_current_time;
+//                                    }                                    
+//                                    
+//                                    var syn_path_msg = "Path " + absl_path;
+//                                    ws.send(syn_path_msg);
+//                                    ws.send(syn_msg);
+//                                }
                             };
 
                             ws.addEventListener("message", function(e) 

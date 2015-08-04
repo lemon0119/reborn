@@ -211,7 +211,6 @@ function pollBulletin() {
         dataType: "json",
         url: "index.php?r=api/GetLatestBulletin",
         success: function(data) {
-            console.log(data[0].id);
             if (role === 'student') {
                 $("#bulletin-textarea").val(data[0].content);
             } else {
@@ -262,7 +261,7 @@ $(document).ready(function(){
     var myVideo = document.getElementById("video1");
     var connection_state = 0;
     var is_first_connection = 1;
-    var is_first_set_path = 1;
+    var last_path = -1;
 
     if (connection_state !== 1) { 
         var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');                            
@@ -273,18 +272,25 @@ $(document).ready(function(){
 
         ws.addEventListener("message", function(e){
             var msg = e.data;
+            console.log(msg);
             var local_my_video = document.getElementById("video1");
 
-            if (msg === "Play" && local_my_video !== null && local_my_video.paused) {
+            if (msg === "<?php echo $classID;?>Play" && local_my_video !== null && local_my_video.paused) {
                 local_my_video = document.getElementById("video1");
                 local_my_video.play();
-            } else if (msg === "Pause" && local_my_video !== null) {
+                console.log('1');
+            } else if (msg === "<?php echo $classID;?>Pause" && local_my_video !== null) {
                 local_my_video = document.getElementById("video1");
                 local_my_video.pause();
-            } else if (msg.indexOf('Path') >= 0) {
-                var video_path = msg.substr(5);
-                if (is_first_set_path === 1) {  
-                    is_first_set_path = 0;
+                console.log(2);
+            } else if (msg.indexOf('<?php echo $classID;?>Path') >= 0) {
+                var video_path = msg.substr(msg.indexOf('Path')+5);               
+                if (last_path != video_path) {
+                    console.log("path last"+last_path);
+                    console.log("path new"+video_path);
+                    last_path = video_path;
+                    console.log("path last"+last_path);
+                    console.log("path new"+video_path);
                     var video = document.getElementById('video1');
                     if(video===null){
                         var html = "";
@@ -300,83 +306,12 @@ $(document).ready(function(){
                     }
                     $("#dianbo-videos-container").show();
                     $("#videos-container").hide();
+                    local_my_video = document.getElementById("video1");
+                    local_my_video.play();
+                    console.log('3');
                 }                                    
             }                
         });
     }
 });
-                            
-function WebSocketConnect(absl_path){
-    console.log("sunpy [WebSocketConnect]");
-    var myVideo = document.getElementById("video1");
-    var connection_state = 0;
-    var is_first_connection = 1;
-    var is_first_set_path = 1;
-
-    if (connection_state !== 1) { //cheching is there is a live connection so we do not spam the server.
-        //if there is not live connection we create one
-        var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
-        ws.onopen = function() //creating the connection
-        {
-            connection_state = 1;
-            /*
-            if (document.getElementById("video1") !== null) {
-                $("#teacher-stop-dianbo").click(function() {
-                    ws.close();
-                });
-            } */                               
-
-            myVideo.addEventListener("play", function() {
-                console.log("sunpy: btn play");
-                var message_sent = "Play";
-                ws.send(message_sent); 
-                message_sent = "Path " + absl_path;
-                ws.send(message_sent);                                    
-            });
-
-            myVideo.addEventListener("pause", function() {
-                console.log("sunpy: btn pause");
-                var message_sent = "Pause";
-                ws.send(message_sent);                                    
-            });                                
-
-            // sunpy: teacher side broadcasts sync msg
-            //        progress + path
-            setInterval(function() {
-                broadcast_video_time(absl_path);
-            }, 1000);
-
-            function broadcast_video_time(absl_path)
-            {
-                var syn_msg;
-                var video_current_time = myVideo.currentTime;                                    
-
-                if (myVideo.paused) {
-                    syn_msg = "sync " + video_current_time;                                        
-                } else {
-                    syn_msg = "psync " + video_current_time;
-                }                                    
-
-                var syn_path_msg = "Path " + absl_path;
-                ws.send(syn_path_msg);
-                ws.send(syn_msg);
-            }
-        };
-
-        ws.addEventListener("message", function(e) 
-        {                                
-            var msg = e.data;
-
-            if (msg === "Play" && myVideo.paused) {
-                myVideo.play();
-            } else if (msg === "Pause") {
-                myVideo.pause();
-            }                               
-        });
-
-        ws.onclose = function(event) {
-            alert("与点播服务器的连接断开...");
-        };
-    }
-}
 </script>

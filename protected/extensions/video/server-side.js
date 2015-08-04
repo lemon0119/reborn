@@ -104,7 +104,7 @@ wsServer.on('request', function(request) {
     });
 	
     connection.on('close', function(reasonCode, description) {
-      var i = clients.indexOf(clients);
+      var i = clients.indexOf(connection);
       clients.splice(i,1);
       console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });

@@ -267,7 +267,7 @@ $(document).ready(function(){
         console.log("sunpy: role = " + role);
         //$("#videos-container").empty();
 
-        var server_root_path = "<?php echo SITE_URL.'/resources/'?>video/";
+        var server_root_path = "<?php echo SITE_URL.'resources/'?>video/";
         var filepath = $("#teacher-choose-file option:selected").val();
         var absl_path = server_root_path + filepath;
         var video_element;
@@ -299,78 +299,35 @@ $(document).ready(function(){
     });
 });
 
-
+var play_fun = null;
+var pause_fun = null;
+var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
+ws.onclose = function(event) {
+      console.log("与点播服务器的连接断开...");
+  }
+  
 function WebSocketConnect(absl_path){
     console.log("sunpy [WebSocketConnect]");
     var myVideo = document.getElementById("video1");
-    var connection_state = 0;
-    var is_first_connection = 1;
-    var is_first_set_path = 1;
-
-    if (connection_state !== 1) { //cheching is there is a live connection so we do not spam the server.
-        //if there is not live connection we create one
-        var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
-        ws.onopen = function() //creating the connection
-        {
-            connection_state = 1;
-            /*
-            if (document.getElementById("video1") !== null) {
-                $("#teacher-stop-dianbo").click(function() {
-                    ws.close();
-                });
-            } */                               
-
-            myVideo.addEventListener("play", function() {
-                console.log("sunpy: btn play");
-                var message_sent = "Play";
-                ws.send(message_sent); 
-                message_sent = "Path " + absl_path;
-                ws.send(message_sent);                                    
-            });
-
-            myVideo.addEventListener("pause", function() {
-                console.log("sunpy: btn pause");
-                var message_sent = "Pause";
-                ws.send(message_sent);                                    
-            });                                
-
-            // sunpy: teacher side broadcasts sync msg
-            //        progress + path
-            setInterval(function() {
-                broadcast_video_time(absl_path);
-            }, 1000);
-
-            function broadcast_video_time(absl_path)
-            {
-                var syn_msg;
-                var video_current_time = myVideo.currentTime;                                    
-
-                if (myVideo.paused) {
-                    syn_msg = "sync " + video_current_time;                                        
-                } else {
-                    syn_msg = "psync " + video_current_time;
-                }                                    
-
-                var syn_path_msg = "Path " + absl_path;
-                ws.send(syn_path_msg);
-                ws.send(syn_msg);
-            }
-        };
-
-        ws.addEventListener("message", function(e) 
-        {                                
-            var msg = e.data;
-
-            if (msg === "Play" && myVideo.paused) {
-                myVideo.play();
-            } else if (msg === "Pause") {
-                myVideo.pause();
-            }                               
-        });
-
-        ws.onclose = function(event) {
-            alert("与点播服务器的连接断开...");
-        };
+    if(play_fun != null)
+    {
+        myVideo.removeEventListener("play",play_fun);
+        myVideo.removeEventListener("pause",pause_fun);
     }
+    play_fun = function() {
+        console.log("sunpy: btn play");
+        var message_sent = "<?php echo $classID;?>Play";
+        ws.send(message_sent); 
+        message_sent = "<?php echo $classID;?>Path " + absl_path;
+        ws.send(message_sent);                                    
+    };
+    pause_fun = function() {
+        console.log("sunpy: btn pause");
+        var message_sent = "<?php echo $classID;?>Pause";
+        ws.send(message_sent);                                    
+    }
+    myVideo.addEventListener("play",play_fun);
+    myVideo.addEventListener("pause",pause_fun);
+
 }
 </script>

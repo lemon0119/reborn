@@ -2,9 +2,9 @@
 class WebrtcController extends CController{
     public $layout='//layouts/studentBar';
     public function actionCourse(){
-        $classID = $_GET['classid'];
-        $course = TbClass::model()->findCourseByClassID($classID);
-        $lesson = TbClass::model()->findLessonByCourse($course[0]['courseID']);
+        $classID                        =   $_GET['classid'];
+        $course                         =   TbClass::model()->findCourseByClassID($classID);
+        $lesson                         =   TbClass::model()->findLessonByCourse($course[0]['courseID']);
         return $this->renderPartial('course',['course'=>$lesson]);
     }
     public function actionSelectCourse(){
@@ -30,13 +30,15 @@ class WebrtcController extends CController{
         $role = Yii::app()->session['role_now'];
         if($role == 'student'){
             $this->layout='//layouts/studentBar';
-            $userName = Student::model()->findByPK($userID)->userName;
-            return $this->render('student',['userName'=>$userName]);
+            $student    =   Student::model()->findByPK($userID);
+            $userName   =   $student->userName;
+            $classID    =   $student->classID;
+            return $this->render('student',['userName'=>$userName,'classID'=>$classID]);
         }
         else{
-            $userName = Teacher::model()->findByPK($userID)->userName;
+            $userName   = Teacher::model()->findByPK($userID)->userName;
             $this->layout='//layouts/teacherBar';
-            return $this->render('teacher',['userName'=>$userName]);
+            return $this->render('teacher',['userName'=>$userName,'classID'=>Yii::app()->session['curClass']]);
         }
         $this->render('index',['userName'=>$userName]);
     }
