@@ -299,8 +299,9 @@ $(document).ready(function(){
     });
 });
 
-var play_fun = null;
-var pause_fun = null;
+var play_fun    =   null;
+var pause_fun   =   null;
+var timer       =   null;
 var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
 ws.onclose = function(event) {
       console.log("与点播服务器的连接断开...");
@@ -314,6 +315,22 @@ function WebSocketConnect(absl_path){
         myVideo.removeEventListener("play",play_fun);
         myVideo.removeEventListener("pause",pause_fun);
     }
+                                    // sunpy: teacher side broadcasts sync msg
+                                //        progress + path
+    if(timer!=null)
+        clearInterval(timer);
+    timer = setInterval(function() {
+        var syn_msg;
+        var video_current_time = myVideo.currentTime;                                    
+
+        if (myVideo.paused) {
+            syn_msg = "<?php echo $classID;?>pauseSync " +absl_path+"-----" +video_current_time;                                        
+        } else {
+            syn_msg = "<?php echo $classID;?>playSync " +absl_path+"-----"+ video_current_time;
+        }
+        ws.send(syn_msg);
+    }, 4000);
+    
     play_fun = function() {
         console.log("sunpy: btn play");
         var message_sent = "<?php echo $classID;?>Play";

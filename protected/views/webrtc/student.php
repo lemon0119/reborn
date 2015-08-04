@@ -278,19 +278,13 @@ $(document).ready(function(){
             if (msg === "<?php echo $classID;?>Play" && local_my_video !== null && local_my_video.paused) {
                 local_my_video = document.getElementById("video1");
                 local_my_video.play();
-                console.log('1');
             } else if (msg === "<?php echo $classID;?>Pause" && local_my_video !== null) {
                 local_my_video = document.getElementById("video1");
                 local_my_video.pause();
-                console.log(2);
             } else if (msg.indexOf('<?php echo $classID;?>Path') >= 0) {
                 var video_path = msg.substr(msg.indexOf('Path')+5);               
                 if (last_path != video_path) {
-                    console.log("path last"+last_path);
-                    console.log("path new"+video_path);
                     last_path = video_path;
-                    console.log("path last"+last_path);
-                    console.log("path new"+video_path);
                     var video = document.getElementById('video1');
                     if(video===null){
                         var html = "";
@@ -308,9 +302,62 @@ $(document).ready(function(){
                     $("#videos-container").hide();
                     local_my_video = document.getElementById("video1");
                     local_my_video.play();
-                    console.log('3');
                 }                                    
-            }                
+            }else if (msg.indexOf('<?php echo $classID;?>playSync') >= 0) {                                                                             
+                var video_current_time = parseFloat(msg.substr(msg.indexOf('-----')+5));
+                var video_path         = msg.substr((msg.indexOf('playSync')+9),msg.indexOf('-----')-(msg.indexOf('playSync')+9));
+                console.log("sunpy: recv websocket broadcast msg " + video_current_time);
+                if (last_path != video_path) {
+                    last_path = video_path;
+                    var video = document.getElementById('video1');
+                    if(video===null){
+                        var html = "";
+                        html += '<video id="video1" width="100%" controls>';
+                        html += '<source src="' + video_path + '">';
+                        html += '</video>';
+                        //html += '<button id="play">播放</button>';
+                        //html += '<button id="pause">暂停</button>';
+                        $("#dianbo-videos-container").empty();
+                        $("#dianbo-videos-container").append(html);
+                    } else {
+                        video.setAttribute("src", video_path); 
+                    }
+                    $("#dianbo-videos-container").show();
+                    $("#videos-container").hide();
+                    local_my_video = document.getElementById("video1");                    
+                } 
+                local_my_video.play();
+                if(Math.abs(local_my_video.currentTime-video_current_time) > 5)
+                    local_my_video.currentTime = video_current_time;
+                console.log("sunpy: student side set video time " + video_current_time);
+            } else if (msg.indexOf('<?php echo $classID;?>pauseSync') >= 0) {
+                var video_current_time = parseFloat(msg.substr(msg.indexOf('-----')+5));
+                var video_path         = msg.substr((msg.indexOf('pauseSync')+10),msg.indexOf('-----')-(msg.indexOf('pauseSync')+10));
+                console.log("sunpy: recv websocket broadcast msg " + video_current_time);
+                if (last_path != video_path) {
+                    last_path = video_path;
+                    var video = document.getElementById('video1');
+                    if(video===null){
+                        var html = "";
+                        html += '<video id="video1" width="100%" controls>';
+                        html += '<source src="' + video_path + '">';
+                        html += '</video>';
+                        //html += '<button id="play">播放</button>';
+                        //html += '<button id="pause">暂停</button>';
+                        $("#dianbo-videos-container").empty();
+                        $("#dianbo-videos-container").append(html);
+                    } else {
+                        video.setAttribute("src", video_path); 
+                    }
+                    $("#dianbo-videos-container").show();
+                    $("#videos-container").hide();
+                    local_my_video = document.getElementById("video1");                    
+                } 
+                local_my_video.pause();
+                if(Math.abs(local_my_video.currentTime-video_current_time) > 5)
+                    local_my_video.currentTime = video_current_time;
+                console.log("sunpy: student side set video time " + video_current_time);    
+            }                 
         });
     }
 });
