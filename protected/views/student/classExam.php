@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 ?>
-<div class="span9">
+<div class="span12">
     <center><h3 >课 堂 考 试</h3></center>
     <table class="table table-bordered table-striped">
             <thead>
@@ -38,7 +38,8 @@
                                 <a href="./index.php?r=student/clsexamOne&&suiteID=<?php echo $exam['suiteID'];?>" class="view-link"><?php echo '进　　入';?></a>
                                 <?php //} else { ?>
                                     <?php //echo '<font color="#ff0000">已经截止</span>'; ?>
-                                <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['suiteID'];?>" class="view-link"><?php echo '查看答案';?></a>
+                                  &nbsp;&nbsp;&nbsp|  &nbsp;&nbsp;&nbsp    
+                                  <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['suiteID'];?>" class="view-link"><?php echo '查看成绩';?></a>
                                 <?php //} ?>
                             </td>
                     </tr>
