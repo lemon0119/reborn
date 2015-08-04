@@ -1724,7 +1724,11 @@ class AdminController extends CController
             
          public function actionAddCourse()
 	{        
-            $this->render('addCourse');
+            $result =   'no';
+            if(isset($_POST['courseName'])){
+                $result = Course::model()->insertCourse($_POST['courseName'],0);
+            }
+            $this->render('addCourse',['result'=>$result]);
         }
         
         public function actionInfoCourse()
