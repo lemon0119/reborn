@@ -106,6 +106,50 @@ class LookType extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        
+     public function getLookLst($type,$value){
+        $order  =   " order by exerciseID ASC";
+        if($type!="")
+            $condition = " WHERE $type = '$value'";
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM look_type";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $lookLst  =   $result->query();
+        
+        return ['lookLst'=>$lookLst,'pages'=>$pages,];
+    }
+    
+    
+        public function insertLook($title,$content,$createPerson){
+        $sql        =   "select max(exerciseID) as id from look_type";
+        $max_id     =   Yii::app()->db->createCommand($sql)->query();
+        $temp       =   $max_id->read();
+        if(empty($temp))
+        {
+            $new_id =   1;
+        }
+        else
+        {
+            $new_id =   $temp['id'] + 1;
+        }
+        $newLook    =   new LookType();
+        $newLook->exerciseID    =   $new_id;
+        $newLook->title =   $title;
+        $newLook->content       =   $content;
+        $newLook->createPerson  =   $createPerson;
+        $newLook->createTime    =   date('y-m-d H:i:s',time());
+        return $newLook->insert();
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.

@@ -5,7 +5,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+$currtime = $examInfo['endtime'];
 ?>
+<h6>距离考试剩余还有</h6>
+<body onLoad="timeCounter('timeCounter')">
+<p id="timeCounter"></p>
+
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
@@ -52,9 +57,19 @@
 
 
 <script>
+    //2015-8-4 宋杰 显示考试倒计时
 var timeCounter = (function() {
  var int;
- var total = 3600;
+ var currtime = "<?php echo $currtime?>";
+ var time = currtime.substr(11,19).split(":");
+ var h2 = time[0];
+ var m2 = time[1];
+ var s2 = time[2];
+ var myDate = new Date();
+ var h1 = myDate.getHours();
+ var m1 = myDate.getMinutes();
+ var s1 = myDate.getSeconds();
+var total = (( Number((h2-h1)*60))+ Number(m2)-Number(m1))*60 + Number(s2) - Number(s1);
  return function(elemID) {
   obj = document.getElementById(elemID);
   var s = (total%60) < 10 ? ('0' + total%60) : total%60;

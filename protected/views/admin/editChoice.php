@@ -39,6 +39,8 @@
     <?php } else if($action == 'look') {?>
         <h3>查看选择题</h3>
     <?php }?>
+        
+        
     <form class="form-horizontal" method="post" action="./index.php?r=admin/editChoiceInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
     <?php if(!isset($action)) {?>

@@ -172,10 +172,12 @@ class StudentController extends CController {
         Yii::app()->session['exerType'] = 'listen';
         $result = ListenType::model()->findByPK($exerID);
         $isExam = true;
-        return $this->render('listenExer',array( 
+        $examInfo = Exam::model()->find($suiteID);
+        return $this->render('keyExer',array( 
             'exercise'=>$classexam,
-            'exerOne'=>$result,
-            'isExam' =>$isExam
+                'exerOne'=>$result,
+            'isExam'=>$isExam,
+                'examInfo'=>$examInfo
         ));
     }
     
@@ -208,10 +210,12 @@ class StudentController extends CController {
         Yii::app()->session['exerType'] = 'look';
         $result = LookType::model()->findByPK($exerID);
         $isExam = true;
-        return $this->render('lookExer',array( 
+        $examInfo = Exam::model()->find($suiteID);
+        return $this->render('keyExer',array( 
             'exercise'=>$classexam,
-            'exerOne'=>$result,
-            'isExam' =>$isExam
+                'exerOne'=>$result,
+            'isExam'=>$isExam,
+                'examInfo'=>$examInfo
         ));
     }
     
@@ -247,10 +251,12 @@ class StudentController extends CController {
         Yii::app()->session['exerType'] = 'key';
         $result = KeyType::model()->findByPK($exerID);
         $isExam = true;
+        $examInfo = Exam::model()->find($suiteID);
         return $this->render('keyExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
-            'isExam'=>$isExam
+            'isExam'=>$isExam,
+                'examInfo'=>$examInfo
         ));
     }
     
@@ -272,8 +278,9 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
+        $examInfo = Exam::model()->find($suiteID);
         $isExam = true;
-        return $this->render('questionExer',['exercise'=>$classexam , 'isExam' =>$isExam]);
+        return $this->render('questionExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
     //2015-8-3 宋杰 isExam为false加载suitesidebar
@@ -294,8 +301,9 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
+        $examInfo = Exam::model()->find($suiteID);
         $isExam = true;
-        return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' =>$isExam]);
+        return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
     
@@ -317,8 +325,9 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
+        $examInfo = Exam::model()->find($suiteID);
         $isExam = true;
-        return $this->render('fillingExer',['exercise'=>$classexam , 'isExam' =>$isExam]);
+        return $this->render('fillingExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
     
@@ -342,8 +351,9 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
+        $examInfo = Exam::model()->find($suiteID);
         $isExam = true;
-        return $this->render('suiteDetail',['exercise'=>$classexam , 'isExam' => $isExam]);
+        return $this->render('suiteDetail',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
     public function actionWebrtc(){

@@ -103,6 +103,49 @@ class KeyType extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+      public function getKeyLst($type,$value){
+        $order  =   " order by exerciseID ASC";
+        if($type!="")
+            $condition = " WHERE $type = '$value'";
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM key_type";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $keyLst  =   $result->query();
+        
+        return ['keyLst'=>$keyLst,'pages'=>$pages,];
+    }
+    
+    
+        public function insertKey($title,$content,$createPerson){
+        $sql        =   "select max(exerciseID) as id from key_type";
+        $max_id     =   Yii::app()->db->createCommand($sql)->query();
+        $temp       =   $max_id->read();
+        if(empty($temp))
+        {
+            $new_id =   1;
+        }
+        else
+        {
+            $new_id =   $temp['id'] + 1;
+        }
+        $newKey    =   new KeyType();
+        $newKey->exerciseID    =   $new_id;
+        $newKey->title =   $title;
+        $newKey->content       =   $content;
+        $newKey->createPerson  =   $createPerson;
+        $newKey->createTime    =   date('y-m-d H:i:s',time());
+        return $newKey->insert();
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.

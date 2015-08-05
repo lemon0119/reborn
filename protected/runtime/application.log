@@ -3070,3 +3070,1103 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=webrtc/index
 in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (37)
 in D:\wamp\www\reborn\index.php (29)
+2015/08/04 17:27:38 [error] [php] Undefined variable: examInfo (C:\wamp\www\reborn\protected\views\student\ExamSideBar.php:8)
+Stack trace:
+#0 C:\wamp\www\framework\web\CBaseController.php(95): StudentController->renderInternal()
+#1 C:\wamp\www\framework\web\CController.php(869): StudentController->renderFile()
+#2 C:\wamp\www\framework\web\CController.php(782): StudentController->renderPartial()
+#3 C:\wamp\www\reborn\protected\controllers\StudentController.php(254): StudentController->render()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionExamKeyType()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/examkeyType&&exerID=1
+in C:\wamp\www\reborn\protected\views\student\ExamSideBar.php (8)
+in C:\wamp\www\reborn\protected\views\student\keyExer.php (5)
+in C:\wamp\www\reborn\protected\controllers\StudentController.php (254)
+2015/08/05 09:00:48 [error] [php] Undefined variable: choiceLst (C:\wamp\www\reborn\protected\views\admin\keyLst.php:58)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(969): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionKeyLst()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/keyLst
+in C:\wamp\www\reborn\protected\views\admin\keyLst.php (58)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (969)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 09:00:52 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/listenLst
+---
+2015/08/05 09:01:38 [error] [php] Undefined variable: choiceLst (C:\wamp\www\reborn\protected\views\admin\keyLst.php:58)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(969): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionKeyLst()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/keyLst
+in C:\wamp\www\reborn\protected\views\admin\keyLst.php (58)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (969)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 09:03:24 [error] [php] Undefined variable: KeyLst (C:\wamp\www\reborn\protected\views\admin\keyLst.php:58)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(969): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionKeyLst()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/keyLst
+in C:\wamp\www\reborn\protected\views\admin\keyLst.php (58)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (969)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 09:20:36 [error] [php] Undefined index: keyLst (C:\wamp\www\reborn\protected\controllers\AdminController.php:906)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/keyLst
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (906)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 09:21:40 [error] [php] Undefined index: keyLst (C:\wamp\www\reborn\protected\controllers\AdminController.php:906)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/keyLst
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (906)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 09:22:23 [error] [exception.CException] exception 'CException' with message 'KeyType and its behaviors do not have a method or closure named "getChoiceLst".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getChoiceLst', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(905): CActiveRecord->__call('getChoiceLst', Array)
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(905): KeyType->getChoiceLst('', '')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionKeyLst()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('keyLst')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/keyLst')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/keyLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/choiceLst
+---
+2015/08/05 09:22:49 [error] [php] Undefined variable: KeyLst (C:\wamp\www\reborn\protected\views\admin\keyLst.php:58)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(913): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionKeyLst()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/keyLst
+in C:\wamp\www\reborn\protected\views\admin\keyLst.php (58)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (913)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 09:23:46 [error] [php] Undefined index: requirements (C:\wamp\www\reborn\protected\views\admin\keyLst.php:62)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(913): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionKeyLst()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/keyLst
+in C:\wamp\www\reborn\protected\views\admin\keyLst.php (62)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (913)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 09:40:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "editKeytype" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('editKeytype')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('editKeytype')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/editKeyty...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/editKeytype&&exerciseID=1&&action=look
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 09:40:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "editKeytype" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('editKeytype')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('editKeytype')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/editKeyty...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/editKeytype&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 09:40:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "editKeytype" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('editKeytype')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('editKeytype')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/editKeyty...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/editKeytype&&exerciseID=1&&action=look
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 09:45:21 [error] [php] Undefined variable: answer (C:\wamp\www\reborn\protected\views\admin\editKey.php:35)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(931): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editKey&&exerciseID=1&&action=look
+in C:\wamp\www\reborn\protected\views\admin\editKey.php (35)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (931)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 10:23:16 [error] [php] Undefined variable: requirements (C:\wamp\www\reborn\protected\views\admin\editKey.php:54)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(933): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editKey&&exerciseID=1
+in C:\wamp\www\reborn\protected\views\admin\editKey.php (54)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (933)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 10:31:32 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/returnFromAddFill&&page=1
+---
+2015/08/05 10:31:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddKey" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddKe...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddKe...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddKey&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editKey&&exerciseID=1&&action=look
+---
+2015/08/05 10:35:28 [error] [php] Undefined index: requirements (C:\wamp\www\reborn\protected\controllers\AdminController.php:1410)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editChoiceInfo&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (1410)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 10:41:11 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:41:14 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:41:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:41:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "searchKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('searchKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchKey...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:41:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:41:45 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:43:39 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:46:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:46:03 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 10:46:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 11:04:05 [error] [php] Undefined variable: classNameInfo (C:\wamp\www\reborn\protected\views\layouts\teacherBar.php:39)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(784): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(681): TeacherController->render()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionQuestionLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/questionLst
+in C:\wamp\www\reborn\protected\views\layouts\teacherBar.php (39)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (681)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 11:04:07 [error] [php] Undefined variable: classNameInfo (C:\wamp\www\reborn\protected\views\layouts\teacherBar.php:39)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(784): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(536): TeacherController->render()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionChoiceLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/choiceLst
+in C:\wamp\www\reborn\protected\views\layouts\teacherBar.php (39)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (536)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 11:07:00 [error] [php] Undefined variable: requirements (C:\wamp\www\reborn\protected\views\admin\editKey.php:53)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(933): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editKey&&exerciseID=1
+in C:\wamp\www\reborn\protected\views\admin\editKey.php (53)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (933)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 11:07:29 [error] [php] Undefined variable: answer (C:\wamp\www\reborn\protected\views\admin\editKey.php:59)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(933): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editKey&&exerciseID=1
+in C:\wamp\www\reborn\protected\views\admin\editKey.php (59)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (933)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 11:11:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "editKeyInfo" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('editKeyInfo')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('editKeyInfo')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/editKeyIn...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/editKeyInfo&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editKey&&exerciseID=1
+---
+2015/08/05 11:22:29 [error] [php] Undefined variable: thisQue (C:\wamp\www\reborn\protected\controllers\AdminController.php:953)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editKeyInfo&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (953)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 11:25:45 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editKeyInfo&&exerciseID=2
+---
+2015/08/05 11:40:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 11:40:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 11:44:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 13:39:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 13:42:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 13:42:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 13:43:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 13:43:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 13:44:52 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('addKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('addKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 13:44:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "AddKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('AddKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/AddKeyTyp...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/AddKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 13:45:15 [error] [php] Undefined variable: exerciseID (C:\wamp\www\reborn\protected\views\admin\addKey.php:43)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(922): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionAddKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/AddKey
+in C:\wamp\www\reborn\protected\views\admin\addKey.php (43)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (922)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 13:48:20 [error] [php] Undefined variable: title (C:\wamp\www\reborn\protected\views\admin\addKey.php:53)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(922): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionAddKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/AddKey
+in C:\wamp\www\reborn\protected\views\admin\addKey.php (53)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (922)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 13:56:56 [error] [php] Undefined variable: title (C:\wamp\www\reborn\protected\views\admin\addKey.php:53)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(922): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionAddKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/AddKey
+in C:\wamp\www\reborn\protected\views\admin\addKey.php (53)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (922)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 14:00:54 [error] [exception.CDbException] exception 'CDbException' with message 'active record 由于不是新的, 无法被新增到数据库.' in C:\wamp\www\framework\db\ar\CActiveRecord.php:1070
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(919): CActiveRecord->insert('\xE9\x94\xAE\xE4\xBD\x8D\xE7\xBB\x83\xE4\xB9\xA0\xE4\xB8\x89', 'AASDFG', 0)
+#1 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionAddKey()
+#2 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#3 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#4 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#5 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddKey')
+#6 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/AddKey')
+#7 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#8 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#9 {main}
+REQUEST_URI=/reborn/index.php?r=admin/AddKey
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/AddKey
+---
+2015/08/05 14:01:51 [error] [exception.CDbException] exception 'CDbException' with message 'active record 由于不是新的, 无法被新增到数据库.' in C:\wamp\www\framework\db\ar\CActiveRecord.php:1070
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(919): CActiveRecord->insert('\xE9\x94\xAE\xE4\xBD\x8D\xE7\xBB\x83\xE4\xB9\xA0\xE5\x8D\x81', 'ASDF', 0)
+#1 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionAddKey()
+#2 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#3 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#4 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#5 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddKey')
+#6 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/AddKey')
+#7 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#8 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#9 {main}
+REQUEST_URI=/reborn/index.php?r=admin/AddKey
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/AddKey
+---
+2015/08/05 14:03:26 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '5' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `question` (`courseID`, `exerciseID`, `requirements`, `answer`, `createPerson`, `createTime`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5). Bound with :yp0=0, :yp1=5, :yp2='键位练习十', :yp3='ASDFG', :yp4=0, :yp5='15-08-05 14:03:25'.
+in C:\wamp\www\reborn\protected\models\KeyType.php (147)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (919)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 14:03:26 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '5' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `question` (`courseID`, `exerciseID`, `requirements`, `answer`, `createPerson`, `createTime`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5). Bound with :yp0=0, :yp1=5, :yp2='键位练习十', :yp3='ASDFG', :yp4=0, :yp5='15-08-05 14:03:25'' in C:\wamp\www\framework\db\CDbCommand.php:358
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(1077): CDbCommand->execute()
+#1 C:\wamp\www\reborn\protected\models\KeyType.php(147): CActiveRecord->insert()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(919): KeyType->insertKey('\xE9\x94\xAE\xE4\xBD\x8D\xE7\xBB\x83\xE4\xB9\xA0\xE5\x8D\x81', 'ASDFG', 0)
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionAddKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddKey')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/AddKey')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/AddKey
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/AddKey
+---
+2015/08/05 14:09:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddKey" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddKe...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddKe...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddKey&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editKeyInfo&&exerciseID=6
+---
+2015/08/05 14:23:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "searchKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('searchKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchKey...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 14:23:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "searchKeyType" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('searchKeyType')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchKeyType')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchKey...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchKeyType
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 14:23:53 [error] [exception.CException] exception 'CException' with message 'KeyType and its behaviors do not have a method or closure named "getKeyLstLst".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getKeyLstLst', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(947): CActiveRecord->__call('getKeyLstLst', Array)
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(947): KeyType->getKeyLstLst('exerciseID', '')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionSearchKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchKey')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchKey')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchKey
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 14:25:31 [error] [php] Undefined index: KeyLst (C:\wamp\www\reborn\protected\controllers\AdminController.php:948)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/searchKey
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (948)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 14:34:19 [error] [php] Undefined variable: questionLst (C:\wamp\www\reborn\protected\views\admin\searchKey.php:44)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(954): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionSearchKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/searchKey
+in C:\wamp\www\reborn\protected\views\admin\searchKey.php (44)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (954)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 14:34:53 [error] [php] Undefined variable: keyLst (C:\wamp\www\reborn\protected\views\admin\searchKey.php:44)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(954): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionSearchKey()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/searchKey
+in C:\wamp\www\reborn\protected\views\admin\searchKey.php (44)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (954)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 14:37:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddKey" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddKe...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddKe...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddKey&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/addKey
+---
+2015/08/05 15:05:00 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/addKey
+---
+2015/08/05 15:05:09 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 15:19:10 [error] [exception.CException] exception 'CException' with message 'AdminController and its behaviors do not have a method or closure named "teaInClass".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): CComponent->__call('teaInClass', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(873): AdminController->teaInClass()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lookLst')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lookLst')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/keyLst
+---
+2015/08/05 15:24:00 [error] [php] Undefined variable: LookLst (C:\wamp\www\reborn\protected\views\admin\lookLst.php:59)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(819): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLookLst()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/lookLst
+in C:\wamp\www\reborn\protected\views\admin\lookLst.php (59)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (819)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 15:35:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddLook" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddLo...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddLo...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editLook&&exerciseID=1&&action=look
+---
+2015/08/05 15:35:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "editLookInfo" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('editLookInfo')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('editLookInfo')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/editLookI...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/editLookInfo&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editLook&&exerciseID=1&&action=look
+---
+2015/08/05 15:35:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "editLookInfo" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('editLookInfo')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('editLookInfo')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/editLookI...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/editLookInfo&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editLook&&exerciseID=1
+---
+2015/08/05 15:39:42 [error] [php] Undefined variable: thisKey (C:\wamp\www\reborn\protected\controllers\AdminController.php:843)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editLookInfo&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (843)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 15:45:58 [error] [exception.CException] exception 'CException' with message 'LookType and its behaviors do not have a method or closure named "insertKey".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('insertKey', Array)
+#1 C:\wamp\www\reborn\protected\controllers\AdminController.php(825): CActiveRecord->__call('insertKey', Array)
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(825): LookType->insertKey('\xE5\xB0\x8F\xE7\x99\xBD\xE5\x85\x94', '\xE5\xB0\x8F\xE7\x99\xBD\xE5\x85\x94', 0)
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionAddLook()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddLook')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/AddLook')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/AddLook
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/AddLook
+---
+2015/08/05 15:48:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddLook" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddLo...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddLo...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/AddLook
+---
+2015/08/05 16:42:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddLook" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddLo...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddLo...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/AddLook
+---
+2015/08/05 16:43:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddLook" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddLo...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddLo...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editLook&&exerciseID=1&&action=look
+---
+2015/08/05 16:43:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddLook" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddLo...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddLo...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+---
+2015/08/05 16:49:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "returnFromAddLook" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('returnFromAddLo...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('returnFromAddLo...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/returnFro...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/editLook&&exerciseID=1&&action=look
+---
+2015/08/05 16:53:11 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "searchLook" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('searchLook')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchLook')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchLoo...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchLook
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/lookLst
+---
+2015/08/05 16:56:54 [error] [php] Undefined variable: keyLst (C:\wamp\www\reborn\protected\views\admin\searchLook.php:44)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\AdminController.php(860): AdminController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionSearchLook()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/searchLook
+in C:\wamp\www\reborn\protected\views\admin\searchLook.php (44)
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (860)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 17:02:31 [error] [php] Undefined variable: lookLst (C:\wamp\www\reborn\protected\controllers\AdminController.php:879)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (879)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 17:02:50 [error] [php] Undefined variable: lookLst (C:\wamp\www\reborn\protected\controllers\AdminController.php:879)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (879)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 17:02:58 [error] [php] Undefined variable: lookLst (C:\wamp\www\reborn\protected\controllers\AdminController.php:879)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (879)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 17:03:37 [error] [php] Undefined variable: lookLst (C:\wamp\www\reborn\protected\controllers\AdminController.php:879)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (879)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 17:03:42 [error] [php] Undefined variable: lookLst (C:\wamp\www\reborn\protected\controllers\AdminController.php:879)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/returnFromAddLook&&page=1
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (879)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/05 17:08:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "searchListen" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('searchListen')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchListen')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchLis...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchListen
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/listenLst
+---
+2015/08/05 17:09:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "searchListen" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('searchListen')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchListen')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchLis...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchListen
+HTTP_REFERER=http://localhost/reborn/index.php?r=admin/listenLst
+---

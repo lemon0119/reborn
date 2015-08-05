@@ -802,83 +802,110 @@ class AdminController extends CController
         
         public function actionLookLst()
 	{       
-            //定义动作
-            $act_result="";
-            
-           //添加动作
-           if(isset($_GET['action']))
-           {
-                   //添加
-                if($_GET['action']=='add')
-               {
-                   if(!empty($_POST['title'])&&!empty($_POST['content']))
-                   {
-                       //得到当前最大的ID
-                       $sql="select max(exerciseID) as id from look_type";
-                       $max_id = Yii::app()->db->createCommand($sql)->query();
-                       $temp=$max_id->read();
-                       if(empty($temp))
-                       {
-                           $new_id=1;
-                       }
-                       else
-                       {
-                           $new_id = $temp['id'] + 1;
-                       }
-                       $sql= "INSERT INTO look_type VALUES ('".$new_id ."','0','" .$_POST['title']."','".$_POST['content']."','0','". date('y-m-d H:i:s',time()) ."','')";
-
-                       Yii::app()->db->createCommand($sql)->query();
-                       $act_result="添加习题成功！";
-                        unset($_GET['action']);
-                   }else
-                   {
-                       //用户输入参数不足
-                       $this->render('addLook',array(
-                                                    'shao'=>"输入全不能为空"
-                                                    ));
-                       return;
-                   }
-               }else if($_GET['action']=='edit'){
-                    $sql= "UPDATE look_type SET content= '".$_POST['content'] ."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="编辑习题成功！";
-                    unset($_GET['action']);
-               }
-           }
-            
-            
-            //搜索习题
-            if(isset($_POST['which']))
-            {   
-                if(!empty($_POST['name']))
-                $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-                else  $ex_sq = "";
+           if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
             }
-            else  $ex_sq = "";
-            
-            //显示结果列表并分页
-	    $sql = "SELECT * FROM look_type ".$ex_sq;
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
+            $result     = LookType::model()->getLookLst("", "");
+            $lookLst  =   $result['lookLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "lookLst";
             $this->render('lookLst',array(
-            'posts'=>$posts,
-            'pages'=>$pages,
-            'teacher'=>$this->teaInClass(),
-            'result'=>$act_result,
-            ),false,true);
+                    'lookLst'     =>  $lookLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
+            ));
 	}
+        
+       public function actionSearchLook()
+        {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
+            if(isset($_POST['type'])){
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchType']   =   $type;
+                Yii::app()->session['searchValue']  =   $value;
+            } else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+            }
+            Yii::app()->session['lastUrl']  =   "searchLook";
+            if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+            $result      = LookType::model()->getLookLst($type, $value);
+            $lookLst =  $result['lookLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchLook',array(
+                    'lookLst'   =>  $lookLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
+        }
           
         public function actionAddLook(){
-            $this->render("addLook",array(
-                
+             $result =   'no';
+            if(isset($_POST['title'])){
+                $result = LookType::model()->insertLook($_POST['title'], $_POST['content'], 0);
+            }
+            $this->render('addLook',['result'   =>  $result]);
+        }
+        
+         public function actionReturnFromAddLook(){
+            if(Yii::app()->session['lastUrl']=="lookLst")
+            {
+            $result     = LookType::model()->getLookLst("", "");
+            $lookLst  =   $result['lookLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "lookLst";
+            $this->render('lookLst',array(
+                    'lookLst'     =>  $lookLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
             ));
+            }  else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+                Yii::app()->session['lastUrl']  =   "searchKey";
+               if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+            $result      = LookType::model()->getLookLst($type, $value);
+            $lookLst =  $result['lookLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchLook',array(
+                    'lookLst'   =>  $lookLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
+            }
         }
         
         public function actionEditLook(){
@@ -886,93 +913,146 @@ class AdminController extends CController
             $sql = "SELECT * FROM look_type WHERE exerciseID = '$exerciseID'";
             $result = Yii::app()->db->createCommand($sql)->query();
             $result =$result->read();
+             if(!isset($_GET['action']))
+            {
+                $this->render("editLook",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'title' =>$result['title'],
+                        'content'=>$result['content']
+                ));
+            }else if($_GET['action']='look'){
+                $this->render("editLook",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'title' =>$result['title'],
+                        'content'=>$result['content'],
+                        'action'        =>  'look'
+                ));
+            }
+        }
+        
+             public function actionEditLookInfo(){
+            $exerciseID    =   $_GET['exerciseID'];
+            $thisLook      =   new LookType();
+            $thisLook       =   $thisLook->find("exerciseID = '$exerciseID'");
+            $thisLook->title =   $_POST['title'];
+            $thisLook->content       =   $_POST['content'];
+            $thisLook -> update();
             $this->render("editLook",array(
-                'exerciseID'=>$result['exerciseID'],
-                'title' =>$result['title'],
-                'content'=>$result['content']
+                'exerciseID'      =>  $thisLook->exerciseID,
+                'title'    =>  $thisLook->title,
+                'content'          =>  $thisLook->content,
+                'result'          =>  "修改习题成功"
             ));
         }
 
         
         public function actionKeyLst()
 	{       
-            //定义动作
-            $act_result="";
-            
-           //添加动作
-           if(isset($_GET['action']))
-           {
-                   //添加
-                if($_GET['action']=='add')
-               {
-                   if(!empty($_POST['title'])&&!empty($_POST['content']))
-                   {
-                       //得到当前最大的ID
-                       $sql="select max(exerciseID) as id from key_type";
-                       $max_id = Yii::app()->db->createCommand($sql)->query();
-                       $temp=$max_id->read();
-                       if(empty($temp))
-                       {
-                           $new_id=1;
-                       }
-                       else
-                       {
-                           $new_id = $temp['id'] + 1;
-                       }
-                       $sql= "INSERT INTO key_type VALUES ('".$new_id ."','0','" .$_POST['title']."','".$_POST['content']."','0','". date('y-m-d H:i:s',time()) ."','')";
-
-                       Yii::app()->db->createCommand($sql)->query();
-                       $act_result="添加习题成功！";
-                        unset($_GET['action']);
-                   }else
-                   {
-                       //输入参数不足
-                       $this->render('addKey',array(
-                                                    'shao'=>"输入全不能为空"
-                                                    ));
-                       return;
-                   }
-               }else if($_GET['action']=='edit'){
-                    $sql= "UPDATE key_type SET content= '".$_POST['content'] ."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                    Yii::app()->db->createCommand($sql)->query();
-                    $act_result="编辑习题成功！";
-                    unset($_GET['action']);
-               }
-           }
-            
-            
-            //搜索习题
-            if(isset($_POST['which']))
-            {   
-                if(!empty($_POST['name']))
-                $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-                else  $ex_sq = "";
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
             }
-            else  $ex_sq = "";
-            
-            //显示结果列表并分页
-	    $sql = "SELECT * FROM key_type ".$ex_sq;
-            $criteria=new CDbCriteria();
-            $result = Yii::app()->db->createCommand($sql)->query();
-            $pages=new CPagination($result->rowCount);
-            $pages->pageSize=10;
-            $pages->applyLimit($criteria);
-            $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-            $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-            $result->bindValue(':limit', $pages->pageSize);
-            $posts=$result->query();
+            $result     = KeyType::model()->getKeyLst("", "");
+            $keyLst  =   $result['keyLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "keyLst";
             $this->render('keyLst',array(
-            'posts'=>$posts,
-            'pages'=>$pages,
-            'teacher'=>  TbClass::model()->teaInClass(),
-            'result'=>$act_result,
-            ),false,true);
+                    'keyLst'     =>  $keyLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
+            ));
 	}
+        
+        public function actionSearchKey()
+        {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
+            if(isset($_POST['type'])){
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchType']   =   $type;
+                Yii::app()->session['searchValue']  =   $value;
+            } else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+            }
+            Yii::app()->session['lastUrl']  =   "searchKey";
+            if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+            $result      = KeyType::model()->getKeyLst($type, $value);
+            $keyLst =  $result['keyLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchKey',array(
+                    'keyLst'   =>  $keyLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
+        }
+        
+        
+        public function actionReturnFromAddKey(){
+            if(Yii::app()->session['lastUrl']=="keyLst")
+            {
+            $result     = KeyType::model()->getKeyLst("", "");
+            $keyLst  =   $result['keyLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "keyLst";
+            $this->render('keyLst',array(
+                    'keyLst'     =>  $keyLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
+            ));
+            }  else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+                Yii::app()->session['lastUrl']  =   "searchKey";
+               if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+            $result      = KeyType::model()->getKeyLst($type, $value);
+            $keyLst =  $result['keyLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchKey',array(
+                    'keyLst'   =>  $keyLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
+            }
+        }
           
         public function actionAddKey(){
-            $this->render("addKey",array(
-                
-            ));
+             $result =   'no';
+            if(isset($_POST['title'])){
+                $result = KeyType::model()->insertKey($_POST['title'], $_POST['content'], 0);
+            }
+            $this->render('addKey',['result'   =>  $result]);
         }
         
         public function actionEditKey(){
@@ -980,10 +1060,36 @@ class AdminController extends CController
             $sql = "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
             $result = Yii::app()->db->createCommand($sql)->query();
             $result =$result->read();
+           if(!isset($_GET['action']))
+            {
+                $this->render("editKey",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'title' =>$result['title'],
+                        'content'=>$result['content']
+                ));
+            }else if($_GET['action']='look'){
+                $this->render("editKey",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'title' =>$result['title'],
+                        'content'=>$result['content'],
+                        'action'        =>  'look'
+                ));
+            }
+        }
+        
+        
+     public function actionEditKeyInfo(){
+            $exerciseID    =   $_GET['exerciseID'];
+            $thisKey      =   new KeyType();
+            $thisKey       =   $thisKey->find("exerciseID = '$exerciseID'");
+            $thisKey->title =   $_POST['title'];
+            $thisKey->content       =   $_POST['content'];
+            $thisKey -> update();
             $this->render("editKey",array(
-                'exerciseID'=>$result['exerciseID'],
-                'title' =>$result['title'],
-                'content'=>$result['content']
+                'exerciseID'      =>  $thisKey->exerciseID,
+                'title'    =>  $thisKey->title,
+                'content'          =>  $thisKey->content,
+                'result'          =>  "修改习题成功"
             ));
         }
 
