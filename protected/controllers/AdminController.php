@@ -1646,23 +1646,6 @@ class AdminController extends CController
         
         public function actionCourseLst()
 	{ 
-//                    if(!empty($_POST['courseName'])) 
-//                        //得到当前最大的学生ID
-//                        $sql="select max(courseID) as id from course";
-//                        $max_id = Yii::app()->db->createCommand($sql)->query();
-//                        $temp=$max_id->read();
-//                        if(empty($temp))
-//                        {
-//                            $new_id=1;
-//                        }
-//                        else
-//                        {
-//                            $new_id = $temp['id'] + 1;
-//                        }
-//                        $sql= "INSERT INTO course VALUES ('".$new_id ."','" .$_POST['courseName'] ."','0','".date('y-m-d H:i:s',time()) ."','')";    
-//                        Yii::app()->db->createCommand($sql)->query();
-//                        $act_result="新建课程成功！";
-//                        unset($_GET['action']); 
             if(isset($_GET['page']))
             {
                 Yii::app()->session['lastPage'] = $_GET['page'];
