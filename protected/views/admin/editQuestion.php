@@ -54,9 +54,9 @@
         <div class="control-group">
             <label class="control-label" for="input02">答案</label>
             <div class="controls">               
-                <textarea name="answer" style="width:450px; height:200px;"><?php echo $answer; ?></textarea>
+                <textarea name="answer" style="width:450px; height:200px;" id="input02"><?php echo $answer; ?></textarea>
             </div>
-        </div> 
+        </div>
         <div class="form-actions">
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">修改</button>
