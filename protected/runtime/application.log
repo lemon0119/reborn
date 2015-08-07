@@ -3070,3 +3070,124 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=webrtc/index
 in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (37)
 in D:\wamp\www\reborn\index.php (29)
+2015/08/06 18:12:29 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "teacher" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('teacher')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('teacher')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('webrtc/teacher')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=webrtc/teacher
+---
+2015/08/07 08:55:30 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (39)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/07 09:15:30 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (39)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/07 09:16:09 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (39)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/07 10:47:49 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (39)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/07 10:47:57 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (39)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/07 10:48:53 [error] [php] Undefined offset: 2 (D:\wamp\www\reborn\protected\views\admin\classLst.php:49)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(598): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionClassLst()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/classLst
+in D:\wamp\www\reborn\protected\views\admin\classLst.php (49)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (598)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/07 10:49:42 [error] [php] Undefined offset: 2 (D:\wamp\www\reborn\protected\views\admin\classLst.php:49)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(598): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionClassLst()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/classLst
+in D:\wamp\www\reborn\protected\views\admin\classLst.php (49)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (598)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/07 11:00:42 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (39)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/07 11:47:41 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:39)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/index
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (39)
+in D:\wamp\www\reborn\index.php (29)

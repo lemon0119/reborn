@@ -11,19 +11,19 @@ class WebrtcController extends CController{
         $class = Teacher::model()->getClassNow();
         return $this->renderPartial('selectCourse',['class'=>$class]);
     }
-    /*
-    public function actionIndex(){
-        $userid = Yii::app()->session['userid_now'];
-        if (Yii::app()->session['role_now'] == 'student') {
-            $user = Student::model()->find("userID=?",[$userid]);
-        } else if(Yii::app()->session['role_now'] == 'teacher'){
-            $user = Teacher::model()->find("userID=?",[$userid]);
-        }else{
-            $user = Admin::model()->find("userID=?",[$userid]);
-        }
-        $userName = $user['userName'];
-        $this->render('index',array('userID'=>$userid,'userRole'=>Yii::app()->session['role_now'],'userName'=>$userName));
-    }*/
+
+//    public function actionIndex(){
+//        $userid = Yii::app()->session['userid_now'];
+//        if (Yii::app()->session['role_now'] == 'student') {
+//            $user = Student::model()->find("userID=?",[$userid]);
+//        } else if(Yii::app()->session['role_now'] == 'teacher'){
+//            $user = Teacher::model()->find("userID=?",[$userid]);
+//        }else{
+//            $user = Admin::model()->find("userID=?",[$userid]);
+//        }
+//        $userName = $user['userName'];
+//        $this->render('index',array('userID'=>$userid,'userRole'=>Yii::app()->session['role_now'],'userName'=>$userName));
+//    }
     public function actionIndex(){   
         $userID = Yii::app()->session['userid_now'];
         $userName = '';
