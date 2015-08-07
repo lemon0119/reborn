@@ -2237,8 +2237,8 @@ class AdminController extends CController
             $this->render('courseLst',array(
                     'courseLst'     =>  $courseLst,
                     'pages'         =>  $pages,
-                    'teacher'       =>  Teacher::model()->findall()
-            ));             
+                    'teacher'       =>  Teacher::model()->findall()                   
+            ));                              
 	}
         
         public function actionSearchCourse()
