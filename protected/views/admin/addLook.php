@@ -8,6 +8,7 @@
                     <option value="exerciseID" selected="selected">编号</option>
                     <option value="courseID" >课程号</option>
                     <option value="createPerson" >创建人</option>
+                    <option value="title">题目名</option>
                 </select>
             </li>
             <li>
@@ -34,19 +35,10 @@
 
     
 <div class="span9">        
-<?php if(!isset($action)) {?>
-<h3>编辑看打练习题</h3>
-<?php } else if($action == 'look') {?>
-<h3>查看看打练习题</h3>
-<?php }?>
-
+<h3>添加看打练习题</h3>
     <form class="form-horizontal" method="post" action="./index.php?r=admin/AddLook" id="myForm"> 
         <fieldset>
-        <?php if(!isset($action)) {?>
-            <legend>填写题目</legend>
-        <?php } else if($action == 'look') {?>
-            <legend>查看题目</legend>
-        <?php }?>
+           <legend>填写题目</legend>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
@@ -78,13 +70,14 @@ $(document).ready(function(){
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
+    
     if(requirements === ""){
-        alert('题目内容不能为空');
+        alert('题目不能为空');
         return false;
     }
     var A = $("#input02")[0].value;
     if(A === ""){
-        alert('答案不能为空');
+        alert('内容不能为空');
         return false;
     }
 });

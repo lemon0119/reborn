@@ -130,6 +130,32 @@ class ListenType extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        
+      public function insertListen($title,$content,$fileName,$filePath,$createPerson){
+        $sql        =   "select max(exerciseID) as id from listen_type";
+        $max_id     =   Yii::app()->db->createCommand($sql)->query();
+        $temp       =   $max_id->read();
+        if(empty($temp))
+        {
+            $new_id =   1;
+        }
+        else
+        {
+            $new_id =   $temp['id'] + 1;
+        }
+        $newListen    =   new ListenType();
+        $newListen->exerciseID    =   $new_id;
+        $newListen->title =   $title;
+        $newListen->content       =   $content;
+        $newListen->fileName   = $fileName;
+        $newListen->filePath = $filePath;
+        $newListen->createPerson  =   $createPerson;
+        $newListen->createTime    =   date('y-m-d H:i:s',time());
+        return $newListen->insert();
+    }
+    
+    
 
 	/**
 	 * Returns the static model of the specified AR class.

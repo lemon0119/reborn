@@ -230,7 +230,7 @@ class AdminController extends CController
             {
                  $this->render('editStu',array(
                 'userID'=>$_GET['id'],
-                'userName'=>$thisStu ->userName,
+                'userName'=>$thisStu ->userName,                  
                 'classID'=>$thisStu ->classID,
                 'classAll'=>$classAll,
                 'userAll'=>$userAll,
@@ -908,6 +908,51 @@ class AdminController extends CController
             }
         }
         
+        public function actionDeleteLook(){
+            $exerciseID = $_GET['exerciseID'];
+            $thisLook = new LookType();
+            $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
+            if(Yii::app()->session['lastUrl']=="lookLst")
+            {
+            $result     = LookType::model()->getLookLst("", "");
+            $lookLst  =   $result['lookLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "lookLst";
+            $this->render('lookLst',array(
+                    'lookLst'     =>  $lookLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall(),
+                   'deleteResult'   => $deleteResult
+            ));
+            }  else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+                Yii::app()->session['lastUrl']  =   "searchKey";
+               if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+            $result      = LookType::model()->getLookLst($type, $value);
+            $lookLst =  $result['lookLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchLook',array(
+                    'lookLst'   =>  $lookLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+                   'deleteResult'   => $deleteResult
+            ));
+            }
+        }
+        
         public function actionEditLook(){
             $exerciseID=$_GET["exerciseID"];
             $sql = "SELECT * FROM look_type WHERE exerciseID = '$exerciseID'";
@@ -930,7 +975,7 @@ class AdminController extends CController
             }
         }
         
-             public function actionEditLookInfo(){
+     public function actionEditLookInfo(){
             $exerciseID    =   $_GET['exerciseID'];
             $thisLook      =   new LookType();
             $thisLook       =   $thisLook->find("exerciseID = '$exerciseID'");
@@ -1043,6 +1088,52 @@ class AdminController extends CController
                     'keyLst'   =>  $keyLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
+            }
+        }
+        
+        public function actionDeleteKey(){
+            $exerciseID = $_GET['exerciseID'];
+            $thisKey = new KeyType();
+            $deleteResult = $thisKey->deleteAll("exerciseID = '$exerciseID'");
+            
+            if(Yii::app()->session['lastUrl']=="keyLst")
+            {
+            $result     = KeyType::model()->getKeyLst("", "");
+            $keyLst  =   $result['keyLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "keyLst";
+            $this->render('keyLst',array(
+                    'keyLst'     =>  $keyLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall(),
+                'deleteResult' => $deleteResult
+            ));
+            }  else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+                Yii::app()->session['lastUrl']  =   "searchKey";
+               if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+            $result      = KeyType::model()->getKeyLst($type, $value);
+            $keyLst =  $result['keyLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchKey',array(
+                    'keyLst'   =>  $keyLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+                'deleteResult' => $deleteResult
             ));
             }
         }
@@ -1277,15 +1368,176 @@ class AdminController extends CController
 //            'result'=>$act_result,
 //            ),false,true);
 	}
+        
+               public function actionSearchListen()
+        {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
+            if(isset($_POST['type'])){
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchType']   =   $type;
+                Yii::app()->session['searchValue']  =   $value;
+            } else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+            }
+            Yii::app()->session['lastUrl']  =   "searchListen";
+            if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+            $result      = ListenType::model()->getListenLst($type, $value);
+            $listenLst =  $result['listenLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchListen',array(
+                    'listenLst'   =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
+        }
           
         public function actionAddListen(){
-            $result =   'no';
-            if(isset($_POST['content'])){
-//                $result = Choice::model()->insertChoice($_POST['requirements'], $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'], $_POST['answer'], 0);
+             $result =   'no';            
+             $typename = Yii::app()->session['role_now'];
+             $userid = Yii::app()->session['userid_now'];
+             $filePath =$typename."/".$userid."/"; 
+             $dir = "resources/".$filePath;            
+             if(!is_dir($dir))
+             {
+             mkdir($dir,0777);
+             }
+            
+             
+            if(isset($_POST['title'])){  
+                if($_FILES['file']['type']!= "audio/mpeg")
+                {
+                    $result = '文件格式不正确，应为MP3格式';            
+                }else if($_FILES['file']['error'] > 0)
+                {
+                    $result = '文件上传失败';
+                }else if(file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
+                {
+                    $result='服务器存在相同文件';
+                }else{
+                     move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+                     $result = '1';
+                }
+                if($result == '1')
+                {
+                    $result = ListenType::model()->insertListen($_POST['title'],$_POST['content'],$_FILES["file"]["name"],$filePath,0);                  
+                }             
             }
-            $this->render("addListen",array(
-                
+            $this->render('addListen',['result'   =>  $result]);
+        }
+        
+       public function actionReturnFromAddListen(){
+            if(Yii::app()->session['lastUrl']=="listenLst")
+            {
+                    $result     =   ListenType::model()->getListenLst("", "");
+            $listenLst  =   $result['listenLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "listenLst";
+            $this->render('listenLst',array(
+                    'listenLst'     =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
             ));
+            }  else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+                Yii::app()->session['lastUrl']  =   "searchListen";
+               if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+             $result      = ListenType::model()->getListenLst($type, $value);
+            $listenLst =  $result['listenLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchListen',array(
+                    'listenLst'   =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+            ));
+            }
+        }
+        
+        public function actionDeleteListen(){
+            $exerciseID = $_GET['exerciseID'];
+            $thisListen = new ListenType();
+            $deleteListen = $thisListen->findAll("exerciseID = '$exerciseID'");
+            $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");    
+            $filePath = $deleteListen[0]['filePath'];
+            $fileName = $deleteListen[0]['fileName'];
+            if($deleteResult == '1')
+            {             
+                $typename = Yii::app()->session['role_now'];
+                $userid = Yii::app()->session['userid_now'];    
+                //怎么用EXER_LISTEN_URL
+                $path = 'resources/'.$filePath.iconv("UTF-8","gb2312",$fileName);
+                unlink($path);
+            }
+            if(Yii::app()->session['lastUrl']=="listenLst")
+            {
+                    $result  =  ListenType::model()->getListenLst("", "");
+            $listenLst  =   $result['listenLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "listenLst";
+            $this->render('listenLst',array(
+                    'listenLst'     =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall(),
+                    'deleteResult'   => $deleteResult
+            ));
+            }  else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+                Yii::app()->session['lastUrl']  =   "searchListen";
+               if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+             $result      = ListenType::model()->getListenLst($type, $value);
+            $listenLst =  $result['listenLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchListen',array(
+                    'listenLst'   =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+                'deleteResult'   => $deleteResult
+            ));
+            }
         }
         
         public function actionEditlisten(){
@@ -1293,11 +1545,75 @@ class AdminController extends CController
             $sql = "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
             $result = Yii::app()->db->createCommand($sql)->query();
             $result =$result->read();
+             if(!isset($_GET['action']))
+            {
+                $this->render("editListen",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'title' =>$result['title'],
+                        'filename' =>$result['fileName'],
+                        'filepath' =>$result['filePath'],
+                        'content'=>$result['content']
+                ));
+            }else if($_GET['action']='look'){
+                $this->render("editListen",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'title' =>$result['title'],
+                       'filename' =>$result['fileName'],
+                        'filepath' =>$result['filePath'],
+                        'content'=>$result['content'],
+                        'action'        =>  'look'
+                ));
+            }
+        }
+        
+             public function actionEditListenInfo()
+        {                  
+             $typename = Yii::app()->session['role_now'];
+             $userid = Yii::app()->session['userid_now'];
+             $filePath = $typename."/".$userid."/";
+             $dir = "resources/".$filePath;
+            $exerciseID    =   $_GET['exerciseID'];
+            $filename = $_GET['oldfilename'];
+            $result = "修改失败";
+            if($_FILES['modifyfile']['tmp_name'])
+            {
+               if($_FILES['modifyfile']['type']!= "audio/mpeg")
+                {
+                    $result = '文件格式不正确，应为MP3格式';            
+                }else if($_FILES['modifyfile']['error'] > 0)
+                {
+                    $result = '文件上传失败';
+                }else if(file_exists($dir.iconv("UTF-8","gb2312",$_FILES["modifyfile"]["name"])))
+                {
+                    $result='服务器存在相同文件';
+                }else{
+                     move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["modifyfile"]["name"]));
+                     unlink($dir.iconv("UTF-8","gb2312",$filename));
+                     $result = '修改失败';
+                }
+            }           
+            $thisListen      =   new ListenType();
+            $thisListen       =   $thisListen->find("exerciseID = '$exerciseID'");
+            $thisListen->title =   $_POST['title'];
+            if($_FILES['modifyfile']['tmp_name'])
+            {
+                $thisListen->fileName = $_FILES['modifyfile']['name'];
+            }  else {
+                $thisListen->fileName = $filename;
+            }
+            $thisListen->content       =   $_POST['content'];
+            if($result == '修改失败')
+            {
+              $thisListen -> update();
+              $result = "修改成功";
+            }
             $this->render("editListen",array(
-                'exerciseID'=>$result['exerciseID'],
-                'title' =>$result['title'],
-                'content'=>$result['content'],
-                'filename'=>$result['fileName']      
+                'exerciseID'      =>  $thisListen->exerciseID,
+                'filename' => $thisListen->fileName,
+                'filepath' =>$thisListen->filePath,
+                'title'    =>  $thisListen->title,
+                'content'          =>  $thisListen->content,
+                'result'          =>  $result
             ));
         }
 
@@ -1419,6 +1735,51 @@ class AdminController extends CController
             }
         }
         
+          public function actionDeleteFill(){
+            $exerciseID = $_GET["exerciseID"];
+            $thisFill = new Filling();
+            $deleteResult = $thisFill->deleteAll("exerciseID = '$exerciseID'");                 
+            if(Yii::app()->session['lastUrl']=="searchFill")
+            {
+                $type = Yii::app()->session['searchFillType'];
+                $value = Yii::app()->session['searchFillValue'];
+             if($type=='createPerson')
+                {
+                    if($value=="管理员")
+                        $vaule=0;
+                    else
+                    {
+                        $tea=  Teacher::model()->find("userName = '$value'");
+                        if($tea['userID']!="")
+                            $value =$tea['userID'];
+                        else 
+                            $value = -1;
+                    }
+                }
+                $result = Filling::model()->getFillLst($type, $value);
+                $fillLst=$result['fillLst'];
+                $pages=$result['pages'];
+                $this->render('searchFill',array(
+                        'fillLst'=>$fillLst,
+                        'pages'=>$pages,
+                        'teacher'=>  Teacher::model()->findall(),
+                        'deleteResult' => $deleteResult
+                        )
+                    );
+            }else{
+                $result = Filling::model()->getFillLst("", "");
+                $fillLst=$result['fillLst'];
+                $pages=$result['pages'];
+                Yii::app()->session['lastUrl']="fillLst";
+                $this->render('fillLst',array(
+                    'fillLst'=>$fillLst,
+                    'pages'=>$pages,
+                    'teacher'=>  Teacher::model()->findall(),
+                    'deleteResult' => $deleteResult
+                ));
+            }
+        }
+        
         public function actionEditFill(){
             $exerciseID =   $_GET["exerciseID"];
             $thisFill   =   new Filling();
@@ -1532,6 +1893,19 @@ class AdminController extends CController
             {
                 $type       =   Yii::app()->session['searchChoiceType'];
                 $value      =   Yii::app()->session['searchChoiceValue'];
+            if($type=='createPerson')
+            {
+                if($value   ==  "管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =$tea['userID'];
+                    else 
+                        $value  =    -1;
+                }
+            }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -1574,7 +1948,7 @@ class AdminController extends CController
         
         
         public function actionEditChoice(){
-            $exerciseID =   $_GET["exerciseID"];
+            $exerciseID = $_GET['exerciseID'];
             $sql        =   "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
             $result     =   $result->read();
@@ -1604,6 +1978,43 @@ class AdminController extends CController
             }
             $this->render('addChoice',['result'=>$result]);
         }
+        
+        //2015 8-7 宋杰 删除选择题
+        public function actionDeleteChoice(){
+            $exerciseID = $_GET["exerciseID"];
+            $thisChoice = new Choice();
+            $deleteResult = $thisChoice->deleteAll("exerciseID = '$exerciseID'");           
+           if(Yii::app()->session['lastUrl']=="searchChoice")
+            {
+                $type       =   Yii::app()->session['searchChoiceType'];
+                $value      =   Yii::app()->session['searchChoiceValue'];
+                $result     =   Choice::model()->getChoiceLst($type, $value);
+                $choiceLst  =   $result['choiceLst'];
+                $pages      =   $result['pages'];
+                $this->render('searchChoice',array(
+                            'choiceLst' =>  $choiceLst,
+                            'pages'     =>  $pages,
+                            'teacher'   =>  Teacher::model()->findall(),
+                            'deleteResult'    =>  $deleteResult
+                        
+                    )
+                    );
+            }else {
+                $result     =   Choice::model()->getChoiceLst("", "");
+                $choiceLst  =   $result['choiceLst'];
+                $pages      =   $result['pages'];
+                Yii::app()->session['lastUrl']  =   "choiceLst";
+                $this->render('choiceLst',array(
+                        'choiceLst' =>  $choiceLst,
+                        'pages'     =>  $pages,
+                        'teacher'   =>  Teacher::model()->findall(),
+                        'deleteResult'      =>  $deleteResult
+                ));
+            }
+                   
+        }
+
+
         
         
         public function actionQuestionLst()
@@ -1701,6 +2112,50 @@ class AdminController extends CController
                         'questionLst'   =>  $questionLst,
                         'pages'         =>  $pages,
                         'teacher'       =>  TbClass::model()->teaInClass(),
+                ));
+            }
+        }
+        
+         public function actionDeleteQuestion(){
+             $exerciseID = $_GET['exerciseID'];
+             $thisQue = new Question();
+             $deleteResult = $thisQue->deleteAll("exerciseID = '$exerciseID'");                  
+            if(Yii::app()->session['lastUrl']=="questionLst")
+            {
+                $result      =  Question::model()->getQuestionLst("", "");
+                $questionLst =  $result['questionLst'];  
+                $pages       =  $result["pages"];
+                $this->render('questionLst',array(
+                        'questionLst'   =>  $questionLst,
+                        'pages'         =>  $pages,
+                        'teacher'       =>  TbClass::model()->teaInClass(),
+                        'deleteResult'  =>  $deleteResult
+                ));
+            }  else {
+                $type   =   Yii::app()->session['searchType'];
+                $value  =   Yii::app()->session['searchValue'];
+                Yii::app()->session['lastUrl']  =   "searchQuestion";
+                if($type=='createPerson')
+                {
+                    if($value=="管理员")
+                        $vaule  =   0;
+                    else
+                    {
+                        $tea    =  Teacher::model()->find("userName = '$value'");
+                        if($tea['userID']!="")
+                            $value =    $tea['userID'];
+                        else 
+                            $value = -1;
+                    }
+                }
+                $result      =  Question::model()->getQuestionLst($type, $value);
+                $questionLst =  $result['questionLst'];  
+                $pages       =  $result["pages"];
+                $this->render('searchQuestion',array(
+                        'questionLst'   =>  $questionLst,
+                        'pages'         =>  $pages,
+                        'teacher'       =>  TbClass::model()->teaInClass(),
+                        'deleteResult'  =>  $deleteResult
                 ));
             }
         }

@@ -1,79 +1,111 @@
- <script src="<?php echo JS_URL;?>jquery-form.js"></script>
-<script>
-    $(document).ready(function(){
-            $("div.span9").find("a").click(function(){
-                var url = $(this).attr("href");
-                //$(this).attr("href","#");
-                if(url.indexOf("index.php") > 0){
-                    $("#cont").load(url);
-                    return false;//阻止链接跳转
-                }
-            });
-        var options = {    target:'#cont',    };
-
-    $("#myForm").submit(function(){ 
-          $(this).ajaxSubmit(options);   
-      // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
-           return false;   
-      });  
-    });
-</script>
-<div class="span9">
-        <div class="hero-unit">
-            
-       
-        <script type="text/javascript">
-        $(document).ready(function(){
-            $("#file").hide();
-            $("#label").hide();
-            $("#qiehuan").click(function(){
-            $("#file").toggle(500);
-            $("#label").toggle(500);
-         });
-        });
-        </script>   
-
-        
-        <h3>修改<?php echo $title;?></h3>
-        <form id="myForm" method="post" action="./index.php?r=admin/listenLst&&action=edit&&exerciseID=<?php echo $exerciseID;?>" enctype="multipart/form-data"> 
-        现有音频：<?php echo $filename;?>
-        <br/>
-        <input id="qiehuan" type="checkbox" name="checkbox[]" value="yes" />替换MP3文件
-        <label id="label" for="file">Filename:</label>
-        <input type="file" name="file" id="file" /> 
-        <br />
-        <br>
-        内容：
-        <br>
-        <textarea name="content" style="width:600px; height:300px;" ><?php echo $content;?></textarea>
-        <br>
-        <input type="submit" name="submit" value="提交"> 
-        </form>   
-        <?php
-        if(isset($shao))
-        {
-             echo $shao;
-        }
-        ?>
-        
-        </div>
-        </div>
+<div class="span3">
+    <div class="well" style="padding: 8px 0;">
+        <ul class="nav nav-list">
+        <li class="nav-header">查询</li>
+        <form action="./index.php?r=admin/searchListen" method="post">
+            <li>
+                <select name="type" style="width: 185px">
+                    <option value="exerciseID" selected="selected">编号</option>
+                    <option value="courseID" >课程号</option>
+                    <option value="createPerson" >创建人</option>
+                    <option value="title">题目名</option>
+                </select>
+            </li>
+            <li>
+                    <input name="value" type="text" class="search-query span2" placeholder="Search" />
+            </li>
+            <li style="margin-top:10px">
+                    <button type="submit" class="btn btn-primary">查询</button>
+                    <a href="./index.php?r=admin/addListen" class="btn">添加</a>
+            </li>
+        </form>
+            <li class="divider"></li>
+            <li class="nav-header">基础知识</li>
+            <li ><a href="./index.php?r=admin/choiceLst"><i class="icon-font"></i> 选择</a></li>
+            <li ><a href="./index.php?r=admin/fillLst"><i class="icon-text-width"></i> 填空</a></li>
+            <li ><a href="./index.php?r=admin/questionLst"><i class="icon-align-left"></i> 简答</a></li>
+            <li class="divider"></li>
+            <li class="nav-header">打字练习</li>
+            <li ><a href="./index.php?r=admin/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+            <li ><a href="./index.php?r=admin/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
+            <li class="active"><a href="./index.php?r=admin/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
+        </ul>
+    </div>
+</div>
 
     
-    <?php
-       //显示操作结果
-       if(isset($result))
-       {
-           if(!empty($result))
-           {
-               echo "<script>var result = '$result';</script>";
-           }
-       }
-    ?>
-    <script>
-        if(result != null){
-            alert(result);
-            result = null;
-        }
-    </script>
+<div class="span9">        
+<?php if(!isset($action)) {?>
+<h3>编辑听打练习题</h3>
+<?php } else if($action == 'look') {?>
+<h3>查看听打练习题</h3>
+<?php }?>
 
+    <form class="form-horizontal" method="post" action="./index.php?r=admin/editListenInfo&&oldfilename=<?php echo $filename;?>&&exerciseID=<?php echo $exerciseID;?>" id="myForm" enctype="multipart/form-data"> 
+        <fieldset>
+        <?php if(!isset($action)) {?>
+            <legend>填写题目</legend>
+        <?php } else if($action == 'look') {?>
+            <legend>查看题目</legend>
+        <?php }?>
+        <?php $listenpath = "resources/".$filepath.$filename;?>
+            
+       <div class="control-group">
+            <label class="control-label" for="input01">题目</label>
+       <div class="controls">
+                <textarea name="title" style="width:450px; height:20px;" id="input01"><?php echo $title; ?></textarea>
+            </div>
+        </div>
+            
+          <div class="control-group">
+              
+              <label class="control-label" ></label>
+            <audio  src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
+         </div>
+            
+            
+           <div class="control-group">
+               <label class="control-label" for="input02">修改</label>
+               <div class="controls">
+               <input type="file" name="modifyfile" id="input02">      
+               </div>
+           </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="input03">内容</label>
+            <div class="controls">               
+                <textarea name="content" style="width:450px; height:200px;" id="input03"><?php echo $content; ?></textarea>
+            </div>
+        </div> 
+            
+        <div class="form-actions">
+            <?php if(!isset($action)) {?> 
+                <button type="submit" class="btn btn-primary">修改</button>
+            <?php }?>
+            <a href="./index.php?r=admin/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">取消</a>
+        </div>
+            
+        </fieldset>
+    </form>   
+</div>
+<script>     
+$(document).ready(function(){
+    <?php if(isset($result))
+            echo "alert('$result');";?>
+});
+
+
+
+$("#myForm").submit(function(){
+    var requirements = $("#input01")[0].value;
+    if(requirements === ""){
+        alert('题目不能为空');
+        return false;
+    }
+    var A = $("#input03")[0].value;
+    if(A === ""){
+        alert('内容不能为空');
+        return false;
+    }
+});
+</script>

@@ -8,6 +8,7 @@
                                         <option value="exerciseID" selected="selected">编号</option>
                                         <option value="courseID" >课程号</option>
                                         <option value="createPerson" >创建人</option>
+                                        <option value="title">题目名</option>
                                 </select>
                         </li>
                         <li>
@@ -74,6 +75,7 @@
                         <td>
                             <a href="./index.php?r=admin/editLook&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                             <a href="./index.php?r=admin/editLook&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                       <a href="./index.php?r=admin/deleteLook&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -89,3 +91,19 @@
     <!-- 翻页标签结束 -->
    
     </div>
+
+<script>
+$(document).ready(function(){
+    var result = <?php if(!empty($deleteResult))
+    {
+        echo $deleteResult;
+    }else{
+        echo "";
+    }
+    ?>
+            if(result == "1")
+                alert("删除成功");
+            else if(result == "0")
+                alert("删除失败");
+});
+</script>

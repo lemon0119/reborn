@@ -2,8 +2,8 @@
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header">查询</li>
-                <form action="./index.php?r=admin/searchListen" method="post">
-                        <li>
+                <form action="./index.php?r=admin/searchListen" method="post" >
+                    <li>
                                 <select name="type" style="width: 185px">
                                         <option value="exerciseID" selected="selected">编号</option>
                                         <option value="courseID" >课程号</option>
@@ -33,40 +33,76 @@
         </div>
 </div>
 
-<div class="span9"> 
-            
-        <h3>添加听打练习</h3>
-        <form id="myForm" method="post" action="./index.php?r=admin/listenLst&&action=add" enctype="multipart/form-data"> 
-        名称：<input type="text" name="title">
-        <label for="file">Filename:</label>
-        <input type="file" name="file" id="file" /> 
-        <br />
-        <br>
-        内容：
-        <br>
-        <textarea name="content" style="width:600px; height:300px;" ></textarea>
-        <br>
-        <input type="submit" name="submit" value="提交"> 
-        </form>   
-        <?php
-        if(isset($shao))
-        {
-             echo $shao;
-        }
-        ?>
+<div class="span9">        
+<h3>添加听打练习题</h3>
+    <form class="form-horizontal" method="post" action="./index.php?r=admin/AddListen" id="myForm" enctype="multipart/form-data"> 
+        <fieldset>
+           <legend>填写题目</legend>
+        <div class="control-group">
+            <label class="control-label" for="input01">题目</label>
+            <div class="controls">
+                <textarea name="title" style="width:450px; height:20px;" id="input01"></textarea>
+            </div>
         </div>
+           <div class="control-group">
+               <label class="control-label" for="input02">文件</label>
+               <div class="controls">
+               <input type="file" name="file" id="input02">      
+               </div>
+           </div>
+        <div class="control-group">
+            <label class="control-label" for="input03">内容</label>
+            <div class="controls">               
+                <textarea name="content" style="width:450px; height:200px;" id="input03"></textarea>
+            </div>
+        </div> 
+        <div class="form-actions">
+            <?php if(!isset($action)) {?> 
+                <button type="submit" class="btn btn-primary">添加</button>
+            <?php }?>
+            <a href="./index.php?r=admin/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">取消</a>
+        </div>
+        </fieldset>
+    </form>   
+</div>
+<script>     
+$(document).ready(function(){
+    var result = <?php echo "'$result'";?>;
+    if(result === '1')
+        alert('添加看打练习成功！');
+    else if(result === '0')
+        alert('添加看打练习失败！');
+    else if(result != 'no')
+    {      
+        alert(result);      
+    }
+        
+});
+$("#myForm").submit(function(){
 
+    var requirements = $("#input01")[0].value;
+    if(requirements === ""){
+        alert('题目内容不能为空');
+        return false;
+    }
+    var uploadFile = $("#input02")[0].value;
+    if(uploadFile === "")
+    {
+        alert('上传文件不能为空');
+    return false;
+    }
     
-    <?php
-       //显示操作结果
-       if(isset($result))
-       {
-           if(!empty($result))
-           {
-               echo "<script>var result = '$result';</script>";
-           }
-       }
-    ?>
+    var A = $("#input03")[0].value;
+        if(A === ""){
+        alert('内容不能为空');
+        return false;
+    }
+    
+    
+
+
+});
+</script>
   
     
 
