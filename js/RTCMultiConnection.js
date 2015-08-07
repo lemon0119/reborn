@@ -97,6 +97,10 @@ function RTCMultiConnection(roomid) {
     connection.broadcasters = [];
 
     var socket;
+    var port = 9001;
+    connection.setSignalerPort = function (port){
+        connection.port = port;
+    }
 
     function connectSocket(connectCallback) {
         if (socket) { // todo: check here readySate/etc. to make sure socket is still opened
@@ -104,7 +108,7 @@ function RTCMultiConnection(roomid) {
             return;
         }
         var host = window.location.host;
-        socket = io.connect('https://'+host+':9001/?userid=' + connection.userid);
+        socket = io.connect('https://'+host+':'+connection.port+'/?userid=' + connection.userid);
 
         socket.on('extra-data-updated', function(remoteUserId, extra) {
             if (!connection.peers[remoteUserId]) return;

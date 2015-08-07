@@ -55,17 +55,16 @@ echo "<script>var role='$role';</script>";
 
                         <div style="display:inline;">
                             <!-- sunpy: broadcast local video -->    
-                            <button id="teacher-dianbo" style="font-size:20px;height:40px">点播</button>
-                            <select id="teacher-choose-file">
+                            <button id="teacher-dianbo" class="btn-large btn-primary">点播</button>
+                            <select id="teacher-choose-file" >
                                 <option value ="1.mp4">速录演示视频</option>
                                 <option value="CB6601435D33002ECE7BAD33F79126D6.flv">MV-不见长安</option>
                                 <option value ="h0134j6z7lp.mp4">MV-时间都去哪了</option>
                                 <option value="l0015jn2cz8.mp4">MV-泡沫</option>
-                            </select>
-                            <!--<input type="file" placeholder="选择点播文件" id="teacher-choose-file" style="font-size:20px;width:30%"></input>-->
-                            <!-- <button id="teacher-stop-dianbo">停止点播</button> -->
+                            </select>　　
+                            <button id="close-dianbo" class="btn-large btn-primary" >关闭点播</button>
                         </div>
-                        
+                    
                         <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px; display:none">
                         </div>
                         <div id="dianbo-videos-container" style="margin-top:18px;display:none">  
@@ -101,41 +100,49 @@ echo "<script>var role='$role';</script>";
 // .......................UI Code........................
 // ......................................................
 $(document).ready(function(){
-    var share_conn;
-    $('#share-screen').click(function(){
-        var cls = $(this).attr('class');
-        if(cls.indexOf('btn-primary') > 0){//按钮是共享
-            share_conn = new RTCMultiConnection('screen-sharing-id-1');
-            share_conn.session = {
-                screen: true,
-                oneway: true
-            };
-            share_conn.sdpConstraints.mandatory = {
-                OfferToReceiveAudio: false,
-                OfferToReceiveVideo: false
-            };
-            share_conn.autoCloseEntireSession = true;
-            share_conn.onstream = function(event) {
-                var container = document.getElementById("videos-container");
-                $("#videos-container").show();
-                container.insertBefore(event.mediaElement, container.firstChild);
-            };
-            share_conn.open("class");
-            $(this).attr('class','btn btn-large');
-            $(this).html('关闭共享');
-        } else {
-            //按钮是关闭
-            share_conn.close();
-            share_conn = null;
-            $("#videos-container").hide();
-            $("#videos-container").empty();
-            $(this).attr('class','btn-large btn-primary');
-            $(this).html('共享屏幕');
-        }
-    });
+//    var share_conn;
+//    $('#share-screen').click(function(){
+//        var cls = $(this).attr('class');
+//        if(cls.indexOf('btn-primary') > 0){//按钮是共享
+//            share_conn = new RTCMultiConnection('screen-sharing-id-1');
+//            share_conn.setSignalerPort(9002);
+//            share_conn.autoReDialOnFailure = false;
+//            share_conn.session = {
+//                screen: true,
+//                oneway: true
+//            };
+//            share_conn.sdpConstraints.mandatory = {
+//                OfferToReceiveAudio: false,
+//                OfferToReceiveVideo: false
+//            };
+//            share_conn.autoCloseEntireSession = true;
+//            share_conn.onstream = function(event) {
+//                var container = document.getElementById("videos-container");
+//                $("#videos-container").show();
+//                container.insertBefore(event.mediaElement, container.firstChild);
+//            };
+//            share_conn.open("class");
+//            $(this).attr('class','btn btn-large');
+//            $(this).html('关闭共享');
+//        } else {
+//            //按钮是关闭
+//            share_conn.close();
+//            share_conn = null;
+//            $("#videos-container").hide();
+//            $("#videos-container").empty();
+//            $(this).attr('class','btn-large btn-primary');
+//            $(this).html('共享屏幕');
+//        }
+//    });
+//    $('#close-dianbo').click(function(){
+//        closeConnect();
+//        clearVideo();
+//    });
     
     $('#setup-new-broadcast').click(function(){
         var video_conn = new RTCMultiConnection('video-sharing-id-1');
+        video_conn.setSignalerPort(9001);
+        video_conn.autoReDialOnFailure = false;
         video_conn.session = {
             audio: true,
             video: true,
@@ -231,7 +238,7 @@ function pollBulletin() {
         dataType: "json",
         url: "index.php?r=api/GetLatestBulletin",
         success: function(data) {
-            console.log(data[0].id);
+            //console.log(data[0].id);
             if (role === 'student') {
                 $("#bulletin-textarea").val(data[0].content);
             } else {
@@ -263,8 +270,8 @@ $(document).ready(function(){
 <script>
     //点播
 $(document).ready(function(){
-    $("#teacher-dianbo").click(function() {   
-        console.log("sunpy: role = " + role);
+    $("#teacher-dianbo").click(function() {
+        //console.log("sunpy: role = " + role);
         //$("#videos-container").empty();
 
         var server_root_path = "<?php echo SITE_URL.'resources/'?>video/";
@@ -281,8 +288,6 @@ $(document).ready(function(){
             html += '<video id="video1" width="100%" controls>';
             html += '<source src="' + absl_path + '">';
             html += '</video>';
-            //html += '<button id="play">播放</button>';
-            //html += '<button id="pause">暂停</button>';
             $("#dianbo-videos-container").empty();
             $("#dianbo-videos-container").append(html);
         } else {
@@ -295,6 +300,7 @@ $(document).ready(function(){
             video_time_duration = video_element.duration;
             console.log("sunpy: video duration " + video_time_duration);
         };
+        openConnect();
         WebSocketConnect(absl_path);
     });
 });
@@ -302,11 +308,34 @@ $(document).ready(function(){
 var play_fun    =   null;
 var pause_fun   =   null;
 var timer       =   null;
-var ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
-ws.onclose = function(event) {
-      console.log("与点播服务器的连接断开...");
-  }
-  
+var ws = null;
+function openConnect(){
+    if(ws !== null)
+        return ;
+    ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');// initializing the connection through the websocket api
+    ws.onclose = function(event) {
+          console.log("与点播服务器的连接断开...");
+    };
+}
+
+function closeConnect(){
+    if(ws === null)
+        return;
+    var message_sent = "<?php echo $classID;?>close";
+    ws.send(message_sent);
+    ws.close();
+    ws = null;
+}
+
+function clearVideo(){
+    var video = document.getElementById('video1');
+    if(video != null){
+        video.pause();
+        video.parentNode.removeChild(video);
+    }
+    $("#dianbo-videos-container").empty();
+}
+
 function WebSocketConnect(absl_path){
     console.log("sunpy [WebSocketConnect]");
     var myVideo = document.getElementById("video1");

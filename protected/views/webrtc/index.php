@@ -806,7 +806,7 @@ echo "<script>var role='$role';</script>";
                         //$("#student-close-camera").css("display", "block");
                         scaleVideos();
                     };
-
+                    connection.autoCloseEntireSession = true;
                     $("#student-close-camera").click(function() {
                         console.log("sunpy: student hides camera");
                         this.disable = true;
