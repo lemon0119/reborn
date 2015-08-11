@@ -16,7 +16,7 @@
                         </li>
                         <li style="margin-top:10px">
                                 <button type="submit" class="btn btn-primary">查询</button>
-                                <a href="./index.php?r=teacher/AddLook" class="btn">添加</a>
+                                <a href="./index.php?r=teacher/addLook" class="btn">添加</a>
                         </li>
                 </form>
                         <li class="divider"></li>
@@ -32,32 +32,32 @@
                 </ul>
         </div>
 </div>
-    
-    <?php
-        //得到老师ID对应的名称
-        foreach ($teacher as $model):
-        $teacherID=$model['userID'];
-        $teachers["$teacherID"]=$model['userName'];
-        endforeach;
-        $code = mt_rand(0, 1000000);
-    ?>
-    
+
+
+<?php
+    //得到老师ID对应的名称
+    foreach ($teacher as $model):
+    $teacherID=$model['userID'];
+    $teachers["$teacherID"]=$model['userName'];
+    endforeach;
+    $code = mt_rand(0, 1000000);
+?>
 <div class="span9">
-    <h2>键位练习列表</h2>
-    <!-- 键位习题列表-->
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>编号</th>
-                <th>课程号</th>
-                <th>题目</th>
-                <th>内容</th>
-                <th>创建人</th>
-                <th>创建时间</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-                <tbody>        
+<?php if($lookLst->count()!=0){?>
+    <h2>查询结果</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>课程号</th>
+            <th>题目</th>>
+            <th>内容</th>
+            <th>创建人</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+            <tbody>        
                     <?php foreach($lookLst as $model):?>
                     <tr>
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
@@ -85,17 +85,19 @@
                     </tr>            
                     <?php endforeach;?> 
                 </tbody>
-    </table>
-    <!-- 学生列表结束 -->
-    <!-- 显示翻页标签 -->
-    <div align=center>
-    <?php   
-        $this->widget('CLinkPager',array('pages'=>$pages));
-    ?>
-    </div>
-    <!-- 翻页标签结束 -->
-   
-    </div>
+</table>
+<!-- 学生列表结束 -->
+<!-- 显示翻页标签 -->
+<div align=center>
+<?php   
+    $this->widget('CLinkPager',array('pages'=>$pages));
+?>
+</div>
+<!-- 翻页标签结束 -->
+<?php } else {?>
+    <h2>查询结果为空！</h2>
+<?php }?>
+</div>
 
 <script>
     $(document).ready(function(){
@@ -114,4 +116,3 @@
   }
 
 </script>
-

@@ -7,6 +7,7 @@
                                 <select name="type" style="width: 185px">
                                         <option value="exerciseID" selected="selected">编号</option>
                                         <option value="courseID" >课程号</option>
+                                        <option value="createPerson">创建人</option>
                             
                                 </select>
                         </li>
@@ -39,6 +40,7 @@
     $teacherID=$model['userID'];
     $teachers["$teacherID"]=$model['userName'];
     endforeach;
+    $code = mt_rand(0, 1000000);
 ?>
 
 
@@ -67,12 +69,19 @@
                                else
                                    echo str_replace("$$","__",substr($model['requirements'], 0, 15)."...");
                    ?></td>
-                    <td><?php echo Yii::app()->user->name;
+                    <td><?php if($model['createPerson']=="0")
+                                        echo "管理员";
+                                    else echo  $teachers[$model['createPerson']];
                         ?></td>
                     <td><?php echo $model['createTime'];?></td>
                     <td>
-                        <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
-                        <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                             <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                          <?php if($model['createPerson'] == Yii::app()->session['userid_now']){?>
+                            <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                            <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                            <?php }else{ ?>
+                            <a href="./index.php?r=teacher/copyFill&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>copy.png">复制</a>
+                            <?php }?>
                     </td>
                 </tr>            
                 <?php endforeach;?> 
@@ -90,3 +99,21 @@
     <h2>查询结果为空！</h2>
 <?php }?>
 </div>
+
+<script>
+    $(document).ready(function(){
+    var result = <?php  if(isset($result)) echo "'$result'"; else echo'1';?>;
+    if(result === '1')
+        alert('复制选择题成功！');
+    else if(result === '0')
+        alert('复制选择题失败！');
+    result = "";
+}      
+);
+   function dele(exerciseID){
+      if(confirm("您确定删除吗？")){
+          window.location.href = "./index.php?r=teacher/deleteFill&&exerciseID=" + exerciseID;
+      }
+  }
+
+</script>

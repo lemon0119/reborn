@@ -57,28 +57,28 @@ class Filling extends CActiveRecord
         return ['fillLst'=>$fillLst,'pages'=>$pages,];
     }
     
-    //宋杰 2015-7-30 获取老师编写的填空题
-        public function getTeaFillLst($type,$value){
-        $order = " order by exerciseID ASC";
-        $teacher_id = Yii::app()->session['userid_now'];
-        if($type!="")
-            $condition = " WHERE $type = '$value' and createPerson = '$teacher_id'";
-        else
-            $condition= " WHERE createPerson = '$teacher_id'";
-        $select = "SELECT * FROM filling";
-        $sql = $select.$condition.$order;
-        $criteria=new CDbCriteria();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10; 
-        $pages->applyLimit($criteria); 
-        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
-        $result->bindValue(':limit', $pages->pageSize); 
-        $fillLst=$result->query();
-        
-        return ['fillLst'=>$fillLst,'pages'=>$pages,];
-    }
+//    //宋杰 2015-7-30 获取老师编写的填空题
+//        public function getTeaFillLst($type,$value){
+//        $order = " order by exerciseID ASC";
+//        $teacher_id = Yii::app()->session['userid_now'];
+//        if($type!="")
+//            $condition = " WHERE $type = '$value' and createPerson = '$teacher_id'";
+//        else
+//            $condition= " WHERE createPerson = '$teacher_id'";
+//        $select = "SELECT * FROM filling";
+//        $sql = $select.$condition.$order;
+//        $criteria=new CDbCriteria();
+//        $result = Yii::app()->db->createCommand($sql)->query();
+//        $pages=new CPagination($result->rowCount);
+//        $pages->pageSize=10; 
+//        $pages->applyLimit($criteria); 
+//        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+//        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+//        $result->bindValue(':limit', $pages->pageSize); 
+//        $fillLst=$result->query();
+//        
+//        return ['fillLst'=>$fillLst,'pages'=>$pages,];
+//    }
     
 	/**
 	 * @return string the associated database table name

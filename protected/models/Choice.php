@@ -63,28 +63,28 @@ class Choice extends CActiveRecord
     }
     
     
-    //宋杰 2015-7-30 得到登录老师的选择题列表
-        public function getTeaChoiceLst($type,$value){
-        $order = " order by exerciseID ASC";
-        $teacher_id = Yii::app()->session['userid_now'];
-        if($type!="")
-            $condition = " WHERE $type = '$value' and createPerson = '$teacher_id'";
-        else
-            $condition= "where createPerson = '$teacher_id'";
-        $select = "SELECT * FROM choice";
-        $sql = $select.$condition.$order;
-        $criteria=new CDbCriteria();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10; 
-        $pages->applyLimit($criteria); 
-        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
-        $result->bindValue(':limit', $pages->pageSize); 
-        $choiceLst=$result->query();
-        
-        return ['choiceLst'=>$choiceLst,'pages'=>$pages,];
-    }
+//    //宋杰 2015-7-30 得到登录老师的选择题列表
+//        public function getTeaChoiceLst($type,$value){
+//        $order = " order by exerciseID ASC";
+//        $teacher_id = Yii::app()->session['userid_now'];
+//        if($type!="")
+//            $condition = " WHERE $type = '$value' and createPerson = '$teacher_id'";
+//        else
+//            $condition= "where createPerson = '$teacher_id'";
+//        $select = "SELECT * FROM choice";
+//        $sql = $select.$condition.$order;
+//        $criteria=new CDbCriteria();
+//        $result = Yii::app()->db->createCommand($sql)->query();
+//        $pages=new CPagination($result->rowCount);
+//        $pages->pageSize=10; 
+//        $pages->applyLimit($criteria); 
+//        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+//        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+//        $result->bindValue(':limit', $pages->pageSize); 
+//        $choiceLst=$result->query();
+//        
+//        return ['choiceLst'=>$choiceLst,'pages'=>$pages,];
+//    }
     
 	/**
 	 * @return string the associated database table name

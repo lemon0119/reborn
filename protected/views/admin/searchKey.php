@@ -59,6 +59,7 @@
                     <tr>
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
+                        <td><?php echo $model['title']?></td>
                         <td><?php  if(strlen($model['content'])<=30)
                                         echo $model['content'];
                                     else
@@ -72,7 +73,8 @@
                         <td>
                             <a href="./index.php?r=admin/editKey&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                             <a href="./index.php?r=admin/editKey&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
-                            <a href="./index.php?r=admin/deleteKey&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                            
+                             <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -92,17 +94,9 @@
 </div>
 
 <script>
-$(document).ready(function(){
-    var result = <?php if(!empty($deleteResult))
-    {
-        echo $deleteResult;
-    }else{
-        echo "";
-    }
-    ?>
-            if(result == "1")
-                alert("删除成功");
-            else if(result == "0")
-                alert("删除失败");
-});
+  function dele(exerciseID){
+      if(confirm("您确定删除吗？")){
+          window.location.href = "./index.php?r=admin/deleteKey&&exerciseID=" + exerciseID;
+      }
+  }
 </script>
