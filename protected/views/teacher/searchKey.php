@@ -9,6 +9,7 @@
                                         <option value="courseID" >课程号</option>
                                         <option value="createPerson" >创建人</option>
                                         <option value="title">题目名</option>
+                                        <option value="requirements">内容</option>
                                 </select>
                         </li>
                         <li>

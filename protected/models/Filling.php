@@ -39,7 +39,14 @@ class Filling extends CActiveRecord
     public function getFillLst($type,$value){
         $order = " order by exerciseID ASC";
         if($type!="")
-            $condition = " WHERE $type = '$value'";
+            if($type == "requirements")
+            {
+                $condition = " where $type like '%$value%'";
+            }else
+            {
+                $condition = " WHERE $type = '$value'";
+            }
+            
         else
             $condition= "";
         $select = "SELECT * FROM filling";

@@ -850,6 +850,13 @@ class AdminController extends CController
                         $value = -1;
                 }
             }
+            if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
             $result      = LookType::model()->getLookLst($type, $value);
             $lookLst =  $result['lookLst'];  
             $pages       =  $result["pages"];
@@ -857,6 +864,7 @@ class AdminController extends CController
                     'lookLst'   =>  $lookLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
+                    'searchKey'     =>  $searchKey
             ));
         }
           
@@ -897,6 +905,14 @@ class AdminController extends CController
                         $value = -1;
                 }
             }
+            
+            if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
             $result      = LookType::model()->getLookLst($type, $value);
             $lookLst =  $result['lookLst'];  
             $pages       =  $result["pages"];
@@ -904,6 +920,7 @@ class AdminController extends CController
                     'lookLst'   =>  $lookLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
+                    'searchKey'     =>  $searchKey
             ));
             }
         }
@@ -941,6 +958,13 @@ class AdminController extends CController
                         $value = -1;
                 }
             }
+           if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
             $result      = LookType::model()->getLookLst($type, $value);
             $lookLst =  $result['lookLst'];  
             $pages       =  $result["pages"];
@@ -948,7 +972,9 @@ class AdminController extends CController
                     'lookLst'   =>  $lookLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
-                   'deleteResult'   => $deleteResult
+                   'deleteResult'   => $deleteResult,
+                   'searchKey'    => $searchKey
+                
             ));
             }
         }
@@ -1400,6 +1426,13 @@ class AdminController extends CController
                         $value = -1;
                 }
             }
+            if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
             $result      = ListenType::model()->getListenLst($type, $value);
             $listenLst =  $result['listenLst'];  
             $pages       =  $result["pages"];
@@ -1407,6 +1440,7 @@ class AdminController extends CController
                     'listenLst'   =>  $listenLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
+                'searchKey' => $searchKey
             ));
         }
           
@@ -1473,6 +1507,13 @@ class AdminController extends CController
                         $value = -1;
                 }
             }
+            if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
              $result      = ListenType::model()->getListenLst($type, $value);
             $listenLst =  $result['listenLst'];  
             $pages       =  $result["pages"];
@@ -1480,6 +1521,7 @@ class AdminController extends CController
                     'listenLst'   =>  $listenLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
+                'searchKey' => $searchKey
             ));
             }
         }
@@ -1528,6 +1570,13 @@ class AdminController extends CController
                         $value = -1;
                 }
             }
+                        if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
              $result      = ListenType::model()->getListenLst($type, $value);
             $listenLst =  $result['listenLst'];  
             $pages       =  $result["pages"];
@@ -1535,7 +1584,8 @@ class AdminController extends CController
                     'listenLst'   =>  $listenLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
-                'deleteResult'   => $deleteResult
+                'deleteResult'   => $deleteResult,
+                'searchKey' => $searchKey
             ));
             }
         }
@@ -1667,13 +1717,21 @@ class AdminController extends CController
                         $value = -1;
                 }
             }
+            if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
             $result = Filling::model()->getFillLst($type, $value);
             $fillLst=$result['fillLst'];
             $pages=$result['pages'];
             $this->render('searchFill',array(
                         'fillLst'=>$fillLst,
                         'pages'=>$pages,
-                        'teacher'=>  Teacher::model()->findall()
+                        'teacher'=>  Teacher::model()->findall(),
+                        'searchKey' => $searchKey
                     )
                     );
         }
@@ -1713,13 +1771,22 @@ class AdminController extends CController
                             $value = -1;
                     }
                 }
+           if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result = Filling::model()->getFillLst($type, $value);
                 $fillLst=$result['fillLst'];
                 $pages=$result['pages'];
                 $this->render('searchFill',array(
                         'fillLst'=>$fillLst,
                         'pages'=>$pages,
-                        'teacher'=>  Teacher::model()->findall()
+                        'teacher'=>  Teacher::model()->findall(),
+                        'searchKey' => $searchKey
+                        
                         )
                     );
             }else{
@@ -1756,6 +1823,13 @@ class AdminController extends CController
                             $value = -1;
                     }
                 }
+           if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result = Filling::model()->getFillLst($type, $value);
                 $fillLst=$result['fillLst'];
                 $pages=$result['pages'];
@@ -1763,7 +1837,8 @@ class AdminController extends CController
                         'fillLst'=>$fillLst,
                         'pages'=>$pages,
                         'teacher'=>  Teacher::model()->findall(),
-                        'deleteResult' => $deleteResult
+                        'deleteResult' => $deleteResult,
+                        'searchKey' => $searchKey
                         )
                     );
             }else{
@@ -1876,17 +1951,24 @@ class AdminController extends CController
                         $value  =    -1;
                 }
             }
+            if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
             $result     =   Choice::model()->getChoiceLst($type, $value);
             $choiceLst  =   $result['choiceLst'];
             $pages      =   $result['pages'];
             $this->render('searchChoice',array(
                             'choiceLst' =>  $choiceLst,
                             'pages'     =>  $pages,
-                            'teacher'   =>  Teacher::model()->findall()
+                            'teacher'   =>  Teacher::model()->findall(),
+                            'searchKey' =>  $searchKey
                     )
                     );
-        }
-        
+        }     
         public function actionReturnFromAddChoice()
         {
             if(Yii::app()->session['lastUrl']=="searchChoice")
@@ -1906,13 +1988,21 @@ class AdminController extends CController
                         $value  =    -1;
                 }
             }
+            if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
                 $this->render('searchChoice',array(
                             'choiceLst' =>  $choiceLst,
                             'pages'     =>  $pages,
-                            'teacher'   =>  Teacher::model()->findall()
+                            'teacher'   =>  Teacher::model()->findall(),
+                            'searchKey' =>  $searchKey
                     )
                     );
             }else {
@@ -1988,6 +2078,13 @@ class AdminController extends CController
             {
                 $type       =   Yii::app()->session['searchChoiceType'];
                 $value      =   Yii::app()->session['searchChoiceValue'];
+            if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -1995,7 +2092,8 @@ class AdminController extends CController
                             'choiceLst' =>  $choiceLst,
                             'pages'     =>  $pages,
                             'teacher'   =>  Teacher::model()->findall(),
-                            'deleteResult'    =>  $deleteResult
+                            'deleteResult'    =>  $deleteResult,
+                            'searchKey'      => $searchKey
                         
                     )
                     );
@@ -2037,7 +2135,7 @@ class AdminController extends CController
 	}
         
         public function actionSearchQuestion()
-        {
+        {         
             if(isset($_GET['page']))
             {
                 Yii::app()->session['lastPage'] = $_GET['page'];
@@ -2067,13 +2165,21 @@ class AdminController extends CController
                         $value = -1;
                 }
             }
-            $result      =  Question::model()->getQuestionLst($type, $value);
+            if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+            $result    =  Question::model()->getQuestionLst($type, $value);         
             $questionLst =  $result['questionLst'];  
             $pages       =  $result["pages"];
             $this->render('searchQuestion',array(
                     'questionLst'   =>  $questionLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
+                    'searchKey'     =>  $searchKey
             ));
         }
         
@@ -2105,6 +2211,13 @@ class AdminController extends CController
                             $value = -1;
                     }
                 }
+            if($type == "requirements")
+            {
+            $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result      =  Question::model()->getQuestionLst($type, $value);
                 $questionLst =  $result['questionLst'];  
                 $pages       =  $result["pages"];
@@ -2112,6 +2225,7 @@ class AdminController extends CController
                         'questionLst'   =>  $questionLst,
                         'pages'         =>  $pages,
                         'teacher'       =>  TbClass::model()->teaInClass(),
+                        'searchKey'     =>  $searchKey
                 ));
             }
         }
@@ -2148,6 +2262,14 @@ class AdminController extends CController
                             $value = -1;
                     }
                 }
+                
+            if($type == "requirements")
+            {
+            $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result      =  Question::model()->getQuestionLst($type, $value);
                 $questionLst =  $result['questionLst'];  
                 $pages       =  $result["pages"];
@@ -2155,7 +2277,8 @@ class AdminController extends CController
                         'questionLst'   =>  $questionLst,
                         'pages'         =>  $pages,
                         'teacher'       =>  TbClass::model()->teaInClass(),
-                        'deleteResult'  =>  $deleteResult
+                        'deleteResult'  =>  $deleteResult,
+                        'searchKey'     =>  $searchKey
                 ));
             }
         }
@@ -2467,4 +2590,5 @@ class AdminController extends CController
 		);
 	}
 	*/
+        
 }

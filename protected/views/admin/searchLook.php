@@ -9,6 +9,7 @@
                                         <option value="courseID" >课程号</option>
                                         <option value="createPerson" >创建人</option>
                                         <option value="title">题目名</option>
+                                        <option value="content">内容</option>>
                                 </select>
                         </li>
                         <li>
@@ -62,11 +63,27 @@
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
                         <td><?php echo $model['title']?></td>
-                        <td><?php  if(strlen($model['content'])<=30)
-                                        echo $model['content'];
-                                    else
-                                        echo substr($model['content'], 0, 30)."...";
-                                        ?></td>
+                        <td><?php   if($searchKey == 'no' || strpos($model['content'],$searchKey)===false)
+                    {
+                              
+                               if(strlen($model['content'])<=30)
+                                    echo $model['content'];
+                                else
+                                    echo substr($model['content'], 0, 30)."...";
+                    }else
+                    {
+                        
+                        $strStart = strpos($model['content'], $searchKey);
+                        $start = $strStart<=9?0:$strStart-9;            
+                       $showContent =  str_replace($searchKey, '<font color=red>'.$searchKey.'</font>',substr($model['content'], $start, 30));
+                       if($start >= 9)
+                           $showContent = "...".$showContent;
+                       if(strlen($model['content'])>($start + 30))
+                           $showContent = $showContent."...";
+                       echo $showContent;
+                     }
+                                        ?>
+                        </td>
                         <td><?php if($model['createPerson']=="0")
                                         echo "管理员";
                                     else echo  $teachers[$model['createPerson']];

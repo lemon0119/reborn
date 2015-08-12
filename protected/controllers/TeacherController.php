@@ -160,6 +160,13 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
             $result      = LookType::model()->getLookLst($type, $value);
             $lookLst =  $result['lookLst'];  
             $pages       =  $result["pages"];
@@ -167,6 +174,7 @@ class TeacherController extends CController {
                     'lookLst'   =>  $lookLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
+                'searchKey'  => $searchKey
             ));
             }
         }
@@ -202,6 +210,14 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
+                        if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+
             $result      = LookType::model()->getLookLst($type, $value);
             $lookLst =  $result['lookLst'];  
             $pages       =  $result["pages"];
@@ -209,6 +225,8 @@ class TeacherController extends CController {
                     'lookLst'   =>  $lookLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
+                    'searchKey'  => $searchKey
+                
             ));
         }
         
@@ -246,6 +264,14 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
+                        if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+            
             $result      = LookType::model()->getLookLst($type, $value);
             $lookLst =  $result['lookLst'];  
             $pages       =  $result["pages"];
@@ -253,7 +279,8 @@ class TeacherController extends CController {
                     'lookLst'   =>  $lookLst,
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
-                'deleteResult' => $deleteResult
+                'deleteResult' => $deleteResult,
+                    'searchKey'  => $searchKey
             ));
             }
         }
@@ -286,6 +313,13 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     = LookType::model()->getLookLst($type, $value);
                 $lookLst  =   $result['lookLst'];
                 $pages      =   $result['pages'];
@@ -293,7 +327,8 @@ class TeacherController extends CController {
                             'lookLst' =>  $lookLst,
                             'pages'     =>  $pages,
                             'teacher'   =>  Teacher::model()->findall(),
-                            'result'    =>  $insertresult                       
+                            'result'    =>  $insertresult   ,
+                         'searchKey'  => $searchKey
                     )
                     );
             }else {
@@ -559,188 +594,380 @@ class TeacherController extends CController {
         
     public function actionListenLst()
     {       
-        //定义动作
-        $act_result="";
+       if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
+            $result     =   ListenType::model()->getListenLst("", "");
+            $listenLst  =   $result['listenLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "listenLst";
+            $this->render('listenLst',array(
+                    'listenLst'     =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
+            ));
+    }
 
-       //添加动作
-       if(isset($_GET['action']))
-       {
-               //添加班级
-            if($_GET['action']=='add')
-           {                  
-               if(!empty($_POST['title'])&&!empty($_POST['content']))
-               {
-                   //得到当前最大的ID
-                   $sql="select max(exerciseID) as id from listen_type";
-                   $max_id = Yii::app()->db->createCommand($sql)->query();
-                   $temp=$max_id->read();
-                   if(empty($temp))
-                   {
-                       $new_id=1;
-                   }
-                   else
-                   {
-                       $new_id = $temp['id'] + 1;
-                   }
-
-                   if($_FILES['file']['type']!='audio/mpeg')
-                   {
-                       $shao='文件格式错误，应为MP3文件';
-                    }else if ($_FILES["file"]["size"] < 200000000)
-                    {
-                      if ($_FILES["file"]["error"] > 0)
-                        {
-                          $shao='文件上传失败';
-                        }
-                      else
-                        {
-                        if (!file_exists($_FILES["file"]["tmp_name"]))
-                          {
-                             $shao='服务器上存在相同文件';
-                          }
-                        else
-                          {
-                             move_uploaded_file($_FILES["file"]["tmp_name"],'resources/'.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-                            $shao='成功';
-                          }
-                        }
-                      }else
-                      {
-                      echo "无效文件";
-                      }
-
-                   if($shao=='成功')
-                   {
-                   $sql= "INSERT INTO listen_type VALUES ('".$new_id ."','0','" .$_POST['content']."','','".$_FILES["file"]["name"]."','".$_POST['title']."','".Yii::app()->session['userid_now']."','". date('y-m-d H:i:s',time()) ."','')";
-                   Yii::app()->db->createCommand($sql)->query();
-                   $act_result="添加习题成功！";
-                   unset($_GET['action']);
-                   }else {
-                         //文件出现问题
-                         $this->render('addListen',array(
-                                                'shao'=>$shao
-                                                ));
-                   return;
-                   }
-               }else
-               {
-                   //用户输入参数不足
-                   $this->render('addListen',array(
-                                                'shao'=>"输入全不能为空"
-                                                ));
-                   return;
-               }
-           }else if($_GET['action']=='edit'){
-
-               if(isset($_POST['checkbox']))
-               {
-                   if($_FILES['file']['type']!='audio/mpeg')
-                   {
-                       $shao='文件格式错误，应为MP3文件';
-                    }else if ($_FILES["file"]["size"] < 200000000)
-                      {
-                      if ($_FILES["file"]["error"] > 0)
-                        {
-                          $shao='文件上传失败';
-                        }
-                      else
-                        {
-                        if (!file_exists($_FILES["file"]["tmp_name"]))
-                          {
-                             $shao='服务器上存在相同文件';
-                          }
-                        else
-                          {
-                             move_uploaded_file($_FILES["file"]["tmp_name"],'resources/'.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-                            $shao='成功';
-                          }
-                        }
-                      }
-                    else
-                      {
-                      echo "无效文件";
-                      }
-
-                   if($shao=='成功')
-                   {
-                   $sql= "UPDATE listen_type SET content= '".$_POST['content'] ."', fileName = '".$_FILES["file"]["name"]."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                   Yii::app()->db->createCommand($sql)->query();
-                   $act_result="编辑习题成功！";
-                   unset($_GET['action']);
-                   }else {
-                       //文件出现问题
-                        $exerciseID=$_GET["exerciseID"];
-                        $sql = "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
-                        $result = Yii::app()->db->createCommand($sql)->query();
-                        $result =$result->read();
-                        $this->render("editListen",array(
-                            'shao'=>$shao,
-                            'exerciseID'=>$result['exerciseID'],
-                            'title' =>$result['title'],
-                            'content'=>$result['content'],
-                            'filename'=>$result['fileName']      
-                        ));
-
-
-                   return;
-                   }
-
-               }else{
-                $sql= "UPDATE listen_type SET content= '".$_POST['content'] ."' WHERE exerciseID= '" .$_GET['exerciseID']."'" ;
-                Yii::app()->db->createCommand($sql)->query();
-                $act_result="编辑习题成功！";
-                unset($_GET['action']);
-               }
-           }
-       }
-
-
-        //搜索习题
-        if(isset($_POST['which']))
-        {   
-            if(!empty($_POST['name']))
-            $ex_sq =" WHERE ". $_POST['which'].  " = '" .$_POST['name']."'";
-            else  $ex_sq = "";
+ public function actionAddListen(){
+             $result =   'no';            
+             $typename = Yii::app()->session['role_now'];
+             $userid = Yii::app()->session['userid_now'];
+             $filePath =$typename."/".$userid."/"; 
+             $dir = "resources/".$filePath;            
+             if(!is_dir($dir))
+             {
+             mkdir($dir,0777);
+             }
+            
+             
+            if(isset($_POST['title'])){  
+                if($_FILES['file']['type']!= "audio/mpeg")
+                {
+                    $result = '文件格式不正确，应为MP3格式';            
+                }else if($_FILES['file']['error'] > 0)
+                {
+                    $result = '文件上传失败';
+                }else if(file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
+                {
+                    $result='服务器存在相同文件';
+                }else{
+                     move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+                     $result = '1';
+                }
+                if($result == '1')
+                {
+                    $result = ListenType::model()->insertListen($_POST['title'],$_POST['content'],$_FILES["file"]["name"],$filePath,Yii::app()->session['userid_now']);                  
+                }             
+            }
+            $this->render('addListen',['result'   =>  $result]);
         }
-        else  $ex_sq = "";
+        
+     public function actionSearchListen()
+        {
+            if(isset($_GET['page']))
+            {
+                Yii::app()->session['lastPage'] = $_GET['page'];
+            }else{
+                Yii::app()->session['lastPage'] = 1;
+            }
+            if(isset($_POST['type'])){
+                $type   =   $_POST['type'];
+                $value  =   $_POST['value'];
+                Yii::app()->session['searchListenType']   =   $type;
+                Yii::app()->session['searchListenValue']  =   $value;
+            } else {
+                $type   =   Yii::app()->session['searchListenType'];
+                $value  =   Yii::app()->session['searchListenValue'];
+            }
+            Yii::app()->session['lastUrl']  =   "searchListen";
+            if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+                        if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+            $result      = ListenType::model()->getListenLst($type, $value);
+            $listenLst =  $result['listenLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchListen',array(
+                    'listenLst'   =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+                'searchKey'  => $searchKey
+                
+            ));
+        }
+          
 
-        //显示结果列表并分页
-        $sql = "SELECT * FROM listen_type ".$ex_sq;
-        $criteria=new CDbCriteria();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10;
-        $pages->applyLimit($criteria);
-        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit");
-        $result->bindValue(':offset', $pages->currentPage*$pages->pageSize);
-        $result->bindValue(':limit', $pages->pageSize);
-        $posts=$result->query();
-        $this->render('listenLst',array(
-        'posts'=>$posts,
-        'pages'=>$pages,
-        'teacher'=>$this->teaInClass(),
-        'result'=>$act_result,
-        ),false,true);
-    }
+        
+       public function actionReturnFromAddListen(){
+            if(Yii::app()->session['lastUrl']=="listenLst")
+            {
+                    $result     =   ListenType::model()->getListenLst("", "");
+            $listenLst  =   $result['listenLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "listenLst";
+            $this->render('listenLst',array(
+                    'listenLst'     =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall()
+            ));
+            }  else {
+                $type   =   Yii::app()->session['searchListenType'];
+                $value  =   Yii::app()->session['searchListenValue'];
+                Yii::app()->session['lastUrl']  =   "searchListen";
+               if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+                        if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+            $result      = ListenType::model()->getListenLst($type, $value);
+            $listenLst =  $result['listenLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchListen',array(
+                    'listenLst'   =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+                'searchKey'  => $searchKey
+            ));
+            }
+        }
+        
+        public function actionDeleteListen(){
+            $exerciseID = $_GET['exerciseID'];
+            $thisListen = new ListenType();
+            $deleteListen = $thisListen->findAll("exerciseID = '$exerciseID'");
+            $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");    
+            $filePath = $deleteListen[0]['filePath'];
+            $fileName = $deleteListen[0]['fileName'];
+            if($deleteResult == '1')
+            {             
+                $typename = Yii::app()->session['role_now'];
+                $userid = Yii::app()->session['userid_now'];    
+                //怎么用EXER_LISTEN_URL
+                $path = 'resources/'.$filePath.iconv("UTF-8","gb2312",$fileName);
+                unlink($path);
+            }
+            if(Yii::app()->session['lastUrl']=="listenLst")
+            {
+            $result  =  ListenType::model()->getListenLst("", "");
+            $listenLst  =   $result['listenLst'];
+            $pages      =   $result['pages'];
+            Yii::app()->session['lastUrl']  =   "listenLst";
+            $this->render('listenLst',array(
+                    'listenLst'     =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  Teacher::model()->findall(),
+                    'deleteResult'   => $deleteResult
+            ));
+            }  else {
+                $type   =   Yii::app()->session['searchListenType'];
+                $value  =   Yii::app()->session['searchListenValue'];
+                Yii::app()->session['lastUrl']  =   "searchListen";
+               if($type=='createPerson')
+            {
+                if($value=="管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =    $tea['userID'];
+                    else 
+                        $value = -1;
+                }
+            }
+                        if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+             $result      = ListenType::model()->getListenLst($type, $value);
+            $listenLst =  $result['listenLst'];  
+            $pages       =  $result["pages"];
+            $this->render('searchListen',array(
+                    'listenLst'   =>  $listenLst,
+                    'pages'         =>  $pages,
+                    'teacher'       =>  TbClass::model()->teaInClass(),
+                'deleteResult'   => $deleteResult,
+                'searchKey'  => $searchKey
+            ));
+            }
+        }
 
-    public function actionAddListen(){
-        $this->render("addListen",array(
-
-        ));
-    }
-
-    public function actionEditlisten(){
-        $exerciseID=$_GET["exerciseID"];
-        $sql = "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $result =$result->read();
-        $this->render("editListen",array(
-            'exerciseID'=>$result['exerciseID'],
-            'title' =>$result['title'],
-            'content'=>$result['content'],
-            'filename'=>$result['fileName']      
-        ));
-    }
+        public function actionEditlisten(){
+            $exerciseID=$_GET["exerciseID"];
+            $sql = "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
+            $result = Yii::app()->db->createCommand($sql)->query();
+            $result =$result->read();
+             if(!isset($_GET['action']))
+            {
+                $this->render("editListen",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'title' =>$result['title'],
+                        'filename' =>$result['fileName'],
+                        'filepath' =>$result['filePath'],
+                        'content'=>$result['content']
+                ));
+            }else if($_GET['action']='look'){
+                $this->render("editListen",array(
+                        'exerciseID'    =>  $exerciseID,
+                        'title' =>$result['title'],
+                       'filename' =>$result['fileName'],
+                        'filepath' =>$result['filePath'],
+                        'content'=>$result['content'],
+                        'action'        =>  'look'
+                ));
+            }
+        }
+        
+             public function actionEditListenInfo()
+     {                  
+             $typename = Yii::app()->session['role_now'];
+             $userid = Yii::app()->session['userid_now'];
+             $filePath = $typename."/".$userid."/";
+             $dir = "resources/".$filePath;
+            $exerciseID    =   $_GET['exerciseID'];
+            $filename = $_GET['oldfilename'];
+            $result = "修改失败";
+            if($_FILES['modifyfile']['tmp_name'])
+            {
+               if($_FILES['modifyfile']['type']!= "audio/mpeg")
+                {
+                    $result = '文件格式不正确，应为MP3格式';            
+                }else if($_FILES['modifyfile']['error'] > 0)
+                {
+                    $result = '文件上传失败';
+                }else if(file_exists($dir.iconv("UTF-8","gb2312",$_FILES["modifyfile"]["name"])))
+                {
+                    $result='服务器存在相同文件';
+                }else{
+                     move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["modifyfile"]["name"]));
+                     unlink($dir.iconv("UTF-8","gb2312",$filename));
+                     $result = '修改失败';
+                }
+            }           
+            $thisListen      =   new ListenType();
+            $thisListen       =   $thisListen->find("exerciseID = '$exerciseID'");
+            $thisListen->title =   $_POST['title'];
+            if($_FILES['modifyfile']['tmp_name'])
+            {
+                $thisListen->fileName = $_FILES['modifyfile']['name'];
+            }  else {
+                $thisListen->fileName = $filename;
+            }
+            $thisListen->content       =   $_POST['content'];
+            if($result == '修改失败')
+            {
+              $thisListen -> update();
+              $result = "修改成功";
+            }
+            $this->render("editListen",array(
+                'exerciseID'      =>  $thisListen->exerciseID,
+                'filename' => $thisListen->fileName,
+                'filepath' =>$thisListen->filePath,
+                'title'    =>  $thisListen->title,
+                'content'          =>  $thisListen->content,
+                'result'          =>  $result
+            ));
+        }
+        
+        
+      public function actionCopyListen(){
+            $insertresult = "no";
+            $code = $_GET["code"];
+            $typename = Yii::app()->session['role_now'];
+            $userid = Yii::app()->session['userid_now'];
+            $filePath = $typename."/".$userid."/";
+            $dir = "resources/".$filePath;
+            if(!is_dir($dir))
+             {
+             mkdir($dir,0777);
+             }
+            
+            if($code != Yii::app()->session['code']){
+            $exerciseID =   $_GET["exerciseID"];
+            $thisListen = new ListenType();
+            $oldListen = $thisListen->findAll("exerciseID = '$exerciseID'");
+            $sourcefilePath = "resources/".$oldListen[0]['filePath'];
+            $fileName = $oldListen[0]['fileName'];
+            
+            if(file_exists($dir.iconv("UTF-8","gb2312",$fileName)))
+            {
+                //表示复制的文件已存在
+                $insertresult = '2';
+            }else{
+                copy($sourcefilePath.iconv("UTF-8","gb2312",$fileName),$dir.iconv("UTF-8","gb2312",$fileName) );
+                $insertresult = ListenType::model()->insertListen($oldListen[0]['title'],$oldListen[0]['content'],$oldListen[0]['fileName'],$filePath , Yii::app()->session['userid_now']);
+            }          
+            Yii::app()->session['code'] = $_GET["code"];
+            }
+            
+            
+           if(Yii::app()->session['lastUrl']=="searchListen")
+            {
+                $type       =   Yii::app()->session['searchListenType'];
+                $value      =   Yii::app()->session['searchListenValue'];
+            if($type=='createPerson')
+            {
+                if($value   ==  "管理员")
+                    $vaule  =   0;
+                else
+                {
+                    $tea    =  Teacher::model()->find("userName = '$value'");
+                    if($tea['userID']!="")
+                        $value =$tea['userID'];
+                    else 
+                        $value  =    -1;
+                }
+            }
+            if($type == "content")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+                $result     = ListenType::model()->getListenLst($type, $value);
+                $listenLst  =   $result['listenLst'];
+                $pages      =   $result['pages'];
+                $this->render('searchListen',array(
+                            'listenLst' =>  $listenLst,
+                            'pages'     =>  $pages,
+                            'teacher'   =>  Teacher::model()->findall(),
+                            'result'    =>  $insertresult,
+                            'searchKey'  => $searchKey
+                    )
+                    );
+            }else {
+                $result     = ListenType::model()->getListenLst("", "");
+                $listenLst  =   $result['listenLst'];
+                $pages      =   $result['pages'];
+                Yii::app()->session['lastUrl']  = "ListenLst";
+                $this->render('ListenLst',array(
+                        'listenLst' =>  $listenLst,
+                        'pages'     =>  $pages,
+                        'teacher'   =>  Teacher::model()->findall(),
+                        'result'      =>  $insertresult
+                ));
+            } 
+            
+        }
+    
 
     public function actionFillLst()
     {       $result = Filling::model()->getFillLst("", "");
@@ -780,13 +1007,21 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
             $result = Filling::model()->getFillLst($type, $value);
             $fillLst=$result['fillLst'];
             $pages=$result['pages'];
             $this->render('searchFill',array(
                         'fillLst'=>$fillLst,
                         'pages'=>$pages,
-                        'teacher'=>  Teacher::model()->findall()
+                        'teacher'=>  Teacher::model()->findall(),
+                        'searchKey'  => $searchKey
                     )
                     );
         }
@@ -809,13 +1044,21 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+          if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result = Filling::model()->getFillLst($type, $value);
                 $fillLst=$result['fillLst'];
                 $pages=$result['pages'];
                 $this->render('searchFill',array(
                         'fillLst'=>$fillLst,
                         'pages'=>$pages,
-                        'teacher'=>  Teacher::model()->findall()
+                        'teacher'=>  Teacher::model()->findall(),
+                        'searchKey'  => $searchKey
                         )
                     );
             }else{
@@ -826,7 +1069,8 @@ class TeacherController extends CController {
                 $this->render('fillLst',array(
                     'fillLst'=>$fillLst,
                     'pages'=>$pages,
-                    'teacher'=>  Teacher::model()->findall()
+                    'teacher'=>  Teacher::model()->findall(),
+                    
                 ));
             }
         }
@@ -870,6 +1114,15 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+            
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+
                 $result     = Filling::model()->getFillLst($type, $value);
                 $fillLst  =   $result['fillLst'];
                 $pages      =   $result['pages'];
@@ -877,7 +1130,8 @@ class TeacherController extends CController {
                             'fillLst' =>  $fillLst,
                             'pages'     =>  $pages,
                             'teacher'   =>  Teacher::model()->findall(),
-                            'deleteResult'    =>  $deleteResult                       
+                            'deleteResult'    =>  $deleteResult,
+                            'searchKey'  => $searchKey
                     )
                     );
             }else {
@@ -923,6 +1177,13 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     = Filling::model()->getFillLst($type, $value);
                 $fillLst  =   $result['fillLst'];
                 $pages      =   $result['pages'];
@@ -930,7 +1191,8 @@ class TeacherController extends CController {
                             'fillLst' =>  $fillLst,
                             'pages'     =>  $pages,
                             'teacher'   =>  Teacher::model()->findall(),
-                            'result'    =>  $insertresult                       
+                            'result'    =>  $insertresult,
+                    'searchKey'  => $searchKey
                     )
                     );
             }else {
@@ -1034,13 +1296,21 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
                 $this->render('searchChoice',array(
                             'choiceLst' =>  $choiceLst,
                             'pages'     =>  $pages,
-                            'teacher'   =>  Teacher::model()->findall()
+                            'teacher'   =>  Teacher::model()->findall(),
+                            'searchKey'  => $searchKey
                     )
                     );
             }else {
@@ -1082,13 +1352,22 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+
             $result     =   Choice::model()->getChoiceLst($type, $value);
             $choiceLst  =   $result['choiceLst'];
             $pages      =   $result['pages'];
             $this->render('searchChoice',array(
                             'choiceLst' =>  $choiceLst,
                             'pages'     =>  $pages     ,
-                            'teacher'   =>  Teacher::model()->findall()
+                            'teacher'   =>  Teacher::model()->findall(),
+                            'searchKey'  => $searchKey
                     )
                     );
         }
@@ -1125,6 +1404,30 @@ class TeacherController extends CController {
                 ));
             }
         }
+        public function actionEditFillInfo()
+	{
+            $exerciseID     =   $_GET['exerciseID'];
+            $thisFill       =   new Filling();
+            $thisFill       =   $thisFill->find("exerciseID = '$exerciseID'");
+            $i      =   2;
+            $answer =   $_POST['in1'];
+            for(;$i<=5;$i++)
+            {
+                if($_POST['in'.$i]!="")
+                    $answer =    $answer."$$".$_POST['in'.$i];
+                else
+                    break;
+            }
+            $thisFill->requirements =   $_POST['requirements'];
+            $thisFill->answer       =   $answer;
+            $thisFill -> update();
+            $this->render("editFill",array(
+                'exerciseID'      =>  $thisFill->exerciseID,
+                'requirements'    =>  $thisFill->requirements,
+                'answer'          =>  $thisFill->answer,
+                'result'          =>  "修改习题成功"
+            ));
+        }
         
     public function actionDeleteChoice(){
             $exerciseID = $_GET["exerciseID"];
@@ -1147,6 +1450,13 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -1154,7 +1464,8 @@ class TeacherController extends CController {
                             'choiceLst' =>  $choiceLst,
                             'pages'     =>  $pages,
                             'teacher'   =>  Teacher::model()->findall(),
-                            'deleteResult'    =>  $deleteResult                       
+                            'deleteResult'    =>  $deleteResult,
+                            'searchKey'  => $searchKey
                     )
                     );
             }else {
@@ -1166,7 +1477,8 @@ class TeacherController extends CController {
                         'choiceLst' =>  $choiceLst,
                         'pages'     =>  $pages,
                         'teacher'   =>  Teacher::model()->findall(),
-                        'deleteResult'      =>  $deleteResult
+                        'deleteResult'      =>  $deleteResult,
+                       
                 ));
             }                   
         }
@@ -1187,6 +1499,13 @@ class TeacherController extends CController {
             {
                 $type       =   Yii::app()->session['searchChoiceType'];
                 $value      =   Yii::app()->session['searchChoiceValue'];
+            if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -1194,7 +1513,8 @@ class TeacherController extends CController {
                             'choiceLst' =>  $choiceLst,
                             'pages'     =>  $pages,
                             'teacher'   =>  Teacher::model()->findall(),
-                            'result'    =>  $insertresult                       
+                            'result'    =>  $insertresult,
+                            'searchKey'  => $searchKey
                     )
                     );
             }else {
@@ -1294,13 +1614,22 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+            if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+
             $result      =  Question::model()->getQuestionLst($type, $value);
             $questionLst =  $result['questionLst'];  
             $pages       =  $result["pages"];           
             $this->render('searchQuestion',array(
                     'questionLst'   =>  $questionLst,
                     'pages'         =>  $pages,
-                'teacher'=>  Teacher::model()->findall()
+                'teacher'=>  Teacher::model()->findall(),
+                'searchKey'  => $searchKey
             ));
         }
 
@@ -1330,13 +1659,21 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     =   Question::model()->getQuestionLst($type, $value);
                 $questionLst  =   $result['questionLst'];
                 $pages      =   $result['pages'];
                 $this->render('searchQuestion',array(
                             'questionLst' =>  $questionLst,
                             'pages'     =>  $pages,
-                            'teacher'   =>  Teacher::model()->findall()
+                            'teacher'   =>  Teacher::model()->findall(),
+                            'searchKey'  => $searchKey
                     )
                     );
             }else {
@@ -1373,6 +1710,13 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
                 $result     = Question::model()->getQuestionLst($type, $value);
                 $questionLst  =   $result['questionLst'];
                 $pages      =   $result['pages'];
@@ -1380,7 +1724,8 @@ class TeacherController extends CController {
                             'questionLst' =>  $questionLst,
                             'pages'     =>  $pages,
                             'teacher'   =>  Teacher::model()->findall(),
-                            'deleteResult'    =>  $deleteResult                       
+                            'deleteResult'    =>  $deleteResult,
+                            'searchKey'  => $searchKey
                     )
                     );
             }else {
@@ -1426,6 +1771,14 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
+                        if($type == "requirements")
+            {
+                $searchKey = $value;
+            }else
+            {
+                $searchKey = "no";
+            }
+
                 $result     = Question::model()->getQuestionLst($type, $value);
                 $questionLst  =   $result['questionLst'];
                 $pages      =   $result['pages'];
@@ -1433,7 +1786,8 @@ class TeacherController extends CController {
                             'questionLst' =>  $questionLst,
                             'pages'     =>  $pages,
                             'teacher'   =>  Teacher::model()->findall(),
-                            'result'    =>  $insertresult                       
+                            'result'    =>  $insertresult    ,
+                    'searchKey'  => $searchKey
                     )
                     );
             }else {

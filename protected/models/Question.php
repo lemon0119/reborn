@@ -38,7 +38,13 @@ class Question extends CActiveRecord
     public function getQuestionLst($type,$value){
         $order = " order by exerciseID ASC";
         if($type!="")
+            if($type == "requirements")
+            {
+               $condition = " where $type like '%$value%'";
+            }else
+            {
             $condition = " WHERE $type = '$value'";
+            }
         else
             $condition= "";
         $select = "SELECT * FROM question";
@@ -53,10 +59,11 @@ class Question extends CActiveRecord
         $result->bindValue(':limit', $pages->pageSize); 
         $questionLst=$result->query();
         
-        return ['questionLst'=>$questionLst,'pages'=>$pages,];
+        return ['questionLst'=>$questionLst,'pages'=>$pages,];     
     }
     
-    
+  
+
 //    //宋杰 2015-7-30 获取登录老师写的简单题
 //        public function getTeaQuestionLst($type,$value){
 //        $order = " order by exerciseID ASC";

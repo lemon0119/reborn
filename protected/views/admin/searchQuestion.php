@@ -8,6 +8,7 @@
                                         <option value="exerciseID" selected="selected">编号</option>
                                         <option value="courseID" >课程号</option>
                                         <option value="createPerson" >创建人</option>
+                                        <option value="requirements">内容</option>
                                 </select>
                         </li>
                         <li>
@@ -59,10 +60,23 @@
                 <tr>
                     <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                     <td><?php echo $model['courseID'];?></td>
-                    <td><?php  if(strlen($model['requirements'])<=15)
+                    <td><?php if($searchKey == 'no' || strpos($model['requirements'],$searchKey)===false)
+                    {
+                               if(strlen($model['requirements'])<=30)
                                     echo $model['requirements'];
                                 else
-                                    echo substr($model['requirements'], 0, 15)."...";
+                                    echo substr($model['requirements'], 0, 30)."...";
+                    }else
+                    {
+                        $strStart = strpos($model['requirements'], $searchKey);
+                        $start = $strStart<=9?0:$strStart-9;            
+                       $content =  str_replace($searchKey, '<font color=red>'.$searchKey.'</font>',substr($model['requirements'], $start, 30));
+                       if($start >= 9)
+                           $content = "...".$content;
+                       if(strlen($model['requirements'])>($start + 30))
+                           $content = $content."...";
+                       echo $content;
+                     }
                     ?></td>
                     <td><?php if($model['createPerson']=="0")
                                     echo "管理员";
