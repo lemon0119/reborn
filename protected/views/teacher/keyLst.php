@@ -63,10 +63,11 @@
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
                         <td><?php echo $model['title']?></td>
-                        <td><?php  if(strlen($model['content'])<=30)
-                                        echo $model['content'];
-                                    else
-                                        echo substr($model['content'], 0, 30)."...";
+                        <td><?php  if(strlen($model['content'])<=29)
+                                   echo  str_replace("$",":",$model['content']);
+                               else
+                                   echo str_replace("$",":",substr($model['content'], 0, 29)."...");
+                               
                                         ?></td>
                         <td><?php if($model['createPerson']=="0")
                                         echo "管理员";

@@ -41,6 +41,7 @@
 <h3>查看键位练习题</h3>
 <?php }?>
 
+
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/AddKey" id="myForm"> 
         <fieldset>
         <?php if(!isset($action)) {?>
@@ -49,17 +50,86 @@
             <legend>查看题目</legend>
         <?php }?>
         <div class="control-group">
-            <label class="control-label" for="input01">题目</label>
+            <label class="control-label" for="input">题目</label>
             <div class="controls">
-                <textarea name="title" style="width:450px; height:20px;" id="input01"></textarea>
+                <textarea name="title" style="width:450px; height:20px;" id="input"></textarea>
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="input02">内容</label>
+            
+            <div class="control-group" id="div1">
+            <label class="control-label" >内容</label>
             <div class="controls">               
-                <textarea name="content" style="width:450px; height:200px;"></textarea>
-            </div>
-        </div> 
+                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12">                
+                <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12">
+                <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2">
+                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+            </div>             
+        </div>
+        <div class="control-group" id="div2">           
+            <div class="controls">               
+                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12">                
+                <input type="text"  name="in5" style="width:150px; height:15px;" id="input5"  maxlength="12">
+                <input type="text"  name="in6" style="width:40px; height:15px;" id="input6" maxlength="2">              
+            </div>             
+        </div>
+        <div class="control-group" id="div3">           
+            <div class="controls">               
+                <input type="text" name="in7" style="width:150px; height:15px;" id="input7" maxlength="12">                
+                <input type="text" name="in8" style="width:150px; height:15px;" id="input8" maxlength="12">
+                <input type="text" name="in9" style="width:40px; height:15px;" id="input9"  maxlength="2">              
+            </div>             
+        </div>
+        <div class="control-group" id="div4">           
+            <div class="controls">               
+                <input type="text" name="in10" style="width:150px; height:15px;" id="input10" maxlength="12">                
+                <input type="text" name="in11" style="width:150px; height:15px;" id="input11"maxlength="12">
+                <input type="text" name="in12" style="width:40px; height:15px;"id="input12" maxlength="2">              
+            </div>             
+        </div>
+        <div class="control-group" id="div5">           
+            <div class="controls">               
+                <input type="text" name="in13" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in14" style="width:150px; height:15px;" id="input14" maxlength="12">
+                <input type="text" name="in15" style="width:40px; height:15px;" id="input15" maxlength="2">              
+            </div>             
+        </div>
+    
+    <div class="control-group" style="display: none"  id="div6">           
+            <div class="controls">               
+                <input type="text" name="in16" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in17" style="width:150px; height:15px;" id="input14" maxlength="12">
+                <input type="text" name="in18" style="width:40px; height:15px;" id="input15" maxlength="2">              
+            </div>             
+    </div>
+                <div class="control-group" style="display: none"  id="div7">           
+            <div class="controls">               
+                <input type="text" name="in19" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in20" style="width:150px; height:15px;" id="input14" maxlength="12">
+                <input type="text" name="in21" style="width:40px; height:15px;" id="input15" maxlength="2">              
+            </div>             
+    </div>
+    <div class="control-group" style="display: none"  id="div8">           
+            <div class="controls">               
+                <input type="text" name="in22" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in23" style="width:150px; height:15px;" id="input14" maxlength="12">
+                <input type="text" name="in24" style="width:40px; height:15px;" id="input15" maxlength="2">              
+            </div>             
+    </div>
+    <div class="control-group"  style="display: none" id="div9">           
+            <div class="controls">               
+                <input type="text" name="in25" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in26" style="width:150px; height:15px;" id="input14" maxlength="12">
+                <input type="text" name="in27" style="width:40px; height:15px;" id="input15" maxlength="2">              
+            </div>             
+    </div>
+            <div class="control-group"  style="display: none" id="div10">           
+            <div class="controls">               
+                <input type="text" name="in28" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in29" style="width:150px; height:15px;" id="input14" maxlength="12">
+                <input type="text" name="in30" style="width:40px; height:15px;" id="input15" maxlength="2">              
+            </div>             
+    </div>
+           
         <div class="form-actions">
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">添加</button>
@@ -70,6 +140,8 @@
     </form>   
 </div>
 <script>     
+ var divCount = 5;
+ var inputCount = 1;
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
@@ -78,17 +150,58 @@ $(document).ready(function(){
         alert('添加键位练习失败！');  
 });
 $("#myForm").submit(function(){
-    var requirements = $("#input01")[0].value;
+    var requirements = $("#input")[0].value;
     if(requirements === ""){
         alert('题目内容不能为空');
         return false;
     }
-    var A = $("#input02")[0].value;
-    if(A === ""){
-        alert('答案不能为空');
-        return false;
+    var i ,j ,k, y = 3*divCount;
+    var patrn = /^[A-Z]{1,12}$/;
+    var numpatrn =/^[0-9]{1,2}$/;
+    for(i = 1 ; i <=y ; i++)
+    {
+        var input = $("#input" + i)[0].value;
+        if(i%3 == 0)
+        {
+            if(!numpatrn.exec(input))
+            {
+                j = Math.floor(i/3);               
+                alert('第'+ j +'行第三空循环次数应设为0-100');
+               return false;
+           }
+        }else{
+            if(!patrn.exec(input))
+            {
+                j = Math.floor(i/3)+1;
+                k = i%3;
+                alert('第' + j + '行第' + k + '空应输入0-12个A-Z的字母');
+                return false;
+            }
+        }           
     }
-});
+    }
+);
+    function addIn()
+    {
+        if(divCount<11){
+            divCount++;
+            $("#div"+divCount).show();
+        }else
+        {
+            alert("最多添加十个选项");
+        }
+    }
+    function deleteIn()
+    {
+        if(divCount>1){
+            $("#div"+divCount).hide();           
+            divCount--;
+        }else
+        {
+            alert("必须有一个答案");
+        }
+    }
+
 </script>
 
 

@@ -34,7 +34,7 @@
 </div>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
     var count = 2;
     function addIn()
     {

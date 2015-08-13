@@ -1165,9 +1165,18 @@ class AdminController extends CController
         }
           
         public function actionAddKey(){
-             $result =   'no';
+            $result =   'no';
             if(isset($_POST['title'])){
-                $result = KeyType::model()->insertKey($_POST['title'], $_POST['content'], 0);
+                $i      =   2;
+                $answer =   $_POST['in1'];         
+                for(;$i<=3*10;$i++)
+                {
+                    if($_POST['in'.$i]!="")
+                        $answer =   $answer."$".$_POST['in'.$i];
+                    else
+                        break;
+                }
+                $result = KeyType::model()->insertKey($_POST['title'], $answer, 0);
             }
             $this->render('addKey',['result'   =>  $result]);
         }
@@ -1199,8 +1208,17 @@ class AdminController extends CController
             $exerciseID    =   $_GET['exerciseID'];
             $thisKey      =   new KeyType();
             $thisKey       =   $thisKey->find("exerciseID = '$exerciseID'");
+               $i =   2;
+                $answer =   $_POST['in1'];
+                for(;$i<=3*10;$i++)
+                {
+                    if($_POST['in'.$i]!="")
+                        $answer =   $answer."$".$_POST['in'.$i];
+                    else
+                        break;
+                }
             $thisKey->title =   $_POST['title'];
-            $thisKey->content       =   $_POST['content'];
+            $thisKey->content       =   $answer;
             $thisKey -> update();
             $this->render("editKey",array(
                 'exerciseID'      =>  $thisKey->exerciseID,
