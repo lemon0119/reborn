@@ -2,13 +2,13 @@
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header">查询</li>
-                <form action="./index.php?r=teacher/searchLook" method="post">
+                <form action="./index.php?r=teacher/searchListen" method="post">
                         <li>
                                 <select name="type" style="width: 185px">
                                         <option value="exerciseID" selected="selected">编号</option>
                                         <option value="courseID" >课程号</option>
+                                        <option value="title" >题目名</option>
                                         <option value="createPerson" >创建人</option>
-                                        <option value="title">题目名</option>
                                         <option value="content">内容</option>
                                 </select>
                         </li>
@@ -17,7 +17,7 @@
                         </li>
                         <li style="margin-top:10px">
                                 <button type="submit" class="btn btn-primary">查询</button>
-                                <a href="./index.php?r=teacher/addLook" class="btn">添加</a>
+                                <a href="./index.php?r=teacher/addListen" class="btn">添加</a>
                         </li>
                 </form>
                         <li class="divider"></li>
@@ -28,42 +28,42 @@
                         <li class="divider"></li>
                         <li class="nav-header">打字练习</li>
                         <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
-                        <li class="active"><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
-                        <li ><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
+                        <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
+                        <li class="active"><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
                 </ul>
         </div>
 </div>
-
-
-<?php
-    //得到老师ID对应的名称
-    foreach ($teacher as $model):
-    $teacherID=$model['userID'];
-    $teachers["$teacherID"]=$model['userName'];
-    endforeach;
-    $code = mt_rand(0, 1000000);
-?>
+    
+    <?php
+        //得到老师ID对应的名称
+        foreach ($teacher as $model):
+        $teacherID=$model['userID'];
+        $teachers["$teacherID"]=$model['userName'];
+        endforeach;
+        $code = mt_rand(0, 1000000);
+    ?>
+    
 <div class="span9">
-<?php if($lookLst->count()!=0){?>
-    <h2>查询结果</h2>
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>编号</th>
-            <th>课程号</th>
-            <th>题目</th>>
-            <th>内容</th>
-            <th>创建人</th>
-            <th>创建时间</th>
-            <th>操作</th>
-        </tr>
-    </thead>
-            <tbody>        
-                    <?php foreach($lookLst as $model):?>
+    <h2>听打练习列表</h2>
+    <!-- 键位习题列表-->
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>课程号</th>
+                <th>题目名</th>
+                <th>内容</th>
+                <th>创建人</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+                <tbody>        
+                    <?php foreach($listenLst as $model):?>
                     <tr>
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
-                        <td><?php echo $model['title']?></td>
+                        <td><?php echo $model['title'];?></td>
                         <td><?php  if($searchKey == 'no' || strpos($model['content'],$searchKey)===false)
                     {
                               
@@ -90,30 +90,28 @@
                             ?></td>
                         <td><?php echo $model['createTime'];?></td>
                         <td>
-                            <a href="./index.php?r=teacher/editLook&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                             <a href="./index.php?r=teacher/editListen&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                           <?php if($model['createPerson'] == Yii::app()->session['userid_now']){?>
-                            <a href="./index.php?r=teacher/editLook&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                            <a href="./index.php?r=teacher/editListen&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
                             <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                             <?php }else{ ?>
-                            <a href="./index.php?r=teacher/copyLook&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>copy.png">复制</a>
+                            <a href="./index.php?r=teacher/copyListen&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>copy.png">复制</a>
                             <?php }?>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
                 </tbody>
-</table>
-<!-- 学生列表结束 -->
-<!-- 显示翻页标签 -->
-<div align=center>
-<?php   
-    $this->widget('CLinkPager',array('pages'=>$pages));
-?>
-</div>
-<!-- 翻页标签结束 -->
-<?php } else {?>
-    <h2>查询结果为空！</h2>
-<?php }?>
-</div>
+    </table>
+    <!-- 学生列表结束 -->
+    <!-- 显示翻页标签 -->
+    <div align=center>
+    <?php   
+        $this->widget('CLinkPager',array('pages'=>$pages));
+    ?>
+    </div>
+    <!-- 翻页标签结束 -->
+   
+    </div>
 
 <script>
     $(document).ready(function(){
@@ -122,12 +120,15 @@
         alert('复制选择题成功！');
     else if(result === '0')
         alert('复制选择题失败！');
+    else if(result === '2')
+    alert('文件已存在');
+    
     result = "";
 }      
 );
    function dele(exerciseID){
       if(confirm("您确定删除吗？")){
-          window.location.href = "./index.php?r=teacher/deleteLook&&exerciseID=" + exerciseID;
+          window.location.href = "./index.php?r=teacher/deleteListen&&exerciseID=" + exerciseID;
       }
   }
 

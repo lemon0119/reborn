@@ -111,7 +111,12 @@ class LookType extends CActiveRecord
      public function getLookLst($type,$value){
         $order  =   " order by exerciseID ASC";
         if($type!="")
-            $condition = " WHERE $type = '$value'";
+            if($type == "content")
+            {
+                $condition = " WHERE $type like '%$value%'";
+            }  else {
+                $condition = " WHERE $type = '$value'";
+            }           
         else
             $condition= "";
         $select     =   "SELECT * FROM look_type";

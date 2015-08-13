@@ -16,7 +16,12 @@ class ListenType extends CActiveRecord
         public function getListenLst($type,$value){
         $order  =   " order by exerciseID ASC";
         if($type!="")
-            $condition = " WHERE $type = '$value'";
+            if($type == "content")
+            {
+                $condition = " WHERE $type like '%$value%'";
+            }else{
+                $condition = " WHERE $type = '$value'";
+            }          
         else
             $condition= "";
         $select     =   "SELECT * FROM listen_type";

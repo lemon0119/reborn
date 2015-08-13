@@ -7,6 +7,8 @@
                 <select name="type" style="width: 185px">
                     <option value="exerciseID" selected="selected">编号</option>
                     <option value="courseID" >课程号</option>
+                    <option value="createPerson">创建人</option>
+                    <option value="requirements">内容</option>
                 </select>
             </li>
             <li>
@@ -32,7 +34,7 @@
 </div>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
     var count = 2;
     function addIn()
     {
