@@ -27,7 +27,7 @@ echo "<script>var role='$role';</script>";
                 </tr>
             </table>
 
-            <div id="videos-container" style="height: 1000px; width: 100%; margin-top:0px;">
+            <div id="videos-container" style="height: 1000px; width: 100%; margin-top:0px;display:none">
                 <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
             </div>
 
@@ -166,7 +166,9 @@ $(document).ready(function(){
     //点播
     var ws = null;
     var last_path = -1;
-
+    var onScreen  = -1;
+    var onCam     = -1;
+    
     function clearVideo(){
         last_path = -1
         var video = document.getElementById('video1');
@@ -192,6 +194,7 @@ $(document).ready(function(){
             } else {
                 video.setAttribute("src", video_path); 
             }
+            $("#videos-container").show();
             $("#dianbo-videos-container").show();
             var local_my_video = document.getElementById("video1");
             local_my_video.play();
@@ -238,6 +241,23 @@ $(document).ready(function(){
             //console.log("sunpy: student side set video time " + video_current_time);    
         } else if(msg.indexOf('<?php echo $classID;?>closeVideo') >= 0){
             clearVideo();
+        } else if(msg.indexOf('<?php echo $classID;?>closeCam') >= 0){
+            iframe_b.location.href ='./index.php?r=webrtc/null';
+            onCam = -1;
+        } else if(msg.indexOf('<?php echo $classID;?>onCam') >= 0){
+            if(onCam==-1){
+                iframe_b.location.href ='./index.php?r=webrtc/stuCam';
+                onCam   =  1;
+            }
+        } else if(msg.indexOf('<?php echo $classID;?>closeScreen') >= 0){
+            iframe_a.location.href ='./index.php?r=webrtc/null';
+            onScreen = -1;
+        } else if(msg.indexOf('<?php echo $classID;?>onScreen') >= 0){
+            if(onScreen==-1){
+                $("#videos-container").show();
+                iframe_a.location.href ='./index.php?r=webrtc/stuScreen';
+                onScreen = 1;
+            }
         }
     }
     
@@ -255,9 +275,7 @@ $(document).ready(function(){
     }
     
 $(document).ready(function(){
-    var myVideo = document.getElementById("video1");
     var connection_state = 0;
-    var is_first_connection = 1;
     
     if (connection_state !== 1) { 
         ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');

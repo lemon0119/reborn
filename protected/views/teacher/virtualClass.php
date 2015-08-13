@@ -22,7 +22,7 @@
             <div style="display:inline;padding-right:60px;">
                 <!-- sunpy: video start -->
                 <button id="share-Cam" class="btn btn-primary">直播视频</button>
-                <button id="close-zhidian" class="btn" disabled="disabled">关闭直播</button>
+                <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
             </div>
 
             <div style="display:inline;">
@@ -189,9 +189,18 @@ $(document).ready(function(){
         $("#dianbo-videos-container").hide();
         $("#videos-container").show();
         iframe_a.location.href ='./index.php?r=webrtc/teaScreen'; 
+        var msg =   "<?php echo $classID;?>onScreen";                               
+        ws.send(msg);
+        timer_screen = setInterval(function() {                           
+            ws.send(msg);
+        }, 4000);
       });
       
     $("#close-Screen").click(function() {
+        var msg = "<?php echo $classID;?>closeScreen";
+        ws.send(msg);
+        if(timer_screen!=null)
+            clearInterval(timer_screen);
         this.disabled = true;
         $("#close-Screen").attr("class","btn");
         document.getElementById("share-Screen").disabled = false;
@@ -201,6 +210,27 @@ $(document).ready(function(){
         $("#videos-container").hide();
         $("#dianbo-videos-container").show();
         iframe_a.location.href ='./index.php?r=webrtc/null'; 
+      });
+      
+    $("#share-Cam").click(function() {
+        var msg =   "<?php echo $classID;?>onCam";                               
+        ws.send(msg);
+        timer_cam = setInterval(function() {                           
+            ws.send(msg);
+        }, 4000);
+    });
+      
+    $("#close-Cam").click(function() {
+        var msg = "<?php echo $classID;?>closeCam";
+        ws.send(msg);
+        if(timer_cam!=null)
+            clearInterval(timer_cam);
+        this.disabled = true;
+        $("#close-Cam").attr("class","btn");
+        document.getElementById("share-Cam").disabled = false;
+        $("#share-Cam").attr("class","btn btn-primary");
+        iframe_b.location.href ='./index.php?r=webrtc/null'; 
+        iframe_b.location.href ='./index.php?r=webrtc/teaCam';
       });
     
     $("#teacher-dianbo").click(function() {
@@ -249,6 +279,8 @@ $(document).ready(function(){
 var play_fun    =   null;
 var pause_fun   =   null;
 var timer       =   null;
+var timer_screen      =   null;
+var timer_cam         =   null;
 var ws = null;
 function openConnect(){
     if(ws !== null)
