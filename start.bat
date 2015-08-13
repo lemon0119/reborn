@@ -1,5 +1,3 @@
-cd "protected/extensions/video"
+cd "protected/extensions/signaler"
 start /min node server-side.js
-cd "../signaler"
-start /min node Signaling-Server.js
-start /min node Signaling-Screen.js
+start /min node server.js

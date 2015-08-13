@@ -14,6 +14,14 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionVirtualClass() {
+        $userID = Yii::app()->session['userid_now'];
+        $student    =   Student::model()->findByPK($userID);
+        $userName   =   $student->userName;
+        $classID    =   $student->classID;
+        return $this->render('virtualClass',['userName'=>$userName,'classID'=>$classID]);
+    }
+    
     public function actionAnslookType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();

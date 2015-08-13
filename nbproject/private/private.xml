@@ -3,20 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/reborn/protected/controllers/TeacherController.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/searchLook.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/editLook.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/choiceLst.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/lookLst.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/listenLst.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/addLook.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/admin/searchLook.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/searchKey.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/admin/searchKey.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/editKey.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/teacher/keyLst.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/views/admin/lookLst.php</file>
-            <file>file:/C:/wamp/www/reborn/protected/models/KeyType.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/student/virtualCLass.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/teacher/virtualClass.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/webrtc/null.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/controllers/WebrtcController.php</file>
+            <file>file:/D:/wamp/www/reborn/protected/views/webrtc/teaCam.php</file>
         </group>
     </open-files>
 </project-private>

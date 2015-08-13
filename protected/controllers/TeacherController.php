@@ -11,11 +11,12 @@ class TeacherController extends CController {
     
     public $layout='//layouts/teacherBar';
     
-    public function actionWebrtc(){
-        $teacherID = Yii::app()->session['userid_now'];
-        $teacherName = Student::model()->findByPK($teacherID)->userName;
-        return $this->render('webrtc',['teacherName'=>$teacherName]);
+    public function actionVirtualClass() {
+        $userID = Yii::app()->session['userid_now'];
+        $userName   = Teacher::model()->findByPK($userID)->userName;
+        return $this->render('virtualClass',['userName'=>$userName,'classID'=>$_GET['classID']]);
     }
+    
     public function actionlookExer(){
         return $this->render('lookExer');
     }
@@ -34,16 +35,9 @@ class TeacherController extends CController {
     public function actionHello(){
         return $this->render('hello',array(null));
     }
-    public function actionVirtualClass(){
-        $user_model = new User;
-        $username_now=Yii::app()->user->name;
-        $info=$user_model->find("username='$username_now'");
-        return $this->render('virtualClass',array('info'=>$info));
-    }
     
     public function actionStartCourse(){
         $classID=$_GET['classID'];
-        Yii::app()->session['curClass'] =   $classID;
         $progress=$_GET['progress'];
         $on=$_GET['on'];
         return $this->render('startCourse',[
