@@ -194,7 +194,7 @@ $(document).ready(function(){
             } else {
                 video.setAttribute("src", video_path); 
             }
-            $("#videos-container").show();
+            $("#videos-container").hide();
             $("#dianbo-videos-container").show();
             var local_my_video = document.getElementById("video1");
             local_my_video.play();

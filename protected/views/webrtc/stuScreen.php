@@ -35,6 +35,7 @@ and open the template in the editor.
         document.body.appendChild(event.mediaElement);
         scaleVideos();
     };
+    
     connection.socketURL = "https://<?php echo HOST_IP; ?>:9001";
     connection.join("class1");
 
@@ -45,7 +46,7 @@ and open the template in the editor.
 
         var minus = 130;
         var windowHeight = 768;
-        var windowWidth = 900;
+        var windowWidth = 850;
         var windowAspectRatio = windowWidth / windowHeight;
         var videoAspectRatio = 4 / 3;
         var blockAspectRatio;

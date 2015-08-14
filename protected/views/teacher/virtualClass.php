@@ -185,7 +185,6 @@ $(document).ready(function(){
         $("#close-Screen").attr("class","btn btn-primary");
         document.getElementById("teacher-dianbo").disabled = true;
         $("#teacher-dianbo").attr("class","btn");
-        clearVideo();
         $("#dianbo-videos-container").hide();
         $("#videos-container").show();
         iframe_a.location.href ='./index.php?r=webrtc/teaScreen'; 
