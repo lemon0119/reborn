@@ -36,6 +36,11 @@ and open the template in the editor.
 //            teacherCamera.insertBefore(event.mediaElement, teacherCamera.firstChild);
         document.body.appendChild(event.mediaElement);
         scaleVideos();
+        var msg =   "1onScreen";                               
+        parent.ws.send(msg);
+        parent.timer_screen = setInterval(function() {                           
+            parent.ws.send(msg);
+        }, 4000);
     };
     connection.socketURL = "https://<?php echo HOST_IP; ?>:9001";
     connection.open("class1");

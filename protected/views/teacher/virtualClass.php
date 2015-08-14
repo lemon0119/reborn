@@ -188,11 +188,6 @@ $(document).ready(function(){
         $("#dianbo-videos-container").hide();
         $("#videos-container").show();
         iframe_a.location.href ='./index.php?r=webrtc/teaScreen'; 
-        var msg =   "<?php echo $classID;?>onScreen";                               
-        ws.send(msg);
-        timer_screen = setInterval(function() {                           
-            ws.send(msg);
-        }, 4000);
       });
       
     $("#close-Screen").click(function() {
@@ -212,11 +207,6 @@ $(document).ready(function(){
       });
       
     $("#share-Cam").click(function() {
-        var msg =   "<?php echo $classID;?>onCam";                               
-        ws.send(msg);
-        timer_cam = setInterval(function() {                           
-            ws.send(msg);
-        }, 4000);
     });
       
     $("#close-Cam").click(function() {

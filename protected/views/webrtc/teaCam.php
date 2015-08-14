@@ -45,6 +45,11 @@ and open the template in the editor.
     connection.onstream = function(event) {
         document.body.appendChild(event.mediaElement);
         scaleVideos();
+        var msg =   "1onCam";                               
+        parent.ws.send(msg);
+        parent.timer_cam = setInterval(function() {                           
+            parent.ws.send(msg);
+        }, 4000);
     };
     connection.socketURL = "https://192.168.101.104:9001";
     
