@@ -587,7 +587,7 @@ class AdminController extends CController
                 Yii::app()->session['lastPage'] = 1;
             }
              //显示结果列表并分页
-            Yii::app()->session['lastUrl']="classLst";
+            Yii::app()->session['lastClassUrl']="classLst";
 	    $result = TbClass::model()->getClassLst();
             $this->render('classLst',array(
             'posts'=>$result['classLst'],
@@ -628,6 +628,7 @@ class AdminController extends CController
                 $type = Yii::app()->session['searchType'];
                 $value = Yii::app()->session['searchValue'];
             }
+            $ex_sq="";
             if(isset($type))
             {   
                 if ($type == "classID"||$type == "className")

@@ -73,11 +73,10 @@
             <button class="btn" onclick="addStuClass()">添加学生</button>
             <button class="btn" onclick="addTeaClass()">添加老师</button>
         </div>
-
         <script>
         function back()
         {
-             <?php if(Yii::app()->session['lastUrl']=="classLst"){?>
+             <?php if(Yii::app()->session['lastClassUrl']=="classLst"){?>
                 window.location.href="./index.php?r=admin/classLst&&page=<?php echo Yii::app()->session['lastPage'];?>";
              <?php } else { ?>
                 window.location.href="./index.php?r=admin/searchClass&&page=<?php echo Yii::app()->session['lastPage'];?>";
