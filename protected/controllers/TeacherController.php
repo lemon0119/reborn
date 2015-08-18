@@ -628,7 +628,8 @@ class TeacherController extends CController {
              $typename = Yii::app()->session['role_now'];
              $userid = Yii::app()->session['userid_now'];
              $filePath =$typename."/".$userid."/"; 
-             $dir = "resources/".$filePath;            
+             $dir = "resourses/".$filePath;        
+       
              if(!is_dir($dir))
              {
              mkdir($dir,0777);
