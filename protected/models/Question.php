@@ -62,6 +62,33 @@ class Question extends CActiveRecord
         return ['questionLst'=>$questionLst,'pages'=>$pages,];     
     }
     
+        public function getQuestionLstPage($type,$value,$pagesize){
+        $order = " order by exerciseID ASC";
+        if($type!="")
+            if($type == "requirements")
+            {
+               $condition = " where $type like '%$value%'";
+            }else
+            {
+            $condition = " WHERE $type = '$value'";
+            }
+        else
+            $condition= "";
+        $select = "SELECT * FROM question";
+        $sql = $select.$condition.$order;
+        $criteria=new CDbCriteria();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages=new CPagination($result->rowCount);
+        $pages->pageSize=$pagesize; 
+        $pages->applyLimit($criteria); 
+        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $questionLst=$result->query();
+        
+        return ['questionLst'=>$questionLst,'pages'=>$pages,];     
+    }
+    
   
 
 //    //宋杰 2015-7-30 获取登录老师写的简单题

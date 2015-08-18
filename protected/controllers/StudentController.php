@@ -291,7 +291,7 @@ class StudentController extends CController {
         return $this->render('questionExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
-    //2015-8-3 宋杰 isExam为false加载suitesidebar
+    
     public function actionChoice(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();

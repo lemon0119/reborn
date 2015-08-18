@@ -72,6 +72,26 @@ class Suite extends CActiveRecord
         return $result;
     }
     
+    
+    public function getSuiteExerByTypePage($suiteID, $type,$pagesize)
+    {
+        $criteria   =   new CDbCriteria();
+        $result = $this->getSuiteExerByType( $suiteID, $type);
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   $pagesize; 
+        $pages->applyLimit($criteria); 
+        $sql = "select * from ".$type;
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='".$type."')";
+        $sql = $sql.$condition.$order;
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $workLst  =   $result->query();       
+        return ['workLst'=>$workLst,'pages'=>$pages,];
+        
+    }
+    
     	public function getchoice($suiteID)
 	{
             $order = " order by exerciseID ASC";

@@ -84,7 +84,20 @@ class TbClass extends CActiveRecord
         $lesson = Lesson::model()->findAll($criteria);
         return $lesson;
     }
+   
     
+    public function findClassByIds($Ids)
+    {
+        $sql = "select * from tb_class";
+        $condition  = " where ";
+        foreach($Ids as $classID){
+            $condition = $condition."classID = '$classID' ";
+        }
+        $sql = $sql.$condition;
+        return Yii::app()->db->createCommand($sql)->query();
+    }
+
+
     
     
 	/**
@@ -161,6 +174,8 @@ class TbClass extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        
 
 	/**
 	 * Returns the static model of the specified AR class.

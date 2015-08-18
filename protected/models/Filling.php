@@ -64,6 +64,33 @@ class Filling extends CActiveRecord
         return ['fillLst'=>$fillLst,'pages'=>$pages,];
     }
     
+        public function getFillLstPage($type,$value,$pagesize){
+        $order = " order by exerciseID ASC";
+        if($type!="")
+            if($type == "requirements")
+            {
+                $condition = " where $type like '%$value%'";
+            }else
+            {
+                $condition = " WHERE $type = '$value'";
+            }           
+        else
+            $condition= "";
+        $select = "SELECT * FROM filling";
+        $sql = $select.$condition.$order;
+        $criteria=new CDbCriteria();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages=new CPagination($result->rowCount);
+        $pages->pageSize=$pagesize; 
+        $pages->applyLimit($criteria); 
+        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $fillLst=$result->query();
+        
+        return ['fillLst'=>$fillLst,'pages'=>$pages,];
+    }
+    
 //    //宋杰 2015-7-30 获取老师编写的填空题
 //        public function getTeaFillLst($type,$value){
 //        $order = " order by exerciseID ASC";
