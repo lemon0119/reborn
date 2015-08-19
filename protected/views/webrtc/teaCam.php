@@ -51,7 +51,7 @@ and open the template in the editor.
             parent.ws.send(msg);
         }, 4000);
     };
-    connection.socketURL = "https://192.168.101.104:9001";
+    connection.socketURL = "https://<?php echo HOST_IP; ?>:9001";
     
     function scaleVideos() {
         var videos = document.querySelectorAll('video'),
