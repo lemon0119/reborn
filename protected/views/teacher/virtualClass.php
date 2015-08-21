@@ -36,11 +36,28 @@
                 </select>　　
                 <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button>
             </div>
+        
+            <div style="display:inline;">
+                <!-- sunpy: broadcast local video -->    
+                <button id="teacher-dianbo" class="btn btn-primary">点播</button>
+                <select id="teacher-choose-file" >
+                    <option value ="test">test</option>
+                </select>　　
+                <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button>
+            </div>
 
             <div id="videos-container" style="height: 1000px; width: 100%; margin-top:0px;display:none">
                 <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
             </div>
             <div id="dianbo-videos-container" style="margin-top:18px;display:none">  
+            </div>
+            <div id="ppt-container" style="margin-top:18px;display:none">
+                <button id="page-up" class="btn btn-primary"></button>
+                <input id="yeshu">
+                /76
+                <button id="page-go" class="btn btn-primary"></button>
+                <button id="page-down" class="btn btn-primary"></button>
+                
             </div>
     </div>
 
