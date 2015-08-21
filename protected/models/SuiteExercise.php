@@ -84,6 +84,25 @@ class SuiteExercise extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function insertWork($type,$exerciseID,$suiteID) {
+            $newSuiteExercise = new SuiteExercise();
+            $newSuiteExercise->type  = $type;
+            $newSuiteExercise->exerciseID = $exerciseID;
+            $newSuiteExercise->suiteID = $suiteID;
+            if($this->findAll(array(
+                'condition' => 'type =:type and exerciseID=:exerciseID and suiteID=:suiteID',
+                'params' =>array(':type' => $type,':exerciseID'=>$exerciseID,':suiteID'=>$suiteID)
+            ))!= NULL) 
+            {
+                return "HAVEN";
+            }
+               
+            else 
+            {
+                return $newSuiteExercise->insert();
+            }
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.

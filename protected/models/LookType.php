@@ -134,6 +134,32 @@ class LookType extends CActiveRecord
         return ['lookLst'=>$lookLst,'pages'=>$pages,];
     }
     
+         public function getLookLstPage($type,$value,$pagesize){
+        $order  =   " order by exerciseID ASC";
+        if($type!="")
+            if($type == "content")
+            {
+                $condition = " WHERE $type like '%$value%'";
+            }  else {
+                $condition = " WHERE $type = '$value'";
+            }           
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM look_type";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   $pagesize; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+            $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $lookLst  =   $result->query();
+        
+        return ['lookLst'=>$lookLst,'pages'=>$pages,];
+    }
+    
     
         public function insertLook($title,$content,$createPerson){
         $sql        =   "select max(exerciseID) as id from look_type";

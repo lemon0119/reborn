@@ -70,7 +70,7 @@ class Choice extends CActiveRecord
     
     
     //可以设置pagesize大小
-        public function getChoiceLst1($type,$value,$pagesize){
+        public function getChoiceLstPage($type,$value,$pagesize){
         $order  =   " order by exerciseID ASC";
         if($type!="")
             if($type == "requirements")
@@ -90,7 +90,7 @@ class Choice extends CActiveRecord
         $pages->pageSize    =   $pagesize; 
         $pages->applyLimit($criteria); 
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+            $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
         $result->bindValue(':limit', $pages->pageSize); 
         $choiceLst  =   $result->query();
         

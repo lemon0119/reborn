@@ -6212,3 +6212,1465 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=webrtc/null
 HTTP_REFERER=https://192.168.101.104/reborn/index.php?r=teacher/virtualClass&&classID=1
 ---
+2015/08/18 16:37:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyW...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyWork
+HTTP_REFERER=https://192.168.1.100/reborn/index.php?r=teacher/ModifyQuestionWork&&suiteID=1
+---
+2015/08/19 09:01:58 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:08:10 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:08:42 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:08:56 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:11:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyLookWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyLookWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyLookWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyLookWork
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyChoiceWork&&suiteID=1
+---
+2015/08/19 09:12:01 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:13:09 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:15:22 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:16:08 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:17:03 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1977)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1977)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:17:18 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key where exerciseID in (select exerciseID from suite_exercise where suiteID='1'' at line 1. The SQL statement executed was: select * from key where exerciseID in (select exerciseID from suite_exercise where suiteID='1' and type='key') order by exerciseID ASC LIMIT :offset,:limit. Bound with :offset=0, :limit=5.
+in C:\wamp\www\reborn\protected\models\Suite.php (90)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1984)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:17:18 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key where exerciseID in (select exerciseID from suite_exercise where suiteID='1'' at line 1. The SQL statement executed was: select * from key where exerciseID in (select exerciseID from suite_exercise where suiteID='1' and type='key') order by exerciseID ASC LIMIT :offset,:limit. Bound with :offset=0, :limit=5' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 C:\wamp\www\reborn\protected\models\Suite.php(90): CDbCommand->query()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1984): Suite->getSuiteExerByTypePage('1', 'key', 5)
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyKeyWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyKeyWork')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyK...')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork&&suiteID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyQuestionWork&&suiteID=1
+---
+2015/08/19 09:30:19 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yawei001.keytype' doesn't exist. The SQL statement executed was: select * from keytype where exerciseID in (select exerciseID from suite_exercise where suiteID='1' and type='key') order by exerciseID ASC LIMIT :offset,:limit. Bound with :offset=0, :limit=5.
+in C:\wamp\www\reborn\protected\models\Suite.php (96)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1984)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:30:19 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yawei001.keytype' doesn't exist. The SQL statement executed was: select * from keytype where exerciseID in (select exerciseID from suite_exercise where suiteID='1' and type='key') order by exerciseID ASC LIMIT :offset,:limit. Bound with :offset=0, :limit=5' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 C:\wamp\www\reborn\protected\models\Suite.php(96): CDbCommand->query()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1984): Suite->getSuiteExerByTypePage('1', 'key', 5)
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyKeyWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyKeyWork')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyK...')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork&&suiteID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyQuestionWork&&suiteID=1
+---
+2015/08/19 09:32:25 [error] [php] Undefined index: requirements (C:\wamp\www\reborn\protected\views\teacher\modifyTypeWork.php:54)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2000): TeacherController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyKeyWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork&&suiteID=1
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeWork.php (54)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2000)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:33:59 [error] [php] Undefined index: requirements (C:\wamp\www\reborn\protected\views\teacher\modifyTypeWork.php:107)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2000): TeacherController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyKeyWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyKeyWork&&suiteID=1
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeWork.php (107)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2000)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:35:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyLookWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyLookWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyLookWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyLookWork&&suiteID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyQuestionWork&&suiteID=1
+---
+2015/08/19 09:38:41 [error] [php] Undefined variable: keyLst (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2022)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyLookWork&&suiteID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2022)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:41:14 [error] [php] Undefined variable: workLook (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2047)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyListenWork&&suiteID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2047)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 09:42:47 [error] [php] Undefined index: requirements (C:\wamp\www\reborn\protected\views\teacher\modifyWork.php:54)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1917): TeacherController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionDeleteSuite()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/deleteSuite&&exerciseID=3&&type=look&&suiteID=1
+in C:\wamp\www\reborn\protected\views\teacher\modifyWork.php (54)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1917)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 10:37:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyChoiceWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyChoiceWor...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyChoiceWor...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyC...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyChoiceWork&&suiteID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyFillingWork&&suiteID=1
+---
+2015/08/19 10:38:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyChoiceWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyChoiceWor...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyChoiceWor...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyC...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyChoiceWork&&suiteID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyFillingWork&&suiteID=1
+---
+2015/08/19 10:40:42 [error] [php] Undefined index: requirements (C:\wamp\www\reborn\protected\views\teacher\modifyWork.php:54)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1885): TeacherController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=key
+in C:\wamp\www\reborn\protected\views\teacher\modifyWork.php (54)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1885)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 10:45:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyListenWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyListenWor...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyListenWor...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyListenWork&&suiteID=1&&type=listen
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyLookWork&&suiteID=1&&type=look
+---
+2015/08/19 10:45:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyLookWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyLookWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyLookWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyLookWork&&suiteID=1&&type=look
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=key
+---
+2015/08/19 10:45:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyLookWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyLookWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyLookWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyLookWork&&suiteID=1&&type=look
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=key
+---
+2015/08/19 10:45:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyLookWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyLookWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyLookWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyLookWork&&suiteID=1&&type=look
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=key
+---
+2015/08/19 10:46:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyLookWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyLookWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyLookWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyLookWork&&suiteID=1&&type=look
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=key
+---
+2015/08/19 10:54:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "modifyChoiceWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('modifyChoiceWor...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('modifyChoiceWor...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/modifyC...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/modifyChoiceWork&&suiteID=4
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignWork&&classID=1&&lessonID=2
+---
+2015/08/19 10:54:16 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "modifyChoiceWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('modifyChoiceWor...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('modifyChoiceWor...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/modifyC...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/modifyChoiceWork&&suiteID=4
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignWork&&classID=1&&lessonID=2
+---
+2015/08/19 11:19:43 [error] [php] Undefined index: exerciseID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1881)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=4&&type=choice&&exercise=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1881)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 11:19:57 [error] [php] Undefined index: exerciseID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1881)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=4&&type=choice&&exercise=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1881)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 11:20:04 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'suiteID' cannot be null. The SQL statement executed was: INSERT INTO `suite_exercise` (`suiteID`, `exerciseID`, `type`) VALUES (NULL, NULL, NULL).
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1888)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 11:20:04 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'suiteID' cannot be null. The SQL statement executed was: INSERT INTO `suite_exercise` (`suiteID`, `exerciseID`, `type`) VALUES (NULL, NULL, NULL)' in C:\wamp\www\framework\db\CDbCommand.php:358
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(1077): CDbCommand->execute()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1888): CActiveRecord->insert(Array)
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=4&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=4&&type=choice
+---
+2015/08/19 11:25:22 [error] [php] Non-static method SuiteExercise::insertWork() should not be called statically, assuming $this from incompatible context (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1884)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=4&&type=choice&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 11:26:37 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '4-1-choice' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `suite_exercise` (`type`, `exerciseID`, `suiteID`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0='choice', :yp1=1, :yp2=4.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 11:26:37 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '4-1-choice' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `suite_exercise` (`type`, `exerciseID`, `suiteID`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0='choice', :yp1=1, :yp2=4' in C:\wamp\www\framework\db\CDbCommand.php:358
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(1077): CDbCommand->execute()
+#1 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->insert()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '1', '4')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=4&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AddWork&&suiteID=4&&type=choice&&exerciseID=2
+---
+2015/08/19 11:27:05 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '4-2-choice' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `suite_exercise` (`type`, `exerciseID`, `suiteID`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0='choice', :yp1=2, :yp2=4.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 11:27:05 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '4-2-choice' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `suite_exercise` (`type`, `exerciseID`, `suiteID`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0='choice', :yp1=2, :yp2=4' in C:\wamp\www\framework\db\CDbCommand.php:358
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(1077): CDbCommand->execute()
+#1 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->insert()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '2', '4')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=4&&type=choice&&exerciseID=2
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AddWork&&suiteID=4&&type=choice&&exerciseID=1
+---
+2015/08/19 11:33:47 [error] [php] Undefined variable: result (C:\wamp\www\reborn\protected\views\teacher\modifyTypeWork.php:155)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1980): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1864): TeacherController->renderModify()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyWork()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyWork&&suiteID=4&&type=key
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeWork.php (155)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1980)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1864)
+2015/08/19 11:34:25 [error] [php] Undefined variable: result (C:\wamp\www\reborn\protected\views\teacher\modifyWork.php:140)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1980): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1875): TeacherController->renderModify()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionDeleteSuite()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/deleteSuite&&exerciseID=2&&type=choice&&suiteID=4
+in C:\wamp\www\reborn\protected\views\teacher\modifyWork.php (140)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1980)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1875)
+2015/08/19 11:34:37 [error] [php] Undefined variable: result (C:\wamp\www\reborn\protected\views\teacher\modifyWork.php:140)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1980): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1864): TeacherController->renderModify()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyWork()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\views\teacher\modifyWork.php (140)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1980)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1864)
+2015/08/19 11:35:32 [error] [php] Undefined variable: result (C:\wamp\www\reborn\protected\views\teacher\modifyWork.php:140)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1980): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1864): TeacherController->renderModify()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyWork()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\views\teacher\modifyWork.php (140)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1980)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1864)
+2015/08/19 11:39:06 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-1-choice' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `suite_exercise` (`type`, `exerciseID`, `suiteID`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0='choice', :yp1=1, :yp2=1.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 11:39:06 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-1-choice' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `suite_exercise` (`type`, `exerciseID`, `suiteID`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0='choice', :yp1=1, :yp2=1' in C:\wamp\www\framework\db\CDbCommand.php:358
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(1077): CDbCommand->execute()
+#1 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->insert()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '1', '1')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=choice
+---
+2015/08/19 11:39:41 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-2-choice' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `suite_exercise` (`type`, `exerciseID`, `suiteID`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0='choice', :yp1=2, :yp2=1.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 11:39:41 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1-2-choice' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `suite_exercise` (`type`, `exerciseID`, `suiteID`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0='choice', :yp1=2, :yp2=1' in C:\wamp\www\framework\db\CDbCommand.php:358
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(1077): CDbCommand->execute()
+#1 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->insert()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '2', '1')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=2
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=3
+---
+2015/08/19 13:11:49 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 13:11:49 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 C:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryAll()
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1470): CActiveRecord->query(Object(CDbCriteria), true)
+#3 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->findAll('type = 'choice'...')
+#4 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '5', '1')
+#5 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#6 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#10 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#11 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#12 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#13 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&suiteID=1&type=choice&exerciseID=5&page=2
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=5
+---
+2015/08/19 13:11:55 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 13:11:55 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 C:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryAll()
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1470): CActiveRecord->query(Object(CDbCriteria), true)
+#3 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->findAll('type = 'choice'...')
+#4 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '5', '1')
+#5 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#6 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#10 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#11 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#12 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#13 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=5
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=4
+---
+2015/08/19 13:12:37 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 13:12:37 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 C:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryAll()
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1470): CActiveRecord->query(Object(CDbCriteria), true)
+#3 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->findAll('type = 'choice'...')
+#4 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '4', '1')
+#5 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#6 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#10 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#11 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#12 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#13 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=4
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=4
+---
+2015/08/19 13:12:37 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 13:12:37 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 C:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryAll()
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1470): CActiveRecord->query(Object(CDbCriteria), true)
+#3 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->findAll('type = 'choice'...')
+#4 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '1', '1')
+#5 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#6 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#10 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#11 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#12 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#13 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=choice
+---
+2015/08/19 13:34:21 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 13:34:21 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 C:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryAll()
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1470): CActiveRecord->query(Object(CDbCriteria), true)
+#3 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->findAll('type = 'choice'...')
+#4 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '1', '1')
+#5 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#6 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#10 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#11 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#12 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#13 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/19 13:40:38 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'.
+in C:\wamp\www\reborn\protected\models\SuiteExercise.php (93)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1884)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 13:40:38 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exerciseID ='exerciseID'' at line 1. The SQL statement executed was: SELECT * FROM `suite_exercise` `t` WHERE type = 'choice',exerciseID ='exerciseID'' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 C:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryAll()
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1470): CActiveRecord->query(Object(CDbCriteria), true)
+#3 C:\wamp\www\reborn\protected\models\SuiteExercise.php(93): CActiveRecord->findAll('type = 'choice'...')
+#4 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '1', '1')
+#5 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#6 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#10 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#11 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#12 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#13 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=choice
+---
+2015/08/19 13:54:12 [error] [exception.CException] exception 'CException' with message '属性 "CDbCriteria.conditon" 未被定义.' in C:\wamp\www\framework\base\CComponent.php:173
+Stack trace:
+#0 C:\wamp\www\framework\db\schema\CDbCriteria.php(160): CComponent->__set('conditon', 'type =:type and...')
+#1 C:\wamp\www\framework\db\schema\CDbCommandBuilder.php(585): CDbCriteria->__construct(Array)
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1469): CDbCommandBuilder->createCriteria(Array, Array)
+#3 C:\wamp\www\reborn\protected\models\SuiteExercise.php(96): CActiveRecord->findAll(Array)
+#4 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1884): SuiteExercise->insertWork('choice', '1', '1')
+#5 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddWork()
+#6 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddWork')
+#10 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddWork')
+#11 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#12 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#13 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=choice
+---
+2015/08/19 14:41:12 [error] [php] Undefined index: exerciseID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1881)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=listen&&exercise=3&&code=597479
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1881)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 15:44:52 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyEditWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyEditWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyEditWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyE...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyWork&&suiteID=1&&type=choice
+---
+2015/08/19 15:47:06 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyEditWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyEditWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyEditWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyE...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=choice&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=choice
+---
+2015/08/19 15:48:18 [error] [php] Undefined variable: currentClass (C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php:18)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1949): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1902): TeacherController->ModifyEditChoice()
+#4 unknown(0): TeacherController->ActionModifyEditWork()
+#5 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#6 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#7 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#9 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#10 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#11 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#12 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=choice&&exerciseID=1
+in C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php (18)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1949)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1902)
+2015/08/19 15:51:11 [error] [php] Illegal string offset 'className' (C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php:18)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1951): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1902): TeacherController->ModifyEditChoice()
+#4 unknown(0): TeacherController->ActionModifyEditWork()
+#5 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#6 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#7 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#9 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#10 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#11 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#12 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=choice&&exerciseID=1
+in C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php (18)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1951)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1902)
+2015/08/19 15:53:16 [error] [php] Illegal string offset 'className' (C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php:18)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1951): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1902): TeacherController->ModifyEditChoice()
+#4 unknown(0): TeacherController->ActionModifyEditWork()
+#5 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#6 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#7 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#9 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#10 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#11 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#12 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=choice&&exerciseID=1
+in C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php (18)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1951)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1902)
+2015/08/19 15:54:31 [error] [php] Undefined variable: Lesson (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1945)
+Stack trace:
+#0 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#1 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#2 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#4 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#5 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#6 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#7 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#8 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=choice&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1945)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1902)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 15:56:54 [error] [php] Undefined variable: currentLesson (C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php:19)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1951): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1902): TeacherController->ModifyEditChoice()
+#4 unknown(0): TeacherController->ActionModifyEditWork()
+#5 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#6 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#7 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#9 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#10 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#11 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#12 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=choice&&exerciseID=1
+in C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php (19)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1951)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1902)
+2015/08/19 15:58:04 [error] [php] Undefined variable: currentLesson (C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php:19)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1951): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1902): TeacherController->ModifyEditChoice()
+#4 unknown(0): TeacherController->ActionModifyEditWork()
+#5 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#6 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#7 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#9 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#10 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#11 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#12 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=choice&&exerciseID=1
+in C:\wamp\www\reborn\protected\views\teacher\modifyEditChoice.php (19)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1951)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1902)
+2015/08/19 15:59:42 [error] [exception.CException] exception 'CException' with message 'TeacherController and its behaviors do not have a method or closure named "ModifyEditFilling".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1905): CComponent->__call('ModifyEditFilli...', Array)
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1905): TeacherController->ModifyEditFilling()
+#2 [internal function]: TeacherController->ActionModifyEditWork('filling')
+#3 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs(Object(TeacherController), Array)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CAction->runWithParamsInternal(Object(TeacherController), Object(ReflectionMethod), Array)
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyEditWork')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyE...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=filling&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=filling
+---
+2015/08/19 16:33:27 [error] [exception.CException] exception 'CException' with message 'TeacherController and its behaviors do not have a method or closure named "ModifyEditFilling".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1912): CComponent->__call('ModifyEditFilli...', Array)
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1912): TeacherController->ModifyEditFilling()
+#2 [internal function]: TeacherController->ActionModifyEditWork('filling')
+#3 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs(Object(TeacherController), Array)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CAction->runWithParamsInternal(Object(TeacherController), Object(ReflectionMethod), Array)
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyEditWork')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyE...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=filling&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=filling
+---
+2015/08/19 16:38:59 [error] [php] Undefined index: options (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1982)
+Stack trace:
+#0 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#1 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#2 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#4 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#5 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#6 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#7 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#8 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=filling&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1982)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1912)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/19 17:23:32 [error] [php] Undefined variable: type (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1292)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/editChoiceInfo&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1292)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 09:15:22 [error] [php] Use of undefined constant mypage - assumed 'mypage' (C:\wamp\www\reborn\protected\models\Suite.php:94)
+Stack trace:
+#0 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyWork()
+#1 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#3 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#4 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#5 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#6 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#7 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\models\Suite.php (94)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2084)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+2015/08/20 09:44:23 [error] [php] Use of undefined constant flag - assumed 'flag' (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2079)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2079)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 09:44:54 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2079)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2079)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 09:45:17 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2079)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2079)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 09:46:06 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2079)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2079)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 09:48:21 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2079)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2079)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 09:50:10 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1896)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 09:50:17 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1896)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 09:50:28 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1896)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:22:05 [error] [php] Undefined index: page (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1905)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&&flag=xianyou
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1905)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:23:51 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1913)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1913)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:24:18 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1913)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1913)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:24:20 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1913)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1913)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:24:21 [error] [php] Undefined index: page (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1912)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1912)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:24:31 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1913)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1913)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:24:32 [error] [php] Undefined index: page (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1912)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1912)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:24:33 [error] [php] Undefined index: flag (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1913)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1913)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:24:40 [error] [php] Undefined index: page (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1912)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1912)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:31:27 [error] [php] Undefined index: page (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1908)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&flag=xianyou&flag=xianyou
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1908)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 10:33:52 [error] [php] Undefined index: page (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1908)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&flag=xianyou&flag=xianyou
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1908)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/20 14:39:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "manageCourseware" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('manageCoursewar...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('manageCoursewar...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/manageC...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/manageCourseware&&classID=1&&progress=2
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignWork
+---
+2015/08/20 14:39:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "manageCourseware" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('manageCoursewar...')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('manageCoursewar...')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/manageC...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/manageCourseware&&classID=2&&progress=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignWork
+---
+2015/08/20 14:39:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignWork
+---
+2015/08/20 17:05:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/choiceLst
+---
+2015/08/20 17:07:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/deleteSuite&&exerciseID=19&&type=choice&&suiteID=1
+---
+2015/08/21 09:00:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "stuWork" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('stuWork')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('stuWork')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/stuWork')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/stuWork
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/index
+---
+2015/08/21 09:32:38 [error] [php] Missing argument 2 for TeacherController::getLstByType(), called in C:\wamp\www\reborn\protected\controllers\TeacherController.php on line 2087 and defined (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2022)
+Stack trace:
+#0 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyWork()
+#1 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#3 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#4 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#5 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#6 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#7 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyWork&suiteID=1&type=choice&page=2&flag=yiyou
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2022)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2087)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1896)
+2015/08/21 13:54:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice&page=2
+---
+2015/08/21 13:54:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/21 13:54:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice&page=2
+---
+2015/08/21 13:55:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/21 13:55:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/21 13:55:06 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/21 13:55:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/21 13:55:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/21 13:55:11 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/21 14:09:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "partFreshPage" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('partFreshPage')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('partFreshPage')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/partFre...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/partFreshPage
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyWork&suiteID=1&type=choice
+---
+2015/08/21 14:14:09 [error] [php] Undefined variable: type (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1292)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/editChoiceInfo&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1292)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/21 14:17:23 [error] [php] Undefined index: options (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2017)
+Stack trace:
+#0 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#1 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#2 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#4 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#5 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#6 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#7 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#8 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=question&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2017)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1940)
+in C:\wamp\www\reborn\index.php (29)
+2015/08/21 14:19:18 [error] [exception.CException] exception 'CException' with message 'TeacherController and its behaviors do not have a method or closure named "ModifyEditKey".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1944): CComponent->__call('ModifyEditKey', Array)
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1944): TeacherController->ModifyEditKey()
+#2 [internal function]: TeacherController->ActionModifyEditWork('key')
+#3 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs(Object(TeacherController), Array)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CAction->runWithParamsInternal(Object(TeacherController), Object(ReflectionMethod), Array)
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyEditWork')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyE...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=key&&exerciseID=4
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AddWork&&suiteID=1&&type=key&&exerciseID=1&&code=575290
+---
+2015/08/21 14:26:04 [error] [php] Undefined variable: teacher (C:\wamp\www\reborn\protected\views\teacher\modifyEditKey.php:30)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2039): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1944): TeacherController->ModifyEditKey()
+#4 unknown(0): TeacherController->ActionModifyEditWork()
+#5 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#6 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#7 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#9 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#10 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#11 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#12 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=key&&exerciseID=4
+in C:\wamp\www\reborn\protected\views\teacher\modifyEditKey.php (30)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2039)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1944)
+2015/08/21 14:35:51 [error] [php] Undefined variable: filename (C:\wamp\www\reborn\protected\views\teacher\modifyEditListen.php:32)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2079): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1948): TeacherController->ModifyEditListen()
+#4 unknown(0): TeacherController->ActionModifyEditWork()
+#5 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#6 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#7 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#9 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#10 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#11 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#12 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&suiteID=1&&type=listen&&exerciseID=2
+in C:\wamp\www\reborn\protected\views\teacher\modifyEditListen.php (32)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2079)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1948)
+2015/08/21 14:55:16 [error] [php] Undefined variable: filename (C:\wamp\www\reborn\protected\views\teacher\modifyEditListen.php:32)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(935): TeacherController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionEditListenInfo()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/editListenInfo&&oldfilename=%E4%B8%AD%E5%9B%BD%E5%9B%BD%E9%99%85%E6%95%91%E6%8F%B4%E9%98%9F.mp3&&exerciseID=2
+in C:\wamp\www\reborn\protected\views\teacher\modifyEditListen.php (32)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (935)
+in C:\wamp\www\reborn\index.php (29)

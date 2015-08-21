@@ -34,13 +34,14 @@
         $code = mt_rand(0, 1000000);
     ?>
 <div class="span9">
-<div id="fenye1">
+<div >
     <h3>已有习题</h3>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>编号</th>
+                <th>题目</th>
                 <th>内容</th>
                 <th>创建时间</th>         
                 <th>操作</th>               
@@ -51,10 +52,17 @@
                     <tr>
                         <td style="width: 150px"><?php echo $work['exerciseID'];?></td>
                         <td>
-                            <?php  if(strlen($work['requirements'])<=15)
-                                        echo $work['requirements'];
+                            <?php  if(strlen($work['title'])<=15)
+                                        echo $work['title'];
                                     else
-                                        echo substr($work['requirements'], 0, 15)."...";
+                                        echo substr($work['title'], 0, 15)."...";
+                                        ?>
+                        </td>
+                        <td>
+                            <?php  if(strlen($work['content'])<=15)
+                                        echo $work['content'];
+                                    else
+                                        echo substr($work['content'], 0, 15)."...";
                                         ?>
                         </td>
                         <td>
@@ -68,7 +76,7 @@
                 </tbody>
     </table>
     <!-- 学生列表结束 -->
-    <div align=center id="yiyou">
+    <div align=center>
     <?php   
         $this->widget('CLinkPager',array('pages'=>$page1));
     ?>
@@ -76,7 +84,7 @@
     </div>
 
 
-<div id="fenye2">
+<div >
     <h3>自有习题</h3>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped">
@@ -84,6 +92,7 @@
             <tr>
                 <th>编号</th>
                 <th>课程</th>
+                <th>题目</th>
                 <th>内容</th>
                 <th>创建人</th>
                 <th>创建时间</th>         
@@ -96,10 +105,16 @@
                         <td style="width: 150px"><?php echo $allwork['exerciseID'];?></td>
                         <td><?php echo $allwork['courseID'];
                             ?></td>
-                        <td> <?php  if(strlen($allwork['requirements'])<=15)
-                                        echo $allwork['requirements'];
+                        <td> <?php  if(strlen($allwork['title'])<=15)
+                                        echo $allwork['title'];
                                     else
-                                        echo substr($allwork['requirements'], 0, 15)."...";
+                                        echo substr($allwork['title'], 0, 15)."...";
+                                        ?>
+                        </td>
+                         <td> <?php  if(strlen($allwork['content'])<=15)
+                                        echo $allwork['content'];
+                                    else
+                                        echo substr($allwork['content'], 0, 15)."...";
                                         ?>
                         </td>
                         <td>
@@ -121,7 +136,7 @@
                 </tbody>
     </table>
     <!-- 学生列表结束 -->   
-   <div align=center id="xianyou">
+   <div align=center>
     <?php   
         $this->widget('CLinkPager',array('pages'=>$page2));
     ?>
@@ -136,25 +151,12 @@ function dele( type ,exerciseID,suiteID){
       }
   }
   
-    $(document).ready(function(){
-        var result = <?php echo "'$maniResult'";?>;
-        if(result != "")
-            alert(result);
-     
-     $("#yiyou").find("a").click(function(){
-         var url = "./index.php?r=teacher/partFreshPage";
-         alert("1");
-         $.ajax(
-                 {
-                     type : "get",
-                     url : url,
-                     success:function(dates){
-                         alert("1");
-                         $("#fenye1").html(dates);
-                 }
-                 });          
-     });       
-    });  
+$(document).ready(function(){
+    var result = <?php echo "'$maniResult'";?>;
+    if(result != "")
+        alert(result);
+});
+  
 </script>
 
 

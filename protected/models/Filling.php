@@ -84,7 +84,7 @@ class Filling extends CActiveRecord
         $pages->pageSize=$pagesize; 
         $pages->applyLimit($criteria); 
         $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+            $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
         $result->bindValue(':limit', $pages->pageSize); 
         $fillLst=$result->query();
         

@@ -118,6 +118,20 @@ class TeacherController extends CController {
             $thisLook->title =   $_POST['title'];
             $thisLook->content       =   $_POST['content'];
             $thisLook -> update();
+            if(Yii::app()->session['lastUrl'] == "modifyWork")
+            {
+                $Info = $this->getSuiteInfo("look", Yii::app()->session['suiteID']);           
+                $this->render("ModifyEditLook",array(
+                    'type' => "look",
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      => $exerciseID,
+                    'title' => $thisLook->title,
+                    'content' => $thisLook->content,
+                    'result'          =>    "修改习题成功"
+                ));       
+            }else{
             $this->render("editLook",array(
                 'exerciseID'      =>  $thisLook->exerciseID,
                 'title'    =>  $thisLook->title,
@@ -125,6 +139,7 @@ class TeacherController extends CController {
                 'result'          =>  "修改习题成功"
             ));
         }
+           }
          public function actionReturnFromAddLook(){
             if(Yii::app()->session['lastUrl']=="lookLst")
             {
@@ -137,7 +152,7 @@ class TeacherController extends CController {
                     'pages'         =>  $pages,
                     'teacher'       =>  Teacher::model()->findall()
             ));
-            }  else {
+            }  else if(Yii::app()->session['lastUrl']=="searchLook"){
                 $type   =   Yii::app()->session['searchLookType'];
                 $value  =   Yii::app()->session['searchLookValue'];
                 Yii::app()->session['lastUrl']  =   "searchLook";
@@ -170,6 +185,11 @@ class TeacherController extends CController {
                     'teacher'       =>  TbClass::model()->teaInClass(),
                 'searchKey'  => $searchKey
             ));
+            }else
+            {
+                $type = "look";
+                $suiteID = Yii::app()->session['suiteID'];
+                $this->renderModify($type,$suiteID,"");                     
             }
         }
         
@@ -415,6 +435,21 @@ class TeacherController extends CController {
             $thisKey->title =   $_POST['title'];
             $thisKey->content       =   $answer;
             $thisKey -> update();
+            
+           if(Yii::app()->session['lastUrl'] == "modifyWork")
+            {
+                $Info = $this->getSuiteInfo("key", Yii::app()->session['suiteID']);           
+                $this->render("ModifyEditKey",array(
+                    'type' => "key",
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $exerciseID,
+                    'title' => $thisKey->title,
+                    'content' => $thisKey->content,
+                    'result'          =>    "修改习题成功"
+                ));       
+            }else{          
             $this->render("editKey",array(
                 'exerciseID'      =>  $thisKey->exerciseID,
                 'title'    =>  $thisKey->title,
@@ -422,6 +457,7 @@ class TeacherController extends CController {
                 'result'          =>  "修改习题成功"
             ));
         }
+         }
     
     
      public function actionReturnFromAddKey(){
@@ -436,7 +472,7 @@ class TeacherController extends CController {
                     'pages'         =>  $pages,
                     'teacher'       =>  Teacher::model()->findall()
             ));
-            }  else {
+            }  else if(Yii::app()->session['lastUrl']=="searchKey"){
                 $type   =   Yii::app()->session['searchKeyType'];
                 $value  =   Yii::app()->session['searchKeyValue'];
                 Yii::app()->session['lastUrl']  =   "searchKey";
@@ -461,6 +497,11 @@ class TeacherController extends CController {
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
             ));
+            } else
+            {
+                $type = "key";
+                $suiteID = Yii::app()->session['suiteID'];
+                $this->renderModify($type,$suiteID,"");                     
             }
         }
         
@@ -722,7 +763,7 @@ class TeacherController extends CController {
                     'pages'         =>  $pages,
                     'teacher'       =>  Teacher::model()->findall()
             ));
-            }  else {
+            }  else if(Yii::app()->session['lastUrl']=="searchListen"){
                 $type   =   Yii::app()->session['searchListenType'];
                 $value  =   Yii::app()->session['searchListenValue'];
                 Yii::app()->session['lastUrl']  =   "searchListen";
@@ -755,7 +796,13 @@ class TeacherController extends CController {
                     'teacher'       =>  TbClass::model()->teaInClass(),
                 'searchKey'  => $searchKey
             ));
+            }else
+            {
+                $type = "listen";
+                $suiteID = Yii::app()->session['suiteID'];
+                $this->renderModify($type,$suiteID,"");                     
             }
+                
         }
         
         public function actionDeleteListen(){
@@ -889,6 +936,23 @@ class TeacherController extends CController {
               $thisListen -> update();
               $result = "修改成功";
             }
+            if(Yii::app()->session['lastUrl'] == "modifyWork")
+            {
+                $Info = $this->getSuiteInfo("listen", Yii::app()->session['suiteID']);           
+                $this->render("ModifyEditListen",array(
+                    'type' => "listen",
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $exerciseID,
+                    'title' => $thisListen->title,
+                    'content' => $thisListen->content,
+                   'filename' => $thisListen->fileName,
+                   'filepath' =>$thisListen->filePath,
+                    'result'          =>    $result
+                ));       
+            }else{
+            
             $this->render("editListen",array(
                 'exerciseID'      =>  $thisListen->exerciseID,
                 'filename' => $thisListen->fileName,
@@ -898,6 +962,7 @@ class TeacherController extends CController {
                 'result'          =>  $result
             ));
         }
+     }
         
         
       public function actionCopyListen(){
@@ -1074,7 +1139,7 @@ class TeacherController extends CController {
                         'searchKey'  => $searchKey
                         )
                     );
-            }else{
+            }else if(Yii::app()->session['lastUrl']=="fillLst"){
                 $result = Filling::model()->getFillLst("", "");
                 $fillLst=$result['fillLst'];
                 $pages=$result['pages'];
@@ -1085,6 +1150,11 @@ class TeacherController extends CController {
                     'teacher'=>  Teacher::model()->findall(),
                     
                 ));
+            }else
+            {
+                $type = "filling";
+                $suiteID = Yii::app()->session['suiteID'];
+                $this->renderModify($type,$suiteID,"");  
             }
         }
 
@@ -1280,6 +1350,21 @@ class TeacherController extends CController {
             $thisCh -> options      =   $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'];
             $thisCh -> answer       =   $_POST['answer'];
             $thisCh -> update();
+            if(Yii::app()->session['lastUrl'] == "modifyWork")
+            {
+                $Info = $this->getSuiteInfo("choice", Yii::app()->session['suiteID']);           
+                $this->render("ModifyEditChoice",array(
+                    'type' => "choice",
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $exerciseID,
+                    'requirements'    =>    $thisCh -> requirements,
+                    'options'         =>    $thisCh -> options,
+                    'answer'          =>    $thisCh -> answer,
+                    'result'          =>    "修改习题成功"
+                ));       
+            }
             $this->render("editChoice",array(
                     'exerciseID'      =>    $exerciseID,
                     'requirements'    =>    $thisCh -> requirements,
@@ -1326,7 +1411,7 @@ class TeacherController extends CController {
                             'searchKey'  => $searchKey
                     )
                     );
-            }else {
+            }else if(Yii::app()->session['lastUrl']=="ChoiceLst"){
                 $result     =   Choice::model()->getChoiceLst("", "");
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -1336,6 +1421,11 @@ class TeacherController extends CController {
                         'pages'     =>  $pages,      
                         'teacher'   =>  Teacher::model()->findall()
                 ));
+            } else
+            {
+                $type = "choice";
+                $suiteID = Yii::app()->session['suiteID'];
+                $this->renderModify($type,$suiteID,"");                     
             }
         }
     
@@ -1689,7 +1779,7 @@ class TeacherController extends CController {
                             'searchKey'  => $searchKey
                     )
                     );
-            }else {
+            }else if(Yii::app()->session['lastUrl']=="questionLst"){
                 $result     =   Question::model()->getQuestionLst("", "");
                 $questionLst  =   $result['questionLst'];
                 $pages      =   $result['pages'];
@@ -1699,6 +1789,11 @@ class TeacherController extends CController {
                         'pages'     =>  $pages,      
                         'teacher'   =>  Teacher::model()->findall()
                 ));
+            }else
+            {
+                $type = "question";
+                $suiteID = Yii::app()->session['suiteID'];
+                $this->renderModify($type,$suiteID,"");  
             }
         }
         
@@ -1858,121 +1953,322 @@ class TeacherController extends CController {
          ));
      }
      
-     public function ActionModifyChoiceWork(){              
+     public function ActionModifyWork(){              
          $suiteID = $_GET['suiteID'];
-         $type = "choice";
-         $currentLesson = Yii::app()->session['currentLesson'];
-         $currentClass = Yii::app()->session['currentClass'];
-         $class = TbClass::model()->findAll("classID='$currentClass'")[0];
-         $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
-         $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
-         $result = Suite::model()->getSuiteExerByTypePage($suiteID, $type,5);
-         $workChoice = $result['workLst'];
-         $page1 = $result['pages'];
-         $result = Choice::model()->getChoiceLst1("", "",5);
-         $choiceLst = $result['choiceLst'];
-         $page2 = $result['pages'];        
-         $this->render('modifyWork' , array(
-             'suite' => $suite,
-             'currentClass' =>$class,
-             'currentLesson'=>$lesson,
-             'suiteWork' => $workChoice,
-             'workLst' => $choiceLst,
-             'page1' => $page1,
-             'page2' =>$page2,
-             'teacher'=>  Teacher::model()->findall(),      
-             'type' => $type
-         ));
+         Yii::app()->session['suiteID'] = $suiteID;
+         Yii::app()->session['lastUrl'] = "modifyWork";
+         $type = $_GET['type'];       
+         $this->renderModify($type, $suiteID,"");
      }
      
      
-     public function ActionDeleteSuite()
+     public function ActionDeleteSuiteExercise()
      {
          $type = $_GET['type'];
          $exerciseID = $_GET['exerciseID'];
          $suiteID = $_GET['suiteID'];
          $thisSuiteExercise = new SuiteExercise();
          $deleteResult = $thisSuiteExercise->deleteAll("exerciseID = '$exerciseID' and type = '$type' and suiteID = '$suiteID'");
-         $currentLesson = Yii::app()->session['currentLesson'];
-         $currentClass = Yii::app()->session['currentClass'];
-         $class = TbClass::model()->findAll("classID='$currentClass'")[0];
-         $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
-         $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
-         $result = Suite::model()->getSuiteExerByTypePage($suiteID, $type,5);
-         $workChoice = $result['workLst'];
-         $page1 = $result['pages'];
-         $result = Choice::model()->getChoiceLst1("", "",5);
-         $choiceLst = $result['choiceLst'];
-         $page2 = $result['pages'];
+         $this->renderModify($type, $suiteID,"");
+     }   
+     
+     public function  ActionAddWork()
+     {
+         $type = $_GET['type'];
+         $exerciseID = $_GET['exerciseID'];
+         $suiteID = $_GET['suiteID'];
+         $code = $_GET['code'];
+         $result = "";
+         if($code != Yii::app()->session['code']){
+         $thisSuiteExercise = new SuiteExercise();
+         $result = SuiteExercise::model()->insertWork($type,$exerciseID,$suiteID);
+         Yii::app()->session['code']=$code;        
+         }
+
+         if($result === "HAVEN")
+             $result = "题目已存在";
+         else
+             $result = "";
+         $this->renderModify($type, $suiteID,$result);        
+     }
+     
+     public function ActionModifyEditWork($type)
+     {
+          switch ($type){
+            case 'choice':
+                $this->ModifyEditChoice();
+                break;
+            case 'filling':
+                $this->ModifyEditFilling();
+                break;
+            case 'question':
+               $this->ModifyEditQuestion();
+
+                break;
+            case 'key':
+                $this->ModifyEditKey();
+
+                break;
+            case 'listen':
+                $this->ModifyEditListen();
+
+                break;
+            case 'look':
+                $this->ModifyEditLook();
+                break;
+            default :
+                break;
+            
+        }
+     }
+
+     public function ModifyEditChoice(){
          
-         $this->render('modifyWork' , array(
-             'suite' => $suite,
-             'currentClass' =>$class,
-             'currentLesson'=>$lesson,
-             'suiteWork' => $workChoice,
-             'workLst' => $choiceLst,
-             'page1' => $page1,
-             'page2' =>$page2,
-             'teacher'=>  Teacher::model()->findall(),
-             'type' => $type
-         ));
+            $type = $_GET['type'];
+            $suiteID = $_GET['suiteID'];
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            $Info = $this->getSuiteInfo($type, $suiteID);           
+                $this->render("ModifyEditChoice",array(
+                    'type' => $type,
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'options'         =>    $result['options'],
+                    'answer'          =>    $result['answer']
+                ));       
+    }
+    
+         public function ModifyEditFilling(){
+         
+            $type = $_GET['type'];
+            $suiteID = $_GET['suiteID'];
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM filling WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            $Info = $this->getSuiteInfo($type, $suiteID);
+                $this->render("ModifyEditFilling",array(
+                    'type' => $type,
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer']
+                ));       
+    }
+    
+     public function ModifyEditQuestion(){
+         
+            $type = $_GET['type'];
+            $suiteID = $_GET['suiteID'];
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            $Info = $this->getSuiteInfo($type, $suiteID);          
+                $this->render("ModifyEditQuestion",array(
+                    'type' => $type,
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer']
+                ));       
+    }
+    
+    
+         public function ModifyEditKey(){
+         
+            $type = $_GET['type'];
+            $suiteID = $_GET['suiteID'];
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            $Info = $this->getSuiteInfo($type, $suiteID);          
+                $this->render("ModifyEditKey",array(
+                    'type' => $type,
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title']
+                ));       
+    }
+    
+         public function ModifyEditLook(){
+         
+            $type = $_GET['type'];
+            $suiteID = $_GET['suiteID'];
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM look_type WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            $Info = $this->getSuiteInfo($type, $suiteID);          
+                $this->render("ModifyEditLook",array(
+                    'type' => $type,
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title']
+                ));       
+    }
+    
+             public function ModifyEditListen(){
+         
+            $type = $_GET['type'];
+            $suiteID = $_GET['suiteID'];
+            $exerciseID =   $_GET["exerciseID"];
+            $sql        =   "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $result     =   $result->read();
+            $Info = $this->getSuiteInfo($type, $suiteID);          
+                $this->render("ModifyEditListen",array(
+                    'type' => $type,
+                    'suite' => $Info['suite'],
+                    'currentLesson' =>$Info['lesson'],
+                    'currentClass' => $Info['class'],
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title'],
+                    'filename' => $result['fileName'],
+                    'filepath' => $result['filePath']
+                ));       
+    }
+
+     public function getLstByType($type)
+     {
+        switch ($type){
+            case 'choice':
+                $result = Choice::model()->getChoiceLstPage("", "",5);
+                $myResult = array(
+                    'workLst' => $result['choiceLst'],
+                    'pages' => $result['pages']
+                );
+                break;
+            case 'filling':
+               $result = Filling::model()->getFillLstPage("", "",5);
+                    $myResult = array(
+                    'workLst' => $result['fillLst'],
+                    'pages' => $result['pages']
+                );
+                break;
+            case 'question':
+                $result = Question::model()->getQuestionLstPage("", "",5);
+                    $myResult = array(
+                    'workLst' => $result['questionLst'],
+                    'pages' => $result['pages']
+                );
+                break;
+            case 'key':
+                $result = KeyType::model()->getKeyLstPage("", "",5);
+                    $myResult = array(
+                    'workLst' => $result['keyLst'],
+                    'pages' => $result['pages']
+                );
+                break;
+            case 'listen':
+                $result = ListenType::model()->getListenLstPage("", "",5);
+                    $myResult = array(
+                    'workLst' => $result['listenLst'],
+                    'pages' => $result['pages']
+                );
+                break;
+            case 'look':
+                $result = LookType::model()->getLookLstPage("", "",5);
+                    $myResult = array(
+                    'workLst' => $result['lookLst'],
+                    'pages' => $result['pages']
+                );
+                break;
+            default :
+                $result = Choice::model()->getChoiceLstPage("", "",5);
+                    $myResult = array(
+                    'workLst' => $result['choiceLst'],
+                    'pages' => $result['pages']
+                );
+        }
+        return $myResult;       
      }
      
-     
-       public function ActionModifyFillingWork(){              
-         $suiteID = $_GET['suiteID'];
-         $type = "filling";
-         $currentLesson = Yii::app()->session['currentLesson'];
-         $currentClass = Yii::app()->session['currentClass'];
-         $class = TbClass::model()->findAll("classID='$currentClass'")[0];
-         $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
-         $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
-         $result = Suite::model()->getSuiteExerByTypePage($suiteID, $type,5);
-         $workFilling = $result['workLst'];
-         $page1 = $result['pages'];
-         $result = Filling::model()->getFillLstPage("", "",5);
-         $fillingLst = $result['fillLst'];
-         $page2 = $result['pages'];        
-         $this->render('modifyWork' , array(
-             'suite' => $suite,
-             'currentClass' =>$class,
-             'currentLesson'=>$lesson,
-             'suiteWork' => $workFilling,
-             'workLst' => $fillingLst,
-             'page1' => $page1,
-             'page2' =>$page2,
-             'teacher'=>  Teacher::model()->findall(),      
-             'type' => $type
-         ));
+     public function renderModify($type,$suiteID,$maniResult)
+     {
+        $currentLesson = Yii::app()->session['currentLesson'];
+        $currentClass = Yii::app()->session['currentClass'];
+        $class = TbClass::model()->findAll("classID='$currentClass'")[0];
+        $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
+        $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+        $result = Suite::model()->getSuiteExerByTypePage($suiteID, $type,5);
+        $workChoice = $result['workLst'];
+        $page1 = $result['pages'];
+        $result = $this->getLstByType($type);
+        $workLst = $result['workLst'];
+        $page2 = $result['pages']; 
+        if($type == "key" || $type == "look" || $type == "listen")
+            $render = "modifyTypework";
+        else
+            $render = "modifywork";
+
+        $this->render($render , array(
+            'suite' => $suite,
+            'currentClass' =>$class,
+            'currentLesson'=>$lesson,
+            'suiteWork' => $workChoice,
+            'workLst' => $workLst,
+            'page1' => $page1,
+            'page2' =>$page2,
+            'teacher'=>  Teacher::model()->findall(),      
+            'type' => $type,
+            'maniResult'=>$maniResult
+        ));     
      }
      
-     
-      public function ActionModifyQuestionWork(){              
-         $suiteID = $_GET['suiteID'];
-         $type = "question";
-         $currentLesson = Yii::app()->session['currentLesson'];
-         $currentClass = Yii::app()->session['currentClass'];
-         $class = TbClass::model()->findAll("classID='$currentClass'")[0];
-         $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
-         $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
-         $result = Suite::model()->getSuiteExerByTypePage($suiteID, $type,5);
-         $workQuestion = $result['workLst'];
-         $page1 = $result['pages'];
-         $result = Question::model()->getQuestionLstPage("", "",5);
-         $questionLst = $result['questionLst'];
-         $page2 = $result['pages'];        
-         $this->render('modifyWork' , array(
-             'suite' => $suite,
-             'currentClass' =>$class,
-             'currentLesson'=>$lesson,
-             'suiteWork' => $workQuestion,
-             'workLst' => $questionLst,
-             'page1' => $page1,
-             'page2' =>$page2,
-             'teacher'=>  Teacher::model()->findall(),      
-             'type' => $type
-         ));
+     //得到修改作业左边框的信息
+     public function getSuiteInfo($type , $suiteID)
+     {
+            $currentLesson = Yii::app()->session['currentLesson'];
+            $currentClass = Yii::app()->session['currentClass'];
+            $class = TbClass::model()->findAll("classID='$currentClass'")[0];
+            $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
+            $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+            return array(
+                'suite' => $suite,
+                'lesson' => $lesson,
+                'class' => $class
+                
+            );
      }
+     
+     public function ActionDeleteSuite()
+     {
+         $exerciseID = $_GET['exerciseID'];
+         Suite::model()->deleteAll("exerciseID='$exerciseID'");
+         $this->render();
+         
+     }
+
+
+     
+     
+     //局部刷新
+     public function ActionPartFreshPage(){
+         
+     } 
+             
+     
+     
+
+     
      
      
      

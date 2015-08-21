@@ -125,6 +125,27 @@ class KeyType extends CActiveRecord
         return ['keyLst'=>$keyLst,'pages'=>$pages,];
     }
     
+          public function getKeyLstPage($type,$value,$pagesize){
+        $order  =   " order by exerciseID ASC";
+        if($type!="")
+            $condition = " WHERE $type = '$value'";
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM key_type";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   $pagesize; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+            $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $keyLst  =   $result->query();
+        
+        return ['keyLst'=>$keyLst,'pages'=>$pages,];
+    }
+    
     
         public function insertKey($title,$content,$createPerson){
         $sql        =   "select max(exerciseID) as id from key_type";

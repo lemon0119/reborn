@@ -42,8 +42,8 @@
                               <a href="#">关闭</a>
                         </td>             
                         <td>
-                            <a href="./index.php?r=teacher/modifyChoiceWork&&suiteID=<?php echo $suite['suiteID'];?>"><img src="<?php echo IMG_URL; ?>detail.png">修改</a>
-                            <a href="#"><img src="<?php echo IMG_URL; ?>edit.png">删除</a>                            
+                            <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=choice"><img src="<?php echo IMG_URL; ?>detail.png">修改</a>
+                            <a href="./index.php?r=teacher/deleteWork&&suiteID=<?php echo $suite['suiteID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">删除</a>                            
                         </td>
                     </tr>            
                     <?php endforeach;?> 

@@ -73,19 +73,33 @@ class Suite extends CActiveRecord
     }
     
     
-    public function getSuiteExerByTypePage($suiteID, $type,$pagesize)
+    public function getSuiteExerByTypePage($suiteID, $type,$pagesize,$mypage=-1)
     {
         $criteria   =   new CDbCriteria();
         $result = $this->getSuiteExerByType( $suiteID, $type);
         $pages      =   new CPagination($result->rowCount);
         $pages->pageSize    =   $pagesize; 
-        $pages->applyLimit($criteria); 
-        $sql = "select * from ".$type;
+        $pages->applyLimit($criteria);
+        if($type == "key"||$type == "look" || $type == "listen" )
+        {
+            $databaseType = $type."_type";
+        }  else {
+            $databaseType = $type;
+        }
+        $sql = "select * from ".$databaseType;
         $order = " order by exerciseID ASC";
         $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='".$type."')";
         $sql = $sql.$condition.$order;
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        if($mypage==-1)
+        {
+            $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        }
+        else
+        {   
+            $pages->currentPage=$mypage-1;
+            $result->bindValue(':offset', ($mypage-1) * $pages->pageSize); 
+        }
         $result->bindValue(':limit', $pages->pageSize); 
         $workLst  =   $result->query();       
         return ['workLst'=>$workLst,'pages'=>$pages,];
