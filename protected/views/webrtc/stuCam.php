@@ -14,6 +14,8 @@ and open the template in the editor.
     <!-- socket.io for signaling -->
     <script src="<?php echo JS_URL; ?>socketio.js"></script>
 
+    <div align="center" id="connecting"><h4>连 接 中 . . .</h4></div> 
+    
     <script>
     // ......................................................
     // ..................RTCMultiConnection Code.............
@@ -33,11 +35,12 @@ and open the template in the editor.
    };
 
     connection.onstream = function(event) {
+        $("#connectiong").hide();
         document.body.appendChild(event.mediaElement);
         scaleVideos();
     };
     connection.socketURL = "https://<?php echo HOST_IP; ?>:9001";
-    connection.join("class1Cam");
+    connection.join("class<?php echo $classID;?>Cam");
     
     function scaleVideos() {
         var videos = document.querySelectorAll('video'),

@@ -14,10 +14,6 @@
     ?>
 
     <div class="left">                 
-            <div style="display:inline;padding-right:60px;">
-                <button id="share-Screen" class="btn  btn-primary">屏幕共享</button>
-                <button id="close-Screen" class="btn" disabled="disabled">关闭共享</button>
-            </div>
 
             <div style="display:inline;padding-right:60px;">
                 <!-- sunpy: video start -->
@@ -27,7 +23,7 @@
 
             <div style="display:inline;">
                 <!-- sunpy: broadcast local video -->    
-                <button id="teacher-dianbo" class="btn btn-primary">点播</button>
+                <button id="teacher-dianbo" class="btn btn-primary">点播视频</button>
                 <select id="teacher-choose-file" >
                     <option value ="1.mp4">速录演示视频</option>
                     <option value="CB6601435D33002ECE7BAD33F79126D6.flv">MV-不见长安</option>
@@ -39,11 +35,26 @@
         
             <div style="display:inline;">
                 <!-- sunpy: broadcast local video -->    
-                <button id="teacher-dianbo" class="btn btn-primary">点播</button>
-                <select id="teacher-choose-file" >
-                    <option value ="test">test</option>
+                <button id="play-ppt" class="btn btn-primary">放映PPT</button>
+                <select id="choose-ppt" >
+                    <option value ="test+-+<?php  $dir = 'D:/wamp/www/reborn/resources/'.'test'; 
+                                                   $num = sizeof(scandir($dir)); 
+                                                   $num = ($num>2)?($num-2):0; 
+                                                   echo $num;?>">test</option>
+                    <option value ="test2+-+<?php  $dir = 'D:/wamp/www/reborn/resources/'.'test2'; 
+                                                   $num = sizeof(scandir($dir)); 
+                                                   $num = ($num>2)?($num-2):0; 
+                                                   echo $num;?>">test2</option>
                 </select>　　
-                <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button>
+                <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
+            </div>
+        
+            <div id="scroll-page" style="display:inline;">
+                <button id="page-up" class="btn btn-primary">上页</button>
+                <input id="yeshu" style="width:50px;" value="1">
+                /<input id="all-yeshu" style="width:50px;" readOnly="true">
+                <button id="page-go" class="btn btn-primary">跳转</button>
+                <button id="page-down" class="btn btn-primary">下页</button>
             </div>
 
             <div id="videos-container" style="height: 1000px; width: 100%; margin-top:0px;display:none">
@@ -51,13 +62,8 @@
             </div>
             <div id="dianbo-videos-container" style="margin-top:18px;display:none">  
             </div>
-            <div id="ppt-container" style="margin-top:18px;display:none">
-                <button id="page-up" class="btn btn-primary"></button>
-                <input id="yeshu">
-                /76
-                <button id="page-go" class="btn btn-primary"></button>
-                <button id="page-down" class="btn btn-primary"></button>
-                
+            <div id="ppt-container" align="center" style="height: 1000px; width: 100% ; margin-top:0px;display:none">
+                <img id="ppt-img" src="" style="width: 100%;"/>
             </div>
     </div>
 
@@ -65,7 +71,7 @@
         <div>
             <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>  
             <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;">
-                <iframe src="./index.php?r=webrtc/teaCam" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
+                <iframe src="./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
             </div>
             <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none">
@@ -190,38 +196,34 @@ $(document).ready(function(){
 </script>
 
 <script>
-    //点播
+$("#scroll-page").hide();
 $(document).ready(function(){
     //打开连接
     openConnect();
-    
-    $("#share-Screen").click(function() {
-        this.disabled = true;
-        $("#share-Screen").attr("class","btn");
-        document.getElementById("close-Screen").disabled = false;
-        $("#close-Screen").attr("class","btn btn-primary");
+      
+    $("#play-ppt").click(function(){
         document.getElementById("teacher-dianbo").disabled = true;
         $("#teacher-dianbo").attr("class","btn");
-        $("#dianbo-videos-container").hide();
-        $("#videos-container").show();
-        iframe_a.location.href ='./index.php?r=webrtc/teaScreen'; 
-      });
-      
-    $("#close-Screen").click(function() {
-        var msg = "<?php echo $classID;?>closeScreen";
-        ws.send(msg);
-        if(timer_screen!=null)
-            clearInterval(timer_screen);
+        document.getElementById("close-ppt").disabled = false;
+        $("#close-ppt").attr("class","btn btn-primary");
+        $("#ppt-container").show();
+        $("#scroll-page").show();
+        var server_root_path = "<?php echo SITE_URL.'resources/'?>";
+        var file_info = $("#choose-ppt option:selected").val().split("+-+");
+        var filename = file_info[0];
+        var absl_path = server_root_path + filename;
+        $("#all-yeshu").val(file_info[1]);
+        $("#ppt-img").attr("src", absl_path+"/幻灯片1.JPG");
+    });
+    $("#close-ppt").click(function(){
         this.disabled = true;
-        $("#close-Screen").attr("class","btn");
-        document.getElementById("share-Screen").disabled = false;
-        $("#share-Screen").attr("class","btn btn-primary");
+        $("#close-ppt").attr("class","btn");
+        document.getElementById("play-ppt").disabled = false;
         document.getElementById("teacher-dianbo").disabled = false;
         $("#teacher-dianbo").attr("class","btn btn-primary");
-        $("#videos-container").hide();
-        $("#dianbo-videos-container").show();
-        iframe_a.location.href ='./index.php?r=webrtc/null'; 
-      });
+        $("#ppt-container").hide();
+        $("#scroll-page").hide();
+    });
       
     $("#share-Cam").click(function() {
     });
@@ -236,12 +238,12 @@ $(document).ready(function(){
         document.getElementById("share-Cam").disabled = false;
         $("#share-Cam").attr("class","btn btn-primary");
         iframe_b.location.href ='./index.php?r=webrtc/null'; 
-        iframe_b.location.href ='./index.php?r=webrtc/teaCam';
+        iframe_b.location.href ='./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>';
       });
     
     $("#teacher-dianbo").click(function() {
-        document.getElementById("share-Screen").disabled = true;
-        $("#share-Screen").attr("class","btn");
+        document.getElementById("play-ppt").disabled = true;
+        $("#play-ppt").attr("class","btn");
         document.getElementById("close-dianbo").disabled = false;
         $("#close-dianbo").attr("class","btn btn-primary");
         var server_root_path = "<?php echo SITE_URL.'resources/'?>video/";
@@ -274,8 +276,8 @@ $(document).ready(function(){
     });
     
       $("#close-dianbo").click(function() {
-        document.getElementById("share-Screen").disabled = false;
-        $("#share-Screen").attr("class","btn btn-primary");
+        document.getElementById("play-ppt").disabled = false;
+        $("#play-ppt").attr("class","btn btn-primary");
         clearVideo();
         this.disabled = true;
         $("#close-dianbo").attr("class","btn");

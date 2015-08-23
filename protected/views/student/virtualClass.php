@@ -142,31 +142,12 @@ $(document).ready(function(){
     $("#sw-bulletin").click(function() {
         $("#bulletin").toggle(200);
     });
-
-    //switch dianbo and screen
-    $("#sw-show-dianbo").click(function() {
-        $("#video-button").css("background-color", "#d9d9d9");
-        $("#share-button").css("background-color", "white");
-        $("#videos-container").hide();
-        $("#dianbo-videos-container").show();
-    });
-
-    $("#sw-show-screen").click(function() {
-        $("#share-button").css("background-color", "#d9d9d9");
-        $("#video-button").css("background-color", "white");
-        $("#sw-show-dianbo").css("filter", "Alpha(opacity=50)");
-        $("#videos-container").show();
-        ws.close();
-        $("#dianbo-videos-container").hide();
-    });
-});
 </script>
 
 <script>
     //点播
     var ws = null;
     var last_path = -1;
-    var onScreen  = -1;
     var onCam     = -1;
     
     function clearVideo(){
@@ -246,31 +227,16 @@ $(document).ready(function(){
             onCam = -1;
         } else if(msg.indexOf('<?php echo $classID;?>onCam') >= 0){
             if(onCam==-1){
-                iframe_b.location.href ='./index.php?r=webrtc/stuCam';
+                iframe_b.location.href ='./index.php?r=webrtc/stuCam&&classID=<?php echo $classID;?>';
                 onCam   =  1;
             }
-        } else if(msg.indexOf('<?php echo $classID;?>closeScreen') >= 0){
-            iframe_a.location.href ='./index.php?r=webrtc/null';
-            onScreen = -1;
-        } else if(msg.indexOf('<?php echo $classID;?>onScreen') >= 0){
-            if(onScreen==-1){
-                $("#videos-container").show();
-                iframe_a.location.href ='./index.php?r=webrtc/stuScreen';
-                onScreen = 1;
-            }
-        }
+        }  
     }
     
     function addMessageHandleForWS(){
         ws.onopen = function() {
             console.log("connect to websocket server");
         };
-//        ws.onclose = function() {
-//            clearVideo();
-//            ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');
-//            addMessageHandleForWS();
-//            console.log("close to connect to websocket server");
-//        };
         ws.addEventListener("message",DoMessage);
     }
     

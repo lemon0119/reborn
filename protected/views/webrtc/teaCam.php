@@ -22,7 +22,7 @@ and open the template in the editor.
         $("#share-Cam",window.parent.document).attr("class","btn");
         window.parent.document.getElementById('close-Cam').disabled = false;
         $('#close-Cam',window.parent.document).attr("class","btn btn-primary");
-        connection.open("class1Cam");
+        connection.open("class<?php echo $classID;?>Cam");
     };
         
     // ......................................................
@@ -45,7 +45,7 @@ and open the template in the editor.
     connection.onstream = function(event) {
         document.body.appendChild(event.mediaElement);
         scaleVideos();
-        var msg =   "1onCam";                               
+        var msg =   "<?php echo $classID;?>onCam";                               
         parent.ws.send(msg);
         parent.timer_cam = setInterval(function() {                           
             parent.ws.send(msg);

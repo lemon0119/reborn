@@ -4,6 +4,6 @@
         <meta charset="UTF-8">
         <title></title>
     </head>
-    <body>
+    <body bgcolor="#d0d0d0">
     </body>
 </html>
