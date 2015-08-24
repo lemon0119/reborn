@@ -5,7 +5,11 @@
         <group>
             <file>file:/C:/wamp/www/reborn/protected/views/teacher/modifyTypeWork.php</file>
             <file>file:/C:/wamp/www/reborn/protected/controllers/TeacherController.php</file>
+            <file>file:/C:/wamp/www/reborn/protected/views/teacher/addKey.php</file>
+            <file>file:/C:/wamp/www/reborn/protected/views/teacher/addFill.php</file>
             <file>file:/C:/wamp/www/reborn/protected/views/teacher/modifyWork.php</file>
+            <file>file:/C:/wamp/www/reborn/protected/models/Question.php</file>
+            <file>file:/C:/wamp/www/reborn/protected/models/Suite.php</file>
             <file>file:/C:/wamp/www/reborn/protected/views/teacher/assignWork.php</file>
         </group>
     </open-files>

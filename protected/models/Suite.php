@@ -243,8 +243,32 @@ class Suite extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function insertSuite($classID,$lessonID,$title,$createPerson){
+        $sql        =   "select max(suiteID) as id from suite";
+        $max_id     =   Yii::app()->db->createCommand($sql)->query();
+        $temp       =   $max_id->read();
+        if(empty($temp))
+        {
+            $new_id =   1;
+        }
+        else
+        {
+            $new_id =   $temp['id'] + 1;
+        }
+        $newSuite    =   new Suite();
+        $newSuite->suiteID    =   $new_id;
+        $newSuite->suiteType =   "exercise";
+        $newSuite->lessonID        = $lessonID;
+        $newSuite->classID =$classID;
+        $newSuite->createPerson  =   $createPerson;
+        $newSuite->createTime    =   date('y-m-d H:i:s',time());
+        $newSuite->suiteName = $title;
+        $newSuite->insert();
+        return $new_id;
+        }
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

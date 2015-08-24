@@ -22,6 +22,7 @@
             </center>                   
         </ul>
     </div>  
+    <a href="./index.php?r=teacher/AssignWork&&classID=<?php echo $currentClass['classID'];?>&&lessonID=<?php echo $currentLesson['lessonID'];?>"  class="btn btn-primary">返回布置作业</a>
 </div>
 
 
