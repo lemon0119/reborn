@@ -15,12 +15,12 @@ echo "<script>var role='$role';</script>";
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
 
-<div class="left">
+<div class="left" style="background-image:url(./img/default/hello.png); background-size:100% 100%; min-height: 50px">
         <!-- list of all available broadcasting rooms -->
         <table style="width: 100%;" id="rooms-list"></table>
 
         <!-- local/remote videos container -->
-        <div id="ppt-container" style="height: 100%; width: 100%; margin-top:0px;display:none">
+        <div id="ppt-container" style="height: 100%; width: 100%; margin-top:0px;display:none;">
             <img id="ppt-img" src="" style="width: 100%;"/>
         </div>
 
@@ -29,7 +29,7 @@ echo "<script>var role='$role';</script>";
 
 <div class="right">
     <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
-    <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;">
+    <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:220px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
         <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
