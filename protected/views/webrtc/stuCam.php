@@ -10,6 +10,7 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
+    <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
     <script src="<?php echo JS_URL; ?>RTCMultiConnection.js"></script>
     <!-- socket.io for signaling -->
     <script src="<?php echo JS_URL; ?>socketio.js"></script>
@@ -35,7 +36,7 @@ and open the template in the editor.
    };
 
     connection.onstream = function(event) {
-        $("#connectiong").hide();
+        $("#connecting").hide();
         document.body.appendChild(event.mediaElement);
         scaleVideos();
     };
@@ -48,8 +49,8 @@ and open the template in the editor.
                 video;
 
         var minus = 130;
-        var windowHeight = 400;
-        var windowWidth = 400;
+        var windowHeight = 350;
+        var windowWidth = 350;
         var windowAspectRatio = windowWidth / windowHeight;
         var videoAspectRatio = 4 / 3;
         var blockAspectRatio;

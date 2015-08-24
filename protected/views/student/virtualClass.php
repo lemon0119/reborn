@@ -27,8 +27,8 @@ echo "<script>var role='$role';</script>";
                 </tr>
             </table>
 
-            <div id="videos-container" style="height: 1000px; width: 100%; margin-top:0px;display:none">
-                <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
+            <div id="ppt-container" style="height: 1000px; width: 100%; margin-top:0px;display:none">
+                <img id="ppt-img" src="" style="width: 100%;"/>
             </div>
 
             <div id="dianbo-videos-container" style="margin-top:5px;display:none">  </div>
@@ -37,7 +37,7 @@ echo "<script>var role='$role';</script>";
     <div class="right">
         <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
         <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;">
-            <iframe src="" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
+            <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
         </div>
             <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none">
@@ -142,6 +142,7 @@ $(document).ready(function(){
     $("#sw-bulletin").click(function() {
         $("#bulletin").toggle(200);
     });
+});
 </script>
 
 <script>
@@ -175,7 +176,7 @@ $(document).ready(function(){
             } else {
                 video.setAttribute("src", video_path); 
             }
-            $("#videos-container").hide();
+            $("#ppt-container").hide();
             $("#dianbo-videos-container").show();
             var local_my_video = document.getElementById("video1");
             local_my_video.play();
@@ -230,7 +231,22 @@ $(document).ready(function(){
                 iframe_b.location.href ='./index.php?r=webrtc/stuCam&&classID=<?php echo $classID;?>';
                 onCam   =  1;
             }
-        }  
+        } else if(msg.indexOf('<?php echo $classID;?>playppt') >= 0){
+            var ppt_src = msg.substr(msg.indexOf('playppt')+7);
+            if(last_path==-1)
+            {
+                $("#dianbo-videos-container").hide();
+                $("#ppt-container").show();
+            }
+            if(ppt_src!=last_path)
+            {
+                $("#ppt-img").attr("src", ppt_src);
+                last_path = ppt_src;
+            }
+        } else if(msg.indexOf('<?php echo $classID;?>closeppt') >= 0){
+            last_path = -1;
+            $("#ppt-container").hide();
+        } 
     }
     
     function addMessageHandleForWS(){

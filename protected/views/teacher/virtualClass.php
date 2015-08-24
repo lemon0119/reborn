@@ -208,14 +208,56 @@ $(document).ready(function(){
         $("#close-ppt").attr("class","btn btn-primary");
         $("#ppt-container").show();
         $("#scroll-page").show();
+        cur_ppt = 1;
         var server_root_path = "<?php echo SITE_URL.'resources/'?>";
         var file_info = $("#choose-ppt option:selected").val().split("+-+");
-        var filename = file_info[0];
-        var absl_path = server_root_path + filename;
-        $("#all-yeshu").val(file_info[1]);
-        $("#ppt-img").attr("src", absl_path+"/幻灯片1.JPG");
+        var dirname = file_info[0];
+        ppt_dir = server_root_path + dirname;
+        ppt_pages = file_info[1];
+        $("#all-yeshu").val(ppt_pages);
+        goCurPage();
+        if(timer_ppt!==null)
+            clearInterval(timer_ppt);
+        timer_ppt = setInterval(function() {
+            var syn_msg;                                 
+            syn_msg = "<?php echo $classID;?>playppt"+$("#ppt-img")[0].src;                                        
+            ws.send(syn_msg);
+        }, 4000);
+    });
+    $("#page-up").click(function(){
+        if(cur_ppt<=1){
+            cur_ppt=1;
+            alert("已到第一页！");
+        }else{
+            cur_ppt = cur_ppt -1;
+        }
+        goCurPage();
+    });
+    $("#page-go").click(function(){
+        var input_page =$("#yeshu").val();
+        input_page =input_page - 1 + 1;
+        if((input_page>=1)&&(input_page<=ppt_pages))
+        {
+            cur_ppt=input_page;
+            goCurPage();
+        }else{
+            alert("请输入合适范围的页数！");
+        }
+    });
+    $("#page-down").click(function(){
+        if(cur_ppt>=ppt_pages){
+            cur_ppt=ppt_pages;
+            alert("已到最后页！");
+        }else{
+            cur_ppt = cur_ppt +1;
+        }
+        goCurPage();
     });
     $("#close-ppt").click(function(){
+        if(timer_ppt!==null)
+            clearInterval(timer_ppt);
+        var msg = "<?php echo $classID;?>closeppt";   
+        ws.send(msg);
         this.disabled = true;
         $("#close-ppt").attr("class","btn");
         document.getElementById("play-ppt").disabled = false;
@@ -287,9 +329,20 @@ $(document).ready(function(){
 var play_fun    =   null;
 var pause_fun   =   null;
 var timer       =   null;
-var timer_screen      =   null;
-var timer_cam         =   null;
-var ws = null;
+var timer_ppt   =   null;
+var timer_cam   =   null;
+var ws          = null;
+var cur_ppt     = -1;
+var ppt_pages   = -1;
+var ppt_dir     = null;
+
+function goCurPage(){
+    $("#yeshu").val(cur_ppt);
+    $("#ppt-img").attr("src", ppt_dir+"/幻灯片"+cur_ppt+".JPG");
+    var msg = "<?php echo $classID;?>playppt"+$("#ppt-img")[0].src;   
+    ws.send(msg);
+}
+
 function openConnect(){
     if(ws !== null)
         return ;
