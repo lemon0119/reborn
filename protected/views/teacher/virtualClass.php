@@ -2,7 +2,6 @@
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
 
 <!--直播begin-->
-<link href="<?php echo CSS_URL; ?>braodcast_style.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 
     <?php
@@ -12,31 +11,24 @@
     $role = Yii::app()->session['role_now'];
     echo "<script>var role='$role';</script>";
     ?>
-
-    <div class="left">                 
-
-            <div style="display:inline;padding-right:60px;">
-                <!-- sunpy: video start -->
-                <button id="share-Cam" class="btn btn-primary">直播视频</button>
-                <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
-            </div>
-
+    <div class="left">
             <div style="display:inline;">
-                <!-- sunpy: broadcast local video -->    
                 <button id="teacher-dianbo" class="btn btn-primary">点播视频</button>
-                <select id="teacher-choose-file" >
+                <select id="teacher-choose-file" style="width:150px">
                     <option value ="1.mp4">速录演示视频</option>
                     <option value="CB6601435D33002ECE7BAD33F79126D6.flv">MV-不见长安</option>
                     <option value ="h0134j6z7lp.mp4">MV-时间都去哪了</option>
                     <option value="l0015jn2cz8.mp4">MV-泡沫</option>
-                </select>　　
+                </select>
                 <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button>
+                <button id="share-Cam" class="btn btn-primary" style="margin-left: 200px">直播视频</button>
+                <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
             </div>
         
+            <div style="display:block;"></div>
             <div style="display:inline;">
-                <!-- sunpy: broadcast local video -->    
                 <button id="play-ppt" class="btn btn-primary">放映PPT</button>
-                <select id="choose-ppt" >
+                <select id="choose-ppt" style="width:150px">
                     <option value ="test+-+<?php  $dir = 'D:/wamp/www/reborn/resources/'.'test'; 
                                                    $num = sizeof(scandir($dir)); 
                                                    $num = ($num>2)?($num-2):0; 
@@ -45,7 +37,7 @@
                                                    $num = sizeof(scandir($dir)); 
                                                    $num = ($num>2)?($num-2):0; 
                                                    echo $num;?>">test2</option>
-                </select>　　
+                </select>
                 <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
             </div>
         
@@ -57,12 +49,12 @@
                 <button id="page-down" class="btn btn-primary">下页</button>
             </div>
 
-            <div id="videos-container" style="height: 1000px; width: 100%; margin-top:0px;display:none">
+            <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px;display:none">
                 <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
             </div>
-            <div id="dianbo-videos-container" style="margin-top:18px;display:none">  
+            <div id="dianbo-videos-container" style="display:none">  
             </div>
-            <div id="ppt-container" align="center" style="height: 1000px; width: 100% ; margin-top:0px;display:none">
+            <div id="ppt-container" align="center" style="height: 100%; width: 100% ; margin-top:0px;display:none">
                 <img id="ppt-img" src="" style="width: 100%;"/>
             </div>
     </div>
@@ -70,8 +62,8 @@
     <div class="right">
         <div>
             <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>  
-            <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;">
-                <iframe src="./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
+            <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:220px; clear:both;">
+                <iframe src="./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
             </div>
             <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none">
@@ -202,6 +194,7 @@ $(document).ready(function(){
     openConnect();
       
     $("#play-ppt").click(function(){
+        window.scrollTo(0,130);
         document.getElementById("teacher-dianbo").disabled = true;
         $("#teacher-dianbo").attr("class","btn");
         document.getElementById("close-ppt").disabled = false;
@@ -284,6 +277,7 @@ $(document).ready(function(){
       });
     
     $("#teacher-dianbo").click(function() {
+        window.scrollTo(0,130);
         document.getElementById("play-ppt").disabled = true;
         $("#play-ppt").attr("class","btn");
         document.getElementById("close-dianbo").disabled = false;

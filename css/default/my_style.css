@@ -16,7 +16,7 @@
     margin-left:30px;
     width:61%;
     min-height: 47px;
-    max-height: 600px;
+    max-height: 800px;
     overflow-y:hidden;
     float:left;
 }
@@ -28,7 +28,7 @@
             border-radius: 4px;
     margin-right: 0px;
     width:31%;
-    max-height: 600px;
+    max-height: 1000px;
     overflow-y: auto;
     float:right;
 }
@@ -51,12 +51,12 @@ video {
     width: 80%;
     margin-left:auto; 
     margin-right:auto;
-    border:1px;        
+    border:1px;
 }   
 
 .chatroom {
     width: 80%;
-    height: 300px;
+    height: 250px;
     margin-left:auto; 
     margin-right:auto;  
     overflow:auto;
@@ -76,15 +76,6 @@ input {
     font-size: 2em;
     margin: .2em;
     width: 20%;
-}
-select {
-    border: 1px solid #d9d9d9;
-    border-radius: 1px;
-    height: 50px;
-    margin-left: 1em;
-    margin-right: -12px;
-    padding: 1.1em;
-    vertical-align: 6px;
 }
 .setup {
     border-bottom-left-radius: 0;

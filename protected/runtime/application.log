@@ -7674,3 +7674,102 @@ REQUEST_URI=/reborn/index.php?r=teacher/editListenInfo&&oldfilename=%E4%B8%AD%E5
 in C:\wamp\www\reborn\protected\views\teacher\modifyEditListen.php (32)
 in C:\wamp\www\reborn\protected\controllers\TeacherController.php (935)
 in C:\wamp\www\reborn\index.php (29)
+2015/08/24 17:37:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "stuScreen" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('stuScreen')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('stuScreen')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('webrtc/stuScree...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=webrtc/stuScreen
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/virtualClass
+---
+2015/08/24 17:37:13 [error] [php] Undefined index: classID (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:9)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/stuCam
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (9)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/24 17:37:35 [error] [php] Undefined index: classID (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:9)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/stuCam
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (9)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/24 17:40:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "stuScreen" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('stuScreen')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('stuScreen')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('webrtc/stuScree...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=webrtc/stuScreen
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/virtualClass
+---
+2015/08/24 17:40:37 [error] [php] Undefined index: classID (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:9)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/stuCam
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (9)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/24 18:56:27 [error] [php] Undefined index: classID (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:9)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/stuCam
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (9)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/24 18:57:59 [error] [php] Undefined index: classID (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:9)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/stuCam
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (9)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/24 18:58:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "stuScreen" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('stuScreen')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('stuScreen')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('webrtc/stuScree...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=webrtc/stuScreen
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/virtualClass
+---
+2015/08/24 18:59:08 [error] [php] Undefined index: classID (D:\wamp\www\reborn\protected\controllers\WebrtcController.php:9)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): WebrtcController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): WebrtcController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): WebrtcController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=webrtc/stuCam
+in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (9)
+in D:\wamp\www\reborn\index.php (29)

@@ -15,43 +15,36 @@ echo "<script>var role='$role';</script>";
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
 
-    <div class="left">
-            <!-- list of all available broadcasting rooms -->
-            <table style="width: 100%;" id="rooms-list"></table>
+<div class="left">
+        <!-- list of all available broadcasting rooms -->
+        <table style="width: 100%;" id="rooms-list"></table>
 
-            <!-- local/remote videos container -->
-            <table class="student-video-head-table">
-                <tr>
-                    <td class="student-video-head-td" id="share-button"><a href="./index.php?r=webrtc/stuScreen" target="iframe_a">屏幕共享</a></td>
-                    <td class="student-video-head-td" id="video-button"><a href="./index.php?r=webrtc/stuCam" target="iframe_b">点播文件</a></td>
-                </tr>
-            </table>
-
-            <div id="ppt-container" style="height: 1000px; width: 100%; margin-top:0px;display:none">
-                <img id="ppt-img" src="" style="width: 100%;"/>
-            </div>
-
-            <div id="dianbo-videos-container" style="margin-top:5px;display:none">  </div>
-    </div>
-
-    <div class="right">
-        <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
-        <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;">
-            <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
+        <!-- local/remote videos container -->
+        <div id="ppt-container" style="height: 100%; width: 100%; margin-top:0px;display:none">
+            <img id="ppt-img" src="" style="width: 100%;"/>
         </div>
-            <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
-            <div id="bulletin" class="bulletin" style="display:none">
-                    <textarea disabled id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
-            </div>
-            <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
-            <div id="chat-box">
+
+        <div id="dianbo-videos-container" style="display:none">  </div>
+</div>
+
+<div class="right">
+    <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
+    <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;">
+        <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
+    </div>
+        <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
+        <div id="bulletin" class="bulletin" style="display:none">
+                <textarea disabled id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+        </div>
+        <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
+        <div id="chat-box">
             <div id="chatroom" class="chatroom"></div>
             <div class="sendfoot">
                 <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px">
                 <button id="send-msg" style="padding-top:4px;padding-bottom:4px;height:30px;width:25%;font-size:10px">发送</button>
             </div>
-            </div>
-    </div>
+        </div>
+</div>
 
 <script>
     //chat and bulletin
