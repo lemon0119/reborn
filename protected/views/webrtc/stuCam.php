@@ -39,17 +39,17 @@ and open the template in the editor.
 
         function scaleVideos() {
             var videos = document.querySelectorAll('video'),
-                    length = videos.length,
-                    video;
-
-            var minus = 130;
-            var windowHeight = 350;
-            var windowWidth = 350;
+                length = videos.length,
+                video;
+            var minus = 60;
+            var windowHeight = 640;
+            var windowWidth = 360;
             var windowAspectRatio = windowWidth / windowHeight;
             var videoAspectRatio = 4 / 3;
             var blockAspectRatio;
             var tempVideoWidth = 0;
             var maxVideoWidth = 0;
+
 
             for (var i = length; i > 0; i--) {
                 blockAspectRatio = i * videoAspectRatio / Math.ceil(length / i);

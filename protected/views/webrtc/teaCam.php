@@ -50,9 +50,8 @@ and open the template in the editor.
 
         function scaleVideos() {
             var videos = document.querySelectorAll('video'),
-                    length = videos.length,
-                    video;
-
+                length = videos.length,
+                video;
             var minus = 60;
             var windowHeight = 640;
             var windowWidth = 360;
