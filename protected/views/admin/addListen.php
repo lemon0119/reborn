@@ -48,7 +48,7 @@
            <div class="control-group">
                <label class="control-label" for="input02">文件</label>
                <div class="controls">
-               <input type="file" name="file" id="input02">      
+               <input type="file" name="file" id="input02">
                </div>
            </div>
         <div class="control-group">

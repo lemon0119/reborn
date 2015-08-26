@@ -7773,3 +7773,213 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=webrtc/stuCam
 in D:\wamp\www\reborn\protected\controllers\WebrtcController.php (9)
 in D:\wamp\www\reborn\index.php (29)
+2015/08/26 15:32:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "manageCourseware" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('manageCoursewar...')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('manageCoursewar...')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/manageC...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/manageCourseware&&classID=1&&progress=2
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=teacher/index
+---
+2015/08/26 15:32:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=teacher/assignWork
+---
+2015/08/26 15:33:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=teacher/assignWork&&classID=2
+---
+2015/08/26 15:37:37 [error] [php] mkdir(): No such file or directory (D:\wamp\www\reborn\protected\controllers\TeacherController.php:676)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/addListen
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (676)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 15:40:27 [error] [php] mkdir(): No such file or directory (D:\wamp\www\reborn\protected\controllers\TeacherController.php:676)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/addListen
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (676)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:20:33 [error] [php] Undefined index: modifyfile (D:\wamp\www\reborn\protected\controllers\AdminController.php:1647)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editListenInfo&&oldfilename=%E6%96%97%E4%BB%99.mp3&&exerciseID=5
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1647)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:20:37 [error] [php] Undefined variable: result (D:\wamp\www\reborn\protected\views\admin\editListen.php:102)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(1625): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditlisten()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editListen&&exerciseID=5
+in D:\wamp\www\reborn\protected\views\admin\editListen.php (102)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1625)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:20:42 [error] [php] Undefined variable: result (D:\wamp\www\reborn\protected\views\admin\editListen.php:102)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(1634): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditlisten()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editListen&&exerciseID=5&&action=look
+in D:\wamp\www\reborn\protected\views\admin\editListen.php (102)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1634)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:20:48 [error] [php] Undefined variable: result (D:\wamp\www\reborn\protected\views\admin\editListen.php:102)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(1625): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditlisten()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editListen&&exerciseID=5
+in D:\wamp\www\reborn\protected\views\admin\editListen.php (102)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1625)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:21:12 [error] [php] Undefined variable: result (D:\wamp\www\reborn\protected\views\admin\editListen.php:102)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(1625): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionEditlisten()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editListen&&exerciseID=5
+in D:\wamp\www\reborn\protected\views\admin\editListen.php (102)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1625)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:27:40 [error] [php] Undefined index: content (D:\wamp\www\reborn\protected\controllers\AdminController.php:1673)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editListenInfo&&oldfilename=Kalimba.mp3&&exerciseID=5
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1673)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:27:43 [error] [php] Undefined index: content (D:\wamp\www\reborn\protected\controllers\AdminController.php:1673)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/editListenInfo&&oldfilename=%E6%96%97%E4%BB%99.mp3&&exerciseID=5
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (1673)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:27:57 [error] [php] mkdir(): No such file or directory (D:\wamp\www\reborn\protected\controllers\TeacherController.php:676)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/addListen
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (676)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:30:41 [error] [php] mkdir(): No such file or directory (D:\wamp\www\reborn\protected\controllers\TeacherController.php:676)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/addListen
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (676)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:45:31 [error] [php] Undefined offset: 2 (D:\wamp\www\reborn\protected\views\admin\classLst.php:49)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(869): AdminController->renderFile()
+#1 D:\wamp\www\framework\web\CController.php(782): AdminController->renderPartial()
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(598): AdminController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionClassLst()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/classLst
+in D:\wamp\www\reborn\protected\views\admin\classLst.php (49)
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (598)
+in D:\wamp\www\reborn\index.php (29)
+2015/08/26 16:46:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "manageCourseware" 动作.' in D:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('manageCoursewar...')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('manageCoursewar...')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/manageC...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/manageCourseware&&classID=1&&progress=2
+HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=teacher/startCourse&&classID=1&&progress=2&&on=2
+---
