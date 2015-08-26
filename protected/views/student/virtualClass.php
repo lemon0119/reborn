@@ -76,7 +76,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: "POST",
-            url: "index.php?r=api/putChat",
+            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
             data: {
                 username: '"' + current_username + '"',
                 chat: '"' + msg + '"',
@@ -90,7 +90,7 @@ function pollChatRoom() {
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "index.php?r=api/getlatestchat",
+        url: "index.php?r=api/getlatestchat&&classID=<?php echo $classID;?>",
         success: function(data) {
             $("#chatroom").empty();
             var html = "";
@@ -108,7 +108,7 @@ function pollBulletin() {
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "index.php?r=api/GetLatestBulletin",
+        url: "index.php?r=api/GetLatestBulletin&&classID=<?php echo $classID;?>",
         success: function(data) {
             if (role === 'student') {
                 $("#bulletin-textarea").val(data[0].content);
@@ -117,6 +117,10 @@ function pollBulletin() {
                     $("#bulletin-textarea").val(data[0].content);
                 }
             }
+        },
+        error: function(xhr, type, exception){
+            console.log('get Bulletin erroe', type);
+            console.log(xhr.responseText, "Failed");
         }
     });
 }
