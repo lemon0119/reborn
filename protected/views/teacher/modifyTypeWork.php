@@ -25,139 +25,26 @@
     <a href="./index.php?r=teacher/AssignWork&&classID=<?php echo $currentClass['classID'];?>&&lessonID=<?php echo $currentLesson['lessonID'];?>"  class="btn btn-primary">返回布置作业</a>
 </div>
 
-
-    <?php
-        //得到老师ID对应的名称
-        foreach ($teacher as $model):
-        $teacherID=$model['userID'];
-        $teachers["$teacherID"]=$model['userName'];
-        endforeach;
-        $code = mt_rand(0, 1000000);
-    ?>
 <div class="span9">
-<div >
-    <h3>已有习题</h3>
-    <!-- 键位习题列表-->
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>编号</th>
-                <th>题目</th>
-                <th>内容</th>
-                <th>创建时间</th>         
-                <th>操作</th>               
-            </tr>
-        </thead>
-                <tbody>        
-                    <?php foreach($suiteWork as $work):?>
-                    <tr>
-                        <td style="width: 150px"><?php echo $work['exerciseID'];?></td>
-                        <td>
-                            <?php  if(strlen($work['title'])<=15)
-                                        echo $work['title'];
-                                    else
-                                        echo substr($work['title'], 0, 15)."...";
-                                        ?>
-                        </td>
-                        <td>
-                            <?php  if(strlen($work['content'])<=15)
-                                        echo $work['content'];
-                                    else
-                                        echo substr($work['content'], 0, 15)."...";
-                                        ?>
-                        </td>
-                        <td>
-                            <?php  echo $work['createTime']?>
-                        </td>           
-                        <td>            
-                            <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $suite['suiteID'] ?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>                          
-                        </td>
-                    </tr>            
-                    <?php endforeach;?> 
-                </tbody>
-    </table>
-    <!-- 学生列表结束 -->
-    <div align=center>
-    <?php   
-        $this->widget('CLinkPager',array('pages'=>$page1));
-    ?>
-    </div>
-    </div>
-
+    <iframe src="./index.php?r=teacher/ToOwnTypeWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe1" frameborder="0" scrolling="no" width="900px" height="350px" name="iframe1"></iframe>
+    
+    <iframe src="./index.php?r=teacher/ToAllTypeWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe2" frameborder="0" scrolling="no" width="900px" height="400px" name="iframe2"></iframe>
 
 <div >
-    <h3>自有习题</h3>
-    <!-- 键位习题列表-->
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>编号</th>
-                <th>课程</th>
-                <th>题目</th>
-                <th>内容</th>
-                <th>创建人</th>
-                <th>创建时间</th>         
-                <th>操作</th>               
-            </tr>
-        </thead>
-                <tbody>        
-                    <?php foreach($workLst as $allwork):?>
-                    <tr>
-                        <td style="width: 150px"><?php echo $allwork['exerciseID'];?></td>
-                        <td><?php echo $allwork['courseID'];
-                            ?></td>
-                        <td> <?php  if(strlen($allwork['title'])<=15)
-                                        echo $allwork['title'];
-                                    else
-                                        echo substr($allwork['title'], 0, 15)."...";
-                                        ?>
-                        </td>
-                         <td> <?php  if(strlen($allwork['content'])<=15)
-                                        echo $allwork['content'];
-                                    else
-                                        echo substr($allwork['content'], 0, 15)."...";
-                                        ?>
-                        </td>
-                        <td>
-                            <?php  if($allwork['createPerson']=="0")
-                                        echo "管理员";
-                                    else echo  $teachers[$allwork['createPerson']];                         
-                            ?>
-                        </td>     
-                        <td>
-                            <?php  echo $allwork['createTime']?>
-                        </td>     
-                        
-                        <td>
-                            <a href="./index.php?r=teacher/AddWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>"><img src="<?php echo IMG_URL; ?>detail.png">添加</a>
-                            <a href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>                            
-                        </td>
-                    </tr>            
-                    <?php endforeach;?> 
-                </tbody>
-    </table>
-    <!-- 学生列表结束 -->   
-   <div align=center>
-    <?php   
-        $this->widget('CLinkPager',array('pages'=>$page2));
-    ?>
-    </div>
-    </div>   
-</div>
+
+
 
 <script>
-function dele( type ,exerciseID,suiteID){
-      if(confirm("您确定删除吗？")){
-          window.location.href = "./index.php?r=teacher/deleteSuiteExercise&&exerciseID=" + exerciseID + "&&type=" + type + "&&suiteID=" + suiteID;
-      }
-  }
-  
-$(document).ready(function(){
-    var result = <?php echo "'$maniResult'";?>;
-    if(result != "")
-        alert(result);
-});
-  
+    var currentPage1;  
+    function refresh()
+    {     
+    $('#iframe1').attr("src","./index.php?r=teacher/ToOwnTypeWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>&&page="+currentPage1);   
+   }
+   
+   function setCurrentPage1(page)
+   {  
+       currentPage1 = page;    
+   }
 </script>
 
 

@@ -73,7 +73,7 @@ class Suite extends CActiveRecord
     }
     
     
-    public function getSuiteExerByTypePage($suiteID, $type,$pagesize,$mypage=-1)
+    public function getSuiteExerByTypePage($suiteID, $type,$pagesize)
     {
         $criteria   =   new CDbCriteria();
         $result = $this->getSuiteExerByType( $suiteID, $type);
@@ -91,22 +91,50 @@ class Suite extends CActiveRecord
         $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='".$type."')";
         $sql = $sql.$condition.$order;
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
-        if($mypage==-1)
-        {
-            $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
-        }
-        else
-        {   
-            $pages->currentPage=$mypage-1;
-            $result->bindValue(':offset', ($mypage-1) * $pages->pageSize); 
-        }
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
         $result->bindValue(':limit', $pages->pageSize); 
         $workLst  =   $result->query();       
-        return ['workLst'=>$workLst,'pages'=>$pages,];
-        
+        return ['workLst'=>$workLst,'pages'=>$pages,];     
     }
     
-    	public function getchoice($suiteID)
+    public function getSuiteByTeacherID($teacherID)
+    {
+        $sql  = "select * from suite";
+        $order = " order by classID ASC";
+        $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID')";
+        $sql = $sql.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $criteria   =   new CDbCriteria();
+        $pages     =   new CPagination($result->rowCount);
+        $pages->pageSize    =   5; 
+        $pages->applyLimit($criteria);
+
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize);
+        $suiteLst = $result->query();
+        return ['suiteLst'=>$suiteLst,'pages'=>$pages,];        
+    }
+    
+    public function getAllSuiteByPage($pagesize)
+    {
+        $sql  = "select * from suite";
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $criteria   =   new CDbCriteria();
+        $pages     =   new CPagination($result->rowCount);
+        $pages->pageSize    =   $pagesize; 
+        $pages->applyLimit($criteria);
+
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize);
+        $suiteLst = $result->query();
+        return ['suiteLst'=>$suiteLst,'pages'=>$pages,]; 
+       
+    }
+
+
+    public function getchoice($suiteID)
 	{
             $order = " order by exerciseID ASC";
             $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='choice')";

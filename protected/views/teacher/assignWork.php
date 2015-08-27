@@ -37,17 +37,25 @@
             </tr>
         </thead>
                 <tbody>        
-                    <?php foreach($array_suite as $suite):?>
+                    <?php foreach($array_allsuite as $suite):
+                        $isOpen = false;
+                        foreach ($array_suite as $exitsuite)
+                            if($suite['suiteID']==$exitsuite['suiteID'])
+                            {
+                                $isOpen = true;
+                                break;
+                            }
+?>                    
                     <tr>
                         <td style="width: 150px"><?php echo $suite['suiteName'];?></td>
                         <td><?php  foreach ($array_lesson as $lesson) if(Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo $lesson['lessonName'];?></td>
                         <td>
-                             <?php if($suite['open'] == false){?>
-                            <a href="./index.php?r=teacher/ChangeSuiteOpen&&suiteID=<?php echo $suite['suiteID'];?>&&open=1">开放</a>
+                             <?php if($isOpen == false){?>
+                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID'];?>&&isOpen=0&&page=<?php echo $pages->currentPage+1;?>">开放</a>
                              <font style="color:red">关闭</font>
                              <?php }else{?>
                              <font style="color:red">开放</font>
-                             <a href="./index.php?r=teacher/ChangeSuiteOpen&&suiteID=<?php echo $suite['suiteID'];?>&&open=0">关闭</a>
+                             <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID'];?>&&isOpen=1&&page=<?php echo $pages->currentPage+1;?>">关闭</a>
                              <?php }?>
                              
                              
@@ -55,21 +63,24 @@
                         </td>             
                         <td>
                             <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=choice"><img src="<?php echo IMG_URL; ?>detail.png">修改</a>
-                            <a href="#" onclick="dele(<?php echo $suite['suiteID']; ?>)"><img src="<?php echo IMG_URL; ?>edit.png">删除</a>                            
+                            <a href="#" onclick="dele(<?php echo $suite['suiteID'];?>,<?php echo $pages->currentPage+1;?>)"><img src="<?php echo IMG_URL; ?>edit.png">删除</a>                            
                         </td>
                     </tr>            
                     <?php endforeach;?> 
                 </tbody>
     </table>
-    <!-- 学生列表结束 -->
- 
+    </div>
+    <div align=center>
+    <?php   
+        $this->widget('CLinkPager',array('pages'=>$pages));
+    ?>
     </div>
 
 <script>
-    function dele(suiteID)
+    function dele(suiteID,currentPage)
     {
         if(confirm("您确定删除吗？")){
-          window.location.href = "./index.php?r=teacher/deleteSuite&&suiteID="+suiteID;
+          window.location.href = "./index.php?r=teacher/deleteSuite&&suiteID="+suiteID + "&&page=" + currentPage;
       }       
     }
     

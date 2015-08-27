@@ -10,7 +10,6 @@
 class TeacherController extends CController {
     
     public $layout='//layouts/teacherBar';
-    
     public function actionVirtualClass() {
         $userID = Yii::app()->session['userid_now'];
         $userName   = Teacher::model()->findByPK($userID)->userName;
@@ -669,7 +668,7 @@ class TeacherController extends CController {
              $typename = Yii::app()->session['role_now'];
              $userid = Yii::app()->session['userid_now'];
              $filePath =$typename."/".$userid."/"; 
-             $dir = "resourses/".$filePath;        
+             $dir = "resources/".$filePath;        
        
              if(!is_dir($dir))
              {
@@ -1364,7 +1363,7 @@ class TeacherController extends CController {
                     'answer'          =>    $thisCh -> answer,
                     'result'          =>    "修改习题成功"
                 ));       
-            }
+            }else{
             $this->render("editChoice",array(
                     'exerciseID'      =>    $exerciseID,
                     'requirements'    =>    $thisCh -> requirements,
@@ -1372,6 +1371,7 @@ class TeacherController extends CController {
                     'answer'          =>    $thisCh -> answer,
                     'result'          =>    "修改习题成功"
             ));
+            }
         }
         
        //宋杰 2015-7-30 添加/编辑选择题的返回
@@ -1916,9 +1916,11 @@ class TeacherController extends CController {
          $teacherID = Yii::app()->session['userid_now'];
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();
-         $array_suite = array();
+         
          $array_class = array();
-   
+         $result = Suite::model()->getAllSuiteByPage(5);
+         $array_allsuite = $result['suiteLst'];
+         $pages = $result['pages'];
          if(!empty($teacher_class))
          {
            if(isset($_GET['classID']))
@@ -1943,11 +1945,14 @@ class TeacherController extends CController {
                  $currentLesson = Yii::app()->session['currentLesson'];
                  $array_suite = Suite::model()->findAll("lessonID = '$currentLesson'");
              }
-         }      
+         }
+         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson']));
          $this->render('assignWork',array(
              'array_class' => $array_class,
              'array_lesson' => $array_lesson,
              'array_suite'  => $array_suite,
+             'array_allsuite' => $array_allsuite,
+             'pages' => $pages
          ));
      }
      
@@ -1956,7 +1961,7 @@ class TeacherController extends CController {
          Yii::app()->session['suiteID'] = $suiteID;
          Yii::app()->session['lastUrl'] = "modifyWork";
          $type = $_GET['type'];       
-         $this->renderModify($type, $suiteID,"");
+         $this->renderModify($type, $suiteID);
      }
      
      
@@ -1967,10 +1972,16 @@ class TeacherController extends CController {
          $suiteID = $_GET['suiteID'];
          $thisSuiteExercise = new SuiteExercise();
          $deleteResult = $thisSuiteExercise->deleteAll("exerciseID = '$exerciseID' and type = '$type' and suiteID = '$suiteID'");
-         $this->renderModify($type, $suiteID,"");
+         if($type == "key" || $type == "look" || $type == "listen")
+         {
+              $this->ActionToOwnTypeWork();
+         }else
+         {
+         $this->ActionToOwnWork();
+         }
      }   
      
-     public function  ActionAddWork()
+     public function  ActionAddwork()
      {
          $type = $_GET['type'];
          $exerciseID = $_GET['exerciseID'];
@@ -1984,10 +1995,26 @@ class TeacherController extends CController {
          }
 
          if($result === "HAVEN")
-             $result = "题目已存在";
+             $maniResult = "题目已存在";
          else
-             $result = "";
-         $this->renderModify($type, $suiteID,$result);        
+             $maniResult = "";
+        $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+        $result = $this->getLstByType($type);
+        $workLst = $result['workLst'];
+        $pages = $result['pages'];
+        if($type == "key" || $type == "look" || $type == "listen")
+            $render = "allTypeWork";
+        else
+            $render = "allWork";
+         $this->renderPartial($render, array(
+             'workLst' => $workLst,
+             'pages' => $pages,
+             'type' => $type,
+             'suite' => $suite,
+             'teacher'=>  Teacher::model()->findall(),
+             'maniResult' => $maniResult,           
+         ));
+         
      }
      
      public function ActionModifyEditWork($type)
@@ -2199,19 +2226,14 @@ class TeacherController extends CController {
         return $myResult;       
      }
      
-     public function renderModify($type,$suiteID,$maniResult)
+     public function renderModify($type,$suiteID)
      {
         $currentLesson = Yii::app()->session['currentLesson'];
         $currentClass = Yii::app()->session['currentClass'];
         $class = TbClass::model()->findAll("classID='$currentClass'")[0];
         $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
         $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
-        $result = Suite::model()->getSuiteExerByTypePage($suiteID, $type,5);
-        $workChoice = $result['workLst'];
-        $page1 = $result['pages'];
-        $result = $this->getLstByType($type);
-        $workLst = $result['workLst'];
-        $page2 = $result['pages']; 
+
         if($type == "key" || $type == "look" || $type == "listen")
             $render = "modifyTypework";
         else
@@ -2221,13 +2243,8 @@ class TeacherController extends CController {
             'suite' => $suite,
             'currentClass' =>$class,
             'currentLesson'=>$lesson,
-            'suiteWork' => $workChoice,
-            'workLst' => $workLst,
-            'page1' => $page1,
-            'page2' =>$page2,
             'teacher'=>  Teacher::model()->findall(),      
             'type' => $type,
-            'maniResult'=>$maniResult
         ));     
      }
      
@@ -2252,30 +2269,38 @@ class TeacherController extends CController {
          $suiteID = $_GET['suiteID'];
          $teacherID = Yii::app()->session['userid_now'];
          Suite::model()->deleteAll("suiteID='$suiteID'");
+         $currentClass = Yii::app()->session['currentClass'];
+         $currentLesson=Yii::app()->session['currentLesson'];
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
-         $array_lesson = array();
-         $array_suite = array();
+         $array_lesson = array();        
          $array_class = array();
+         $result = Suite::model()->getAllSuiteByPage(5);
+         $array_allsuite = $result['suiteLst'];
+         $pages = $result['pages'];
+   
          if(!empty($teacher_class))
-         {          
+         {        
            foreach ($teacher_class as $class)
              {
                  $id = $class['classID'];
                  $result = TbClass::model()->findAll("classID ='$id'");               
                  array_push($array_class, $result[0]);
              }     
-             $currentClass = Yii::app()->session['currentClass'];
+             
              $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
              if(!empty($array_lesson))
              {
-                 $currentLesson = Yii::app()->session['currentLesson'];
                  $array_suite = Suite::model()->findAll("lessonID = '$currentLesson'");
              }
-         }      
+         }
+         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson']));
          $this->render('assignWork',array(
              'array_class' => $array_class,
              'array_lesson' => $array_lesson,
              'array_suite'  => $array_suite,
+             'array_allsuite' => $array_allsuite,
+             'pages' => $pages
+                 
          ));   
      }
      
@@ -2303,7 +2328,7 @@ class TeacherController extends CController {
      public function ActionChangeSuiteOpen()
      {
          $suiteID = $_GET['suiteID'];
-         $open = $_GET['open'];
+         $open = $_GET['isExit'];
          $teacherID = Yii::app()->session['userid_now'];
          $suite = Suite::model()->find("suiteID = '$suiteID'");
          $suite->open = $open;
@@ -2334,7 +2359,200 @@ class TeacherController extends CController {
              'array_suite'  => $array_suite,
          ));       
      }
+     
+     
+     public function ActionStuWork()
+     {
+         $teacherID = Yii::app()->session['userid_now'];
+         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+         $array_lesson = array();
+         $array_suite = array();
+         $array_class = array();
+         $result = Suite::model()->getSuiteByTeacherID($teacherID);
+         foreach ($result['suiteLst'] as $suite)
+             array_push ($array_suite, $suite);        
+         $pages = $result['pages'];
+         if(!empty($teacher_class))
+         {
+           if(isset($_GET['classID']))
+             Yii::app()->session['currentClass'] = $_GET['classID'];
+           else
+               Yii::app()->session['currentClass'] = $teacher_class[0]['classID'];
+           
+           foreach ($teacher_class as $class)
+             {
+                 $id = $class['classID'];
+                 $result = TbClass::model()->findAll("classID ='$id'");               
+                 array_push($array_class, $result[0]);
+             }     
+             $currentClass = Yii::app()->session['currentClass'];
+             $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
+             if(!empty($array_lesson))
+             {
+                if(isset($_GET['lessonID']))          
+                   Yii::app()->session['currentLesson'] = $_GET['lessonID'];
+                else      
+                   Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
+                 
+             }
+         }
+         $array_accomplished = array();
+         $array_unaccomplished = array();
+         $currentLesson = Yii::app()->session['currentLesson'];
+         $currentClass = Yii::app()->session['currentClass']; 
+         if(isset($_GET['suiteID']))
+            $suiteID=$_GET['suiteID'];
+         else
+         $suiteID = $array_suite[0]['suiteID'];
+         $class_student = Student::model()->findAll("classID = '$currentClass'");
+         foreach ( $class_student as $student)
+         {
+             $result = SuiteRecord::model()->getRecordBySuiteAndStudentID($suiteID,$student['userID']);
+             if($result!=NULL&& $result['ratio_accomplish'] == 1)
+                 array_push ($array_accomplished, $student);
+             else
+                  array_push ($array_unaccomplished, $student);
+         } 
+         $this->render('studentWork',array(
+             'array_class' => $array_class,
+             'array_lesson' => $array_lesson,
+             'array_suite'  => $array_suite,
+             'pages'=>$pages,
+             'array_accomplished' => $array_accomplished,
+             'array_unaccomplished' =>$array_unaccomplished
+         ));
+     }
+     
+     public function ActionChangeSuiteClass()
+     {
+         $suiteID = $_GET['suiteID'];
+         $isOpen = $_GET['isOpen'];
+         $currentClass = Yii::app()->session['currentClass'];
+         $currentLesson = Yii::app()->session['currentLesson'];
+         if($isOpen == 1)
+         {
+             //从表中删除
+             ClassLessonSuite::model()->deleteAll("classID=? and lessonID=? and suiteID=?" ,array($currentClass,$currentLesson,$suiteID));          
+         }else
+         {
+            ClassLessonSuite::model()->insertSuite($currentClass,$currentLesson,$suiteID);
+         }
+         
+         $teacherID = Yii::app()->session['userid_now'];
+         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+         $array_lesson = array();        
+         $array_class = array();
+         $result = Suite::model()->getAllSuiteByPage(5);
+         $array_allsuite = $result['suiteLst'];
+         $pages = $result['pages'];
+   
+         if(!empty($teacher_class))
+         {        
+           foreach ($teacher_class as $class)
+             {
+                 $id = $class['classID'];
+                 $result = TbClass::model()->findAll("classID ='$id'");               
+                 array_push($array_class, $result[0]);
+             }     
+             
+             $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
+             if(!empty($array_lesson))
+             {
+                 $array_suite = Suite::model()->findAll("lessonID = '$currentLesson'");
+             }
+         }
+         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson']));
+         $this->render('assignWork',array(
+             'array_class' => $array_class,
+             'array_lesson' => $array_lesson,
+             'array_suite'  => $array_suite,
+             'array_allsuite' => $array_allsuite,
+             'pages' => $pages
+         ));      
+     }
+     
+     public function ActionToOwnWork()
+     {      
+        $type = $_GET['type'];
+        $suiteID = $_GET['suiteID'];
+        $this->renderOwnWork($type, $suiteID);
 
+     }
+     
+          public function ActionToOwnTypeWork()
+     {      
+        $type = $_GET['type'];
+        $suiteID = $_GET['suiteID'];
+        $this->renderOwnTypeWork($type, $suiteID);
+
+     }
+     
+     public function ActionToAllWork()
+     {            
+        $type = $_GET['type'];
+        $suiteID = $_GET['suiteID'];
+        $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+        $result = $this->getLstByType($type);
+        $workLst = $result['workLst'];
+        $pages = $result['pages']; 
+         $this->renderPartial('AllWork', array(
+             'workLst' => $workLst,
+             'pages' => $pages,
+             'type' => $type,
+             'suite' => $suite,
+             'teacher'=>  Teacher::model()->findall(),
+             'maniResult' => "",
+         ));
+     }
+     
+          public function ActionToAllTypeWork()
+     {            
+        $type = $_GET['type'];
+        $suiteID = $_GET['suiteID'];
+        $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+        $result = $this->getLstByType($type);
+        $workLst = $result['workLst'];
+        $pages = $result['pages']; 
+         $this->renderPartial('allTypeWork', array(
+             'workLst' => $workLst,
+             'pages' => $pages,
+             'type' => $type,
+             'suite' => $suite,
+             'teacher'=>  Teacher::model()->findall(),
+             'maniResult' => "",
+         ));
+     }
+     
+     public function renderOwnWork($type,$suiteID)
+     {
+        $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+        $result = Suite::model()->getSuiteExerByTypePage($suiteID, $type,5);
+        $workChoice = $result['workLst'];
+        $pages = $result['pages'];
+         $this->renderPartial('ownWork', array(
+             'suiteWork' => $workChoice,
+             'pages' => $pages,
+             'type' => $type,
+             'suite' => $suite
+         ));
+     }
+     
+          public function renderOwnTypeWork($type,$suiteID)
+     {
+        $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+        $result = Suite::model()->getSuiteExerByTypePage($suiteID, $type,5);
+        $workKey = $result['workLst'];
+        $pages = $result['pages'];
+         $this->renderPartial('ownTypeWork', array(
+             'suiteWork' => $workKey,
+             'pages' => $pages,
+             'type' => $type,
+             'suite' => $suite
+         ));
+     }
+     
+     
+     
      
      
      //局部刷新

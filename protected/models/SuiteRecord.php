@@ -20,6 +20,13 @@ class SuiteRecord extends CActiveRecord
             return $record->recordID;
         }
     }
+    
+        public static function getRecordBySuiteAndStudentID($suiteID, $createPerson) {
+        return SuiteRecord::model()->find('suiteID=? and studentID=?', array($suiteID,$createPerson));
+
+    }
+    
+
     public static function getClassworkAll($type) {
         $createPerson = Yii::app()->session['userid_now'];
         $getSuiteID = "select suiteID from suite where suiteType='$type'";
