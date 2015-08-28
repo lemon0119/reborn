@@ -9,6 +9,12 @@
     echo "<script>var current_username=\"$username\";</script>";
 
     $role = Yii::app()->session['role_now'];
+    $userid = Yii::app()->session['userid_now'];
+    $videoFilePath =$role."/".$userid."/".$classID."/".$on."/video/"; 
+    $vdir = "./resources/".$videoFilePath;                 
+    $pptFilePath =$role."/".$userid."/".$classID."/".$on."/ppt/"; 
+    $pdir = "./resources/".$pptFilePath;
+    
     echo "<script>var role='$role';</script>";
     ?>
     <div class="left">
@@ -29,14 +35,22 @@
             <div style="display:inline;">
                 <button id="play-ppt" class="btn btn-primary">放映PPT</button>
                 <select id="choose-ppt" style="width:150px">
-                    <option value ="test+-+<?php  $dir = 'D:/wamp/www/reborn/resources/'.'test'; 
-                                                   $num = sizeof(scandir($dir)); 
-                                                   $num = ($num>2)?($num-2):0; 
-                                                   echo $num;?>">test</option>
-                    <option value ="test2+-+<?php  $dir = 'D:/wamp/www/reborn/resources/'.'test2'; 
-                                                   $num = sizeof(scandir($dir)); 
-                                                   $num = ($num>2)?($num-2):0; 
-                                                   echo $num;?>">test2</option>
+                    <?php
+                    	$mydir = dir($pdir); 
+                        while($file = $mydir->read())
+                        { 
+                                if((is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {
+                    ?>
+                    <option value ="<?php echo $file;?>+-+<?php   $dir = "$pdir/$file"; 
+                                                                    $num = sizeof(scandir($dir)); 
+                                                                    $num = ($num>2)?($num-2):0; 
+                                                                    echo $num;?>"><?php echo $file;?></option>   
+                    <?php     
+                                } 
+                        } 
+                        $mydir->close(); 
+                    ?>
                 </select>
                 <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
             </div>
@@ -209,7 +223,7 @@ $(document).ready(function(){
         $("#ppt-container").show();
         $("#scroll-page").show();
         cur_ppt = 1;
-        var server_root_path = "<?php echo SITE_URL.'resources/'?>";
+        var server_root_path = "<?php echo SITE_URL.'resources/'.$pptFilePath?>";
         var file_info = $("#choose-ppt option:selected").val().split("+-+");
         var dirname = file_info[0];
         ppt_dir = server_root_path + dirname;
