@@ -1411,7 +1411,7 @@ class TeacherController extends CController {
                             'searchKey'  => $searchKey
                     )
                     );
-            }else if(Yii::app()->session['lastUrl']=="ChoiceLst"){
+            }else if(Yii::app()->session['lastUrl']=="choiceLst"){
                 $result     =   Choice::model()->getChoiceLst("", "");
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -2269,6 +2269,8 @@ class TeacherController extends CController {
          $suiteID = $_GET['suiteID'];
          $teacherID = Yii::app()->session['userid_now'];
          Suite::model()->deleteAll("suiteID='$suiteID'");
+         SuiteExercise::model()->deleteAll("suiteID='$suiteID'");
+         ClassLessonSuite::model()->deleteAll("suiteID='$suiteID'");
          $currentClass = Yii::app()->session['currentClass'];
          $currentLesson=Yii::app()->session['currentLesson'];
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
@@ -2323,61 +2325,28 @@ class TeacherController extends CController {
          Yii::app()->session['lastUrl'] = "modifyWork";
          $this->renderModify("choice", $suiteID,"");
      }
-     
-     
-     public function ActionChangeSuiteOpen()
-     {
-         $suiteID = $_GET['suiteID'];
-         $open = $_GET['isExit'];
-         $teacherID = Yii::app()->session['userid_now'];
-         $suite = Suite::model()->find("suiteID = '$suiteID'");
-         $suite->open = $open;
-         $suite->update();
-         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
-         $array_lesson = array();
-         $array_suite = array();
-         $array_class = array();
-         if(!empty($teacher_class))
-         {          
-           foreach ($teacher_class as $class)
-             {
-                 $id = $class['classID'];
-                 $result = TbClass::model()->findAll("classID ='$id'");               
-                 array_push($array_class, $result[0]);
-             }     
-             $currentClass = Yii::app()->session['currentClass'];
-             $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
-             if(!empty($array_lesson))
-             {
-                 $currentLesson = Yii::app()->session['currentLesson'];
-                 $array_suite = Suite::model()->findAll("lessonID = '$currentLesson'");
-             }
-         }      
-         $this->render('assignWork',array(
-             'array_class' => $array_class,
-             'array_lesson' => $array_lesson,
-             'array_suite'  => $array_suite,
-         ));       
-     }
-     
-     
+      
      public function ActionStuWork()
      {
          $teacherID = Yii::app()->session['userid_now'];
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();
-         $array_suite = array();
          $array_class = array();
-         $result = Suite::model()->getSuiteByTeacherID($teacherID);
-         foreach ($result['suiteLst'] as $suite)
-             array_push ($array_suite, $suite);        
+         $array_suite = array();
+         $array_suiteLessonClass = array();
+         $result = ClassLessonSuite::model()->getSuiteClassByTeacherID($teacherID); 
+         foreach ( $result['suiteLst'] as $suite)
+             array_push($array_suiteLessonClass,$suite);
          $pages = $result['pages'];
+         $result = Suite::model()->getSuiteByClassLessonSuite($teacherID);
+         foreach ($result as $suite)
+             array_push ($array_suite, $suite);
          if(!empty($teacher_class))
          {
            if(isset($_GET['classID']))
              Yii::app()->session['currentClass'] = $_GET['classID'];
            else
-               Yii::app()->session['currentClass'] = $teacher_class[0]['classID'];
+               Yii::app()->session['currentClass'] = $array_suiteLessonClass[0]['classID'];
            
            foreach ($teacher_class as $class)
              {
@@ -2392,7 +2361,7 @@ class TeacherController extends CController {
                 if(isset($_GET['lessonID']))          
                    Yii::app()->session['currentLesson'] = $_GET['lessonID'];
                 else      
-                   Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
+                   Yii::app()->session['currentLesson'] = $array_suiteLessonClass[0]['lessonID'];
                  
              }
          }
@@ -2403,11 +2372,11 @@ class TeacherController extends CController {
          if(isset($_GET['suiteID']))
             $suiteID=$_GET['suiteID'];
          else
-         $suiteID = $array_suite[0]['suiteID'];
+         $suiteID = $array_suiteLessonClass[0]['suiteID'];
          $class_student = Student::model()->findAll("classID = '$currentClass'");
          foreach ( $class_student as $student)
          {
-             $result = SuiteRecord::model()->getRecordBySuiteAndStudentID($suiteID,$student['userID']);
+             $result = SuiteRecord::model()->getRecordBySuiteAndStudentID($suiteID,$student['userID'],$currentClass,$currentLesson);
              if($result!=NULL&& $result['ratio_accomplish'] == 1)
                  array_push ($array_accomplished, $student);
              else
@@ -2417,6 +2386,7 @@ class TeacherController extends CController {
              'array_class' => $array_class,
              'array_lesson' => $array_lesson,
              'array_suite'  => $array_suite,
+             'array_suiteLessonClass' => $array_suiteLessonClass,
              'pages'=>$pages,
              'array_accomplished' => $array_accomplished,
              'array_unaccomplished' =>$array_unaccomplished

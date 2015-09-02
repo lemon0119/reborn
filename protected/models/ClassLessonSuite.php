@@ -113,8 +113,36 @@ class ClassLessonSuite extends CActiveRecord
             $newSuite->suiteID = $suiteID;
             $newSuite->insert();           
         }
+        
+        public function getSuiteClassByTeacherID($teacherID)
+        {
+            $sql = "select * from class_lesson_suite";
+            $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID')";
+            $order = "order by classID ASC ,lessonID ASC";
+        $sql = $sql.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $criteria   =   new CDbCriteria();
+        $pages     =   new CPagination($result->rowCount);
+        $pages->pageSize    =   5; 
+        $pages->applyLimit($criteria);
 
-	/**
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize);
+        $suiteLst = $result->query();
+        return ['suiteLst'=>$suiteLst,'pages'=>$pages,];             
+        }
+        
+        
+    
+                
+
+        
+
+
+
+
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

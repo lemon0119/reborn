@@ -5,29 +5,41 @@
         <thead>
             <tr>
                 <th>编号</th>
-                <th>班级</th>
+                <th class="dropdown">班级<b class="caret"></b>
+                    <ul class="dropdown-menu">
+                    <li><a href="./index.php?r=teacher/assignWork">布置作业</a></li>
+                    <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
+                    </ul>                             
+              </th>                      
                 <th>课程</th>   
                 <th>作业</th>
-                <th>状态</th>      
                 <th>操作</th>
             </tr>
         </thead>
                 <tbody>        
-                    <?php foreach($array_suite as $suite):
+                    <?php $id =1;
+                      foreach($array_suiteLessonClass as $suiteLesson):
                         foreach($array_class as $class)
-                            if($class['classID'] == $suite['classID']){
-                                $thisClass = $class;
+                            if($class['classID'] == $suiteLesson['classID']){
+                                $thisClass = $class;                                
                                 break;
                             }
                         foreach($array_lesson as $lesson)
-                            if($lesson['lessonID'] == $suite['lessonID']){
+                            if($lesson['lessonID'] == $suiteLesson['lessonID']){
                                 $thisLesson = $lesson;
                                 break;
                             }
+                        foreach ($array_suite as $suite)
+                            if($suite['suiteID'] == $suiteLesson['suiteID']){
+                                $thisSuite = $suite;
+                                break;
+                            }
+                            
+                            
                             ?>
                     <tr>
                         <td style="width: 150px">
-                            <?php echo $suite['suiteID'];?>
+                            <?php echo $id++;?>
                         </td>
                         <td>
                             <?php  echo $thisClass['className'];?>
@@ -38,16 +50,10 @@
                             
                         </td>           
                         <td>            
-                            <?php  echo $suite['suiteName'];?>                      
+                             <?php echo $thisSuite['suiteName']?>                    
                         </td>
                         <td>            
-                            <?php  if($suite['open'])
-                                    echo "开放";
-                                   else
-                                       echo "关闭";?>                      
-                        </td>
-                        <td>            
-                            <a href="./index.php?r=teacher/stuWork&&classID=<?php echo $suite['classID'];?>&&lessonID=<?php echo $suite['lessonID'];?>&&suiteID=<?php echo $suite['suiteID'];?>&&page=<?php echo $pages->currentPage+1?>">查看</a>                      
+                            <a href="./index.php?r=teacher/stuWork&&classID=<?php echo $suiteLesson['classID'];?>&&lessonID=<?php echo $suiteLesson['lessonID'];?>&&suiteID=<?php echo $suiteLesson['suiteID'];?>&&page=<?php echo $pages->currentPage+1?>">查看</a>                      
                         </td>
                     </tr>            
                     <?php endforeach;?> 

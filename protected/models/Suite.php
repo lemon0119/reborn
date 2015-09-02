@@ -116,6 +116,17 @@ class Suite extends CActiveRecord
         return ['suiteLst'=>$suiteLst,'pages'=>$pages,];        
     }
     
+    public function getSuiteByClassLessonSuite($teacherID)
+        {
+        $sql = "select * from suite";
+        $condition = " where suiteID in(select suiteID from class_lesson_suite where classID in (select classID from teacher_class where teacherID = '$teacherID'))";
+        $sql = $sql.$condition;
+        return Yii::app()->db->createCommand($sql)->query(); 
+        }  
+        
+        
+    
+    
     public function getAllSuiteByPage($pagesize)
     {
         $sql  = "select * from suite";

@@ -21,8 +21,8 @@ class SuiteRecord extends CActiveRecord
         }
     }
     
-        public static function getRecordBySuiteAndStudentID($suiteID, $createPerson) {
-        return SuiteRecord::model()->find('suiteID=? and studentID=?', array($suiteID,$createPerson));
+        public static function getRecordBySuiteAndStudentID($suiteID, $createPerson , $classID,$lessonID) {
+        return SuiteRecord::model()->find('suiteID=? and studentID=? and classID=? and lessonID=?', array($suiteID,$createPerson,$classID,$lessonID));
 
     }
     
