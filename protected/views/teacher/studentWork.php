@@ -5,49 +5,58 @@
         <thead>
             <tr>
                 <th>编号</th>
-                <th>班级</th>
+      <th>
+          <select   onchange="changeClass(this.value)" name="selectAge" id="classSelect" style="width: 80px"> 
+              <option value=-1 <?php if($selectClassID == -1) echo "selected='selected'";?>>全部</option>   
+        <?php foreach ($array_class as $class):?>
+          <option value=<?php echo $class['classID'];?> <?php if($selectClassID == $class['classID']) echo "selected='selected'";?>><?php echo $class['className']?></option>
+        <?php endforeach;?>       
+      </select>                            
+      </th>                      
                 <th>课程</th>   
                 <th>作业</th>
-                <th>状态</th>      
                 <th>操作</th>
             </tr>
         </thead>
                 <tbody>        
-                    <?php foreach($array_suite as $suite):
+                    <?php $id =1;
+                      foreach($array_suiteLessonClass as $suiteLesson):
                         foreach($array_class as $class)
-                            if($class['classID'] == $suite['classID']){
-                                $thisClass = $class;
+                            if($class['classID'] == $suiteLesson['classID']){
+                                $thisClass = $class;                                
                                 break;
                             }
                         foreach($array_lesson as $lesson)
-                            if($lesson['lessonID'] == $suite['lessonID']){
+                            if($lesson['lessonID'] == $suiteLesson['lessonID']){
                                 $thisLesson = $lesson;
                                 break;
                             }
+                        foreach ($array_suite as $suite)
+                            if($suite['suiteID'] == $suiteLesson['suiteID']){
+                                $thisSuite = $suite;
+                                break;
+                            }                     
                             ?>
                     <tr>
                         <td style="width: 150px">
-                            <?php echo $suite['suiteID'];?>
+                            <?php echo $id++;?>
                         </td>
                         <td>
-                            <?php  echo $thisClass['className'];?>
+                            <?php            
+                            echo $thisClass['className'];?>
                            
                         </td>
                         <td>
-                            <?php  echo $thisLesson['lessonName'] ;?>
+                            <?php                
+                            echo $thisLesson['lessonName'] ;?>
                             
                         </td>           
                         <td>            
-                            <?php  echo $suite['suiteName'];?>                      
+                             <?php
+                             echo $thisSuite['suiteName']?>                    
                         </td>
                         <td>            
-                            <?php  if($suite['open'])
-                                    echo "开放";
-                                   else
-                                       echo "关闭";?>                      
-                        </td>
-                        <td>            
-                            <a href="./index.php?r=teacher/stuWork&&classID=<?php echo $suite['classID'];?>&&lessonID=<?php echo $suite['lessonID'];?>&&suiteID=<?php echo $suite['suiteID'];?>&&page=<?php echo $pages->currentPage+1?>">查看</a>                      
+                            <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>                      
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -89,7 +98,7 @@
                             完成
                         </td>  
                         <td >
-                            <a href="#">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1">查看</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -122,7 +131,7 @@
                             未完成
                         </td>  
                         <td>
-                            <a href="#">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0">查看</a>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 
@@ -134,15 +143,22 @@
 </div>
 
 <script>
-   
-//   function refresh(classID,lessonID,suiteID)
-//   {
-//     $("#list").html("");
-//     $.ajax({
-//         type:"POST",
-//         url:"./index.php?r=teacher/refreshLst&&classID="+classID+"&&lessonID="+lessonID+"&&suiteID="+suiteID,
-//         cache:false,        
-//     })
-//   }
+
+//       $("#classSelect").change(function(){
+//           var url = "./index.php?r=teacher/stuWork";
+//           var value = $(this).options[$(this).selectedIndex].value
+//           alert(value);
+//           if(value != "")
+//           url += "&&classID="+ value;
+//       alert(url);
+//       window.location.href = url;
+//       });
+       
+       function changeClass(value)
+       {   var url = "./index.php?r=teacher/stuWork";
+           if(value != -1)
+           url += "&&selectClassID="+ value;  
+           window.location.href = url;
+       }
 </script>
 

@@ -7,8 +7,6 @@
     <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo CSS_URL; ?>font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo CSS_URL; ?>style.css" rel="stylesheet" type="text/css"/>
-
-
 </head>
 
 <!-- END HEAD -->

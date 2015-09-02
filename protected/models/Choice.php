@@ -98,6 +98,12 @@ class Choice extends CActiveRecord
     }
     
     
+    public function getChoiceBySuiteID()
+    {
+        
+    }
+    
+    
 //    //宋杰 2015-7-30 得到登录老师的选择题列表
 //        public function getTeaChoiceLst($type,$value){
 //        $order = " order by exerciseID ASC";
