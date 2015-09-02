@@ -13,7 +13,28 @@ class TeacherController extends CController {
     public function actionVirtualClass() {
         $userID = Yii::app()->session['userid_now'];
         $userName   = Teacher::model()->findByPK($userID)->userName;
-        return $this->render('virtualClass',['userName'=>$userName,'classID'=>$_GET['classID']]);
+        return $this->render('virtualClass',['userName'=>$userName,'classID'=>$_GET['classID'],'on'=>$_GET['on']]);
+    }
+    
+    public function actionPptLSt(){
+        $classID=$_GET['classID'];
+        $progress=$_GET['progress'];
+        $on=$_GET['on'];
+        return $this->render('pptLst',[
+            'classID'=>$classID,
+            'progress'=>$progress,
+            'on'=>$on
+        ]);
+    }
+    
+    public function actionAddPpt(){
+            $typename = Yii::app()->session['role_now'];
+            $userid = Yii::app()->session['userid_now'];
+            $pptFilePath =$typename."/".$userid."/".$_GET['classID']."/".$_GET['on']."/ppt/"; 
+            $dir = "resources/".$pptFilePath; 
+            move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+            exec(iconv("UTF-8","gb2312","D:\\wamp\\www\\reborn\\resources\\ppt2jpg.exe D:\\wamp\\www\\reborn\\resources\\test3.ppt"),$out);
+            print_r($out);
     }
     
     public function actionlookExer(){

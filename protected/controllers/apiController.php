@@ -21,8 +21,9 @@ class apiController extends Controller {
     }
 
     public function actionGetLatestChat() {
+        $classID = $_GET['classID'];
         $connection = Yii::app()->db;
-        $sql = "SELECT * FROM chat_lesson_1 ORDER BY id DESC";
+        $sql = "SELECT * FROM chat_lesson_1 where classID = '$classID' ORDER BY id DESC";
         $command = $connection->createCommand($sql);
         $dataReader = $command->query();
         $all_chats = $dataReader->readAll();
@@ -31,19 +32,22 @@ class apiController extends Controller {
     }
 
     public function actionPutChat() {
+        $classID = $_GET['classID'];
         $username = (string) Yii::app()->request->getParam('username');
         $chat = (string) Yii::app()->request->getParam('chat');
-        $publishtime = (string) Yii::app()->request->getParam('time');
-
+        //$publishtime = (string) Yii::app()->request->getParam('time');
+        //改为使用服务器时间
+        $publishtime = date('y-m-d H:i:s',time());
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO chat_lesson_1 (username, chat, time) values ($username, $chat, $publishtime)";
+        $sql = "INSERT INTO chat_lesson_1 (username, chat, time, classID) values ($username, $chat, '$publishtime', '$classID')";
         $command = $connection->createCommand($sql);
         $command->execute();
     }
 
     public function actionGetLatestBulletin() {
+        $classID = $_GET['classID'];
         $connection = Yii::app()->db;
-        $sql = "SELECT * FROM bulletin_lesson_1 ORDER BY id DESC LIMIT 1";
+        $sql = "SELECT * FROM bulletin_lesson_1 where classID = '$classID' ORDER BY id DESC LIMIT 1";
         $command = $connection->createCommand($sql);
         $dataReader = $command->query();
         $bulletin = $dataReader->readAll();
@@ -53,10 +57,12 @@ class apiController extends Controller {
 
     public function actionPutBulletin() {
         $bulletin = (string) Yii::app()->request->getParam('bulletin');
-        $publishtime = (string) Yii::app()->request->getParam('time');
-
+        //$publishtime = (string) Yii::app()->request->getParam('time');
+        //改为使用服务器时间
+        $publishtime = date('y-m-d H:i:s',time());
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO bulletin_lesson_1 (content, time) values ($bulletin, $publishtime)";
+        $classID = $_GET['classID'];
+        $sql = "INSERT INTO bulletin_lesson_1 (content, time, classID) values ($bulletin, '$publishtime','$classID')";
         $command = $connection->createCommand($sql);
         $command->execute();
     }
