@@ -32,9 +32,17 @@ class TeacherController extends CController {
             $userid = Yii::app()->session['userid_now'];
             $pptFilePath =$typename."/".$userid."/".$_GET['classID']."/".$_GET['on']."/ppt/"; 
             $dir = "resources/".$pptFilePath; 
-            move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-            exec(iconv("UTF-8","gb2312","D:\\wamp\\www\\reborn\\resources\\ppt2jpg.exe D:\\wamp\\www\\reborn\\resources\\test3.ppt"),$out);
+//            move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+            exec("D:\\ppt2jpg.exe D:\\test.ppt",$out);
             print_r($out);
+//            $ppt = new COM("PowerPoint.application") or die("unable to instantiate ppt");
+//            echo "Loaded ppt, version {$ppt->Version}\n";
+//            $file = "D:\test.ppt";
+//            echo $file;
+//            $pptopen = $ppt->Presentations->Open($file);
+//            $pptopen->SaveAs("D:\wamp\www\reborn\resources\test.jpg");
+//            $ppt->Quit();
+//            $ppt = null;
     }
     
     public function actionlookExer(){
