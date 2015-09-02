@@ -5,12 +5,14 @@
         <thead>
             <tr>
                 <th>编号</th>
-                <th class="dropdown">班级<b class="caret"></b>
-                    <ul class="dropdown-menu">
-                    <li><a href="./index.php?r=teacher/assignWork">布置作业</a></li>
-                    <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
-                    </ul>                             
-              </th>                      
+      <th>
+          <select   onchange="changeClass(this.value)" name="selectAge" id="classSelect" style="width: 80px"> 
+              <option value=-1 <?php if($selectClassID == -1) echo "selected='selected'";?>>全部</option>   
+        <?php foreach ($array_class as $class):?>
+          <option value=<?php echo $class['classID'];?> <?php if($selectClassID == $class['classID']) echo "selected='selected'";?>><?php echo $class['className']?></option>
+        <?php endforeach;?>       
+      </select>                            
+      </th>                      
                 <th>课程</th>   
                 <th>作业</th>
                 <th>操作</th>
@@ -33,27 +35,30 @@
                             if($suite['suiteID'] == $suiteLesson['suiteID']){
                                 $thisSuite = $suite;
                                 break;
-                            }
-                            
-                            
+
+                            }                     
                             ?>
                     <tr>
                         <td style="width: 150px">
                             <?php echo $id++;?>
                         </td>
                         <td>
-                            <?php  echo $thisClass['className'];?>
+                            <?php            
+                            echo $thisClass['className'];?>
                            
                         </td>
                         <td>
-                            <?php  echo $thisLesson['lessonName'] ;?>
+                            <?php                
+                            echo $thisLesson['lessonName'] ;?>
                             
                         </td>           
                         <td>            
-                             <?php echo $thisSuite['suiteName']?>                    
+                             <?php
+                             echo $thisSuite['suiteName']?>                    
                         </td>
                         <td>            
-                            <a href="./index.php?r=teacher/stuWork&&classID=<?php echo $suiteLesson['classID'];?>&&lessonID=<?php echo $suiteLesson['lessonID'];?>&&suiteID=<?php echo $suiteLesson['suiteID'];?>&&page=<?php echo $pages->currentPage+1?>">查看</a>                      
+                            <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>                      
+
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -95,7 +100,7 @@
                             完成
                         </td>  
                         <td >
-                            <a href="#">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1">查看</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -128,7 +133,7 @@
                             未完成
                         </td>  
                         <td>
-                            <a href="#">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0">查看</a>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 
@@ -140,15 +145,22 @@
 </div>
 
 <script>
-   
-//   function refresh(classID,lessonID,suiteID)
-//   {
-//     $("#list").html("");
-//     $.ajax({
-//         type:"POST",
-//         url:"./index.php?r=teacher/refreshLst&&classID="+classID+"&&lessonID="+lessonID+"&&suiteID="+suiteID,
-//         cache:false,        
-//     })
-//   }
+
+//       $("#classSelect").change(function(){
+//           var url = "./index.php?r=teacher/stuWork";
+//           var value = $(this).options[$(this).selectedIndex].value
+//           alert(value);
+//           if(value != "")
+//           url += "&&classID="+ value;
+//       alert(url);
+//       window.location.href = url;
+//       });
+       
+       function changeClass(value)
+       {   var url = "./index.php?r=teacher/stuWork";
+           if(value != -1)
+           url += "&&selectClassID="+ value;  
+           window.location.href = url;
+       }
 </script>
 

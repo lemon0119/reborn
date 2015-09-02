@@ -68,7 +68,11 @@
            <div class="control-group">
                <label class="control-label" for="input02">修改</label>
                <div class="controls">
-               <input type="file" name="modifyfile" id="input02">      
+               <input type="file" name="modifyfile" id="input02">
+               <div id="upload" style="display:inline;" hidden="true">
+               <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+                　　正在上传，请稍等...
+               </div>
                </div>
            </div>
             
@@ -91,8 +95,13 @@
 </div>
 <script>     
 $(document).ready(function(){
-    <?php if(isset($result))
-            echo "alert('$result');";?>
+    $("#upload").hide();
+    <?php 
+        if(isset($result)){
+            echo '$("#upload").hide();';
+            echo "alert('$result');";
+        }
+    ?>
 });
 
 
@@ -108,5 +117,6 @@ $("#myForm").submit(function(){
         alert('内容不能为空');
         return false;
     }
+    $("#upload").show();
 });
 </script>

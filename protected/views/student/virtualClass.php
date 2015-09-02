@@ -15,43 +15,36 @@ echo "<script>var role='$role';</script>";
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
 
-    <div class="left">
-            <!-- list of all available broadcasting rooms -->
-            <table style="width: 100%;" id="rooms-list"></table>
+<div class="left" style="background-image:url(./img/default/hello.png); background-size:100% 100%; min-height: 50px">
+        <!-- list of all available broadcasting rooms -->
+        <table style="width: 100%;" id="rooms-list"></table>
 
-            <!-- local/remote videos container -->
-            <table class="student-video-head-table">
-                <tr>
-                    <td class="student-video-head-td" id="share-button"><a href="./index.php?r=webrtc/stuScreen" target="iframe_a">屏幕共享</a></td>
-                    <td class="student-video-head-td" id="video-button"><a href="./index.php?r=webrtc/stuCam" target="iframe_b">点播文件</a></td>
-                </tr>
-            </table>
-
-            <div id="videos-container" style="height: 1000px; width: 100%; margin-top:0px;display:none">
-                <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
-            </div>
-
-            <div id="dianbo-videos-container" style="margin-top:5px;display:none">  </div>
-    </div>
-
-    <div class="right">
-        <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
-        <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:202px; clear:both;">
-            <iframe src="" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
+        <!-- local/remote videos container -->
+        <div id="ppt-container" style="height: 100%; width: 100%; margin-top:0px;display:none;">
+            <img id="ppt-img" src="" style="width: 100%;"/>
         </div>
-            <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
-            <div id="bulletin" class="bulletin" style="display:none">
-                    <textarea disabled id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
-            </div>
-            <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
-            <div id="chat-box">
+
+        <div id="dianbo-videos-container" style="display:none">  </div>
+</div>
+
+<div class="right">
+    <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
+    <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:220px; clear:both;">
+        <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
+    </div>
+        <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
+        <div id="bulletin" class="bulletin" style="display:none">
+                <textarea disabled id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+        </div>
+        <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
+        <div id="chat-box">
             <div id="chatroom" class="chatroom"></div>
             <div class="sendfoot">
                 <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px">
                 <button id="send-msg" style="padding-top:4px;padding-bottom:4px;height:30px;width:25%;font-size:10px">发送</button>
             </div>
-            </div>
-    </div>
+        </div>
+</div>
 
 <script>
     //chat and bulletin
@@ -83,7 +76,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: "POST",
-            url: "index.php?r=api/putChat",
+            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
             data: {
                 username: '"' + current_username + '"',
                 chat: '"' + msg + '"',
@@ -97,7 +90,7 @@ function pollChatRoom() {
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "index.php?r=api/getlatestchat",
+        url: "index.php?r=api/getlatestchat&&classID=<?php echo $classID;?>",
         success: function(data) {
             $("#chatroom").empty();
             var html = "";
@@ -115,7 +108,7 @@ function pollBulletin() {
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "index.php?r=api/GetLatestBulletin",
+        url: "index.php?r=api/GetLatestBulletin&&classID=<?php echo $classID;?>",
         success: function(data) {
             if (role === 'student') {
                 $("#bulletin-textarea").val(data[0].content);
@@ -124,6 +117,10 @@ function pollBulletin() {
                     $("#bulletin-textarea").val(data[0].content);
                 }
             }
+        },
+        error: function(xhr, type, exception){
+            console.log('get Bulletin erroe', type);
+            console.log(xhr.responseText, "Failed");
         }
     });
 }
@@ -142,23 +139,6 @@ $(document).ready(function(){
     $("#sw-bulletin").click(function() {
         $("#bulletin").toggle(200);
     });
-
-    //switch dianbo and screen
-    $("#sw-show-dianbo").click(function() {
-        $("#video-button").css("background-color", "#d9d9d9");
-        $("#share-button").css("background-color", "white");
-        $("#videos-container").hide();
-        $("#dianbo-videos-container").show();
-    });
-
-    $("#sw-show-screen").click(function() {
-        $("#share-button").css("background-color", "#d9d9d9");
-        $("#video-button").css("background-color", "white");
-        $("#sw-show-dianbo").css("filter", "Alpha(opacity=50)");
-        $("#videos-container").show();
-        ws.close();
-        $("#dianbo-videos-container").hide();
-    });
 });
 </script>
 
@@ -166,7 +146,6 @@ $(document).ready(function(){
     //点播
     var ws = null;
     var last_path = -1;
-    var onScreen  = -1;
     var onCam     = -1;
     
     function clearVideo(){
@@ -194,7 +173,7 @@ $(document).ready(function(){
             } else {
                 video.setAttribute("src", video_path); 
             }
-            $("#videos-container").hide();
+            $("#ppt-container").hide();
             $("#dianbo-videos-container").show();
             var local_my_video = document.getElementById("video1");
             local_my_video.play();
@@ -246,31 +225,31 @@ $(document).ready(function(){
             onCam = -1;
         } else if(msg.indexOf('<?php echo $classID;?>onCam') >= 0){
             if(onCam==-1){
-                iframe_b.location.href ='./index.php?r=webrtc/stuCam';
+                iframe_b.location.href ='./index.php?r=webrtc/stuCam&&classID=<?php echo $classID;?>';
                 onCam   =  1;
             }
-        } else if(msg.indexOf('<?php echo $classID;?>closeScreen') >= 0){
-            iframe_a.location.href ='./index.php?r=webrtc/null';
-            onScreen = -1;
-        } else if(msg.indexOf('<?php echo $classID;?>onScreen') >= 0){
-            if(onScreen==-1){
-                $("#videos-container").show();
-                iframe_a.location.href ='./index.php?r=webrtc/stuScreen';
-                onScreen = 1;
+        } else if(msg.indexOf('<?php echo $classID;?>playppt') >= 0){
+            var ppt_src = msg.substr(msg.indexOf('playppt')+7);
+            if(last_path==-1)
+            {
+                $("#dianbo-videos-container").hide();
+                $("#ppt-container").show();
             }
-        }
+            if(ppt_src!=last_path)
+            {
+                $("#ppt-img").attr("src", ppt_src);
+                last_path = ppt_src;
+            }
+        } else if(msg.indexOf('<?php echo $classID;?>closeppt') >= 0){
+            last_path = -1;
+            $("#ppt-container").hide();
+        } 
     }
     
     function addMessageHandleForWS(){
         ws.onopen = function() {
             console.log("connect to websocket server");
         };
-//        ws.onclose = function() {
-//            clearVideo();
-//            ws = new WebSocket("wss://<?php echo HOST_IP;?>:8443", 'echo-protocol');
-//            addMessageHandleForWS();
-//            console.log("close to connect to websocket server");
-//        };
         ws.addEventListener("message",DoMessage);
     }
     

@@ -96,6 +96,15 @@ class TbClass extends CActiveRecord
         $sql = $sql.$condition;
         return Yii::app()->db->createCommand($sql)->query();
     }
+    
+    
+    public function getClassByTeacherID($teacherID){
+        $sql = "select * from tb_class";
+        $condition = " where classID in(select classID from teacher_class where teacherID = '$teacherID')";
+        $order = " order by classID ASC";
+        $sql = $sql.$condition.$order;
+        return Yii::app()->db->createCommand($sql)->query();
+    }
 
 
     

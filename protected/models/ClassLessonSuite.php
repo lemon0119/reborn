@@ -4,7 +4,7 @@
  * This is the model class for table "class_lesson_suite".
  *
  * The followings are the available columns in table 'class_lesson_suite':
- * @property integer $ID
+ * @property integer $workID
  * @property integer $suiteID
  * @property integer $lessonID
  * @property integer $classID
@@ -27,11 +27,11 @@ class ClassLessonSuite extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ID, suiteID, lessonID, classID', 'required'),
-			array('ID, suiteID, lessonID, classID', 'numerical', 'integerOnly'=>true),
+			array('workID, suiteID, lessonID, classID', 'required'),
+			array('workID, suiteID, lessonID, classID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ID, suiteID, lessonID, classID', 'safe', 'on'=>'search'),
+			array('workID, suiteID, lessonID, classID', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +52,7 @@ class ClassLessonSuite extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'ID' => 'ID',
+			'workID' => 'workID',
 			'suiteID' => 'Suite',
 			'lessonID' => 'Lesson',
 			'classID' => 'Class',
@@ -82,7 +82,7 @@ class ClassLessonSuite extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('ID',$this->ID);
+		$criteria->compare('workID',$this->ID);
 		$criteria->compare('suiteID',$this->suiteID);
 		$criteria->compare('lessonID',$this->lessonID);
 		$criteria->compare('classID',$this->classID);
@@ -94,7 +94,7 @@ class ClassLessonSuite extends CActiveRecord
         
         public function insertSuite($classID,$lessonID,$suiteID)
         {
-            $sql = "select max(ID) as id from class_lesson_suite";
+            $sql = "select max(workID) as id from class_lesson_suite";
             $max_id = Yii::app()->db->createCommand($sql)->query();
             $temp=$max_id->read();
          if(empty($temp))
@@ -107,17 +107,22 @@ class ClassLessonSuite extends CActiveRecord
         }
             
             $newSuite = new ClassLessonSuite();
-            $newSuite->ID = $new_id;
-            $newSuite->classID = $classID;
+            $newSuite->workID = $new_id;
+            $newSuite->classID = $classID;           
             $newSuite->lessonID = $lessonID;
             $newSuite->suiteID = $suiteID;
+            $newSuite->open = true;
             $newSuite->insert();           
         }
         
-        public function getSuiteClassByTeacherID($teacherID)
+        public function getSuiteClassByTeacherID($teacherID,$selectClassID)
         {
             $sql = "select * from class_lesson_suite";
-            $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID')";
+            if($selectClassID == "")
+            $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID') and open=1 ";
+            else
+            $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID' and classID = '$selectClassID') and open=1 ";
+
             $order = "order by classID ASC ,lessonID ASC";
         $sql = $sql.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
@@ -125,23 +130,19 @@ class ClassLessonSuite extends CActiveRecord
         $pages     =   new CPagination($result->rowCount);
         $pages->pageSize    =   5; 
         $pages->applyLimit($criteria);
-
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
         $result->bindValue(':limit', $pages->pageSize);
         $suiteLst = $result->query();
         return ['suiteLst'=>$suiteLst,'pages'=>$pages,];             
         }
+
         
         
     
                 
 
-        
-
-
-
-
+      
         /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

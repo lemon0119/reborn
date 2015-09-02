@@ -21,12 +21,6 @@ class SuiteRecord extends CActiveRecord
         }
     }
     
-        public static function getRecordBySuiteAndStudentID($suiteID, $createPerson , $classID,$lessonID) {
-        return SuiteRecord::model()->find('suiteID=? and studentID=? and classID=? and lessonID=?', array($suiteID,$createPerson,$classID,$lessonID));
-
-    }
-    
-
     public static function getClassworkAll($type) {
         $createPerson = Yii::app()->session['userid_now'];
         $getSuiteID = "select suiteID from suite where suiteType='$type'";
@@ -65,6 +59,35 @@ class SuiteRecord extends CActiveRecord
             $recordID = $oldRecord->recordID;
             return true;
         }
+    }
+    
+    
+    public function getNextStudentID($workID,$studentID,$accomplished,$classID)
+    {
+//        $sql = "select studentID from suite_record";
+//        if($accomplished != 1)
+//        {
+//            $condition = " where workID = '$workID' and studentID>'$studentID' and ratio_accomplish!=1 limit 1";
+//        }else{
+//            $condition = " where workID = '$workID' and studentID>'$studentID' and ratio_accomplish=1 limit 1";
+//        }
+//        $sql = $sql.$condition;
+//        return Yii::app()->db->createCommand($sql)->query();
+        if($accomplished !=1)
+        {
+             $result =  Student::model()->find('classID=? and userID>? and userID not in(select studentID from suite_record where workID=? and ratio_accomplish=1) order by userID ASC', array($classID,$studentID,$workID));
+             if($result != NULL)
+                 return $result['userID'];   
+             else
+                 return -1;
+        }else
+        {
+            $result =  SuiteRecord::model()->find('workID=? and studentID>? and ratio_accomplish=1 order by studentID ASC', array($workID,$studentID));
+            if($result != NULL)
+                return $result['studentID'];
+            else
+                return -1;
+         }
     }
 	/**
 	 * @return string the associated database table name

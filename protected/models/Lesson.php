@@ -93,8 +93,20 @@ class Lesson extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        
+        public function getLessonByTeacherID($teacherID)
+        {
+            $sql = "select * from lesson";
+            $condition = " where classID in(select classID from teacher_class where teacherID = '$teacherID')";
+            $sql = $sql.$condition;
+            return Yii::app()->db->createCommand($sql)->query();
+                
+            
+        }
+                
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

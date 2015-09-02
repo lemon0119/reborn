@@ -3,19 +3,13 @@ class WebrtcController extends CController{
     public $layout='';
     
     public function actionTeaCam(){
-        $this->render('teaCam');
+        $this->renderPartial('teaCam',['classID'=>$_GET['classID']]);
     }
     public function actionstuCam(){
-        $this->render('stuCam');
-    }
-    public function actionTeaScreen(){
-        $this->render('teaScreen');
-    }
-    public function actionStuScreen(){
-        $this->render('stuScreen');
+        $this->renderPartial('stuCam',['classID'=>$_GET['classID']]);
     }
     public function actionNull(){
-        $this->render('null');
+        $this->renderPartial('null');
     }
     
 }
