@@ -61,10 +61,10 @@
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
                         <td><?php echo $model['title']?></td>
-                        <td><?php  if(strlen($model['content'])<=15)
+                        <td><?php  if(Tool::clength($model['content'])<=15)
                                    echo  str_replace("$",":",$model['content']);
                                else
-                                   echo str_replace("$",":",substr($model['content'], 0, 15)."...");
+                                   echo str_replace("$",":",Tool::csubstr($model['content'], 0, 15)."...");
                                         ?>
                                         </td>
                         <td><?php if($model['createPerson']=="0")

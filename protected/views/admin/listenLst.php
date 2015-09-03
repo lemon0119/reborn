@@ -63,10 +63,10 @@
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
                         <td><?php echo $model['title'];?></td>
-                        <td><?php  if(strlen($model['content'])<=17)
+                        <td><?php  if(Tool::clength($model['content'])<=15)
                                         echo $model['content'];
                                     else
-                                        echo substr($model['content'], 0, 17)."...";
+                                        echo Tool::csubstr($model['content'], 0, 15)."...";
                                         ?></td>
                         <td><?php if($model['createPerson']=="0")
                                         echo "管理员";
