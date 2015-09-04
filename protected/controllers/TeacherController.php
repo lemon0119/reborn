@@ -30,9 +30,64 @@ class TeacherController extends CController {
     public function actionAddPpt(){
             $typename = Yii::app()->session['role_now'];
             $userid = Yii::app()->session['userid_now'];
-            $pptFilePath =$typename."/".$userid."/".$_GET['classID']."/".$_GET['on']."/ppt/"; 
+            $classID=$_GET['classID'];
+            $progress=$_GET['progress'];
+            $on=$_GET['on'];
+            $pptFilePath =$typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir = "resources/".$pptFilePath; 
-            move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+            $result="上传失败!";
+            if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint")
+            {   
+                if($_FILES["file"]["size"] < 30000000)
+                {
+                    if ($_FILES["file"]["error"] > 0)
+                    {
+                        $result = "Return Code: " . $_FILES["file"]["error"];
+                    }
+                  else
+                    {
+                        if (file_exists("upload/" . $_FILES["file"]["name"]))
+                        {
+                            $result = $_FILES["file"]["name"] . "已经存在！";
+                        }
+                        else
+                        {
+                             move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+                            $result = "上传成功！";
+                      }
+                    }
+                }else{
+                    $reult = "PPT文件限定大小为30M！";
+                }
+            }else {
+                $result = "请上传正确类型的文件！";
+            }
+            return $this->render('pptLst',[
+                    'classID'   =>  $classID,
+                    'progress'  =>  $progress,
+                    'on'        =>  $on,
+                    'result'    =>  $result,    
+        ]);
+    }
+    
+        public function actionDeletePpt(){
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $fieName        =   $_GET['ppt'];
+            $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
+            $dir            =   "resources/".$pptFilePath; 
+            $file           =   $dir.$fieName;
+            unlink(iconv('utf-8','gb2312',$file));
+            $result         =   "删除成功！";    
+            return $this->render('pptLst',[
+                    'classID'   =>  $classID,
+                    'progress'  =>  $progress,
+                    'on'        =>  $on,
+                    'result'    =>  $result,    
+        ]);
     }
     
     public function actionlookExer(){
