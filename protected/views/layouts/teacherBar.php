@@ -65,12 +65,17 @@
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">作业管理<b class="caret"></b></a>
                                             <ul class="dropdown-menu">
-              
                                             <li><a href="./index.php?r=teacher/assignWork">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="./index.php?r=teacher/courseLst">考试管理</a></li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">考试管理<b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                            <li><a href="./index.php?r=teacher/assignExam">试卷管理</a></li>
+                                            <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
+                                            </ul>
+                                        </li>
                                         </ul>
                                         <ul class="nav pull-right">
                                             <li class="dropdown">

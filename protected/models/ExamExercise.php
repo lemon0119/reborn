@@ -87,6 +87,25 @@ class ExamExercise extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+       public function insertExam($type,$exerciseID,$examID) {
+            $newSuiteExercise = new ExamExercise();
+            $newSuiteExercise->type  = $type;
+            $newSuiteExercise->exerciseID = $exerciseID;
+            $newSuiteExercise->examID = $examID;
+            if($this->findAll(array(
+                'condition' => 'type =:type and exerciseID=:exerciseID and examID=:examID',
+                'params' =>array(':type' => $type,':exerciseID'=>$exerciseID,':examID'=>$examID)
+            ))!= NULL) 
+            {
+                echo "1";
+                return "HAVEN";
+            }     
+            else 
+            {
+                echo "2";
+                return $newSuiteExercise->insert();
+            }
+        }
         
  //宋杰 2015-7-31 根据题目类型从相应题库中获取题目       
     public function getExamExerByType( $suiteID, $type)

@@ -91,9 +91,7 @@ $("#myForm").submit(function(){
             alert("题目不能为空");
             return false;
         }
-    });
-    
-    
+    }); 
 </script>
 
 

@@ -350,3 +350,1407 @@ REQUEST_URI=/reborn/index.php?r=teacher/returnFromAddChoice
 in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2234)
 in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1429)
 in C:\wamp\www\reborn\index.php (29)
+2015/09/02 14:51:02 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'open' in 'where clause'. The SQL statement executed was: select * from class_lesson_suite where classID in (select classID from teacher_class where teacherID = '1') and open=1 order by classID ASC ,lessonID ASC.
+in C:\wamp\www\reborn\protected\models\ClassLessonSuite.php (128)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2367)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 14:51:02 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'open' in 'where clause'. The SQL statement executed was: select * from class_lesson_suite where classID in (select classID from teacher_class where teacherID = '1') and open=1 order by classID ASC ,lessonID ASC' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 C:\wamp\www\reborn\protected\models\ClassLessonSuite.php(128): CDbCommand->query()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2367): ClassLessonSuite->getSuiteClassByTeacherID('1', '')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionStuWork()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('stuWork')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/stuWork')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/stuWork
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/index
+---
+2015/09/02 14:52:10 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'open' in 'where clause'. The SQL statement executed was: SELECT * FROM `class_lesson_suite` `t` WHERE classID=? and lessonID=? and open=?. Bound with 0='1', 1='1', 2=1.
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1970)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 14:52:10 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'open' in 'where clause'. The SQL statement executed was: SELECT * FROM `class_lesson_suite` `t` WHERE classID=? and lessonID=? and open=?. Bound with 0='1', 1='1', 2=1' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 C:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryAll()
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1470): CActiveRecord->query(Object(CDbCriteria), true)
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1970): CActiveRecord->findAll('classID=? and l...', Array)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAssignWork()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('assignWork')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/assignW...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/assignWork
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/index
+---
+2015/09/02 14:56:29 [error] [php] Undefined variable: exer (C:\wamp\www\reborn\protected\views\teacher\suiteKey.php:5)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2689): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAjaxChoice()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxChoice
+in C:\wamp\www\reborn\protected\views\teacher\suiteKey.php (5)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2689)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 14:57:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "courseLst" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('courseLst')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('courseLst')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/courseL...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/courseLst
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/stuWork&&workID=31&&classID=1&&page=1&&selectClassID=-1
+---
+2015/09/02 15:26:43 [error] [php] Undefined variable: exer (C:\wamp\www\reborn\protected\views\teacher\suiteKey.php:5)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2689): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAjaxChoice()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxChoice
+in C:\wamp\www\reborn\protected\views\teacher\suiteKey.php (5)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2689)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 15:26:57 [error] [php] Undefined variable: exer (C:\wamp\www\reborn\protected\views\teacher\suiteKey.php:5)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2689): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAjaxChoice()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxChoice
+in C:\wamp\www\reborn\protected\views\teacher\suiteKey.php (5)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2689)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 17:15:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "managerExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('managerExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('managerExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/manager...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/managerExam
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignWork
+---
+2015/09/02 17:15:09 [error] [exception.CException] exception 'CException' with message 'Exam and its behaviors do not have a method or closure named "getAllExamByPage".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getAllExamByPag...', Array)
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1986): CActiveRecord->__call('getAllExamByPag...', Array)
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1986): Exam->getAllExamByPage(5)
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAssignExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('assignExam')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/assignE...')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/assignExam
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignWork
+---
+2015/09/02 17:15:47 [error] [php] Undefined index: suiteLst (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1987)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/assignExam
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1987)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 17:16:13 [error] [php] Undefined variable: teacher_class (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1993)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/assignExam
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1993)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 17:16:54 [error] [php] Undefined variable: array_allsuite (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2004)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/assignExam
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2004)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 17:17:07 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\views\teacher\assignExam.php:48)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2006): TeacherController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAssignExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/assignExam
+in C:\wamp\www\reborn\protected\views\teacher\assignExam.php (48)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2006)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/02 17:17:43 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\assignExam.php:57)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2006): TeacherController->render()
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAssignExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/assignExam
+in C:\wamp\www\reborn\protected\views\teacher\assignExam.php (57)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2006)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 10:17:44 [error] [exception.CException] exception 'CException' with message '属性 "ClassExam.suiteID" 未被定义.' in C:\wamp\www\framework\base\CComponent.php:173
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(161): CComponent->__set('suiteID', '1')
+#1 C:\wamp\www\reborn\protected\models\ClassExam.php(107): CActiveRecord->__set('suiteID', '1')
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2508): ClassExam->insertExam('1', '1')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionChangeExamClass()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ChangeExamClass')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ChangeE...')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ChangeExamClass&&examID=1&&isOpen=0&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignExam
+---
+2015/09/06 10:18:54 [error] [php] Undefined variable: currentLesson (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2535)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ChangeExamClass&&examID=1&&isOpen=0&&page=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2535)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 10:20:56 [error] [exception.CDbException] exception 'CDbException' with message '列名必须是一个字符串或者数组' in C:\wamp\www\framework\db\schema\CDbCommandBuilder.php:828
+Stack trace:
+#0 C:\wamp\www\framework\db\schema\CDbCommandBuilder.php(621): CDbCommandBuilder->createInCondition(Object(CMysqlTableSchema), NULL, Array, NULL)
+#1 C:\wamp\www\framework\db\ar\CActiveRecord.php(1746): CDbCommandBuilder->createPkCriteria(Object(CMysqlTableSchema), NULL, '', Array)
+#2 C:\wamp\www\framework\db\ar\CActiveRecord.php(1124): CActiveRecord->updateByPk(NULL, Array)
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2512): CActiveRecord->update()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionChangeExamClass()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ChangeExamClass')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ChangeE...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ChangeExamClass&&examID=1&&isOpen=0&&page=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignExam
+---
+2015/09/06 11:06:05 [error] [php] Undefined index: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2020)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2020)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:08:38 [error] [php] Undefined index: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2020)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2020)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:14:19 [error] [php] Undefined index: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2020)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2020)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:14:34 [error] [php] Undefined offset: 0 (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2294)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2294)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:15:24 [error] [php] Undefined variable: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2313)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2313)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:15:43 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\modifyExam.php:4)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2322): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+in C:\wamp\www\reborn\protected\views\teacher\modifyExam.php (4)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2322)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 11:16:35 [error] [php] Undefined variable: currentClass (C:\wamp\www\reborn\protected\views\teacher\modifyExam.php:18)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2322): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+in C:\wamp\www\reborn\protected\views\teacher\modifyExam.php (18)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2322)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 11:17:04 [error] [php] Undefined variable: currentClass (C:\wamp\www\reborn\protected\views\teacher\modifyExam.php:14)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2322): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+in C:\wamp\www\reborn\protected\views\teacher\modifyExam.php (14)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2322)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 11:17:30 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\modifyExam.php:20)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2322): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+in C:\wamp\www\reborn\protected\views\teacher\modifyExam.php (20)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2322)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 11:17:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:17:55 [error] [exception.CException] exception 'CException' with message 'Exam and its behaviors do not have a method or closure named "getSuiteExerByTypePage".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getSuiteExerByT...', Array)
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): CActiveRecord->__call('getSuiteExerByT...', Array)
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getSuiteExerByTypePage('1', 'choice', 5)
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:18:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:18:35 [error] [exception.CException] exception 'CException' with message 'Exam and its behaviors do not have a method or closure named "getSuiteExerByType".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getSuiteExerByT...', Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(130): CActiveRecord->__call('getSuiteExerByT...', Array)
+#2 C:\wamp\www\reborn\protected\models\Exam.php(130): Exam->getSuiteExerByType('1', 'choice')
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:18:36 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:18:36 [error] [exception.CException] exception 'CException' with message 'Exam and its behaviors do not have a method or closure named "getSuiteExerByType".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getSuiteExerByT...', Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(130): CActiveRecord->__call('getSuiteExerByT...', Array)
+#2 C:\wamp\www\reborn\protected\models\Exam.php(130): Exam->getSuiteExerByType('1', 'choice')
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:18:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:18:56 [error] [exception.CException] exception 'CException' with message 'Exam and its behaviors do not have a method or closure named "getSuiteExerByType".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getSuiteExerByT...', Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(130): CActiveRecord->__call('getSuiteExerByT...', Array)
+#2 C:\wamp\www\reborn\protected\models\Exam.php(130): Exam->getSuiteExerByType('1', 'choice')
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:19:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:19:18 [error] [exception.CException] exception 'CException' with message 'Exam and its behaviors do not have a method or closure named "getSuiteExerByType".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getSuiteExerByT...', Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(130): CActiveRecord->__call('getSuiteExerByT...', Array)
+#2 C:\wamp\www\reborn\protected\models\Exam.php(130): Exam->getSuiteExerByType('1', 'choice')
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:19:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:19:42 [error] [exception.CException] exception 'CException' with message 'Exam and its behaviors do not have a method or closure named "getSuiteExerByType".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getSuiteExerByT...', Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(130): CActiveRecord->__call('getSuiteExerByT...', Array)
+#2 C:\wamp\www\reborn\protected\models\Exam.php(130): Exam->getSuiteExerByType('1', 'choice')
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:22:23 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:22:23 [error] [exception.CException] exception 'CException' with message 'Exam and its behaviors do not have a method or closure named "getExamExerByType".' in C:\wamp\www\framework\base\CComponent.php:266
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(227): CComponent->__call('getExamExerByTy...', Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(130): CActiveRecord->__call('getExamExerByTy...', Array)
+#2 C:\wamp\www\reborn\protected\models\Exam.php(130): Exam->getExamExerByType('1', 'choice')
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#6 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#7 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#12 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:25:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:25:33 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'examID' in 'where clause'. The SQL statement executed was: select * from choice where exerciseID in (select exerciseID from suite_exercise where examID='1' and type='choice') order by exerciseID ASC.
+in C:\wamp\www\reborn\protected\models\Exam.php (156)
+in C:\wamp\www\reborn\protected\models\Exam.php (130)
+in C:\wamp\www\reborn\protected\models\Exam.php (208)
+2015/09/06 11:25:33 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'examID' in 'where clause'. The SQL statement executed was: select * from choice where exerciseID in (select exerciseID from suite_exercise where examID='1' and type='choice') order by exerciseID ASC' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(156): CDbCommand->query()
+#2 C:\wamp\www\reborn\protected\models\Exam.php(130): Exam->getchoice('1')
+#3 C:\wamp\www\reborn\protected\models\Exam.php(208): Exam->getExamExerByType('1', 'choice')
+#4 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#5 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#6 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#10 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#11 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#12 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#13 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:26:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:26:39 [error] [php] Undefined variable: workLst (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2613)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2613)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:27:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:27:12 [error] [php] Undefined variable: suiteWork (C:\wamp\www\reborn\protected\views\teacher\ownExam.php:24)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2617): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\ownExam.php (24)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2617)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:28:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:28:00 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\ownExam.php:38)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2617): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\ownExam.php (38)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2617)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:28:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:28:48 [error] [php] Illegal string offset 'examID' (C:\wamp\www\reborn\protected\views\teacher\ownExam.php:38)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2617): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\ownExam.php (38)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2617)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:29:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:29:12 [error] [php] Undefined index: examID (C:\wamp\www\reborn\protected\views\teacher\ownExam.php:38)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2617): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\ownExam.php (38)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2617)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 11:30:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 11:31:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 12:20:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllEx...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 12:23:47 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\allWork.php:59)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2670): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToAllExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\allWork.php (59)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2670)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 12:26:42 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\allExam.php:59)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2670): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToAllExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllExam&&type=choice&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\allExam.php (59)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2670)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 12:34:08 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'suiteID' in 'where clause'. The SQL statement executed was: select * from choice where exerciseID in (select exerciseID from exam_exercise where suiteID='1' and type='choice') order by exerciseID ASC LIMIT :offset,:limit. Bound with :offset=0, :limit=5.
+in C:\wamp\www\reborn\protected\models\Exam.php (225)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2609)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 12:34:08 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'suiteID' in 'where clause'. The SQL statement executed was: select * from choice where exerciseID in (select exerciseID from exam_exercise where suiteID='1' and type='choice') order by exerciseID ASC LIMIT :offset,:limit. Bound with :offset=0, :limit=5' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(225): CDbCommand->query()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 12:34:08 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'suiteID' in 'where clause'. The SQL statement executed was: select * from choice where exerciseID in (select exerciseID from exam_exercise where suiteID='1' and type='choice') order by exerciseID ASC LIMIT :offset,:limit. Bound with :offset=0, :limit=5.
+in C:\wamp\www\reborn\protected\models\Exam.php (225)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2609)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 12:34:08 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'suiteID' in 'where clause'. The SQL statement executed was: select * from choice where exerciseID in (select exerciseID from exam_exercise where suiteID='1' and type='choice') order by exerciseID ASC LIMIT :offset,:limit. Bound with :offset=0, :limit=5' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(225): CDbCommand->query()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2609): Exam->getExamExerByTypePage('1', 'choice', 5)
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToOwnExam')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToOwnEx...')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnExam&&type=choice&&examID=1&&page=undefined
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+---
+2015/09/06 13:11:45 [error] [php] Undefined variable: examID (C:\wamp\www\reborn\protected\models\ExamExercise.php:94)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/AddExam&&examID=1&&type=choice&&exerciseID=5&&code=598529&&page=1
+in C:\wamp\www\reborn\protected\models\ExamExercise.php (94)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2088)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:12:12 [error] [php] Undefined variable: exam (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2108)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/AddExam&&examID=1&&type=choice&&exerciseID=5&&code=51049&&page=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2108)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:13:03 [error] [php] Undefined offset: 0 (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2727)
+Stack trace:
+#0 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionDeleteSuiteExercise()
+#1 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#2 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#3 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#4 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#5 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#6 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#7 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/deleteSuiteExercise&&exerciseID=23&&type=choice&&suiteID=3&&page=undefined
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2727)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2626)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2040)
+2015/09/06 13:19:15 [error] [php] Undefined offset: 0 (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2343)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2343)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2016)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:21:18 [error] [php] Undefined offset: 0 (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2343)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyWork&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2343)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2016)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:21:30 [error] [php] Undefined index: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2020)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2020)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:21:55 [error] [php] Undefined index: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2020)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&suiteID=1&&type=choice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2020)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:22:12 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php:4)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2371): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php (4)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2371)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 13:22:34 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php:4)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2371): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=look
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php (4)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2371)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 13:23:41 [error] [php] Undefined variable: currentClass (C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php:18)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2371): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php (18)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2371)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 13:23:45 [error] [php] Undefined variable: currentClass (C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php:18)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2371): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php (18)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2371)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 13:24:17 [error] [php] Undefined variable: currentClass (C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php:14)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2371): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php (14)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2371)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 13:24:32 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php:18)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2371): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php (18)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2371)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 13:25:14 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php:30)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2371): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2024): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+in C:\wamp\www\reborn\protected\views\teacher\modifyTypeExam.php (30)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2371)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2024)
+2015/09/06 13:25:44 [error] [php] Undefined variable: workLst (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2679)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1&&page=undefined
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2679)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:26:11 [error] [php] Undefined variable: workLst (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2679)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1&&page=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2679)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:26:47 [error] [php] Undefined variable: suiteWork (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:25)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2683): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1&&page=undefined
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (25)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2683)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:27:35 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:46)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2683): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1&&page=1
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (46)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2683)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:28:46 [error] [php] Illegal string offset 'examID' (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:46)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2683): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1&&page=1
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (46)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2683)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:30:00 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2012)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyWork&&examID=1&&type=look
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2012)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:30:05 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2012)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyWork&&examID=1&&type=question
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2012)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 13:46:50 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2162)
+Stack trace:
+#0 C:\wamp\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#1 C:\wamp\www\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#2 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#4 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#5 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#6 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#7 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#8 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditWork&&examID=1&&type=choice&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2162)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2133)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 14:19:55 [error] [php] Undefined variable: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1469)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/returnFromAddChoice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1469)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 14:39:05 [error] [php] Undefined variable: thisCh (C:\wamp\www\reborn\protected\controllers\TeacherController.php:1572)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/editFillInfo&&exerciseID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (1572)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 14:44:39 [error] [exception.CException] exception 'CException' with message 'TeacherController 无法找到请求的视图 "ModifyEditFill".' in C:\wamp\www\framework\web\CController.php:878
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(782): CController->renderPartial('ModifyEditFill', Array, true)
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(1567): CController->render('ModifyEditFill', Array)
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->actionEditFillInfo()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('editFillInfo')
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/editFil...')
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#10 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/editFillInfo&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyEditWork&&type=filling&&exerciseID=1
+---
+2015/09/06 15:03:16 [error] [php] Undefined index: suiteID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2070)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/deleteSuiteExercise&&exerciseID=1&&type=key&&examID=1&&page=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2070)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 15:05:14 [error] [php] Undefined index: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2682)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&suiteID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2682)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 15:05:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllTypeExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllTypeExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllTypeExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllTy...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllTypeExam&&type=key&&suiteID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+---
+2015/09/06 15:09:00 [error] [php] Undefined index: examID (C:\wamp\www\reborn\protected\controllers\TeacherController.php:2682)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&suiteID=1
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2682)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 15:09:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllTypeExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllTypeExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllTypeExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllTy...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllTypeExam&&type=key&&suiteID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+---
+2015/09/06 15:09:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ToAllTypeExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ToAllTypeExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ToAllTypeExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ToAllTy...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ToAllTypeExam&&type=key&&examID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ModifyExam&&examID=1&&type=key
+---
+2015/09/06 15:12:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyEditExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyEditExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyEditExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyE...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditExam&&type=listen&&exerciseID=2
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ToAllTypeExam&&type=listen&&examID=1
+---
+2015/09/06 15:12:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "ModifyEditExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('ModifyEditExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('ModifyEditExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/ModifyE...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/ModifyEditExam&&type=look&&exerciseID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/ToAllTypeExam&&type=look&&examID=1
+---
+2015/09/06 15:21:00 [error] [php] Undefined variable: currentClass (C:\wamp\www\reborn\protected\views\teacher\modifyExam.php:14)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2379): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2063): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+in C:\wamp\www\reborn\protected\views\teacher\modifyExam.php (14)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2379)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2063)
+2015/09/06 15:23:02 [error] [exception.CException] exception 'CException' with message '属性 "CWebApplication.sssion" 未被定义.' in C:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\wamp\www\framework\base\CModule.php(105): CComponent->__get('sssion')
+#1 C:\wamp\www\reborn\protected\views\teacher\modifyExam.php(14): CModule->__get('sssion')
+#2 C:\wamp\www\framework\web\CBaseController.php(126): require('C:\\wamp\\www\\reb...')
+#3 C:\wamp\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\wamp\\www\\reb...', Array, true)
+#4 C:\wamp\www\framework\web\CController.php(869): CBaseController->renderFile('C:\\wamp\\www\\reb...', Array, true)
+#5 C:\wamp\www\framework\web\CController.php(782): CController->renderPartial('modifyExam', Array, true)
+#6 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2378): CController->render('modifyExam', Array)
+#7 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2062): TeacherController->renderModifyExam('choice', '1')
+#8 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#9 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('modifyExam')
+#13 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/modifyE...')
+#14 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#15 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#16 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/assignExam&&classID=1
+---
+2015/09/06 15:52:50 [error] [php] Undefined variable: suite (C:\wamp\www\reborn\protected\views\teacher\modifyExam.php:21)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\framework\web\CController.php(782): TeacherController->renderPartial()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2378): TeacherController->render()
+#3 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2062): TeacherController->renderModifyExam()
+#4 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionModifyExam()
+#5 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#7 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/modifyExam&&examID=1&&type=choice
+in C:\wamp\www\reborn\protected\views\teacher\modifyExam.php (21)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2378)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2062)
+2015/09/06 15:54:43 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'suiteID' in 'field list'. The SQL statement executed was: select max(suiteID) as id from exam.
+in C:\wamp\www\reborn\protected\models\Exam.php (231)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2500)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/06 15:54:43 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'suiteID' in 'field list'. The SQL statement executed was: select max(suiteID) as id from exam' in C:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 C:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(231): CDbCommand->query()
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2500): Exam->insertExam('2', '1', '\xE5\x8D\x95\xE5\x85\x83\xE6\xB5\x8B\xE8\xAF\x95\xE4\xB8\x83', '1')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddExam')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddExam')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddExam
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AssignExam&&classID=2
+---
+2015/09/06 15:55:31 [error] [exception.CException] exception 'CException' with message '属性 "Suite.examID" 未被定义.' in C:\wamp\www\framework\base\CComponent.php:173
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(161): CComponent->__set('examID', 7)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(242): CActiveRecord->__set('examID', 7)
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2500): Exam->insertExam('2', '1', '\xE5\x8D\x95\xE5\x85\x83\xE6\xB5\x8B\xE8\xAF\x95\xE4\xB8\x83', '1')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddExam')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddExam')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddExam
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AssignExam&&classID=2
+---
+2015/09/06 15:57:49 [error] [exception.CException] exception 'CException' with message '属性 "Suite.examID" 未被定义.' in C:\wamp\www\framework\base\CComponent.php:173
+Stack trace:
+#0 C:\wamp\www\framework\db\ar\CActiveRecord.php(161): CComponent->__set('examID', 7)
+#1 C:\wamp\www\reborn\protected\models\Exam.php(242): CActiveRecord->__set('examID', 7)
+#2 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2500): Exam->insertExam('\xE5\x8D\x95\xE5\x85\x83\xE6\xB5\x8B\xE8\xAF\x95\xE4\xB8\x83', '1')
+#3 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAddExam()
+#4 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 C:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 C:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('AddExam')
+#8 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/AddExam')
+#9 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/AddExam
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/AssignExam&&classID=2
+---
