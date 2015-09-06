@@ -42,10 +42,10 @@
                                 if((is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {
                     ?>
-                    <option value ="<?php echo $file;?>+-+<?php   $dir = "$pdir/$file"; 
+                    <option value ="<?php echo iconv("gb2312","UTF-8",$file);?>+-+<?php   $dir = "$pdir/$file"; 
                                                                     $num = sizeof(scandir($dir)); 
                                                                     $num = ($num>2)?($num-2):0; 
-                                                                    echo $num;?>"><?php echo $file;?></option>   
+                                                                    echo $num;?>"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
                     <?php     
                                 } 
                         } 
@@ -215,6 +215,8 @@ $(document).ready(function(){
     openConnect();
       
     $("#play-ppt").click(function(){
+        if($("#choose-ppt")[0].selectedIndex == -1 )
+        {    return;    }
         window.scrollTo(0,130);
         document.getElementById("teacher-dianbo").disabled = true;
         $("#teacher-dianbo").attr("class","btn");

@@ -63,18 +63,18 @@
                         <td><?php echo $model['courseID'];?></td>
                         <td><?php if($searchKey == 'no' || strpos($model['requirements'],$searchKey)===false)
                     {
-                               if(strlen($model['requirements'])<=30)
+                               if(Tool::clength($model['requirements'])<=15)
                                     echo $model['requirements'];
                                 else
-                                    echo substr($model['requirements'], 0, 30)."...";
+                                    echo Tool::csubstr($model['requirements'], 0, 15)."...";
                     }else
                     {
                         $strStart = strpos($model['requirements'], $searchKey);
                         $start = $strStart<=9?0:$strStart-9;            
-                       $content =  str_replace($searchKey, '<font color=red>'.$searchKey.'</font>',substr($model['requirements'], $start, 30));
+                       $content =  str_replace($searchKey, '<font color=red>'.$searchKey.'</font>',Tool::csubstr($model['requirements'], $start, 15));
                        if($start >= 9)
                            $content = "...".$content;
-                       if(strlen($model['requirements'])>($start + 30))
+                       if(Tool::clength($model['requirements'])>($start + 15))
                            $content = $content."...";
                        echo $content;
                      }

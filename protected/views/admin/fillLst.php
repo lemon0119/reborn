@@ -62,10 +62,10 @@
                 <tr>
                     <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                     <td><?php echo $model['courseID'];?></td>
-                    <td><?php  if(strlen($model['requirements'])<=30)
+                    <td><?php  if(Tool::clength($model['requirements'])<=15)
                                    echo  str_replace("$$","__",$model['requirements']);
                                else
-                                   echo str_replace("$$","__",substr($model['requirements'], 0, 30)."...");
+                                   echo str_replace("$$","__",Tool::csubstr($model['requirements'], 0, 15)."...");
                    ?></td>
                     <td><?php if($model['createPerson']=="0")
                                     echo "管理员";
