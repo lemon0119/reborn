@@ -11,31 +11,31 @@ class TeacherController extends CController {
     
     public $layout='//layouts/teacherBar';
     public function actionVirtualClass() {
-        $userID = Yii::app()->session['userid_now'];
+        $userID     = Yii::app()->session['userid_now'];
         $userName   = Teacher::model()->findByPK($userID)->userName;
         return $this->render('virtualClass',['userName'=>$userName,'classID'=>$_GET['classID'],'on'=>$_GET['on']]);
     }
     
     public function actionPptLSt(){
-        $classID=$_GET['classID'];
-        $progress=$_GET['progress'];
-        $on=$_GET['on'];
+        $classID    =   $_GET['classID'];
+        $progress   =   $_GET['progress'];
+        $on         =   $_GET['on'];
         return $this->render('pptLst',[
-            'classID'=>$classID,
-            'progress'=>$progress,
-            'on'=>$on
+            'classID'   =>  $classID,
+            'progress'  =>  $progress,
+            'on'        =>  $on
         ]);
     }
     
     public function actionAddPpt(){
-            $typename = Yii::app()->session['role_now'];
-            $userid = Yii::app()->session['userid_now'];
-            $classID=$_GET['classID'];
-            $progress=$_GET['progress'];
-            $on=$_GET['on'];
-            $pptFilePath =$typename."/".$userid."/".$classID."/".$on."/ppt/"; 
-            $dir = "resources/".$pptFilePath; 
-            $result="上传失败!";
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
+            $dir            =   "resources/".$pptFilePath; 
+            $result         =   "上传失败!";
             if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint")
             {   
                 if($_FILES["file"]["size"] < 30000000)
@@ -97,7 +97,7 @@ class TeacherController extends CController {
             $classID        =   $_GET['classID'];
             $progress       =   $_GET['progress'];
             $on             =   $_GET['on'];
-            $fileDir      =   $_GET['ppt'];
+            $fileDir        =   $_GET['ppt'];
             $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir            =   "resources/".$pptFilePath.$fileDir; 
   
@@ -105,7 +105,7 @@ class TeacherController extends CController {
                     'classID'   =>  $classID,
                     'progress'  =>  $progress,
                     'on'        =>  $on,
-                    'dir'    =>  $dir,    
+                    'dir'       =>  $dir,    
         ]);
     }
     
