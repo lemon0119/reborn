@@ -50,7 +50,10 @@
                             <?php echo iconv("gb2312","UTF-8",$file);?>
                         </td>
                         <td>
-                            <a href="#"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                            <a href="./index.php?r=teacher/lookPpt&&ppt=<?php  $fileName   = iconv("gb2312","UTF-8",$file);
+                                                                                $len    = strlen($fileName);
+                                                                                $path   = substr($fileName,0,$len-4);
+                                                                                echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                             <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>"><img src="<?php echo IMG_URL; ?>edit.png">下载</a>
                             <a href="./index.php?r=teacher/deletePpt&&ppt=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                         </td>

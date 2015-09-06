@@ -46,13 +46,14 @@ class TeacherController extends CController {
                     }
                   else
                     {
-                        if (file_exists("upload/" . $_FILES["file"]["name"]))
+                        if (file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
                         {
                             $result = $_FILES["file"]["name"] . "已经存在！";
                         }
                         else
                         {
                              move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+                             sleep(14);
                             $result = "上传成功！";
                       }
                     }
@@ -76,10 +77,10 @@ class TeacherController extends CController {
             $classID        =   $_GET['classID'];
             $progress       =   $_GET['progress'];
             $on             =   $_GET['on'];
-            $fieName        =   $_GET['ppt'];
+            $fileName        =   $_GET['ppt'];
             $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir            =   "resources/".$pptFilePath; 
-            $file           =   $dir.$fieName;
+            $file           =   $dir.$fileName;
             unlink(iconv('utf-8','gb2312',$file));
             $result         =   "删除成功！";    
             return $this->render('pptLst',[
@@ -87,6 +88,24 @@ class TeacherController extends CController {
                     'progress'  =>  $progress,
                     'on'        =>  $on,
                     'result'    =>  $result,    
+        ]);
+    }
+    
+    public function actionLookPpt(){
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $fileDir      =   $_GET['ppt'];
+            $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
+            $dir            =   "resources/".$pptFilePath.$fileDir; 
+  
+            return $this->render('lookPpt',[
+                    'classID'   =>  $classID,
+                    'progress'  =>  $progress,
+                    'on'        =>  $on,
+                    'dir'    =>  $dir,    
         ]);
     }
     
