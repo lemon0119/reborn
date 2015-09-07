@@ -201,7 +201,7 @@ class StudentController extends CController {
         $result = LookType::model()->findByPK($exerID);
         $isExam = false;
         return $this->render('lookExer',array( 
-            'exercise'=>$classexam,
+            'exercise'=>$classwork,
             'exerOne'=>$result,
             'isExam' =>$isExam
         ));
