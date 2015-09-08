@@ -13,15 +13,19 @@ else {
 }
 ?>
 <div clas="span9">
+    <?php if($isExam == true){?>
     <center>
     <h6>距离考试剩余还有</h6>
     <p id="timeCounter"></p>
     </center>
+    <?php }else { ?>
+    <h3 align="center"> 在左侧选择题目开始答题。 </h3>
+    <?php } ?>
 </div>
 <script>
 var timeCounter = (function() {
  var int;
- var currtime = "<?php echo $currtime?>";
+ var currtime = "<?php echo date("Y-m-d  H:i:s");?>";
  var time = currtime.substr(11,19).split(":");
  var h2 = time[0];
  var m2 = time[1];
