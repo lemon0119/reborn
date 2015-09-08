@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -572,6 +572,37 @@ class StudentController extends CController {
     public function actionIndex(){
         $this->render('index');
     }
+    public function actionSet(){       //set
+    	$result ='no';
+    	if(isset($_POST['old'])){
+    		$new1=$_POST['new1'];
+    		$defnew=$_POST['defnew'];
+                $email=$_POST['email'];
+    		$userid_now = Yii::app()->session['userid_now'];
+    		$usertype=Yii::app()->session['role_now'];
+    		
+    		//
+    		
+    		
+    		//$thisStudent=new Student();
+    		//$thisStudent->password=$new1;
+    		//$result=$thisStudent->update();
+    		$user = Student::model()->find('userID=?', array($userid_now));
+                if($user->password !== $_POST['old']){
+    			$result='old error';
+    			$this->render('set',['result'=>$result]);
+    			return;
+    		}
+    		$user->password=$new1;
+                $user->mail_address=$email;
+    		$result=$user->save();
+    		
+    		
+    	}
+    	
+    	$this->render('set',['result'=>$result]);
+    }
+    
     public function actionHello(){
         return $this->render('hello',array(null));
     }
