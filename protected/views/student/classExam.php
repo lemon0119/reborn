@@ -22,7 +22,7 @@
                 <?php foreach ($classexams as $exam){?>
                     <tr>
                             <td>
-                                    <?php echo $exam['suiteName'];?>
+                                    <?php echo $exam['examName'];?>
                             </td>
                             <td>
                                     <?php echo $exam['begintime'];?>
@@ -35,11 +35,11 @@
                             </td>
                             <td>
                                 <?php //if(time() > strtotime($exam['begintime']) && time() < strtotime($exam['endtime'])){?>
-                                <a href="./index.php?r=student/clsexamOne&&suiteID=<?php echo $exam['suiteID'];?>" class="view-link"><?php echo '进　　入';?></a>
+                                <a href="./index.php?r=student/clsexamOne&&suiteID=<?php echo $exam['examID'];?>" class="view-link"><?php echo '进　　入';?></a>
                                 <?php //} else { ?>
                                     <?php //echo '<font color="#ff0000">已经截止</span>'; ?>
                                   &nbsp;&nbsp;&nbsp|  &nbsp;&nbsp;&nbsp    
-                                  <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['suiteID'];?>" class="view-link"><?php echo '查看成绩';?></a>
+                                  <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['examID'];?>" class="view-link"><?php echo '查看成绩';?></a>
                                 <?php //} ?>
                             </td>
                     </tr>

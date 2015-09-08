@@ -181,7 +181,7 @@ class StudentController extends CController {
         $result = ListenType::model()->findByPK($exerID);
         $isExam = true;
         $examInfo = Exam::model()->find($suiteID);
-        return $this->render('keyExer',array( 
+        return $this->render('listenExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
             'isExam'=>$isExam,
@@ -219,7 +219,7 @@ class StudentController extends CController {
         $result = LookType::model()->findByPK($exerID);
         $isExam = true;
         $examInfo = Exam::model()->find($suiteID);
-        return $this->render('keyExer',array( 
+        return $this->render('lookExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
             'isExam'=>$isExam,
