@@ -144,6 +144,14 @@ class AdminController extends CController
             $this->render('addStu',['classAll'=>$classAll,'userAll'=>$userAll,'result'=>$result]);
         }
         
+        public function actionExlAddStu(){
+        	$flag = 'no';
+        	if (isset($_POST['flag'])) {
+        		$flag = "1";
+        	}
+        	$this->render('exlAddStu',['flag'=>$flag]);
+        } 
+        
         public function actionInfoStu()
 	{        
             if(Yii::app()->session['lastUrl']=="infoClass")

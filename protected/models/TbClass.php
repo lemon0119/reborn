@@ -13,7 +13,11 @@
  */
 class TbClass extends CActiveRecord
 {
-    
+    public function findlessonByClassID($classID){
+    	//得到当前的学生的当前课程
+    	$tb_class = $this->find("classid = '$classID'");
+    	return $tb_class->currentLesson;
+    }
     public function insertClass($courseName,$currentCourse){
         
         //添加班级
