@@ -2073,7 +2073,6 @@ class TeacherController extends CController {
                 else      
                    Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
                  $currentLesson = Yii::app()->session['currentLesson'];
-                 $array_suite = Suite::model()->findAll("lessonID = '$currentLesson'");
              }
          }
          $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
@@ -2653,47 +2652,43 @@ class TeacherController extends CController {
      }
      
      
-          public function ActionStuExam()
+    public function ActionStuExam()
      {
          $teacherID = Yii::app()->session['userid_now'];
          $array_class = array();
-         $array_suiteLessonClass = array();
-         $array_suite = array();
-         
-         //获取上面部分的作业列表
-         //$array_suiteLessonClass表示一共有多少作业
-         $selectClassID = -1;
-         if(isset($_GET['selectClassID'])&&$_GET['selectClassID']!=-1)  
-         {
-           $result = ClassLessonSuite::model()->getSuiteClassByTeacherID($teacherID,$_GET['selectClassID']);
-           $selectClassID = $_GET['selectClassID'];
-         }        
+         $array_classExam = array();
+         $array_exam = array();
+         if(isset($_GET['selectClassID']))
+                 $selectClassID = $_GET['selectClassID'];
+
          else
-           $result = ClassLessonSuite::model()->getSuiteClassByTeacherID($teacherID,"");
-         
-             $array_suiteLessonClass1 = $result['suiteLst'];
-             
+         {
+         $class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+         if($class != NULL)
+             $selectClassID = $class[0]['classID'];
+         else
+            $selectClassID = -1;
+         }
+             $result = ClassExam::model()->getExamClassByTeacherID($teacherID,$selectClassID);             
+             $array_classExam1 = $result['suiteLst'];          
              $pages = $result['pages'];
          
          $array_class1 = TbClass::model()->getClassByTeacherID($teacherID);
-         $array_lesson1 = Lesson::model()->getLessonByTeacherID($teacherID);
-         $array_suite1 = Suite::model()->getSuiteByClassLessonSuite($teacherID);
+         $array_exam1 = Exam::model()->getExamByClassExam($teacherID);
          
-         foreach ($array_suiteLessonClass1 as $result)
-             array_push ($array_suiteLessonClass, $result);
+         foreach ($array_classExam1 as $result)
+             array_push ($array_classExam, $result);
          foreach ($array_class1 as $result)
              array_push ($array_class, $result);
-        foreach ($array_lesson1 as $result)
-             array_push ($array_lesson, $result);
-         foreach ($array_suite1 as $result)
-             array_push ($array_suite, $result);
+         foreach ($array_exam1 as $result)
+             array_push ($array_exam, $result);
          
          $workID = -1;
          $classID = -1;
-         if($array_suiteLessonClass!=NULL)
+         if($array_classExam!=NULL)
          {
-             $workID = $array_suiteLessonClass[0]['workID'];
-             $classID = $array_suiteLessonClass[0]['classID'];
+             $workID = $array_classExam[0]['workID'];
+             $classID = $array_classExam[0]['classID'];
          }
          if(isset($_GET['workID']))
          {
@@ -2708,18 +2703,16 @@ class TeacherController extends CController {
              foreach ($class_student as $student)
              {
                  $userID = $student['userID'];
-                 $result = SuiteRecord::model()->find("workID=? and studentID=?" , array($workID,$userID));
-                 
+                 $result = ExamRecord::model()->find("workID=? and studentID=?" , array($workID,$userID));
              if($result!=NULL && $result['ratio_accomplish'] == 1)
                  array_push ($array_accomplished, $student);
              else
-                  array_push ($array_unaccomplished, $student);  
+                 array_push ($array_unaccomplished, $student);  
              }
-         $this->render('studentWork',array(
+         $this->render('studentExam',array(
              'array_class' => $array_class,
-             'array_lesson' => $array_lesson,
-             'array_suite'  => $array_suite,
-             'array_suiteLessonClass' => $array_suiteLessonClass,
+             'array_exam'  => $array_exam,
+             'array_classExam' => $array_classExam,
              'pages'=>$pages,
              'workID' => $workID,
              'array_accomplished' => $array_accomplished,
@@ -2730,7 +2723,7 @@ class TeacherController extends CController {
      }
      
      public function ActionChangeSuiteClass()
-     {
+ {
          $suiteID = $_GET['suiteID'];
          $isOpen = $_GET['isOpen'];
          $currentClass = Yii::app()->session['currentClass'];
@@ -2743,33 +2736,33 @@ class TeacherController extends CController {
             $result->open = 1-$isOpen;
             $result->update();
          }
-                  $teacherID = Yii::app()->session['userid_now'];
+         $teacherID = Yii::app()->session['userid_now'];
+         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+         $array_lesson = array();        
          $array_class = array();
-         $result = TbClass::model()->getClassByTeacherID($teacherID);   
-         foreach ($result as $class)
-             array_push ($array_class, $class);
-         
-         $result = Exam::model()->getAllExamByPage(5);
-         $array_allexam = $result['examLst'];
+         $result = Suite::model()->getAllSuiteByPage(5);
+         $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
-         //得到当前显示班级
-           if(isset($_GET['classID']))
-             Yii::app()->session['currentClass'] = $_GET['classID'];
-           else if($array_class != NULL)
-             Yii::app()->session['currentClass'] = $array_class[0]['classID'];
-           else 
-             Yii::app()->session['currentClass'] =0;
-               
-           $currentClass = Yii::app()->session['currentClass'];
-           
-           $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'],1));
-           
-             $this->render('assignExam' , array(
+   
+         if(!empty($teacher_class))
+         {        
+           foreach ($teacher_class as $class)
+             {
+                 $id = $class['classID'];
+                 $result = TbClass::model()->findAll("classID ='$id'");               
+                 array_push($array_class, $result[0]);
+             }     
+             
+             $array_lesson = Lesson::model()->findAll("classID = '$currentClass'");
+         }
+         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
+         $this->render('assignWork',array(
              'array_class' => $array_class,
-             'array_exam'  => $array_suite,
-             'array_allexam' => $array_allexam,
+             'array_lesson' => $array_lesson,
+             'array_suite'  => $array_suite,
+             'array_allsuite' => $array_allsuite,
              'pages' => $pages
-             ));      
+         ));      
      }
      
           public function ActionChangeExamClass()

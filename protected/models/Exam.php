@@ -249,6 +249,15 @@ class Exam extends CActiveRecord
         $newSuite->insert();
         return $new_id;
         }
+        
+        
+        public function getExamByClassExam($teacherID)
+        {
+        $sql = "select * from exam";
+        $condition = " where examID in(select examID from class_exam where classID in (select classID from teacher_class where teacherID = '$teacherID'))";
+        $sql = $sql.$condition;
+        return Yii::app()->db->createCommand($sql)->query(); 
+        }  
 
 	/**
 	 * Returns the static model of the specified AR class.

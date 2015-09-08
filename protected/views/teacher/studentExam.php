@@ -1,63 +1,64 @@
+<div class="span3">
+    <div class="well" style="padding: 8px 0;">
+        <ul class="nav nav-list">
+            <li class="nav-header">班级</li>
+           <?php foreach ($array_class as $class):?>
+            <li <?php if($class['classID'] == $selectClassID) echo "class='active'";?>><a href="./index.php?r=teacher/StuExam&&selectClassID=<?php echo $class['classID']?>"><?php echo $class['className']?></a></li>
+          <?php endforeach;?>  
+                        
+        </ul>       
+    </div>
+</div>
+
+
 <div class="span9">
-    <h3>现有习题</h3>
+    <h3>现有试卷</h3>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped" >
         <thead>
             <tr>
-                <th>编号</th>
-      <th>
-          <select   onchange="changeClass(this.value)" name="selectAge" id="classSelect" style="width: 80px"> 
-              <option value=-1 <?php if($selectClassID == -1) echo "selected='selected'";?>>全部</option>   
-        <?php foreach ($array_class as $class):?>
-          <option value=<?php echo $class['classID'];?> <?php if($selectClassID == $class['classID']) echo "selected='selected'";?>><?php echo $class['className']?></option>
-        <?php endforeach;?>       
-      </select>                            
-      </th>                      
-                <th>课程</th>   
-                <th>作业</th>
+                <th>试卷名称</th>                  
+                <th>开始时间</th>   
+                <th>结束时间</th>
+                <th>时长</th>
                 <th>操作</th>
+                
             </tr>
         </thead>
                 <tbody>        
                     <?php $id =1;
-                      foreach($array_suiteLessonClass as $suiteLesson):
+                      foreach($array_classExam as $classexam):
                         foreach($array_class as $class)
-                            if($class['classID'] == $suiteLesson['classID']){
+                            if($class['classID'] == $classexam['classID']){
                                 $thisClass = $class;                                
                                 break;
                             }
-                        foreach($array_lesson as $lesson)
-                            if($lesson['lessonID'] == $suiteLesson['lessonID']){
-                                $thisLesson = $lesson;
+                        foreach ($array_exam as $exam)
+                            if($exam['examID'] == $classexam['examID']){
+                                $thisExam = $exam;
                                 break;
-                            }
-                        foreach ($array_suite as $suite)
-                            if($suite['suiteID'] == $suiteLesson['suiteID']){
-                                $thisSuite = $suite;
-                                break;
-
                             }                     
                             ?>
                     <tr>
-                        <td style="width: 150px">
-                            <?php echo $id++;?>
-                        </td>
                         <td>
                             <?php            
-                            echo $thisClass['className'];?>
+                            echo $thisExam['suiteName'];?>
                            
-                        </td>
-                        <td>
-                            <?php                
-                            echo $thisLesson['lessonName'] ;?>
-                            
-                        </td>           
+                        </td>        
                         <td>            
                              <?php
-                             echo $thisSuite['suiteName']?>                    
+                             echo $thisExam['begintime']?>                    
                         </td>
                         <td>            
-                            <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>                      
+                             <?php
+                             echo $thisExam['endtime']?>                    
+                        </td>
+                        <td>            
+                             <?php
+                             echo $thisExam['duration']?>                    
+                        </td>
+                        <td>            
+                            <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>">查看</a>                      
 
                         </td>
                     </tr>            
@@ -70,9 +71,7 @@
         $this->widget('CLinkPager',array('pages'=>$pages));
     ?>
     </div>
- </div>
 
-<div class="span9" id="list">
 <h3>学生列表</h3>
 <div style="overflow-y:auto; height:300px;">
 <table width="50%" style="float:left;" >
@@ -82,7 +81,8 @@
             <tr>
                 <th>姓名</th>
                 <th>学号</th>
-                <th>完成情况</th>   
+                <th>完成情况</th> 
+                <th>成绩</th>
                 <th>查看</th>
             </tr>
         </thead>
@@ -100,7 +100,7 @@
                             完成
                         </td>  
                         <td >
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1">批阅</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -115,7 +115,7 @@
             <tr>
                 <th>姓名</th>
                 <th>学号</th>
-                <th>完成情况</th>   
+                <th>完成情况</th> 
                 <th>查看</th>
             </tr>
         </thead>
@@ -133,7 +133,7 @@
                             未完成
                         </td>  
                         <td>
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0">批阅</a>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 

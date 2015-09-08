@@ -108,6 +108,28 @@ class ClassExam extends CActiveRecord
             $newExam->open = true;
             $newExam->insert();           
         }
+        
+        public function getExamClassByTeacherID($teacherID,$selectClassID)
+        {
+            $sql = "select * from class_exam";
+            if($selectClassID == "")
+            $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID') and open=1 ";
+            else
+            $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID' and classID = '$selectClassID') and open=1 ";
+
+            $order = "order by examID ASC";
+        $sql = $sql.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $criteria   =   new CDbCriteria();
+        $pages     =   new CPagination($result->rowCount);
+        $pages->pageSize    =   5; 
+        $pages->applyLimit($criteria);
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize);
+        $suiteLst = $result->query();
+        return ['suiteLst'=>$suiteLst,'pages'=>$pages,];             
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.
