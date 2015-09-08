@@ -101,4 +101,135 @@ class Tool {
         //echo("id:$id\n");
 	return $id;
     }
+    
+    
+    /**
+     * class ExcelToDatabase
+     * @author pengjingcheng
+     *         Excle上传工具类。
+     *         功能为上传后的临时excle文件另存，解析以及其内容合理性的逻辑检查。
+     *
+     *
+     * 读取excel $filename 路径文件名 $encode 返回数据的编码 默认为utf8
+     * $filetype为精简后的excle种类;
+     * $file_types = explode(".",$_FILES['file']['type']);
+     * $filetype = $file_types[count( $file_types )-1];
+     * 精简后 $filetype Excle2007(.xlsx)版为sheet,Excle2003(.xls)版为ms-excel
+     * return $excelData:获取的Excle解析结果数组
+     */
+    public static function excelreadToArray($filename, $filetype, $encode = 'utf-8') {
+    	/* 导入phpExcel核心类 */
+    	/* 静用Yii自身的自动加载方法，使PHPExcel自带的autoload生效 */
+    	Yii::$enableIncludePath = false;
+    	/* 引入PHPExcel.php文件 */
+    	Yii::import ( 'application.extensions.PHPExcel.PHPExcel', 1 );
+    
+    	if ($filetype == "ms-excel") {
+    		$objReader = PHPExcel_IOFactory::createReader ( 'Excel5' );
+    	} elseif ($filetype == "sheet") {
+    		$objReader = PHPExcel_IOFactory::createReader ( 'Excel2007' );
+    	}
+    	$objReader->setReadDataOnly ( true );
+    	$objPHPExcel = $objReader->load ( $filename );
+    	$objWorksheet = $objPHPExcel->getActiveSheet ();
+    
+    	$highestRow = $objWorksheet->getHighestRow ();
+    	$highestColumn = $objWorksheet->getHighestColumn ();
+    	$highestColumnIndex = PHPExcel_Cell::columnIndexFromString ( $highestColumn );
+    	$excelData = array ();
+    	for($row = 1; $row <= $highestRow; $row ++) {
+    		for($col = 0; $col < $highestColumnIndex; $col ++) {
+    			$excelData [$row] [] = ( string ) $objWorksheet->getCellByColumnAndRow ( $col, $row )->getValue ();
+    		}
+    	}
+    	return $excelData;
+    }
+    
+    /**
+     *         将数组内容拆分后导入数据库。假如出现数据限制（如学号不能为空）问题
+     *         则返回问题原因的字符串,成功则返回成功。View接取内容后，可直接alert();
+     *         $excelData:传入Excle解析结果数组
+     *         return $result:导入结果
+     */
+    public static function excelreadToDatabase($excelData) {
+    	foreach ( $excelData as $k => $v ) {
+    		if ($k > 1) {
+    			$data ['uid'] = $v [0];
+    			$data ['userName'] = $v [1];
+    			$data ['className'] = $v [2];
+    			$data ['pass1'] = $v [3];
+    			$data ['pass2'] = $v [4];
+    
+    			if ($data ['uid'] === "") {
+    				$result = '学生学号不能为空';
+    				return $result;
+    			}
+    			if (Tool::excelreadUserID( $data ['uid'] )) {
+    				$result = "学生" . $data ['uid'] . '学生学号已存在！';
+    				return $result;
+    			}
+    			if ($data ['userName'] === "") {
+    				$result = "学生" . $data ['uid'] . '学生姓名不能为空';
+    				return $result;
+    			}
+    			if ($data ['className'] === "") {
+    				$result = "学生" . $data ['uid'] . '学生班级不能为空';
+    				return $result;
+    			}
+    			if (!Tool::excelreadClass($data ['className'])) {
+    				$result = "学生" . $data ['uid'] . '学生班级不存在！';
+    				return $result;
+    			}
+    			if ($data ['pass1'] === "") {
+    				$result = "学生" . $data ['uid'] . '密码不能为空';
+    				return $result;
+    			}
+    			if ($data ['pass2'] === "") {
+    				$result = "学生" . $data ['uid'] . '确认密码不能为空';
+    				return $result;
+    			}
+    			if ($data ['pass1'] !== $data ['pass2']) {
+    				$result = "学生" . $data ['uid'].'密码两次输入不相同！';
+    				return $result;
+    			} else {
+    				// 导入数据库
+    				$className = $data ['className'];
+    				$subClass = TbClass::model()->find("className = '$className'");
+    				$classID = $subClass['classID'];
+    				Student::model()->insertStu($data ['uid'], $data ['userName'], $data ['pass1'], $classID);
+    			}
+    		}
+    
+    	}
+    	return $result = '导入成功！';
+    }
+    /**
+     * 验证用户班级是否存在
+     * return true 用户班级存在; false 用户班级不存在
+     */
+    public static function excelreadClass($className) {
+    	$classAll = TbClass::model ()->findAll ( "" );
+    	foreach ( $classAll as $k => $v ) {
+    		$name = $v ['className'];
+    		if ($name == $className) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    /**
+     * 验证用户ID（学号）是否存在
+     * return true 用户ID（学号）重复; false 用户ID（学号）不重复
+     */
+    public static function excelreadUserID($userId) {
+    	$userAll = Student::model ()->findAll ();
+    	foreach ( $userAll as $k => $v ) {
+    		$Id = $v ['userID'];
+    		if ($Id == $userId) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
 }
