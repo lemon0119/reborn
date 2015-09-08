@@ -406,8 +406,7 @@ class StudentController extends CController {
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
-        $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:0;
-        //if()
+        $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $classworks = Suite::model()->getClassworkAll($currentLesn);
         return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classworks]);
         /*
