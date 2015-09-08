@@ -27,6 +27,17 @@ class TeacherController extends CController {
         ]);
     }
     
+    public function actionPptTable(){
+        $classID    =   $_GET['classID'];
+        $progress   =   $_GET['progress'];
+        $on         =   $_GET['on'];
+        return $this->renderPartial('pptTable',[
+            'classID'   =>  $classID,
+            'progress'  =>  $progress,
+            'on'        =>  $on
+        ]);
+    }
+    
     public function actionAddPpt(){
             $typename       =   Yii::app()->session['role_now'];
             $userid         =   Yii::app()->session['userid_now'];
