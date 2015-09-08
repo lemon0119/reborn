@@ -1,22 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "class_lesson_suite".
+ * This is the model class for table "class_exam".
  *
- * The followings are the available columns in table 'class_lesson_suite':
- * @property integer $workID
- * @property integer $suiteID
- * @property integer $lessonID
+ * The followings are the available columns in table 'class_exam':
  * @property integer $classID
+ * @property integer $examID
+ * @property integer $open
+ * @property integer $workID
  */
-class ClassLessonSuite extends CActiveRecord
+class ClassExam extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'class_lesson_suite';
+		return 'class_exam';
 	}
 
 	/**
@@ -27,11 +27,11 @@ class ClassLessonSuite extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('workID, suiteID, lessonID, classID', 'required'),
-			array('workID, suiteID, lessonID, classID', 'numerical', 'integerOnly'=>true),
+			array('classID, examID, open', 'required'),
+			array('classID, examID, open, workID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('workID, suiteID, lessonID, classID', 'safe', 'on'=>'search'),
+			array('classID, examID, open, workID', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,13 +52,12 @@ class ClassLessonSuite extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'workID' => 'workID',
-			'suiteID' => 'Suite',
-			'lessonID' => 'Lesson',
 			'classID' => 'Class',
+			'examID' => 'Exam',
+			'open' => 'Open',
+			'workID' => 'Work',
 		);
 	}
-        
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -78,19 +77,19 @@ class ClassLessonSuite extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('workID',$this->ID);
-		$criteria->compare('suiteID',$this->suiteID);
-		$criteria->compare('lessonID',$this->lessonID);
 		$criteria->compare('classID',$this->classID);
+		$criteria->compare('examID',$this->examID);
+		$criteria->compare('open',$this->open);
+		$criteria->compare('workID',$this->workID);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
         
-        public function insertSuite($classID,$lessonID,$suiteID)
+        public function insertExam($classID,$examID)
         {
-            $sql = "select max(workID) as id from class_lesson_suite";
+            $sql = "select max(workID) as id from class_exam";
             $max_id = Yii::app()->db->createCommand($sql)->query();
             $temp=$max_id->read();
          if(empty($temp))
@@ -102,24 +101,23 @@ class ClassLessonSuite extends CActiveRecord
             $new_id = $temp['id'] + 1;
         }
             
-            $newSuite = new ClassLessonSuite();
-            $newSuite->workID = $new_id;
-            $newSuite->classID = $classID;           
-            $newSuite->lessonID = $lessonID;
-            $newSuite->suiteID = $suiteID;
-            $newSuite->open = true;
-            $newSuite->insert();           
+            $newExam = new ClassExam();
+            $newExam->workID = $new_id;
+            $newExam->classID = $classID;           
+            $newExam->examID = $examID;
+            $newExam->open = true;
+            $newExam->insert();           
         }
         
-        public function getSuiteClassByTeacherID($teacherID,$selectClassID)
+        public function getExamClassByTeacherID($teacherID,$selectClassID)
         {
-            $sql = "select * from class_lesson_suite";
+            $sql = "select * from class_exam";
             if($selectClassID == "")
             $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID') and open=1 ";
             else
             $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID' and classID = '$selectClassID') and open=1 ";
 
-            $order = "order by classID ASC ,lessonID ASC";
+            $order = "order by examID ASC";
         $sql = $sql.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria   =   new CDbCriteria();
@@ -133,17 +131,11 @@ class ClassLessonSuite extends CActiveRecord
         return ['suiteLst'=>$suiteLst,'pages'=>$pages,];             
         }
 
-        
-        
-    
-                
-
-      
-        /**
+	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ClassLessonSuite the static model class
+	 * @return ClassExam the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

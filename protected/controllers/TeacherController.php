@@ -210,14 +210,10 @@ class TeacherController extends CController {
             $thisLook->title =   $_POST['title'];
             $thisLook->content       =   $_POST['content'];
             $thisLook -> update();
-            if(Yii::app()->session['lastUrl'] == "modifyWork")
-            {
-                $Info = $this->getSuiteInfo("look", Yii::app()->session['suiteID']);           
+            if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
+            {    
                 $this->render("ModifyEditLook",array(
                     'type' => "look",
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      => $exerciseID,
                     'title' => $thisLook->title,
                     'content' => $thisLook->content,
@@ -230,8 +226,11 @@ class TeacherController extends CController {
                 'content'          =>  $thisLook->content,
                 'result'          =>  "修改习题成功"
             ));
-        }
+        } 
            }
+           
+           
+           
          public function actionReturnFromAddLook(){
             if(Yii::app()->session['lastUrl']=="lookLst")
             {
@@ -277,14 +276,19 @@ class TeacherController extends CController {
                     'teacher'       =>  TbClass::model()->teaInClass(),
                 'searchKey'  => $searchKey
             ));
-            }else
+            }else if(Yii::app()->session['lastUrl']=="modifyExam")
+            {
+                $type = "look";
+                $examID = Yii::app()->session['examID'];
+                $this->renderModifyExam($type,$examID,"");                     
+            }  else 
             {
                 $type = "look";
                 $suiteID = Yii::app()->session['suiteID'];
                 $this->renderModify($type,$suiteID,"");                     
             }
         }
-        
+            
               public function actionSearchLook()
         {
             if(isset($_GET['page']))
@@ -528,14 +532,10 @@ class TeacherController extends CController {
             $thisKey->content       =   $answer;
             $thisKey -> update();
             
-           if(Yii::app()->session['lastUrl'] == "modifyWork")
-            {
-                $Info = $this->getSuiteInfo("key", Yii::app()->session['suiteID']);           
+           if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
+            { 
                 $this->render("ModifyEditKey",array(
                     'type' => "key",
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $exerciseID,
                     'title' => $thisKey->title,
                     'content' => $thisKey->content,
@@ -589,7 +589,12 @@ class TeacherController extends CController {
                     'pages'         =>  $pages,
                     'teacher'       =>  TbClass::model()->teaInClass(),
             ));
-            } else
+            } else if(Yii::app()->session['lastUrl']=="modifyExam")
+            {
+                $type = "key";
+                $examID = Yii::app()->session['examID'];
+                $this->renderModifyExam($type,$examID,"");                     
+            }  else 
             {
                 $type = "key";
                 $suiteID = Yii::app()->session['suiteID'];
@@ -888,7 +893,12 @@ class TeacherController extends CController {
                     'teacher'       =>  TbClass::model()->teaInClass(),
                 'searchKey'  => $searchKey
             ));
-            }else
+            }else if(Yii::app()->session['lastUrl']=="modifyExam")
+            {
+                $type = "listen";
+                $examID = Yii::app()->session['examID'];
+                $this->renderModifyExam($type,$examID,"");                     
+            }  else 
             {
                 $type = "listen";
                 $suiteID = Yii::app()->session['suiteID'];
@@ -1028,14 +1038,10 @@ class TeacherController extends CController {
               $thisListen -> update();
               $result = "修改成功";
             }
-            if(Yii::app()->session['lastUrl'] == "modifyWork")
-            {
-                $Info = $this->getSuiteInfo("listen", Yii::app()->session['suiteID']);           
+            if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
+            {       
                 $this->render("ModifyEditListen",array(
                     'type' => "listen",
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $exerciseID,
                     'title' => $thisListen->title,
                     'content' => $thisListen->content,
@@ -1242,7 +1248,12 @@ class TeacherController extends CController {
                     'teacher'=>  Teacher::model()->findall(),
                     
                 ));
-            }else
+            }else if(Yii::app()->session['lastUrl']=="modifyExam")
+            {
+                $type = "filling";
+                $examID = Yii::app()->session['examID'];
+                $this->renderModifyExam($type,$examID,"");                     
+            }  else 
             {
                 $type = "filling";
                 $suiteID = Yii::app()->session['suiteID'];
@@ -1442,14 +1453,10 @@ class TeacherController extends CController {
             $thisCh -> options      =   $_POST['A']."$$".$_POST['B']."$$".$_POST['C']."$$".$_POST['D'];
             $thisCh -> answer       =   $_POST['answer'];
             $thisCh -> update();
-            if(Yii::app()->session['lastUrl'] == "modifyWork")
-            {
-                $Info = $this->getSuiteInfo("choice", Yii::app()->session['suiteID']);           
+            if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
+            {      
                 $this->render("ModifyEditChoice",array(
                     'type' => "choice",
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $exerciseID,
                     'requirements'    =>    $thisCh -> requirements,
                     'options'         =>    $thisCh -> options,
@@ -1487,7 +1494,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-                        if($type == "requirements")
+            if($type == "requirements")
             {
                 $searchKey = $value;
             }else
@@ -1514,11 +1521,15 @@ class TeacherController extends CController {
                         'pages'     =>  $pages,      
                         'teacher'   =>  Teacher::model()->findall()
                 ));
-            } else
+            } else if(Yii::app()->session['lastUrl']=="modifyExam")
             {
                 $type = "choice";
+                $examID = Yii::app()->session['examID'];
+                $this->renderModifyExam($type,$examID,"");                     
+            }  else {
+                $type = "choice";
                 $suiteID = Yii::app()->session['suiteID'];
-                $this->renderModify($type,$suiteID,"");                     
+                $this->renderModify($type,$suiteID,"");    
             }
         }
     
@@ -1617,12 +1628,23 @@ class TeacherController extends CController {
             $thisFill->requirements =   $_POST['requirements'];
             $thisFill->answer       =   $answer;
             $thisFill -> update();
+            if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
+            {      
+                $this->render("ModifyEditFilling",array(
+                    'type' => "choice",
+                    'exerciseID'      =>    $exerciseID,
+                    'requirements'    =>    $thisFill -> requirements,
+                    'answer'          =>    $thisFill -> answer,
+                    'result'          =>    "修改习题成功"
+                ));       
+            }else{
             $this->render("editFill",array(
                 'exerciseID'      =>  $thisFill->exerciseID,
                 'requirements'    =>  $thisFill->requirements,
                 'answer'          =>  $thisFill->answer,
                 'result'          =>  "修改习题成功"
             ));
+            }
         }
         
     public function actionDeleteChoice(){
@@ -1753,12 +1775,23 @@ class TeacherController extends CController {
             $thisQue->requirements =   $_POST['requirements'];
             $thisQue->answer       =   $_POST['answer'];
             $thisQue -> update();
+            if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
+            {      
+                $this->render("ModifyEditQuestion",array(
+                    'type' => "choice",
+                    'exerciseID'      =>    $exerciseID,
+                    'requirements'    =>    $thisQue -> requirements,
+                    'answer'          =>    $thisQue -> answer,
+                    'result'          =>    "修改习题成功"
+                ));       
+            }else{
             $this->render("editQuestion",array(
                 'exerciseID'      =>  $thisQue->exerciseID,
                 'requirements'    =>  $thisQue->requirements,
                 'answer'          =>  $thisQue->answer,
                 'result'          =>  "修改习题成功"
             ));
+            }
         }
 
         //宋杰 2015-7-30 编辑/修改问题
@@ -1882,7 +1915,12 @@ class TeacherController extends CController {
                         'pages'     =>  $pages,      
                         'teacher'   =>  Teacher::model()->findall()
                 ));
-            }else
+            }else if(Yii::app()->session['lastUrl']=="modifyExam")
+            {
+                $type = "question";
+                $examID = Yii::app()->session['examID'];
+                $this->renderModifyExam($type,$examID,"");                     
+            }  else 
             {
                 $type = "question";
                 $suiteID = Yii::app()->session['suiteID'];
@@ -2008,8 +2046,7 @@ class TeacherController extends CController {
      public  function ActionAssignWork(){
          $teacherID = Yii::app()->session['userid_now'];
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
-         $array_lesson = array();
-         
+         $array_lesson = array();    
          $array_class = array();
          $result = Suite::model()->getAllSuiteByPage(5);
          $array_allsuite = $result['suiteLst'];
@@ -2019,7 +2056,7 @@ class TeacherController extends CController {
            if(isset($_GET['classID']))
              Yii::app()->session['currentClass'] = $_GET['classID'];
            else
-               Yii::app()->session['currentClass'] = $teacher_class[0]['classID'];
+             Yii::app()->session['currentClass'] = $teacher_class[0]['classID'];
            
            foreach ($teacher_class as $class)
              {
@@ -2036,7 +2073,6 @@ class TeacherController extends CController {
                 else      
                    Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
                  $currentLesson = Yii::app()->session['currentLesson'];
-                 $array_suite = Suite::model()->findAll("lessonID = '$currentLesson'");
              }
          }
          $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
@@ -2049,12 +2085,52 @@ class TeacherController extends CController {
          ));
      }
      
+          public  function ActionAssignExam(){
+         $teacherID = Yii::app()->session['userid_now'];
+         $array_class = array();
+         $result = TbClass::model()->getClassByTeacherID($teacherID);   
+         foreach ($result as $class)
+             array_push ($array_class, $class);
+         
+         $result = Exam::model()->getAllExamByPage(5);
+         $array_allexam = $result['examLst'];
+         $pages = $result['pages'];
+         //得到当前显示班级
+           if(isset($_GET['classID']))
+             Yii::app()->session['currentClass'] = $_GET['classID'];
+           else if($array_class != NULL)
+             Yii::app()->session['currentClass'] = $array_class[0]['classID'];
+           else 
+             Yii::app()->session['currentClass'] =0;
+               
+           $currentClass = Yii::app()->session['currentClass'];
+           
+           $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'],1));
+           
+             $this->render('assignExam' , array(
+             'array_class' => $array_class,
+             'array_exam'  => $array_suite,
+             'array_allexam' => $array_allexam,
+             'pages' => $pages
+             ));
+         }
+              
+     
+     
      public function ActionModifyWork(){              
          $suiteID = $_GET['suiteID'];
          Yii::app()->session['suiteID'] = $suiteID;
          Yii::app()->session['lastUrl'] = "modifyWork";
          $type = $_GET['type'];       
          $this->renderModify($type, $suiteID);
+     }
+     
+     public function ActionModifyExam(){              
+         $examID = $_GET['examID'];
+         Yii::app()->session['examID'] = $examID;
+         Yii::app()->session['lastUrl'] = "modifyExam";
+         $type = $_GET['type'];       
+         $this->renderModifyExam($type, $examID);
      }
      
      
@@ -2073,6 +2149,21 @@ class TeacherController extends CController {
          $this->ActionToOwnWork();
          }
      }   
+          public function ActionDeleteExamExercise()
+     {
+         $type = $_GET['type'];
+         $exerciseID = $_GET['exerciseID'];
+         $examID = $_GET['examID'];
+         $thisExamExercise = new ExamExercise();
+         $deleteResult = $thisExamExercise->deleteAll("exerciseID = '$exerciseID' and type = '$type' and examID = '$examID'");
+         if($type == "key" || $type == "look" || $type == "listen")
+         {
+              $this->ActionToOwnTypeExam();
+         }else
+         {
+              $this->ActionToOwnExam();
+         }
+     }  
      
      public function  ActionAddwork()
      {
@@ -2106,8 +2197,42 @@ class TeacherController extends CController {
              'suite' => $suite,
              'teacher'=>  Teacher::model()->findall(),
              'maniResult' => $maniResult,           
-         ));
-         
+         ));       
+     }
+     
+    public function  ActionAddExamExercise()
+     {
+         $type = $_GET['type'];
+         $exerciseID = $_GET['exerciseID'];
+         $examID = $_GET['examID'];
+         $code = $_GET['code'];
+         $result = "";
+         if($code != Yii::app()->session['code']){
+         $thisExamExercise = new ExamExercise();
+         $result = ExamExercise::model()->insertExam($type,$exerciseID,$examID);
+         Yii::app()->session['code']=$code;        
+         }
+
+         if($result === "HAVEN")
+             $maniResult = "题目已存在";
+         else
+             $maniResult = "";
+        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $result = $this->getLstByType($type);
+        $workLst = $result['workLst'];
+        $pages = $result['pages'];
+        if($type == "key" || $type == "look" || $type == "listen")
+            $render = "allTypeExam";
+        else
+            $render = "allExam";
+         $this->renderPartial($render, array(
+             'workLst' => $workLst,
+             'pages' => $pages,
+             'type' => $type,
+             'exam' => $exam,
+             'teacher'=>  Teacher::model()->findall(),
+             'maniResult' => $maniResult,           
+         ));       
      }
      
      public function ActionModifyEditWork($type)
@@ -2140,20 +2265,14 @@ class TeacherController extends CController {
         }
      }
 
-     public function ModifyEditChoice(){
-         
+     public function ModifyEditChoice(){         
             $type = $_GET['type'];
-            $suiteID = $_GET['suiteID'];
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();
-            $Info = $this->getSuiteInfo($type, $suiteID);           
+            $result     =   $result->read();        
                 $this->render("ModifyEditChoice",array(
                     'type' => $type,
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'options'         =>    $result['options'],
@@ -2164,17 +2283,12 @@ class TeacherController extends CController {
          public function ModifyEditFilling(){
          
             $type = $_GET['type'];
-            $suiteID = $_GET['suiteID'];
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM filling WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
             $result     =   $result->read();
-            $Info = $this->getSuiteInfo($type, $suiteID);
                 $this->render("ModifyEditFilling",array(
                     'type' => $type,
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'answer'          =>    $result['answer']
@@ -2184,17 +2298,12 @@ class TeacherController extends CController {
      public function ModifyEditQuestion(){
          
             $type = $_GET['type'];
-            $suiteID = $_GET['suiteID'];
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();
-            $Info = $this->getSuiteInfo($type, $suiteID);          
+            $result     =   $result->read();         
                 $this->render("ModifyEditQuestion",array(
                     'type' => $type,
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'answer'          =>    $result['answer']
@@ -2205,17 +2314,12 @@ class TeacherController extends CController {
          public function ModifyEditKey(){
          
             $type = $_GET['type'];
-            $suiteID = $_GET['suiteID'];
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();
-            $Info = $this->getSuiteInfo($type, $suiteID);          
+            $result     =   $result->read();         
                 $this->render("ModifyEditKey",array(
                     'type' => $type,
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $result['exerciseID'],
                     'content'    =>    $result['content'],
                     'title'          =>    $result['title']
@@ -2225,37 +2329,27 @@ class TeacherController extends CController {
          public function ModifyEditLook(){
          
             $type = $_GET['type'];
-            $suiteID = $_GET['suiteID'];
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM look_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();
-            $Info = $this->getSuiteInfo($type, $suiteID);          
+            $result     =   $result->read();       
                 $this->render("ModifyEditLook",array(
                     'type' => $type,
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $result['exerciseID'],
                     'content'    =>    $result['content'],
                     'title'          =>    $result['title']
                 ));       
     }
     
-             public function ModifyEditListen(){
+          public function ModifyEditListen(){
          
             $type = $_GET['type'];
-            $suiteID = $_GET['suiteID'];
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();
-            $Info = $this->getSuiteInfo($type, $suiteID);          
+            $result     =   $result->read();          
                 $this->render("ModifyEditListen",array(
                     'type' => $type,
-                    'suite' => $Info['suite'],
-                    'currentLesson' =>$Info['lesson'],
-                    'currentClass' => $Info['class'],
                     'exerciseID'      =>    $result['exerciseID'],
                     'content'    =>    $result['content'],
                     'title'          =>    $result['title'],
@@ -2341,6 +2435,20 @@ class TeacherController extends CController {
         ));     
      }
      
+      public function renderModifyExam($type,$examID)
+     {
+        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        if($type == "key" || $type == "look" || $type == "listen")
+            $render = "modifyTypeExam";
+        else
+            $render = "modifyExam";
+
+        $this->render($render , array(
+            'exam' => $exam,    
+            'type' => $type,
+        ));     
+     }
+     
      //得到修改作业左边框的信息
      public function getSuiteInfo($type , $suiteID)
      {
@@ -2400,6 +2508,34 @@ class TeacherController extends CController {
      }
      
      
+          public function ActionDeleteExam()
+     {
+         $examID = $_GET['examID'];
+         $teacherID = Yii::app()->session['userid_now'];
+         Exam::model()->deleteAll("examID='$examID'");
+         ExamExercise::model()->deleteAll("examID='$examID'");
+         ClassExam::model()->deleteAll("examID='$examID'");
+         $currentClass = Yii::app()->session['currentClass'];
+         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+             $array_class = array();
+         $result = TbClass::model()->getClassByTeacherID($teacherID);   
+         foreach ($result as $class)
+             array_push ($array_class, $class);
+         
+         $result = Exam::model()->getAllExamByPage(5);
+         $array_allexam = $result['examLst'];
+         $pages = $result['pages'];
+         $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'],1));
+           
+             $this->render('assignExam' , array(
+             'array_class' => $array_class,
+             'array_exam'  => $array_suite,
+             'array_allexam' => $array_allexam,
+             'pages' => $pages
+             ));
+     }
+     
+     
      public function ActionAddSuite(){
          if(isset($_POST['title']))
          {
@@ -2417,6 +2553,25 @@ class TeacherController extends CController {
          Yii::app()->session['suiteID'] = $suiteID;
          Yii::app()->session['lastUrl'] = "modifyWork";
          $this->renderModify("choice", $suiteID,"");
+     }
+     
+          public function ActionAddExam(){
+         if(isset($_POST['title']))
+         {
+         $title = $_POST['title'];
+         Yii::app()->session['title'] = $title;
+         }
+         else{
+             $title = Yii::app()->session['title'];
+         }
+         
+         $classID = Yii::app()->session['currentClass'];
+         $lessonID = Yii::app()->session['currentLesson'];
+         $createPerson = Yii::app()->session['userid_now'];
+         $examID = Exam::model()->insertExam($title,$createPerson);       
+         Yii::app()->session['examID'] = $examID;
+         Yii::app()->session['lastUrl'] = "modifyExam";
+         $this->renderModifyExam("choice", $examID,"");
      }
       
      public function ActionStuWork()
@@ -2496,8 +2651,79 @@ class TeacherController extends CController {
          ));
      }
      
-     public function ActionChangeSuiteClass()
+     
+    public function ActionStuExam()
      {
+         $teacherID = Yii::app()->session['userid_now'];
+         $array_class = array();
+         $array_classExam = array();
+         $array_exam = array();
+         if(isset($_GET['selectClassID']))
+                 $selectClassID = $_GET['selectClassID'];
+
+         else
+         {
+         $class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+         if($class != NULL)
+             $selectClassID = $class[0]['classID'];
+         else
+            $selectClassID = -1;
+         }
+             $result = ClassExam::model()->getExamClassByTeacherID($teacherID,$selectClassID);             
+             $array_classExam1 = $result['suiteLst'];          
+             $pages = $result['pages'];
+         
+         $array_class1 = TbClass::model()->getClassByTeacherID($teacherID);
+         $array_exam1 = Exam::model()->getExamByClassExam($teacherID);
+         
+         foreach ($array_classExam1 as $result)
+             array_push ($array_classExam, $result);
+         foreach ($array_class1 as $result)
+             array_push ($array_class, $result);
+         foreach ($array_exam1 as $result)
+             array_push ($array_exam, $result);
+         
+         $workID = -1;
+         $classID = -1;
+         if($array_classExam!=NULL)
+         {
+             $workID = $array_classExam[0]['workID'];
+             $classID = $array_classExam[0]['classID'];
+         }
+         if(isset($_GET['workID']))
+         {
+            $workID = $_GET['workID'];
+            $classID = $_GET['classID'];
+         }
+         //获取学生作业完成情况 需要currentClass currentLesson currentSuite
+         $array_accomplished = array();
+         $array_unaccomplished = array();
+         $class_student = Student::model()->findAll("classID = '$classID'");
+             
+             foreach ($class_student as $student)
+             {
+                 $userID = $student['userID'];
+                 $result = ExamRecord::model()->find("workID=? and studentID=?" , array($workID,$userID));
+             if($result!=NULL && $result['ratio_accomplish'] == 1)
+                 array_push ($array_accomplished, $student);
+             else
+                 array_push ($array_unaccomplished, $student);  
+             }
+         $this->render('studentExam',array(
+             'array_class' => $array_class,
+             'array_exam'  => $array_exam,
+             'array_classExam' => $array_classExam,
+             'pages'=>$pages,
+             'workID' => $workID,
+             'array_accomplished' => $array_accomplished,
+             'array_unaccomplished' =>$array_unaccomplished,
+             'selectClassID' => $selectClassID,
+             
+         ));
+     }
+     
+     public function ActionChangeSuiteClass()
+ {
          $suiteID = $_GET['suiteID'];
          $isOpen = $_GET['isOpen'];
          $currentClass = Yii::app()->session['currentClass'];
@@ -2527,11 +2753,7 @@ class TeacherController extends CController {
                  array_push($array_class, $result[0]);
              }     
              
-             $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
-             if(!empty($array_lesson))
-             {
-                 $array_suite = Suite::model()->findAll("lessonID = '$currentLesson'");
-             }
+             $array_lesson = Lesson::model()->findAll("classID = '$currentClass'");
          }
          $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
          $this->render('assignWork',array(
@@ -2541,6 +2763,43 @@ class TeacherController extends CController {
              'array_allsuite' => $array_allsuite,
              'pages' => $pages
          ));      
+     }
+     
+          public function ActionChangeExamClass()
+     {
+         $examID = $_GET['examID'];
+         $isOpen = $_GET['isOpen'];
+         $currentClass = Yii::app()->session['currentClass'];
+         $result = ClassExam::model()->find("classID=? and examID=?" , array($currentClass,$examID));
+         if($result == NULL)
+         {
+             
+             ClassExam::model()->insertExam($currentClass,$examID);
+         }
+         else
+         {
+            $result->open = 1-$isOpen;
+            $result->update();
+         }
+         
+         $teacherID = Yii::app()->session['userid_now'];
+         $array_class = array();
+         $result = TbClass::model()->getClassByTeacherID($teacherID);   
+         foreach ($result as $class)
+             array_push ($array_class, $class);
+         
+         $result = Exam::model()->getAllExamByPage(5);
+         $array_allexam = $result['examLst'];
+         $pages = $result['pages'];
+         
+         $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'],1));
+           
+             $this->render('assignExam' , array(
+             'array_class' => $array_class,
+             'array_exam'  => $array_suite,
+             'array_allexam' => $array_allexam,
+             'pages' => $pages
+             ));      
      }
      
      public function ActionToOwnWork()
@@ -2556,6 +2815,40 @@ class TeacherController extends CController {
         $type = $_GET['type'];
         $suiteID = $_GET['suiteID'];
         $this->renderOwnTypeWork($type, $suiteID);
+
+     }
+     
+          public function ActionToOwnExam()
+     {      
+        $type = $_GET['type'];
+        $examID = $_GET['examID'];
+        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $result = Exam::model()->getExamExerByTypePage($examID, $type,5);
+        $workLst = $result['workLst'];
+        $pages = $result['pages'];
+         $this->renderPartial('ownExam', array(
+             'examWork' => $workLst,
+             'pages' => $pages,
+             'type' => $type,
+             'exam' => $exam
+         ));
+
+     }
+     
+          public function ActionToOwnTypeExam()
+     {      
+        $type = $_GET['type'];
+        $examID = $_GET['examID'];
+        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $result = Exam::model()->getExamExerByTypePage($examID, $type,5);
+        $workLst = $result['workLst'];
+        $pages = $result['pages'];
+         $this->renderPartial('ownTypeExam', array(
+             'examWork' => $workLst,
+             'pages' => $pages,
+             'type' => $type,
+             'exam' => $exam
+         ));
 
      }
      
@@ -2576,6 +2869,23 @@ class TeacherController extends CController {
              'maniResult' => "",
          ));
      }
+     public function ActionToAllExam()
+     {            
+        $type = $_GET['type'];
+        $examID = $_GET['examID'];
+        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $result = $this->getLstByType($type);
+        $workLst = $result['workLst'];
+        $pages = $result['pages']; 
+         $this->renderPartial('AllExam', array(
+             'workLst' => $workLst,
+             'pages' => $pages,
+             'type' => $type,
+             'exam' => $exam,
+             'teacher'=>  Teacher::model()->findall(),
+             'maniResult' => "",
+         ));
+     }
      
           public function ActionToAllTypeWork()
      {            
@@ -2590,6 +2900,24 @@ class TeacherController extends CController {
              'pages' => $pages,
              'type' => $type,
              'suite' => $suite,
+             'teacher'=>  Teacher::model()->findall(),
+             'maniResult' => "",
+         ));
+     }
+     
+     public function ActionToAllTypeExam()
+     {            
+        $type = $_GET['type'];
+        $examID = $_GET['examID'];
+        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $result = $this->getLstByType($type);
+        $workLst = $result['workLst'];
+        $pages = $result['pages']; 
+         $this->renderPartial('allTypeExam', array(
+             'workLst' => $workLst,
+             'pages' => $pages,
+             'type' => $type,
+             'exam' => $exam,
              'teacher'=>  Teacher::model()->findall(),
              'maniResult' => "",
          ));

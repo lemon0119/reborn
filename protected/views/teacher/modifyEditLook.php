@@ -1,29 +1,3 @@
-<div class="span3">
-    <div class="well" style="padding: 8px 0;">
-        <ul class="nav nav-list">
-            <li <?php if($type == "choice") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=choice"><i class="icon-font"></i> 选择</a></li>
-                        <li <?php if($type == "filling") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=filling"><i class="icon-text-width"></i> 填空</a></li>
-                        <li <?php if($type == "question") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=question"><i class="icon-align-left"></i> 简答</a></li>
-                        <li <?php if($type == "key") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=key"><i class="icon-th"></i> 键位练习</a></li>
-                        <li <?php if($type == "look") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=look"><i class="icon-eye-open"></i> 看打练习</a></li>
-                        <li <?php if($type == "listen") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=listen"><i class="icon-headphones"></i> 听打练习</a></li>                           
-        </ul>
-        
-    </div>  
-    
-     <div class="well" style="padding: 8px 0;">
-        <ul class="nav nav-list">
-            <center>
-                <table>
-                    <tr><td><?php echo $currentClass['className']?></td></tr>
-                    <tr><td><?php echo $currentLesson['lessonName']?></td></tr>
-                    <tr><td><?php echo $suite['suiteName']?></td></tr>
-                </table>                
-            </center>                   
-        </ul>
-    </div>  
-</div>
-
 
 <div class="span9">        
 <h3>编辑键位练习题</h3>

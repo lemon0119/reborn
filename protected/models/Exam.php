@@ -98,14 +98,165 @@ class Exam extends CActiveRecord
     public function getClassexamAll(){
         $userid =Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($userid);
-        $select = 'select begintime , endtime , exam.suiteID , suiteName from exam , classsuite';
-        $time = date("Y-m-d  H:i:s");
-        $condition = " where exam.suiteID = classsuite.suiteID and classId = '$classID'";
-        $order = ' order by suiteID';
+        $select = 'select begintime , endtime , exam.examID as examID, examName, class_exam.open as open from exam , class_exam';
+        $condition = " where exam.examID = class_exam.examID and classId = '$classID'";
+        $order = ' order by exam.examID';
         $sql = $select.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
         return $result;
     }
+    
+    public function getAllExamByPage($pagesize)
+    {
+        $sql  = "select * from exam";
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $criteria   =   new CDbCriteria();
+        $pages     =   new CPagination($result->rowCount);
+        $pages->pageSize    =   $pagesize; 
+        $pages->applyLimit($criteria);
+
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize);
+        $examLst = $result->query();
+        return ['examLst'=>$examLst,'pages'=>$pages,]; 
+       
+    }
+        public function getExamExerByType( $examID, $type)
+    {
+        switch ($type){
+            case 'choice':
+                $result = $this->getchoice($examID);
+                break;
+            case 'filling':
+                $result = $this->getFilling($examID);
+                break;
+            case 'question':
+                $result = $this->getQuestion($examID);
+                break;
+            case 'key':
+                $result = $this->getKeyExer($examID);
+                break;
+            case 'listen':
+                $result = $this->getListenExer($examID);
+                break;
+            default :
+                $result = $this->getLookExer($examID);
+        }
+        return $result;
+    }
+    
+        public function getchoice($examID)
+	{
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='choice')";
+            $select = "select * from choice";
+            $sql = $select.$condition.$order;
+            $result = Yii::app()->db->createCommand($sql)->query();
+            return $result;
+	}
+    	public function getFilling($examID)
+	{
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='filling')";
+            $select = "select * from filling";
+            $sql = $select.$condition.$order;
+            $result = Yii::app()->db->createCommand($sql)->query();
+            return $result;
+	}
+    	public function getQuestion($examID)
+	{
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='question')";
+            $select = "select * from question";
+            $sql = $select.$condition.$order;
+            $result = Yii::app()->db->createCommand($sql)->query();
+            return $result;
+	}
+        public function getKeyExer($examID)
+	{
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='key')";
+            $select = "select * from key_type";
+            $sql = $select.$condition.$order;
+            $result = Yii::app()->db->createCommand($sql)->query();
+            return $result;
+	}
+        public function getListenExer($examID)
+	{
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='listen')";
+            $select = "select * from listen_type";
+            $sql = $select.$condition.$order;
+            $result = Yii::app()->db->createCommand($sql)->query();
+            return $result;
+	}
+        public function getLookExer($examID)
+	{
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='look')";
+            $select = "select * from look_type";
+            $sql = $select.$condition.$order;
+            $result = Yii::app()->db->createCommand($sql)->query();
+            return $result;
+	}
+    
+        public function getExamExerByTypePage($examID, $type,$pagesize)
+    {
+        $criteria   =   new CDbCriteria();
+        $result = $this->getExamExerByType( $examID, $type);
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   $pagesize; 
+        $pages->applyLimit($criteria);
+        if($type == "key"||$type == "look" || $type == "listen" )
+        {
+            $databaseType = $type."_type";
+        }  else {
+            $databaseType = $type;
+        }
+        $sql = "select * from ".$databaseType;
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='".$type."')";
+        $sql = $sql.$condition.$order;
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $workLst  =   $result->query();       
+        return ['workLst'=>$workLst,'pages'=>$pages,];     
+    }
+    
+       public function insertExam($title,$createPerson){
+        $sql        =   "select max(examID) as id from exam";
+        $max_id     =   Yii::app()->db->createCommand($sql)->query();
+        $temp       =   $max_id->read();
+        if(empty($temp))
+        {
+            $new_id =   1;
+        }
+        else
+        {
+            $new_id =   $temp['id'] + 1;
+        }
+        $newSuite    =   new Exam();
+        $newSuite->examID    =   $new_id;
+        $newSuite->createPerson  =   $createPerson;
+        $newSuite->createTime    =   date('y-m-d H:i:s',time());
+        $newSuite->begintime    =   date('y-m-d H:i:s',time());
+        $newSuite->endtime    =   date('y-m-d H:i:s',time());
+        $newSuite->duration  = 0;
+        $newSuite->suiteName = $title;
+        $newSuite->insert();
+        return $new_id;
+        }
+        
+        
+        public function getExamByClassExam($teacherID)
+        {
+        $sql = "select * from exam";
+        $condition = " where examID in(select examID from class_exam where classID in (select classID from teacher_class where teacherID = '$teacherID'))";
+        $sql = $sql.$condition;
+        return Yii::app()->db->createCommand($sql)->query(); 
+        }  
 
 	/**
 	 * Returns the static model of the specified AR class.
