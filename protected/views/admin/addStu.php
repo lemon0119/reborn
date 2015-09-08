@@ -35,7 +35,7 @@
                     </div>
             </div>						
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=admin/stuLst" class="btn">取消</a>
+                <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=admin/exlAddStu" class="btn">批量添加</a> <a href="./index.php?r=admin/stuLst" class="btn">取消</a>
             </div>
         </fieldset>
     </form>
