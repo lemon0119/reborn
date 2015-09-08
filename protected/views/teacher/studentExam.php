@@ -42,7 +42,7 @@
                     <tr>
                         <td>
                             <?php            
-                            echo $thisExam['suiteName'];?>
+                            echo $thisExam['examName'];?>
                            
                         </td>        
                         <td>            
