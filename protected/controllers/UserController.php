@@ -2,6 +2,25 @@
 
 class UserController extends Controller
 {
+    public function actionForgetPassword(){     //忘记密码
+        $result ='no';
+    	if(isset($_POST['account'])){
+            $account=$_POST['account'];
+    	    $email=$_POST['email'];
+            
+            $user = Student::model()->find('userID=?', array($userid_now));
+            if(!empty($user)){
+                if($user->mail_address !== $account){
+                    $result='old error';
+                    $this->render('set',['result'=>$result]);
+                    return;
+                }
+                $this->render('updatepassword');
+            }
+            
+        }
+	$this->render('forgetpassword');
+    }
     protected function setuser() {
         $login_model=new LoginForm;
         $login_model->attributes=$_POST['LoginForm'];

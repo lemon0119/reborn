@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
 <?php
     if(isset(Yii::app()->session['userid_now']))
@@ -43,6 +43,7 @@
                                                                     </a>
                                                                     <ul class="dropdown-menu">
                                                                             <li>
+<a href="./index.php?r=student/set">设置</a>
                                                                                     <a href="./index.php?r=user/login&exit=1">退出</a>
                                                                             </li>
                                                                     </ul>                    

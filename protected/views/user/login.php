@@ -8,7 +8,6 @@
     <link href="<?php echo CSS_URL; ?>font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo CSS_URL; ?>style.css" rel="stylesheet" type="text/css"/>
 </head>
-
 <!-- END HEAD -->
 
 <!-- BEGIN BODY -->
@@ -21,9 +20,8 @@
 	<!-- BEGIN LOGIN -->
 	<div class="content">
 		<!-- BEGIN LOGIN FORM -->
-                <?php $form=$this->beginWidget('CActiveForm');?>
+           <?php $form=$this->beginWidget('CActiveForm');?>
 			<h3 class="form-title">用户登录</h3>
-                        
 			<div class="alert alert-error hide">
 				<button class="close" data-dismiss="alert"></button>
 				<span>请输入用户名和密码</span>
@@ -34,8 +32,13 @@
 				<div class="controls">
 					<div class="input-icon left">
 						<i class="icon-user"></i>
-                                       <?php echo $form->textField($login_model,'username',array('class'=>'m-wrap placeholder-no-fix','placeholder'=>"请输入您的用户名")); ?>
-                                       <?php echo $form->error($login_model,'username'); ?>
+						<!-- 为一个模型属性渲染一个输入框   -->
+						<?php 
+						$cookie = Yii::app()->request->getCookies();
+						if(!empty($cookie['usernamecookie']->value))
+						$login_model->username=$cookie['usernamecookie']->value;
+                         echo $form->textField($login_model,'username',array('class'=>'m-wrap placeholder-no-fix','placeholder'=>"请输入您的用户名")); ?>
+                        <?php echo $form->error($login_model,'username'); ?>
 					</div>
 				</div>
 			</div>
@@ -44,34 +47,46 @@
 				<div class="controls">
 					<div class="input-icon left">
 						<i class="icon-lock"></i>
-                                                <!--<input class="m-wrap placeholder-no-fix" type="password" placeholder="请输入您的密码" name="password" />-->
-                                                <?php echo $form->passwordField($login_model,'password',array('class'=>'m-wrap placeholder-no-fix','placeholder'=>"请输入您的密码")); ?>
-                                                <?php echo $form->error($login_model,'password'); ?>
-                                        </div>
+                            <!--<input class="m-wrap placeholder-no-fix" type="password" placeholder="请输入您的密码" name="password" />-->
+                            <?php echo $form->passwordField($login_model,'password',array('class'=>'m-wrap placeholder-no-fix','placeholder'=>"请输入您的密码")); ?>
+                            <?php echo $form->error($login_model,'password'); ?>
+                    </div>
 				</div>
 			</div>
                         
-                        <div class="control-group">
-                                <div class="controls">
-                                    <div class="input-icon left">
-                                        <?php $login_model->usertype = 'student';
-                                        echo $form->dropDownList($login_model,'usertype',array('empty'=>'请选择身份','student'=>"学生",'teacher'=>'老师','admin'=>"管理员")); 
-                                        ?>
-                                    </div>
-                                </div>
-                        </div>
+            <div class="control-group">
+                 <div class="controls">
+                     <div class="input-icon left">
+                          <?php
+                             $cookie = Yii::app()->request->getCookies();
+                             if(!empty($cookie['usertypecookie']->value))
+                          	 	$login_model->usertype = $cookie['usertypecookie']->value;
+                             echo $form->dropDownList($login_model,'usertype',array('empty'=>'请选择身份','student'=>"学生",'teacher'=>'老师','admin'=>"管理员")); 
+                          ?>
+                     </div>
+                 </div>
+            </div>
                         
 			<div class="form-actions">
+				
 				<label class="checkbox">
-				<input type="checkbox" name="remember" value="1"/>下次自动登录
+					<?php 
+						$cookie = Yii::app()->request->getCookies();
+						if(!empty($cookie['remcookie']->value))
+							echo $form->checkBox($login_model, 'rememberMe',array('checked'=>'checked'));
+						else
+							echo $form->checkBox($login_model, 'rememberMe',array('checked'=>'')); 
+						
+						?>
+					<p>记住用户名和身份</p>
 				</label>
 				<button type="submit" class="btn btn-primary pull-right">
-				登录 <i class="m-icon-swapright m-icon-white"></i>
+					登录 <i class="m-icon-swapright m-icon-white"></i>
 				</button>            
 			</div>
 			<div class="forget-password">
-                            <p>
-                                <a href="javascript:;" class="" id="forget-password">忘记密码?</a>
+                <p>
+                    <a href="./index.php?r=user/forgetpassword" class="" id="forget-password">忘记密码?</a>
 			    </p>
 			</div>
                 <?php $this->endWidget(); ?>
@@ -85,8 +100,8 @@
 			<div class="control-group">
 				<div class="controls">
 					<div class="input-icon left">
-                                            <i class="icon-envelope"></i>
-                                            <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="email" />
+                         <i class="icon-envelope"></i>
+                         <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="email" />
 					</div>
 				</div>
 			</div>

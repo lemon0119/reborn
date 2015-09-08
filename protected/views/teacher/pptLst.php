@@ -30,41 +30,7 @@
 </div>
 <div class="span9">
     <h2>PPT列表</h2>
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>名称</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-                <tbody>        
-                    <?php
-                    	$mydir = dir($pdir); 
-                        while($file = $mydir->read())
-                        { 
-                                if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
-                                {
-                    ?>
-                    <tr>
-                        <td>
-                            <?php echo iconv("gb2312","UTF-8",$file);?>
-                        </td>
-                        <td>
-                            <a href="./index.php?r=teacher/lookPpt&&ppt=<?php  $fileName   = iconv("gb2312","UTF-8",$file);
-                                                                                $len    = strlen($fileName);
-                                                                                $path   = substr($fileName,0,$len-4);
-                                                                                echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
-                            <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>"><img src="<?php echo IMG_URL; ?>edit.png">下载</a>
-                            <a href="./index.php?r=teacher/deletePpt&&ppt=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
-                        </td>
-                    </tr>
-                    <?php     
-                                } 
-                        } 
-                        $mydir->close(); 
-                    ?>
-                </tbody>
-    </table>
+    <div id ="ppt-table"></div>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/addPpt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 
     <div class="control-group">
        <label class="control-label" for="input02">上传</label>
@@ -82,13 +48,10 @@
 <script>
     $(document).ready(function(){
     $("#upload").hide();
-    <?php 
-        if(isset($result)){
-            echo '$("#upload").hide();';
-            echo "alert('$result');";
-        }
-    ?>
 });
+
+    $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
+
 $("#myForm").submit(function(){
     $("#upload").show();
 });

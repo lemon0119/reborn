@@ -28,13 +28,18 @@ class Suite extends CActiveRecord
         return $result;
     }
     
+    /*
+     * 
+     * 
+     *    得到登录学生的所有课堂作业
+     */
     public function getClassworkAll($lesnID){
         $userid =Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($userid);
-        $select = 'select begintime , endtime , classwork.suiteID , suiteName from classwork , suite ';
+        $select = 'select begintime , endtime , classwork.suiteID , suite.suiteName from classwork, class_lesson_suite, suite';
         $time = date("Y-m-d  H:i:s");
-        $condition = "where classwork.suiteID=suite.suiteID and suiteType = 'classwork' and lessonID = '$lesnID'";
-        $order = ' order by classwork.suiteID';
+        $condition = " where classwork.suiteID=suite.suiteID and class_lesson_suite.suiteID=classwork.suiteID and class_lesson_suite.classID='$classID' and class_lesson_suite.lessonID='$lesnID'";
+        $order = 'order by suite.suiteID';
         $sql = $select.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
         return $result;

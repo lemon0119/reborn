@@ -134,7 +134,7 @@ class ExamExercise extends CActiveRecord
        public function getchoice($suiteID)
 	{
             $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where suiteID='$suiteID' and type='choice')";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='choice')";
             $select = "select * from choice";
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->query();
@@ -145,7 +145,7 @@ class ExamExercise extends CActiveRecord
     	public function getFilling($suiteID)
 	{
             $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where suiteID='$suiteID' and type='filling')";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='filling')";
             $select = "select * from filling";
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->query();
@@ -156,7 +156,7 @@ class ExamExercise extends CActiveRecord
     	public function getQuestion($suiteID)
 	{
             $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where suiteID='$suiteID' and type='question')";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='question')";
             $select = "select * from question";
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->query();
@@ -167,7 +167,7 @@ class ExamExercise extends CActiveRecord
         public function getKeyExer($suiteID)
 	{
             $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where suiteID='$suiteID' and type='key')";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='key')";
             $select = "select * from key_type";
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->query();
@@ -178,7 +178,7 @@ class ExamExercise extends CActiveRecord
         public function getListenExer($suiteID)
 	{
             $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where suiteID='$suiteID' and type='listen')";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='listen')";
             $select = "select * from listen_type";
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->query();
@@ -189,7 +189,7 @@ class ExamExercise extends CActiveRecord
         public function getLookExer($suiteID)
 	{
             $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where suiteID='$suiteID' and type='look')";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='look')";
             $select = "select * from look_type";
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->query();

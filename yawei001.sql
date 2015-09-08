@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-08-26 14:59:32
+-- Generation Time: 2015-09-08 09:59:38
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -415,6 +415,73 @@ INSERT INTO `classwork` (`suiteID`, `begintime`, `endtime`, `createTime`, `creat
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `class_exam`
+--
+
+CREATE TABLE IF NOT EXISTS `class_exam` (
+  `classID` int(11) NOT NULL,
+  `examID` int(11) NOT NULL,
+  `open` tinyint(1) NOT NULL,
+  `workID` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`workID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `class_exam`
+--
+
+INSERT INTO `class_exam` (`classID`, `examID`, `open`, `workID`) VALUES
+(1, 8, 1, 12),
+(1, 10, 1, 17),
+(1, 11, 1, 22),
+(1, 1, 1, 31),
+(1, 5, 1, 32),
+(1, 4, 1, 33),
+(1, 2, 1, 34),
+(2, 2, 1, 35),
+(2, 1, 0, 36);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `class_lesson_suite`
+--
+
+CREATE TABLE IF NOT EXISTS `class_lesson_suite` (
+  `workID` int(11) NOT NULL DEFAULT '0',
+  `suiteID` int(30) NOT NULL,
+  `lessonID` int(30) NOT NULL,
+  `classID` int(30) NOT NULL,
+  `open` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`workID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `class_lesson_suite`
+--
+
+INSERT INTO `class_lesson_suite` (`workID`, `suiteID`, `lessonID`, `classID`, `open`) VALUES
+(5, 8, 2, 1, 1),
+(12, 8, 1, 1, 1),
+(15, 2, 2, 1, 1),
+(16, 1, 2, 1, 1),
+(17, 10, 2, 1, 1),
+(18, 11, 2, 1, 1),
+(22, 11, 1, 1, 1),
+(23, 5, 4, 1, 1),
+(27, 4, 2, 1, 1),
+(28, 5, 2, 1, 1),
+(31, 1, 1, 1, 1),
+(32, 5, 1, 1, 1),
+(33, 4, 1, 1, 1),
+(34, 2, 1, 1, 1),
+(35, 2, 3, 2, 1),
+(36, 1, 3, 2, 0),
+(37, 1, 3, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `course`
 --
 
@@ -443,21 +510,29 @@ INSERT INTO `course` (`courseID`, `courseName`, `createPerson`, `createTime`, `c
 --
 
 CREATE TABLE IF NOT EXISTS `exam` (
-  `suiteID` int(30) NOT NULL,
-  `suiteName` varchar(60) NOT NULL,
+  `examID` int(30) NOT NULL,
+  `examName` varchar(60) NOT NULL,
   `begintime` datetime NOT NULL,
   `endtime` datetime NOT NULL,
   `createTime` datetime NOT NULL,
   `createPerson` int(30) NOT NULL,
-  PRIMARY KEY (`suiteID`)
+  `duration` int(11) DEFAULT NULL,
+  PRIMARY KEY (`examID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `exam`
 --
 
-INSERT INTO `exam` (`suiteID`, `suiteName`, `begintime`, `endtime`, `createTime`, `createPerson`) VALUES
-(1, '单元测试一', '2015-07-08 10:00:00', '2015-07-08 11:30:00', '2015-07-05 00:00:00', 1);
+INSERT INTO `exam` (`examID`, `examName`, `begintime`, `endtime`, `createTime`, `createPerson`, `duration`) VALUES
+(1, '单元测试一', '2015-07-08 10:00:00', '2015-07-08 23:30:00', '2015-07-05 00:00:00', 1, 750),
+(2, '单元测试二', '2015-07-31 10:10:12', '2015-07-31 10:10:12', '2015-07-31 10:10:12', 1, 0),
+(4, '单元测试四', '2015-07-08 10:00:00', '2015-07-08 23:30:00', '2015-07-05 00:00:00', 1, 750),
+(5, '单元测试七', '2015-09-06 15:58:21', '2015-09-06 15:58:21', '2015-09-06 15:58:21', 1, 0),
+(8, '单元测试三', '2015-07-08 10:00:00', '2015-07-08 23:30:00', '2015-07-05 00:00:00', 1, 750),
+(10, '单元测试六', '2015-07-08 10:00:00', '2015-07-08 23:30:00', '2015-07-05 00:00:00', 1, 750),
+(11, '单元测试八', '2015-07-08 10:00:00', '2015-07-08 23:30:00', '2015-07-05 00:00:00', 1, 750),
+(12, '单元测试九', '2015-07-08 10:00:00', '2015-07-08 23:30:00', '2015-07-05 00:00:00', 1, 750);
 
 -- --------------------------------------------------------
 
@@ -466,27 +541,128 @@ INSERT INTO `exam` (`suiteID`, `suiteName`, `begintime`, `endtime`, `createTime`
 --
 
 CREATE TABLE IF NOT EXISTS `exam_exercise` (
-  `suiteID` int(30) NOT NULL,
+  `examID` int(30) NOT NULL,
   `exerciseID` int(30) NOT NULL,
   `type` enum('look','listen','key','choice','filling','question') NOT NULL,
   `score` int(2) NOT NULL,
-  PRIMARY KEY (`suiteID`,`exerciseID`,`type`)
+  `time` int(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`examID`,`exerciseID`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `exam_exercise`
 --
 
-INSERT INTO `exam_exercise` (`suiteID`, `exerciseID`, `type`, `score`) VALUES
-(1, 1, 'look', 10),
-(1, 1, 'listen', 10),
-(1, 1, 'key', 8),
-(1, 1, 'choice', 3),
-(1, 1, 'filling', 5),
-(1, 1, 'question', 10),
-(1, 2, 'look', 10),
-(1, 2, 'listen', 10),
-(1, 2, 'choice', 3);
+INSERT INTO `exam_exercise` (`examID`, `exerciseID`, `type`, `score`, `time`) VALUES
+(1, 1, 'look', 0, 0),
+(1, 1, 'listen', 0, 0),
+(1, 1, 'key', 0, 0),
+(1, 1, 'choice', 0, 0),
+(1, 1, 'filling', 0, 0),
+(1, 1, 'question', 0, 0),
+(1, 2, 'listen', 0, 0),
+(1, 2, 'key', 0, 0),
+(1, 2, 'choice', 0, 0),
+(1, 2, 'filling', 0, 0),
+(1, 3, 'look', 0, 0),
+(1, 3, 'listen', 0, 0),
+(1, 3, 'key', 0, 0),
+(1, 3, 'choice', 0, 0),
+(1, 4, 'key', 0, 0),
+(1, 7, 'choice', 0, 0),
+(1, 14, 'choice', 0, 0),
+(1, 20, 'choice', 0, 0),
+(1, 21, 'choice', 0, 0),
+(1, 22, 'choice', 0, 0),
+(1, 22, 'question', 0, 0),
+(1, 23, 'choice', 0, 0),
+(1, 26, 'key', 0, 0),
+(1, 27, 'key', 0, 0),
+(1, 29, 'key', 0, 0),
+(1, 30, 'key', 0, 0),
+(1, 31, 'key', 0, 0),
+(2, 1, 'look', 0, 0),
+(2, 1, 'listen', 0, 0),
+(2, 1, 'key', 0, 0),
+(2, 1, 'choice', 0, 0),
+(2, 1, 'filling', 0, 0),
+(2, 1, 'question', 0, 0),
+(2, 2, 'look', 0, 0),
+(2, 3, 'listen', 0, 0),
+(3, 1, 'listen', 0, 0),
+(3, 2, 'listen', 0, 0),
+(4, 1, 'choice', 0, 0),
+(5, 1, 'choice', 0, 0),
+(7, 1, 'look', 0, 0),
+(7, 1, 'listen', 0, 0),
+(7, 1, 'key', 0, 0),
+(7, 1, 'filling', 0, 0),
+(7, 2, 'listen', 0, 0),
+(7, 2, 'key', 0, 0),
+(7, 2, 'choice', 0, 0),
+(8, 1, 'look', 0, 0),
+(8, 1, 'key', 0, 0),
+(8, 1, 'filling', 0, 0),
+(8, 1, 'question', 0, 0),
+(8, 2, 'listen', 0, 0),
+(13, 1, 'choice', 0, 0),
+(13, 2, 'choice', 0, 0),
+(13, 3, 'choice', 0, 0),
+(13, 5, 'choice', 0, 0),
+(13, 14, 'choice', 0, 0),
+(13, 17, 'choice', 0, 0),
+(13, 18, 'choice', 0, 0),
+(13, 19, 'choice', 0, 0),
+(15, 1, 'choice', 0, 0),
+(15, 1, 'filling', 0, 0),
+(15, 2, 'choice', 0, 0),
+(15, 3, 'choice', 0, 0),
+(22, 1, 'choice', 0, 0),
+(22, 2, 'choice', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `exam_record`
+--
+
+CREATE TABLE IF NOT EXISTS `exam_record` (
+  `recordID` varchar(30) NOT NULL,
+  `ratio_accomplish` float NOT NULL DEFAULT '0',
+  `ratio_correct` float NOT NULL DEFAULT '0',
+  `createPerson` int(30) NOT NULL,
+  `createTime` datetime NOT NULL,
+  `workID` int(11) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `modifyTime` datetime DEFAULT NULL,
+  `studentID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`recordID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `exam_record`
+--
+
+INSERT INTO `exam_record` (`recordID`, `ratio_accomplish`, `ratio_correct`, `createPerson`, `createTime`, `workID`, `score`, `modifyTime`, `studentID`) VALUES
+('2566125580', 0.8, 0.85, 0, '2015-05-25 23:02:05', 31, 85, '1899-11-30 00:00:00', 10),
+('2732231190', 0.6, 0.8, 0, '2015-05-27 21:10:31', 24, 60, '0000-00-00 00:00:00', 10),
+('2732451644', 0.3, 0.8, 0, '2015-05-27 21:14:11', 30, 40, '0000-00-00 00:00:00', 10),
+('5485296065', 0, 0, 0, '2015-06-28 17:54:56', NULL, 0, '0000-00-00 00:00:00', 10),
+('5502287245', 0, 0, 0, '2015-06-28 22:38:07', NULL, 0, '0000-00-00 00:00:00', 10),
+('6759597211', 1, 0, 0, '2015-07-13 11:53:17', NULL, 0, '0000-00-00 00:00:00', 4),
+('7465077556', 1, 0, 0, '2015-07-21 15:51:17', 15, 0, '0000-00-00 00:00:00', 3),
+('7472972378', 0, 0, 0, '2015-07-21 18:02:52', 15, 0, '0000-00-00 00:00:00', 4),
+('7729586059', 0, 0, 0, '2015-07-24 17:19:46', 30, 0, '0000-00-00 00:00:00', 20),
+('7960135124', 0, 0, 0, '2015-07-27 09:22:15', 30, 0, '0000-00-00 00:00:00', 0),
+('7962646268', 0, 0, 0, '2015-07-27 10:04:06', 12, 0, '0000-00-00 00:00:00', 0),
+('7983371525', 1, 0, 0, '2015-07-27 15:49:31', 30, 0, '0000-00-00 00:00:00', 1),
+('8069131291', 1, 0, 0, '2015-07-28 15:38:51', 31, 0, '0000-00-00 00:00:00', 2),
+('8069131292', 1, 0, 0, '2015-07-28 15:38:51', 16, 0, '0000-00-00 00:00:00', 3),
+('8069131293', 1, 0, 0, '2015-07-28 15:38:51', 31, 0, '0000-00-00 00:00:00', 4),
+('8069131294', 1, 0, 0, '2015-07-28 15:38:51', 31, 0, '0000-00-00 00:00:00', 5),
+('8069131295', 1, 0, 0, '2015-07-28 15:38:51', 31, 0, '0000-00-00 00:00:00', 6),
+('8069131296', 0, 0, 0, '2015-07-28 15:38:51', 31, 0, '0000-00-00 00:00:00', 7),
+('8069131299', 1, 0, 0, '2015-07-28 15:38:51', 15, 0, '0000-00-00 00:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -674,6 +850,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `userID` varchar(30) NOT NULL,
   `userName` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
+  `mail_address` varchar(50) NOT NULL,
   `classID` int(30) NOT NULL,
   `is_delete` tinyint(1) NOT NULL,
   PRIMARY KEY (`userID`)
@@ -683,18 +860,18 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- 转存表中的数据 `student`
 --
 
-INSERT INTO `student` (`userID`, `userName`, `password`, `classID`, `is_delete`) VALUES
-('1', 'student', '000', 1, 0),
-('13', '13', '000', 1, 0),
-('19', 'rty', 'rty', 0, 1),
-('2', '2', '2', 2, 0),
-('20', 'student2', '000', 1, 0),
-('21', 'student3', '000', 2, 0),
-('22', '22', '22', 2, 0),
-('23', '23', '23', 2, 0),
-('25', 'asf', 'asd', 2, 0),
-('27', 'ad', 'as', 1, 0),
-('29', 'asd', 'as', 1, 0);
+INSERT INTO `student` (`userID`, `userName`, `password`, `mail_address`, `classID`, `is_delete`) VALUES
+('1', 'student', '000', '', 1, 0),
+('13', '13', '000', '', 1, 0),
+('19', 'rty', 'rty', '', 0, 1),
+('2', '2', '2', '', 2, 0),
+('20', 'student2', '000', '', 1, 0),
+('21', 'student3', '000', '', 2, 0),
+('22', '22', '22', '', 2, 0),
+('23', '23', '23', '', 2, 0),
+('25', 'asf', 'asd', '', 2, 0),
+('27', 'ad', 'as', '', 1, 0),
+('29', 'asd', 'as', '', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -704,12 +881,10 @@ INSERT INTO `student` (`userID`, `userName`, `password`, `classID`, `is_delete`)
 
 CREATE TABLE IF NOT EXISTS `suite` (
   `suiteID` int(30) NOT NULL,
-  `lessonID` int(30) NOT NULL,
   `suiteName` varchar(60) NOT NULL,
   `suiteType` enum('exam','exercise','classwork') NOT NULL DEFAULT 'exercise',
   `createTime` datetime NOT NULL,
   `createPerson` int(30) NOT NULL,
-  `classID` int(30) DEFAULT '0',
   PRIMARY KEY (`suiteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -717,18 +892,18 @@ CREATE TABLE IF NOT EXISTS `suite` (
 -- 转存表中的数据 `suite`
 --
 
-INSERT INTO `suite` (`suiteID`, `lessonID`, `suiteName`, `suiteType`, `createTime`, `createPerson`, `classID`) VALUES
-(1, 1, '第一课基础练习1', 'exercise', '2015-04-14 00:00:00', 1, 0),
-(2, 1, '基础班第一次课堂作业', 'classwork', '2015-04-15 00:00:00', 1, 0),
-(3, 1, '课堂练习1', 'exercise', '0000-00-00 00:00:00', 1, 0),
-(4, 2, '练习二', 'exercise', '0000-00-00 00:00:00', 1, 0),
-(5, 2, '打字基础-课堂练习', 'exercise', '0000-00-00 00:00:00', 2, 0),
-(6, 1, '第一课基础练习2', 'exercise', '0000-00-00 00:00:00', 0, 1),
-(7, 1, '基础班第二次课堂作业', 'classwork', '0000-00-00 00:00:00', 0, 1),
-(8, 2, '基础班第三次课堂作业', 'classwork', '0000-00-00 00:00:00', 0, 2),
-(9, 1, '第二课基础练习1', 'exercise', '0000-00-00 00:00:00', 0, 1),
-(10, 4, '课堂练习', 'classwork', '2015-07-03 10:43:38', 0, 0),
-(11, 4, '自我练习', 'exercise', '2015-07-03 10:43:38', 0, 0);
+INSERT INTO `suite` (`suiteID`, `suiteName`, `suiteType`, `createTime`, `createPerson`) VALUES
+(1, '第一课基础练习1', 'exercise', '2015-04-14 00:00:00', 1),
+(2, '基础班第一次课堂作业', 'classwork', '2015-04-15 00:00:00', 1),
+(3, '课堂练习1', 'exercise', '0000-00-00 00:00:00', 1),
+(4, '练习二', 'exercise', '0000-00-00 00:00:00', 1),
+(5, '打字基础-课堂练习', 'exercise', '0000-00-00 00:00:00', 2),
+(6, '第一课基础练习2', 'exercise', '0000-00-00 00:00:00', 0),
+(7, '基础班第二次课堂作业', 'classwork', '0000-00-00 00:00:00', 0),
+(8, '基础班第三次课堂作业', 'classwork', '0000-00-00 00:00:00', 0),
+(9, '第二课基础练习1', 'exercise', '0000-00-00 00:00:00', 0),
+(10, '课堂练习', 'classwork', '2015-07-03 10:43:38', 0),
+(11, '自我练习', 'exercise', '2015-07-03 10:43:38', 0);
 
 -- --------------------------------------------------------
 
@@ -792,7 +967,7 @@ INSERT INTO `suite_exercise` (`suiteID`, `exerciseID`, `type`) VALUES
 
 CREATE TABLE IF NOT EXISTS `suite_record` (
   `recordID` varchar(30) NOT NULL DEFAULT '000',
-  `suiteID` int(30) NOT NULL,
+  `workID` int(30) NOT NULL,
   `ratio_accomplish` float NOT NULL DEFAULT '0',
   `ratio_correct` float NOT NULL DEFAULT '0',
   `score` int(3) NOT NULL DEFAULT '0',
@@ -807,7 +982,7 @@ CREATE TABLE IF NOT EXISTS `suite_record` (
 -- 转存表中的数据 `suite_record`
 --
 
-INSERT INTO `suite_record` (`recordID`, `suiteID`, `ratio_accomplish`, `ratio_correct`, `score`, `studentID`, `createTime`, `modifyTime`) VALUES
+INSERT INTO `suite_record` (`recordID`, `workID`, `ratio_accomplish`, `ratio_correct`, `score`, `studentID`, `createTime`, `modifyTime`) VALUES
 ('2566125580', 1, 0.8, 0.85, 85, 10, '2015-05-25 23:02:05', '2015-06-29 20:52:16'),
 ('2732231190', 4, 0.6, 0.8, 60, 10, '2015-05-27 21:10:31', '2015-05-27 21:10:31'),
 ('2732451644', 2, 0.3, 0.8, 40, 10, '2015-05-27 21:14:11', '2015-06-19 10:23:06'),
@@ -850,6 +1025,7 @@ CREATE TABLE IF NOT EXISTS `teacher` (
   `userID` int(30) NOT NULL,
   `userName` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
+  `mail_address` varchar(50) NOT NULL,
   `is_delete` tinyint(1) NOT NULL,
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -858,9 +1034,9 @@ CREATE TABLE IF NOT EXISTS `teacher` (
 -- 转存表中的数据 `teacher`
 --
 
-INSERT INTO `teacher` (`userID`, `userName`, `password`, `is_delete`) VALUES
-(1, 'teacher', '000', 0),
-(5, '张三', 'shi123', 0);
+INSERT INTO `teacher` (`userID`, `userName`, `password`, `mail_address`, `is_delete`) VALUES
+(1, 'teacher', '000', '', 0),
+(5, '张三', 'shi123', '', 0);
 
 -- --------------------------------------------------------
 
