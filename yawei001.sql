@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-09-08 09:49:34
+-- Generation Time: 2015-09-08 09:59:38
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -850,6 +850,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `userID` varchar(30) NOT NULL,
   `userName` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
+  `mail_address` varchar(50) NOT NULL,
   `classID` int(30) NOT NULL,
   `is_delete` tinyint(1) NOT NULL,
   PRIMARY KEY (`userID`)
@@ -859,18 +860,18 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- 转存表中的数据 `student`
 --
 
-INSERT INTO `student` (`userID`, `userName`, `password`, `classID`, `is_delete`) VALUES
-('1', 'student', '000', 1, 0),
-('13', '13', '000', 1, 0),
-('19', 'rty', 'rty', 0, 1),
-('2', '2', '2', 2, 0),
-('20', 'student2', '000', 1, 0),
-('21', 'student3', '000', 2, 0),
-('22', '22', '22', 2, 0),
-('23', '23', '23', 2, 0),
-('25', 'asf', 'asd', 2, 0),
-('27', 'ad', 'as', 1, 0),
-('29', 'asd', 'as', 1, 0);
+INSERT INTO `student` (`userID`, `userName`, `password`, `mail_address`, `classID`, `is_delete`) VALUES
+('1', 'student', '000', '', 1, 0),
+('13', '13', '000', '', 1, 0),
+('19', 'rty', 'rty', '', 0, 1),
+('2', '2', '2', '', 2, 0),
+('20', 'student2', '000', '', 1, 0),
+('21', 'student3', '000', '', 2, 0),
+('22', '22', '22', '', 2, 0),
+('23', '23', '23', '', 2, 0),
+('25', 'asf', 'asd', '', 2, 0),
+('27', 'ad', 'as', '', 1, 0),
+('29', 'asd', 'as', '', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1024,6 +1025,7 @@ CREATE TABLE IF NOT EXISTS `teacher` (
   `userID` int(30) NOT NULL,
   `userName` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
+  `mail_address` varchar(50) NOT NULL,
   `is_delete` tinyint(1) NOT NULL,
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1032,9 +1034,9 @@ CREATE TABLE IF NOT EXISTS `teacher` (
 -- 转存表中的数据 `teacher`
 --
 
-INSERT INTO `teacher` (`userID`, `userName`, `password`, `is_delete`) VALUES
-(1, 'teacher', '000', 0),
-(5, '张三', 'shi123', 0);
+INSERT INTO `teacher` (`userID`, `userName`, `password`, `mail_address`, `is_delete`) VALUES
+(1, 'teacher', '000', '', 0),
+(5, '张三', 'shi123', '', 0);
 
 -- --------------------------------------------------------
 
