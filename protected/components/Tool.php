@@ -161,7 +161,7 @@ class Tool {
     			$data ['pass2'] = $v [4];
     
     			if ($data ['uid'] === "") {
-    				$result = '学生学号不能为空';
+    				$result = "学生" . $data ['uid'] .'学生学号不能为空';
     				return $result;
     			}
     			if (Tool::excelreadUserID( $data ['uid'] )) {
@@ -204,11 +204,55 @@ class Tool {
     	return $result = '导入成功！';
     }
     /**
+     * 老师的excel导入条件判断，逻辑同学生
+     */
+    public static function excelReadTeaToDatabase($excelData) {
+    	foreach ( $excelData as $k => $v ) {
+    		if ($k > 1) {
+    			$data ['uid'] = $v [0];
+    			$data ['userName'] = $v [1];
+    			$data ['pass1'] = $v [2];
+    			$data ['pass2'] = $v [3];
+    
+    			if ($data ['uid'] === "") {
+    				$result = "老师" . $data ['uid'] . '老师工号不能为空';
+    				return $result;
+    			}
+    			if (Tool::excelReadTeaUserID( $data ['uid'] )) {
+    				$result = "老师" . $data ['uid'] . '老师工号已存在！';
+    				return $result;
+    			}
+    			if ($data ['userName'] === "") {
+    				$result = "老师" . $data ['uid'] . '老师姓名不能为空';
+    				return $result;
+    			}
+    			if ($data ['pass1'] === "") {
+    				$result = "老师" . $data ['uid'] . '密码不能为空';
+    				return $result;
+    			}
+    			if ($data ['pass2'] === "") {
+    				$result = "老师" . $data ['uid'] . '确认密码不能为空';
+    				return $result;
+    			}
+    			if ($data ['pass1'] !== $data ['pass2']) {
+    				$result = "老师" . $data ['uid'].'密码两次输入不相同！';
+    				return $result;
+    			} else {
+    				// 导入数据库
+    				error_log("进入导入数据库");
+    				Teacher::model()->insertTea($data ['uid'], $data ['userName'], $data ['pass1']);
+    			}
+    		}
+    
+    	}
+    	return $result = '导入成功！';
+    }
+    /**
      * 验证用户班级是否存在
      * return true 用户班级存在; false 用户班级不存在
      */
     public static function excelreadClass($className) {
-    	$classAll = TbClass::model ()->findAll ( "" );
+    	$classAll = TbClass::model ()->findAll ("");
     	foreach ( $classAll as $k => $v ) {
     		$name = $v ['className'];
     		if ($name == $className) {
@@ -218,11 +262,26 @@ class Tool {
     	return false;
     }
     /**
-     * 验证用户ID（学号）是否存在
-     * return true 用户ID（学号）重复; false 用户ID（学号）不重复
+     * 验证学生ID（学号）是否存在
+     * return true 学生ID（学号）重复; false 学生ID（学号）不重复
      */
     public static function excelreadUserID($userId) {
     	$userAll = Student::model ()->findAll ();
+    	foreach ( $userAll as $k => $v ) {
+    		$Id = $v ['userID'];
+    		if ($Id == $userId) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    /**
+     * 验证老师ID（工号）是否存在
+     * return true 老师ID（工号）重复; false 老师ID（工号）不重复
+     */
+    public static function excelReadTeaUserID($userId) {
+    	$userAll = Teacher::model ()->findAll ();
     	foreach ( $userAll as $k => $v ) {
     		$Id = $v ['userID'];
     		if ($Id == $userId) {

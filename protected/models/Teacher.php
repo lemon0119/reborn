@@ -15,7 +15,7 @@ class Teacher extends CActiveRecord
         $newTea->userID = $userID;
         $newTea->userName = $userName;
         $newTea->password = $pass;
-        $oldTea = Student::model()->findAll("userID = '$userID'");
+        $oldTea = Teacher::model()->findAll("userID = '$userID'");
         if(count($oldTea) > 0)
             return 'no';
         else

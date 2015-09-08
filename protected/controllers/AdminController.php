@@ -145,6 +145,17 @@ class AdminController extends CController {
 				'flag' => $flag 
 		] );
 	}
+	
+	public function actionExlAddTea() {
+		$flag = 'no';
+		if (isset ( $_POST ['flag'] )) {
+			$flag = "1";
+		}
+		$this->render ( 'exlAddTea', [
+				'flag' => $flag
+		] );
+	}
+	
 	public function actionInfoStu() {
 		if (Yii::app ()->session ['lastUrl'] == "infoClass") {
 			$this->render ( 'infoStu', array (
