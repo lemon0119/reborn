@@ -47,6 +47,11 @@ class TeacherController extends CController {
             $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir            =   "resources/".$pptFilePath; 
             $result         =   "上传失败!";
+            if(!isset($_FILES["file"]))
+            {
+                echo "请选择文件！";
+                return ;
+            }
             if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint")
             {   
                 if($_FILES["file"]["size"] < 30000000)
@@ -64,7 +69,7 @@ class TeacherController extends CController {
                         else
                         {
                              move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-                             sleep(14);
+//                             sleep(14);
                             $result = "上传成功！";
                       }
                     }
@@ -74,12 +79,7 @@ class TeacherController extends CController {
             }else {
                 $result = "请上传正确类型的文件！";
             }
-            return $this->render('pptLst',[
-                    'classID'   =>  $classID,
-                    'progress'  =>  $progress,
-                    'on'        =>  $on,
-                    'result'    =>  $result,    
-        ]);
+            echo $result;
     }
     
         public function actionDeletePpt(){
@@ -94,12 +94,7 @@ class TeacherController extends CController {
             $file           =   $dir.$fileName;
             unlink(iconv('utf-8','gb2312',$file));
             $result         =   "删除成功！";    
-            return $this->render('pptLst',[
-                    'classID'   =>  $classID,
-                    'progress'  =>  $progress,
-                    'on'        =>  $on,
-                    'result'    =>  $result,    
-        ]);
+            echo $result;
     }
     
     public function actionLookPpt(){
