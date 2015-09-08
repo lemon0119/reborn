@@ -97,12 +97,10 @@ class ExamExercise extends CActiveRecord
                 'params' =>array(':type' => $type,':exerciseID'=>$exerciseID,':examID'=>$examID)
             ))!= NULL) 
             {
-                echo "1";
                 return "HAVEN";
             }     
             else 
             {
-                echo "2";
                 return $newSuiteExercise->insert();
             }
         }

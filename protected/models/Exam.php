@@ -10,6 +10,7 @@
  * @property string $endtime
  * @property string $createTime
  * @property integer $createPerson
+ * 
  */
 class Exam extends CActiveRecord
 {
@@ -29,12 +30,12 @@ class Exam extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('suiteID, suiteName, begintime, endtime, createTime, createPerson', 'required'),
-			array('suiteID, createPerson', 'numerical', 'integerOnly'=>true),
-			array('suiteName', 'length', 'max'=>60),
+			array('examID, examName, begintime, endtime, createTime, createPerson', 'required'),
+			array('examID, createPerson', 'numerical', 'integerOnly'=>true),
+			array('examName', 'length', 'max'=>60),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('suiteID, suiteName, begintime, endtime, createTime, createPerson', 'safe', 'on'=>'search'),
+			array('examID, examName, begintime, endtime, createTime, createPerson', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,8 +56,8 @@ class Exam extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'suiteID' => 'Suite',
-			'suiteName' => 'Suite Name',
+			'examID' => 'exam',
+			'examName' => 'exam Name',
 			'begintime' => 'Begintime',
 			'endtime' => 'Endtime',
 			'createTime' => 'Create Time',
@@ -82,8 +83,8 @@ class Exam extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('suiteID',$this->suiteID);
-		$criteria->compare('suiteName',$this->suiteName,true);
+		$criteria->compare('examID',$this->examID);
+		$criteria->compare('examName',$this->examName,true);
 		$criteria->compare('begintime',$this->begintime,true);
 		$criteria->compare('endtime',$this->endtime,true);
 		$criteria->compare('createTime',$this->createTime,true);
@@ -98,10 +99,10 @@ class Exam extends CActiveRecord
     public function getClassexamAll(){
         $userid =Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($userid);
-        $select = 'select begintime , endtime , exam.suiteID , suiteName from exam , classsuite';
+        $select = 'select begintime , endtime , exam.examID , examName from exam , classsuite';
         $time = date("Y-m-d  H:i:s");
-        $condition = " where exam.suiteID = classsuite.suiteID and classId = '$classID'";
-        $order = ' order by suiteID';
+        $condition = " where exam.examID = classsuite.suiteID and classId = '$classID'";
+        $order = ' order by examID';
         $sql = $select.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
         return $result;
@@ -245,7 +246,7 @@ class Exam extends CActiveRecord
         $newSuite->begintime    =   date('y-m-d H:i:s',time());
         $newSuite->endtime    =   date('y-m-d H:i:s',time());
         $newSuite->duration  = 0;
-        $newSuite->suiteName = $title;
+        $newSuite->examName = $title;
         $newSuite->insert();
         return $new_id;
         }
@@ -258,6 +259,8 @@ class Exam extends CActiveRecord
         $sql = $sql.$condition;
         return Yii::app()->db->createCommand($sql)->query(); 
         }  
+        
+        
 
 	/**
 	 * Returns the static model of the specified AR class.

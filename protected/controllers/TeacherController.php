@@ -2048,7 +2048,7 @@ class TeacherController extends CController {
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();    
          $array_class = array();
-         $result = Suite::model()->getAllSuiteByPage(5);
+         $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
          if(!empty($teacher_class))
@@ -2477,7 +2477,7 @@ class TeacherController extends CController {
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();        
          $array_class = array();
-         $result = Suite::model()->getAllSuiteByPage(5);
+         $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
    
@@ -2491,10 +2491,6 @@ class TeacherController extends CController {
              }     
              
              $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
-             if(!empty($array_lesson))
-             {
-                 $array_suite = Suite::model()->findAll("lessonID = '$currentLesson'");
-             }
          }
          $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson']));
          $this->render('assignWork',array(
@@ -2704,10 +2700,26 @@ class TeacherController extends CController {
              {
                  $userID = $student['userID'];
                  $result = ExamRecord::model()->find("workID=? and studentID=?" , array($workID,$userID));
+                 
+            
              if($result!=NULL && $result['ratio_accomplish'] == 1)
-                 array_push ($array_accomplished, $student);
+             {
+                 $score = $result['score'];
+                 array_push ($array_accomplished, array(
+                     'userID' => $student['userID'],
+                     'userName' => $student['userName'],
+                     'score' => $score
+                 ));
+             }
              else
-                 array_push ($array_unaccomplished, $student);  
+             {
+                 array_push ($array_unaccomplished, array(
+                     'userID' => $student['userID'],
+                     'userName' => $student['userName'],
+                     'score' => 0
+                 ));  
+                 
+             }
              }
          $this->render('studentExam',array(
              'array_class' => $array_class,
@@ -2740,7 +2752,7 @@ class TeacherController extends CController {
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();        
          $array_class = array();
-         $result = Suite::model()->getAllSuiteByPage(5);
+         $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
    
@@ -3035,8 +3047,95 @@ class TeacherController extends CController {
          ));
      }
      
+          public function ActionCheckStuExam()
+     {
+         $workID = $_GET['workID'];
+         $studentID = $_GET['studentID'];
+         $accomplish = $_GET['accomplish'];
+         $type = "choice";
+         if(isset($_GET['type']))
+             $type = $_GET['type'];
+         $student = Student::model()->find("userID='$studentID'");
+         $work = ClassExam::model()->find("workID='$workID'");
+         $record = ExamRecord::model()->find("workID=? and studentID=?",array($work['workID'],$student['userID']));
+         $recordID = $record['recordID'];   
+         $classID = $work['classID'];
+         $examID = $work['examID'];
+         $class = TbClass::model()->find("classID='$classID'");
+         $array_workLst = array();
+         $results = Exam::model()->getExamExerByType($examID, $type);
+         Yii::app()->session['index'] = 0;
+         foreach ($results as $result )
+             array_push ($array_workLst, $result);
+         
+         $this->render('checkStuExam',array(
+             'student' => $student,
+             'class' => $class,   
+             'workLst' => $array_workLst,
+             'type' =>$type,
+             'recordID' =>$recordID,
+             'examID' => $examID,
+             'workID'=>$workID,
+             'accomplish'=>$accomplish
+         ));
+     }
+     
      
      public function ActionAjaxChoice(){        
+         $type = $_POST['type'];
+         $recordID = $_POST['recordID'];
+         $suiteID = $_POST['suiteID'];
+         $count = $_POST['count'];
+         $isLast = false;
+         if(Yii::app()->session['index'] >= $count)
+         {
+             $isLast = true;
+             Yii::app()->session['index'] = $count-1;
+         }         
+         $array_workLst = array();
+         $results = Suite::model()->getSuiteExerByType($suiteID, $type);
+         foreach ($results as $result )
+         array_push ($array_workLst, $result);
+         $exerciseID = $array_workLst[Yii::app()->session['index']]['exerciseID'];
+         switch($type)
+         {
+             case "choice": 
+                 $work = Choice::model()->find("exerciseID='$exerciseID'");
+                 $render = "suiteChoice";
+                 break;
+             case "filling": 
+                 $work = Filling::model()->find("exerciseID='$exerciseID'");
+                 $render = "suiteFilling";
+                 break;
+             case "question": 
+                 $work = Question::model()->find("exerciseID='$exerciseID'");
+                 $render = "suiteQuestion";
+                 break;
+            case "key": 
+                 $work = KeyType::model()->find("exerciseID='$exerciseID'");
+                 $render = "suiteKey";
+                 break;
+            case "look": 
+                 $work = LookType::model()->find("exerciseID='$exerciseID'");
+                 $render = "suiteLook";
+                 break;
+            case "listen": 
+                 $work = ListenType::model()->find("exerciseID='$exerciseID'");
+                 $render = "suiteListen";
+                 break;
+         }   
+         
+         $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$exerciseID));
+         Yii::app()->session['index'] = Yii::app()->session['index'] + 1;
+         $this->renderPartial($render,array(
+             'work'=> $work,
+             'ansWork'=>$ansWork,
+             'isLast' => $isLast
+         ));       
+     }
+     
+     
+    public function ActionAjaxExam(){        
          $type = $_POST['type'];
          $recordID = $_POST['recordID'];
          $suiteID = $_POST['suiteID'];
