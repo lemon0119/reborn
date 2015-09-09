@@ -1,4 +1,6 @@
- <div class="span3">
+                <script src="<?php echo JS_URL;?>/My97DatePicker"></script>
+
+<div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">                     
                         <li class="nav-header">班级列表</li>
@@ -10,10 +12,10 @@
         </div>
      <form id="myForm" action="./index.php?r=teacher/AddExam" method="post" >  
              <div class="controls">
-                 <font >作业题目</font>
+                 <font >试卷标题</font>
                  <input name= "title" type="text" style="width:150px" id="title" value="" />
              </div>      
-         <button type="submit" class="btn btn-primary">创建作业</button>
+         <button type="submit" class="btn btn-primary">创建试卷</button>
      </form>
 </div>
 
@@ -42,7 +44,7 @@
                             }
 ?>                    
                     <tr>
-                        <td style="width: 150px"><?php echo $exam['suiteName'];?></td>                        
+                        <td style="width: 150px"><?php echo $exam['examName'];?></td>                        
    
                         <td>
                             <?php echo $exam['begintime']?>

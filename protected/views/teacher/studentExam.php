@@ -42,7 +42,7 @@
                     <tr>
                         <td>
                             <?php            
-                            echo $thisExam['suiteName'];?>
+                            echo $thisExam['examName'];?>
                            
                         </td>        
                         <td>            
@@ -58,7 +58,7 @@
                              echo $thisExam['duration']?>                    
                         </td>
                         <td>            
-                            <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>">查看</a>                      
+                            <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>">查看</a>                      
 
                         </td>
                     </tr>            
@@ -98,9 +98,12 @@
                         </td>
                         <td >
                             完成
-                        </td>  
+                        </td> 
+                        <td style="width: 50px">
+                            <?php  echo $student['score'];?>   
+                        </td> 
                         <td >
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1">批阅</a>
+                            <a href="./index.php?r=teacher/checkStuExam&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1">批阅</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 

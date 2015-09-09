@@ -132,9 +132,9 @@ class Suite extends CActiveRecord
         
     
     
-    public function getAllSuiteByPage($pagesize)
+    public function getAllSuiteByPage($pagesize,$teacherID)
     {
-        $sql  = "select * from suite";
+        $sql  = "select * from suite where createPerson =".$teacherID;
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria   =   new CDbCriteria();
         $pages     =   new CPagination($result->rowCount);
@@ -303,8 +303,6 @@ class Suite extends CActiveRecord
         $newSuite    =   new Suite();
         $newSuite->suiteID    =   $new_id;
         $newSuite->suiteType =   "exercise";
-        $newSuite->lessonID        = $lessonID;
-        $newSuite->classID =$classID;
         $newSuite->createPerson  =   $createPerson;
         $newSuite->createTime    =   date('y-m-d H:i:s',time());
         $newSuite->suiteName = $title;

@@ -31,7 +31,6 @@
         <thead>
             <tr>
                 <th>标题</th>
-                <th>课程</th>
                 <th>状态</th>
                 <th>操作</th>               
             </tr>
@@ -48,7 +47,6 @@
 ?>                    
                     <tr>
                         <td style="width: 150px"><?php echo $suite['suiteName'];?></td>
-                        <td><?php  foreach ($array_lesson as $lesson) if(Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo $lesson['lessonName'];?></td>
                         <td>
                              <?php if($isOpen == false){?>
                             <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID'];?>&&isOpen=0&&page=<?php echo $pages->currentPage+1;?>">开放</a>
@@ -63,8 +61,10 @@
                         </td>             
                         <td>
                             <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=choice"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+
                             <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=choice"><img src="<?php echo IMG_URL; ?>detail.png">修改</a>
-                            <a href="#" onclick="dele(<?php echo $suite['suiteID'];?>,<?php echo $pages->currentPage+1;?>)"><img src="<?php echo IMG_URL; ?>edit.png">删除</a>                            
+                            <a href="#" onclick="dele(<?php echo $suite['suiteID'];?>,<?php echo $pages->currentPage+1;?>)"><img src="<?php echo IMG_URL; ?>edit.png">删除</a>
+                            
                         </td>
                     </tr>            
                     <?php endforeach;?> 
