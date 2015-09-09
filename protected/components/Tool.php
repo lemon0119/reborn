@@ -208,8 +208,8 @@ class Tool {
 	public static function excelReadTeaToDatabase($excelData) {
 		foreach ( $excelData as $k => $v ) {
 			if ($k == 1) {
-				if (isset ( $v [0] ) && isset ( $v [1] ) && isset ( $v [2] ) && isset ( $v [3] )) {
-					if ($v [0] != "工号" || $v [1] != "姓名" || $v [2] != "密码" || $v [3] != "确认密码") {
+				if (isset ( $v [0] ) && isset ( $v [1] ) ) {
+					if ($v [0] != "工号" || $v [1] != "姓名") {
 						return $result = "表格格式不正确！请选择正确格式的表格！";
 					}
 				} else {
@@ -219,8 +219,6 @@ class Tool {
 			if ($k > 1) {
 				$data ['uid'] = $v [0];
 				$data ['userName'] = $v [1];
-				$data ['pass1'] = $v [2];
-				$data ['pass2'] = $v [3];
 				
 				if ($data ['uid'] === "") {
 					$result = "工号" . $data ['uid'] . '不能为空';
@@ -234,18 +232,7 @@ class Tool {
 					$result = "工号" . $data ['uid'] . '姓名不能为空';
 					return $result;
 				}
-				if ($data ['pass1'] === "") {
-					$result = "工号" . $data ['uid'] . '密码不能为空';
-					return $result;
-				}
-				if ($data ['pass2'] === "") {
-					$result = "工号" . $data ['uid'] . '确认密码不能为空';
-					return $result;
-				}
-				if ($data ['pass1'] !== $data ['pass2']) {
-					$result = "工号" . $data ['uid'] . '密码两次输入不相同！';
-					return $result;
-				} else {
+				 else {
 					$flag = 1;
 				}
 			}
@@ -253,7 +240,7 @@ class Tool {
 		if ($flag == 1) {
 			foreach ( $excelData as $k => $v ) {
 				if ($k > 1) {
-					Teacher::model ()->insertTea ( $data ['uid'], $data ['userName'], $data ['pass1'] );
+					Teacher::model ()->insertTea ( $data ['uid'], $data ['userName'], "000" );
 				}
 			}
 		}
@@ -287,7 +274,6 @@ class Tool {
 		}
 		return false;
 	}
-	
 	/**
 	 * 验证老师ID（工号）是否存在
 	 * return true 老师ID（工号）重复; false 老师ID（工号）不重复
