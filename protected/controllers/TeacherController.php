@@ -3046,8 +3046,39 @@ class TeacherController extends CController {
          ));
      }
      
-     
-     public function ActionAjaxChoice(){        
+     public function actionSet(){       //set
+    	$result ='no';
+        $mail='';
+        $userid_now = Yii::app()->session['userid_now'];
+        $user = Teacher::model()->find('userID=?', array($userid_now));
+        if (!empty($user->mail_address)) {
+            $mail = $user->mail_address;
+        }
+        if(isset($_POST['old'])){
+    		$new1=$_POST['new1'];
+    		$defnew=$_POST['defnew'];
+                $email=$_POST['email'];
+    		
+    		$usertype=Yii::app()->session['role_now'];
+    		
+    		//$thisStudent=new Student();
+    		//$thisStudent->password=$new1;
+    		//$result=$thisStudent->update();
+    		$user = Teacher::model()->find('userID=?', array($userid_now));
+                if($user->password !== $_POST['old']){
+    			$result='old error';
+    			$this->render('set',['result'=>$result,'mail'=>$mail]);
+    			return;
+    		}
+    		$user->password=$new1;
+                $user->mail_address=$email;
+    		$result=$user->save();
+                $mail=$email;
+    	}
+    	
+    	$this->render('set',['result'=>$result,'mail'=>$mail]);
+    }
+     public function ActionAjaxChoice(){         
          $type = $_POST['type'];
          $recordID = $_POST['recordID'];
          $suiteID = $_POST['suiteID'];

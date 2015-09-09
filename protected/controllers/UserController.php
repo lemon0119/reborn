@@ -2,24 +2,52 @@
 
 class UserController extends Controller
 {
+    public function actionUpdatePassword(){      //重置密码
+        $result ='no';
+    	if(isset($_POST['new1'])){
+    		$new1=$_POST['new1'];
+    		$defnew=$_POST['defnew'];
+               
+    		//$userid_now = Yii::app()->session['userid_now'];
+    		//$usertype=Yii::app()->session['role_now'];
+    		
+    		//$thisStudent=new Student();
+    		//$thisStudent->password=$new1;
+    		//$result=$thisStudent->update();
+    		$user = Student::model()->find('userID=?',$_GET['userid']);
+                if($user){
+                    $user->password=$new1;
+                    $result=$user->save();
+                }else{
+                    $result='0';
+                }
+    		$this->render('forgetpassword',['result'=>$result]);
+                return ;
+    	}
+    	
+    	$this->render('updatepassword',['result'=>$result,'userid'=>$_GET['userid']]);
+    }
     public function actionForgetPassword(){     //忘记密码
         $result ='no';
+        $account='0';
     	if(isset($_POST['account'])){
             $account=$_POST['account'];
     	    $email=$_POST['email'];
-            
-            $user = Student::model()->find('userID=?', array($userid_now));
-            if(!empty($user)){
-                if($user->mail_address !== $account){
-                    $result='old error';
-                    $this->render('set',['result'=>$result]);
+            $user = Student::model()->find('userID=?', $account);
+            $userid = isset($_GET['userid'])?$_GET['userid']:0;
+            //if($user){
+                if($user->mail_address !== $email){
+                    $result="email error";
+                    $this->render('forgetpassword',['result'=>$result]);
                     return;
                 }
-                $this->render('updatepassword');
-            }
+                //$this->redirect('./index.php?r=user/updatepassword',array('userid'=>$account));
+                $this->render('updatepassword',['userid'=>$account]);
+                return ;
+            //}
             
         }
-	$this->render('forgetpassword');
+	$this->render('forgetpassword',['result'=>$result]);
     }
     protected function setuser() {
         $login_model=new LoginForm;

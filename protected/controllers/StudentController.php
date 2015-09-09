@@ -574,15 +574,18 @@ class StudentController extends CController {
     }
     public function actionSet(){       //set
     	$result ='no';
-    	if(isset($_POST['old'])){
+        $mail='';
+        $userid_now = Yii::app()->session['userid_now'];
+        $user = Student::model()->find('userID=?', array($userid_now));
+        if (!empty($user->mail_address)) {
+            $mail = $user->mail_address;
+        }
+        if(isset($_POST['old'])){
     		$new1=$_POST['new1'];
     		$defnew=$_POST['defnew'];
                 $email=$_POST['email'];
-    		$userid_now = Yii::app()->session['userid_now'];
+    		
     		$usertype=Yii::app()->session['role_now'];
-    		
-    		//
-    		
     		
     		//$thisStudent=new Student();
     		//$thisStudent->password=$new1;
@@ -590,17 +593,16 @@ class StudentController extends CController {
     		$user = Student::model()->find('userID=?', array($userid_now));
                 if($user->password !== $_POST['old']){
     			$result='old error';
-    			$this->render('set',['result'=>$result]);
+    			$this->render('set',['result'=>$result,'mail'=>$mail]);
     			return;
     		}
     		$user->password=$new1;
                 $user->mail_address=$email;
     		$result=$user->save();
-    		
-    		
+                $mail=$email;
     	}
     	
-    	$this->render('set',['result'=>$result]);
+    	$this->render('set',['result'=>$result,'mail'=>$mail]);
     }
     
     public function actionHello(){

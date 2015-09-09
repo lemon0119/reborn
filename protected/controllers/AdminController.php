@@ -4,6 +4,33 @@ class AdminController extends CController {
 	public function actionIndex() {
 		$this->render ( 'index' );
 	}
+        public function actionSet(){       //set
+            $result ='no';
+            $mail='';
+            $userid_now = Yii::app()->session['userid_now'];
+            $user = Admin::model()->find('userID=?', array($userid_now));
+            if (!empty($user->mail_address)) {
+                $mail = $user->mail_address;
+            }
+            if(isset($_POST['old'])){
+                    $new1=$_POST['new1'];
+                    $defnew=$_POST['defnew'];
+                    $email=$_POST['email'];
+                    $usertype=Yii::app()->session['role_now'];
+                    $user = Admin::model()->find('userID=?', array($userid_now));
+                    if($user->password !== $_POST['old']){
+                            $result='old error';
+                            $this->render('set',['result'=>$result,'mail'=>$mail]);
+                            return;
+                    }
+                    $user->password=$new1;
+                    $user->mail_address=$email;
+                    $result=$user->save();
+                    $mail=$email;
+            }
+
+            $this->render('set',['result'=>$result,'mail'=>$mail]);
+        }
 	public function actionHardDeleteStu() {
 		$pass = $_POST ['password'];
 		$id = Yii::app ()->session ['userid_now'];
@@ -2144,6 +2171,7 @@ class AdminController extends CController {
 				'exer' => $exer 
 		) );
 	}
+        
 	public function actionGoverLesson() {
 		$suiteID = $_GET ['suiteID'];
 		$suiteName = $_GET ['suiteName'];

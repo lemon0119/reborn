@@ -31,7 +31,6 @@ function test()
 <div class="span9">
     <h3>忘记密码</h3>
     <form id="myForm" method="post" action="./index.php?r=user/forgetpassword"> 
-   
             <div class="control-group">
                 <label class="control-label" for="input01">账号</label>
                 <div class="controls">
@@ -57,8 +56,27 @@ function test()
             </body>
 </html>
 
-
-
+<script>  
+$(document).ready(function(){
+    var result = '<?php echo $result;?>';
+    if(result === '1')
+        alert('成功！');
+    else if(result === '0')
+        alert('失败！'); 
+    else if(result==='email error')
+        alert('邮箱错误！'); 
+}); 
+$("#myForm").submit(function(){
+    var account = $("#input01")[0].value;
+    var email = $("#input02")[0].value;
+    
+    if(account === "" ||email === ""){
+        alert('不能为空');
+        return false;
+    }
+        
+});
+</script>
 
 
 
