@@ -8,14 +8,22 @@
  * @property string $userName
  * @property string $password
  * @property string $classID
+ * @property string $sex
+ * @property string $age
+ * @property string $mail_address
+ * @property string $phone_number
  */
 class Student extends CActiveRecord
 {
-    public function insertStu($userID,$userName,$pass,$classID){
+    public function insertStu($userID,$userName,$sex,$age,$pass,$mail_address,$phone_number,$classID){
         $newStu = new Student();
         $newStu->userID = $userID;
         $newStu->userName = $userName;
+        $newStu->sex = $sex;
+        $newStu->age = $age;
         $newStu->password = $pass;
+        $newStu->mail_address = $mail_address;
+        $newStu->phone_number = $phone_number;
         $newStu->classID = $classID;
         $oldstu = Student::model()->findAll("userID = '$userID'");
         if(count($oldstu) > 0)
