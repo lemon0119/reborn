@@ -24,6 +24,7 @@ class StudentController extends CController {
     
     public function actionAnslookType(){
         $suiteID = Yii::app()->session['suiteID'];
+        $workID = Yii::app()->session['workID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -33,8 +34,8 @@ class StudentController extends CController {
         $type = $_GET['type'];
         $exer = Exercise::getExerise($exerID, $type);
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($suiteID, $studentID);
-        $answer = AnswerRecord::getAnswer($recordID, $type, $exerID);
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
         return $this->render('ansDetail_1',['exercise' => $classwork,
             'exer' => $exer,
             'answer' => $answer['answer'],
@@ -43,6 +44,7 @@ class StudentController extends CController {
     
     public function actionAnsKeyType(){
         $suiteID = Yii::app()->session['suiteID'];
+        $workID = Yii::app()->session['workID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -53,8 +55,8 @@ class StudentController extends CController {
         $result = KeyType::model()->findByPK($exerID);
         
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($suiteID, $studentID);
-        $answer = AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
         return $this->render('ansKey',
             ['exercise' => $classwork,
             'exer' => $result,
@@ -64,48 +66,53 @@ class StudentController extends CController {
     
     public function actionAnsQuestion(){
         $suiteID = Yii::app()->session['suiteID'];
+        $workID = Yii::app()->session['workID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($suiteID, $studentID);
-        $ansQuest = AnswerRecord::model()->getAnswerByType($recordID, 'question');
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansQuest = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'question');
         $ansArr = AnswerRecord::model()->ansToArray($ansQuest);
         return $this->render('ansQuest',['exercise'=>$classwork,'ansQuest'=>$ansArr]);
     }
     
     public function actionAnsFilling(){
         $suiteID = Yii::app()->session['suiteID'];
+        $workID = Yii::app()->session['workID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($suiteID, $studentID);
-        $ansFilling = AnswerRecord::model()->getAnswerByType($recordID, 'filling');
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
         $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
         return $this->render('ansFilling',['exercise'=>$classwork,'ansFilling'=>$ansArr]);
     }
     
     public function actionAnsChoice(){
         $suiteID = Yii::app()->session['suiteID'];
+        $workID = Yii::app()->session['workID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($suiteID, $studentID);
-        $ansChoice = AnswerRecord::model()->getAnswerByType($recordID, 'choice');
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansChoice = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'choice');
         $ansArr = AnswerRecord::model()->ansToArray($ansChoice);
         return $this->render('ansChoice',['exercise'=>$classwork,'ansChoice'=>$ansArr]);
     }
     public function actionViewAns(){
-        $suiteID = $_GET['suiteID'];
-        Yii::app()->session['suiteID'] = $suiteID;
+        $workID = $_GET['suiteID'];
+        Yii::app()->session['workID'] = $workID;
+        $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
+        Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
-            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
         }
         return $this->render('suiteAns',['exercise'=>$classwork]);
     }
@@ -231,7 +238,7 @@ class StudentController extends CController {
     
 
    
-        public function actionKeyType(){
+    public function actionKeyType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
@@ -343,11 +350,12 @@ class StudentController extends CController {
     
     
     public function actionClswkOne(){
-        $suiteID = $_GET['suiteID'];
-        Yii::app()->session['suiteID'] = $suiteID;
+        $workID = $_GET['suiteID'];
+        $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
+        Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
-            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
         }
         $isExam = false;
         return $this->render('suiteDetail',['exercise'=>$classwork , 'isExam' => $isExam]);
