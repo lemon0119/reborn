@@ -151,7 +151,8 @@ class StudentController extends CController {
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:0;
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
-        return $this->render('myCourse',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'myCourse'=>$myCourse]);
+        $ratio_accomplish = ExamRecord::model()->getExamAccomplish($studentID);
+        return $this->render('myCourse',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'myCourse'=>$myCourse,'ratio_accomplish'=>$ratio_accomplish]);
     }
     public function actionlistenType(){
         $suiteID = Yii::app()->session['suiteID'];
@@ -409,7 +410,8 @@ class StudentController extends CController {
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $classworks = Suite::model()->getClassworkAll($currentLesn);
-        return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classworks]);
+        $ratio_accomplish = ExamRecord::model()->getExamAccomplish($studentID);
+        return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classworks,'ratio_accomplish'=>$ratio_accomplish]);
         /*
         $this->saveParam();
         Yii::app()->session['type'] = 'classwork';

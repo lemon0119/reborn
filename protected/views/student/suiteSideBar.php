@@ -11,13 +11,13 @@
                 <ul class="nav nav-list">
                         <li class="nav-header">基础知识</li>
                         <li id="li-choice">
-                            <a href="./index.php?r=student/choice"><i class="icon-font"></i> 选 择 题</a>
+                            <a href="./index.php?r=student/choice"><i class="icon-font"></i> 选 择 题<?php require 'classWorkProgress.php';?></a>                           
                         </li>
                         <li id="li-filling">
-                                <a href="./index.php?r=student/filling"><i class="icon-text-width"></i> 填 空 题</a>
+                                <a href="./index.php?r=student/filling"><i class="icon-text-width"></i> 填 空 题<?php require 'classWorkProgress.php';?></a>
                         </li>
                         <li id="li-question">
-                                <a href="./index.php?r=student/question"><i class="icon-align-left"></i> 简 答 题</a>
+                                <a href="./index.php?r=student/question"><i class="icon-align-left"></i> 简 答 题<?php require 'classWorkProgress.php';?></a>
                         </li>
                         <li class="nav-header">键位练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
