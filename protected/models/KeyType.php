@@ -104,7 +104,7 @@ class KeyType extends CActiveRecord
 		));
 	}
         
-      public function getKeyLst($type,$value){
+    public function getKeyLst($type,$value){
         $order  =   " order by exerciseID ASC";
         if($type!="")
             $condition = " WHERE $type = '$value'";
@@ -125,7 +125,7 @@ class KeyType extends CActiveRecord
         return ['keyLst'=>$keyLst,'pages'=>$pages,];
     }
     
-          public function getKeyLstPage($type,$value,$pagesize){
+    public function getKeyLstPage($type,$value,$pagesize){
         $order  =   " order by exerciseID ASC";
         if($type!="")
             $condition = " WHERE $type = '$value'";
@@ -147,7 +147,7 @@ class KeyType extends CActiveRecord
     }
     
     
-        public function insertKey($title,$content,$createPerson){
+    public function insertKey($title,$content,$createPerson){
         $sql        =   "select max(exerciseID) as id from key_type";
         $max_id     =   Yii::app()->db->createCommand($sql)->query();
         $temp       =   $max_id->read();
