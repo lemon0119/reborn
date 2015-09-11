@@ -351,6 +351,7 @@ class StudentController extends CController {
     
     public function actionClswkOne(){
         $workID = $_GET['suiteID'];
+        Yii::app()->session['workID'] = $workID;
         $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
         Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
         $classwork = Array();
