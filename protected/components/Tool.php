@@ -185,8 +185,10 @@ class Tool {
                     return $result;
                 } elseif ($data['sex'] === "") {
                     $result = "学号" . $data ['uid'] . '性别不能为空';
+                    return $result;
                 } else if ($data['sex'] != "男" && $data['sex'] == "女") {
-                    $result = "学号" . $data['uid'] . "性别格式有误！";
+                    $result = "学号" . $data['uid'] . "性别输入有误！";
+                    return $result;
                 } else if ($data ['userName'] === "") {
                     $result = "学号" . $data ['uid'] . '姓名不能为空';
                     return $result;
@@ -209,20 +211,18 @@ class Tool {
                     $data ['phone_number'] = $v[6];
                     if (!Tool::excelreadClass($data ['className'])) {
                         $data ['className'] = "";
-                        Student::model()->insertStu($data ['uid'], $data ['userName'], "000", $data ['className']);
-                    } elseif (count_chars($data['phone_number'])!=11) {
+                    } 
+                    if (strlen($data['phone_number']) !=11) {
                         $data['phone_number']="";
-                    } else {
+                    } 
                         $className = $data ['className'];
                         $subClass = TbClass::model()->find("className = '$className'");
                         $classID = $subClass ['classID'];
-                        error_log(print_r($data));
                         Student::model()->insertStu($data ['uid'], $data ['userName'],$data ['sex'] ,$data ['age'], "000",$data ['mail_address'],$data ['phone_number'], $classID);
-                    }
                 }
             }
+             return $result = '导入成功！';
         }
-        return $result = '导入成功！';
     }
 
     /**

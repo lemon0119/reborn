@@ -265,6 +265,10 @@ class Student extends CActiveRecord
 		$criteria->compare('userName',$this->userName,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('classID',$this->classID,true);
+                $criteria->compare('sex',$this->sex,true);
+                $criteria->compare('age',$this->age,true);
+                $criteria->compare('mail_address',$this->mail_address,true);
+                $criteria->compare('phone_number',$this->phone_number,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
