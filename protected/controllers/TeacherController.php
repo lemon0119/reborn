@@ -2080,11 +2080,83 @@ class TeacherController extends CController {
                 ));
             }            
         }
-        
-     public  function ActionAssignWork(){
+    public function actionChoice(){           //see choice
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $isExam = FALSE;
+        return $this->render('choiceExer',['exercise'=>$classwork  ]);
+    }
+    public function actionfilling(){               //see filling
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $isExam = false;
+        return $this->render('fillingExer',['exercise'=>$classwork ]);
+    }
+    public function actionQuestion(){        //see question
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $isExam = FALSE;
+        return $this->render('questionExer',['exercise'=>$classwork]);
+    }
+    public function actionKeyType(){           //see keyType
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerID'] = $exerID;
+        Yii::app()->session['exerType'] = 'key';
+        $result = KeyType::model()->findByPK($exerID);
+        return $this->render('keyExer',array( 'exercise'=>$classwork, 'exerOne'=>$result,));
+    }
+    public function actionlookType(){
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerType'] = 'look';
+        $result = LookType::model()->findByPK($exerID);
+        return $this->render('lookExer',array( 'exercise'=>$classwork,'exerOne'=>$result));
+    }
+    public function actionlistenType(){
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerType'] = 'listen';
+        $result = ListenType::model()->findByPK($exerID);
+        return $this->render('listenExer',array( 
+            'exercise'=>$classwork,
+            'exerOne'=>$result ));
+    }
+     public function ActionSeeWork(){           //see work
+        $suiteID = $_GET['suiteID'];
+        Yii::app()->session['suiteID'] = $suiteID;
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        //return $this->render('seeWork',['exercise'=>$classwork ]);
+        return $this->render('choiceExer',['exercise'=>$classwork  ]);
+     }
+     public  function ActionAssignWork(){              
          $teacherID = Yii::app()->session['userid_now'];
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
-         $array_lesson = array();    
+         $array_lesson = array();          
          $array_class = array();
          $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
          $array_allsuite = $result['suiteLst'];

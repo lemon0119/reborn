@@ -150,7 +150,7 @@ class Suite extends CActiveRecord
     }
 
 
-    public function getchoice($suiteID)
+        public function getchoice($suiteID)
 	{
             $order = " order by exerciseID ASC";
             $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='choice')";

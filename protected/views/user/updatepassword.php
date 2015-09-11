@@ -16,7 +16,7 @@
 	<body>
 <div class="span9">
     <h3>重置密码</h3>
-    <form id="myForm" method="post" action="./index.php?r=user/updatepassword&&userid=<?php echo $userid;?>"> 
+    <form id="myForm" method="post" action="./index.php?r=user/updatepassword&&userid=<?php echo $userid;?>&&type=<?php echo $type;?>"> 
          
    
             <div class="control-group">

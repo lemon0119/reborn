@@ -61,7 +61,6 @@ $("#myForm").submit(function(){
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
     if(new1===defnew){
-        alert("yizhi");
     }else
     {
     	alert('不一致');
