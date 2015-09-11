@@ -121,6 +121,7 @@ class AdminController extends CController {
 		$result = Student::model ()->getStuLst ( "", "" );
 		$stuLst = $result ['stuLst'];
 		$pages = $result ['pages'];
+		
 		$this->render ( 'stuLst', array (
 				'stuLst' => $stuLst,
 				'pages' => $pages 

@@ -15,6 +15,8 @@
 class AnswerRecord extends CActiveRecord
 {
     public static function ansToArray($answer){
+        if($answer == NULL)
+            return NULL;
         $result = array();
         foreach ($answer as $one) {
             $key = $one['exerciseID'];

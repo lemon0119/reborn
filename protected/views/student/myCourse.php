@@ -27,9 +27,8 @@
             <thead>
                     <tr>
                             <th>标　　题</th>
-                            <th>开始时间</th>
-                            <th>截止时间</th>
-                            <th>是否完成</th>
+                            <th>状      态</th>
+                            
                             <th>操　　作</th>
                     </tr>
             </thead>
@@ -40,21 +39,23 @@
                                     <?php echo $work['suiteName'];?>
                             </td>
                             <td>
-                                    <?php echo $work['begintime'];?>
+                                   <?php if ($ratio_accomplish==1){
+                                    	echo '已提交';
+                                    }else {
+                                    	echo '未提交';
+                                    }?>
                             </td>
                             <td>
-                                    <?php echo $work['endtime'];?>
-                            </td>
-                            <td>
-                                    <?php echo '已完成';?>
-                            </td>
-                            <td>
-                                <?php //if(time() > strtotime($work['begintime']) && time() < strtotime($work['endtime'])){?>
-                                <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['suiteID'];?>" class="view-link"><?php echo '进　　入';?></a>
-                                <?php //} else { ?>
-                                    <?php //echo '<font color="#ff0000">已经截止</span>'; ?>
-                                <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['suiteID'];?>" class="view-link"><?php echo '查看答案';?></a>
-                                <?php //} ?>
+                                <?php if ($ratio_accomplish==1){
+                              	echo  '答题';
+                              }else {?>
+                                <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['suiteID'];?>" class="view-link"><?php echo '答题';?></a>
+                                <?php }?>
+                               <?php if ($ratio_accomplish==1){?>
+                                <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['suiteID'];?>" class="view-link"><?php echo '查看';?></a>
+                                <?php }else {
+                               	echo '查看';
+                               }?>
                             </td>
                     </tr>
                 <?php }?>
