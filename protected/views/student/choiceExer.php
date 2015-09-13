@@ -49,8 +49,11 @@ $(document).ready(function(){
     $("li#li-choice").attr('class','active');
 });
 function formSubmit(){
+    $('#klgAnswer').submit();
+        /*
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
       alert(result);
   });
+  */
 }
 </script>
