@@ -15,7 +15,7 @@ function test()
 </script>
 <div class="span9">
     <h3>设置密码</h3>
-    <form id="myForm" method="post" action="./index.php?r=student/set"> 
+    <form id="myForm" method="post" action="./index.php?r=admin/set"> 
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
@@ -61,14 +61,12 @@ $("#myForm").submit(function(){
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
     if(new1===defnew){
-        alert("yizhi");
     }else
     {
-    	alert('不一致');
-        alert(new1+','+defnew);
-    	$("#input02")[0].value="";
-    	$("#input03")[0].value="";
-        return false;
+    	//alert('不一致');
+    	//$("#input02")[0].value="";
+    	//$("#input03")[0].value="";
+        //return false;
     }
     if(new1 === "" ||old === ""||defnew === "" ){
         alert('密码不能为空');

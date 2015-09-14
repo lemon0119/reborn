@@ -15,6 +15,38 @@ class TeacherController extends CController {
         $userName   = Teacher::model()->findByPK($userID)->userName;
         return $this->render('virtualClass',['userName'=>$userName,'classID'=>$_GET['classID'],'on'=>$_GET['on']]);
     }
+    public function actionSet(){       //set
+    	$result ='no';
+        $mail='';
+        $userid_now = Yii::app()->session['userid_now'];
+        $user = Teacher::model()->find('userID=?', array($userid_now));
+        if (!empty($user->mail_address)) {
+            $mail = $user->mail_address;
+        }
+        if(isset($_POST['old'])){
+    		$new1=$_POST['new1'];
+    		$defnew=$_POST['defnew'];
+                $email=$_POST['email'];
+    		
+    		$usertype=Yii::app()->session['role_now'];
+    		
+    		//$thisStudent=new Student();
+    		//$thisStudent->password=$new1;
+    		//$result=$thisStudent->update();
+    		$user = Teacher::model()->find('userID=?', array($userid_now));
+                if($user->password !== $_POST['old']){
+    			$result='old error';
+    			$this->render('set',['result'=>$result,'mail'=>$mail]);
+    			return;
+    		}
+    		$user->password=$new1;
+                $user->mail_address=$email;
+    		$result=$user->save();
+                $mail=$email;
+    	}
+    	
+    	$this->render('set',['result'=>$result,'mail'=>$mail]);
+    }
     
     public function actionPptLSt(){
         $classID    =   $_GET['classID'];
@@ -47,6 +79,11 @@ class TeacherController extends CController {
             $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir            =   "resources/".$pptFilePath; 
             $result         =   "上传失败!";
+            if(!isset($_FILES["file"]))
+            {
+                echo "请选择文件！";
+                return ;
+            }
             if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint")
             {   
                 if($_FILES["file"]["size"] < 30000000)
@@ -64,7 +101,7 @@ class TeacherController extends CController {
                         else
                         {
                              move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-                             sleep(14);
+//                             sleep(14);
                             $result = "上传成功！";
                       }
                     }
@@ -74,12 +111,7 @@ class TeacherController extends CController {
             }else {
                 $result = "请上传正确类型的文件！";
             }
-            return $this->render('pptLst',[
-                    'classID'   =>  $classID,
-                    'progress'  =>  $progress,
-                    'on'        =>  $on,
-                    'result'    =>  $result,    
-        ]);
+            echo $result;
     }
     
         public function actionDeletePpt(){
@@ -94,12 +126,7 @@ class TeacherController extends CController {
             $file           =   $dir.$fileName;
             unlink(iconv('utf-8','gb2312',$file));
             $result         =   "删除成功！";    
-            return $this->render('pptLst',[
-                    'classID'   =>  $classID,
-                    'progress'  =>  $progress,
-                    'on'        =>  $on,
-                    'result'    =>  $result,    
-        ]);
+            echo $result;
     }
     
     public function actionLookPpt(){
@@ -3049,6 +3076,7 @@ class TeacherController extends CController {
          ));
      }
      
+
           public function ActionCheckStuExam()
      {
          $workID = $_GET['workID'];
@@ -3071,7 +3099,7 @@ class TeacherController extends CController {
      }
      
      
-     public function ActionAjaxChoice(){        
+     public function ActionAjaxChoice(){       
          $type = $_POST['type'];
          $recordID = $_POST['recordID'];
          $suiteID = $_POST['suiteID'];

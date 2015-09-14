@@ -11,6 +11,7 @@
         });
     var options = {   
         target:'#cont',   // 需要刷新的区域 
+        //
         //type:'post',
         //dataType:'json',
         //resetForm:false,

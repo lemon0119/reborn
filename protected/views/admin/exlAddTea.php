@@ -1,8 +1,8 @@
-<?php require 'stuSideBar.php';?>
+<?php require 'teaSideBar.php';?>
 <div class="span9">
-	<h2>添 加 学 生</h2>
-	<form action="./index.php?r=admin/exlAddStu" class="form-horizontal"
-		method="post" id="form-exlAddStu" enctype="multipart/form-data">
+	<h2>添 加 老 师</h2>
+	<form action="./index.php?r=admin/exlAddTea" class="form-horizontal"
+		method="post" id="form-exlAddTea" enctype="multipart/form-data">
 		<fieldset>
 			<legend>批量添加</legend>
 			<div class="control-group">
@@ -16,8 +16,8 @@
 			</div>
 			<div class="form-actions">
 				<input type="submit" class="btn btn-primary" value="添加" />&nbsp;&nbsp;<a
-					href="./index.php?r=admin/addStu" class="btn">逐个添加</a>&nbsp;&nbsp;<a
-					href="./index.php?r=admin/stuLst" class="btn">取消</a>
+					href="./index.php?r=admin/AddTea" class="btn">逐个添加</a>&nbsp;&nbsp;<a
+					href="./index.php?r=admin/teaLst" class="btn">取消</a>
 			</div>
 		</fieldset>
 	</form>
@@ -43,12 +43,12 @@ $(document).ready(function(){
 							$savePath = dirname ( Yii::app ()->BasePath ) . '/public/upload/excel/';
 							/* 以时间来命名上传的文件 */
 							$str = date ( 'Ymdhis' );
-							$file_name = "Stu".$str . ".xls";
+							$file_name = "Tea".$str . ".xls";
 							if (! copy ( $tmp_file, $savePath . $file_name )) {
 								echo "alert('上传失败');";
 							} else {
 								$res = Tool::excelreadToArray ( $savePath . $file_name, $file_type );
-								$uploadResult = Tool::excelreadToDatabase ( $res );
+								$uploadResult = Tool::excelReadTeaToDatabase( $res );
 								echo " alert ('$uploadResult');";
 							}
 						}

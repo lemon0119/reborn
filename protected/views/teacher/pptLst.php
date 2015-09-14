@@ -11,6 +11,7 @@
     $pdir = "./resources/".$pptFilePath;
     
 ?>
+<script src="<?php echo JS_URL;?>jquery-form.js"></script>
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
@@ -52,8 +53,29 @@
 
     $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
 
+    var options = {  
+        success: function(info){
+            alert(info);
+            $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
+            $("#upload").hide();
+        },
+        error: function(xhr, type, exception){
+            console.log('upload erroe', type);
+            console.log(xhr.responseText, "Failed");
+            alert("上传失败！");
+            $("#upload").hide();
+        }
+        //type:'post',
+        //dataType:'json',
+        //resetForm:false,
+       // timeout:10000
+    };
+
 $("#myForm").submit(function(){
     $("#upload").show();
+    $(this).ajaxSubmit(options);   
+        // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
+    return false;   
 });
     
     $(document).ready(function(){

@@ -12,15 +12,21 @@
  */
 class SuiteRecord extends CActiveRecord
 {
-    public static function getRecord($suiteID, $createPerson) {
-        $record = SuiteRecord::model()->find('suiteID=? and studentID=?', array($suiteID,$createPerson));
+    public static function getRecord($workID, $createPerson, $lesnID = '0') {
+        //$select = "select recordID from suite_record ";
+        //$condition = "where studentID = '$createPerson' and workID = ";
+        $record = SuiteRecord::model()->find('workID=? and studentID=?', array($workID,$createPerson));
         if($record == null) {
             return null;
         } else {
             return $record->recordID;
         }
     }
-    
+    public function getSuitRecordAccomplish($recordID){
+        $ratio_accomplish = $this->find("recordID = '$recordID'");
+		return $ratio_accomplish['ratio_accomplish'];
+    }
+
     public static function getClassworkAll($type) {
         $createPerson = Yii::app()->session['userid_now'];
         $getSuiteID = "select suiteID from suite where suiteType='$type'";
@@ -33,14 +39,15 @@ class SuiteRecord extends CActiveRecord
     }
     public static function saveSuiteRecord (&$recordID) {
         $suiteID = Yii::app()->session['suiteID'];
+        $workID = Yii::app()->session['workID'];
         $createPerson = Yii::app()->session['userid_now'];
-        $oldID = SuiteRecord::getRecord($suiteID, $createPerson);
+        $oldID = SuiteRecord::getRecord($workID, $createPerson);
         if($oldID == null) {
             $newID = Tool::createID();
             $newRecord = new SuiteRecord();
             $newRecord->recordID = $newID;
             $newRecord->studentID = $createPerson;
-            $newRecord->suiteID = $suiteID;
+            $newRecord->workID = $workID;
             $newRecord->createTime = date("Y-m-d  H:i:s");
             $newRecord->modifyTime = $newRecord->createTime;
             if(!($newRecord->insert())) {

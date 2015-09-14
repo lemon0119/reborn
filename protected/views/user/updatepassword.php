@@ -15,21 +15,18 @@
 	</head>
 	<body>
 <div class="span9">
-    <h3>忘记密码</h3>
-    <form id="myForm" method="post" action="./index.php?r=user/set"> 
+    <h3>重置密码</h3>
+    <form id="myForm" method="post" action="./index.php?r=user/updatepassword&&userid=<?php echo $userid;?>"> 
+         
    
             <div class="control-group">
-                <label class="control-label" for="input01">账号</label>
+                <label class="control-label" for="input01">新密码</label>
                 <div class="controls">
-                        <input name="account" type="text" class="input-xlarge" id="input01" style="height: 30px;"/>
+                    <input name="new1" type="password" class="input-xlarge" id="input01" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input02">邮箱</label>
+                <label class="control-label" for="input02">确认密码</label>
                 <div class="controls">
-                        <input name="email" type="text" class="input-xlarge" id="input02" onblur="test()" style="height: 30px;"/>
-                </div>
-                <div class="controls">
-                    <input name="yzm" type="text" class="input-xlarge" id="input02" hidden="true" style="width: 150px;height: 30px;"/>
-                    <input name="yzm" type="text" class="input-xlarge" id="input02" hidden="true" style="width: 120px;height: 30px;"/>
+                    <input name="defnew" type="password" class="input-xlarge" id="input02" onblur="test()" style="height: 30px;"/>
                 </div>
                 
             </div>

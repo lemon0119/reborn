@@ -60,7 +60,8 @@
                              
                         </td>             
                         <td>
-                            <a href="#" onclick="dele(<?php echo $suite['suiteID'];?>,<?php echo $pages->currentPage+1;?>)"><img src="<?php echo IMG_URL; ?>edit.png">查看</a>
+                            <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=choice"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+
                             <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=choice"><img src="<?php echo IMG_URL; ?>detail.png">修改</a>
                             <a href="#" onclick="dele(<?php echo $suite['suiteID'];?>,<?php echo $pages->currentPage+1;?>)"><img src="<?php echo IMG_URL; ?>edit.png">删除</a>
                             

@@ -56,6 +56,7 @@
                                                                     <a href="" class="dropdown-toggle" data-toggle="dropdown">管理员<b class="caret"></b></a>
                                                                     <ul class="dropdown-menu">
                                                                             <li>
+                                                                                    <a href="./index.php?r=admin/set">设置</a>
                                                                                     <a href="./index.php?r=user/login&exit=1">退出</a>
                                                                             </li>
                                                                     </ul>                    
