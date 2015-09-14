@@ -14,15 +14,16 @@ else {
 ?>
 <div clas="span9">
     <?php if($isExam == true){?>
-    <center>
-    <h6>距离考试剩余还有</h6>
+    <center id="time">
+    <h6>距离考试开始还有</h6>
     <p id="timeCounter"></p>
     </center>
     <?php }else { ?>
-    <h3 align="center"> 在左侧选择题目开始答题。 </h3>
+    <h3 align="center"> 考试已经开始，可以开始答题。 </h3>
     <?php } ?>
 </div>
 <script>
+    /*
 var timeCounter = (function() {
  var int;
  var currtime = "<?php echo date("Y-m-d  H:i:s");?>";
@@ -46,6 +47,42 @@ var total = (( Number((h2-h1)*60))+ Number(m2)-Number(m1))*60 + Number(s2) - Num
   if(total < 0) clearTimeout(int);
  }
 })();
-timeCounter('timeCounter');
-
+    */
+function startTime(){
+    <?php 
+    //$end = $examInfo['endtime'];
+    //echo "'$end'"?>;
+    var curtime = <?php echo time();?>;
+    var endtime = <?php echo strtotime($examInfo['endtime']);?>;
+    var hh = parseInt((endtime - curtime) / 3600);
+    var mm = parseInt((endtime - curtime) % 3600 / 60);
+    var ss = parseInt((endtime - curtime) % 60);
+    var strTime = '';
+    var timer;
+	timer = window.setInterval(function(){
+		strTime = "";
+		if(--ss == 0)
+		{
+			if(--mm == 0)
+			{
+				hh--;
+                                if( hh == 0){
+                                    clearInterval(timer);
+                                    document.getElementById('time').innerHTML = '考试已经开始，可以开始答题。';
+                                }
+				mm = 59;
+			}
+			ss = 59;
+		}
+		strTime+=hh<10?"0"+hh:hh;
+		strTime+=":";
+		strTime+=mm<10?"0"+mm:mm;
+		strTime+=":";
+		strTime+=ss<10?"0"+ss:ss;
+		document.getElementById('timeCounter').innerHTML = strTime;
+	},1000);
+};
+$(document).ready(function(){
+    <?php if($isExam) echo "startTime();";?>
+});
 </script>
