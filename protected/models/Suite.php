@@ -36,7 +36,7 @@ class Suite extends CActiveRecord
     public function getClassworkAll($lesnID){
         $userid =Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($userid);
-        $select = 'select begintime , endtime , classwork.suiteID , suite.suiteName , class_lesson_suite.workID from classwork, class_lesson_suite, suite';
+        $select = 'select begintime , endtime , classwork.suiteID , suite.suiteName , class_lesson_suite.open as open, class_lesson_suite.workID from classwork, class_lesson_suite, suite';
         $condition = " where classwork.suiteID=suite.suiteID and class_lesson_suite.suiteID=classwork.suiteID and class_lesson_suite.classID='$classID' and class_lesson_suite.lessonID='$lesnID'";
         $order = 'order by suite.suiteID';
         $sql = $select.$condition.$order;
@@ -149,60 +149,107 @@ class Suite extends CActiveRecord
     }
 
 
-        public function getchoice($suiteID)
-	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='choice')";
-            $select = "select * from choice";
-            $sql = $select.$condition.$order;
-            $result = Yii::app()->db->createCommand($sql)->query();
-            return $result;
-	}
-    	public function getFilling($suiteID)
-	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='filling')";
-            $select = "select * from filling";
-            $sql = $select.$condition.$order;
-            $result = Yii::app()->db->createCommand($sql)->query();
-            return $result;
-	}
-    	public function getQuestion($suiteID)
-	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='question')";
-            $select = "select * from question";
-            $sql = $select.$condition.$order;
-            $result = Yii::app()->db->createCommand($sql)->query();
-            return $result;
-	}
-        public function getKeyExer($suiteID)
-	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='key')";
-            $select = "select * from key_type";
-            $sql = $select.$condition.$order;
-            $result = Yii::app()->db->createCommand($sql)->query();
-            return $result;
-	}
-        public function getListenExer($suiteID)
-	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='listen')";
-            $select = "select * from listen_type";
-            $sql = $select.$condition.$order;
-            $result = Yii::app()->db->createCommand($sql)->query();
-            return $result;
-	}
-        public function getLookExer($suiteID)
-	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='look')";
-            $select = "select * from look_type";
-            $sql = $select.$condition.$order;
-            $result = Yii::app()->db->createCommand($sql)->query();
-            return $result;
-	}
+
+    public function getchoice($suiteID){
+        $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='choice')";
+        $select = "select * from choice";
+        $sql = $select.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
+    public function getFilling($suiteID){
+        $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='filling')";
+        $select = "select * from filling";
+        $sql = $select.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
+    public function getQuestion($suiteID)
+    {
+        $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='question')";
+        $select = "select * from question";
+        $sql = $select.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
+    public function getKeyExer($suiteID)
+    {
+        $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='key')";
+        $select = "select * from key_type";
+        $sql = $select.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
+    public function getListenExer($suiteID)
+    {
+        $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='listen')";
+        $select = "select * from listen_type";
+        $sql = $select.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
+    public function getLookExer($suiteID)
+    {
+        $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='look')";
+        $select = "select * from look_type";
+        $sql = $select.$condition.$order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
 	/**
 	 * @return string the associated database table name
 	 */

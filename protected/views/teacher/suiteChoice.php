@@ -26,12 +26,15 @@
                     <br/>
                 <?php $mark++;}?>
 </div>
+   <button id = 'next' onclick="nextWork()" class="btn btn-primary">保存/下一题</button> 
+
 <script>
     $(document).ready(function(){
     var isLast = <?php echo $isLast?>;
     if(isLast == 1)
         alert("已是最后一题");
     });
+    
 </script>
 
 

@@ -8,7 +8,7 @@
                     <option value="exerciseID" selected="selected">编号</option>
                     <option value="courseID" >课程号</option>
                     <option value="createPerson" >创建人</option>                                  
-                     <option value="requirements">内容</option>
+                    <option value="requirements">内容</option>
                 </select>
             </li>
             <li>
@@ -156,7 +156,7 @@ $("#myForm").submit(function(){
         return false;
     }
     var i ,j ,k, y = 3*divCount;
-    var patrn = /^[A-Z]{1,12}$/;
+    var patrn = /^[ANIGDZWUEOXB]{1,12}$/;
     var numpatrn =/^[0-9]{1,2}$/;
     for(i = 1 ; i <=y ; i++)
     {
@@ -174,7 +174,7 @@ $("#myForm").submit(function(){
             {
                 j = Math.floor(i/3)+1;
                 k = i%3;
-                alert('第' + j + '行第' + k + '空应输入0-12个A-Z的字母');
+                alert('第' + j + '行第' + k + '空应输入指定大写字母');
                 return false;
             }
         }           

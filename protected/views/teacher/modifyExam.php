@@ -45,6 +45,7 @@ function test()
             <li <?php if ($type == "key") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=key"><i class="icon-th"></i> 键位练习</a></li>
             <li <?php if ($type == "look") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=look"><i class="icon-eye-open"></i> 看打练习</a></li>
             <li <?php if ($type == "listen") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=listen"><i class="icon-headphones"></i> 听打练习</a></li>                           
+
         </ul>
 
     </div>  
@@ -115,3 +116,4 @@ function test()
 
             });
         </script>
+

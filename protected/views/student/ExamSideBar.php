@@ -54,7 +54,8 @@ $currtime = $examInfo['endtime'];
         </div>
 </div>
 <script>
-    $('.queTitle').bind('click', function(e){
-  e.preventDefault();
-});
+    /*
+$('.queTitle').bind('click', function(e){
+    e.preventDefault();
+});*/
 </script>

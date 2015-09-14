@@ -154,7 +154,7 @@ $("#myForm").submit(function(){
         return false;
     }
     var i ,j ,k, y = 3*divCount;
-    var patrn = /^[A-Z]{1,12}$/;
+    var patrn = /^[ANIGDZWUEOXB]{1,12}$/;
     var numpatrn =/^[0-9]{1,2}$/;
     for(i = 1 ; i <=y ; i++)
     {

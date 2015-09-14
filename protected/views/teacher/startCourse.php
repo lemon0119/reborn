@@ -54,7 +54,7 @@
     <div class="well summary">
         <ul>
                 <li>
-                        <a href="#"><span class="count"><?php  $num = sizeof(scandir($vdir)); 
+                        <a href="./index.php?r=teacher/videoLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><span class="count"><?php  $num = sizeof(scandir($vdir)); 
                                                                 $num = ($num>2)?($num-2):0;
                                                                 echo $num;?></span> 视频</a>
                 </li>

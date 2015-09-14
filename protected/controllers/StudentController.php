@@ -106,14 +106,28 @@ class StudentController extends CController {
         return $this->render('ansChoice',['exercise'=>$classwork,'ansChoice'=>$ansArr]);
     }
     public function actionViewAns(){
-        $workID = $_GET['suiteID'];
-        Yii::app()->session['workID'] = $workID;
-        $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
-        Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
-        $classwork = Array();
-        foreach(Tool::$EXER_TYPE as $type){
-            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+        if(isset($_GET['workID'])){
+            $workID = $_GET['workID'];
+            $suiteID = $_GET['suiteID'];
+        } else {
+            $workID = $_GET['suiteID'];
+            $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
+            $suiteID = $clsLesnSuite->suiteID;
         }
+        Yii::app()->session['workID'] = $workID;
+        Yii::app()->session['suiteID'] = $suiteID;
+        $classwork = Array();
+        $isExam = Yii::app()->session['isExam'];
+        if(!$isExam){
+            foreach(Tool::$EXER_TYPE as $type){
+                $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+            }
+        } else {
+            foreach(Tool::$EXER_TYPE as $type){
+                $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+            }
+        }
+        
         return $this->render('suiteAns',['exercise'=>$classwork]);
     }
     public function actionSaveQuestion(){
@@ -315,15 +329,14 @@ class StudentController extends CController {
     public function actionChoice(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
-        
         $arg=$_GET['cent'];
         $cent= explode(',', $arg);
-        //print_r($cent);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $isExam = FALSE;
-        return $this->render('choiceExer',['exercise'=>$classwork , 'isExam' =>$isExam,'cent'=>$cent ]);
+        return $this->render('choiceExer',['exercise'=>$classwork , 'isExam' =>$isExam ,'cent'=>$cent]);
+
     }
     
    //2015-8-3 宋杰 获取试题，跳转到选择题页面 isExam为true加载examsidebar
@@ -342,9 +355,14 @@ class StudentController extends CController {
     
     public function actionfilling(){
         $suiteID = Yii::app()->session['suiteID'];
+       
         $classwork = Array();
+
         $arg=$_GET['cent'];
         $cent= explode(',', $arg);
+
+        
+
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
@@ -368,6 +386,7 @@ class StudentController extends CController {
     
     public function actionClswkOne(){
         $workID = $_GET['suiteID'];
+        Yii::app()->session['workID'] = $workID;
         $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
         Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
         $suiteID=Yii::app()->session['suiteID'];
@@ -376,16 +395,15 @@ class StudentController extends CController {
         $studentID = Yii::app()->session['userid_now'];
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
         $finishRecord=Array();
-        $finishNum=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
          }
         $n=0;
         $cent=Array();
-        foreach(Tool::$EXER_TYPE2 as $type3){
-            $cent[$n]=round(count($classwork[$type3])*100/count($finishRecord[$type3]),2)."%";
-            //print_r( $cent[$n]);            
+        foreach(Tool::$EXER_TYPE3 as $type   ){
+            $cent[$n]=round(count($finishRecord[$type])*100/count($classwork[$type]),2)."%"; 
             $n++;
         }
          $isExam = false;
@@ -397,12 +415,15 @@ class StudentController extends CController {
     public function actionClsexamOne(){
         $suiteID = $_GET['suiteID'];
         Yii::app()->session['examsuiteID'] = $suiteID;
+        Yii::app()->session['workID'] = $_GET['workID'];
+        Yii::app()->session['suiteID'] = $suiteID;
         $classexam = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         $isExam = true;
+        Yii::app()->session['isExam'] = $isExam;
         return $this->render('suiteDetail',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
@@ -449,9 +470,20 @@ class StudentController extends CController {
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
+        
         $classworks = Suite::model()->getClassworkAll($currentLesn);
-        $ratio_accomplish = ExamRecord::model()->getExamAccomplish($studentID);
-        return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classworks,'ratio_accomplish'=>$ratio_accomplish]);
+        
+        $classwork = array();
+        foreach ($classworks as $c){
+        array_push($classwork, $c);
+        $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
+            
+        }
+        
+        
+        
+        $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
+        return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork,'ratio_accomplish'=>$ratio_accomplish]);
         /*
         $this->saveParam();
         Yii::app()->session['type'] = 'classwork';
