@@ -99,8 +99,7 @@ class Exam extends CActiveRecord
     public function getClassexamAll(){
         $userid =Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($userid);
-
-        $select = 'select begintime , endtime , exam.examID as examID, examName, class_exam.open as open from exam , class_exam';
+        $select = 'select begintime , endtime , exam.examID as examID, examName, class_exam.workID, class_exam.open as open from exam , class_exam';
         $condition = " where exam.examID = class_exam.examID and classId = '$classID'";
         $order = ' order by exam.examID';
         $sql = $select.$condition.$order;
