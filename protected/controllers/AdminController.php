@@ -258,6 +258,7 @@ class AdminController extends CController {
     }
 
     public function actionDeleteStu() {
+        if(isset($_GET ['id'])){
         $userID = $_GET ['id'];
         $thisStu = new Student ();
         $thisStu = $thisStu->find("userID = '$userID'");
@@ -270,6 +271,25 @@ class AdminController extends CController {
             'stuLst' => $stuLst,
             'pages' => $pages
         ));
+        }
+        if(isset($_POST['checkbox'])){
+        $userIDlist = $_POST['checkbox'];
+        foreach ($userIDlist as $v){
+            $thisStu = new Student ();
+            $thisStu = $thisStu->find("userID = '$v'");
+            $thisStu->is_delete = '1';
+            $thisStu->update();
+        }
+        $result = Student::model()->getStuLst("", "");
+        $stuLst = $result ['stuLst'];
+        $pages = $result ['pages'];
+        $this->render('stuLst', array(
+            'stuLst' => $stuLst,
+            'pages' => $pages
+        ));
+        }
+        
+        
     }
 
     public function actionDeleteStuDontHaveClass() {
