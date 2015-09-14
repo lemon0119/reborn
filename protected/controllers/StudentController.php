@@ -106,14 +106,28 @@ class StudentController extends CController {
         return $this->render('ansChoice',['exercise'=>$classwork,'ansChoice'=>$ansArr]);
     }
     public function actionViewAns(){
-        $workID = $_GET['suiteID'];
-        Yii::app()->session['workID'] = $workID;
-        $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
-        Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
-        $classwork = Array();
-        foreach(Tool::$EXER_TYPE as $type){
-            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+        if(isset($_GET['workID'])){
+            $workID = $_GET['workID'];
+            $suiteID = $_GET['suiteID'];
+        } else {
+            $workID = $_GET['suiteID'];
+            $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
+            $suiteID = $clsLesnSuite->suiteID;
         }
+        Yii::app()->session['workID'] = $workID;
+        Yii::app()->session['suiteID'] = $suiteID;
+        $classwork = Array();
+        $isExam = Yii::app()->session['isExam'];
+        if(!$isExam){
+            foreach(Tool::$EXER_TYPE as $type){
+                $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+            }
+        } else {
+            foreach(Tool::$EXER_TYPE as $type){
+                $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+            }
+        }
+        
         return $this->render('suiteAns',['exercise'=>$classwork]);
     }
     public function actionSaveQuestion(){
@@ -358,6 +372,7 @@ class StudentController extends CController {
     
     public function actionClswkOne(){
         $workID = $_GET['suiteID'];
+        Yii::app()->session['workID'] = $workID;
         $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
         Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
         $suiteID=Yii::app()->session['suiteID'];
@@ -368,6 +383,7 @@ class StudentController extends CController {
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
          }
         $n=0;
@@ -380,18 +396,23 @@ class StudentController extends CController {
          $isExam = false;
          return $this->render('suiteDetail',['exercise'=>$classwork , 'isExam' => $isExam,'cent'=>$cent]);
 
+
+      
     }
     
     //获取考试套题
     public function actionClsexamOne(){
         $suiteID = $_GET['suiteID'];
         Yii::app()->session['examsuiteID'] = $suiteID;
+        Yii::app()->session['workID'] = $_GET['workID'];
+        Yii::app()->session['suiteID'] = $suiteID;
         $classexam = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         $examInfo = Exam::model()->find($suiteID);
         $isExam = true;
+        Yii::app()->session['isExam'] = $isExam;
         return $this->render('suiteDetail',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
