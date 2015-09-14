@@ -26,10 +26,21 @@
             <li <?php if($type == "listen") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuExam&&workID=<?php echo $record['workID'];?>&&type=listen&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>"><i class="icon-headphones"></i> 听打练习</a></li>   
     </ul>
    </div>
+      <table class="table table-bordered table-striped">       
+        <tbody>
+            <tr>
+                <th>成绩:</th>    
+                <td><div id="score"><?php echo 100;?></div></td>
+            </tr>    
+        </tbody>   
+    </table> 
+    
 </div>
 
 <div class="span9" id="work">
 </div>
+
+
 <script>
    $(document).ready(function(){
         var user = {

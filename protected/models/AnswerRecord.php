@@ -280,6 +280,19 @@ class AnswerRecord extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function getAndSaveScoreByRecordID($recordID)
+        {
+            $sql = "select sum(score) as totalScore from answer_record where recordID = '$recordID'";
+            $result = Yii::app()->db->createCommand($sql)->query();
+            foreach($result as $total){
+                $score = $total['totalScore'];
+            }
+           $exam_record = ExamRecord::model()->find("recordID = '$recordID'");
+           $exam_record->score = $score;
+           $exam_record->update();
+           return $score;
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.
