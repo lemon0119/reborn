@@ -22,7 +22,11 @@ class SuiteRecord extends CActiveRecord
             return $record->recordID;
         }
     }
-    
+    public function getSuitRecordAccomplish($recordID){
+        $ratio_accomplish = $this->find("recordID = '$recordID'");
+		return $ratio_accomplish['ratio_accomplish'];
+    }
+
     public static function getClassworkAll($type) {
         $createPerson = Yii::app()->session['userid_now'];
         $getSuiteID = "select suiteID from suite where suiteType='$type'";
