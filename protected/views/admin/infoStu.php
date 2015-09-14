@@ -30,11 +30,11 @@
                 </tr>
                 <tr>
                     <td>联系电话:</td>
-                    <td><?php if($phone_number=="0") echo "无"; else echo $phone_number;?></td>
+                    <td><?php if($phone_number=="") echo "无"; else echo $phone_number;?></td>
                 </tr>
                 <tr>
                     <td>联系邮箱:</td>
-                    <td><?php if($mail_address=="0") echo "无"; else echo $mail_address;?></td>
+                    <td><?php if($mail_address=="") echo "无"; else echo $mail_address;?></td>
                 </tr>
                 <tr>
                     <td>密码:</td>

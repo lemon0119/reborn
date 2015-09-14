@@ -165,8 +165,11 @@ class AdminController extends CController {
 
     public function actionAddStu() {
         $result = 'no';
-        if (isset($_POST ['userID'])) {
-            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'], $_POST ['password1'], $_POST ['classID']);
+        if (isset($_POST ['userID'])&&isset($_POST['sex'])) {
+            $className = $_POST ['className'];
+            $classSqlResult = TbClass::model()->find("className = '$className'");
+            $classID = $classSqlResult['classID'];
+            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], $_POST ['password1'], $_POST ['mail_address'], $_POST ['phone_number'], $classID);
         }
         $classAll = TbClass::model()->findAll("");
         $userAll = Student::model()->findAll();
