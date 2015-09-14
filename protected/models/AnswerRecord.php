@@ -14,6 +14,7 @@
  */
 class AnswerRecord extends CActiveRecord
 {
+    
     public static function ansToArray($answer){
         if($answer == NULL)
             return NULL;

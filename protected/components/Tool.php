@@ -10,6 +10,22 @@ class Tool {
         'filling',
         'question'
     ];
+    public static $EXER_TYPE2 = [
+        'listen',
+        'look',
+        'key',
+        'choice',
+        'filling',
+        'question'
+    ];
+    public static $EXER_TYPE3 = [
+        'listen',
+        'look',
+        'key',
+        'choice',
+        'filling',
+        'question'
+    ];
 
     public function alertInfo($info, $url) {
         return "<script type='text/javascript'>alert('$info');location.href='$url';</script>";

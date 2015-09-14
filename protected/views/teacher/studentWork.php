@@ -1,3 +1,14 @@
+<div class="span3">
+    <div class="well" style="padding: 8px 0;">
+        <ul class="nav nav-list">
+            <li class="nav-header">班级</li>
+           <?php foreach ($array_class as $class):?>
+            <li <?php if($class['classID'] == $selectClassID) echo "class='active'";?>><a href="./index.php?r=teacher/StuWork&&selectClassID=<?php echo $class['classID']?>"><?php echo $class['className']?></a></li>
+          <?php endforeach;?>  
+                        
+        </ul>       
+    </div>
+</div>
 <div class="span9">
     <h3>现有习题</h3>
     <!-- 键位习题列表-->
@@ -5,14 +16,7 @@
         <thead>
             <tr>
                 <th>编号</th>
-      <th>
-          <select   onchange="changeClass(this.value)" name="selectAge" id="classSelect" style="width: 80px"> 
-              <option value=-1 <?php if($selectClassID == -1) echo "selected='selected'";?>>全部</option>   
-        <?php foreach ($array_class as $class):?>
-          <option value=<?php echo $class['classID'];?> <?php if($selectClassID == $class['classID']) echo "selected='selected'";?>><?php echo $class['className']?></option>
-        <?php endforeach;?>       
-      </select>                            
-      </th>                      
+                      
                 <th>课程</th>   
                 <th>作业</th>
                 <th>操作</th>
@@ -70,9 +74,8 @@
         $this->widget('CLinkPager',array('pages'=>$pages));
     ?>
     </div>
- </div>
 
-<div class="span9" id="list">
+
 <h3>学生列表</h3>
 <div style="overflow-y:auto; height:300px;">
 <table width="50%" style="float:left;" >
@@ -144,23 +147,4 @@
     </div>
 </div>
 
-<script>
-
-//       $("#classSelect").change(function(){
-//           var url = "./index.php?r=teacher/stuWork";
-//           var value = $(this).options[$(this).selectedIndex].value
-//           alert(value);
-//           if(value != "")
-//           url += "&&classID="+ value;
-//       alert(url);
-//       window.location.href = url;
-//       });
-       
-       function changeClass(value)
-       {   var url = "./index.php?r=teacher/stuWork";
-           if(value != -1)
-           url += "&&selectClassID="+ value;  
-           window.location.href = url;
-       }
-</script>
 

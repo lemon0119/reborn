@@ -164,6 +164,8 @@ class StudentController extends CController {
     public function actionlistenType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
+        $arg=$_GET['cent'];
+        $cent= explode(',', $arg);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
@@ -174,7 +176,8 @@ class StudentController extends CController {
         return $this->render('listenExer',array( 
             'exercise'=>$classwork,
             'exerOne'=>$result,
-            'isExam' =>$isExam
+            'isExam' =>$isExam,
+            'cent'=>$cent,
         ));
     }
     
@@ -202,6 +205,8 @@ class StudentController extends CController {
     public function actionlookType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
+        $arg=$_GET['cent'];
+        $cent= explode(',', $arg);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
@@ -212,7 +217,8 @@ class StudentController extends CController {
         return $this->render('lookExer',array( 
             'exercise'=>$classwork,
             'exerOne'=>$result,
-            'isExam' =>$isExam
+            'isExam' =>$isExam,
+            'cent'=>$cent,
         ));
     }
     
@@ -241,6 +247,8 @@ class StudentController extends CController {
     public function actionKeyType(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
+         $arg=$_GET['cent'];
+        $cent= explode(',', $arg);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
@@ -252,7 +260,8 @@ class StudentController extends CController {
         return $this->render('keyExer',array( 
             'exercise'=>$classwork,
                 'exerOne'=>$result,
-            'isExam' => $isExam
+            'isExam' => $isExam,
+            'cent'=>$cent,
         ));
     }
     
@@ -281,11 +290,13 @@ class StudentController extends CController {
     public function actionQuestion(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
+        $arg=$_GET['cent'];
+        $cent= explode(',', $arg);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $isExam = FALSE;
-        return $this->render('questionExer',['exercise'=>$classwork , 'isExam' => $isExam]);
+        return $this->render('questionExer',['exercise'=>$classwork , 'isExam' => $isExam,'cent'=>$cent]);
     }
     
     //2015-8-3 宋杰 获取考试简答题
@@ -304,11 +315,15 @@ class StudentController extends CController {
     public function actionChoice(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
+        
+        $arg=$_GET['cent'];
+        $cent= explode(',', $arg);
+        //print_r($cent);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $isExam = FALSE;
-        return $this->render('choiceExer',['exercise'=>$classwork , 'isExam' =>$isExam ]);
+        return $this->render('choiceExer',['exercise'=>$classwork , 'isExam' =>$isExam,'cent'=>$cent ]);
     }
     
    //2015-8-3 宋杰 获取试题，跳转到选择题页面 isExam为true加载examsidebar
@@ -328,11 +343,13 @@ class StudentController extends CController {
     public function actionfilling(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
+        $arg=$_GET['cent'];
+        $cent= explode(',', $arg);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $isExam = false;
-        return $this->render('fillingExer',['exercise'=>$classwork , 'isExam' =>$isExam]);
+        return $this->render('fillingExer',['exercise'=>$classwork , 'isExam' =>$isExam,'cent'=>$cent]);
     }
     
     //2015-8-3 宋杰 加载考试填空题
@@ -353,12 +370,27 @@ class StudentController extends CController {
         $workID = $_GET['suiteID'];
         $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
         Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
+        $suiteID=Yii::app()->session['suiteID'];
         $classwork = Array();
+        
+        $studentID = Yii::app()->session['userid_now'];
+        $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        $finishRecord=Array();
+        $finishNum=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+         }
+        $n=0;
+        $cent=Array();
+        foreach(Tool::$EXER_TYPE2 as $type3){
+            $cent[$n]=round(count($classwork[$type3])*100/count($finishRecord[$type3]),2)."%";
+            //print_r( $cent[$n]);            
+            $n++;
         }
-        $isExam = false;
-        return $this->render('suiteDetail',['exercise'=>$classwork , 'isExam' => $isExam]);
+         $isExam = false;
+         return $this->render('suiteDetail',['exercise'=>$classwork , 'isExam' => $isExam,'cent'=>$cent]);
+
     }
     
     //获取考试套题

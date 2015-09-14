@@ -2242,7 +2242,35 @@ class TeacherController extends CController {
          $type = $_GET['type'];       
          $this->renderModifyExam($type, $examID);
      }
-     
+     public function ActionUpdateTime(){      //更新时间
+         $type=$_GET['type'];
+         $examID = $_GET['examID'];
+         $startTime=$_POST['startTime'];
+         $endTime=$_POST['endTime'];
+         
+
+
+       $date=floor((strtotime($endTime)-strtotime($startTime))/86400);
+        $hour=floor((strtotime($endTime)-strtotime($startTime))%86400/3600);
+        $minute=floor((strtotime($endTime)-strtotime($startTime))%86400/60);
+        $second=floor((strtotime($endTime)-strtotime($startTime))%86400%60);
+        if($second>=60){
+            $minute+=($second/60);
+            $second=$second%60;
+        }
+
+        if($minute>=60){
+            $hour=$hour+(int)($hour/60);
+            $minute=$minute%60;
+        }
+        if($hour>=24){
+            $date+=($date/24);
+            $hour=$hour%24;
+        }
+        $duration=strtotime($endTime)-strtotime($startTime);
+         Exam::model()->updateByPk($examID,array('begintime'=>$startTime,'endtime'=>$endTime,'duration'=>$duration));
+         $this->renderModifyExam($type, $examID);
+     }
      
      public function ActionDeleteSuiteExercise()
      {
@@ -2381,13 +2409,26 @@ class TeacherController extends CController {
             $sql        =   "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
             $result     =   $result->read();        
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditChoice",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'options'         =>    $result['options'],
                     'answer'          =>    $result['answer']
-                ));       
+                ));  
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditChoice",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'options'         =>    $result['options'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
+                     
     }
     
          public function ModifyEditFilling(){
@@ -2397,12 +2438,23 @@ class TeacherController extends CController {
             $sql        =   "SELECT * FROM filling WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
             $result     =   $result->read();
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditFilling",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'answer'          =>    $result['answer']
-                ));       
+                ));    
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditFilling",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
     
      public function ModifyEditQuestion(){
@@ -2411,13 +2463,24 @@ class TeacherController extends CController {
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();         
+            $result     =   $result->read();    
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditQuestion",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'answer'          =>    $result['answer']
                 ));       
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditQuestion",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
     
     
@@ -2427,13 +2490,24 @@ class TeacherController extends CController {
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();         
+            $result     =   $result->read();   
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditKey",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'content'    =>    $result['content'],
                     'title'          =>    $result['title']
-                ));       
+                ));    
+         }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditKey",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
     
          public function ModifyEditLook(){
@@ -2442,13 +2516,24 @@ class TeacherController extends CController {
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM look_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();       
+            $result     =   $result->read();     
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditLook",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'content'    =>    $result['content'],
                     'title'          =>    $result['title']
-                ));       
+                ));    
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditLook",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
     
           public function ModifyEditListen(){
@@ -2457,7 +2542,8 @@ class TeacherController extends CController {
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();          
+            $result     =   $result->read();       
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditListen",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
@@ -2466,6 +2552,18 @@ class TeacherController extends CController {
                     'filename' => $result['fileName'],
                     'filepath' => $result['filePath']
                 ));       
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditListen",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title'],
+                     'filename' => $result['fileName'],
+                    'filepath' => $result['filePath'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
 
      public function getLstByType($type)
@@ -2556,6 +2654,7 @@ class TeacherController extends CController {
         $this->render($render , array(
             'exam' => $exam,    
             'type' => $type,
+            'examID'=>$examID,
         ));     
      }
      
@@ -2679,6 +2778,7 @@ class TeacherController extends CController {
          Yii::app()->session['lastUrl'] = "modifyExam";
          $this->renderModifyExam("choice", $examID,"");
      }
+     
       
      public function ActionStuWork()
      {

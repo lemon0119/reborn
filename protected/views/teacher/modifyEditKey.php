@@ -1,12 +1,19 @@
 <?php $optArr = explode("$",$content);
       $count = round(count($optArr)/3);?>
     
-<div class="span9">        
-<h3>编辑键位练习题</h3>
+<div class="span9">    
+<?php if(!isset($action)) {?>
+        <h3>编辑键位练习题</h3>
+    <?php } else if($action == 'look') {?>
+        <h3>查看键位练习题</h3>
+    <?php }?>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editKeyInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
-            <legend>填写题目</legend>
-
+    <?php if(!isset($action)) {?>
+        <legend>编辑题目</legend>
+    <?php } else if($action == 'look') {?>
+        <legend>查看题目</legend>
+    <?php }?>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
