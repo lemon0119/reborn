@@ -127,6 +127,7 @@ class TeacherController extends CController {
             unlink(iconv('utf-8','gb2312',$file));
             $result         =   "删除成功！";    
             echo $result;
+            
     }
     
     public function actionLookPpt(){
@@ -2977,6 +2978,7 @@ class TeacherController extends CController {
         $exam = Exam::model()->findAll("examID = '$examID'")[0];
         $result = Exam::model()->getExamExerByTypePage($examID, $type,5);
         $examExercise = ExamExercise::model()->findAll("examID=? and type=?" ,array($examID,$type));
+        $totalScore = ExamExercise::model()->getTotalScore($examID);
         $workLst = $result['workLst'];
         $pages = $result['pages'];
          $this->renderPartial('ownExam', array(
@@ -2984,7 +2986,8 @@ class TeacherController extends CController {
              'pages' => $pages,
              'type' => $type,
              'exam' => $exam,
-             'examExercise' => $examExercise
+             'examExercise' => $examExercise,
+             'totalScore' => $totalScore
          ));
 
      }
@@ -2995,13 +2998,17 @@ class TeacherController extends CController {
         $examID = $_GET['examID'];
         $exam = Exam::model()->findAll("examID = '$examID'")[0];
         $result = Exam::model()->getExamExerByTypePage($examID, $type,5);
+        $totalScore = ExamExercise::model()->getTotalScore($examID);
+        $examExercise = ExamExercise::model()->findAll("examID=? and type=?" ,array($examID,$type));
         $workLst = $result['workLst'];
         $pages = $result['pages'];
          $this->renderPartial('ownTypeExam', array(
              'examWork' => $workLst,
              'pages' => $pages,
              'type' => $type,
-             'exam' => $exam
+             'exam' => $exam,
+             'examExercise'=>$examExercise,
+             'totalScore' => $totalScore
          ));
 
      }
@@ -3112,10 +3119,7 @@ class TeacherController extends CController {
         $studentID = $_GET['studentID'];
         $accomplish = $_GET['accomplish'];
         $classID = $_GET['classID']; 
-        echo $studentID."-";
-        echo $accomplish;
        $nextStudentID = ExamRecord::model()->getNextStudentID($workID,$studentID,$accomplish,$classID);
-       echo $nextStudentID." ";
        if($nextStudentID == -1)
         {
             $this->renderStuWork($studentID,$workID,"choice",$accomplish);
@@ -3313,6 +3317,25 @@ class TeacherController extends CController {
          $score = $_GET['score'];
          $thisExamExercise = new ExamExercise();
          $thisExamExercise->updateScore($exerciseID ,$type,$examID,$score);
+         if($type == "key" || $type == "look" || $type == "listen")
+         {
+              $this->ActionToOwnTypeExam();
+         }else
+         {
+              $this->ActionToOwnExam();
+         }
+     }
+     
+     
+          public function ActionConfigTime()
+     {
+         $type = $_GET['type'];
+         $exerciseID = $_GET['exerciseID'];
+         $examID = $_GET['examID'];
+         $time = $_GET['time'];
+         $time = $time * 60;
+         $thisExamExercise = new ExamExercise();
+         $thisExamExercise->updateTime($exerciseID ,$type,$examID,$time);
          if($type == "key" || $type == "look" || $type == "listen")
          {
               $this->ActionToOwnTypeExam();

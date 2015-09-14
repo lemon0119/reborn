@@ -203,6 +203,13 @@ class ExamExercise extends CActiveRecord
             $exercise->update();
         }
         
+                public function updateTime($exerciseID,$type,$examID,$time)
+        {
+            $exercise = $this->find("exerciseID = '$exerciseID' and type = '$type' and examID = '$examID'");
+            $exercise->time = $time;
+            $exercise->update();
+        }
+        
         public function getTotalScore($examID)
         {
            

@@ -3814,3 +3814,236 @@ REQUEST_URI=/reborn/index.php?r=teacher/ajaxExam
 in C:\wamp\www\reborn\protected\views\teacher\examKey.php (6)
 in C:\wamp\www\reborn\protected\controllers\TeacherController.php (3177)
 in C:\wamp\www\reborn\index.php (29)
+2015/09/14 12:17:38 [error] [php] Trying to get property of non-object (C:\wamp\www\reborn\protected\controllers\StudentController.php:115)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/viewAns&&suiteID=2
+in C:\wamp\www\reborn\protected\controllers\StudentController.php (115)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 12:17:46 [error] [php] Trying to get property of non-object (C:\wamp\www\reborn\protected\controllers\StudentController.php:115)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): StudentController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): StudentController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/viewAns&&suiteID=8
+in C:\wamp\www\reborn\protected\controllers\StudentController.php (115)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 12:21:47 [error] [php] Undefined variable: exer (C:\wamp\www\reborn\protected\views\teacher\examKey.php:6)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(3205): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAjaxExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxExam
+in C:\wamp\www\reborn\protected\views\teacher\examKey.php (6)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (3205)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 12:56:15 [error] [php] Undefined offset: -1 (C:\wamp\www\reborn\protected\controllers\TeacherController.php:3115)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxChoice
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (3115)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 12:56:16 [error] [php] Undefined variable: work (C:\wamp\www\reborn\protected\controllers\TeacherController.php:3175)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxExam
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (3175)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 12:56:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "NextStuExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('NextStuExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('NextStuExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/NextStu...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/NextStuExam&&studentID=10&&workID=&&accomplish=0&&classID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/NextStuWork&&studentID=1&&workID=33&&accomplish=0&&classID=1
+---
+2015/09/14 12:56:19 [error] [php] Undefined variable: work (C:\wamp\www\reborn\protected\controllers\TeacherController.php:3175)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxExam
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (3175)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 12:56:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "NextStuExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('NextStuExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('NextStuExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/NextStu...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/NextStuExam&&studentID=10&&workID=&&accomplish=0&&classID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/NextStuWork&&studentID=1&&workID=33&&accomplish=0&&classID=1
+---
+2015/09/14 12:56:21 [error] [php] Undefined variable: work (C:\wamp\www\reborn\protected\controllers\TeacherController.php:3175)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxExam
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (3175)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 12:56:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "NextStuExam" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('NextStuExam')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('NextStuExam')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/NextStu...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/NextStuExam&&studentID=10&&workID=&&accomplish=0&&classID=1
+HTTP_REFERER=http://localhost/reborn/index.php?r=teacher/NextStuWork&&studentID=1&&workID=33&&accomplish=0&&classID=1
+---
+2015/09/14 12:56:26 [error] [php] Undefined variable: work (C:\wamp\www\reborn\protected\controllers\TeacherController.php:3175)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxExam
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (3175)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 13:22:57 [error] [php] Undefined variable: totalScore (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:62)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2908): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=look&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (62)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2908)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 13:22:58 [error] [php] Undefined variable: totalScore (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:62)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2908): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=look&&examID=1&&page=undefined
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (62)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2908)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 13:23:00 [error] [php] Undefined variable: totalScore (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:62)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2908): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (62)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2908)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 13:23:00 [error] [php] Undefined variable: totalScore (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:62)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2908): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1&&page=undefined
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (62)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2908)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 13:24:37 [error] [php] Undefined variable: totalScore (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:64)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2908): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (64)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2908)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 13:24:37 [error] [php] Undefined variable: totalScore (C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php:64)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(869): TeacherController->renderFile()
+#1 C:\wamp\www\reborn\protected\controllers\TeacherController.php(2908): TeacherController->renderPartial()
+#2 C:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionToOwnTypeExam()
+#3 C:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#4 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#5 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#6 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#7 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#8 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#9 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ToOwnTypeExam&&type=key&&examID=1&&page=undefined
+in C:\wamp\www\reborn\protected\views\teacher\ownTypeExam.php (64)
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (2908)
+in C:\wamp\www\reborn\index.php (29)
+2015/09/14 13:48:59 [error] [php] Undefined index: score (C:\wamp\www\reborn\protected\controllers\TeacherController.php:3217)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/configScore&&exerciseID=1&&type=key&&examID=1&&page=1&&time=10
+in C:\wamp\www\reborn\protected\controllers\TeacherController.php (3217)
+in C:\wamp\www\reborn\index.php (29)

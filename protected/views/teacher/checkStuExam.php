@@ -15,7 +15,7 @@
             </tr>      
         </tbody>   
     </table> 
-    <a href="./index.php?r=teacher/NextStuWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $record['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>">下一人</a>
+    <a href="./index.php?r=teacher/NextStuExam&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $record['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>">下一人</a>
    <div>
     <ul class="nav nav-list">
         <li <?php if($type == "choice") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuExam&&workID=<?php echo $record['workID'];?>&&type=choice&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>"><i class="icon-font"></i> 选择</a></li>

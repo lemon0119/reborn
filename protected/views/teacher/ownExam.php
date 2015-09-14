@@ -64,9 +64,10 @@
     </div>
     
 <script>
-    $(document).ready(function(){
-        
+    $(document).ready(function(){       
      parent.setCurrentPage1(<?php echo $pages->currentPage+1?>);
+     var str = "总分:" + <?php echo $totalScore?>;
+     $("#totalScore",window.parent.document).html(str);  
 });
     
    
@@ -81,12 +82,11 @@ function configScore(type,exerciseID,examID,page)
      var score=prompt("分值","");//将输入的内容赋给变量 name ，
  
     //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
-    $("#totalScore",window.parent.document).innerHTML = 100;
+   
     if(score)//如果返回的有内容
  
     {
-         window.location.href = "./index.php?r=teacher/configScore&&exerciseID=" + exerciseID + "&&type=" + type + "&&examID=" + examID + "&&page=" + page +"&&score=" + score;
-         
+         window.location.href = "./index.php?r=teacher/configScore&&exerciseID=" + exerciseID + "&&type=" + type + "&&examID=" + examID + "&&page=" + page +"&&score=" + score;     
      }
     
 }
