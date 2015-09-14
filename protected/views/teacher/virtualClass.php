@@ -61,6 +61,7 @@
                 /<input id="all-yeshu" style="width:50px;" readOnly="true">
                 <button id="page-go" class="btn btn-primary">跳转</button>
                 <button id="page-down" class="btn btn-primary">下页</button>
+                <button id="full-screen-button" class="btn btn-primary">全屏</button>
             </div>
 
             <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px;display:none">
@@ -68,8 +69,8 @@
             </div>
             <div id="dianbo-videos-container" style="display:none">  
             </div>
-            <div id="ppt-container" align="center" style="height: 100%; width: 100% ; margin-top:0px;display:none">
-                <img id="ppt-img" src="" style="width: 100%;"/>
+            <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
+                <img id="ppt-img" src="" style="height: 100%;"/>
             </div>
     </div>
 
@@ -96,6 +97,40 @@
             </div>
         </div>
     </div>
+
+<script>
+//全屏
+    $('#full-screen-button').on('click', function(){
+    var docelem         = document.getElementById('ppt-container');
+    if (docelem.requestFullscreen) {
+        docelem.requestFullscreen();
+    }else if (docelem.webkitRequestFullscreen) {
+        docelem.webkitRequestFullscreen();
+    } else if(docelem.mozRequestFullScreen) {
+        docelem.mozRequestFullScreen();
+    } else if(docelem.msRequestFullscreen) {
+        docelem.msRequestFullscreen();
+    } 
+    alert("按方向键左右进行跳转，按Esc退出！");
+    });
+    
+    function keyDown(e) {   
+  　　  var keycode = e.which;   　　 　　   
+//        var realkey = String.fromCharCode(e.which);   　　 　　    
+//        alert("按键码: " + keycode + " 字符: " + realkey);
+        if(cur_ppt!=-1)
+        {
+            if(keycode == 37)
+            {
+                pageUp();
+            }else if(keycode == 39)
+            {
+                pageDown();
+            }
+        }
+    } 　　   
+    document.onkeydown      = keyDown;
+</script>
 
 <script>
     //chat and bulletin
@@ -241,13 +276,7 @@ $(document).ready(function(){
         }, 4000);
     });
     $("#page-up").click(function(){
-        if(cur_ppt<=1){
-            cur_ppt=1;
-            alert("已到第一页！");
-        }else{
-            cur_ppt = cur_ppt -1;
-        }
-        goCurPage();
+        pageUp();
     });
     $("#page-go").click(function(){
         var input_page =$("#yeshu").val();
@@ -261,15 +290,11 @@ $(document).ready(function(){
         }
     });
     $("#page-down").click(function(){
-        if(cur_ppt>=ppt_pages){
-            cur_ppt=ppt_pages;
-            alert("已到最后页！");
-        }else{
-            cur_ppt = cur_ppt +1;
-        }
-        goCurPage();
+        pageDown();
     });
     $("#close-ppt").click(function(){
+        cur_ppt     = -1;
+        ppt_pages   = -1;
         if(timer_ppt!==null)
             clearInterval(timer_ppt);
         var msg = "<?php echo $classID;?>closeppt";   
@@ -343,15 +368,15 @@ $(document).ready(function(){
       });
 });
 
-var play_fun    =   null;
-var pause_fun   =   null;
-var timer       =   null;
-var timer_ppt   =   null;
-var timer_cam   =   null;
-var ws          = null;
-var cur_ppt     = -1;
-var ppt_pages   = -1;
-var ppt_dir     = null;
+var play_fun        =   null;
+var pause_fun       =   null;
+var timer           =   null;
+var timer_ppt       =   null;
+var timer_cam       =   null;
+var ws              = null;
+var cur_ppt         = -1;
+var ppt_pages       = -1;
+var ppt_dir         = null;
 
 function goCurPage(){
     $("#yeshu").val(cur_ppt);
@@ -359,6 +384,26 @@ function goCurPage(){
     var msg = "<?php echo $classID;?>playppt"+$("#ppt-img")[0].src;   
     ws.send(msg);
 }
+function pageUp(){
+    if(cur_ppt<=1){
+        cur_ppt=1;
+        alert("已到第一页！");
+    }else{
+        cur_ppt = cur_ppt -1;
+    }
+    goCurPage();
+}
+
+function pageDown(){
+    if(cur_ppt>=ppt_pages){
+        cur_ppt=ppt_pages;
+        alert("已到最后页！");
+    }else{
+        cur_ppt = cur_ppt +1;
+    }
+    goCurPage();
+}
+
 
 function openConnect(){
     if(ws !== null)

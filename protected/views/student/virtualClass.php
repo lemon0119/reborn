@@ -15,17 +15,20 @@ echo "<script>var role='$role';</script>";
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
 
-<div class="left" style="background-image:url(./img/default/hello.png); background-size:100% 100%; min-height: 50px">
-        <!-- list of all available broadcasting rooms -->
-        <table style="width: 100%;" id="rooms-list"></table>
-
-        <!-- local/remote videos container -->
-        <div id="ppt-container" style="height: 100%; width: 100%; margin-top:0px;display:none;">
-            <img id="ppt-img" src="" style="width: 100%;"/>
+<div class="left">
+    <!-- local/remote videos container -->
+    <div id="ppt-container" align="center" style="width: 100% ; height: 549px;  margin-top:0px;display:none;overflow-x: hidden">
+        <div id ="full-screen" style="position: relative; left: 275px; top: 20px;display:none;">
+            <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3; margin-bottom: -35px"/> 
         </div>
+        <div id="ppt-asd">
+        <img id="ppt-img"  onmouseover="fun1();" onmouseout="fun2();" src=""  style="height: 100%;"/>  
+        </div>
+    </div>
 
-        <div id="dianbo-videos-container" style="display:none">  </div>
+    <div id="dianbo-videos-container" style="display:none;">  </div>
 </div>
+
 
 <div class="right">
     <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
@@ -45,6 +48,39 @@ echo "<script>var role='$role';</script>";
             </div>
         </div>
 </div>
+
+<script>
+    //显示全屏图像
+    var onImg = false;
+    function fun1(){
+        $("#full-screen").show();
+        onImg = false;
+        //full_screen =document.mozFullScreen;
+    }
+    function fun2(){
+        if(onImg!=true)
+        {   
+            $("#full-screen").hide();
+            onImg = false;
+        }
+    }
+    function fun3(){
+        onImg = true;
+        $("#full-screen").show();
+    }
+    function fun4(){
+        var docelem         = document.getElementById('ppt-asd');
+        if (docelem.requestFullscreen) {
+            docelem.requestFullscreen();
+        }else if (docelem.webkitRequestFullscreen) {
+            docelem.webkitRequestFullscreen();
+        } else if(docelem.mozRequestFullScreen) {
+            docelem.mozRequestFullScreen();
+        } else if(docelem.msRequestFullscreen) {
+            docelem.msRequestFullscreen();
+        } 
+    }
+</script>
 
 <script>
     //chat and bulletin
