@@ -11,19 +11,19 @@
                 <ul class="nav nav-list">
                         <li class="nav-header">基础知识</li>
                         <li id="li-choice">
-                            <a href="./index.php?r=student/choice&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-font"></i> 选 择 题<div id= "container" style="width:50%;height: 5px;border:1px solid black;">
+                            <a href="./index.php?r=student/choice&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-font"></i> 选 择 题<div id= "container" style="height: 5px;border:1px solid black;">
     <div id="progress-bar" style="width:<?php echo "$cent[3]";?>;background-color: springgreen;height:5px;">
     </div>
 </div> </a>                           
                         </li>
                         <li id="li-filling">
-                                <a href="./index.php?r=student/filling&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-text-width"></i> 填 空 题<div id= "container" style="width:50%;height: 5px;border:1px solid black;">
+                                <a href="./index.php?r=student/filling&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-text-width"></i> 填 空 题<div id= "container" style="height: 5px;border:1px solid black;">
     <div id="progress-bar" style="width:<?php echo "$cent[4]";?>;background-color: springgreen;height:5px;">
     </div>
 </div> </a>
                         </li>
                         <li id="li-question">
-                                <a href="./index.php?r=student/question&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-align-left"></i> 简 答 题<div id= "container" style="width:50%;height: 5px;border:1px solid black;">
+                                <a href="./index.php?r=student/question&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-align-left"></i> 简 答 题<div id= "container" style="height: 5px;border:1px solid black;">
     <div id="progress-bar" style="width:<?php echo "$cent[5]";?>;background-color: springgreen;height:5px;">
     </div>
 </div> </a>

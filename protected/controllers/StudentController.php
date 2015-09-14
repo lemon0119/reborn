@@ -390,7 +390,6 @@ class StudentController extends CController {
         $cent=Array();
         foreach(Tool::$EXER_TYPE3 as $type   ){
             $cent[$n]=round(count($finishRecord[$type])*100/count($classwork[$type]),2)."%"; 
-            print_r($cent[$n]);
             $n++;
         }
          $isExam = false;
