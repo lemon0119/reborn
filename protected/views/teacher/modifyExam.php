@@ -16,9 +16,11 @@
         <ul class="nav nav-list">
             <center>
                 <table>
+                    <tr><td>试卷名称:<?php echo $exam['examName']?></td></tr>
                     <tr><td>开始时间:<?php echo $exam['begintime']?></td></tr>
                     <tr><td>结束时间:<?php echo $exam['endtime']?></td></tr>
                     <tr><td>时长:<?php echo $exam['duration']?>分钟</td></tr>
+                    <tr><td><div id="totalScore">总分:<?php echo $totalScore?></div></td></tr>
                 </table>                
             </center>                   
         </ul>
@@ -46,5 +48,7 @@
    {  
        currentPage1 = page;    
    }
+   
+   
 </script>
     

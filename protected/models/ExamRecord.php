@@ -71,6 +71,28 @@ class ExamRecord extends CActiveRecord
 			'studentID' => 'Student',
 		);
 	}
+        
+        
+            public function getNextStudentID($workID,$studentID,$accomplished,$classID)
+    {
+        if($accomplished !=1)
+        {
+             $result =  Student::model()->find('classID=? and userID>? and userID not in(select studentID from exam_record where workID=? and ratio_accomplish=1) order by userID ASC', array($classID,$studentID,$workID));
+             if($result != NULL)
+                 return $result['userID'];   
+             else
+                 return -1;
+        }else
+        {   
+            echo $workID;
+            echo $studentID;
+            $result =  ExamRecord::model()->find('workID=? and studentID>? and ratio_accomplish=1 order by studentID ASC', array($workID,$studentID));
+            if($result != NULL)
+                return $result['studentID'];
+            else
+                return -1;
+         }
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

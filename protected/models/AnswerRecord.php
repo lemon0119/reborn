@@ -187,6 +187,15 @@ class AnswerRecord extends CActiveRecord
                 return true;
         }
     }
+    
+    public function changeScore($answerID , $score){
+        $answer = $this->find("answerID='$answerID'");
+        if($answer != NULL)
+        {
+            $answer->score = $score;
+            $answer->update();
+        }
+    }
 	/**
 	 * @return string the associated database table name
 	 */
