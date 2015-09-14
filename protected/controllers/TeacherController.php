@@ -147,6 +147,106 @@ class TeacherController extends CController {
         ]);
     }
     
+        public function actionVideoLst(){
+        $classID    =   $_GET['classID'];
+        $progress   =   $_GET['progress'];
+        $on         =   $_GET['on'];
+        return $this->render('videoLst',[
+            'classID'   =>  $classID,
+            'progress'  =>  $progress,
+            'on'        =>  $on
+        ]);
+    }
+    
+    public function actionVideoTable(){
+        $classID    =   $_GET['classID'];
+        $progress   =   $_GET['progress'];
+        $on         =   $_GET['on'];
+        return $this->renderPartial('videoTable',[
+            'classID'   =>  $classID,
+            'progress'  =>  $progress,
+            'on'        =>  $on
+        ]);
+    }
+    
+    public function actionAddVideo(){
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $videoFilePath  =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
+            $dir            =   "resources/".$videoFilePath; 
+            $result         =   "上传失败!";
+            if(!isset($_FILES["file"]))
+            {
+                echo "请选择文件！";
+                return ;
+            }
+            if ($_FILES["file"]["type"] == "video/mp4"
+                    || $_FILES["file"]["type"] == "application/octet-stream")
+            {   
+                if($_FILES["file"]["size"] < 200000000)
+                {
+                    if ($_FILES["file"]["error"] > 0)
+                    {
+                        $result = "Return Code: " . $_FILES["file"]["error"];
+                    }
+                  else
+                    {
+                        if (file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
+                        {
+                            $result = $_FILES["file"]["name"] . "已经存在！";
+                        }
+                        else
+                        {
+                             move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+//                             sleep(14);
+                            $result = "上传成功！";
+                      }
+                    }
+                }else{
+                    $reult = "PPT文件限定大小为200M！";
+                }
+            }else {
+                $result = "请上传正确类型的文件！";
+            }
+            echo $result;
+    }
+    
+        public function actionDeleteVideo(){
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $fileName        =   $_GET['video'];
+            $videoFilePath    =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
+            $dir            =   "resources/".$videoFilePath; 
+            $file           =   $dir.$fileName;
+            unlink(iconv('utf-8','gb2312',$file));
+            $result         =   "删除成功！";    
+            echo $result;
+    }
+    
+    public function actionLookVideo(){
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $fileDir        =   $_GET['video'];
+            $videoFilePath    =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
+            $file            =   "resources/".$videoFilePath.$fileDir; 
+  
+            return $this->render('lookvideo',[
+                    'classID'   =>  $classID,
+                    'progress'  =>  $progress,
+                    'on'        =>  $on,
+                    'file'       =>  $file,    
+        ]);
+    }
+    
     public function actionlookExer(){
         return $this->render('lookExer');
     }

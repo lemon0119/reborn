@@ -21,10 +21,19 @@
             <div style="display:inline;">
                 <button id="teacher-dianbo" class="btn btn-primary">点播视频</button>
                 <select id="teacher-choose-file" style="width:150px">
-                    <option value ="1.mp4">速录演示视频</option>
-                    <option value="CB6601435D33002ECE7BAD33F79126D6.flv">MV-不见长安</option>
-                    <option value ="h0134j6z7lp.mp4">MV-时间都去哪了</option>
-                    <option value="l0015jn2cz8.mp4">MV-泡沫</option>
+                    <?php
+                    	$mydir = dir($vdir); 
+                        while($file = $mydir->read())
+                        { 
+                                if((!is_dir("$vdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {
+                    ?>
+                    <option value ="<?php echo iconv("gb2312","UTF-8",$file);?>"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                    <?php     
+                                } 
+                        } 
+                        $mydir->close(); 
+                    ?>
                 </select>
                 <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button>
                 <button id="share-Cam" class="btn btn-primary" style="margin-left: 200px">直播视频</button>
@@ -260,7 +269,7 @@ $(document).ready(function(){
         $("#ppt-container").show();
         $("#scroll-page").show();
         cur_ppt = 1;
-        var server_root_path = "<?php echo SITE_URL.'resources/'.$pptFilePath?>";
+        var server_root_path = "<?php echo SITE_URL.'resources/'.$pptFilePath;?>";
         var file_info = $("#choose-ppt option:selected").val().split("+-+");
         var dirname = file_info[0];
         ppt_dir = server_root_path + dirname;
@@ -330,7 +339,7 @@ $(document).ready(function(){
         $("#play-ppt").attr("class","btn");
         document.getElementById("close-dianbo").disabled = false;
         $("#close-dianbo").attr("class","btn btn-primary");
-        var server_root_path = "<?php echo SITE_URL.'resources/'?>video/";
+        var server_root_path = "<?php echo SITE_URL.'resources/'.$videoFilePath;?>";
         var filepath = $("#teacher-choose-file option:selected").val();
         var absl_path = server_root_path + filepath;
         var video_element;
