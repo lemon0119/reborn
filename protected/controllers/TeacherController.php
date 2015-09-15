@@ -48,6 +48,20 @@ class TeacherController extends CController {
     	$this->render('set',['result'=>$result,'mail'=>$mail]);
     }
     
+    public function actionChangeProgress(){
+        $classID    =   $_GET['classID'];
+        $on         =   $_GET['on'];
+        $class      =   new TbClass();
+        $class      =   $class->find("classID = '$classID'");
+        $class->currentLesson =   $on ;
+        $class-> update();
+        return $this->render('startCourse',[
+            'classID'=>$classID,
+            'progress'=>$on,
+            'on'=>$on
+        ]);
+    }
+    
     public function actionPptLSt(){
         $classID    =   $_GET['classID'];
         $progress   =   $_GET['progress'];
