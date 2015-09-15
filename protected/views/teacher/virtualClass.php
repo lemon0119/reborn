@@ -334,6 +334,8 @@ $(document).ready(function(){
       });
     
     $("#teacher-dianbo").click(function() {
+        if($("#teacher-choose-file")[0].selectedIndex == -1 )
+        {    return;    }
         window.scrollTo(0,130);
         document.getElementById("play-ppt").disabled = true;
         $("#play-ppt").attr("class","btn");
