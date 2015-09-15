@@ -206,7 +206,7 @@ class TeacherController extends CController {
                       }
                     }
                 }else{
-                    $reult = "PPT文件限定大小为200M！";
+                    $reult = "视频文件限定大小为200M！";
                 }
             }else {
                 $result = "请上传正确类型的文件！";

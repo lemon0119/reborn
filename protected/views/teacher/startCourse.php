@@ -30,7 +30,9 @@
                 点击虚拟课堂开始本课.
         </p>
         <p>
-            <a href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID;?>&&on=<?php echo $on;?>" class="btn btn-primary btn-large">虚拟课堂</a> <a class="btn btn-large">课堂作业</a>
+            <a href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID;?>&&on=<?php echo $on;?>" class="btn btn-primary btn-large">虚拟课堂</a> 
+            <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $classID;?>&&lessonID=<?php $less    = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+                                                                                                        echo $less['lessonID'];?>" class="btn btn-large">课堂作业</a>
         </p>
     </div>
     <h1>
