@@ -7,8 +7,8 @@
                                 <select name="type" style="width: 185px">
                                         <option value="exerciseID" selected="selected">编号</option>
                                         <option value="courseID" >课程号</option>
-                                        <option value="createPerson" >创建人</option>
                                         <option value="title">题目名</option>
+                                        <option value="createPerson" >创建人</option>
                                         <option value="content">内容</option>
                                 </select>
                         </li>
@@ -63,11 +63,14 @@
                     <tr>
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
-                        <td><?php echo $model['title']?></td>
-                        <td><?php  if(strlen($model['content'])<=30)
+                        <td><?php  if(Tool::clength($model['title'])<=7)
+                                        echo $model['title'];
+                                    else
+                                        echo Tool::csubstr($model['title'], 0, 7)."...";?></td>
+                        <td><?php  if(Tool::clength($model['content'])<=15)
                                         echo $model['content'];
                                     else
-                                        echo substr($model['content'], 0, 30)."...";
+                                        echo Tool::csubstr($model['content'], 0, 15)."...";
                                         ?></td>
                         <td><?php if($model['createPerson']=="0")
                                         echo "管理员";

@@ -54,7 +54,7 @@
        <div class="control-group">
             <label class="control-label" for="input01">题目</label>
        <div class="controls">
-                <textarea name="title" style="width:450px; height:20px;" id="input01"><?php echo $title; ?></textarea>
+                <textarea name="title" style="width:450px; height:20px;" id="input01" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $title; ?></textarea>
             </div>
         </div>
             
@@ -75,7 +75,7 @@
         <div class="control-group">
             <label class="control-label" for="input03">内容</label>
             <div class="controls">               
-                <textarea name="content" style="width:450px; height:200px;" id="input03"><?php echo $content; ?></textarea>
+                <textarea name="content" style="width:450px; height:200px;" id="input03" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $content; ?></textarea>
             </div>
         </div> 
             
