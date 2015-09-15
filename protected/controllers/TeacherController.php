@@ -402,7 +402,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -462,7 +462,7 @@ class TeacherController extends CController {
             if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -516,7 +516,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -565,7 +565,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -723,7 +723,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -778,7 +778,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -821,7 +821,7 @@ class TeacherController extends CController {
             if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -859,7 +859,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -969,7 +969,7 @@ class TeacherController extends CController {
             if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1019,7 +1019,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1093,7 +1093,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1253,7 +1253,7 @@ class TeacherController extends CController {
             if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1325,7 +1325,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1362,7 +1362,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1442,7 +1442,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1505,7 +1505,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1636,7 +1636,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1701,7 +1701,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1810,7 +1810,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1985,7 +1985,7 @@ class TeacherController extends CController {
                        if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -2030,7 +2030,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -2091,7 +2091,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -2152,7 +2152,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
