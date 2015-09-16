@@ -8,10 +8,12 @@
 <?php
 //2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar
 if($isExam == false){ 
-require 'suiteSideBar.php';
+    require 'suiteSideBar.php';
  }else{ 
     require 'examSideBar.php';
- } ;?>
+ }
+    $type = 'listen'; //add by lc 
+?>
 <div class="span9">
         <div class="hero-unit"  align="center">
             <table border = '0px'>

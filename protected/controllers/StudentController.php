@@ -14,6 +14,17 @@ class StudentController extends CController {
     
     public $layout='//layouts/studentBar';
     
+    public function actionOverSuite(){
+        if(isset($_GET['isExam']) && $_GET['isExam'] == false){
+            SuiteRecord::saveSuiteRecord($recordID);
+            SuiteRecord::overSuite($recordID);
+        } else {
+            //这里，应该改成修改考试记录examRecord
+            SuiteRecord::saveSuiteRecord($recordID);
+            SuiteRecord::overSuite($recordID);
+        }
+    }
+    
     public function actionVirtualClass() {
         $userID = Yii::app()->session['userid_now'];
         $student    =   Student::model()->findByPK($userID);
@@ -211,7 +222,8 @@ class StudentController extends CController {
             'exercise'=>$classexam,
                 'exerOne'=>$result,
             'isExam'=>$isExam,
-                'examInfo'=>$examInfo
+                'examInfo'=>$examInfo,
+            'typeNow' => 'listen'
         ));
     }
     
@@ -252,7 +264,8 @@ class StudentController extends CController {
             'exercise'=>$classexam,
                 'exerOne'=>$result,
             'isExam'=>$isExam,
-                'examInfo'=>$examInfo
+                'examInfo'=>$examInfo,
+            'typeNow' => 'look'
         ));
     }
     
@@ -296,7 +309,8 @@ class StudentController extends CController {
             'exercise'=>$classexam,
                 'exerOne'=>$result,
             'isExam'=>$isExam,
-                'examInfo'=>$examInfo
+                'examInfo'=>$examInfo, 
+            'typeNow' => 'key'
         ));
     }
     
@@ -322,7 +336,7 @@ class StudentController extends CController {
         }
         $examInfo = Exam::model()->findByPK($suiteID);
         $isExam = true;
-        return $this->render('questionExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
+        return $this->render('questionExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo,'typeNow' => 'question']);
     }
     
     
@@ -348,7 +362,7 @@ class StudentController extends CController {
         }
         $examInfo = Exam::model()->findByPK($suiteID);
         $isExam = true;
-        return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
+        return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']);
     }
     
     
@@ -379,7 +393,7 @@ class StudentController extends CController {
         }
         $examInfo = Exam::model()->findByPK($suiteID);
         $isExam = true;
-        return $this->render('fillingExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
+        return $this->render('fillingExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'filling']);
     }
     
     
@@ -534,7 +548,7 @@ class StudentController extends CController {
     
     //宋杰 2015-7-30 课堂考试
     public function actionClassExam(){
-                $studentID = Yii::app()->session['userid_now'];
+        $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);     
         $classexams = Exam::model()->getClassexamAll($classID);
         return $this->render('classexam',['classexams'=>$classexams]);

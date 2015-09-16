@@ -22,6 +22,15 @@ class SuiteRecord extends CActiveRecord
             return $record->recordID;
         }
     }
+    public static function overSuite($recordID){
+        $record = SuiteRecord::model()->findByPK($recordID);
+        $record -> ratio_accomplish = 1;
+        if(!($record->upDate())) {
+            echo Tool::jsLog('最后提交失败！');
+            return false;
+        }
+        return true;
+    }
     public function getSuitRecordAccomplish($recordID){
         $ratio_accomplish = $this->find("recordID = '$recordID'");
 		return $ratio_accomplish['ratio_accomplish'];

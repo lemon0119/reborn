@@ -34,8 +34,7 @@
                                     <?php echo '已完成';?>
                             </td>
                             <td>
-                                <?php //echo 'time:'.time();echo 'begin'.strtotime($exam['begintime']); echo 'end:'?>
-                                <?php if(time() < strtotime($exam['endtime'])){?>
+                                <?php if(1){?>
                                 <a href="./index.php?r=student/clsexamOne&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '进　　入';?></a>
                                 <?php } else { ?>
                                     <?php echo '<font color="#ff0000">已经截止</font>'; ?>

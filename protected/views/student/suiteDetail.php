@@ -29,7 +29,7 @@ $(document).ready(function(){
         e.preventDefault();
     });
     $('#leftTime').hide();
-    var isExam = <?php echo $isExam;?>;
+    var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     var curtime = <?php echo time();?>;
     var beginTime = <?php if($isExam) echo strtotime($examInfo['begintime']);?>;
     function endTimer(endID){
@@ -38,7 +38,7 @@ $(document).ready(function(){
         $('.queTitle').unbind('click');
     }
     if(isExam){
-        tCounter(curtime,beginTime,"timeCounter",endTimer);
+        tCounter(0,3,"timeCounter",endTimer);
     }
 });
 </script>

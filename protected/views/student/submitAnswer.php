@@ -3,6 +3,21 @@
     function onSubmit(){
         if(!confirm("确定要提交答案？"))
             return ;
+        doSubmit(false);
+    }
+    function submitSuite(){
+        var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
+        if(confirm("提交以后，不能重新进行答题，你确定提交吗？")){
+            doSubmit(true);
+            $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
+                if(isExam)
+                    window.location.href="index.php?r=student/classExam";
+                else
+                    window.location.href="index.php?r=student/classwork";
+            });
+        }
+    }
+    function doSubmit(simple){
         var obj =  document.getElementById("typeOCX");
         var theString = getContent( obj);
         var text = document.getElementById("content").value;
@@ -15,7 +30,8 @@
         document.getElementById("id_cost").value = time;
         //console.log("answer = "+theString);\
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
-            alert(result);
+            if(!simple)
+                alert(result);
         });
     }
     function restart(){
@@ -41,6 +57,11 @@
     <input name="nm_answer" id="id_answer" type="hidden">
     <input name="nm_cost" id="id_cost" type="hidden">
     <input name="nm_correct" id="id_correct" type="hidden">
-    <a type="button" class="btn btn-primary btn-large" onclick="onSubmit();" style="margin-left: 200px">提交</a>
-　　<a class="btn btn-large" onclick="restart();" style="margin-left: 200px">重新计时</a>
+    <a type="button" class="btn btn-primary btn-large" onclick="onSubmit();" style="margin-left: 200px">保存</a>
+    <?php 
+      $last = Tool::getLastExer($exercise);
+      if($last['type'] == $type && $last['exerciseID'] == $_GET['exerID']){
+    ?>
+      <a class="btn btn-large" style="margin-left: 200px" onclick="submitSuite();">提交</a>
+    <?php }?>
 </form>

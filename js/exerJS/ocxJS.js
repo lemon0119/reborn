@@ -8,7 +8,7 @@ function getContent(yaweiOCX) {
     var str;
     try {
         str = yaweiOCX.GetContent();
-        console.log("getContent:"+'debug...');
+        //console.log("getContent:"+'debug...');
     } catch(e) {
         console.log("getContent:"+e);
     }

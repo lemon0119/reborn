@@ -3,12 +3,12 @@
 class Tool {
 
     public static $EXER_TYPE = [
-        'listen',
-        'look',
-        'key',
         'choice',
         'filling',
-        'question'
+        'question',
+        'key',
+        'look',
+        'listen',
     ];
 public static $EXER_TYPE3 = [
         'listen',
@@ -18,6 +18,19 @@ public static $EXER_TYPE3 = [
         'filling',
         'question'
     ];
+
+    public static function getLastExer($exercise){
+        $result = Array();
+        $result['type'] = '';
+        $result['exerciseID'] = 0;
+        foreach(Tool::$EXER_TYPE as $type){
+            foreach( $exercise[$type] as $oneexer){
+                $result['type'] = $type;
+                $result['exerciseID'] = $oneexer['exerciseID'];
+            }
+        }
+        return $result;
+    }
 
     public function alertInfo($info, $url) {
         return "<script type='text/javascript'>alert('$info');location.href='$url';</script>";
