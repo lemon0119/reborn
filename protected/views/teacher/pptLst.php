@@ -1,14 +1,14 @@
 <?php 
     $lessons=Lesson::model()->findall("classID='$classID'");
     foreach ($lessons as $key => $value) {
-        $lessonsName[$value['number']]=$value['lessonName'];
+        $lessonsName[$value['number']] = $value['lessonName'];
     }
     
-    $username = Yii::app()->user->name;
-    $role = Yii::app()->session['role_now'];
-    $userid = Yii::app()->session['userid_now'];             
-    $pptFilePath =$role."/".$userid."/".$classID."/".$on."/ppt/"; 
-    $pdir = "./resources/".$pptFilePath;
+    $username    = Yii::app()->user->name;
+    $role        = Yii::app()->session['role_now'];
+    $userid      = Yii::app()->session['userid_now'];             
+    $pptFilePath = $role."/".$userid."/".$classID."/".$on."/ppt/"; 
+    $pdir        = "./resources/".$pptFilePath;
     
 ?>
 <script src="<?php echo JS_URL;?>jquery-form.js"></script>

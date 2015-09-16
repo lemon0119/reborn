@@ -144,15 +144,19 @@ class TeacherController extends CController {
     }
     
     public function actionLookPpt(){
-            $typename       =   Yii::app()->session['role_now'];
-            $userid         =   Yii::app()->session['userid_now'];
-            $classID        =   $_GET['classID'];
-            $progress       =   $_GET['progress'];
-            $on             =   $_GET['on'];
-            $fileDir        =   $_GET['ppt'];
-            $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
-            $dir            =   "resources/".$pptFilePath.$fileDir; 
-  
+            $typename           =   Yii::app()->session['role_now'];
+            $userid             =   Yii::app()->session['userid_now'];
+            $classID            =   $_GET['classID'];
+            $progress           =   $_GET['progress'];
+            $on                 =   $_GET['on'];
+            $fileDir            =   $_GET['ppt'];
+            if(isset($_GET['pdir']))
+            {
+                $dir            = $_GET['pdir'].$fileDir;
+            }else{
+                $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/";
+                $dir            =   "resources/".$pptFilePath.$fileDir; 
+            }
             return $this->render('lookPpt',[
                     'classID'   =>  $classID,
                     'progress'  =>  $progress,
@@ -249,15 +253,20 @@ class TeacherController extends CController {
             $classID        =   $_GET['classID'];
             $progress       =   $_GET['progress'];
             $on             =   $_GET['on'];
-            $fileDir        =   $_GET['video'];
-            $videoFilePath    =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
-            $file            =   "resources/".$videoFilePath.$fileDir; 
-  
+            $file        =   $_GET['video'];
+            if(isset($_GET['vdir']))
+            {
+                $file       =   $_GET['vdir'].$file;
+            } else{
+                $videoFilePath  =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
+                $file           =   "resources/".$videoFilePath.$file; 
+            }
+          
             return $this->render('lookvideo',[
                     'classID'   =>  $classID,
                     'progress'  =>  $progress,
                     'on'        =>  $on,
-                    'file'       =>  $file,    
+                    'file'      =>  $file,    
         ]);
     }
     

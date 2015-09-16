@@ -8,19 +8,36 @@
     $username = Yii::app()->user->name;
     echo "<script>var current_username=\"$username\";</script>";
 
-    $role = Yii::app()->session['role_now'];
-    $userid = Yii::app()->session['userid_now'];
-    $videoFilePath =$role."/".$userid."/".$classID."/".$on."/video/"; 
-    $vdir = "./resources/".$videoFilePath;                 
-    $pptFilePath =$role."/".$userid."/".$classID."/".$on."/ppt/"; 
-    $pdir = "./resources/".$pptFilePath;
+    $role               = Yii::app()->session['role_now'];
+    $userid             = Yii::app()->session['userid_now'];
+    $videoFilePath      = $role."/".$userid."/".$classID."/".$on."/video/"; 
+    $vdir               = "./resources/".$videoFilePath;                 
+    $pptFilePath        = $role."/".$userid."/".$classID."/".$on."/ppt/"; 
+    $pdir               = "./resources/".$pptFilePath;
     
-    echo "<script>var role='$role';</script>";
+    $courseID           = TbClass::model()->findCourseIDByClassID($classID);
+    $adminPptFilePath   = "admin/001/$courseID/$on/ppt/"; 
+    $adminPdir          = "./resources/admin/001/$courseID/$on/ppt/";
+    $adminVideoFilePath = "admin/001/$courseID/$on/video/"; 
+    $adminVdir          = "./resources/admin/001/$courseID/$on/video/";
     ?>
     <div class="left">
             <div style="display:inline;">
                 <button id="teacher-dianbo" class="btn btn-primary">点播视频</button>
                 <select id="teacher-choose-file" style="width:150px">
+                    <?php
+                    	$mydir = dir($adminVdir); 
+                        while($file = $mydir->read())
+                        { 
+                                if((!is_dir("$$adminVdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {
+                    ?>
+                    <option value ="<?php echo $adminVideoFilePath.iconv("gb2312","UTF-8",$file);?>"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                    <?php     
+                                } 
+                        } 
+                        $mydir->close(); 
+                    ?>
                     <?php
                     	$mydir = dir($vdir); 
                         while($file = $mydir->read())
@@ -28,7 +45,7 @@
                                 if((!is_dir("$vdir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {
                     ?>
-                    <option value ="<?php echo iconv("gb2312","UTF-8",$file);?>"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                    <option value ="<?php echo $videoFilePath.iconv("gb2312","UTF-8",$file);?>"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
                     <?php     
                                 } 
                         } 
@@ -45,16 +62,34 @@
                 <button id="play-ppt" class="btn btn-primary">放映PPT</button>
                 <select id="choose-ppt" style="width:150px">
                     <?php
+                    	$mydir = dir($adminPdir); 
+                        while($file = $mydir->read())
+                        { 
+                                if((is_dir("$adminPdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {
+                    ?>
+                    <option value ="<?php echo iconv("gb2312","UTF-8",$file);?>+-+<?php   
+                                                                    $dir = "$adminPdir/$file"; 
+                                                                    $num = sizeof(scandir($dir)); 
+                                                                    $num = ($num>2)?($num-2):0; 
+                                                                    echo $num;?>+-+admin"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                    <?php     
+                                } 
+                        } 
+                        $mydir->close(); 
+                    ?>
+                    <?php
                     	$mydir = dir($pdir); 
                         while($file = $mydir->read())
                         { 
                                 if((is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {
                     ?>
-                    <option value ="<?php echo iconv("gb2312","UTF-8",$file);?>+-+<?php   $dir = "$pdir/$file"; 
+                    <option value ="<?php echo iconv("gb2312","UTF-8",$file);?>+-+<?php   
+                                                                    $dir = "$pdir/$file"; 
                                                                     $num = sizeof(scandir($dir)); 
                                                                     $num = ($num>2)?($num-2):0; 
-                                                                    echo $num;?>"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                                                                    echo $num;?>+-+tea"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
                     <?php     
                                 } 
                         } 
@@ -269,8 +304,15 @@ $(document).ready(function(){
         $("#ppt-container").show();
         $("#scroll-page").show();
         cur_ppt = 1;
-        var server_root_path = "<?php echo SITE_URL.'resources/'.$pptFilePath;?>";
         var file_info = $("#choose-ppt option:selected").val().split("+-+");
+        var source    = file_info[2];
+        var server_root_path;
+        if(source === "tea")
+        {
+            server_root_path = "<?php echo SITE_URL.'resources/'.$pptFilePath;?>";
+        }else {
+            server_root_path = "<?php echo SITE_URL.'resources/'.$adminPptFilePath;?>";
+        }
         var dirname = file_info[0];
         ppt_dir = server_root_path + dirname;
         ppt_pages = file_info[1];
@@ -341,7 +383,7 @@ $(document).ready(function(){
         $("#play-ppt").attr("class","btn");
         document.getElementById("close-dianbo").disabled = false;
         $("#close-dianbo").attr("class","btn btn-primary");
-        var server_root_path = "<?php echo SITE_URL.'resources/'.$videoFilePath;?>";
+        var server_root_path = "<?php echo SITE_URL.'resources/'?>";
         var filepath = $("#teacher-choose-file option:selected").val();
         var absl_path = server_root_path + filepath;
         var video_element;

@@ -42,33 +42,43 @@
     <h1>
        本课资源
     </h1>
-    <?php   $typename = Yii::app()->session['role_now'];
-             $userid = Yii::app()->session['userid_now'];
-             $videoFilePath =$typename."/".$userid."/".$classID."/".$on."/video/"; 
-             $vdir = "resources/".$videoFilePath;            
-             if(!is_dir($vdir))
-             {//true表示可以创建多级目录
-                mkdir($vdir,0777,true);
-             }             
-             $pptFilePath =$typename."/".$userid."/".$classID."/".$on."/ppt/"; 
-             $pdir = "resources/".$pptFilePath;            
-             if(!is_dir($pdir))
-             {//true表示可以创建多级目录
-                mkdir($pdir,0777,true);
-             }
+    <?php   
+        $typename       = Yii::app()->session['role_now'];
+        $userid         = Yii::app()->session['userid_now'];
+        $videoFilePath  = $typename."/".$userid."/".$classID."/".$on."/video/"; 
+        $vdir           = "resources/".$videoFilePath;            
+        if(!is_dir($vdir))
+        {//true表示可以创建多级目录
+           mkdir($vdir,0777,true);
+        }             
+        $pptFilePath    = $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
+        $pdir           = "resources/".$pptFilePath;            
+        if(!is_dir($pdir))
+        {//true表示可以创建多级目录
+           mkdir($pdir,0777,true);
+        }
+
+       $courseID        = TbClass::model()->findCourseIDByClassID($classID);
+       $adminPdir             = "resources/admin/001/$courseID/$on/ppt/";
+       $adminVdir             = "resources/admin/001/$courseID/$on/video/";
     ?>
     <div class="well summary">
         <ul>
                 <li>
-                        <a href="./index.php?r=teacher/videoLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><span class="count"><?php  $num = sizeof(scandir($vdir)); 
-                                                                $num = ($num>2)?($num-2):0;
-                                                                echo $num;?></span> 视频</a>
+                        <a href="./index.php?r=teacher/videoLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><span class="count"><?php  
+                                                                $num1 = sizeof(scandir($vdir)); 
+                                                                $num1 = ($num1>2)?($num1-2):0;
+                                                                $num2 = sizeof(scandir($adminVdir)); 
+                                                                $num2 = ($num2>2)?($num2-2):0;
+                                                                echo $num1+$num2;?></span> 视频</a>
                 </li>
                 <li class="last">
                         <a href="./index.php?r=teacher/pptLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>">
-                            <span class="count"><?php  $num = sizeof(scandir($pdir)); 
-                                                        $num = ($num>2)?($num-2)/2:0;
-                                                        echo $num;?></span> ppt</a>
+                            <span class="count"><?php  $num1 = sizeof(scandir($pdir)); 
+                                                        $num1 = ($num1>2)?($num1-2)/2:0;
+                                                        $num2 = sizeof(scandir($adminPdir)); 
+                                                        $num2 = ($num2>2)?($num2-2)/2:0;
+                                                        echo $num1+$num2;?></span> ppt</a>
         </ul>
     </div>
 </div>

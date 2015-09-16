@@ -30,7 +30,6 @@
       /<input id="all-yeshu" style="width:50px;" readOnly="true">
       <button id="page-go" class="btn btn-primary">跳转</button>
       <button id="page-down" class="btn btn-primary">下页</button>
-      <a href="./index.php?r=teacher/pptLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
     </div>
     <div id="ppt-container" align="center" style="height: 100%; width: 100% ; margin-top:0px">
         <img id="ppt-img" src="" style="width: 100%;"/>
