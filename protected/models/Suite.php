@@ -200,6 +200,25 @@ class Suite extends CActiveRecord
         $result = Yii::app()->db->createCommand($sql)->query();
         return $result;
     }
+    public function getFilling2($suiteID){
+        
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='filling')";
+        $select = "select * from filling";
+        $sql = $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   2; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $fillingLst  =   $result->query();
+        
+        return ['fillingLst'=>$fillingLst,'pages'=>$pages,];
+    }
+
     public function getQuestion($suiteID)
     {
         $isExam = Yii::app()->session['isExam'];
@@ -217,6 +236,26 @@ class Suite extends CActiveRecord
         $result = Yii::app()->db->createCommand($sql)->query();
         return $result;
     }
+    public function getQuestion2($suiteID)
+    {
+       
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='question')";
+        $select = "select * from question";
+        $sql = $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   2; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $questionLst  =   $result->query();
+        
+        return ['questionLst'=>$questionLst,'pages'=>$pages,];
+    }
+
     public function getKeyExer($suiteID)
     {
         $isExam = Yii::app()->session['isExam'];

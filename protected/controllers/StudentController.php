@@ -308,18 +308,23 @@ class StudentController extends CController {
     }
     
     
-    public function actionQuestion(){
+     public function actionQuestion(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         $arg=$_GET['cent'];
-        $cent=  explode(',', $arg);
+        $cent= explode(',', $arg);
+       
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
+        $result = Suite::model()->getQuestion2($suiteID);
+        $questionLst = $result ['questionLst'];
+        $pages = $result ['pages'];
         $isExam = FALSE;
         $wID=Yii::app()->session['workID'];
-        return $this->render('questionExer',['exercise'=>$classwork , 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
+        return $this->render('questionExer',['questionLst'=>$questionLst ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
     }
+
     
     //2015-8-3 宋杰 获取考试简答题
         public function actionExamQuestion(){
@@ -364,21 +369,25 @@ class StudentController extends CController {
         return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
-    
-    
-    public function actionfilling(){
+public function actionfilling(){
         $suiteID = Yii::app()->session['suiteID'];
-        $arg=$_GET['cent'];
-        $cent=  explode(',', $arg);
+       
         $classwork = Array();
-        
+
+        $arg=$_GET['cent'];
+        $cent= explode(',', $arg);
+
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
-        }
+         }
+        $result = Suite::model()->getFilling2($suiteID);
+        $fillingLst = $result ['fillingLst'];
+        $pages = $result ['pages'];
         $isExam = false;
-        $wID=Yii::app()->session['workID'];
-        return $this->render('fillingExer',['exercise'=>$classwork , 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
+         $wID=Yii::app()->session['workID'];
+        return $this->render('fillingExer',['fillingLst'=>$fillingLst,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
     }
+
     
     //2015-8-3 宋杰 加载考试填空题
         public function actionExamfilling(){
@@ -410,7 +419,7 @@ class StudentController extends CController {
          }
         $n=0;
         $cent=Array();
-        foreach(Tool::$EXER_TYPE3 as $type){
+        foreach(Tool::$EXER_TYPE as $type){
             if(count($classwork[$type])!=0 ){
               $cent[$n]=round(count($finishRecord[$type])*100/count($classwork[$type]),2)."%";    
             }          

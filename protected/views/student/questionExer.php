@@ -22,20 +22,27 @@ $SNum = 0;
         <div class="hero-unit">
             <input name ="qType" type="hidden" value="question"/>
             <?php 
-                $SNum = 0;
-                foreach ($exercise['question'] as $value) {
-                    echo ($SNum+1).'. ';
+                $n=2*($pages->currentPage+1)-1;
+                foreach ($questionLst as $value) {
+                    echo ($n++).'. ';
                     echo $value['requirements'];
                     echo '<br/>';
                     echo '<textarea style="width:600px; height:200px;" name = "quest'.$value["exerciseID"].'"></textarea>';
                     echo '<br/>';
-                    $SNum++;
+                   
                 }
             ?>
+             <!-- 显示翻页标签 -->
+    <div align=center>
+        <?php
+        $this->widget('CLinkPager', array('pages' => $pages));
+        ?>
+    </div>
+    <!-- 翻页标签结束 -->
         </div>
         <?php if(count($exercise['question']) > 0){?>
-        <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();" style="margin-left: 100px">保存</a>
-        <a  href="./index.php?r=student/classwork" type="button" class="btn btn-primary btn-large" style="margin-left: 200px">退出</a>
+        <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();" style="margin-left: 150px">保存</a>
+        <a  href="./index.php?r=student/classwork" type="button" class="btn btn-primary btn-large" style="margin-left: 350px">退出</a>
             <!--<a class="btn btn-large" style="margin-left: 200px">暂存</a>-->
         <?php }?>
     </form>

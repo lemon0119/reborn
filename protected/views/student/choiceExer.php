@@ -22,9 +22,11 @@ $SNum = 0;
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host.$path.$page;?>">
         <div class="hero-unit">
         <input name ="qType" type="hidden" value="choice"/>
-        <?php 
+       <?php 
+            $n=2*($pages->currentPage+1)-1;
             foreach ($choiceLst as $value) {
-                echo ($SNum+1).'. ';
+                
+                echo ($n++).'. ';
                 echo $value['requirements'];
                 echo '<br/>';
                 $opt = $value['options'];
@@ -35,9 +37,10 @@ $SNum = 0;
                     $mark++;
                 }
                 echo '<br/>';
-                $SNum++;
+               
             }
         ?>
+
         <!-- 显示翻页标签 -->
     <div align=center>
         <?php
@@ -48,8 +51,8 @@ $SNum = 0;
 
         <tr>
         <?php if(count($exercise['choice']) > 0){//this.submit()?>
-            <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();" style="margin-left: 100px">保存</a>
-            <a  href="./index.php?r=student/classwork"type="button" class="btn btn-primary btn-large"  style="margin-left: 200px">退出</a>
+            <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();" style="margin-left: 150px">保存</a>
+            <a  href="./index.php?r=student/classwork"type="button" class="btn btn-primary btn-large"  style="margin-left: 350px">退出</a>
             <!--<a class="btn btn-large" style="margin-left: 200px">暂存</a>-->
         <?php }?>
         </tr>
