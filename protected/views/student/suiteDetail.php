@@ -12,18 +12,18 @@ else {
     require 'examSideBar.php';
 }
 ?>
-<script src="<?php echo JS_URL;?>exerJS/timeCounter.js"></script>
 <div clas="span9">
     <?php if($isExam == true){?>
-    <center id="time">
-    <h6>距离考试开始还有</h6>
+    <center>
+    <h6>距离考试剩余还有</h6>
     <p id="timeCounter"></p>
     </center>
     <?php }else { ?>
-    <h3 align="center"> 考试已经开始，可以开始答题。 </h3>
+    <h3 align="center"> 在左侧选择题目开始答题。 </h3>
     <?php } ?>
 </div>
 <script>
+<<<<<<< HEAD
 $(document).ready(function(){
     $('.queTitle').bind('click', function(e){
         e.preventDefault();
@@ -41,4 +41,32 @@ $(document).ready(function(){
         tCounter(0,3,"timeCounter",endTimer);
     }
 });
+=======
+    
+var timeCounter = (function() {
+ var int;
+ var currtime = "<?php echo date("Y-m-d  H:i:s");?>";
+ var time = currtime.substr(11,19).split(":");
+ var h2 = time[0];
+ var m2 = time[1];
+ var s2 = time[2];
+ var myDate = new Date();
+ var h1 = myDate.getHours();
+ var m1 = myDate.getMinutes();
+ var s1 = myDate.getSeconds();
+var total = (( Number((h2-h1)*60))+ Number(m2)-Number(m1))*60 + Number(s2) - Number(s1);
+ return function(elemID) {
+  obj = document.getElementById(elemID);
+  var s = (total%60) < 10 ? ('0' + total%60) : total%60;
+  var h = total/3600 < 10 ? ('0' + parseInt(total/3600)) : parseInt(total/3600);
+  var m = (total-h*3600)/60 < 10 ? ('0' + parseInt((total-h*3600)/60)) : parseInt((total-h*3600)/60);
+  obj.innerHTML = h + ' : ' + m + ' : ' + s;
+  total--;
+  int = setTimeout("timeCounter('" + elemID + "')", 1000);
+  if(total < 0) clearTimeout(int);
+ }
+})();
+timeCounter('timeCounter');
+
+>>>>>>> origin/master
 </script>

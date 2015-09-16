@@ -14,7 +14,7 @@ class Course extends CActiveRecord
     
     public function insertCourse($courseName,$createPerson){   
         //添加课程
-        //得到当前最大的班级ID
+        //得到当前最大的课程ID
         $sql    =   "select max(courseID) as id from course";
         $max_id =   Yii::app()->db->createCommand($sql)->query();
         $temp=$max_id->read();
@@ -30,7 +30,7 @@ class Course extends CActiveRecord
         $newCourse->courseID        =   $new_id;
         $newCourse->courseName      =   $courseName;
         $newCourse->createPerson    =   $createPerson;
-        $newCourse->createTime          =   date('y-m-d H:i:s',time());
+        $newCourse->createTime      =   date('y-m-d H:i:s',time());
         return $newCourse->insert();
     }
     

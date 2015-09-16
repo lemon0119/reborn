@@ -22,7 +22,6 @@ class TbClass extends CActiveRecord
     
     
     public function insertClass($courseName,$currentCourse){
-        
         //添加班级
         //得到当前最大的班级ID
         $sql="select max(classID) as id from tb_class";
@@ -37,10 +36,12 @@ class TbClass extends CActiveRecord
             $new_id = $temp['id'] + 1;
         }  
         $newClass = new TbClass();
-        $newClass->classID = $new_id;
-        $newClass->className=$courseName;
-        $newClass->currentCourse=$currentCourse;
-        return $newClass->insert();
+        $newClass->classID          =   $new_id;
+        $newClass->className        =   $courseName;
+        $newClass->currentCourse    =   $currentCourse;
+        $newClass->currentLesson    =   1;
+        $newClass->insert();
+        return $new_id;
     }
     
     //查看班级人数
@@ -50,17 +51,17 @@ class TbClass extends CActiveRecord
          return $an;
     }
     
-        public function teaInClass(){
-            $sql="SELECT * FROM teacher order by userID ASC";
-            $an = Yii::app()->db->createCommand($sql)->query();
-            return $an;
-        }
+    public function teaInClass(){
+        $sql="SELECT * FROM teacher order by userID ASC";
+        $an = Yii::app()->db->createCommand($sql)->query();
+        return $an;
+    }
         
-        public function teaByClass(){
-            $sql="SELECT * FROM teacher_class order by classID ASC";
-            $an = Yii::app()->db->createCommand($sql)->query();
-            return $an;
-        }
+    public function teaByClass(){
+        $sql="SELECT * FROM teacher_class order by classID ASC";
+        $an = Yii::app()->db->createCommand($sql)->query();
+        return $an;
+    }
     
     public function getClassLst(){
         //显示结果列表并分页

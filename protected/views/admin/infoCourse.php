@@ -1,28 +1,11 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li class="nav-header">查询</li>
-            <form action="./index.php?r=admin/searchLesson" method="post">
-                <li>
-                    <select name="type" style="width: 185px">
-                        <option value="number" selected="selected">编号</option>
-                        <option value="lessonName">课程名</option>
-                        <option value="createPerson">创建人</option>
-                    </select>
-                </li>
-                <li>
-                    <input name="value" type="text" class="search-query span2" placeholder="Search" />
-                </li>
-                <li style="margin-top:10px">
-                    <button type="submit" class="btn btn-primary">查询</button>
-                    <a href="./index.php?r=admin/addLesson" class="btn">添加</a>
-                </li>
-            </form>
-            <li class="divider"></li>
             <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><i class="icon-align-left"></i> 课业列表</a></li>
-            <li ><a href="./index.php?r=admin/<?php echo Yii::app()->session['lastUrl'];?>&&page=<?php echo Yii::app()->session['lastPage'];?>"><i class="icon-align-left"></i> 返回</a></li>
         </ul>
     </div>
+    <a href="./index.php?r=admin/addLesson&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>" class="btn btn-primary">添加</a>
+    <a href="./index.php?r=admin/<?php echo Yii::app()->session['lastUrl'];?>&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
 </div>
 
  <div class="span9">

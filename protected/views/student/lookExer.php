@@ -6,7 +6,9 @@
  }else{ 
     require 'examSideBar.php';
  } 
-    $type = 'look';?>
+    $type = 'look';
+?>
+ <h3 >课 堂 作 业</h3>
 <div class="span9">
     <div class="hero-unit">
             <?php 

@@ -14,6 +14,7 @@ if($isExam == false){
  }
     $type = 'listen'; //add by lc 
 ?>
+ <h3 >课 堂 作 业</h3>
 <div class="span9">
         <div class="hero-unit"  align="center">
             <table border = '0px'>

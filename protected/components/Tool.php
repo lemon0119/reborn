@@ -10,14 +10,7 @@ class Tool {
         'look',
         'listen',
     ];
-public static $EXER_TYPE3 = [
-        'listen',
-        'look',
-        'key',
-        'choice',
-        'filling',
-        'question'
-    ];
+
 
     public static function getLastExer($exercise){
         $result = Array();
