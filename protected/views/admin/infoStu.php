@@ -26,7 +26,9 @@
                 </tr>
                 <tr>
                     <td>班级:</td>
-                    <td><?php if($class=="0") echo "无"; else echo $class;?></td>
+                    <td><?php $sqlClass = TbClass::model()->find("classID = $class");
+          echo $sqlClass['className'];
+    ?></td>
                 </tr>
                 <tr>
                     <td>联系电话:</td>
@@ -36,10 +38,7 @@
                     <td>联系邮箱:</td>
                     <td><?php if($mail_address=="") echo "无"; else echo $mail_address;?></td>
                 </tr>
-                <tr>
-                    <td>密码:</td>
-                    <td><?php echo $password;?></td>
-                </tr>
+                
             </tbody>
     </table>
         <?php if(Yii::app()->session['lastUrl']=="stuDontHaveClass"){?>

@@ -16,6 +16,27 @@
                     <td>姓名:</td>
                     <td><?php echo $name;?></td>
                 </tr>
+                <tr>
+                    <td>年龄:</td>
+                    <td><?php echo $age;?></td>
+                </tr>
+                <tr>
+                    <td>性别:</td>
+                    <td><?php echo $sex;?></td>
+                </tr>
+                <tr>
+                    <td>所属部门:</td>
+                    <td><?php if($department=="") echo "无"; else echo $department;?></td>
+                </tr>
+                <tr>
+                    <td>联系电话:</td>
+                    <td><?php if($phone_number=="") echo "无"; else echo $phone_number;?></td>
+                </tr>
+                <tr>
+                    <td>联系邮箱:</td>
+                    <td><?php if($mail_address=="") echo "无"; else echo $mail_address;?></td>
+                </tr>
+                
             </tbody>
     </table>
         <?php if(Yii::app()->session['lastUrl']=="classLst"){?>

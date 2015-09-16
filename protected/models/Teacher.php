@@ -10,11 +10,16 @@
  */
 class Teacher extends CActiveRecord
 {
-    public function insertTea($userID,$userName,$pass){
+    public function insertTea($userID,$userName,$sex,$age,$pass,$phone_number,$mail_address,$department){
         $newTea = new Teacher();
         $newTea->userID = $userID;
         $newTea->userName = $userName;
+        $newTea->sex = $sex;
+        $newTea->age = $age;
         $newTea->password = $pass;
+        $newTea->mail_address = $mail_address;
+        $newTea->phone_number = $phone_number;
+        $newTea->department = $department;
         $oldTea = Teacher::model()->findAll("userID = '$userID'");
         if(count($oldTea) > 0)
             return 'no';

@@ -57,7 +57,7 @@
     function check_all(obj,cName)
 {    
     var checkboxs = document.getElementsByName(cName); 
-    for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;} 
+    for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;}
 }
     function dele(stuID) {
         if (confirm("这将会移动该学生至回收站，您确定这样吗？")) {

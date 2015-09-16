@@ -307,6 +307,25 @@ class AdminController extends CController {
     }
 
     public function actionResetPass() {
+        $classAll = TbClass::model()->findAll();
+        $userAll = Student::model()->findAll();
+        $sqlUserID = $_GET['id'];
+        $sqlStudentInfo = Student::model()->find("userID = '$sqlUserID'");
+        if (isset($_GET ['flag'])) {
+            $this->render('editStu', array(
+                'userID' => $_GET ['id'],
+                'userName' => $_GET ['name'],
+                'classID' => $_GET ['class'],
+                'classAll' => $classAll,
+                'userAll' => $userAll,
+                'sex' => $sqlStudentInfo['sex'],
+                'age' => $sqlStudentInfo['age'],
+                'phone_number' => $sqlStudentInfo['phone_number'],
+                'mail_address' => $sqlStudentInfo['mail_address'],
+                'flag' => 'search'
+            ));
+        }
+        
         $userID = $_GET ['id'];
         $thisStu = new Student ();
         $thisStu = $thisStu->find("userID = '$userID'");
@@ -315,23 +334,32 @@ class AdminController extends CController {
         $thisStu->update();
         $classAll = TbClass::model()->findAll();
         $userAll = Student::model()->findAll();
+        $sqlStudentInfo = Student::model()->find("userID = '$userID'");
         if (isset($_GET ['flag'])) {
             $this->render('editStu', array(
                 'userID' => $_GET ['id'],
-                'userName' => $thisStu->userName,
-                'classID' => $thisStu->classID,
+                'userName' => $sqlStudentInfo['userName'],
+                'classID' => $sqlStudentInfo['classID'],
                 'classAll' => $classAll,
                 'userAll' => $userAll,
+                'sex' => $sqlStudentInfo['sex'],
+                'age' => $sqlStudentInfo['age'],
+                'phone_number' => $sqlStudentInfo['phone_number'],
+                'mail_address' => $sqlStudentInfo['mail_address'],
                 'result' => '密码重置成功！',
                 'flag' => 'search'
             ));
         } else {
             $this->render('editStu', array(
                 'userID' => $_GET ['id'],
-                'userName' => $thisStu->userName,
-                'classID' => $thisStu->classID,
+                'userName' => $sqlStudentInfo['userName'],
+                'classID' => $sqlStudentInfo['classID'],
                 'classAll' => $classAll,
                 'userAll' => $userAll,
+                'sex' => $sqlStudentInfo['sex'],
+                'age' => $sqlStudentInfo['age'],
+                'phone_number' => $sqlStudentInfo['phone_number'],
+                'mail_address' => $sqlStudentInfo['mail_address'],
                 'result' => '密码重置成功！'
             ));
         }
@@ -349,7 +377,6 @@ class AdminController extends CController {
             $thisStu->sex ="";
         }
         $thisStu->age = $_POST ['age'];
-        $thisStu->password = $_POST ['password'];
         $thisStu->mail_address = $_POST ['mail_address'];
         $thisStu->phone_number = $_POST ['phone_number'];
         $className = $_POST ['className'];
@@ -371,7 +398,6 @@ class AdminController extends CController {
                 'age' => $sqlStudentInfo['age'],
                 'phone_number' => $sqlStudentInfo['phone_number'],
                 'mail_address' => $sqlStudentInfo['mail_address'],
-                'password' => $sqlStudentInfo['password'],
                 'result' => '信息修改成功！',
                 'flag' => $_GET ['flag']
             ));
@@ -386,7 +412,6 @@ class AdminController extends CController {
                 'age' => $sqlStudentInfo['age'],
                 'phone_number' => $sqlStudentInfo['phone_number'],
                 'mail_address' => $sqlStudentInfo['mail_address'],
-                'password' => $sqlStudentInfo['password'],
                 'result' => '信息修改成功！'
             ));
         }
@@ -479,22 +504,41 @@ class AdminController extends CController {
     }
 
     public function actionInfoTea() {
+        $ID = $_GET ['id'];
+        $student = Teacher::model()->find("userID = $ID");
         if (Yii::app()->session ['lastUrl'] == "infoClass") {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
                 'name' => $_GET ['name'],
-                'classID' => $_GET ['classID']
+                'department' => $student ['department'],
+                'sex' => $student['sex'],
+                'age' => $student['age'],
+                'password' => $student['password'],
+                'mail_address' => $student['mail_address'],
+                'phone_number' => $student['phone_number']
             ));
         } else if (isset($_GET ['flag'])) {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
                 'name' => $_GET ['name'],
+                'department' => $student ['department'],
+                'sex' => $student['sex'],
+                'age' => $student['age'],
+                'password' => $student['password'],
+                'mail_address' => $student['mail_address'],
+                'phone_number' => $student['phone_number'],
                 'flag' => $_GET ['flag']
             ));
         } else {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
-                'name' => $_GET ['name']
+                'name' => $_GET ['name'],
+                'department' => $student['department'],
+                'sex' => $student['sex'],
+                'age' => $student['age'],
+                'password' => $student['password'],
+                'mail_address' => $student['mail_address'],
+                'phone_number' => $student['phone_number']
             ));
         }
     }
@@ -512,6 +556,7 @@ class AdminController extends CController {
     }
 
     public function actionResetTeaPass() {
+        
         $userID = $_GET ['id'];
         $thisTea = new Teacher ();
         $thisTea = $thisTea->find("userID = '$userID'");
@@ -519,20 +564,31 @@ class AdminController extends CController {
 
         $thisTea->update();
         $userAll = Teacher::model()->findAll();
+        $sqlTeaInof = Teacher::model()->find("userID = '$userID'");
         if (isset($_GET ['flag'])) {
             $this->render('editTea', array(
                 'userID' => $_GET ['id'],
-                'userName' => $thisTea->userName,
+                'userName' => $sqlTeaInof ['userName'],
+                'department' => $sqlTeaInof['department'],
                 'userAll' => $userAll,
+                'sex' => $sqlTeaInof['sex'],
+                'age' => $sqlTeaInof['age'],
+                'phone_number' => $sqlTeaInof['phone_number'],
+                'mail_address' => $sqlTeaInof['mail_address'],
                 'result' => '密码重置成功！',
                 'flag' => 'search'
             ));
         } else {
             $this->render('editTea', array(
                 'userID' => $_GET ['id'],
-                'userName' => $thisTea->userName,
+                'userName' => $sqlTeaInof ['userName'],
+                'department' => $sqlTeaInof['department'],
                 'userAll' => $userAll,
-                'result' => '密码重置成功！'
+                'sex' => $sqlTeaInof['sex'],
+                'age' => $sqlTeaInof['age'],
+                'phone_number' => $sqlTeaInof['phone_number'],
+                'mail_address' => $sqlTeaInof['mail_address'],
+                'result' => '密码重置成功！',
             ));
         }
     }
@@ -543,13 +599,29 @@ class AdminController extends CController {
         $thisTea = $thisTea->find("userID = '$userID'");
         $thisTea->userID = $_POST ['userID'];
         $thisTea->userName = $_POST ['userName'];
+        if(isset($_POST ['sex'])){
+            $thisTea->sex = $_POST ['sex'];
+        }else{
+            $thisTea->sex ="";
+        }
+        $thisTea->age = $_POST ['age'];
+        $thisTea->mail_address = $_POST ['mail_address'];
+        $thisTea->phone_number = $_POST ['phone_number'];
+        $thisTea->department = $_POST['department'];
         $thisTea->update();
         $userAll = Teacher::model()->findAll();
+        $sqlUserID = $thisTea->userID;
+        $sqlTeaInof = Teacher::model()->find("userID = '$sqlUserID'");
         if (isset($_GET ['flag'])) {
             $this->render('editTea', array(
                 'userID' => $thisTea->userID,
                 'userName' => $thisTea->userName,
+                'department'=>$thisTea->department,
                 'userAll' => $userAll,
+                'sex' => $sqlTeaInof['sex'],
+                'age' => $sqlTeaInof['age'],
+                'phone_number' => $sqlTeaInof['phone_number'],
+                'mail_address' => $sqlTeaInof['mail_address'],
                 'result' => '信息修改成功！',
                 'flag' => $_GET ['flag']
             ));
@@ -557,7 +629,12 @@ class AdminController extends CController {
             $this->render('editTea', array(
                 'userID' => $thisTea->userID,
                 'userName' => $thisTea->userName,
+                'department'=>$thisTea->department,
                 'userAll' => $userAll,
+                'sex' => $sqlTeaInof['sex'],
+                'age' => $sqlTeaInof['age'],
+                'phone_number' => $sqlTeaInof['phone_number'],
+                'mail_address' => $sqlTeaInof['mail_address'],
                 'result' => '信息修改成功！'
             ));
         }
@@ -565,18 +642,30 @@ class AdminController extends CController {
 
     public function actionEditTea() {
         $userAll = Teacher::model()->findAll();
+        $sqlUserID = $_GET['id'];
+        $sqlTeaInof = Teacher::model()->find("userID = '$sqlUserID'");
         if (isset($_GET ['flag'])) {
             $this->render('editTea', array(
                 'userID' => $_GET ['id'],
                 'userName' => $_GET ['name'],
+                'department' => $sqlTeaInof['department'],
                 'userAll' => $userAll,
+                'sex' => $sqlTeaInof['sex'],
+                'age' => $sqlTeaInof['age'],
+                'phone_number' => $sqlTeaInof['phone_number'],
+                'mail_address' => $sqlTeaInof['mail_address'],
                 'flag' => 'search'
             ));
         } else {
             $this->render('editTea', array(
                 'userID' => $_GET ['id'],
                 'userName' => $_GET ['name'],
-                'userAll' => $userAll
+                'department' => $sqlTeaInof['department'],
+                'userAll' => $userAll,
+                'sex' => $sqlTeaInof['sex'],
+                'age' => $sqlTeaInof['age'],
+                'phone_number' => $sqlTeaInof['phone_number'],
+                'mail_address' => $sqlTeaInof['mail_address'],
             ));
         }
     }
@@ -599,6 +688,7 @@ class AdminController extends CController {
     }
 
     public function actionDeleteTea() {
+         if(isset($_GET ['id'])){
         $userID = $_GET ['id'];
         $thisTea = new Teacher ();
         $thisTea = $thisTea->find("userID = '$userID'");
@@ -611,6 +701,23 @@ class AdminController extends CController {
             'teaLst' => $teaLst,
             'pages' => $pages
         ));
+        }
+        if(isset($_POST['checkbox'])){
+        $userIDlist = $_POST['checkbox'];
+        foreach ($userIDlist as $v){
+            $thisTea = new Teacher ();
+            $thisTea = $thisTea->find("userID = '$v'");
+            $thisTea->is_delete = '1';
+            $thisTea->update();
+        }
+        $result = Teacher::model()->getTeaLst("", "");
+        $teaLst = $result ['teaLst'];
+        $pages = $result ['pages'];
+        $this->render('teaLst', array(
+            'teaLst' => $teaLst,
+            'pages' => $pages
+        ));
+        }
     }
 
     public function actionHardDeleteTea() {
