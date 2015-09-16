@@ -56,7 +56,7 @@ class Suite extends CActiveRecord
     {
         switch ($type){
             case 'choice':
-                $result = $this->getchoice($suiteID);
+                $result = $this->getchoice($suiteID);    
                 break;
             case 'filling':
                 $result = $this->getFilling($suiteID);
@@ -75,6 +75,7 @@ class Suite extends CActiveRecord
         }
         return $result;
     }
+    
     
     
     public function getSuiteExerByTypePage($suiteID, $type,$pagesize)
@@ -164,6 +165,23 @@ class Suite extends CActiveRecord
         $sql = $select.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
         return $result;
+    }
+    public function getChoice2($suiteID){
+        $order = " order by exerciseID ASC";
+        $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='choice')";
+        $select = "select * from choice";
+        $sql = $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   2; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $choiceLst  =   $result->query();
+        
+        return ['choiceLst'=>$choiceLst,'pages'=>$pages,];
     }
     public function getFilling($suiteID){
         $isExam = Yii::app()->session['isExam'];

@@ -12,6 +12,7 @@ require 'suiteSideBar.php';
  }else{ 
     require 'examSideBar.php';
  } ;?>
+ <h3 >课 堂 作 业</h3>
 <div class="span9">
         <div class="hero-unit"  align="center">
             <table border = '0px'>

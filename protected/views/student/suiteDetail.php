@@ -23,6 +23,7 @@ else {
     <?php } ?>
 </div>
 <script>
+    
 var timeCounter = (function() {
  var int;
  var currtime = "<?php echo date("Y-m-d  H:i:s");?>";

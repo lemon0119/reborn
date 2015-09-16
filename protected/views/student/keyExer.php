@@ -4,6 +4,7 @@ require 'suiteSideBar.php';
  }else{ 
     require 'examSideBar.php';
  } ?>
+ <h3 >课 堂 作 业</h3>
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
@@ -40,7 +41,7 @@ require 'suiteSideBar.php';
         <input name="nm_answer" id="id_answer" type="hidden">
         <input name="nm_cost" id="id_cost" type="hidden">
         <input name="nm_correct" id="id_correct" type="hidden">
-        <a aline="center" type="button" class="btn btn-primary btn-large" onclick="onSubmit()" style="margin-left: 250px">提交</a>
+        <a aline="center" type="button" class="btn btn-primary btn-large" onclick="onSubmit()" style="margin-left: 250px">保存</a>
         <a class="btn btn-large" onclick="restart();" style="margin-left: 250px">重新计时</a>
     </form>
 </div>

@@ -58,7 +58,7 @@ class Choice extends CActiveRecord
         $criteria   =   new CDbCriteria();
         $result     =   Yii::app()->db->createCommand($sql)->query();
         $pages      =   new CPagination($result->rowCount);
-        $pages->pageSize    =   10; 
+        $pages->pageSize    =   2; 
         $pages->applyLimit($criteria); 
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
@@ -70,7 +70,7 @@ class Choice extends CActiveRecord
     
     
     //可以设置pagesize大小
-        public function getChoiceLstPage($type,$value,$pagesize){
+      public function getChoiceLstPage($type,$value,$pagesize){
         $order  =   " order by exerciseID ASC";
         if($type!="")
             if($type == "requirements")
@@ -96,13 +96,6 @@ class Choice extends CActiveRecord
         
         return ['choiceLst'=>$choiceLst,'pages'=>$pages,];
     }
-    
-    
-    public function getChoiceBySuiteID()
-    {
-        
-    }
-    
     
 //    //宋杰 2015-7-30 得到登录老师的选择题列表
 //        public function getTeaChoiceLst($type,$value){
