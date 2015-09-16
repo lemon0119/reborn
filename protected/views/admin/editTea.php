@@ -19,6 +19,44 @@
                             <input name="userName" type="text" class="input-xlarge" id="input02" value="<?php echo $userName?>" />
                     </div>
             </div>
+             <div class="control-group">
+                <label class="control-label" for="input04">性别</label>
+                <div class="controls">
+                    男
+                    <input name="sex" type="radio"<?php if ($sex == "男") {
+              echo 'checked="checked"';
+          } ?>  class="input-xlarge"  value="男" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    女
+                    <input name="sex" type="radio" <?php if ($sex == "女") {
+              echo 'checked="checked"';
+          } ?> class="input-xlarge"  value="女" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input05">年龄</label>
+                <div class="controls">
+                    <input name="age" type="text" class="input-xlarge" id="input05" value="<?php echo $age ?>" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input03">所属部门</label>
+                <div class="controls">
+                    <input name="department" type="text" class="input-xlarge" id="input03" value="<?php echo $department ?>" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input06">联系电话</label>
+                <div class="controls">
+                    <input name="phone_number" type="text" class="input-xlarge" id="input06" value="<?php echo $phone_number ?>" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input07">联系邮箱</label>
+                <div class="controls">
+                    <input name="mail_address" type="text" class="input-xlarge" id="input07" value="<?php echo $mail_address ?>" />
+                </div>
+            </div>
+           
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">提交</button>　　　
                 <?php if(isset($flag)){?>
@@ -79,5 +117,12 @@ $("#form-addTea").submit(function(){
         alert('老师姓名不能为空');
         return false;
     }
+    var phone_number = $("#input06")[0].value;
+        if (phone_number !=="" && phone_number.length!==11 ) {
+            alert('联系电话格式有误');
+            return false;
+        }
+        
+       
 });
 </script>

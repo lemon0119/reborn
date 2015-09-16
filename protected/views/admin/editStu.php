@@ -64,12 +64,6 @@ else
                     <input name="mail_address" type="text" class="input-xlarge" id="input07" value="<?php echo $mail_address ?>" />
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="input08">密码</label>
-                <div class="controls">
-                    <input name="password" type="text" class="input-xlarge" id="input08" value="<?php echo $password ?>" />
-                </div>
-            </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">提交</button>
                 <?php if (Yii::app()->session['lastUrl'] == "stuDontHaveClass") { ?>
@@ -158,12 +152,6 @@ foreach ($classAll as $key => $value) {
         var phone_number = $("#input06")[0].value;
         if (phone_number !=="" && phone_number.length!==11 ) {
             alert('联系电话格式有误');
-            return false;
-        }
-        
-        var password = $("#input08")[0].value;
-        if (password==="") {
-            alert('密码不能为空');
             return false;
         }
         
