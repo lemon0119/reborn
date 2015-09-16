@@ -7,12 +7,14 @@
  */
 $currtime = $examInfo['endtime'];
 ?>
+<script src="<?php echo JS_URL;?>exerJS/timeCounter.js"></script>
 <style type="text/css">
     .queTitle{}
 </style>
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
+                        <li class="nav-header" id="leftTime">考试剩余：<font id = "sideTime"></font></li>
                         <li class="nav-header">基础知识</li>
                         <li id="li-choice">
                             <a class="queTitle" href="./index.php?r=student/examchoice"><i class="icon-font"></i> 选 择 题</a>
@@ -54,8 +56,12 @@ $currtime = $examInfo['endtime'];
         </div>
 </div>
 <script>
-    /*
-$('.queTitle').bind('click', function(e){
-    e.preventDefault();
-});*/
+    $(document).ready(function(){
+        var curtime = <?php echo time();?>;
+        var endTime = <?php echo strtotime($examInfo['endtime']);?>;
+        function endTimer(endID){
+            alert("考试即将结束");
+        }
+        tCounter(curtime,endTime,"sideTime", endTimer);
+    });
 </script>

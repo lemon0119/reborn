@@ -206,7 +206,7 @@ class StudentController extends CController {
         Yii::app()->session['exerType'] = 'listen';
         $result = ListenType::model()->findByPK($exerID);
         $isExam = true;
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         return $this->render('listenExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
@@ -247,7 +247,7 @@ class StudentController extends CController {
         Yii::app()->session['exerType'] = 'look';
         $result = LookType::model()->findByPK($exerID);
         $isExam = true;
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         return $this->render('lookExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
@@ -291,7 +291,7 @@ class StudentController extends CController {
         Yii::app()->session['exerType'] = 'key';
         $result = KeyType::model()->findByPK($exerID);
         $isExam = true;
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         return $this->render('keyExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
@@ -320,7 +320,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         $isExam = true;
         return $this->render('questionExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
@@ -346,7 +346,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         $isExam = true;
         return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
@@ -377,7 +377,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         $isExam = true;
         return $this->render('fillingExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
