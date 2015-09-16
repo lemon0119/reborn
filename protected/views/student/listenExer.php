@@ -6,21 +6,35 @@
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
 
 <?php
-//2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar
-if($isExam == false){ 
-    require 'suiteSideBar.php';
- }else{ 
-    require 'examSideBar.php';
- }
-    $type = 'listen'; //add by lc 
+    //2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar
+    if($isExam == false){ 
+        require 'suiteSideBar.php';
+     }else{ 
+        require 'examSideBar.php';
+     }
+    //add by lc 
+    $type = 'listen'; 
+    $seconds = $exerOne['time'];
+    $hh = floor(($seconds) / 3600);
+    $mm = floor(($seconds) % 3600 / 60);
+    $ss = floor(($seconds) % 60);
+    $strTime = "";
+    $strTime .= $hh < 10 ? "0".$hh : $hh;
+    $strTime .= ":";
+    $strTime .= $mm < 10 ? "0".$mm : $mm;
+    $strTime .= ":";
+    $strTime .= $ss < 10 ? "0".$ss : $ss;
+    //end
 ?>
  <h3 >课 堂 作 业</h3>
 <div class="span9">
         <div class="hero-unit"  align="center">
             <table border = '0px'>
+                <tr><h3><?php echo $exerOne['title']?></h3></tr>
                 <tr>
-                    <td width = '250px'><h3><?php echo $exerOne['title']?></h3></td>
-                    <td width = '250px'>时间：<span id="time">00:00:00</span></td>
+                    <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
+                    <td width = '250px'>总时间：<?php echo $strTime?></td>
+                    <td width = '250px'>计时：<span id="time">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                 </tr>
             </table>
@@ -29,8 +43,10 @@ if($isExam == false){
                 Yii::app()->session['exerID'] = $exerOne['exerciseID'];
             ?>
             <div align="left">
-            <audio src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
+                <br/>
+                <audio src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
             </div>
+            <br/>
             <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
             <object id="typeOCX" type="application/x-itst-activex" 
                     clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 

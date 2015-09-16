@@ -166,9 +166,20 @@ class ExamExercise extends CActiveRecord
         //宋杰 2015-7-31 获取键位练习 
         public function getKeyExer($suiteID)
 	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='key')";
-            $select = "select * from key_type";
+            //edit by LC
+            //$order = " order by exerciseID ASC";
+            //$condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='key')";
+            //$select = "select * from key_type";
+            $select = 'select key_type.exerciseID, '
+                    . 'key_type.content, '
+                    . 'key_type.title, '
+                    . 'exam_exercise.score, '
+                    . 'exam_exercise.time from key_type, exam_exercise ';
+            $condition = "where exam_exercise.exerciseID=key_type.exerciseID "
+                    . "and exam_exercise.examID='$suiteID' "
+                    . "and exam_exercise.type='key'";
+            $order = " order by key_type.exerciseID ASC";
+            //end
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->queryAll();
             return $result;
@@ -177,9 +188,22 @@ class ExamExercise extends CActiveRecord
         //宋杰 2015-7-31 获取听打练习 
         public function getListenExer($suiteID)
 	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='listen')";
-            $select = "select * from listen_type";
+            //edit by lc
+            //$order = " order by exerciseID ASC";
+            //$condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='listen')";
+            //$select = "select * from listen_type";
+            $select = 'select listen_type.exerciseID, '
+                    . 'listen_type.content, '
+                    . 'listen_type.filePath, '
+                    . 'listen_type.fileName, '
+                    . 'listen_type.title, '
+                    . 'exam_exercise.score, '
+                    . 'exam_exercise.time from listen_type, exam_exercise ';
+            $condition = "where exam_exercise.exerciseID=listen_type.exerciseID "
+                    . "and exam_exercise.examID='$suiteID' "
+                    . "and exam_exercise.type='listen'";
+            $order = " order by listen_type.exerciseID ASC";
+            //end
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->queryAll();
             return $result;
@@ -188,9 +212,20 @@ class ExamExercise extends CActiveRecord
         //宋杰 2015-7-31 获取看打练习 
         public function getLookExer($suiteID)
 	{
-            $order = " order by exerciseID ASC";
-            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='look')";
-            $select = "select * from look_type";
+            //edit by LC
+            //$order = " order by exerciseID ASC";
+            //$condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$suiteID' and type='look')";
+            //$select = "select * from look_type";
+            $select = 'select look_type.exerciseID, '
+                    . 'look_type.content, '
+                    . 'look_type.title, '
+                    . 'exam_exercise.score, '
+                    . 'exam_exercise.time from look_type, exam_exercise ';
+            $condition = "where exam_exercise.exerciseID=look_type.exerciseID "
+                    . "and exam_exercise.examID='$suiteID' "
+                    . "and exam_exercise.type='look'";
+            $order = " order by look_type.exerciseID ASC";
+            //end
             $sql = $select.$condition.$order;
             $result = Yii::app()->db->createCommand($sql)->queryAll();
             return $result;

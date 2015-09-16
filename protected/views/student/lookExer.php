@@ -6,20 +6,34 @@
  }else{ 
     require 'examSideBar.php';
  } 
-    $type = 'look';
+    //add by lc 
+    $type = 'look'; 
+    $seconds = $exerOne['time'];
+    $hh = floor(($seconds) / 3600);
+    $mm = floor(($seconds) % 3600 / 60);
+    $ss = floor(($seconds) % 60);
+    $strTime = "";
+    $strTime .= $hh < 10 ? "0".$hh : $hh;
+    $strTime .= ":";
+    $strTime .= $mm < 10 ? "0".$mm : $mm;
+    $strTime .= ":";
+    $strTime .= $ss < 10 ? "0".$ss : $ss;
+    //end
 ?>
  <h3 >课 堂 作 业</h3>
 <div class="span9">
-    <div class="hero-unit">
+    <div class="hero-unit" align="center">
             <?php 
                 Yii::app()->session['exerID'] = $exerOne['exerciseID'];
             ?>
         <table border = '0px'>
-            <tr>
-                <td width = '250px'><h3><?php echo $exerOne['title']?></h3></td>
-                <td width = '250px'>时间：<span id="time">00:00:00</span></td>
-                <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
-            </tr>
+                <tr><h3><?php echo $exerOne['title']?></h3></tr>
+                <tr>
+                    <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
+                    <td width = '250px'>总时间：<?php echo $strTime?></td>
+                    <td width = '250px'>计时：<span id="time">00:00:00</span></td>
+                    <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                </tr>
         </table>
         <br/>
         <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">

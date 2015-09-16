@@ -3,17 +3,33 @@
 require 'suiteSideBar.php';
  }else{ 
     require 'examSideBar.php';
- } ?>
+ } 
+     //add by lc 
+    $type = 'key'; 
+    $seconds = $exerOne['time'];
+    $hh = floor(($seconds) / 3600);
+    $mm = floor(($seconds) % 3600 / 60);
+    $ss = floor(($seconds) % 60);
+    $strTime = "";
+    $strTime .= $hh < 10 ? "0".$hh : $hh;
+    $strTime .= ":";
+    $strTime .= $mm < 10 ? "0".$mm : $mm;
+    $strTime .= ":";
+    $strTime .= $ss < 10 ? "0".$ss : $ss;
+    //end
+ ?>
  <h3 >课 堂 作 业</h3>
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
         <table border = '0px'>
-            <tr>
-                <td width = '200px'><h3><?php echo $exerOne['title']?></h3></td>
-                <td width = '200px'>时间：<span id="time">00:00:00</span></td>
-                <td width = '200px'>速度：<span id="wordps">0</span> 字/分</td>
-            </tr>
+                <tr><h3><?php echo $exerOne['title']?></h3></tr>
+                <tr>
+                    <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
+                    <td width = '250px'>总时间：<?php echo $strTime?></td>
+                    <td width = '250px'>计时：<span id="time">00:00:00</span></td>
+                    <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                </tr>
         </table>
         <br/>
         <div id ="templet" class ="questionBlock" onselectstart="return false">
@@ -41,7 +57,7 @@ require 'suiteSideBar.php';
         <input name="nm_answer" id="id_answer" type="hidden">
         <input name="nm_cost" id="id_cost" type="hidden">
         <input name="nm_correct" id="id_correct" type="hidden">
-        <a aline="center" type="button" class="btn btn-primary btn-large" onclick="onSubmit()" style="margin-left: 200px">提交</a>
+        <a aline="center" type="button" class="btn btn-primary btn-large" onclick="onSubmit()" style="margin-left: 200px">保存</a>
         <?php 
           $last = Tool::getLastExer($exercise);
           if($last['type'] == 'key'&& $last['exerciseID'] == $_GET['exerID']){

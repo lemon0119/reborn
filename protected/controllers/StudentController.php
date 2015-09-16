@@ -218,7 +218,15 @@ class StudentController extends CController {
         }
         $exerID = $_GET['exerID'];
         Yii::app()->session['exerType'] = 'listen';
-        $result = ListenType::model()->findByPK($exerID);
+        //edit by LC
+        //$result = ListenType::model()->findByPK($exerID);
+        foreach($classexam['listen'] as $listenType){
+            if($listenType['exerciseID'] == $exerID){
+                $result = $listenType;
+                break;
+            }
+        }
+        //end
         $isExam = true;
         $examInfo = Exam::model()->find($suiteID);
         return $this->render('listenExer',array( 
@@ -262,7 +270,15 @@ class StudentController extends CController {
         }
         $exerID = $_GET['exerID'];
         Yii::app()->session['exerType'] = 'look';
-        $result = LookType::model()->findByPK($exerID);
+        //edit by LC
+        //$result = LookType::model()->findByPK($exerID);
+        foreach($classexam['look'] as $lookType){
+            if($lookType['exerciseID'] == $exerID){
+                $result = $lookType;
+                break;
+            }
+        }
+        //end
         $isExam = true;
         $examInfo = Exam::model()->find($suiteID);
         return $this->render('lookExer',array( 
@@ -309,7 +325,15 @@ class StudentController extends CController {
         $exerID = $_GET['exerID'];
         Yii::app()->session['exerID'] = $exerID;
         Yii::app()->session['exerType'] = 'key';
-        $result = KeyType::model()->findByPK($exerID);
+        //edit by LC
+        //$result = KeyType::model()->findByPK($exerID);
+        foreach($classexam['key'] as $keyType){
+            if($keyType['exerciseID'] == $exerID){
+                $result = $keyType;
+                break;
+            }
+        }
+        //end
         $isExam = true;
         $examInfo = Exam::model()->find($suiteID);
         return $this->render('keyExer',array( 
