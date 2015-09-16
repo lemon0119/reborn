@@ -2356,24 +2356,166 @@ class AdminController extends CController {
         ));
     }
 
-    public function actionLessonBranch() {
-        $sql = "SELECT * FROM suite WHERE lessonID = '" . $_GET ['lessonID'] . "'";
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $class = $result->read();
-        $exer = $result->read();
-        $this->render('lessonBranch', array(
-            'lessonName' => $_GET ['lessonName'],
-            'class' => $class,
-            'exer' => $exer
+    public function actionPptLst() {
+        $courseID       = $_GET ['courseID'];
+        $courseName     = $_GET ['courseName'];
+        $createPerson   = $_GET ['createPerson'];
+        $pdir           = $_GET ['pdir'];
+        Yii::app()->session['courseID']      = $courseID;
+        Yii::app()->session['courseName']    = $courseName;
+        Yii::app()->session['createPerson']  = $createPerson;
+        $this->render("pptLst",array(
+            'courseID'      => $courseID,
+            'courseName'    => $courseName,
+            'createPerson'  => $createPerson,
+            'pdir'          => $pdir
         ));
     }
-
-    public function actionGoverLesson() {
-        $suiteID = $_GET ['suiteID'];
-        $suiteName = $_GET ['suiteName'];
-        $suiteType = $_GET ['suiteType'];
+    
+    public function actionAddPpt(){
+        $dir            =   $_GET['pdir']; 
+        $result         =   "上传失败!";
+        if(!isset($_FILES["file"]))
+        {
+            echo "请选择文件！";
+            return ;
+        }
+        if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint")
+        {   
+            if($_FILES["file"]["size"] < 30000000)
+            {
+                if ($_FILES["file"]["error"] > 0)
+                {
+                    $result = "Return Code: " . $_FILES["file"]["error"];
+                }
+              else
+                {
+                    if (file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
+                    {
+                        $result = $_FILES["file"]["name"] . "已经存在！";
+                    }
+                    else
+                    {
+                         move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+//                             sleep(14);
+                        $result = "上传成功！";
+                  }
+                }
+            }else{
+                $reult = "PPT文件限定大小为30M！";
+            }
+        }else {
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+    }
+    
+    public function actionPptTable(){
+        $pdir           = $_GET ['pdir'];        
+        return $this->renderPartial('pptTable',[
+            'pdir'   =>  $pdir,
+        ]);
+    }
+    
+    public function actionDeletePpt(){
+        $fileName       =   $_GET['ppt'];
+        $dir            =   $_GET['pdir'];
+        $file           =   $dir.$fileName;
+        unlink(iconv('utf-8','gb2312',$file));
+        $result         =   "删除成功！";    
+        echo $result;
+    }
+    
+    public function actionLookPpt(){
+        $fileDir         =   $_GET['ppt'];
+        $pdir            =   $_GET['pdir'];
+        $dir             =   $pdir.$fileDir;
+        return $this->render('lookPpt',[
+                'pdir'   =>  $pdir,
+                'dir'    =>  $dir,    
+        ]);
     }
 
+    public function actionVideoLst(){
+        $courseID       = $_GET ['courseID'];
+        $courseName     = $_GET ['courseName'];
+        $createPerson   = $_GET ['createPerson'];
+        $vdir           = $_GET ['vdir'];
+        Yii::app()->session['courseID']      = $courseID;
+        Yii::app()->session['courseName']    = $courseName;
+        Yii::app()->session['createPerson']  = $createPerson;
+        $this->render("videoLst",array(
+            'courseID'      => $courseID,
+            'courseName'    => $courseName,
+            'createPerson'  => $createPerson,
+            'vdir'          => $vdir
+        ));
+    }
+    
+    public function actionVideoTable(){
+        $vdir           = $_GET ['vdir'];        
+        return $this->renderPartial('videoTable',[
+            'vdir'   =>  $vdir,
+        ]);
+    }
+    
+    public function actionAddVideo(){
+            $dir            =   $_GET['vdir']; 
+            $result         =   "上传失败!";
+            if(!isset($_FILES["file"]))
+            {
+                echo "请选择文件！";
+                return ;
+            }
+            if ($_FILES["file"]["type"] == "video/mp4"
+                    || $_FILES["file"]["type"] == "application/octet-stream")
+            {   
+                if($_FILES["file"]["size"] < 200000000)
+                {
+                    if ($_FILES["file"]["error"] > 0)
+                    {
+                        $result = "Return Code: " . $_FILES["file"]["error"];
+                    }
+                  else
+                    {
+                        if (file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
+                        {
+                            $result = $_FILES["file"]["name"] . "已经存在！";
+                        }
+                        else
+                        {
+                             move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+//                             sleep(14);
+                            $result = "上传成功！";
+                      }
+                    }
+                }else{
+                    $reult = "视频文件限定大小为200M！";
+                }
+            }else {
+                $result = "请上传正确类型的文件！";
+            }
+            echo $result;
+    }
+    
+    public function actionDeleteVideo(){
+        $fileName       =   $_GET['video'];
+        $dir            =   $_GET['vdir'];
+        $file           =   $dir.$fileName;
+        unlink(iconv('utf-8','gb2312',$file));
+        $result         =   "删除成功！";    
+        echo $result;
+    }
+    
+    public function actionLookVideo(){
+        $file            =   $_GET['video'];
+        $vdir            =   $_GET['vdir'];
+        return $this->render('lookVideo',[
+                'vdir'   =>  $vdir,
+                'file'   =>  $vdir.$file,   
+        ]);
+    }
+    
     // Uncomment the following methods and override them if needed
     /*
      * public function filters()

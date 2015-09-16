@@ -1,12 +1,5 @@
 <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
 <link href="<?php echo CSS_URL; ?>bootstrap-responsive.min.css" rel="stylesheet">
-<?php
-    $username = Yii::app()->user->name;
-    $role = Yii::app()->session['role_now'];
-    $userid = Yii::app()->session['userid_now'];             
-    $videoFilePath =$role."/".$userid."/".$classID."/".$on."/video/"; 
-    $vdir = "./resources/".$videoFilePath;
-?>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -27,9 +20,9 @@
                         <?php echo iconv("gb2312","UTF-8",$file);?>
                     </td>
                     <td>
-                        <a href="./index.php?r=teacher/lookVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                        <a href="./index.php?r=admin/lookVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&vdir=<?php echo $vdir;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                         <a href="<?php echo "$vdir".iconv("gb2312","UTF-8",$file);?>" target="_blank"><img src="<?php echo IMG_URL; ?>edit.png">右键另存为</a>
-                        <a href="./index.php?r=teacher/deleteVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="dele"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                        <a href="./index.php?r=admin/deleteVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&vdir=<?php echo $vdir;?>" id="dele"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                     </td>
                 </tr>
                 <?php     
@@ -46,7 +39,7 @@
         });
         $("#dele").click(function(){
             $.get($(this).attr("href"),function(data,status){
-                $("#video-table").load("./index.php?r=teacher/videoTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
+                $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
                 alert(data);
             });  
             return false;     
