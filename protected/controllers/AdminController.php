@@ -165,8 +165,11 @@ class AdminController extends CController {
 
     public function actionAddStu() {
         $result = 'no';
-        if (isset($_POST ['userID'])) {
-            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'], $_POST ['password1'], $_POST ['classID']);
+        if (isset($_POST ['userID'])&&isset($_POST['sex'])) {
+            $className = $_POST ['className'];
+            $classSqlResult = TbClass::model()->find("className = '$className'");
+            $classID = $classSqlResult['classID'];
+            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], $_POST ['password1'], $_POST ['mail_address'], $_POST ['phone_number'], $classID);
         }
         $classAll = TbClass::model()->findAll("");
         $userAll = Student::model()->findAll();
@@ -255,6 +258,7 @@ class AdminController extends CController {
     }
 
     public function actionDeleteStu() {
+        if(isset($_GET ['id'])){
         $userID = $_GET ['id'];
         $thisStu = new Student ();
         $thisStu = $thisStu->find("userID = '$userID'");
@@ -267,6 +271,25 @@ class AdminController extends CController {
             'stuLst' => $stuLst,
             'pages' => $pages
         ));
+        }
+        if(isset($_POST['checkbox'])){
+        $userIDlist = $_POST['checkbox'];
+        foreach ($userIDlist as $v){
+            $thisStu = new Student ();
+            $thisStu = $thisStu->find("userID = '$v'");
+            $thisStu->is_delete = '1';
+            $thisStu->update();
+        }
+        $result = Student::model()->getStuLst("", "");
+        $stuLst = $result ['stuLst'];
+        $pages = $result ['pages'];
+        $this->render('stuLst', array(
+            'stuLst' => $stuLst,
+            'pages' => $pages
+        ));
+        }
+        
+        
     }
 
     public function actionDeleteStuDontHaveClass() {
@@ -904,7 +927,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "searchLook";
         if ($type == 'createPerson') {
             if ($value == "管理员")
-                $vaule = 0;
+                $value = 0;
             else {
                 $tea = Teacher::model()->find("userName = '$value'");
                 if ($tea ['userID'] != "")
@@ -956,7 +979,7 @@ class AdminController extends CController {
             Yii::app()->session ['lastUrl'] = "searchKey";
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1004,7 +1027,7 @@ class AdminController extends CController {
             Yii::app()->session ['lastUrl'] = "searchKey";
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1103,7 +1126,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "searchKey";
         if ($type == 'createPerson') {
             if ($value == "管理员")
-                $vaule = 0;
+                $value = 0;
             else {
                 $tea = Teacher::model()->find("userName = '$value'");
                 if ($tea ['userID'] != "")
@@ -1139,7 +1162,7 @@ class AdminController extends CController {
             Yii::app()->session ['lastUrl'] = "searchKey";
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1181,7 +1204,7 @@ class AdminController extends CController {
             Yii::app()->session ['lastUrl'] = "searchKey";
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1299,7 +1322,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "searchListen";
         if ($type == 'createPerson') {
             if ($value == "管理员")
-                $vaule = 0;
+                $value = 0;
             else {
                 $tea = Teacher::model()->find("userName = '$value'");
                 if ($tea ['userID'] != "")
@@ -1371,7 +1394,7 @@ class AdminController extends CController {
             Yii::app()->session ['lastUrl'] = "searchListen";
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1428,7 +1451,7 @@ class AdminController extends CController {
             Yii::app()->session ['lastUrl'] = "searchListen";
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1559,7 +1582,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "searchFill";
         if ($type == 'createPerson') {
             if ($value == "管理员")
-                $vaule = 0;
+                $value = 0;
             else {
                 $tea = Teacher::model()->find("userName = '$value'");
                 if ($tea ['userID'] != "")
@@ -1608,7 +1631,7 @@ class AdminController extends CController {
             $value = Yii::app()->session ['searchFillValue'];
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1654,7 +1677,7 @@ class AdminController extends CController {
             $value = Yii::app()->session ['searchFillValue'];
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1770,7 +1793,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "searchChoice";
         if ($type == 'createPerson') {
             if ($value == "管理员")
-                $vaule = 0;
+                $value = 0;
             else {
                 $tea = Teacher::model()->find("userName = '$value'");
                 if ($tea ['userID'] != "")
@@ -1801,7 +1824,7 @@ class AdminController extends CController {
             $value = Yii::app()->session ['searchChoiceValue'];
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -1960,7 +1983,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "searchQuestion";
         if ($type == 'createPerson') {
             if ($value == "管理员")
-                $vaule = 0;
+                $value = 0;
             else {
                 $tea = Teacher::model()->find("userName = '$value'");
                 if ($tea ['userID'] != "")
@@ -2001,7 +2024,7 @@ class AdminController extends CController {
             Yii::app()->session ['lastUrl'] = "searchQuestion";
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -2047,7 +2070,7 @@ class AdminController extends CController {
             Yii::app()->session ['lastUrl'] = "searchQuestion";
             if ($type == 'createPerson') {
                 if ($value == "管理员")
-                    $vaule = 0;
+                    $value = 0;
                 else {
                     $tea = Teacher::model()->find("userName = '$value'");
                     if ($tea ['userID'] != "")
@@ -2122,23 +2145,6 @@ class AdminController extends CController {
     }
 
     public function actionCourseLst() {
-        // if(!empty($_POST['courseName']))
-        // //得到当前最大的学生ID
-        // $sql="select max(courseID) as id from course";
-        // $max_id = Yii::app()->db->createCommand($sql)->query();
-        // $temp=$max_id->read();
-        // if(empty($temp))
-        // {
-        // $new_id=1;
-        // }
-        // else
-        // {
-        // $new_id = $temp['id'] + 1;
-        // }
-        // $sql= "INSERT INTO course VALUES ('".$new_id ."','" .$_POST['courseName'] ."','0','".date('y-m-d H:i:s',time()) ."','')";
-        // Yii::app()->db->createCommand($sql)->query();
-        // $act_result="新建课程成功！";
-        // unset($_GET['action']);
         if (isset($_GET ['page'])) {
             Yii::app()->session ['lastPage'] = $_GET ['page'];
         } else {
@@ -2172,9 +2178,9 @@ class AdminController extends CController {
         }
         Yii::app()->session ['lastUrl'] = "searchCourse";
         if ($type == 'createPerson') {
-            if ($value == "管理员")
-                $vaule = 0;
-            else {
+            if ($value == "管理员"){
+                $value = 0;
+            }else {
                 $tea = Teacher::model()->find("userName = '$value'");
                 if ($tea ['userID'] != "")
                     $value = $tea ['userID'];
@@ -2207,78 +2213,79 @@ class AdminController extends CController {
         $courseName = $_GET ['courseName'];
         $createPerson = $_GET ['createPerson'];
 
-        // 定义动作
-        $act_result = "";
-
-        // 搜索动作
-        if (isset($_POST ['which'])) {
-            if (!empty($_POST ['name'])) {
-                $ex_sq = " AND " . $_POST ['which'] . " = '" . $_POST ['name'] . "'";
-            } else
-                $ex_sq = "";
-        } else
-            $ex_sq = "";
-
-        // 添加动作
-        if (isset($_GET ['action'])) {
-            // 添加课程
-            if ($_GET ['action'] == 'add') {
-                if (!empty($_POST ['lessonName'])) {
-
-                    // 得到当前最大的lessonID
-                    $sql = "select max(lessonID) as id from lesson";
-                    $max_id = Yii::app()->db->createCommand($sql)->query();
-                    $temp = $max_id->read();
-                    if (empty($temp)) {
-                        $new_id = 1;
-                    } else {
-                        $new_id = $temp ['id'] + 1;
-                    }
-                    // 得到该lesson最大的number
-                    $sql = "select max(number) as number from lesson WHERE courseID = '" . $courseID . "'";
-                    $max_num = Yii::app()->db->createCommand($sql)->query();
-                    $temp = $max_num->read();
-                    if (empty($temp)) {
-                        $new_num = 1;
-                    } else {
-                        $new_num = $temp ['number'] + 1;
-                    }
-
-                    $sql = "INSERT INTO lesson VALUES ('" . $new_id . "','" . $new_num . "','" . $_POST ['lessonName'] . "','" . $courseID . "','0','" . date('y-m-d H:i:s', time()) . "')";
-                    Yii::app()->db->createCommand($sql)->query();
-
-                    // 得到该suite最大的
-                    $sql = "select max(suiteID) as id from suite";
-                    $max_s = Yii::app()->db->createCommand($sql)->query();
-                    $temp = $max_s->read();
-                    if (empty($temp)) {
-                        $new_s = 1;
-                    } else {
-                        $new_s = $temp ['id'] + 1;
-                    }
-                    $sql = "INSERT INTO suite VALUES ('" . $new_s . "','" . $new_id . "','课堂练习','classwork','" . date('y-m-d H:i:s', time()) . "','0','0')";
-                    Yii::app()->db->createCommand($sql)->query();
-                    $new_s = $new_s + 1;
-                    $sql = "INSERT INTO suite VALUES ('" . $new_s . "','" . $new_id . "','自我练习','exercise','" . date('y-m-d H:i:s', time()) . "','0','0')";
-                    Yii::app()->db->createCommand($sql)->query();
-
-                    $act_result = "新建课程成功！";
-                    unset($_GET ['action']);
-                } else {
-                    // 用户输入参数不足
-                    $this->render('addCourse', array(
-                        'shao' => "输入不能为空",
-                        'courseID' => $courseID,
-                        'courseName' => $courseName,
-                        'createPerson' => $createPerson
-                    ));
-                    return;
-                }
-            }
-        }
+//        // 定义动作
+//        $act_result = "";
+//
+//        // 搜索动作
+//        if (isset($_POST ['which'])) {
+//            if (!empty($_POST ['name'])) {
+//                $ex_sq = " AND " . $_POST ['which'] . " = '" . $_POST ['name'] . "'";
+//            } else
+//                $ex_sq = "";
+//        } else
+//            $ex_sq = "";
+//
+//        // 添加动作
+//        if (isset($_GET ['action'])) {
+//            // 添加课程
+//            if ($_GET ['action'] == 'add') {
+//                if (!empty($_POST ['lessonName'])) {
+//
+//                    // 得到当前最大的lessonID
+//                    $sql = "select max(lessonID) as id from lesson";
+//                    $max_id = Yii::app()->db->createCommand($sql)->query();
+//                    $temp = $max_id->read();
+//                    if (empty($temp)) {
+//                        $new_id = 1;
+//                    } else {
+//                        $new_id = $temp ['id'] + 1;
+//                    }
+//                    // 得到该lesson最大的number
+//                    $sql = "select max(number) as number from lesson WHERE courseID = '" . $courseID . "'";
+//                    $max_num = Yii::app()->db->createCommand($sql)->query();
+//                    $temp = $max_num->read();
+//                    if (empty($temp)) {
+//                        $new_num = 1;
+//                    } else {
+//                        $new_num = $temp ['number'] + 1;
+//                    }
+//
+//                    $sql = "INSERT INTO lesson VALUES ('" . $new_id . "','" . $new_num . "','" . $_POST ['lessonName'] . "','" . $courseID . "','0','" . date('y-m-d H:i:s', time()) . "')";
+//                    Yii::app()->db->createCommand($sql)->query();
+//
+//                    // 得到该suite最大的
+//                    $sql = "select max(suiteID) as id from suite";
+//                    $max_s = Yii::app()->db->createCommand($sql)->query();
+//                    $temp = $max_s->read();
+//                    if (empty($temp)) {
+//                        $new_s = 1;
+//                    } else {
+//                        $new_s = $temp ['id'] + 1;
+//                    }
+//                    $sql = "INSERT INTO suite VALUES ('" . $new_s . "','" . $new_id . "','课堂练习','classwork','" . date('y-m-d H:i:s', time()) . "','0','0')";
+//                    Yii::app()->db->createCommand($sql)->query();
+//                    $new_s = $new_s + 1;
+//                    $sql = "INSERT INTO suite VALUES ('" . $new_s . "','" . $new_id . "','自我练习','exercise','" . date('y-m-d H:i:s', time()) . "','0','0')";
+//                    Yii::app()->db->createCommand($sql)->query();
+//
+//                    $act_result = "新建课程成功！";
+//                    unset($_GET ['action']);
+//                } else {
+//                    // 用户输入参数不足
+//                    $this->render('addCourse', array(
+//                        'shao' => "输入不能为空",
+//                        'courseID' => $courseID,
+//                        'courseName' => $courseName,
+//                        'createPerson' => $createPerson
+//                    ));
+//                    return;
+//                }
+//            }
+//        }
 
         // 显示结果列表并分页
-        $sql = "SELECT * FROM lesson WHERE courseID = $courseID " . $ex_sq;
+//        $sql = "SELECT * FROM lesson WHERE courseID = $courseID " . $ex_sq;
+        $sql = "SELECT * FROM lesson WHERE courseID = $courseID";
         $criteria = new CDbCriteria ();
         $result = Yii::app()->db->createCommand($sql)->query();
         $pages = new CPagination($result->rowCount);
@@ -2295,7 +2302,7 @@ class AdminController extends CController {
             'posts' => $posts,
             'pages' => $pages,
             'result' => $act_result
-                ), false, true);
+                ));
     }
 
     public function actionAddLesson() {

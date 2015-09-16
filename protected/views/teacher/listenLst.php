@@ -51,7 +51,7 @@
             <tr>
                 <th>编号</th>
                 <th>课程号</th>
-                <th>题目名</th>
+                <th>题目</th>
                 <th>内容</th>
                 <th>创建人</th>
                 <th>创建时间</th>
@@ -63,11 +63,14 @@
                     <tr>
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
-                        <td><?php echo $model['title'];?></td>
-                        <td><?php  if(strlen($model['content'])<=17)
+                        <td><?php  if(Tool::clength($model['title'])<=7)
+                                        echo $model['title'];
+                                    else
+                                        echo Tool::csubstr($model['title'], 0, 7)."...";?></td>
+                        <td><?php  if(Tool::clength($model['content'])<=15)
                                         echo $model['content'];
                                     else
-                                        echo substr($model['content'], 0, 17)."...";
+                                        echo Tool::csubstr($model['content'], 0,15)."...";
                                         ?></td>
                         <td><?php if($model['createPerson']=="0")
                                         echo "管理员";
@@ -75,13 +78,14 @@
                             ?></td>
                         <td><?php echo $model['createTime'];?></td>
                         <td>
-                              <a href="./index.php?r=teacher/editListen&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                             <a href="./index.php?r=teacher/editListen&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                           <?php if($model['createPerson'] == Yii::app()->session['userid_now']){?>
                             <a href="./index.php?r=teacher/editListen&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
                             <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                             <?php }else{ ?>
                             <a href="./index.php?r=teacher/copyListen&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>copy.png">复制</a>
-                            <?php }?>     </td>
+                            <?php }?>     
+                        </td>
                     </tr>            
                     <?php endforeach;?> 
                 </tbody>

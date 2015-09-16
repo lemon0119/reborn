@@ -30,7 +30,13 @@
                 点击虚拟课堂开始本课.
         </p>
         <p>
-            <a href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID;?>&&on=<?php echo $on;?>" class="btn btn-primary btn-large">虚拟课堂</a> <a class="btn btn-large">课堂作业</a>
+            <?php if($on == $progress){?>
+            <a href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID;?>&&on=<?php echo $on;?>" class="btn btn-primary btn-large">虚拟课堂</a> 
+            <?php }else {?>
+            <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID;?>&&on=<?php echo $on;?>" class="btn btn-primary btn-large">开始本课</a> 
+            <?php } ?>
+            <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $classID;?>&&lessonID=<?php $less    = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+                                                                                                        echo $less['lessonID'];?>" class="btn btn-large">课堂作业</a>
         </p>
     </div>
     <h1>
@@ -54,7 +60,7 @@
     <div class="well summary">
         <ul>
                 <li>
-                        <a href="#"><span class="count"><?php  $num = sizeof(scandir($vdir)); 
+                        <a href="./index.php?r=teacher/videoLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><span class="count"><?php  $num = sizeof(scandir($vdir)); 
                                                                 $num = ($num>2)?($num-2):0;
                                                                 echo $num;?></span> 视频</a>
                 </li>

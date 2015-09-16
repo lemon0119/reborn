@@ -39,7 +39,7 @@ function test()
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">确认</button> 
-                <a href="./index.php?r=student/<?php echo Yii::app()->session['lastUrl'];?>&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">取消</a>
+                <a href="./index.php?r=student/index" class="btn">取消</a>
             </div>
         </fieldset>
     </form>   
@@ -61,7 +61,6 @@ $("#myForm").submit(function(){
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
     if(new1===defnew){
-        alert("yizhi");
     }else
     {
     	alert('不一致');

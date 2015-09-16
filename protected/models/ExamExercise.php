@@ -195,6 +195,32 @@ class ExamExercise extends CActiveRecord
             $result = Yii::app()->db->createCommand($sql)->query();
             return $result;
 	}
+        
+        public function updateScore($exerciseID,$type,$examID,$score)
+        {
+            $exercise = $this->find("exerciseID = '$exerciseID' and type = '$type' and examID = '$examID'");
+            $exercise->score = $score;
+            $exercise->update();
+        }
+        
+                public function updateTime($exerciseID,$type,$examID,$time)
+        {
+            $exercise = $this->find("exerciseID = '$exerciseID' and type = '$type' and examID = '$examID'");
+            $exercise->time = $time;
+            $exercise->update();
+        }
+        
+        public function getTotalScore($examID)
+        {
+           
+            $sql = "select sum(score) as totalScore from exam_exercise where examID = '$examID'";
+            $result = Yii::app()->db->createCommand($sql)->query();
+            foreach ($result as $total)
+            {
+                $totalScore = $total['totalScore'];
+            }
+            return $totalScore;
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.

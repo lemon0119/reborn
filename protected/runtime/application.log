@@ -3145,59 +3145,107 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=student/ansLookType&&type=look&&exerID=1
 HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/viewAns&&suiteID=5
 ---
-2015/09/13 14:32:30 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `suite_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='1'.
-in D:\wamp\www\reborn\protected\models\SuiteRecord.php (18)
-in D:\wamp\www\reborn\protected\models\SuiteRecord.php (40)
-in D:\wamp\www\reborn\protected\controllers\StudentController.php (140)
-2015/09/13 14:32:30 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `suite_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='1'' in D:\wamp\www\framework\db\CDbCommand.php:543
+2015/09/15 21:43:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "searchLesson" 动作.' in D:\wamp\www\framework\web\CController.php:483
 Stack trace:
-#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
-#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
-#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
-#3 D:\wamp\www\reborn\protected\models\SuiteRecord.php(18): CActiveRecord->find('workID=? and st...', Array)
-#4 D:\wamp\www\reborn\protected\models\SuiteRecord.php(40): SuiteRecord::getRecord(NULL, '1')
-#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(140): SuiteRecord::saveSuiteRecord(NULL)
-#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
-#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
-#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
-#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
-#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
-#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
-#13 D:\wamp\www\reborn\index.php(29): CApplication->run()
-#14 {main}
-REQUEST_URI=/reborn/index.php?r=student/saveChoice
-HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/examchoice
+#0 D:\wamp\www\framework\web\CController.php(270): CController->missingAction('searchLesson')
+#1 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('searchLesson')
+#2 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/searchLes...')
+#3 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 D:\wamp\www\reborn\index.php(29): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/searchLesson
+HTTP_REFERER=https://192.168.101.104/reborn/index.php?r=admin/infoCourse&&courseID=1&&courseName=%E5%88%9D%E7%BA%A7%E8%AF%BE%E7%A8%8B&&createPerson=%E7%AE%A1%E7%90%86%E5%91%98
 ---
-2015/09/13 16:09:15 [error] [exception.CException] exception 'CException' with message '属性 "CWebApplication.ssession" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+2015/09/15 21:47:26 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lessonID' in 'where clause'. The SQL statement executed was: SELECT * FROM suite WHERE lessonID = '1'.
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (2321)
+in D:\wamp\www\reborn\index.php (29)
+2015/09/15 21:47:26 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lessonID' in 'where clause'. The SQL statement executed was: SELECT * FROM suite WHERE lessonID = '1'' in D:\wamp\www\framework\db\CDbCommand.php:543
 Stack trace:
-#0 D:\wamp\www\framework\base\CModule.php(105): CComponent->__get('ssession')
-#1 D:\wamp\www\reborn\protected\controllers\StudentController.php(120): CModule->__get('ssession')
-#2 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionViewAns()
+#0 D:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 D:\wamp\www\reborn\protected\controllers\AdminController.php(2321): CDbCommand->query()
+#2 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLessonBranch()
 #3 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
 #4 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
 #5 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('viewAns')
-#7 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/viewAns')
+#6 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lessonBranch')
+#7 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lessonBra...')
 #8 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
 #9 D:\wamp\www\reborn\index.php(29): CApplication->run()
 #10 {main}
-REQUEST_URI=/reborn/index.php?r=student/viewAns&&suiteID=1&&workID=31
-HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classExam
+REQUEST_URI=/reborn/index.php?r=admin/lessonBranch&&lessonID=1&&lessonName=%E7%AC%AC%E4%B8%80%E8%AF%BE
+HTTP_REFERER=https://192.168.101.104/reborn/index.php?r=admin/infoCourse&&courseID=1&&courseName=%E5%88%9D%E7%BA%A7%E8%AF%BE%E7%A8%8B&&createPerson=%E7%AE%A1%E7%90%86%E5%91%98
 ---
-2015/09/13 16:09:38 [error] [exception.CException] exception 'CException' with message '属性 "CWebApplication.ssession" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+2015/09/15 21:51:52 [error] [php] Undefined index: courseID (D:\wamp\www\reborn\protected\controllers\AdminController.php:2308)
 Stack trace:
-#0 D:\wamp\www\framework\base\CModule.php(105): CComponent->__get('ssession')
-#1 D:\wamp\www\reborn\protected\controllers\StudentController.php(120): CModule->__get('ssession')
-#2 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionViewAns()
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/addLesson
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (2308)
+in D:\wamp\www\reborn\index.php (29)
+2015/09/15 22:00:34 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lessonID' in 'where clause'. The SQL statement executed was: SELECT * FROM suite WHERE lessonID = '1'.
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (2321)
+in D:\wamp\www\reborn\index.php (29)
+2015/09/15 22:00:34 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lessonID' in 'where clause'. The SQL statement executed was: SELECT * FROM suite WHERE lessonID = '1'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 D:\wamp\www\reborn\protected\controllers\AdminController.php(2321): CDbCommand->query()
+#2 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionLessonBranch()
 #3 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
 #4 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
 #5 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
-#6 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('viewAns')
-#7 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/viewAns')
+#6 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('lessonBranch')
+#7 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/lessonBra...')
 #8 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
 #9 D:\wamp\www\reborn\index.php(29): CApplication->run()
 #10 {main}
-REQUEST_URI=/reborn/index.php?r=student/viewAns&&suiteID=1&&workID=31
-HTTP_REFERER=https://192.168.101.235/reborn/index.php?r=student/classExam
+REQUEST_URI=/reborn/index.php?r=admin/lessonBranch&&lessonID=1&&lessonName=%E7%AC%AC%E4%B8%80%E8%AF%BE
+HTTP_REFERER=https://192.168.101.104/reborn/index.php?r=admin/infoCourse&&courseID=1&&courseName=%E5%88%9D%E7%BA%A7%E8%AF%BE%E7%A8%8B&&createPerson=%E7%AE%A1%E7%90%86%E5%91%98
 ---
+2015/09/15 22:02:36 [error] [php] Undefined variable: ex_sq (D:\wamp\www\reborn\protected\controllers\AdminController.php:2287)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/infoCourse&&courseID=1&&courseName=%E5%88%9D%E7%BA%A7%E8%AF%BE%E7%A8%8B&&createPerson=%E7%AE%A1%E7%90%86%E5%91%98
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (2287)
+in D:\wamp\www\reborn\index.php (29)
+2015/09/15 22:02:41 [error] [php] Undefined variable: ex_sq (D:\wamp\www\reborn\protected\controllers\AdminController.php:2287)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/infoCourse&&courseID=1&&courseName=%E5%88%9D%E7%BA%A7%E8%AF%BE%E7%A8%8B&&createPerson=%E7%AE%A1%E7%90%86%E5%91%98
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (2287)
+in D:\wamp\www\reborn\index.php (29)
+2015/09/15 22:02:45 [error] [php] Undefined variable: ex_sq (D:\wamp\www\reborn\protected\controllers\AdminController.php:2287)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/infoCourse&&courseID=1&&courseName=%E5%88%9D%E7%BA%A7%E8%AF%BE%E7%A8%8B&&createPerson=%E7%AE%A1%E7%90%86%E5%91%98
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (2287)
+in D:\wamp\www\reborn\index.php (29)
+2015/09/15 22:03:21 [error] [php] Undefined variable: act_result (D:\wamp\www\reborn\protected\controllers\AdminController.php:2305)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 D:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 D:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 D:\wamp\www\reborn\index.php(29): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/infoCourse&&courseID=1&&courseName=%E5%88%9D%E7%BA%A7%E8%AF%BE%E7%A8%8B&&createPerson=%E7%AE%A1%E7%90%86%E5%91%98
+in D:\wamp\www\reborn\protected\controllers\AdminController.php (2305)
+in D:\wamp\www\reborn\index.php (29)

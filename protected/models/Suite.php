@@ -150,6 +150,7 @@ class Suite extends CActiveRecord
     }
 
 
+
     public function getchoice($suiteID){
         $isExam = Yii::app()->session['isExam'];
         if($isExam){

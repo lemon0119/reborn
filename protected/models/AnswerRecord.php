@@ -14,6 +14,7 @@
  */
 class AnswerRecord extends CActiveRecord
 {
+    
     public static function ansToArray($answer){
         if($answer == NULL)
             return NULL;
@@ -189,6 +190,15 @@ class AnswerRecord extends CActiveRecord
                 return true;
         }
     }
+    
+    public function changeScore($answerID , $score){
+        $answer = $this->find("answerID='$answerID'");
+        if($answer != NULL)
+        {
+            $answer->score = $score;
+            $answer->update();
+        }
+    }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -271,6 +281,19 @@ class AnswerRecord extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function getAndSaveScoreByRecordID($recordID)
+        {
+            $sql = "select sum(score) as totalScore from answer_record where recordID = '$recordID'";
+            $result = Yii::app()->db->createCommand($sql)->query();
+            foreach($result as $total){
+                $score = $total['totalScore'];
+            }
+           $exam_record = ExamRecord::model()->find("recordID = '$recordID'");
+           $exam_record->score = $score;
+           $exam_record->update();
+           return $score;
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.

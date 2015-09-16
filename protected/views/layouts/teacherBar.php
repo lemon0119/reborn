@@ -34,7 +34,7 @@
                                 <div class="nav-collapse">
                                     <ul class="nav">
                                         <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">开始上课<b class="caret"></b></a>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >开始上课<b class="caret"></b></a>
                                                 <ul class="dropdown-menu">
                                                     <?php foreach($classNameInfo as $key => $value):?>
                                                     <li><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $key;?>&&progress=<?php echo $classProgress[$key];?>&&on=<?php echo $classProgress[$key];?>"><?php echo $value;?></a></li>

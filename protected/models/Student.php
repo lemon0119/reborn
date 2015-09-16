@@ -7,6 +7,7 @@
  * @property string $userID
  * @property string $userName
  * @property string $password
+ * @property String $mail_address
  * @property string $classID
  * @property string $sex
  * @property string $age
@@ -15,6 +16,7 @@
  */
 class Student extends CActiveRecord
 {
+
     public function insertStu($userID,$userName,$sex,$age,$pass,$mail_address,$phone_number,$classID){
         $newStu = new Student();
         $newStu->userID = $userID;
@@ -45,7 +47,7 @@ class Student extends CActiveRecord
         $criteria=new CDbCriteria();
         $result = Yii::app()->db->createCommand($sql)->query();
         $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10; 
+        $pages->pageSize=6; 
         $pages->applyLimit($criteria); 
         $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
@@ -211,11 +213,11 @@ class Student extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('userID, userName, password, classID', 'required'),
-			array('userID, userName, password, classID', 'length', 'max'=>30),
+			array('userID, userName, password, classID,mail_address', 'required'),
+			array('userID, userName, password, classID,mail_address', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('userID, userName, password, classID', 'safe', 'on'=>'search'),
+			array('userID, userName, password, classID,mail_address', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -239,7 +241,9 @@ class Student extends CActiveRecord
 			'userID' => 'User',
 			'userName' => 'User Name',
 			'password' => 'Password',
+                        'mail_address'=>'mail_address',
 			'classID' => 'Class',
+                       
 		);
 	}
 
@@ -264,6 +268,7 @@ class Student extends CActiveRecord
 		$criteria->compare('userID',$this->userID,true);
 		$criteria->compare('userName',$this->userName,true);
 		$criteria->compare('password',$this->password,true);
+                $criteria->compare('mail_address',$this->mail_address,true);
 		$criteria->compare('classID',$this->classID,true);
                 $criteria->compare('sex',$this->sex,true);
                 $criteria->compare('age',$this->age,true);

@@ -1,12 +1,18 @@
 
- <div class="span9">        
-<h3>编辑听打练习题</h3>
-
+ <div class="span9">      
+<?php if(!isset($action)) {?>
+        <h3>编辑听打练习题</h3>
+    <?php } else if($action == 'look') {?>
+        <h3>查看听打练习题</h3>
+    <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editListenInfo&&oldfilename=<?php echo $filename;?>&&exerciseID=<?php echo $exerciseID;?>" id="myForm" enctype="multipart/form-data"> 
-        <fieldset>
-            <legend>填写题目</legend>
-            
+       <fieldset>
+    <?php if(!isset($action)) {?>
+        <legend>编辑题目</legend>
+    <?php } else if($action == 'look') {?>
+        <legend>查看题目</legend>
+    <?php }?>
         <?php $listenpath = "resources/".$filepath.$filename;?>
             
        <div class="control-group">

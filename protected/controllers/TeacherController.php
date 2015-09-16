@@ -48,6 +48,20 @@ class TeacherController extends CController {
     	$this->render('set',['result'=>$result,'mail'=>$mail]);
     }
     
+    public function actionChangeProgress(){
+        $classID    =   $_GET['classID'];
+        $on         =   $_GET['on'];
+        $class      =   new TbClass();
+        $class      =   $class->find("classID = '$classID'");
+        $class->currentLesson =   $on ;
+        $class-> update();
+        return $this->render('startCourse',[
+            'classID'=>$classID,
+            'progress'=>$on,
+            'on'=>$on
+        ]);
+    }
+    
     public function actionPptLSt(){
         $classID    =   $_GET['classID'];
         $progress   =   $_GET['progress'];
@@ -144,6 +158,106 @@ class TeacherController extends CController {
                     'progress'  =>  $progress,
                     'on'        =>  $on,
                     'dir'       =>  $dir,    
+        ]);
+    }
+    
+        public function actionVideoLst(){
+        $classID    =   $_GET['classID'];
+        $progress   =   $_GET['progress'];
+        $on         =   $_GET['on'];
+        return $this->render('videoLst',[
+            'classID'   =>  $classID,
+            'progress'  =>  $progress,
+            'on'        =>  $on
+        ]);
+    }
+    
+    public function actionVideoTable(){
+        $classID    =   $_GET['classID'];
+        $progress   =   $_GET['progress'];
+        $on         =   $_GET['on'];
+        return $this->renderPartial('videoTable',[
+            'classID'   =>  $classID,
+            'progress'  =>  $progress,
+            'on'        =>  $on
+        ]);
+    }
+    
+    public function actionAddVideo(){
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $videoFilePath  =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
+            $dir            =   "resources/".$videoFilePath; 
+            $result         =   "上传失败!";
+            if(!isset($_FILES["file"]))
+            {
+                echo "请选择文件！";
+                return ;
+            }
+            if ($_FILES["file"]["type"] == "video/mp4"
+                    || $_FILES["file"]["type"] == "application/octet-stream")
+            {   
+                if($_FILES["file"]["size"] < 200000000)
+                {
+                    if ($_FILES["file"]["error"] > 0)
+                    {
+                        $result = "Return Code: " . $_FILES["file"]["error"];
+                    }
+                  else
+                    {
+                        if (file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
+                        {
+                            $result = $_FILES["file"]["name"] . "已经存在！";
+                        }
+                        else
+                        {
+                             move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+//                             sleep(14);
+                            $result = "上传成功！";
+                      }
+                    }
+                }else{
+                    $reult = "视频文件限定大小为200M！";
+                }
+            }else {
+                $result = "请上传正确类型的文件！";
+            }
+            echo $result;
+    }
+    
+        public function actionDeleteVideo(){
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $fileName        =   $_GET['video'];
+            $videoFilePath    =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
+            $dir            =   "resources/".$videoFilePath; 
+            $file           =   $dir.$fileName;
+            unlink(iconv('utf-8','gb2312',$file));
+            $result         =   "删除成功！";    
+            echo $result;
+    }
+    
+    public function actionLookVideo(){
+            $typename       =   Yii::app()->session['role_now'];
+            $userid         =   Yii::app()->session['userid_now'];
+            $classID        =   $_GET['classID'];
+            $progress       =   $_GET['progress'];
+            $on             =   $_GET['on'];
+            $fileDir        =   $_GET['video'];
+            $videoFilePath    =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
+            $file            =   "resources/".$videoFilePath.$fileDir; 
+  
+            return $this->render('lookvideo',[
+                    'classID'   =>  $classID,
+                    'progress'  =>  $progress,
+                    'on'        =>  $on,
+                    'file'       =>  $file,    
         ]);
     }
     
@@ -288,7 +402,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -348,7 +462,7 @@ class TeacherController extends CController {
             if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -402,7 +516,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -451,7 +565,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -609,7 +723,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -664,7 +778,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -707,7 +821,7 @@ class TeacherController extends CController {
             if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -745,7 +859,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -855,7 +969,7 @@ class TeacherController extends CController {
             if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -905,7 +1019,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -979,7 +1093,7 @@ class TeacherController extends CController {
                if($type=='createPerson')
             {
                 if($value=="管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1139,7 +1253,7 @@ class TeacherController extends CController {
             if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1211,7 +1325,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1248,7 +1362,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1328,7 +1442,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1391,7 +1505,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1522,7 +1636,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1587,7 +1701,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1696,7 +1810,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1871,7 +1985,7 @@ class TeacherController extends CController {
                        if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1916,7 +2030,7 @@ class TeacherController extends CController {
            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -1977,7 +2091,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -2038,7 +2152,7 @@ class TeacherController extends CController {
                            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
-                    $vaule  =   0;
+                    $value  =   0;
                 else
                 {
                     $tea    =  Teacher::model()->find("userName = '$value'");
@@ -2080,11 +2194,83 @@ class TeacherController extends CController {
                 ));
             }            
         }
-        
-     public  function ActionAssignWork(){
+    public function actionChoice(){           //see choice
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $isExam = FALSE;
+        return $this->render('choiceExer',['exercise'=>$classwork  ]);
+    }
+    public function actionfilling(){               //see filling
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $isExam = false;
+        return $this->render('fillingExer',['exercise'=>$classwork ]);
+    }
+    public function actionQuestion(){        //see question
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $isExam = FALSE;
+        return $this->render('questionExer',['exercise'=>$classwork]);
+    }
+    public function actionKeyType(){           //see keyType
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerID'] = $exerID;
+        Yii::app()->session['exerType'] = 'key';
+        $result = KeyType::model()->findByPK($exerID);
+        return $this->render('keyExer',array( 'exercise'=>$classwork, 'exerOne'=>$result,));
+    }
+    public function actionlookType(){
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerType'] = 'look';
+        $result = LookType::model()->findByPK($exerID);
+        return $this->render('lookExer',array( 'exercise'=>$classwork,'exerOne'=>$result));
+    }
+    public function actionlistenType(){
+        $suiteID = Yii::app()->session['suiteID'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerType'] = 'listen';
+        $result = ListenType::model()->findByPK($exerID);
+        return $this->render('listenExer',array( 
+            'exercise'=>$classwork,
+            'exerOne'=>$result ));
+    }
+     public function ActionSeeWork(){           //see work
+        $suiteID = $_GET['suiteID'];
+        Yii::app()->session['suiteID'] = $suiteID;
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        //return $this->render('seeWork',['exercise'=>$classwork ]);
+        return $this->render('choiceExer',['exercise'=>$classwork  ]);
+     }
+     public  function ActionAssignWork(){              
          $teacherID = Yii::app()->session['userid_now'];
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
-         $array_lesson = array();    
+         $array_lesson = array();          
          $array_class = array();
          $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
          $array_allsuite = $result['suiteLst'];
@@ -2170,7 +2356,35 @@ class TeacherController extends CController {
          $type = $_GET['type'];       
          $this->renderModifyExam($type, $examID);
      }
-     
+     public function ActionUpdateTime(){      //更新时间
+         $type=$_GET['type'];
+         $examID = $_GET['examID'];
+         $startTime=$_POST['startTime'];
+         $endTime=$_POST['endTime'];
+         
+
+
+       $date=floor((strtotime($endTime)-strtotime($startTime))/86400);
+        $hour=floor((strtotime($endTime)-strtotime($startTime))%86400/3600);
+        $minute=floor((strtotime($endTime)-strtotime($startTime))%86400/60);
+        $second=floor((strtotime($endTime)-strtotime($startTime))%86400%60);
+        if($second>=60){
+            $minute+=($second/60);
+            $second=$second%60;
+        }
+
+        if($minute>=60){
+            $hour=$hour+(int)($hour/60);
+            $minute=$minute%60;
+        }
+        if($hour>=24){
+            $date+=($date/24);
+            $hour=$hour%24;
+        }
+        $duration=strtotime($endTime)-strtotime($startTime);
+         Exam::model()->updateByPk($examID,array('begintime'=>$startTime,'endtime'=>$endTime,'duration'=>$duration));
+         $this->renderModifyExam($type, $examID);
+     }
      
      public function ActionDeleteSuiteExercise()
      {
@@ -2309,13 +2523,26 @@ class TeacherController extends CController {
             $sql        =   "SELECT * FROM choice WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
             $result     =   $result->read();        
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditChoice",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'options'         =>    $result['options'],
                     'answer'          =>    $result['answer']
-                ));       
+                ));  
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditChoice",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'options'         =>    $result['options'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
+                     
     }
     
          public function ModifyEditFilling(){
@@ -2325,12 +2552,23 @@ class TeacherController extends CController {
             $sql        =   "SELECT * FROM filling WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
             $result     =   $result->read();
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditFilling",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'answer'          =>    $result['answer']
-                ));       
+                ));    
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditFilling",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
     
      public function ModifyEditQuestion(){
@@ -2339,13 +2577,24 @@ class TeacherController extends CController {
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM question WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();         
+            $result     =   $result->read();    
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditQuestion",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'requirements'    =>    $result['requirements'],
                     'answer'          =>    $result['answer']
                 ));       
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditQuestion",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'requirements'    =>    $result['requirements'],
+                    'answer'          =>    $result['answer'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
     
     
@@ -2355,13 +2604,24 @@ class TeacherController extends CController {
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();         
+            $result     =   $result->read();   
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditKey",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'content'    =>    $result['content'],
                     'title'          =>    $result['title']
-                ));       
+                ));    
+         }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditKey",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
     
          public function ModifyEditLook(){
@@ -2370,13 +2630,24 @@ class TeacherController extends CController {
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM look_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();       
+            $result     =   $result->read();     
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditLook",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
                     'content'    =>    $result['content'],
                     'title'          =>    $result['title']
-                ));       
+                ));    
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditLook",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
     
           public function ModifyEditListen(){
@@ -2385,7 +2656,8 @@ class TeacherController extends CController {
             $exerciseID =   $_GET["exerciseID"];
             $sql        =   "SELECT * FROM listen_type WHERE exerciseID = '$exerciseID'";
             $result     =   Yii::app()->db->createCommand($sql)->query();
-            $result     =   $result->read();          
+            $result     =   $result->read();       
+            if(!isset($_GET['action'])){
                 $this->render("ModifyEditListen",array(
                     'type' => $type,
                     'exerciseID'      =>    $result['exerciseID'],
@@ -2394,6 +2666,18 @@ class TeacherController extends CController {
                     'filename' => $result['fileName'],
                     'filepath' => $result['filePath']
                 ));       
+            }else if($_GET['action'] =='look'){
+                $this->render("ModifyEditListen",array(
+                    'type' => $type,
+                    'exerciseID'      =>    $result['exerciseID'],
+                    'content'    =>    $result['content'],
+                    'title'          =>    $result['title'],
+                     'filename' => $result['fileName'],
+                    'filepath' => $result['filePath'],
+                    'action'          =>    'look',
+                        
+                ));
+            }
     }
 
      public function getLstByType($type)
@@ -2476,6 +2760,7 @@ class TeacherController extends CController {
       public function renderModifyExam($type,$examID)
      {
         $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $totalScore = ExamExercise::model()->getTotalScore($examID);
         if($type == "key" || $type == "look" || $type == "listen")
             $render = "modifyTypeExam";
         else
@@ -2484,6 +2769,9 @@ class TeacherController extends CController {
         $this->render($render , array(
             'exam' => $exam,    
             'type' => $type,
+            'examID'=>$examID,
+            'totalScore' => $totalScore
+
         ));     
      }
      
@@ -2607,6 +2895,7 @@ class TeacherController extends CController {
          Yii::app()->session['lastUrl'] = "modifyExam";
          $this->renderModifyExam("choice", $examID,"");
      }
+     
       
      public function ActionStuWork()
      {
@@ -2874,18 +3163,20 @@ class TeacherController extends CController {
         $examID = $_GET['examID'];
         $exam = Exam::model()->findAll("examID = '$examID'")[0];
         $result = Exam::model()->getExamExerByTypePage($examID, $type,5);
+        $examExercise = ExamExercise::model()->findAll("examID=? and type=?" ,array($examID,$type));
         $workLst = $result['workLst'];
         $pages = $result['pages'];
          $this->renderPartial('ownExam', array(
              'examWork' => $workLst,
              'pages' => $pages,
              'type' => $type,
-             'exam' => $exam
+             'exam' => $exam,
+             'examExercise' => $examExercise
          ));
 
      }
      
-          public function ActionToOwnTypeExam()
+    public function ActionToOwnTypeExam()
      {      
         $type = $_GET['type'];
         $examID = $_GET['examID'];
@@ -3004,16 +3295,16 @@ class TeacherController extends CController {
      
     public function ActionNextStuWork()
     {
-        
         $workID = $_GET['workID'];
         $studentID = $_GET['studentID'];
         $accomplish = $_GET['accomplish'];
-        $classID = $_GET['classID'];
-        
-       $nextStudentID = SuiteRecord::model()->getNextStudentID($workID,$studentID,$accomplish,$classID);
-       
+        $classID = $_GET['classID']; 
+        echo $studentID."-";
+        echo $accomplish;
+       $nextStudentID = ExamRecord::model()->getNextStudentID($workID,$studentID,$accomplish,$classID);
+       echo $nextStudentID." ";
        if($nextStudentID == -1)
-       {
+        {
             $this->renderStuWork($studentID,$workID,"choice",$accomplish);
         }else{
             $this->renderStuWork($nextStudentID,$workID,"choice",$accomplish);
@@ -3022,28 +3313,16 @@ class TeacherController extends CController {
     
     public function renderStuWork($studentID,$workID,$type,$accomplish){
          $student = Student::model()->find("userID='$studentID'");
-         $work = ClassLessonSuite::model()->find("workID='$workID'");
-         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($work['workID'],$student['userID']));
-         $recordID = $record['recordID'];   
+         $work = ClassExam::model()->find("workID='$workID'");
+         $record = ExamRecord::model()->find("workID=? and studentID=?",array($work['workID'],$student['userID']));
          $classID = $work['classID'];
-         $lessonID = $work['lessonID'];
-         $suiteID = $work['suiteID'];
-         $class = TbClass::model()->find("classID='$classID'");
-         $lesson = Lesson::model()->find("lessonID='$lessonID'");
-         $array_workLst = array();
-         $results = Suite::model()->getSuiteExerByType($suiteID, $type);
-         Yii::app()->session['index'] = 0;
-         foreach ($results as $result )
-             array_push ($array_workLst, $result);
-         $this->render('checkStuWork',array(
+         $class = TbClass::model()->find("classID='$classID'");  
+         $this->render('checkStuExam',array(
              'student' => $student,
-             'class' => $class,
-             'lesson' => $lesson,
-             'workLst' => $array_workLst,
+             'class' => $class,  
              'type' =>$type,
-             'recordID' =>$recordID,
-             'suiteID' => $suiteID,
-             'workID'=>$workID,
+             'record' =>$record,
+             'work' => $work,
              'accomplish'=>$accomplish
          ));
     }
@@ -3070,8 +3349,7 @@ class TeacherController extends CController {
          $results = Suite::model()->getSuiteExerByType($suiteID, $type);
          Yii::app()->session['index'] = 0;
          foreach ($results as $result )
-             array_push ($array_workLst, $result);
-         
+             array_push ($array_workLst, $result);         
          $this->render('checkStuWork',array(
              'student' => $student,
              'class' => $class,
@@ -3091,30 +3369,18 @@ class TeacherController extends CController {
          $workID = $_GET['workID'];
          $studentID = $_GET['studentID'];
          $accomplish = $_GET['accomplish'];
-         $type = "choice";
-         if(isset($_GET['type']))
-             $type = $_GET['type'];
+         $type = $_GET['type'];
          $student = Student::model()->find("userID='$studentID'");
          $work = ClassExam::model()->find("workID='$workID'");
          $record = ExamRecord::model()->find("workID=? and studentID=?",array($work['workID'],$student['userID']));
-         $recordID = $record['recordID'];   
          $classID = $work['classID'];
-         $examID = $work['examID'];
-         $class = TbClass::model()->find("classID='$classID'");
-         $array_workLst = array();
-         $results = Exam::model()->getExamExerByType($examID, $type);
-         Yii::app()->session['index'] = 0;
-         foreach ($results as $result )
-             array_push ($array_workLst, $result);
-         
+         $class = TbClass::model()->find("classID='$classID'");  
          $this->render('checkStuExam',array(
              'student' => $student,
-             'class' => $class,   
-             'workLst' => $array_workLst,
+             'class' => $class,  
              'type' =>$type,
-             'recordID' =>$recordID,
-             'examID' => $examID,
-             'workID'=>$workID,
+             'record' =>$record,
+             'work' => $work,
              'accomplish'=>$accomplish
          ));
      }
@@ -3174,57 +3440,76 @@ class TeacherController extends CController {
      }
      
      
-    public function ActionAjaxExam(){        
+    public function ActionAjaxExam(){   
          $type = $_POST['type'];
          $recordID = $_POST['recordID'];
-         $suiteID = $_POST['suiteID'];
-         $count = $_POST['count'];
-         $isLast = false;
-         if(Yii::app()->session['index'] >= $count)
+         $examID = $_POST['examID'];
+         $exerciseID = $_POST['exerciseID'];
+         if(isset($_POST['score']) && isset($_POST['answerID']))
          {
-             $isLast = true;
-             Yii::app()->session['index'] = $count-1;
-         }         
-         $array_workLst = array();
-         $results = Suite::model()->getSuiteExerByType($suiteID, $type);
-         foreach ($results as $result )
-         array_push ($array_workLst, $result);
-         $exerciseID = $array_workLst[Yii::app()->session['index']]['exerciseID'];
-         switch($type)
+             echo "1";
+           AnswerRecord::model()->changeScore($_POST['answerID'],$_POST['score']);            
+         }                  
+         $results = Exam::model()->getExamExerByType($examID, $type);
+         $isLast = 1;
+         foreach ($results as $result)
+         {
+             if($result['exerciseID'] > $exerciseID)
+             {
+                 $isLast = 0;
+                 $work = $result;
+                 break;
+             }
+            $work = $result; 
+         }
+         $exam_exercise = ExamExercise::model()->find("exerciseID=? and examID=? and type=?" ,array($work['exerciseID'],$examID,$type));        
+         $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$work['exerciseID']));
+         
+                  switch($type)
          {
              case "choice": 
-                 $work = Choice::model()->find("exerciseID='$exerciseID'");
-                 $render = "suiteChoice";
+                 $render = "examChoice";
                  break;
              case "filling": 
-                 $work = Filling::model()->find("exerciseID='$exerciseID'");
-                 $render = "suiteFilling";
+                 $render = "examFilling";
                  break;
              case "question": 
-                 $work = Question::model()->find("exerciseID='$exerciseID'");
-                 $render = "suiteQuestion";
+                 $render = "examQuestion";
                  break;
             case "key": 
-                 $work = KeyType::model()->find("exerciseID='$exerciseID'");
-                 $render = "suiteKey";
+                 $render = "examKey";
                  break;
             case "look": 
-                 $work = LookType::model()->find("exerciseID='$exerciseID'");
-                 $render = "suiteLook";
+                 $render = "examLook";
                  break;
             case "listen": 
-                 $work = ListenType::model()->find("exerciseID='$exerciseID'");
-                 $render = "suiteListen";
+                 $render = "examListen";
                  break;
-         }   
-         
-         $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$exerciseID));
-         Yii::app()->session['index'] = Yii::app()->session['index'] + 1;
+         } 
          $this->renderPartial($render,array(
              'work'=> $work,
              'ansWork'=>$ansWork,
-             'isLast' => $isLast
+             'exam_exercise' => $exam_exercise,
+             'isLast'=>$isLast,
+            
          ));       
+     }
+     
+     public function ActionConfigScore()
+     {
+         $type = $_GET['type'];
+         $exerciseID = $_GET['exerciseID'];
+         $examID = $_GET['examID'];
+         $score = $_GET['score'];
+         $thisExamExercise = new ExamExercise();
+         $thisExamExercise->updateScore($exerciseID ,$type,$examID,$score);
+         if($type == "key" || $type == "look" || $type == "listen")
+         {
+              $this->ActionToOwnTypeExam();
+         }else
+         {
+              $this->ActionToOwnExam();
+         }
      }
      
 }

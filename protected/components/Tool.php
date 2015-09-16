@@ -10,7 +10,7 @@ class Tool {
         'filling',
         'question'
     ];
-    public static $EXER_TYPE3 = [
+public static $EXER_TYPE3 = [
         'listen',
         'look',
         'key',
@@ -218,14 +218,15 @@ class Tool {
                     $data ['mail_address'] = $v[5];
                     $data ['phone_number'] = $v[6];
                     if (!Tool::excelreadClass($data ['className'])) {
-                        $data ['className'] = "";
-                    } 
-                    if (strlen($data['phone_number']) !=11) {
-                        $data['phone_number']="";
-                    } 
+                        $classID = "0";
+                    } else{
                         $className = $data ['className'];
                         $subClass = TbClass::model()->find("className = '$className'");
                         $classID = $subClass ['classID'];
+                    }
+                    if (strlen($data['phone_number']) !=11) {
+                        $data['phone_number']="";
+                    } 
                         Student::model()->insertStu($data ['uid'], $data ['userName'],$data ['sex'] ,$data ['age'], "000",$data ['mail_address'],$data ['phone_number'], $classID);
                 }
             }

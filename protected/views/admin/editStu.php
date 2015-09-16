@@ -31,7 +31,7 @@ else
                     男
                     <input name="sex" type="radio"<?php if ($sex == "男") {
               echo 'checked="checked"';
-          } ?>  class="input-xlarge"  value="男" />
+          } ?>  class="input-xlarge"  value="男" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     女
                     <input name="sex" type="radio" <?php if ($sex == "女") {
               echo 'checked="checked"';

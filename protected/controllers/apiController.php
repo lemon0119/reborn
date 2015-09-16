@@ -67,4 +67,8 @@ class apiController extends Controller {
         $command->execute();
     }
 
+    public function actionGetTime(){
+        echo time();
+    }
+    
 }

@@ -18,6 +18,17 @@ class ClassLessonSuite extends CActiveRecord
 	{
 		return 'class_lesson_suite';
 	}
+public function findWorkID($classID,$lessonID,$suiteID){
+            $sql="select * from class_lesson_suite";
+            $condition = " where classID = '$classID' and lessonID = '$lessonID' and suiteID = '$suiteID'";
+            $order = "order by workID ASC";
+            $sql = $sql.$condition.$order;
+            $result = Yii::app()->db->createCommand($sql)->query();
+            if($result!=null)
+                return $result;
+            else
+                return null;
+        }
 
 	/**
 	 * @return array validation rules for model attributes.
