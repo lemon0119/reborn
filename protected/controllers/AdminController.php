@@ -791,9 +791,14 @@ class AdminController extends CController {
     }
 
     public function actionAddClass() {
-        $result = 'no';
+        $result         = 'no';
         if (isset($_POST ['className'])) {
-            $result = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
+            $classID    = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
+            $lessons    = Lesson::model()->findall('classID=? and courseID=?', array(0,$_POST ['courseID']));
+            foreach ($lessons as $lesson) {
+                Lesson::model()->insertLesson($lesson['lessonName'], $lesson['courseID'],0, $classID);
+            }
+            $result     = 1;
         }
         $this->render('addClass', [
             'result' => $result
@@ -2209,111 +2214,38 @@ class AdminController extends CController {
     }
 
     public function actionInfoCourse() {
-        $courseID = $_GET ['courseID'];
-        $courseName = $_GET ['courseName'];
-        $createPerson = $_GET ['createPerson'];
-
-//        // 定义动作
-//        $act_result = "";
-//
-//        // 搜索动作
-//        if (isset($_POST ['which'])) {
-//            if (!empty($_POST ['name'])) {
-//                $ex_sq = " AND " . $_POST ['which'] . " = '" . $_POST ['name'] . "'";
-//            } else
-//                $ex_sq = "";
-//        } else
-//            $ex_sq = "";
-//
-//        // 添加动作
-//        if (isset($_GET ['action'])) {
-//            // 添加课程
-//            if ($_GET ['action'] == 'add') {
-//                if (!empty($_POST ['lessonName'])) {
-//
-//                    // 得到当前最大的lessonID
-//                    $sql = "select max(lessonID) as id from lesson";
-//                    $max_id = Yii::app()->db->createCommand($sql)->query();
-//                    $temp = $max_id->read();
-//                    if (empty($temp)) {
-//                        $new_id = 1;
-//                    } else {
-//                        $new_id = $temp ['id'] + 1;
-//                    }
-//                    // 得到该lesson最大的number
-//                    $sql = "select max(number) as number from lesson WHERE courseID = '" . $courseID . "'";
-//                    $max_num = Yii::app()->db->createCommand($sql)->query();
-//                    $temp = $max_num->read();
-//                    if (empty($temp)) {
-//                        $new_num = 1;
-//                    } else {
-//                        $new_num = $temp ['number'] + 1;
-//                    }
-//
-//                    $sql = "INSERT INTO lesson VALUES ('" . $new_id . "','" . $new_num . "','" . $_POST ['lessonName'] . "','" . $courseID . "','0','" . date('y-m-d H:i:s', time()) . "')";
-//                    Yii::app()->db->createCommand($sql)->query();
-//
-//                    // 得到该suite最大的
-//                    $sql = "select max(suiteID) as id from suite";
-//                    $max_s = Yii::app()->db->createCommand($sql)->query();
-//                    $temp = $max_s->read();
-//                    if (empty($temp)) {
-//                        $new_s = 1;
-//                    } else {
-//                        $new_s = $temp ['id'] + 1;
-//                    }
-//                    $sql = "INSERT INTO suite VALUES ('" . $new_s . "','" . $new_id . "','课堂练习','classwork','" . date('y-m-d H:i:s', time()) . "','0','0')";
-//                    Yii::app()->db->createCommand($sql)->query();
-//                    $new_s = $new_s + 1;
-//                    $sql = "INSERT INTO suite VALUES ('" . $new_s . "','" . $new_id . "','自我练习','exercise','" . date('y-m-d H:i:s', time()) . "','0','0')";
-//                    Yii::app()->db->createCommand($sql)->query();
-//
-//                    $act_result = "新建课程成功！";
-//                    unset($_GET ['action']);
-//                } else {
-//                    // 用户输入参数不足
-//                    $this->render('addCourse', array(
-//                        'shao' => "输入不能为空",
-//                        'courseID' => $courseID,
-//                        'courseName' => $courseName,
-//                        'createPerson' => $createPerson
-//                    ));
-//                    return;
-//                }
-//            }
-//        }
-
-        // 显示结果列表并分页
-//        $sql = "SELECT * FROM lesson WHERE courseID = $courseID " . $ex_sq;
-        $sql = "SELECT * FROM lesson WHERE courseID = $courseID";
-        $criteria = new CDbCriteria ();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages = new CPagination($result->rowCount);
-        $pages->pageSize = 10;
-        $pages->applyLimit($criteria);
-        $result = Yii::app()->db->createCommand($sql . " LIMIT :offset,:limit");
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize);
-        $result->bindValue(':limit', $pages->pageSize);
-        $posts = $result->query();
+        $courseID       = $_GET ['courseID'];
+        $courseName     = $_GET ['courseName'];
+        $createPerson   = $_GET ['createPerson'];
+        $result         = Lesson::model()->getLessonLst("", "",$courseID);
+        $lessonLst      = $result ['lessonLst'];
+        $pages          = $result ['pages'];
         $this->render('infoCourse', array(
-            'courseID' => $courseID,
-            'courseName' => $courseName,
-            'createPerson' => $createPerson,
-            'posts' => $posts,
-            'pages' => $pages,
-            'result' => $act_result
+            'courseID'      => $courseID,
+            'courseName'    => $courseName,
+            'createPerson'  => $createPerson,
+            'posts'         => $lessonLst,
+            'pages'         => $pages,
                 ));
     }
 
     public function actionAddLesson() {
-        $courseID = $_GET ['courseID'];
-        $courseName = $_GET ['courseName'];
-        $createPerson = $_GET ['createPerson'];
-
+        $courseID       = $_GET ['courseID'];
+        $courseName     = $_GET ['courseName'];
+        $createPerson   = $_GET ['createPerson'];
+        $result = 'no';
+        if (isset($_POST['lessonName'])) {
+            $result     = Lesson::model()->insertLesson($_POST['lessonName'],$courseID, 0,0);
+            $classes    = TbClass::model()->findall("currentCourse = '$courseID'");
+            foreach ($classes as $class) {
+                $result = Lesson::model()->insertLesson($_POST['lessonName'],$courseID, 0,$class['classID']);
+            }
+        }
         $this->render('addLesson', array(
-            'courseID' => $courseID,
-            'courseName' => $courseName,
-            'createPerson' => $createPerson
+            'courseID'      => $courseID,
+            'courseName'    => $courseName,
+            'createPerson'  => $createPerson,
+            'result'        => $result
         ));
     }
 

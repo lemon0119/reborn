@@ -20,6 +20,66 @@ class Lesson extends CActiveRecord
 	{
 		return 'lesson';
 	}
+        
+        public function newID() {
+            //得到当前最大的lessonID
+            $sql        = "select max(lessonID) as id from lesson";
+            $max_id     = Yii::app()->db->createCommand($sql)->query();
+            $temp       = $max_id->read();
+            if (empty($temp)) {
+                $new_id = 1;
+            } else {
+                $new_id = $temp ['id'] + 1;
+            }
+            return $new_id;
+        }
+        
+        public function newNum($courseID,$classID){
+            // 得到该lesson最大的number
+            $sql = "select max(number) as number from lesson WHERE courseID = '$courseID' AND classID = '$classID'";
+            $max_num = Yii::app()->db->createCommand($sql)->query();
+            $temp = $max_num->read();
+            if (empty($temp)) {
+                $new_num = 1;
+            } else {
+                $new_num = $temp ['number'] + 1;
+            }
+            return $new_num;
+        }
+        
+        public function insertLesson($lessonName,$courseID,$createPerson,$classID){   
+            //添加课程
+            $newLesson                  =   new Lesson();
+            $newLesson->lessonID        =   Lesson::model()->newID();
+            $newLesson->classID         =   $classID;
+            $newLesson->number          =   Lesson::model()->newNum($courseID,$classID);
+            $newLesson->lessonName      =   $lessonName;
+            $newLesson->courseID        =   $courseID;
+            $newLesson->createPerson    =   $createPerson;
+            $newLesson->createTime      =   date('y-m-d H:i:s',time());
+            return $newLesson->insert();
+        }
+        
+        public function getLessonLst($type,$value,$courseID){
+            $order  =   " order by lessonID ASC";
+            if($type!="")
+                $condition = " WHERE $type = '$value' AND ";
+            else
+                $condition= " WHERE ";
+            $select     =   "SELECT * FROM lesson";
+            $sql        =   $select.$condition."courseID = '$courseID' AND classID = '0'".$order;
+            $criteria   =   new CDbCriteria();
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            $pages      =   new CPagination($result->rowCount);
+            $pages->pageSize    =   10; 
+            $pages->applyLimit($criteria); 
+            $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+            $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+            $result->bindValue(':limit', $pages->pageSize); 
+            $lessonLst  =   $result->query();
+        
+            return ['lessonLst'=>$lessonLst,'pages'=>$pages,];
+        }
 
 	/**
 	 * @return array validation rules for model attributes.
