@@ -290,8 +290,11 @@ class AnswerRecord extends CActiveRecord
                 $score = $total['totalScore'];
             }
            $exam_record = ExamRecord::model()->find("recordID = '$recordID'");
+           if($exam_record != NULL)
+           {
            $exam_record->score = $score;
            $exam_record->update();
+           }
            return $score;
         }
 

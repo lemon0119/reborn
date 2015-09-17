@@ -28,7 +28,7 @@
         </table>
     </div>
 配分:<?php echo $exam_exercise['score'];?>
-   得分:<input teyp="text" id="score" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
+   得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
    <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
 </div>
 <?php
@@ -39,7 +39,7 @@
 ?>
 <script type="text/javascript">
     function load(){
-            var url = "./index.php?r=student/preExer&&type=classwork";
+       var url = "./index.php?r=student/preExer&&type=classwork";
         $("#cont").load(url);
     }
     function createFont(element, color, text){
@@ -112,7 +112,7 @@
             type:"listen",
             examID:examID,
             exerciseID:exerciseID,
-            score:$("#score")[0].value,
+            score:$("#input")[0].value,
             answerID:answerID
         };
       $.ajax({

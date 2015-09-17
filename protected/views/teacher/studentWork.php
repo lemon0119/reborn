@@ -103,7 +103,7 @@
                             完成
                         </td>  
                         <td >
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice">查看</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -136,7 +136,7 @@
                             未完成
                         </td>  
                         <td>
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice">查看</a>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 
