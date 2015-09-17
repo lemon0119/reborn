@@ -200,7 +200,7 @@ class Tool {
                 } elseif ($data['sex'] === "") {
                     $result = "学号" . $data ['uid'] . '性别不能为空';
                     return $result;
-                } else if ($data['sex'] != "男" && $data['sex'] == "女") {
+                } else if ($data['sex'] != "男" && $data['sex'] != "女") {
                     $result = "学号" . $data['uid'] . "性别输入有误！";
                     return $result;
                 } else if ($data ['userName'] === "") {
@@ -246,8 +246,10 @@ class Tool {
     public static function excelReadTeaToDatabase($excelData) {
         foreach ($excelData as $k => $v) {
             if ($k == 1) {
-                if (isset($v [0]) && isset($v [1])) {
-                    if ($v [0] != "工号" || $v [1] != "姓名") {
+                // 防止表格字段缺少造成数组越界
+                if (isset($v [0]) && isset($v [1]) && isset($v [2]) && isset($v [3]) && isset($v [4]) && isset($v [5]) && isset($v [6])) {
+                    // 防止表格格式有误
+                    if ($v [0] != "工号" || $v [1] != "姓名" || $v [2] != "性别" || $v [3] != "年龄" || $v [4] != "所属部门" || $v [5] != "联系邮箱" || $v [6] != "联系电话") {
                         return $result = "表格格式不正确！请选择正确格式的表格！";
                     }
                 } else {
@@ -257,19 +259,29 @@ class Tool {
             if ($k > 1) {
                 $data ['uid'] = $v [0];
                 $data ['userName'] = $v [1];
+                $data ['sex'] = $v [2];
+                $data ['age'] = $v[3];
+                $data ['department'] = $v[4];
+                $data ['mail_address'] = $v[5];
+                $data ['phone_number'] = $v[6];
 
                 if ($data ['uid'] === "") {
                     $result = "工号" . $data ['uid'] . '不能为空';
                     return $result;
-                }
-                if (Tool::excelReadTeaUserID($data ['uid'])) {
+                } else if (Tool::excelReadTeaUserID($data ['uid'])) {
                     $result = "工号" . $data ['uid'] . '已存在！';
                     return $result;
-                }
-                if ($data ['userName'] === "") {
+                } elseif ($data['sex'] === "") {
+                    $result = "工号" . $data ['uid'] . '性别不能为空';
+                    return $result;
+                } else if ($data['sex'] != "男" && $data['sex'] != "女") {
+                    $result = "工号" . $data['uid'] . "性别输入有误！";
+                    return $result;
+                } else if ($data ['userName'] === "") {
                     $result = "工号" . $data ['uid'] . '姓名不能为空';
                     return $result;
                 } else {
+                    // 标记！内容检验无误可以导入
                     $flag = 1;
                 }
             }
@@ -277,7 +289,17 @@ class Tool {
         if ($flag == 1) {
             foreach ($excelData as $k => $v) {
                 if ($k > 1) {
-                    Teacher::model()->insertTea($data ['uid'], $data ['userName'], "000");
+                    $data ['uid'] = $v [0];
+                    $data ['userName'] = $v [1];
+                    $data ['sex'] = $v [2];
+                    $data ['age'] = $v[3];
+                    $data ['department'] = $v[4];
+                    $data ['mail_address'] = $v[5];
+                    $data ['phone_number'] = $v[6];
+                    if (strlen($data['phone_number']) !=11) {
+                        $data['phone_number']="";
+                    } 
+                    Teacher::model()->insertTea($data ['uid'], $data ['userName'],$data ['sex'] ,$data ['age'], "000",$data ['phone_number'],$data ['mail_address'],$data['department']);
                 }
             }
         }
