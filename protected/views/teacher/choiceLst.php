@@ -1,7 +1,7 @@
  <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
-                <li class="nav-header">查询</li>
+                <li class="nav-header">搜索</li>
                 <form action="./index.php?r=teacher/searchChoice" method="post">
                         <li>
                                 <select name="type" style="width: 185px">
@@ -15,7 +15,7 @@
                                 <input name="value" type="text" class="search-query span2" placeholder="Search" />
                         </li>
                         <li style="margin-top:10px">
-                                <button type="submit" class="btn btn-primary">查询</button>
+                                <button type="submit" class="btn btn-primary">搜索</button>
                                 <a href="./index.php?r=teacher/addChoice" class="btn">添加</a>
                         </li>
                 </form>

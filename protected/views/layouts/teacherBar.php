@@ -44,7 +44,6 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="topicmanager"></a>
                                         <ul class="dropdown-menu">
-                                            <li class="nav-header">基础知识</li>
                                             <li><a href="./index.php?r=teacher/choiceLst">选择</a></li>
                                             <li><a href="./index.php?r=teacher/fillLst">填空</a></li>
                                             <li><a href="./index.php?r=teacher/questionLst">简答</a></li>
