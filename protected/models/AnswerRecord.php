@@ -27,6 +27,7 @@ class AnswerRecord extends CActiveRecord
         return $result;
     }
     public static function saveFilling($recordID){
+        $res = true;
         $filling = Suite::model()->getFilling(Yii::app()->session['suiteID']);
         foreach ($filling as $record) {
             $str = $record['requirements'];
@@ -47,6 +48,7 @@ class AnswerRecord extends CActiveRecord
     }
     
     public static function saveChoice($recordID){
+        $res = true;
         $choice = Suite::model()->getchoice(Yii::app()->session['suiteID']);
         foreach ($choice as $record) {
             $name = 'choice'.$record['exerciseID'];
@@ -61,6 +63,7 @@ class AnswerRecord extends CActiveRecord
     }
     
     public static function saveQuestion($recordID){
+        $res = true;
         $quest = Suite::model()->getQuestion(Yii::app()->session['suiteID']);
         foreach ($quest as $record) {
             $name = 'quest'.$record['exerciseID'];
