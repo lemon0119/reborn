@@ -2940,8 +2940,7 @@ class TeacherController extends CController {
         foreach ($array_lesson1 as $result)
              array_push ($array_lesson, $result);
          foreach ($array_suite1 as $result)
-             array_push ($array_suite, $result);
-         
+             array_push ($array_suite, $result);        
          $workID = -1;
          $classID = -1;
          if($array_suiteLessonClass!=NULL)

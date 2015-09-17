@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th>编号</th>
-                      
+                <th>班级</th>     
                 <th>课程</th>   
                 <th>作业</th>
                 <th>操作</th>
