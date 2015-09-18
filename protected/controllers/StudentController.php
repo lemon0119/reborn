@@ -355,12 +355,19 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
+        //分页
         $result = Suite::model()->getQuestion2($suiteID);
         $questionLst = $result ['questionLst'];
         $pages = $result ['pages'];
         $isExam = FALSE;
         $wID=Yii::app()->session['workID'];
-        return $this->render('questionExer',['questionLst'=>$questionLst ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
+         Yii::app()->session['questionNum']=count($classwork['question']);
+        $workID = Yii::app()->session['workID'];
+        $studentID = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansQuest = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'question');
+        $ansArr = AnswerRecord::model()->ansToArray($ansQuest);
+        return $this->render('questionExer',['ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
     }
 
     
@@ -385,14 +392,19 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-       
+        Yii::app()->session['choiceNum']=count($classwork['choice']);
+        $workID = Yii::app()->session['workID'];
+        $studentID = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansChoice = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'choice');
+        $ansArr = AnswerRecord::model()->ansToArray($ansChoice);
         $wID=Yii::app()->session['workID']; 
         //显示选择题列表并分页  
         $result = Suite::model()->getChoice2($suiteID);
         $choiceLst = $result['choiceLst'];
         $pages = $result['pages'];
          $isExam = FALSE;
-        return $this->render('choiceExer',['choiceLst'=>$choiceLst,'pages'=>$pages,'exercise'=>$classwork ,'isExam' =>$isExam ,'cent'=>$cent,'workID'=>$wID]);
+        return $this->render('choiceExer',['ansChoice'=>$ansArr,'choiceLst'=>$choiceLst,'pages'=>$pages,'exercise'=>$classwork ,'isExam' =>$isExam ,'cent'=>$cent,'workID'=>$wID]);
     }
     
    //2015-8-3 宋杰 获取试题，跳转到选择题页面 isExam为true加载examsidebar
@@ -404,7 +416,7 @@ class StudentController extends CController {
         }
         $examInfo = Exam::model()->find($suiteID);
         $isExam = true;
-        return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']);
+        return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
     }
     
 public function actionfilling(){
@@ -418,12 +430,19 @@ public function actionfilling(){
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
          }
+         //分页
         $result = Suite::model()->getFilling2($suiteID);
         $fillingLst = $result ['fillingLst'];
         $pages = $result ['pages'];
         $isExam = false;
-         $wID=Yii::app()->session['workID'];
-        return $this->render('fillingExer',['fillingLst'=>$fillingLst,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
+        $wID=Yii::app()->session['workID'];
+         Yii::app()->session['fillingNum']=count($classwork['filling']);
+        $workID = Yii::app()->session['workID'];
+        $studentID = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
+        $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
+        return $this->render('fillingExer',['ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
     }
 
     
@@ -443,6 +462,7 @@ public function actionfilling(){
     
     public function actionClswkOne(){
         $workID = $_GET['suiteID'];
+         $isExam = false;
         Yii::app()->session['workID'] = $workID;
         $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
         Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
@@ -450,20 +470,36 @@ public function actionfilling(){
         $classwork = Array();
         $studentID = Yii::app()->session['userid_now'];
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        $cent=Array("0"=>"0","1"=>"0","2"=>"0","3"=>"0","4"=>"0","5"=>"0");
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+         }
+        if($record==null){
+            return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);
+        }
+            
         $finishRecord=Array();
+       
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
          }
         $n=0;
-        $cent=Array();
+        $cNum=count($classwork['choice']);
+        $fNum=count($classwork['filling']);
+        $qNum=count($classwork['question']);
+       $num=(($cNum>$fNum)?$cNum:$fNum)>$qNum?(($cNum>$fNum)?$cNum:$fNum):$qNum;
+       Yii::app()->session['num']=$num;
+
+        
         foreach(Tool::$EXER_TYPE as $type){
+        
             if(count($classwork[$type])!=0 ){
               $cent[$n]=round(count($finishRecord[$type])*100/count($classwork[$type]),2)."%";    
             }          
             $n++;
         }
-         $isExam = false;
+        
          return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);
 
 

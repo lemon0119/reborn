@@ -16,7 +16,6 @@ $rout = 'student/saveQuestion';
 $page = '/index.php?r='.$rout;
 $SNum = 0;
 ?>
- <h3 >课 堂 作 业</h3>
 <div class="span9">
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host.$path.$page;?>">
         <div class="hero-unit">
@@ -24,12 +23,18 @@ $SNum = 0;
             <?php 
                 $n=2*($pages->currentPage+1)-1;
                 foreach ($questionLst as $value) {
-                    echo ($n++).'. ';
+                    echo ($n).'. ';
                     echo $value['requirements'];
                     echo '<br/>';
-                    echo '<textarea style="width:600px; height:200px;" name = "quest'.$value["exerciseID"].'"></textarea>';
+                    $v = $ansQuest[$n];
+                   if($v!='0')    
+                        echo '<textarea style="width:600px; height:200px;"  name = "quest'.$value["exerciseID"].'">'.$v.'</textarea>';
+                    else
+                        echo ' <textarea style="width:600px; height:200px;" name = "quest'.$value["exerciseID"].'"></textarea>';
+ 
+     
                     echo '<br/>';
-                   
+                   $n++;
                 }
             ?>
              <!-- 显示翻页标签 -->
@@ -42,7 +47,7 @@ $SNum = 0;
         </div>
         <?php if(count($exercise['question']) > 0){?>
             <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();" style="margin-left: 200px">提交</a>
-            <a  href="./index.php?r=student/classwork" type="button" class="btn btn-primary btn-large" style="margin-left: 350px">退出</a>
+            <!--<a  href="./index.php?r=student/classwork" type="button" class="btn btn-primary btn-large" style="margin-left: 350px">退出</a>-->
         <?php }?>
         <?php 
             $last = Tool::getLastExer($exercise);
@@ -53,8 +58,29 @@ $SNum = 0;
     </form>
 </div>
 <script>
+    $(function(){
+ $("div.span9").find("a").click(function(event) {
+     $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
+       
+     });
+     
+ });
+})
+
 $(document).ready(function(){
-    $("li#li-question").attr('class','active');
+    
+    $("div.span9").find("a").click(function() {
+        var url=$(this).attr("href");
+        if(url.indexOf("index.php")>0){
+            $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
+                console.log(result);
+                window.location.href = url;
+            });
+            return false;
+        }
+    });
+    
+    $("li#li-choice").attr('class','active');
 });
 function submitSuite(){
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;

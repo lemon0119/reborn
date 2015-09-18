@@ -18,7 +18,6 @@ require 'suiteSideBar.php';
     $strTime .= $ss < 10 ? "0".$ss : $ss;
     //end
  ?>
- <h3 >课 堂 作 业</h3>
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>

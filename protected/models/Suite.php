@@ -164,7 +164,7 @@ class Suite extends CActiveRecord
         $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='choice')";
         $select = "select * from choice";
         $sql = $select.$condition.$order;
-        $result = Yii::app()->db->createCommand($sql)->queryAll();
+        $result = Yii::app()->db->createCommand($sql)->query();
         return $result;
     }
     public function getChoice2($suiteID){
