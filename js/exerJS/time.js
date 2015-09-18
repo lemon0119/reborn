@@ -24,6 +24,9 @@ function startTime(){
 		document.getElementById('time').innerHTML = strTime;
 	},1000);
 };
+function getSeconds(){
+    return paseInt(hh) * 3600 + paseInt(mm) * 60 + ss;
+}
 function changWordPS(){
     var length = getWordLength();
     var timeAll = ss / 60 + mm + hh * 60;

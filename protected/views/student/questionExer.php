@@ -56,17 +56,19 @@ $SNum = 0;
 $(document).ready(function(){
     $("li#li-question").attr('class','active');
 });
-function submitSuite(){
+function submitSuite(simple){
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-    if(confirm("提交以后，不能重新进行答题，你确定提交吗？")){
-        $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){});
-        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
-            if(isExam)
-                window.location.href="index.php?r=student/classExam";
-            else
-                window.location.href="index.php?r=student/classwork";
-        });
+    if(!simple){
+        if(!confirm("提交以后，不能重新进行答题，你确定提交吗？"))
+            return ;
     }
+    doSubmit(true);
+    $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
+        if(isExam)
+            window.location.href="index.php?r=student/classExam";
+        else
+            window.location.href="index.php?r=student/classwork";
+    });
 }
 function formSubmit(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){

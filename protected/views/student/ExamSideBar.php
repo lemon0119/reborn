@@ -60,8 +60,9 @@ $currtime = $examInfo['endtime'];
         var curtime = <?php echo time();?>;
         var endTime = <?php echo strtotime($examInfo['endtime']);?>;
         function endTimer(endID){
-            alert("考试即将结束");
+            alert("考试时间已到，即将交卷。");
+            submitSuite(true);
         }
-        tCounter(curtime,endTime,"sideTime", endTimer);
+        tCounter(0,5,"sideTime", endTimer);
     });
 </script>

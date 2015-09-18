@@ -6,27 +6,31 @@ require 'suiteSideBar.php';
  } 
      //add by lc 
     $type = 'key'; 
-    $seconds = $exerOne['time'];
-    $hh = floor(($seconds) / 3600);
-    $mm = floor(($seconds) % 3600 / 60);
-    $ss = floor(($seconds) % 60);
-    $strTime = "";
-    $strTime .= $hh < 10 ? "0".$hh : $hh;
-    $strTime .= ":";
-    $strTime .= $mm < 10 ? "0".$mm : $mm;
-    $strTime .= ":";
-    $strTime .= $ss < 10 ? "0".$ss : $ss;
-    //end
+    if($isExam){
+        $seconds = $exerOne['time'];
+        $hh = floor(($seconds) / 3600);
+        $mm = floor(($seconds) % 3600 / 60);
+        $ss = floor(($seconds) % 60);
+        $strTime = "";
+        $strTime .= $hh < 10 ? "0".$hh : $hh;
+        $strTime .= ":";
+        $strTime .= $mm < 10 ? "0".$mm : $mm;
+        $strTime .= ":";
+        $strTime .= $ss < 10 ? "0".$ss : $ss;
+    }//end
  ?>
  <h3 >课 堂 作 业</h3>
+ <?php if(!$isOver){?>
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
         <table border = '0px'>
                 <tr><h3><?php echo $exerOne['title']?></h3></tr>
                 <tr>
-                    <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
-                    <td width = '250px'>总时间：<?php echo $strTime?></td>
+                    <?php if($isExam){?>
+                        <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
+                        <td width = '250px'>总时间：<?php echo $strTime?></td>
+                    <?php }?>
                     <td width = '250px'>计时：<span id="time">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                 </tr>
@@ -66,8 +70,28 @@ require 'suiteSideBar.php';
         <?php }?>
     </form>
 </div>
-
+ <?php } else {?>
+    <h3>本题时间已经用完。</h3>
+<?php }?>
 <script>
+    var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
+    
+    $(document).ready(function(){
+        if(isExam){
+            var isover = setInterval(function(){
+                var time = getSeconds();
+                var seconds = <?php echo $exerOne['time'];?>;
+                if(time >= seconds){
+                    clearInterval(isover);
+                    doSubmit(true,function(){
+                        window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['suiteID'];?>&&workID=<?php echo Yii::app()->session['workID']?>";
+                    });
+                    
+                }
+            },1000);
+        }
+    });
+    
     $(document).ready(function(){
         $("li#li-key-<?php echo $exerOne['exerciseID'];?>").attr('class','active');
     });
@@ -75,11 +99,9 @@ require 'suiteSideBar.php';
     function getWordLength(){
         var input = document.getElementById("id_answer");
         var answer = input.value;
-        console.log(answer);
         var reg = new RegExp(":", "g");
         var res = answer.match(reg);
         var length = res === null ? 0 : res.length;
-        console.log('length:'+length);
         return length;
     }
     
@@ -106,19 +128,21 @@ require 'suiteSideBar.php';
             return ;
         doSubmit(false);
     }
-    function submitSuite(){
-        var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-        if(confirm("提交以后，不能重新进行答题，你确定提交吗？")){
-            doSubmit(true);
-            $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
-                if(isExam)
-                    window.location.href="index.php?r=student/classExam";
-                else
-                    window.location.href="index.php?r=student/classwork";
-            });
+    function submitSuite(simple){
+        if(!simple){
+            if(!confirm("提交以后，不能重新进行答题，你确定提交吗？"))
+                return ;
         }
+        doSubmit(true);
+        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
+            if(isExam)
+                window.location.href="index.php?r=student/classExam";
+            else
+                window.location.href="index.php?r=student/classwork";
+        });
     }
-    function doSubmit(simple){
+    function doSubmit(simple,doFunction){
+    console.log('simple1'+simple);
         var answer = document.getElementById("id_answer").value;
         var modtext = document.getElementById("id_content").value;
         var correct = getCorrect(answer , modtext);
@@ -127,8 +151,11 @@ require 'suiteSideBar.php';
         document.getElementById("id_cost").value = time;
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
-            if(!simple)
+            if(!simple){
                 alert(result);
+            }else{
+                doFunction();
+            }
         });
     }
     document.getElementById("id_new").firstChild.nodeValue = document.getElementById("id_content").value;

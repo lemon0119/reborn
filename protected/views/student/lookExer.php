@@ -8,19 +8,21 @@
  } 
     //add by lc 
     $type = 'look'; 
-    $seconds = $exerOne['time'];
-    $hh = floor(($seconds) / 3600);
-    $mm = floor(($seconds) % 3600 / 60);
-    $ss = floor(($seconds) % 60);
-    $strTime = "";
-    $strTime .= $hh < 10 ? "0".$hh : $hh;
-    $strTime .= ":";
-    $strTime .= $mm < 10 ? "0".$mm : $mm;
-    $strTime .= ":";
-    $strTime .= $ss < 10 ? "0".$ss : $ss;
-    //end
+    if($isExam){
+        $seconds = $exerOne['time'];
+        $hh = floor(($seconds) / 3600);
+        $mm = floor(($seconds) % 3600 / 60);
+        $ss = floor(($seconds) % 60);
+        $strTime = "";
+        $strTime .= $hh < 10 ? "0".$hh : $hh;
+        $strTime .= ":";
+        $strTime .= $mm < 10 ? "0".$mm : $mm;
+        $strTime .= ":";
+        $strTime .= $ss < 10 ? "0".$ss : $ss;
+    }//end
 ?>
  <h3 >课 堂 作 业</h3>
+  <?php if(!$isOver){?>
 <div class="span9">
     <div class="hero-unit" align="center">
             <?php 
@@ -29,8 +31,10 @@
         <table border = '0px'>
                 <tr><h3><?php echo $exerOne['title']?></h3></tr>
                 <tr>
-                    <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
-                    <td width = '250px'>总时间：<?php echo $strTime?></td>
+                    <?php if($isExam){?>
+                        <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
+                        <td width = '250px'>总时间：<?php echo $strTime?></td>
+                    <?php }?>
                     <td width = '250px'>计时：<span id="time">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                 </tr>
@@ -48,8 +52,30 @@
     </div>
     <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
 </div>
-
+ <?php } else {?>
+    <h3>本题时间已经用完。</h3>
+<?php }?>
 <script>
+    
+    var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
+    
+    $(document).ready(function(){
+        if(isExam){
+            var isover = setInterval(function(){
+                var time = getSeconds();
+                //console.log(time + "time");
+                var seconds = <?php echo $exerOne['time'];?>;
+                //console.log(seconds + "seconds");
+                if(time >= seconds){
+                    clearInterval(isover);
+                    doSubmit(true,function(){
+                        window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['suiteID'];?>&&workID=<?php echo Yii::app()->session['workID']?>";
+                    });
+                    
+                }
+            },1000);
+        }
+    });
     
     function getWordLength(){
         var input = getContent(document.getElementById("typeOCX"));

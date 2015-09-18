@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -229,12 +229,25 @@ class StudentController extends CController {
         //end
         $isExam = true;
         $examInfo = Exam::model()->find($suiteID);
+        //edit by LC
+        $studentID = Yii::app()->session['userid_now'];
+        $workID = Yii::app()->session['workID'];
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'listen', $exerID);
+        $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;
+        //echo '$costTime'.$costTime;
+        $totalTime = $result['time'];
+        //echo '$totalTime'.$totalTime;
+        $isOver = $costTime < $totalTime ? 0 : 1;
+        //end
         return $this->render('listenExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
             'isExam'=>$isExam,
                 'examInfo'=>$examInfo,
-            'typeNow' => 'listen'
+            'typeNow' => 'listen',
+            'isOver' => $isOver, //edit by LC
+            'costTime' => $costTime
         ));
     }
     
@@ -281,12 +294,25 @@ class StudentController extends CController {
         //end
         $isExam = true;
         $examInfo = Exam::model()->find($suiteID);
+        //edit by LC
+        $studentID = Yii::app()->session['userid_now'];
+        $workID = Yii::app()->session['workID'];
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'look', $exerID);
+        $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;
+        //echo '$costTime'.$costTime;
+        $totalTime = $result['time'];
+        //echo '$totalTime'.$totalTime;
+        $isOver = $costTime < $totalTime ? 0 : 1;
+        //end
         return $this->render('lookExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
             'isExam'=>$isExam,
                 'examInfo'=>$examInfo,
-            'typeNow' => 'look'
+            'typeNow' => 'look',
+            'isOver' => $isOver, //edit by LC
+            'costTime' => $costTime
         ));
     }
     
@@ -336,12 +362,25 @@ class StudentController extends CController {
         //end
         $isExam = true;
         $examInfo = Exam::model()->find($suiteID);
+        //edit by LC
+        $studentID = Yii::app()->session['userid_now'];
+        $workID = Yii::app()->session['workID'];
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;
+        //echo '$costTime'.$costTime;
+        $totalTime = $result['time'];
+        //echo '$costTime'.$costTime;
+        $isOver = $costTime < $totalTime ? 0 : 1;
+        //end
         return $this->render('keyExer',array( 
             'exercise'=>$classexam,
                 'exerOne'=>$result,
             'isExam'=>$isExam,
                 'examInfo'=>$examInfo, 
-            'typeNow' => 'key'
+            'typeNow' => 'key',
+            'isOver' => $isOver, //edit by LC
+            'costTime' => $costTime
         ));
     }
     
@@ -474,13 +513,13 @@ public function actionfilling(){
     public function actionClsexamOne(){
         $suiteID = $_GET['suiteID'];
         Yii::app()->session['examsuiteID'] = $suiteID;
-        //Yii::app()->session['workID'] = $_GET['workID'];
+        Yii::app()->session['workID'] = $_GET['workID'];
         Yii::app()->session['suiteID'] = $suiteID;
         $classexam = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         $isExam = true;
         Yii::app()->session['isExam'] = $isExam;
         return $this->render('suiteDetail',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo]);
