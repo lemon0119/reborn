@@ -101,7 +101,8 @@ function submitSuite(){
 function formSubmit(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
       alert(result);
-      window.location.href = './index.php?r=student/clswkOne&&suiteID=<?php echo $workID;?>';   
+      location.reload(); 
+
   });
   
 }
