@@ -207,7 +207,7 @@ class AdminController extends CController {
 
     public function actionInfoStu() {
         $ID = $_GET ['id'];
-        $student = Student::model()->find("userID = $ID");
+        $student = Student::model()->find("userID = '$ID'");
         if (Yii::app()->session ['lastUrl'] == "infoClass") {
             $this->render('infoStu', array(
                 'id' => $_GET ['id'],
@@ -510,7 +510,7 @@ class AdminController extends CController {
 
     public function actionInfoTea() {
         $ID = $_GET ['id'];
-        $student = Teacher::model()->find("userID = $ID");
+        $student = Teacher::model()->find("userID = '$ID'");
         if (Yii::app()->session ['lastUrl'] == "infoClass") {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],

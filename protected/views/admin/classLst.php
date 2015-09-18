@@ -53,7 +53,7 @@
                                     }
                                 }
                             ?></td>
-                        <td><?php  if(array_key_exists($model['classID'], $numOfClass))
+                        <td><?php  if(isset($numOfClass) && array_key_exists($model['classID'], $numOfClass))
                                         echo  $numOfClass[$model['classID']];
                                     else echo "0";
                             ?></td>

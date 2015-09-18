@@ -36,9 +36,10 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     <li class="dropdown">
                                         <a href="#"  id ="startclass" data-toggle="dropdown" ></a>
                                         <ul class="dropdown-menu">
-                                            <?php foreach ($classNameInfo as $key => $value): ?>
+                                            <?php if(isset($classNameInfo)){
+                                                foreach ($classNameInfo as $key => $value): ?>
                                                 <li><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $key; ?>&&progress=<?php echo $classProgress[$key]; ?>&&on=<?php echo $classProgress[$key]; ?>"><?php echo $value; ?></a></li>
-                                            <?php endforeach; ?>
+                                            <?php endforeach;} ?>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
