@@ -63,6 +63,6 @@ $currtime = $examInfo['endtime'];
             alert("考试时间已到，即将交卷。");
             submitSuite(true);
         }
-        tCounter(0,5,"sideTime", endTimer);
+        tCounter(curtime,endTime,"sideTime", endTimer);
     });
 </script>
