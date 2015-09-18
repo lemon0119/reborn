@@ -19,7 +19,7 @@ echo "<script>var role='$role';</script>";
     <!-- local/remote videos container -->
     <div id="ppt-container" align="center" style="width: 100% ; height: 549px;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 275px; top: 20px;display:none;">
-            <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3; margin-bottom: -35px"/> 
+            <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3"/> 
         </div>
         <div id="ppt-asd">
         <img id="ppt-img"  onmouseover="fun1();" onmouseout="fun2();" src=""  style="height: 100%;"/>  
@@ -53,6 +53,7 @@ echo "<script>var role='$role';</script>";
     //显示全屏图像
     var onImg = false;
     function fun1(){
+        $('#ppt-asd').attr('style','margin-top: -35px');
         $("#full-screen").show();
         onImg = false;
         //full_screen =document.mozFullScreen;
@@ -61,12 +62,14 @@ echo "<script>var role='$role';</script>";
         if(onImg!=true)
         {   
             $("#full-screen").hide();
+            $('#ppt-asd').attr('style','');
             onImg = false;
         }
     }
     function fun3(){
         onImg = true;
         $("#full-screen").show();
+        $('#ppt-asd').attr('style','margin-top: -35px');
     }
     function fun4(){
         var docelem         = document.getElementById('ppt-asd');

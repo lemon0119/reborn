@@ -27,29 +27,27 @@
                 <?php $mark++;}?>
 </div>
    配分:<?php echo $exam_exercise['score'];?>
-   得分:<input type="text"  id="name" value="11">   
+  得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" > 
    <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
 </div>
 <script>
-       $(document).ready(function(){
-         var value1 = $("#name").attr("value",'90')
-         alert(value1);
-    });   
-    
-    function nextWork(answerID,recordID,examID,exerciseID){
-        var value1 = $("#score").val();
-        alert(value1);
-        if(<?php echo $isLast?> == 1)
+   $(document).ready(function(){   
+      $("#score").html(<?php echo $score;?>);
+       if(<?php echo $isLast?> == 1)
         {
             alert("已是最后一题");
             return ;
         }
+    });
+     
+    function nextWork(answerID,recordID,examID,exerciseID){
+        var value1 = $("#input")[0].value;
         var user = {
             recordID:recordID,
             type:"choice",
             examID:examID,
             exerciseID:exerciseID,
-            score:$("#score")[0].value,
+            score:value1,
             answerID:answerID
         };
       $.ajax({

@@ -23,7 +23,7 @@ class Student extends CActiveRecord
         $newStu->userName = $userName;
         $newStu->sex = $sex;
         $newStu->age = $age;
-        $newStu->password = $pass;
+        $newStu->password = md5($pass);
         $newStu->mail_address = $mail_address;
         $newStu->phone_number = $phone_number;
         $newStu->classID = $classID;

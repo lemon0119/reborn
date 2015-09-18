@@ -19,10 +19,6 @@ class AnswerRecord extends CActiveRecord
         if($answer == NULL)
             return NULL;
         $result = array();
-        $num=Yii::app()->session['num'];
-        for($i=1;$i<=$num;$i++){
-            $result[$i]="0";
-        }
         foreach ($answer as $one) {
             $key = $one['exerciseID'];
             $value = $one['answer'];
@@ -31,7 +27,7 @@ class AnswerRecord extends CActiveRecord
         return $result;
     }
     public static function saveFilling($recordID){
-         $res = true;
+        $res = true;
         $filling = Suite::model()->getFilling(Yii::app()->session['suiteID']);
         foreach ($filling as $record) {
             $str = $record['requirements'];
@@ -67,7 +63,7 @@ class AnswerRecord extends CActiveRecord
     }
     
     public static function saveQuestion($recordID){
-         $res = true;
+        $res = true;
         $quest = Suite::model()->getQuestion(Yii::app()->session['suiteID']);
         foreach ($quest as $record) {
             $name = 'quest'.$record['exerciseID'];
@@ -297,8 +293,11 @@ class AnswerRecord extends CActiveRecord
                 $score = $total['totalScore'];
             }
            $exam_record = ExamRecord::model()->find("recordID = '$recordID'");
+           if($exam_record != NULL)
+           {
            $exam_record->score = $score;
            $exam_record->update();
+           }
            return $score;
         }
 

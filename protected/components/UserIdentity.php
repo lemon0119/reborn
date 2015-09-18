@@ -42,7 +42,7 @@ class UserIdentity extends CUserIdentity
             }
             if($user === null){
                 $this->errorCode=self::ERROR_USERNAME_INVALID;
-            }elseif($user->password !== ($this->password)){                 //先不使用MD5加密
+            }elseif($user->password !== md5($this->password)){                 //先不使用MD5加密
                 $this->errorCode=self::ERROR_PASSWORD_INVALID;
             }else{
                 $this->errorCode=self::ERROR_NONE;
@@ -55,7 +55,7 @@ class UserIdentity extends CUserIdentity
             }
             if($user === null){
                 $this->errorCode=self::ERROR_USERNAME_INVALID;
-            }elseif($user->password !== ($this->password)){                 //先不使用MD5加密
+            }elseif($user->password !== md5($this->password)){                 //先不使用MD5加密
                 $this->errorCode=self::ERROR_PASSWORD_INVALID;
             }else{
                 $this->errorCode=self::ERROR_NONE;
@@ -68,7 +68,7 @@ class UserIdentity extends CUserIdentity
             }
             if($user === null){
                 $this->errorCode=self::ERROR_USERNAME_INVALID;
-            }elseif($user->password !== ($this->password)){                 //先不使用MD5加密
+            }elseif($user->password !== md5($this->password)){                 //先不使用MD5加密
                 $this->errorCode=self::ERROR_PASSWORD_INVALID;
             }else{
                 $this->errorCode=self::ERROR_NONE;

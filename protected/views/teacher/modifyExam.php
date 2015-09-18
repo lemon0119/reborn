@@ -55,6 +55,7 @@ function test()
             <ul class="nav nav-list">
                 <center>
                     <table>
+                        <tr><td>试卷名称:<?php echo $exam['examName']?></td></tr>
                         <tr><td>开始时间: 
                                 <div class="inline layinput"><input placeholder="选择开始时间" name="startTime" id="startTime" value="<?php echo $exam['begintime'] ?> " onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" ></div>       
                             </td></tr>
@@ -62,6 +63,7 @@ function test()
                                 <input placeholder="选择结束时间" name="endTime" id="endTime" value="<?php echo $exam['endtime'] ?>" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" onblur="test()">
                             </td></tr>
                         <tr><td>时长:<?php echo $exam['duration'] ?>秒</td></tr>
+                        <tr><td><div id="totalScore">总分:<?php echo $totalScore?></div></td></tr>
                     </table>                
                 </center>                   
             </ul>

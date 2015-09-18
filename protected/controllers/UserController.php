@@ -15,7 +15,7 @@ class UserController extends Controller
                 else if($type==='2')
                     $user = Teacher::model()->find('userID=?',$_GET['userid']);
                 if($user){
-                    $user->password=$new1;
+                    $user->password=md5($new1);
                     $result=$user->save();
                 }else{
                     $result='0';

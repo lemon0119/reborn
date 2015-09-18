@@ -25,7 +25,7 @@
         </thead>
                 <tbody>        
                     <?php foreach($examWork as $work):
-                                                   foreach ($examExercise as $exam)
+                            foreach ($examExercise as $exam)
                           {
                          if($exam['exerciseID'] == $work['exerciseID'])
                              $thisExam = $exam;

@@ -14,8 +14,8 @@ else {
 ?>
 <div clas="span9">
     <?php if($isExam == true){?>
-    <center>
-    <h6>距离考试剩余还有</h6>
+    <center id="time">
+    <h6>距离考试开始还有</h6>
     <p id="timeCounter"></p>
     </center>
     <?php }else { ?>
@@ -23,7 +23,6 @@ else {
     <?php } ?>
 </div>
 <script>
-<<<<<<< HEAD
 $(document).ready(function(){
     $('.queTitle').bind('click', function(e){
         e.preventDefault();
@@ -38,11 +37,10 @@ $(document).ready(function(){
         $('.queTitle').unbind('click');
     }
     if(isExam){
-        tCounter(0,3,"timeCounter",endTimer);
+        tCounter(curtime,beginTime,"timeCounter",endTimer);
     }
 });
-=======
-    
+/*
 var timeCounter = (function() {
  var int;
  var currtime = "<?php echo date("Y-m-d  H:i:s");?>";
@@ -67,6 +65,5 @@ var total = (( Number((h2-h1)*60))+ Number(m2)-Number(m1))*60 + Number(s2) - Num
  }
 })();
 timeCounter('timeCounter');
-
->>>>>>> origin/master
+*/
 </script>

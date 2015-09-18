@@ -5,19 +5,21 @@
             return ;
         doSubmit(false);
     }
-    function submitSuite(){
+    function submitSuite(simple){
         var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-        if(confirm("提交以后，不能重新进行答题，你确定提交吗？")){
-            doSubmit(true);
-            $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
-                if(isExam)
-                    window.location.href="index.php?r=student/classExam";
-                else
-                    window.location.href="index.php?r=student/classwork";
-            });
+        if(!simple){
+            if(!confirm("提交以后，不能重新进行答题，你确定提交吗？"))
+                return ;
         }
+        doSubmit(true);
+        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
+            if(isExam)
+                window.location.href="index.php?r=student/classExam";
+            else
+                window.location.href="index.php?r=student/classwork";
+        });
     }
-    function doSubmit(simple){
+    function doSubmit(simple,doFunction){
         var obj =  document.getElementById("typeOCX");
         var theString = getContent( obj);
         var text = document.getElementById("content").value;
@@ -30,8 +32,11 @@
         document.getElementById("id_cost").value = time;
         //console.log("answer = "+theString);\
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
-            if(!simple)
+            if(!simple){
                 alert(result);
+            }else{
+                doFunction();
+            }
         });
     }
     function restart(){

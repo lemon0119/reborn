@@ -49,7 +49,7 @@
                     <input name="mail_address" type="text" class="input-xlarge" id="input10" value="" />
                 </div>
             </div>
-            <div class="control-group">
+<!--            <div class="control-group">
                 <label class="control-label" for="input04">密码</label>
                 <div class="controls">
                     <input name="password1" type="password" class="input-xlarge" id="input04" value="" />
@@ -60,7 +60,7 @@
                 <div class="controls">
                     <input name="password2" type="password" class="input-xlarge" id="input05" value="" />
                 </div>
-            </div>						
+            </div>						-->
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=admin/exlAddStu" class="btn">批量添加</a> <a href="./index.php?r=admin/stuLst" class="btn">取消</a>
 
@@ -135,20 +135,20 @@ foreach ($classAll as $key => $value) {
     alert('学生班级不存在！');
             return false;
     }
-    var pass1 = $("#input04")[0].value;
-            if (pass1 === ""){
-    alert('密码不能为空');
-            return false;
-    }
-    var pass2 = $("#input05")[0].value;
-            if (pass2 === ""){
-    alert('确认密码不能为空');
-            return false;
-    }
-    if (pass1 !== pass2){
-    alert('密码两次输入不相同！');
-            return false;
-    }
+//    var pass1 = $("#input04")[0].value;
+//            if (pass1 === ""){
+//    alert('密码不能为空');
+//            return false;
+//    }
+//    var pass2 = $("#input05")[0].value;
+//            if (pass2 === ""){
+//    alert('确认密码不能为空');
+//            return false;
+//    }
+//    if (pass1 !== pass2){
+//    alert('密码两次输入不相同！');
+//            return false;
+//    }
     var sex = document.getElementsByName("sex");
     for(var i=0;i<sex.length;i++){
         if(sex[i].checked){

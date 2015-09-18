@@ -22,12 +22,12 @@ class AdminController extends CController {
             $email = $_POST['email'];
             $usertype = Yii::app()->session['role_now'];
             $user = Admin::model()->find('userID=?', array($userid_now));
-            if ($user->password !== $_POST['old']) {
+            if ($user->password !== md5($_POST['old'])) {
                 $result = 'old error';
                 $this->render('set', ['result' => $result, 'mail' => $mail]);
                 return;
             }
-            $user->password = $new1;
+            $user->password = md5($new1);
             $user->mail_address = $email;
             $result = $user->save();
             $mail = $email;
@@ -37,7 +37,7 @@ class AdminController extends CController {
     }
 
     public function actionHardDeleteStu() {
-        $pass = $_POST ['password'];
+        $pass = md5($_POST ['password']);
         $id = Yii::app()->session ['userid_now'];
         $admin = Admin::model()->findByPK($id);
         if ($admin->password !== $pass) {
@@ -148,6 +148,11 @@ class AdminController extends CController {
         if (isset($_POST ['type'])) {
             $type = $_POST ['type'];
             $value = $_POST ['value'];
+            if($type=='classID'){
+                $className = $value;
+                $sqlClass = TbClass::model()->find("className = '$className'");
+                $value = $sqlClass['classID'];
+            }
             Yii::app()->session ['searchStuType'] = $type;
             Yii::app()->session ['searchStuValue'] = $value;
         } else {
@@ -169,7 +174,7 @@ class AdminController extends CController {
             $className = $_POST ['className'];
             $classSqlResult = TbClass::model()->find("className = '$className'");
             $classID = $classSqlResult['classID'];
-            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], $_POST ['password1'], $_POST ['mail_address'], $_POST ['phone_number'], $classID);
+            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $classID);
         }
         $classAll = TbClass::model()->findAll("");
         $userAll = Student::model()->findAll();
@@ -202,7 +207,7 @@ class AdminController extends CController {
 
     public function actionInfoStu() {
         $ID = $_GET ['id'];
-        $student = Student::model()->find("userID = $ID");
+        $student = Student::model()->find("userID = '$ID'");
         if (Yii::app()->session ['lastUrl'] == "infoClass") {
             $this->render('infoStu', array(
                 'id' => $_GET ['id'],
@@ -329,7 +334,7 @@ class AdminController extends CController {
         $userID = $_GET ['id'];
         $thisStu = new Student ();
         $thisStu = $thisStu->find("userID = '$userID'");
-        $thisStu->password = '000';
+        $thisStu->password = md5('000');
 
         $thisStu->update();
         $classAll = TbClass::model()->findAll();
@@ -505,7 +510,7 @@ class AdminController extends CController {
 
     public function actionInfoTea() {
         $ID = $_GET ['id'];
-        $student = Teacher::model()->find("userID = $ID");
+        $student = Teacher::model()->find("userID = '$ID'");
         if (Yii::app()->session ['lastUrl'] == "infoClass") {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
@@ -545,8 +550,8 @@ class AdminController extends CController {
 
     public function actionAddTea() {
         $result = 'no';
-        if (isset($_POST ['userID'])) {
-            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'], $_POST ['password1']);
+        if (isset($_POST ['userID'])&&isset($_POST['sex'])) {
+            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $_POST['department']);
         }
         $userAll = Teacher::model()->findAll();
         $this->render('addTea', [
@@ -560,7 +565,7 @@ class AdminController extends CController {
         $userID = $_GET ['id'];
         $thisTea = new Teacher ();
         $thisTea = $thisTea->find("userID = '$userID'");
-        $thisTea->password = '000';
+        $thisTea->password = md5('000');
 
         $thisTea->update();
         $userAll = Teacher::model()->findAll();
@@ -721,7 +726,7 @@ class AdminController extends CController {
     }
 
     public function actionHardDeleteTea() {
-        $pass = $_POST ['password'];
+        $pass = md5($_POST ['password']);
         $id = Yii::app()->session ['userid_now'];
         $admin = Admin::model()->findByPK($id);
         if ($admin->password !== $pass) {
