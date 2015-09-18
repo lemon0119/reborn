@@ -34,12 +34,12 @@ class TeacherController extends CController {
     		//$thisStudent->password=$new1;
     		//$result=$thisStudent->update();
     		$user = Teacher::model()->find('userID=?', array($userid_now));
-                if($user->password !== $_POST['old']){
+                if($user->password !== md5($_POST['old'])){
     			$result='old error';
     			$this->render('set',['result'=>$result,'mail'=>$mail]);
     			return;
     		}
-    		$user->password=$new1;
+    		$user->password=md5($new1);
                 $user->mail_address=$email;
     		$result=$user->save();
                 $mail=$email;

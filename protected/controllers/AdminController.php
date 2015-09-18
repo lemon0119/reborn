@@ -22,12 +22,12 @@ class AdminController extends CController {
             $email = $_POST['email'];
             $usertype = Yii::app()->session['role_now'];
             $user = Admin::model()->find('userID=?', array($userid_now));
-            if ($user->password !== $_POST['old']) {
+            if ($user->password !== md5($_POST['old'])) {
                 $result = 'old error';
                 $this->render('set', ['result' => $result, 'mail' => $mail]);
                 return;
             }
-            $user->password = $new1;
+            $user->password = md5($new1);
             $user->mail_address = $email;
             $result = $user->save();
             $mail = $email;
@@ -37,7 +37,7 @@ class AdminController extends CController {
     }
 
     public function actionHardDeleteStu() {
-        $pass = $_POST ['password'];
+        $pass = md5($_POST ['password']);
         $id = Yii::app()->session ['userid_now'];
         $admin = Admin::model()->findByPK($id);
         if ($admin->password !== $pass) {
@@ -334,7 +334,7 @@ class AdminController extends CController {
         $userID = $_GET ['id'];
         $thisStu = new Student ();
         $thisStu = $thisStu->find("userID = '$userID'");
-        $thisStu->password = '000';
+        $thisStu->password = md5('000');
 
         $thisStu->update();
         $classAll = TbClass::model()->findAll();
@@ -565,7 +565,7 @@ class AdminController extends CController {
         $userID = $_GET ['id'];
         $thisTea = new Teacher ();
         $thisTea = $thisTea->find("userID = '$userID'");
-        $thisTea->password = '000';
+        $thisTea->password = md5('000');
 
         $thisTea->update();
         $userAll = Teacher::model()->findAll();
@@ -726,7 +726,7 @@ class AdminController extends CController {
     }
 
     public function actionHardDeleteTea() {
-        $pass = $_POST ['password'];
+        $pass = md5($_POST ['password']);
         $id = Yii::app()->session ['userid_now'];
         $admin = Admin::model()->findByPK($id);
         if ($admin->password !== $pass) {

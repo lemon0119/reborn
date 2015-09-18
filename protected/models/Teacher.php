@@ -16,7 +16,7 @@ class Teacher extends CActiveRecord
         $newTea->userName = $userName;
         $newTea->sex = $sex;
         $newTea->age = $age;
-        $newTea->password = $pass;
+        $newTea->password = md5($pass);
         $newTea->mail_address = $mail_address;
         $newTea->phone_number = $phone_number;
         $newTea->department = $department;
