@@ -1,31 +1,33 @@
  <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
-                <li class="nav-header">搜索</li>
+                    <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
                 <form action="./index.php?r=teacher/searchChoice" method="post">
                         <li>
-                                <select name="type" style="width: 185px">
-                                        <option value="exerciseID" selected="selected">编号</option>
-                                        <option value="courseID" >课程号</option>
-                                        <option value="createPerson" >创建人</option>
-                                        <option value="requirements">内容</option>
+                            <div class="selectoption">
+                                <select  name="type" style="width: 185px">
+                                    <option  value="exerciseID" selected="selected">编号</option>
+                                        <option  value="courseID" >课程号</option>
+                                        <option  value="createPerson" >创建人</option>
+                                        <option  value="requirements">内容</option>
                                 </select>
+                            </div>
                         </li>
                         <li>
                                 <input name="value" type="text" class="search-query span2" placeholder="Search" />
                         </li>
                         <li style="margin-top:10px">
-                                <button type="submit" class="btn btn-primary">搜索</button>
-                                <a href="./index.php?r=teacher/addChoice" class="btn">添加</a>
+                            <button type="submit" class="btn_serch"></button>
+                            <button href="./index.php?r=teacher/addChoice" class="btn_add"></button>
                         </li>
                 </form>
                         <li class="divider"></li>
-                        <li class="nav-header">基础知识</li>
+                        <li class="nav-header"><i class="icon-knowlage"></i>基础知识</li>
                         <li class="active"><a href="./index.php?r=teacher/choiceLst"><i class="icon-font"></i> 选择</a></li>
                         <li ><a href="./index.php?r=teacher/fillLst"><i class="icon-text-width"></i> 填空</a></li>
                         <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
                         <li class="divider"></li>
-                        <li class="nav-header">打字练习</li>
+                        <li class="nav-header"><i class="icon-typing"></i>打字练习</li>
                         <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
                         <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
                         <li ><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
@@ -73,10 +75,10 @@
                             ?></td>
                         <td><?php echo $model['createTime'];?></td>
                         <td>
-                            <a href="./index.php?r=teacher/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                            <a href="./index.php?r=teacher/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                           <?php if($model['createPerson'] == Yii::app()->session['userid_now']){?>
-                            <a href="./index.php?r=teacher/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
-                            <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                            <a href="./index.php?r=teacher/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>
                             <?php }else{ ?>
                             <a href="./index.php?r=teacher/copyChoice&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>copy.png">复制</a>
                             <?php }?>
