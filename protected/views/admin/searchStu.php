@@ -17,12 +17,9 @@
                 <tr>
                     <td style="width: 125px"><?php echo $model['userID'];?></td>
                     <td><?php echo $model['userName'];?></td>
-                    <td><?php if($model['classID']=="0"){
+                    <td><?php if($model['classID']=="0")
                                     echo "无";
-                    }
-                                else{$classID = $model['classID'];
-                                    $sqlClass = TbClass::model()->find("classID = $classID");
-                                echo $sqlClass['className'];}
+                                else echo $model['classID'];
                         ?></td>
                     <td>  
                         <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>&&flag=search"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>

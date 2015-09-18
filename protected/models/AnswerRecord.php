@@ -19,6 +19,10 @@ class AnswerRecord extends CActiveRecord
         if($answer == NULL)
             return NULL;
         $result = array();
+        $num=Yii::app()->session['num'];
+        for($i=1;$i<=$num;$i++){
+            $result[$i]="0";
+        }
         foreach ($answer as $one) {
             $key = $one['exerciseID'];
             $value = $one['answer'];
@@ -290,11 +294,8 @@ class AnswerRecord extends CActiveRecord
                 $score = $total['totalScore'];
             }
            $exam_record = ExamRecord::model()->find("recordID = '$recordID'");
-           if($exam_record != NULL)
-           {
            $exam_record->score = $score;
            $exam_record->update();
-           }
            return $score;
         }
 

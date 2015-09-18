@@ -136,7 +136,7 @@
                             未完成
                         </td>  
                         <td>
-                            <a href="./index.php?r=teacher/checkStuExam&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice">批阅</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0">批阅</a>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 

@@ -24,7 +24,7 @@ class Suite extends CActiveRecord
         $condition = " where classID = '$classID' and suiteType = 'classwork' and suiteID in ($getRightSuite)";
         $select = "select * from suite";
         $sql = $select.$condition;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }
     
@@ -40,7 +40,7 @@ class Suite extends CActiveRecord
         $condition = " where classwork.suiteID=suite.suiteID and class_lesson_suite.suiteID=classwork.suiteID and class_lesson_suite.classID='$classID' and class_lesson_suite.lessonID='$lesnID'";
         $order = 'order by suite.suiteID';
         $sql = $select.$condition.$order;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }
     
@@ -82,7 +82,6 @@ class Suite extends CActiveRecord
     {
         $criteria   =   new CDbCriteria();
         $result = $this->getSuiteExerByType( $suiteID, $type);
-        
         $pages      =   new CPagination($result->rowCount);
         $pages->pageSize    =   $pagesize; 
         $pages->applyLimit($criteria);
@@ -99,7 +98,7 @@ class Suite extends CActiveRecord
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
         $result->bindValue(':limit', $pages->pageSize); 
-        $workLst  =   $result->query();       
+        $workLst  =   $result->queryAll();       
         return ['workLst'=>$workLst,'pages'=>$pages,];     
     }
     
@@ -109,7 +108,7 @@ class Suite extends CActiveRecord
         $order = " order by classID ASC";
         $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID')";
         $sql = $sql.$condition.$order;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         $criteria   =   new CDbCriteria();
         $pages     =   new CPagination($result->rowCount);
         $pages->pageSize    =   5; 
@@ -118,16 +117,16 @@ class Suite extends CActiveRecord
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
         $result->bindValue(':limit', $pages->pageSize);
-        $suiteLst = $result->query();
+        $suiteLst = $result->queryAll();
         return ['suiteLst'=>$suiteLst,'pages'=>$pages,];        
     }
     
     public function getSuiteByClassLessonSuite($teacherID)
         {
         $sql = "select * from suite";
-        $condition = " where suiteID in(select suiteID from class_lesson_suite where classID in (select classID from teacher_class where teacherID = '$teacherID')) and createPerson = '$teacherID'";
+        $condition = " where suiteID in(select suiteID from class_lesson_suite where classID in (select classID from teacher_class where teacherID = '$teacherID'))";
         $sql = $sql.$condition;
-        return Yii::app()->db->createCommand($sql)->query(); 
+        return Yii::app()->db->createCommand($sql)->queryAll(); 
         }  
         
         
@@ -136,15 +135,16 @@ class Suite extends CActiveRecord
     public function getAllSuiteByPage($pagesize,$teacherID)
     {
         $sql  = "select * from suite where createPerson =".$teacherID;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         $criteria   =   new CDbCriteria();
         $pages     =   new CPagination($result->rowCount);
         $pages->pageSize    =   $pagesize; 
         $pages->applyLimit($criteria);
+
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
         $result->bindValue(':limit', $pages->pageSize);
-        $suiteLst = $result->query();
+        $suiteLst = $result->queryAll();
         return ['suiteLst'=>$suiteLst,'pages'=>$pages,]; 
        
     }
@@ -197,7 +197,7 @@ class Suite extends CActiveRecord
         $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='filling')";
         $select = "select * from filling";
         $sql = $select.$condition.$order;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }
     public function getFilling2($suiteID){
@@ -233,7 +233,7 @@ class Suite extends CActiveRecord
         $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='question')";
         $select = "select * from question";
         $sql = $select.$condition.$order;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }
     public function getQuestion2($suiteID)
@@ -270,7 +270,7 @@ class Suite extends CActiveRecord
         $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='key')";
         $select = "select * from key_type";
         $sql = $select.$condition.$order;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }
     public function getListenExer($suiteID)
@@ -287,7 +287,7 @@ class Suite extends CActiveRecord
         $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='listen')";
         $select = "select * from listen_type";
         $sql = $select.$condition.$order;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }
     public function getLookExer($suiteID)
@@ -304,7 +304,7 @@ class Suite extends CActiveRecord
         $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='look')";
         $select = "select * from look_type";
         $sql = $select.$condition.$order;
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = Yii::app()->db->createCommand($sql)->queryAll();
         return $result;
     }
 	/**
@@ -393,7 +393,7 @@ class Suite extends CActiveRecord
         
         public function insertSuite($classID,$lessonID,$title,$createPerson){
         $sql        =   "select max(suiteID) as id from suite";
-        $max_id     =   Yii::app()->db->createCommand($sql)->query();
+        $max_id     =   Yii::app()->db->createCommand($sql)->queryAll();
         $temp       =   $max_id->read();
         if(empty($temp))
         {

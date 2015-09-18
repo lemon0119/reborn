@@ -148,11 +148,6 @@ class AdminController extends CController {
         if (isset($_POST ['type'])) {
             $type = $_POST ['type'];
             $value = $_POST ['value'];
-            if($type=='classID'){
-                $className = $value;
-                $sqlClass = TbClass::model()->find("className = '$className'");
-                $value = $sqlClass['classID'];
-            }
             Yii::app()->session ['searchStuType'] = $type;
             Yii::app()->session ['searchStuValue'] = $value;
         } else {
@@ -174,7 +169,7 @@ class AdminController extends CController {
             $className = $_POST ['className'];
             $classSqlResult = TbClass::model()->find("className = '$className'");
             $classID = $classSqlResult['classID'];
-            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $classID);
+            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], $_POST ['password1'], $_POST ['mail_address'], $_POST ['phone_number'], $classID);
         }
         $classAll = TbClass::model()->findAll("");
         $userAll = Student::model()->findAll();
@@ -550,8 +545,8 @@ class AdminController extends CController {
 
     public function actionAddTea() {
         $result = 'no';
-        if (isset($_POST ['userID'])&&isset($_POST['sex'])) {
-            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $_POST['department']);
+        if (isset($_POST ['userID'])) {
+            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'], $_POST ['password1']);
         }
         $userAll = Teacher::model()->findAll();
         $this->render('addTea', [
