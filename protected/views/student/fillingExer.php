@@ -16,7 +16,6 @@ $rout = 'student/saveFilling';
 $page = '/index.php?r='.$rout;
 $SNum = 0;
 ?>
- <h3 >课 堂 作 业</h3>
 <div class="span9">
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host.$path.$page;?>">
         <div class="hero-unit">
@@ -24,7 +23,7 @@ $SNum = 0;
             <?php 
                $n=2*($pages->currentPage+1)-1;
                 foreach ($fillingLst as $value) {
-                    echo ($n++).'. ';
+                    echo ($n).'. ';
                     $str = $value['requirements'];
                     $answer = $value['answer'];
                     $ansArr = explode('$$', $answer);
@@ -32,11 +31,18 @@ $SNum = 0;
                     $i = 1;
                     while($i < count($ansArr)+1){
                         echo '('.$i.') ';
-                        echo '<input type="text" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
+                          $v=$ansFilling[$n];
+                        if($v!='0'){
+                             echo '<input type="text" value="'.$v.'" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
+
+                        }else{
+                         echo '<input type="text" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';   
+                        }
+                        
                         $i++;
                     }
                     echo '<br/>';
-                  
+                  $n++;
                 }
             ?>
              <!-- 显示翻页标签 -->
@@ -49,10 +55,10 @@ $SNum = 0;
         </div>
         <?php if(count($exercise['filling']) > 0){?>
             <a type="button" class="btn btn-primary btn-large" onclick="formSubmit()" style="margin-left: 200px">保存</a>
-            <a href="./index.php?r=student/classwork"type="button" class="btn btn-primary btn-large"  style="margin-left: 350px">退出</a>
+            <!--<a href="./index.php?r=student/clswkOne&&suiteID=15"type="button" class="btn btn-primary btn-large"  style="margin-left: 350px">退出</a>-->
         <?php }?>
         <?php 
-            $last = Tool::getLastExer($exercise);
+            $last = Tool::getLastExer($exercise2);
             if($last['type'] == 'filling'){
         ?>
             <a class="btn btn-large" style="margin-left: 200px" onclick="submitSuite();">提交</a>
@@ -61,26 +67,36 @@ $SNum = 0;
 </div>
 <script>
 $(document).ready(function(){
+    
+    $("div.span9").find("a").click(function() {
+        var url=$(this).attr("href");
+        if(url.indexOf("index.php")>0){
+            $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
+                console.log(result);
+                window.location.href = url;
+            });
+            return false;
+        }
+    });
+    
     $("li#li-filling").attr('class','active');
 });
-function submitSuite(simple){
+function submitSuite(){
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-    if(!simple){
-        if(!confirm("提交以后，不能重新进行答题，你确定提交吗？"))
-            return ;
+    if(confirm("提交以后，不能重新进行答题，你确定提交吗？")){
+        $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){});
+        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
+            if(isExam)
+                window.location.href="index.php?r=student/classExam";
+            else
+                window.location.href="index.php?r=student/classwork";
+        });
     }
-    doSubmit(true);
-    $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
-        if(isExam)
-            window.location.href="index.php?r=student/classExam";
-        else
-            window.location.href="index.php?r=student/classwork";
-    });
 }
 function formSubmit(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
       alert(result);
-       window.location.href = './index.php?r=student/clswkOne&&suiteID=<?php echo $workID;?>';   
+       location.reload();  
   });
 }
 </script>

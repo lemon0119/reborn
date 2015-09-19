@@ -388,21 +388,44 @@ class StudentController extends CController {
      public function actionQuestion(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
+        $classwork = Array();
         $arg=$_GET['cent'];
         $cent= explode(',', $arg);
        
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
+        //分页
         $result = Suite::model()->getQuestion2($suiteID);
         $questionLst = $result ['questionLst'];
         $pages = $result ['pages'];
         $isExam = FALSE;
         $wID=Yii::app()->session['workID'];
-        return $this->render('questionExer',['questionLst'=>$questionLst ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
+         Yii::app()->session['questionNum']=count($classwork['question']);
+        $workID = Yii::app()->session['workID'];
+        $studentID = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansQuest = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'question');
+        $ansArr = AnswerRecord::model()->ansToArray($ansQuest);
+        $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        $finishRecord=Array();
+        $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+            $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+         }
+         $n=0;
+        foreach(Tool::$EXER_TYPE as $type){
+            $cent[$n]=round(count($finishRecord[$type])*100/count($classwork[$type]),2)."%"; 
+            $n++;
+        }
+
+        return $this->render('questionExer',['ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
     }
 
     
+   
     //2015-8-3 宋杰 获取考试简答题
         public function actionExamQuestion(){
         $suiteID = Yii::app()->session['examsuiteID'];
@@ -418,20 +441,38 @@ class StudentController extends CController {
     
     public function actionChoice(){
         $suiteID = Yii::app()->session['suiteID'];
+        $workID = Yii::app()->session['workID'];
+         $studentID = Yii::app()->session['userid_now'];
         $classwork = Array();
+        $classwork2 = Array();
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
+       
+        $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        $finishRecord=Array();
+        $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
         foreach(Tool::$EXER_TYPE as $type){
-            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+            $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+         }
+         $n=0;
+        foreach(Tool::$EXER_TYPE as $type){
+            $cent[$n]=round(count($finishRecord[$type])*100/count($classwork[$type]),2)."%"; 
+            $n++;
         }
        
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansChoice = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'choice');
+        $ansArr = AnswerRecord::model()->ansToArray($ansChoice);
+        
         $wID=Yii::app()->session['workID']; 
         //显示选择题列表并分页  
         $result = Suite::model()->getChoice2($suiteID);
         $choiceLst = $result['choiceLst'];
         $pages = $result['pages'];
          $isExam = FALSE;
-        return $this->render('choiceExer',['choiceLst'=>$choiceLst,'pages'=>$pages,'exercise'=>$classwork ,'isExam' =>$isExam ,'cent'=>$cent,'workID'=>$wID]);
+        return $this->render('choiceExer',['ansChoice'=>$ansArr,'choiceLst'=>$choiceLst,'pages'=>$pages,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'isExam' =>$isExam ,'cent'=>$cent,'workID'=>$wID]);
     }
     
    //2015-8-3 宋杰 获取试题，跳转到选择题页面 isExam为true加载examsidebar
@@ -448,22 +489,42 @@ class StudentController extends CController {
     
 public function actionfilling(){
         $suiteID = Yii::app()->session['suiteID'];
-       
+        $workID = Yii::app()->session['workID'];
+         $studentID = Yii::app()->session['userid_now'];
         $classwork = Array();
-
+        $classwork2 = Array();
         $arg=$_GET['cent'];
         $cent= explode(',', $arg);
 
-        foreach(Tool::$EXER_TYPE as $type){
-            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        $finishRecord=Array();
+        $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
+         foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+            $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
          }
+         $n=0;
+        foreach(Tool::$EXER_TYPE as $type){
+            $cent[$n]=round(count($finishRecord[$type])*100/count($classwork[$type]),2)."%"; 
+            $n++;
+        }
+
+         //分页
         $result = Suite::model()->getFilling2($suiteID);
         $fillingLst = $result ['fillingLst'];
         $pages = $result ['pages'];
         $isExam = false;
-         $wID=Yii::app()->session['workID'];
-        return $this->render('fillingExer',['fillingLst'=>$fillingLst,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
+        $wID=Yii::app()->session['workID'];
+         Yii::app()->session['fillingNum']=count($classwork['filling']);
+       
+       
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
+        $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
+        return $this->render('fillingExer',['ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
     }
+
 
     
     //2015-8-3 宋杰 加载考试填空题
@@ -480,8 +541,9 @@ public function actionfilling(){
     
     
     
-    public function actionClswkOne(){
+   public function actionClswkOne(){
         $workID = $_GET['suiteID'];
+         $isExam = false;
         Yii::app()->session['workID'] = $workID;
         $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
         Yii::app()->session['suiteID'] = $clsLesnSuite->suiteID;
@@ -489,20 +551,36 @@ public function actionfilling(){
         $classwork = Array();
         $studentID = Yii::app()->session['userid_now'];
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        $cent=Array("0"=>"0","1"=>"0","2"=>"0","3"=>"0","4"=>"0","5"=>"0");
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+         }
+        if($record==null){
+            return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);
+        }
+            
         $finishRecord=Array();
+       
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
          }
         $n=0;
-        $cent=Array();
+        $cNum=count($classwork['choice']);
+        $fNum=count($classwork['filling']);
+        $qNum=count($classwork['question']);
+       $num=(($cNum>$fNum)?$cNum:$fNum)>$qNum?(($cNum>$fNum)?$cNum:$fNum):$qNum;
+       Yii::app()->session['num']=$num;
+       
+        
         foreach(Tool::$EXER_TYPE as $type){
+        
             if(count($classwork[$type])!=0 ){
               $cent[$n]=round(count($finishRecord[$type])*100/count($classwork[$type]),2)."%";    
             }          
             $n++;
         }
-         $isExam = false;
+        
          return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);
 
 
