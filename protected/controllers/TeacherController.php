@@ -2294,8 +2294,8 @@ class TeacherController extends CController {
            foreach ($teacher_class as $class)
              {
                  $id = $class['classID'];
-                 $result = TbClass::model()->findAll("classID ='$id'");               
-                 array_push($array_class, $result[0]);
+                 $result = TbClass::model()->find("classID ='$id'");               
+                 array_push($array_class, $result);
              }     
              $currentClass = Yii::app()->session['currentClass'];
              $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
