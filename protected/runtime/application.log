@@ -4584,3 +4584,32 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=student/filling&&cent=25%,20%,66.67%,300%,100%,100%
 HTTP_REFERER=http://localhost/reborn/index.php?r=student/choice&&cent=25%,20%,66.67%,300%,100%,100%
 ---
+2015/09/19 13:26:11 [error] [php] scandir(resources/admin/001/1/1/video/,resources/admin/001/1/1/video/):  (E:\php_workstation\reborn\protected\views\teacher\startCourse.php:71)
+Stack trace:
+#0 E:\php_workstation\framework\web\CBaseController.php(95): TeacherController->renderInternal()
+#1 E:\php_workstation\framework\web\CController.php(869): TeacherController->renderFile()
+#2 E:\php_workstation\framework\web\CController.php(782): TeacherController->renderPartial()
+#3 E:\php_workstation\reborn\protected\controllers\TeacherController.php(300): TeacherController->render()
+#4 E:\php_workstation\framework\web\actions\CInlineAction.php(49): TeacherController->actionStartCourse()
+#5 E:\php_workstation\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 E:\php_workstation\framework\web\CController.php(286): TeacherController->runAction()
+#7 E:\php_workstation\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#8 E:\php_workstation\framework\web\CWebApplication.php(284): TeacherController->run()
+#9 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#10 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#11 E:\php_workstation\reborn\index.php(30): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/startCourse&&classID=1&&progress=1&&on=1
+in E:\php_workstation\reborn\protected\views\teacher\startCourse.php (71)
+in E:\php_workstation\reborn\protected\controllers\TeacherController.php (300)
+in E:\php_workstation\reborn\index.php (30)
+2015/09/19 13:36:38 [error] [php] Undefined variable: recordID (E:\php_workstation\reborn\protected\controllers\StudentController.php:661)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(286): StudentController->runAction()
+#1 E:\php_workstation\framework\web\CController.php(265): StudentController->runActionWithFilters()
+#2 E:\php_workstation\framework\web\CWebApplication.php(284): StudentController->run()
+#3 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 E:\php_workstation\reborn\index.php(30): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=student/classwork
+in E:\php_workstation\reborn\protected\controllers\StudentController.php (661)
+in E:\php_workstation\reborn\index.php (30)

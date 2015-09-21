@@ -74,10 +74,10 @@
                             ?></td>
                         <td><?php echo $model['createTime'];?></td>
                         <td>
-                            <a href="./index.php?r=admin/editLook&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
-                            <a href="./index.php?r=admin/editLook&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                            <a href="./index.php?r=admin/editLook&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <a href="./index.php?r=admin/editLook&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
                       
-<a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+<a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 

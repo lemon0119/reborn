@@ -1722,7 +1722,9 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
 	background-position:-336px -48px
 }
 .icon-list {
-	background-position:-360px -48px
+	padding: 4px 4px;
+    background: url(../../img/icon_answer.png);
+    background-repeat: no-repeat;
 }
 .icon-indent-left {
 	background-position:-384px -48px
