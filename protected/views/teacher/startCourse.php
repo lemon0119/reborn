@@ -61,6 +61,14 @@
        $courseID        = TbClass::model()->findCourseIDByClassID($classID);
        $adminPdir             = "resources/admin/001/$courseID/$on/ppt/";
        $adminVdir             = "resources/admin/001/$courseID/$on/video/";
+        if(!is_dir($adminPdir))
+        {//true表示可以创建多级目录
+           mkdir($pdir,0777,true);
+        }
+        if(!is_dir($adminVdir))
+        {//true表示可以创建多级目录
+           mkdir($pdir,0777,true);
+        }
     ?>
     <div class="well summary">
         <ul>
