@@ -16,8 +16,8 @@
                                 <input name="value" type="text" class="search-query span2" placeholder="Search" />
                         </li>
                         <li style="margin-top:10px">
-                                <button type="submit" class="btn btn-primary">查询</button>
-                                <a href="./index.php?r=admin/addListen" class="btn">添加</a>
+                                <button type="submit" class="btn_serch"></button>
+                                <button href="./index.php?r=admin/addListen" class="btn_add"></button>>
                         </li>
                 </form>
                         <li class="divider"></li>
@@ -30,6 +30,7 @@
                         <li ><a href="./index.php?r=admin/keyLst"><i class="icon-th"></i> 键位练习</a></li>
                         <li ><a href="./index.php?r=admin/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
                         <li class="active"><a href="./index.php?r=admin/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
+                        
                 </ul>
         </div>
 </div>
@@ -62,11 +63,14 @@
                     <tr>
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
-                        <td><?php echo $model['title'];?></td>
-                        <td><?php  if(Tool::clength($model['content'])<=15)
+                        <td><?php  if(Tool::clength($model['title'])<=7)
+                                        echo $model['title'];
+                                    else
+                                        echo Tool::csubstr($model['title'], 0, 7)."...";?></td>
+                        <td><?php  if(Tool::clength($model['content'])<=10)
                                         echo $model['content'];
                                     else
-                                        echo Tool::csubstr($model['content'], 0, 15)."...";
+                                        echo Tool::csubstr($model['content'], 0, 10)."...";
                                         ?></td>
                         <td><?php if($model['createPerson']=="0")
                                         echo "管理员";

@@ -44,9 +44,9 @@
                                                                         <li><a href="./index.php?r=admin/fillLst">填空</a></li>
                                                                         <li><a href="./index.php?r=admin/questionLst">简答</a></li>
                                                                         <li class="divider"></li>
-                                                                        <li><a href="./index.php?r=admin/listenLst">听打练习</a></li>
-                                                                        <li><a href="./index.php?r=admin/lookLst">看打练习</a></li>
                                                                         <li><a href="./index.php?r=admin/keyLst">键位练习</a></li>
+                                                                        <li><a href="./index.php?r=admin/lookLst">看打练习</a></li>
+                                                                        <li><a href="./index.php?r=admin/listenLst">听打练习</a></li>
                                                                     </ul>
                                                             </li>
                                                             <li><a href="./index.php?r=admin/courseLst">课程管理</a></li>

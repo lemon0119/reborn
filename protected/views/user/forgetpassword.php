@@ -40,10 +40,7 @@ function test()
                 <div class="controls">
                         <input name="email" type="text" class="input-xlarge" id="input02" onblur="test()" style="height: 30px;"/>
                 </div>
-                <div class="controls">
-                    <input name="yzm" type="text" class="input-xlarge" id="input02" hidden="true" style="width: 150px;height: 30px;"/>
-                    <input name="yzm" type="text" class="input-xlarge" id="input02" hidden="true" style="width: 120px;height: 30px;"/>
-                </div>
+                
                 
             </div>
             <div class="form-actions">

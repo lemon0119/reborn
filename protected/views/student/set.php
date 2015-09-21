@@ -14,6 +14,7 @@ function test()
 }
 </script>
 <div class="span9">
+    <div class="span_set">
     <h3>设置密码</h3>
     <form id="myForm" method="post" action="./index.php?r=student/set"> 
         <fieldset>
@@ -43,6 +44,7 @@ function test()
             </div>
         </fieldset>
     </form>   
+    </div>
 </div>
 
 <script>  

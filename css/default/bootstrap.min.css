@@ -219,8 +219,7 @@ a:hover,a:focus {
 .span9 {
          border-radius: 5px;
         background-color: #fff;
-        position: absolute;
-        left:400px;
+        position:relative;
         padding: 40px;
 	width:700px
 }
@@ -4600,4 +4599,8 @@ to {
     padding: 4px 5px;
     background: url(../../img/icon_typingPractice.png);
     background-repeat: no-repeat;
+}
+.span_set{
+    position: relative;
+    left:210px;
 }

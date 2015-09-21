@@ -28,7 +28,6 @@
                 <div class="controls">
                     <input name="defnew" type="password" class="input-xlarge" id="input02" onblur="test()" style="height: 30px;"/>
                 </div>
-                
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">确认</button> 
