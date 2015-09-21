@@ -73,7 +73,7 @@
     <div class="well summary">
         <ul>
                 <li>
-                        <a href="./index.php?r=teacher/videoLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><span class="count"><?php  
+                        <a  id="ppt" href="./index.php?r=teacher/videoLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><span class="count"><?php  
                                                                 $num1 = sizeof(scandir($vdir)); 
                                                                 $num1 = ($num1>2)?($num1-2):0;
                                                                 $num2 = sizeof(scandir($adminVdir)); 
@@ -81,7 +81,7 @@
                                                                 echo $num1+$num2;?></span> 视频</a>
                 </li>
                 <li class="last">
-                        <a href="./index.php?r=teacher/pptLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>">
+                        <a href="./index.php?r=teacher/pptLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="ppt">
                             <span class="count"><?php  $num1 = sizeof(scandir($pdir)); 
                                                         $num1 = ($num1>2)?($num1-2)/2:0;
                                                         $num2 = sizeof(scandir($adminPdir)); 
