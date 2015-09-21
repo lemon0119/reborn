@@ -61,10 +61,12 @@
                 <tr>
                     <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                     <td><?php echo $model['courseID'];?></td>
-                    <td><?php  if(strlen($model['requirements'])<=15)
-                                    echo $model['requirements'];
-                                else
-                                    echo substr($model['requirements'], 0, 15)."...";
+                    <td><?php  if(Tool::clength($model['requirements'])<=15)
+                                    {   
+                                        echo $model['requirements'];                               
+                                    }else{
+                                        echo Tool::csubstr($model['requirements'], 0, 15)."...";
+                                    }
                     ?></td>
                     <td><?php if($model['createPerson']=="0")
                                         echo "管理员";

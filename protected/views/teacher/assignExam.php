@@ -12,7 +12,7 @@
                 <li class="divider"></li>
                 <li class="nav-header">试卷标题</li>
                 <li style="margin-top:10px">
-                <input name= "title" type="text" class="search-query span2"  placeholder="试卷标题" value="" />
+                    <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value="" />
                 </li>
                 <li style="margin-top:10px">
                 <button type="submit" class="btn btn-primary">创建试卷</button>
@@ -93,7 +93,7 @@
         }
     }
 
-    $("#myForm").submit(function () {
+    $("#myForm").submit(function(){
         var title = $("#title")[0].value;
         if (title == "")
         {
@@ -101,7 +101,6 @@
             return false;
         }
     });
-
 
 </script>
 

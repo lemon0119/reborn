@@ -87,7 +87,7 @@
         }
     }
 
-    $("#myForm").submit(function () {
+    $("#myForm").submit(function(){
         var title = $("#title")[0].value;
         if (title == "")
         {

@@ -506,7 +506,7 @@ class TeacherController extends CController {
             $thisLook = new LookType();
             $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
             
-            if(Yii::app()->session['lastUrl']=="LookLst")
+            if(Yii::app()->session['lastUrl']=="lookLst")
             {
             $result     = LookType::model()->getLookLst("", "");
             $lookLst  =   $result['lookLst'];
@@ -606,7 +606,7 @@ class TeacherController extends CController {
                 $result     = LookType::model()->getLookLst("", "");
                 $lookLst  =   $result['lookLst'];
                 $pages      =   $result['pages'];
-                Yii::app()->session['lastUrl']  = "LookLst";
+                Yii::app()->session['lastUrl']  = "lookLst";
                 $this->render('LookLst',array(
                         'lookLst' =>  $lookLst,
                         'pages'     =>  $pages,
@@ -892,7 +892,7 @@ class TeacherController extends CController {
                 $result     = KeyType::model()->getKeyLst("", "");
                 $keyLst  =   $result['keyLst'];
                 $pages      =   $result['pages'];
-                Yii::app()->session['lastUrl']  = "KeyLst";
+                Yii::app()->session['lastUrl']  = "keyLst";
                 $this->render('KeyLst',array(
                         'keyLst' =>  $keyLst,
                         'pages'     =>  $pages,
@@ -1368,7 +1368,7 @@ class TeacherController extends CController {
             {
                 $type = Yii::app()->session['searchFillType'];
                 $value = Yii::app()->session['searchFillValue'];
-                           if($type=='createPerson')
+            if($type=='createPerson')
             {
                 if($value   ==  "管理员")
                     $value  =   0;
@@ -1430,7 +1430,7 @@ class TeacherController extends CController {
                 for(;$i<=5;$i++)
                 {
                     if($_POST['in'.$i]!="")
-                        $answer =   $answer."$".$_POST['in'.$i];
+                        $answer =   $answer."$$".$_POST['in'.$i];
                     else
                         break;
                 }
@@ -1546,7 +1546,7 @@ class TeacherController extends CController {
                 $result     = Filling::model()->getFillLst("", "");
                 $fillLst  =   $result['fillLst'];
                 $pages      =   $result['pages'];
-                Yii::app()->session['lastUrl']  =   "FillLst";
+                Yii::app()->session['lastUrl']  =   "fillLst";
                 $this->render('fillLst',array(
                         'fillLst' =>  $fillLst,
                         'pages'     =>  $pages,
@@ -1917,6 +1917,7 @@ class TeacherController extends CController {
     public function actionQuestionLst()
     {       
             Yii::app()->session['lastUrl']  =   "questionLst";
+           
             $result      =  Question::model()->getQuestionLst("", "");
             $questionLst =  $result['questionLst'];  
             $pages       =  $result["pages"];
@@ -2070,7 +2071,7 @@ class TeacherController extends CController {
                 $result     =   Question::model()->getQuestionLst("", "");
                 $questionLst  =   $result['questionLst'];
                 $pages      =   $result['pages'];
-                Yii::app()->session['lastUrl']  =   "QuestionLst";
+                Yii::app()->session['lastUrl']  =   "questionLst";
                 $this->render('QuestionLst',array(
                         'questionLst' =>  $questionLst,
                         'pages'     =>  $pages,      
@@ -2194,7 +2195,7 @@ class TeacherController extends CController {
                 $result     = Question::model()->getQuestionLst("", "");
                 $questionLst  =   $result['questionLst'];
                 $pages      =   $result['pages'];
-                Yii::app()->session['lastUrl']  =   "QuestionLst";
+                Yii::app()->session['lastUrl']  =   "questionLst";
                 $this->render('QuestionLst',array(
                         'questionLst' =>  $questionLst,
                         'pages'     =>  $pages,
@@ -2748,6 +2749,7 @@ class TeacherController extends CController {
      {
         $currentLesson = Yii::app()->session['currentLesson'];
         $currentClass = Yii::app()->session['currentClass'];
+        echo $currentClass;
         $class = TbClass::model()->findAll("classID='$currentClass'")[0];
         $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
         $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];

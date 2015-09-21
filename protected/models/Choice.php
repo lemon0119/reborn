@@ -58,7 +58,7 @@ class Choice extends CActiveRecord
         $criteria   =   new CDbCriteria();
         $result     =   Yii::app()->db->createCommand($sql)->query();
         $pages      =   new CPagination($result->rowCount);
-        $pages->pageSize    =   2; 
+        $pages->pageSize    =   10; 
         $pages->applyLimit($criteria); 
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
