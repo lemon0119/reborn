@@ -42,7 +42,7 @@
 <h3>查看听打练习题</h3>
 <?php }?>
 
-    <form class="form-horizontal" method="post" action="./index.php?r=admin/editListenInfo&&oldfilename=<?php echo $filename;?>&&exerciseID=<?php echo $exerciseID;?>" id="myForm" enctype="multipart/form-data"> 
+    <form class="form-horizontal" method="post" action="./index.php?r=admin/editListenInfo&&oldfilename=<?php echo $filename;?>&&exerciseID=<?php echo $exerciseID;?>&&filepath=<?php echo $filepath;?>" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
         <?php if(!isset($action)) {?>
             <legend>填写题目</legend>

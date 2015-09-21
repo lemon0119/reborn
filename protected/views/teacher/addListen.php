@@ -42,10 +42,10 @@
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="title" style="width:450px; height:20px;" id="input01"></textarea>
+                <textarea name="title" style="width:450px; height:20px;" id="input01"><?php echo $title;?></textarea>
             </div>
         </div>
-           <div class="control-group">
+        <div class="control-group">
                <label class="control-label" for="input02">文件</label>
                <div class="controls">
                <input type="file" name="file" id="input02">      
@@ -54,7 +54,7 @@
         <div class="control-group">
             <label class="control-label" for="input03">内容</label>
             <div class="controls">               
-                <textarea name="content" style="width:450px; height:200px;" id="input03"></textarea>
+                <textarea name="content" style="width:450px; height:200px;" id="input03"><?php echo $content;?></textarea>
             </div>
         </div> 
         <div class="form-actions">

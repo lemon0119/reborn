@@ -1473,8 +1473,11 @@ class AdminController extends CController {
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
         }
-
+        $title = "";
+        $content = "";
         if (isset($_POST ['title'])) {
+            $title = $_POST ['title'];
+            $content = $_POST ['content'];
             if ($_FILES ['file'] ['type'] != "audio/mpeg") {
                 $result = '文件格式不正确，应为MP3格式';
             } else if ($_FILES ['file'] ['error'] > 0) {
@@ -1489,9 +1492,11 @@ class AdminController extends CController {
                 $result = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $_FILES ["file"] ["name"], $filePath, 0);
             }
         }
-        $this->render('addListen', [
-            'result' => $result
-        ]);
+        $this->render('addListen', array(
+            'result' => $result,
+            'title' => $title,
+            'content' => $content
+        ));
     }
 
     public function actionReturnFromAddListen() {
@@ -1623,7 +1628,7 @@ class AdminController extends CController {
     public function actionEditListenInfo() {
         $typename = Yii::app()->session ['role_now'];
         $userid = Yii::app()->session ['userid_now'];
-        $filePath = $typename . "/" . $userid . "/";
+        $filePath = $_GET['filepath'];
         $dir = "resources/" . $filePath;
         $exerciseID = $_GET ['exerciseID'];
         $filename = $_GET ['oldfilename'];
@@ -1638,13 +1643,12 @@ class AdminController extends CController {
             } else {
                 move_uploaded_file($_FILES ["modifyfile"] ["tmp_name"], $dir . iconv("UTF-8", "gb2312", $_FILES ["modifyfile"] ["name"]));
                 unlink($dir . iconv("UTF-8", "gb2312", $filename));
-                $result = '修改失败';
             }
         }
         $thisListen = new ListenType ();
         $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
         $thisListen->title = $_POST ['title'];
-        if ($_FILES ['modifyfile'] ['tmp_name']) {
+        if ($result == '修改失败' && $_FILES['modifyfile']['name'] != NULL) {
             $thisListen->fileName = $_FILES ['modifyfile'] ['name'];
         } else {
             $thisListen->fileName = $filename;

@@ -421,7 +421,7 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
-                        if($type == "requirements")
+                        if($type == "content")
             {
                 $searchKey = $value;
             }else
@@ -928,15 +928,20 @@ class TeacherController extends CController {
              $userid = Yii::app()->session['userid_now'];
              $filePath =$typename."/".$userid."/"; 
              $dir = "resources/".$filePath;        
-       
+            
              if(!is_dir($dir))
              {
              mkdir($dir,0777);
              }
-            
-             
-            if(isset($_POST['title'])){  
-                if($_FILES['file']['type']!= "audio/mpeg")
+            $title = "";
+            $content = "";
+            if(isset($_POST['title'])){
+                $title = $_POST['title'];
+                $content = $_POST["content"];
+                if($_FILES['file']['size']>80000000)
+                {
+                    $result = '大小不能超过8M';
+                }else if($_FILES['file']['type']!= "audio/mpeg")
                 {
                     $result = '文件格式不正确，应为MP3格式';            
                 }else if($_FILES['file']['error'] > 0)
@@ -954,7 +959,11 @@ class TeacherController extends CController {
                     $result = ListenType::model()->insertListen($_POST['title'],$_POST['content'],$_FILES["file"]["name"],$filePath,Yii::app()->session['userid_now']);                  
                 }             
             }
-            $this->render('addListen',['result'   =>  $result]);
+            $this->render('addListen',array(
+               'result' => $result,
+                'title' => $title,
+                'content' => $content
+            ));
         }
         
      public function actionSearchListen()
@@ -1168,8 +1177,11 @@ class TeacherController extends CController {
             $filename = $_GET['oldfilename'];
             $result = "修改失败";
             if($_FILES['modifyfile']['tmp_name'])
-            {
-               if($_FILES['modifyfile']['type']!= "audio/mpeg")
+            { 
+               if($_FILES['modifyfile']['size']>80000000)
+                {
+                    $result = '大小不能超过8M';
+                }else if($_FILES['modifyfile']['type']!= "audio/mpeg")
                 {
                     $result = '文件格式不正确，应为MP3格式';            
                 }else if($_FILES['modifyfile']['error'] > 0)
@@ -1181,19 +1193,18 @@ class TeacherController extends CController {
                 }else{
                      move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["modifyfile"]["name"]));
                      unlink($dir.iconv("UTF-8","gb2312",$filename));
-                     $result = '修改失败';
                 }
             }           
             $thisListen      =   new ListenType();
             $thisListen       =   $thisListen->find("exerciseID = '$exerciseID'");
             $thisListen->title =   $_POST['title'];
-            if($_FILES['modifyfile']['tmp_name'])
+            if($result == '修改失败' && $_FILES['modifyfile']['name'] != NULL)
             {
-                $thisListen->fileName = $_FILES['modifyfile']['name'];
+                $thisListen->fileName = $_FILES['modifyfile']['name'];               
             }  else {
                 $thisListen->fileName = $filename;
             }
-            $thisListen->content       =   $_POST['content'];
+            $thisListen->content  =   $_POST['content'];
             if($result == '修改失败')
             {
               $thisListen -> update();
@@ -1210,8 +1221,7 @@ class TeacherController extends CController {
                    'filepath' =>$thisListen->filePath,
                     'result'          =>    $result
                 ));       
-            }else{
-            
+            }else{           
             $this->render("editListen",array(
                 'exerciseID'      =>  $thisListen->exerciseID,
                 'filename' => $thisListen->fileName,
@@ -1294,7 +1304,7 @@ class TeacherController extends CController {
                 $result     = ListenType::model()->getListenLst("", "");
                 $listenLst  =   $result['listenLst'];
                 $pages      =   $result['pages'];
-                Yii::app()->session['lastUrl']  = "ListenLst";
+                Yii::app()->session['lastUrl']  = "listenLst";
                 $this->render('ListenLst',array(
                         'listenLst' =>  $listenLst,
                         'pages'     =>  $pages,
@@ -3576,6 +3586,5 @@ class TeacherController extends CController {
          {
               $this->ActionToOwnExam();
          }
-     }
-     
+     }  
 }
