@@ -27,17 +27,17 @@
                                             <div class="nav-collapse">
                                                     <ul class="nav">
                                                         <li class="dropdown">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">人员管理<b class="caret"></b></a>
+                                                            <a href="#" id="person_manager" data-toggle="dropdown"></a>
                                                             <ul class="dropdown-menu">
                                                                 <li><a href="./index.php?r=admin/stuLst">学生管理</a></li>
                                                                 <li><a href="./index.php?r=admin/teaLst">老师管理</a></li>
                                                             </ul>
                                                         </li>
                                                             <li>
-                                                                <a href="./index.php?r=admin/classLst">班级管理</a>
+                                                                <a id="class_manager" href="./index.php?r=admin/classLst"></a>
                                                             </li>
                                                             <li class="dropdown">
-                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">题库管理<b class="caret"></b></a>
+                                                                <a href="#" id="topic_manager" data-toggle="dropdown"></a>
                                                                     <ul class="dropdown-menu">
                                                                         <li class="nav-header">基础知识</li>
                                                                         <li><a href="./index.php?r=admin/choiceLst">选择</a></li>
@@ -49,11 +49,9 @@
                                                                         <li><a href="./index.php?r=admin/listenLst">听打练习</a></li>
                                                                     </ul>
                                                             </li>
-                                                            <li><a href="./index.php?r=admin/courseLst">课程管理</a></li>
-                                                    </ul>
-                                                    <ul class="nav pull-right">
-                                                        <li class="dropdown">
-                                                                    <a href="" class="dropdown-toggle" data-toggle="dropdown">管理员<b class="caret"></b></a>
+                                                            <li><a id="course_manager"  href="./index.php?r=admin/courseLst"></a></li>
+                                                            <li class="dropdown">
+                                                                    <a href="" id="userUI" data-toggle="dropdown">管理员<b class="user_dropdown_logo"></b></a>
                                                                     <ul class="dropdown-menu">
                                                                             <li>
                                                                                     <a href="./index.php?r=admin/set">设置</a>
@@ -62,6 +60,7 @@
                                                                     </ul>                    
                                                         </li>
                                                     </ul>
+                                                        
                                             </div>
                                     </div>
                             </div>

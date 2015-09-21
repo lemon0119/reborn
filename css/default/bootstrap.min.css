@@ -4540,13 +4540,13 @@ to {
 }
 #userUI{
     font-weight: bolder;
-    padding: 18px 28px;
+    padding: 18px 21px;
     background-image: url("../../img/user_ui.png");
 }
 #userUI:hover{
     font-weight: bolder;
     color: #f46500;
-    padding: 18px 28px;
+    padding: 18px 21px;
     background-image: url("../../img/user_ui.png");
  
 }
@@ -4609,4 +4609,36 @@ to {
 }
 #ppt{
     color:#fff;
+}
+#person_manager{
+     padding: 28px 60px;
+    background-image: url("../../img/UI_adm/person_manager.png");
+}
+#person_manager:hover{
+     padding: 28px 60px;
+    background-image: url("../../img/UI_adm/on_person_manager.png");
+}
+#class_manager{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/class_manager.png");
+}
+#class_manager:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/on_class_manager.png");
+}
+#topic_manager{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/topic_manager.png");
+}
+#topic_manager:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/on_topic_manager.png");
+}
+#course_manager{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/course_manager.png");
+}
+#course_manager:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/on_course_manager.png");
 }
