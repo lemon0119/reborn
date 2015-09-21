@@ -8,15 +8,18 @@ class UserController extends Controller
     		$new1=$_POST['new1'];
     		$defnew=$_POST['defnew'];
                 $type=$_GET['type'];
-                if($type==='0')
+                if($type=='0')
                     $user = Student::model()->find('userID=?',$_GET['userid']);
-    		else if($type==='1')
+    		else if($type=='1')
                     $user = Teacher::model()->find('userID=?',$_GET['userid']);
-                else if($type==='2')
+                else if($type=='2')
                     $user = Teacher::model()->find('userID=?',$_GET['userid']);
                 if($user){
-                    $user->password=md5($new1);
-                    $result=$user->save();
+                    $m=$new1;
+                   
+                    $user->password= md5($new1);
+                     print_r($user->password);
+                     $result=$user->update();
                 }else{
                     $result='0';
                 }
@@ -33,7 +36,9 @@ class UserController extends Controller
     	if(isset($_POST['account'])){
             $account=$_POST['account'];
     	    $email=$_POST['email'];
+                
             $user=  Student::model()->find("userName ='$account'");
+            
             if($user==null)
             {
                 $type='1';
@@ -45,6 +50,7 @@ class UserController extends Controller
                 $user= Admin::model()->find("userName ='$account'");
             }
             $userid=$user['userID'];
+            
             if($user!=null){
                 if($user['mail_address'] !== $email){
                     $result="email error";

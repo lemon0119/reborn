@@ -788,20 +788,20 @@ public function actionfilling(){
                 $email=$_POST['email'];
     		
     		$usertype=Yii::app()->session['role_now'];
-    		
-    		//$thisStudent=new Student();
-    		//$thisStudent->password=$new1;
-    		//$result=$thisStudent->update();
     		$user = Student::model()->find('userID=?', array($userid_now));
-                if($user->password !== md5($_POST['old'])){
-    			$result='old error';
+                if($user->password== md5($_POST['old'])){
+                    $user->password=md5($new1);
+                    $user->mail_address=$email;
+                    $result=$user->update();
+                    echo $result;
+                    $mail=$email;
+    			
+    		}else{
+                    $result='old error';
     			$this->render('set',['result'=>$result,'mail'=>$mail]);
     			return;
-    		}
-    		$user->password=md5($new1);
-                $user->mail_address=$email;
-    		$result=$user->save();
-                $mail=$email;
+                }
+    		
     	}
     	
     	$this->render('set',['result'=>$result,'mail'=>$mail]);
