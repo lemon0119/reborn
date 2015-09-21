@@ -171,9 +171,7 @@ class AdminController extends CController {
     public function actionAddStu() {
         $result = 'no';
         if (isset($_POST ['userID'])&&isset($_POST['sex'])) {
-            $className = $_POST ['className'];
-            $classSqlResult = TbClass::model()->find("className = '$className'");
-            $classID = $classSqlResult['classID'];
+            $classID = $_POST ['classID'];
             $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $classID);
         }
         $classAll = TbClass::model()->findAll("");
@@ -384,9 +382,7 @@ class AdminController extends CController {
         $thisStu->age = $_POST ['age'];
         $thisStu->mail_address = $_POST ['mail_address'];
         $thisStu->phone_number = $_POST ['phone_number'];
-        $className = $_POST ['className'];
-        $sqlClassID = TbClass::model()->find("className = '$className'");
-        $thisStu->classID = $sqlClassID['classID'];
+        $thisStu->classID = $_POST['classID'];
         $thisStu->update();
         $classAll = TbClass::model()->findAll();
         $userAll = Student::model()->findAll();
@@ -853,8 +849,9 @@ class AdminController extends CController {
         if (isset($type)) {
             if ($type == "classID" || $type == "className") {
                 $ex_sq = " WHERE " . $type . " = '" . $value . "'";
-            } else if ($type == "courseID") {
-                $ex_sq = " WHERE currentCourse = '" . $value . "'";
+            } else if ($type == "courseName") {
+                $course = Course::model()->find("courseName = ?",array($value));
+                $ex_sq = " WHERE currentCourse = '" . $course->courseID . "'";
             } else if ($type == "teaName") {
                 $sql = "SELECT * FROM teacher WHERE userName ='" . $value . "'";
                 $an = Yii::app()->db->createCommand($sql)->query();

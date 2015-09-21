@@ -7,7 +7,7 @@
                 <select name="which" style="width: 185px">
                         <option value="classID" selected="selected">班号</option>
                         <option value="className" >班级名</option>
-                        <option value="courseID" >课程号</option>
+                        <option value="courseName" >课程</option>
                         <option value="teaName" >老师</option>
                 </select>
             </li>

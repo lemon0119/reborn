@@ -32,9 +32,19 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input03">班级</label>
+                <label class="control-label" for="input03">班级名称</label>
                 <div class="controls">
-                    <input name="className" type="text" class="input-xlarge" id="input03" value="" />
+                    <select name="classID" style="width: 285px">
+                        <option value="0" >以后再选</option>
+                        <?php 
+                            $classes = TbClass::model()->findall();
+                            foreach ($classes as $value) {                               
+                        ?>
+                            <option value="<?php echo $value['classID']; ?>" ><?php echo $value['className']; ?></option>
+                        <?php   
+                            }
+                        ?>
+                    </select>
                 </div>
             </div>
             <div class="control-group">
@@ -123,16 +133,6 @@ foreach ($classAll as $key => $value) {
     var userName = $("#input02")[0].value;
             if (userName === ""){
     alert('学生姓名不能为空');
-            return false;
-    }
-    var className = $("#input03")[0].value;
-            if (className === ""){
-    alert('学生班级不能为空');
-            return false;
-    }
-    var classAll = getclassName();
-            if (classAll.indexOf(className) < 0){
-    alert('学生班级不存在！');
             return false;
     }
 //    var pass1 = $("#input04")[0].value;

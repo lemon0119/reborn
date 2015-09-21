@@ -14,8 +14,8 @@
                     <input name="value" type="text" class="search-query span2" placeholder="Search" />
                 </li>
                 <li style="margin-top:10px">
-                    <button type="submit" class="btn btn-primary">查询</button>
-                    <a href="./index.php?r=admin/addCourse" class="btn">添加</a>
+                    <button type="submit" class="btn_serch"></button>
+                    <a href="./index.php?r=admin/addCourse" class="btn_add"></a>
                 </li>
             </form>
             <li class="divider"></li>
@@ -42,7 +42,6 @@ endforeach;
             <th>课程名</th>
             <th>创建人</th>
             <th>创建时间</th>
-            <th>更改记录</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -56,10 +55,6 @@ endforeach;
                                 else echo $teachers[$model['createPerson']];
                         ?></td>
                     <td><?php echo $model['createTime'];?></td>
-                    <td><?php  if($model['changeLog']=="")
-                                    echo '无';
-                                else echo "<a href='./index.php?r=admin/changeLog&&courseID=".$model['courseID'] ."&&source=courseLst'>详情</a>";?>
-                    </td>
                     <td>  
                         <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $model['courseID'];?>&&courseName=<?php echo $model['courseName'];?>&&createPerson=<?php if($model['createPerson']=="0")
                                                                                                                                                                                     echo "管理员";
