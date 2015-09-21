@@ -23,7 +23,7 @@
                     <div class="navbar">
                             <div class="navbar-inner">
                                     <div class="container">
-                                        <a class="brand" href="./index.php?r=student/index">亚伟速录</a>
+                                        <a class="brand" href="./index.php?r=student/index"></a>
                                             <div class="nav-collapse">
                                                     <ul class="nav">
                                                         <li class="dropdown">

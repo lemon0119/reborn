@@ -12,7 +12,7 @@
                 <ul class="nav nav-list">
                 <li class="nav-header">章 节 列 表</li>
                 <?php foreach ($lessons as $less) {?>
-                        <li id="<?php echo $less['lessonID']?>" <?php if($less['lessonID'] <= $currentLesn) {?>>
+                        <li id="<?php echo $less['lessonID']?>" <?php if($less['lessonID'] <= $currentLesn) {if($less['lessonID'] == $currentLesn) echo 'class=\'active\''?>>
                             <a href="./index.php?r=student/myCourse&&lessonID=<?php echo $less['lessonID']?>">
                                 <i class="icon-list-alt"></i> <?php echo $less['lessonName']?>
                             </a>
@@ -54,10 +54,10 @@
                                 <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['workID'];?>" class="view-link"><?php echo '答题';?></a>
                                 <?php }?>
                                <?php if ($ratio_accomplish==1){?>
-                                <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['workID'];?>" class="view-link"><?php echo '查看';?></a>
-                                <?php }else {
-                               	echo '查看';
-                               }?>
+                                <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                                <?php }else {?>
+                               	<img src="<?php echo IMG_URL; ?>detail.png">
+                               <?php }?>
                             </td>
                     </tr>
                 <?php }?>

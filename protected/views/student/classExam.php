@@ -6,9 +6,9 @@
  * and open the template in the editor.
  */
 ?>
-<div class="span12">
-    <center><h3 >课 堂 考 试</h3></center>
-    <table class="table table-bordered table-striped">
+<div class="span11">
+    <center><h3 style="color: white;">课 堂 考 试</h3></center>
+    <table class="table table-bordered table-striped"  style="background: #DDD">
             <thead>
                     <tr>
                             <th>标　　题</th>

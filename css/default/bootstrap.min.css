@@ -161,7 +161,7 @@ h2,h3 {
         background-repeat: no-repeat;
 }
 a {
-	color:#f46500;
+	color:green;
 	text-decoration:none
 }
 a:hover,a:focus {
@@ -4466,13 +4466,12 @@ to {
 	margin-bottom:0
 }
 .hero-unit {
-	padding:60px;
+	padding:0px 60px;
 	margin-bottom:30px;
 	font-size:18px;
 	font-weight:200;
 	line-height:30px;
 	color:inherit;
-	background-color:#eee;
 	-webkit-border-radius:6px;
 	-moz-border-radius:6px;
 	border-radius:6px
@@ -4551,12 +4550,12 @@ to {
  
 }
 .user_dropdown_logo{
-    padding: 0px 5px;
+    padding: 0px 18px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_tea/down_black.png");
 }
 .user_dropdown_logo:hover{
-    padding: 0px 5px;
+    padding: 0px 18px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_tea/down_wite.png");
 }
@@ -4576,13 +4575,13 @@ to {
     background: url(../../img/on_btn_serch.png);
 }
 .btn_add{
-    border: 0px;
-    padding: 18px 55px;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    margin-left: 10px;
     background: url(../../img/btn_add.png);
 }
 .btn_add:hover{
-    border: 0px;
-    padding: 18px 55px;
+    padding: 10px 55px;
     background: url(../../img/on_btn_add.png);
 }
 .icon-navsearch{

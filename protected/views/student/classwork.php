@@ -39,10 +39,10 @@ require 'lessonSideBar.php';
                                 <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['workID'];?>" class="view-link"><?php echo '答题';?></a>
                                 <?php }?>
                                <?php if ($ratio_accomplish==1){?>
-                               	<a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['workID'];?>" class="view-link"><?php echo '查看';?></a>
-                               <?php }else {
-                               	echo '查看';
-                               }?>
+                               	<a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                               <?php }else {?>
+                               	<img src="<?php echo IMG_URL; ?>detail.png">
+                              <?php }?>
                                 
                                
                             </td>

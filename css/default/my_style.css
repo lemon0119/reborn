@@ -59,8 +59,11 @@ video {
     height: 250px;
     margin-left:auto; 
     margin-right:auto;  
+    margin-bottom: 10px;
     overflow:auto;
     font-size:15px;
+    color:#fff;
+    border:1px solid #ccc; 
 }
 
 .sendfoot {

@@ -59,7 +59,7 @@
                             ?></td>
                         <td><?php $couID = $model['currentCourse']; echo $courseName[$couID];?></td>
                         <td>  
-                            <a href="./index.php?r=admin/infoClass&&classID=<?php echo $model['classID']; ?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <a href="./index.php?r=admin/infoClass&&classID=<?php echo $model['classID']; ?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 

@@ -44,7 +44,7 @@ echo "<script>var role='$role';</script>";
             <div id="chatroom" class="chatroom"></div>
             <div class="sendfoot">
                 <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px">
-                <button id="send-msg" style="padding-top:4px;padding-bottom:4px;height:30px;width:25%;font-size:10px">发送</button>
+                <button id="send-msg" style="padding-top:4px;padding-bottom:4px;height:30px;width:25%;font-size:10px;">发送</button>
             </div>
         </div>
 </div>

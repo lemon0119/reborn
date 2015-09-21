@@ -46,7 +46,7 @@ $SNum = 0;
     <!-- 翻页标签结束 -->
         </div>
         <?php if(count($exercise['question']) > 0){?>
-            <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();" style="margin-left: 200px">提交</a>
+            <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();" style="margin-left: 200px">保存</a>
             <!--<a  href="./index.php?r=student/classwork" type="button" class="btn btn-primary btn-large" style="margin-left: 350px">退出</a>-->
         <?php }?>
         <?php 

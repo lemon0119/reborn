@@ -200,12 +200,13 @@ class StudentController extends CController {
         $result = ListenType::model()->findByPK($exerID);
         $isExam = false;
         $wID=Yii::app()->session['workID'];
+        $isOver='0';
         return $this->render('listenExer',array( 
             'exercise'=>$classwork,
             'exerOne'=>$result,
             'isExam' =>$isExam,
             'cent' =>$cent,
-            'workId'=>$wID
+            'workId'=>$wID,'isOver'=>$isOver
         ));
     }
     
@@ -265,12 +266,13 @@ class StudentController extends CController {
         $result = LookType::model()->findByPK($exerID);
         $isExam = false;
         $wID=Yii::app()->session['workID'];
+        $isOver='0';
         return $this->render('lookExer',array( 
             'exercise'=>$classwork,
             'exerOne'=>$result,
             'isExam' =>$isExam,
             'cent' =>$cent,
-            'workID' =>$wID
+            'workID' =>$wID,'isOver'=>$isOver
         ));
     }
     
@@ -325,6 +327,7 @@ class StudentController extends CController {
         $classwork = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $exerID = $_GET['exerID'];
         Yii::app()->session['exerID'] = $exerID;
@@ -332,12 +335,13 @@ class StudentController extends CController {
         $result = KeyType::model()->findByPK($exerID);
         $isExam = false;
         $wID=Yii::app()->session['workID'];
+        $isOver='0';
         return $this->render('keyExer',array( 
             'exercise'=>$classwork,
                 'exerOne'=>$result,
             'isExam' => $isExam,
                 'cent' => $cent,
-            'workId' =>$wID
+            'workId' =>$wID,'isOver'=>$isOver
         ));
     }
     
@@ -522,6 +526,7 @@ public function actionfilling(){
         $recordID = SuiteRecord::getRecord($workID, $studentID);
         $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
         $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
+        
         return $this->render('fillingExer',['ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
     }
 

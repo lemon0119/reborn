@@ -44,7 +44,7 @@
         <?php }else if(Yii::app()->session['lastUrl']=="searchClass"){?>
         <a href="./index.php?r=admin/searchClass&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
         <?php }else if(Yii::app()->session['lastUrl']=="infoClass"){?>
-        <a href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" class="btn">返回</a>
+        <a href="./index.php?r=admin/infoClass&&classID=<?php echo $_GET['classID'];?>" class="btn">返回</a>
         <?php }else if(isset($flag)){?>
         <a href="./index.php?r=admin/searchTea&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
         <?php }else{?>
