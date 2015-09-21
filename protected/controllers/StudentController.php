@@ -651,9 +651,7 @@ public function actionfilling(){
         $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
             
         }
-        if($recordID==null){
-            return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork,'ratio_accomplish'=>$ratio_accomplish]);
-        }
+        
         
         
         $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
