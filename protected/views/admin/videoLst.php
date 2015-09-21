@@ -7,7 +7,8 @@
     </div>
 </div>
 <div class="span9">
-    <h2>视频列表</h2>
+    <h2  style="display:inline-block;">视频列表</h2>
+    <span>(支持mp4及flv格式)</span>
     <div id ="video-table"></div>
     <form class="form-horizontal" method="post" action="./index.php?r=admin/addVideo&&vdir=<?php echo $vdir;?>" id="myForm" enctype="multipart/form-data"> 
     <div class="control-group">
