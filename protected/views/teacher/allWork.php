@@ -8,7 +8,11 @@
                 <script src="<?php echo JS_URL;?>jquery.min.js"></script>
                 <script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
                 <script src="<?php echo JS_URL;?>site.js"></script>
-
+<style>
+                    body{
+                        background:#fff;
+                    }
+                </style>
                 
                 
 <?php

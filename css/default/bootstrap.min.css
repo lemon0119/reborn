@@ -161,7 +161,7 @@ h2,h3 {
         background-repeat: no-repeat;
 }
 a {
-	color:green;
+	color:#f46401;
 	text-decoration:none
 }
 a:hover,a:focus {
@@ -2836,6 +2836,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 	margin-top:9px
 }
 .nav-list {
+        color:#f46401;
 	padding-right:15px;
 	padding-left:15px;
 	margin-bottom:0
@@ -4602,4 +4603,7 @@ to {
 .span_set{
     position: relative;
     left:210px;
+}
+.view-link{
+    color:green;
 }

@@ -14,10 +14,10 @@
      <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
             <center>
-                <table>
+                <table style="margin-left: -60px;">
                     <tr><td><?php echo $currentClass['className']?></td></tr>
-                    <tr><td><?php echo $currentLesson['lessonName']?></td></tr>
-                    <tr><td><?php echo $suite['suiteName']?></td></tr>
+                    <tr><td>&nbsp;&nbsp;&nbsp;<?php echo $currentLesson['lessonName']?></td></tr>
+                    <tr><td>&nbsp;  &nbsp;  &nbsp;   &nbsp;<?php echo $suite['suiteName']?></td></tr>
                 </table>                
             </center>                   
         </ul>
@@ -26,9 +26,9 @@
 </div>
 
 <div class="span9">
-    <iframe src="./index.php?r=teacher/ToOwnWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe1" frameborder="0" scrolling="no" width="900px" height="350px" name="iframe1"></iframe>
+    <iframe  src="./index.php?r=teacher/ToOwnWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe1" frameborder="0" scrolling="no" width="770px" height="350px" name="iframe1"></iframe>
     
-    <iframe src="./index.php?r=teacher/ToAllWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe2" frameborder="0" scrolling="no" width="900px" height="400px" name="iframe2"></iframe>
+    <iframe  src="./index.php?r=teacher/ToAllWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe2" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe2"></iframe>
 
 <div >
     
