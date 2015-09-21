@@ -42,18 +42,16 @@
                         <td style="width: 150px"><?php echo $allwork['exerciseID'];?></td>
                         <td><?php echo $allwork['courseID'];
                             ?></td>
-                        <td> <?php  if(strlen($allwork['title'])<=15)
+                         <td><?php  if(Tool::clength($allwork['title'])<=7)
                                         echo $allwork['title'];
                                     else
-                                        echo substr($allwork['title'], 0, 15)."...";
-                                        ?>
-                        </td>
-                         <td> <?php  if(strlen($allwork['content'])<=15)
+                                        echo Tool::csubstr($allwork['title'], 0, 7)."...";?></td>
+                        
+                        <td><?php  if(Tool::clength($allwork['content'])<=10)
                                         echo $allwork['content'];
                                     else
-                                        echo substr($allwork['content'], 0, 15)."...";
-                                        ?>
-                        </td>
+                                        echo Tool::csubstr($allwork['content'], 0,10)."...";
+                                        ?></td>
                         <td>
                             <?php  if($allwork['createPerson']=="0")
                                         echo "管理员";

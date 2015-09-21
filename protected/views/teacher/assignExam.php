@@ -61,7 +61,7 @@
                     </td>
                     <td>
                         <?php if ($isOpen == false) { ?>
-                            <a href="./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $exam['examID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>">开放</a>
+                        <a href="./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $exam['examID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color: green">开放</a>
                             <font style="color:red">关闭</font>
                         <?php } else { ?>
                             <font style="color:red">开放</font>

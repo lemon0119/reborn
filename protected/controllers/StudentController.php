@@ -627,17 +627,7 @@ public function actionfilling(){
         else
             echo '对不起，提交答案失败。';
     }
-    
-//    public function actionGotoDetail(){
-//        $recordID = Yii::app()->session['recordID'];
-//        $type = $_GET['exerType'];
-//        $exerID = $_GET['exerID'];
-//        Yii::app()->session['exerID'] = $exerID;
-//        Yii::app()->session['exerType'] = $type;
-//        $answer = AnswerRecord::getAnswerID($recordID, $type, $exerID);
-//        Yii::app()->session['answer'] = $answer['answer'];
-//        $this->redirect(['/student/answerDetail']);
-//    }
+   
     public function actionAnswerDetail(){
         $exerID = Yii::app()->session['exerID'];
         $type = Yii::app()->session['exerType'];
@@ -651,66 +641,23 @@ public function actionfilling(){
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
-        
+        $workID = Yii::app()->session['workID'];
         $classworks = Suite::model()->getClassworkAll($currentLesn);
         
         $classwork = array();
         foreach ($classworks as $c){
         array_push($classwork, $c);
+        
         $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
             
         }
-        
+        if($recordID==null){
+            return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork,'ratio_accomplish'=>$ratio_accomplish]);
+        }
         
         
         $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
         return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork,'ratio_accomplish'=>$ratio_accomplish]);
-        /*
-        $this->saveParam();
-        Yii::app()->session['type'] = 'classwork';
-        Yii::app()->session['progress'] = 'false';
-        $exerType = Yii::app()->session['exerType'];
-        //找到当前的课堂练习
-        $suite = Suite::model()->getClassworkNow();
-        $record = $suite->read();
-        if($record == FALSE){
-            return $this->render('classwork',array(
-                'noExer'=>"true",
-            ));
-        }
-        $suiteID = $record['suiteID'];
-        Yii::app()->session['suiteID'] = $suiteID;
-        
-        //判断内部选择的题型，以便包含不同的页面。
-        if($exerType == 'listenExer') {
-            $result = ListenType::model()->getListenExer($suiteID);
-            return $this->render('classwork',array(
-                'exercise'=>$result["exercise"],
-                'pages'=>$result["pages"],
-            ),false,true);
-        } else if ($exerType == 'lookExer') {
-            $result = LookType::model()->getLookExer($suiteID);
-            return $this->render('classwork',  ['exercise'=>$result["exercise"],
-                'pages'=>$result['pages'],
-                ],false,true);
-        } else if ($exerType == 'keyExer') {
-            $result = KeyType::model()->getKeyExer($suiteID);
-            return $this->render('classwork',array(
-                'exercise'=>$result["exercise"],
-                'pages'=>$result['pages'],
-            ),false,true);
-        } else if ($exerType == 'knlgExer') {
-            $choice = Suite::model()->getchoice($suiteID);
-            $filling = Suite::model()->getFilling($suiteID);
-            $question = Suite::model()->getQuestion($suiteID);
-            return $this->render('classwork',array( 
-                'choice'=>$choice, 
-                'filling'=>$filling, 
-                'question'=>$question, 
-            ));
-        }
-         * 
-         */
     }
     
     //宋杰 2015-7-30 课堂考试

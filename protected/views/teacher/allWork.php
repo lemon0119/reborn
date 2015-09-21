@@ -41,14 +41,15 @@
                     <?php foreach($workLst as $allwork):?>
                     <tr>
                         <td style="width: 150px"><?php echo $allwork['exerciseID'];?></td>
-                        <td><?php echo $allwork['courseID'];
-                            ?></td>
-                        <td> <?php  if(strlen($allwork['requirements'])<=15)
+                        <td><?php  if(Tool::clength($allwork['courseID'])<=7)
+                                        echo $allwork['courseID'];
+                                    else
+                                        echo Tool::csubstr($allwork['courseID'], 0, 7)."...";?></td>
+                         <td><?php  if(Tool::clength($allwork['requirements'])<=10)
                                         echo $allwork['requirements'];
                                     else
-                                        echo substr($allwork['requirements'], 0, 15)."...";
-                                        ?>
-                        </td>
+                                        echo Tool::csubstr($allwork['requirements'], 0,10)."...";
+                                        ?></td>
                         <td>
                             <?php  if($allwork['createPerson']=="0")
                                         echo "管理员";
