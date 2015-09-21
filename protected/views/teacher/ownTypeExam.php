@@ -8,7 +8,11 @@
                 <script src="<?php echo JS_URL;?>jquery.min.js"></script>
                 <script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
                 <script src="<?php echo JS_URL;?>site.js"></script>
-                
+                <style>
+                    body{
+                        background:#fff;
+                    }
+                </style>
 <h3>已有习题</h3>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped">
@@ -56,7 +60,7 @@
                             <?php  echo $thisExam['time']/60?>
                         </td>
                         <td>            
-                            <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID'] ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>                          
+                            <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID'] ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>                          
                             <a href="#"  onclick="configScore('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png">配分</a>
                             <a href="#"  onclick="configTime('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png">配置时间</a>
                         </td>

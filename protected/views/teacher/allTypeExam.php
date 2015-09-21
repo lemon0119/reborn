@@ -8,7 +8,11 @@
                 <script src="<?php echo JS_URL;?>jquery.min.js"></script>
                 <script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
                 <script src="<?php echo JS_URL;?>site.js"></script>  
-
+<style>
+                    body{
+                        background:#fff;
+                    }
+                </style>
     <?php
         //得到老师ID对应的名称
         foreach ($teacher as $model):
@@ -62,7 +66,7 @@
                         
                         <td>
                             <a href="./index.php?r=teacher/AddExamExercise&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>detail.png">添加</a>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>                            
+                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>                            
                         </td>
                     </tr>            
                     <?php endforeach;?> 

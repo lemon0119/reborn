@@ -77,13 +77,15 @@
                 </tr>            
             <?php endforeach; ?> 
         </tbody>
+        
     </table>
-</div>
-<div align=center>
+    <div align=center>
     <?php
     $this->widget('CLinkPager', array('pages' => $pages));
     ?>
 </div>
+</div>
+
 
 <script>
     function dele(examID, currentPage)

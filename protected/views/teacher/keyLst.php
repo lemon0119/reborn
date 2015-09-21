@@ -16,7 +16,7 @@
                         </li>
                         <li style="margin-top:10px">
                                 <button type="submit" class="btn_serch"></button>
-                                <button href="./index.php?r=teacher/AddKey" class="btn_add"></buton>
+                                <a href="./index.php?r=teacher/AddKey" class="btn_add"></a>
                         </li>
                 </form>
                         <li class="divider"></li>

@@ -8,7 +8,11 @@
                 <script src="<?php echo JS_URL;?>jquery.min.js"></script>
                 <script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
                 <script src="<?php echo JS_URL;?>site.js"></script>
-
+<style>
+                    body{
+                        background:#fff;
+                    }
+                </style>
                 
                 
 <?php
@@ -58,11 +62,11 @@
                         <td>
                             <?php 
                             if($allwork['createPerson'] == Yii::app()->session['userid_now']){ ?>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                             <a href="./index.php?r=teacher/AddExamExercise&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>edit.png">添加</a>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>" ><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>                            
+                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>" ><img src="<?php echo IMG_URL; ?>edit.png"></a>                            
                             <?php }else{ ?>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
+                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                             <a href="./index.php?r=teacher/AddExamExercise&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>edit.png">添加</a>
                             <?php }?>
                         </td>
