@@ -27,19 +27,19 @@
                                             <div class="nav-collapse">
                                                     <ul class="nav">
                                                         <li class="dropdown">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">在线课堂<b class="caret"></b></a>
+                                                            <a id="onlineCourse" href="#"  data-toggle="dropdown"></a>
                                                             <ul class="dropdown-menu">
                                                                 <li><a href="./index.php?r=student/virtualClass">虚拟课堂</a></li>
                                                                 <li><a href="./index.php?r=student/classwork">课堂作业</a></li>
                                                             </ul>
                                                         </li>
-                                                            <li><a href="./index.php?r=student/myCourse">我的课程</a></li>
-                                                            <li><a href="./index.php?r=student/classExam">课堂考试</a></li>
-                                                    </ul>
-                                                    <ul class="nav pull-right">
+                                                            <li><a id="myCourse" href="./index.php?r=student/myCourse"></a></li>
+                                                            <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
+                                                    
+                                                
                                                         <li class="dropdown">
-                                                                    <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                                                                        <?php echo Yii::app()->user->name; ?><b class="caret"></b>
+                                                                    <a href="" id="nameStu" class="dropdown-toggle" data-toggle="dropdown">
+                                                                        <?php echo Yii::app()->user->name; ?><b class="user_dropdown_logo"></b>
                                                                     </a>
                                                                     <ul class="dropdown-menu">
                                                                             <li>
