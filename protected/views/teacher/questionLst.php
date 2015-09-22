@@ -74,12 +74,12 @@
                         ?></td>
                     <td><?php echo $model['createTime'];?></td>
                     <td>
-                          <a href="./index.php?r=teacher/editQuestion&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                          <a href="./index.php?r=teacher/editQuestion&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
                           <?php if($model['createPerson'] == Yii::app()->session['userid_now']){?>
-                            <a href="./index.php?r=teacher/editQuestion&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href="./index.php?r=teacher/editQuestion&&exerciseID=<?php echo $model['exerciseID'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>
                             <?php }else{ ?>
-                            <a href="./index.php?r=teacher/copyQuestion&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>copy.png">复制</a>
+                            <a href="./index.php?r=teacher/copyQuestion&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img title="复制"src="<?php echo IMG_URL; ?>copy.png"></a>
                             <?php }?>   
                     </td>
                 </tr>            

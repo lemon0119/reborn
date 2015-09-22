@@ -39,19 +39,19 @@
                 <tbody>        
                     <?php foreach($workLst as $allwork):?>
                     <tr>
-                        <td style="width: 150px"><?php echo $allwork['exerciseID'];?></td>
+                        <td style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
                         <td><?php echo $allwork['courseID'];
                             ?></td>
-                        <td> <?php  if(strlen($allwork['title'])<=15)
+                        <td> <?php  if(tool::clength($allwork['title'])<=7)
                                         echo $allwork['title'];
                                     else
-                                        echo substr($allwork['title'], 0, 15)."...";
+                                        echo tool::csubstr($allwork['title'], 0, 7)."...";
                                         ?>
                         </td>
-                         <td> <?php  if(strlen($allwork['content'])<=15)
+                        <td> <?php  if(tool::clength($allwork['content'])<=10)
                                         echo $allwork['content'];
                                     else
-                                        echo substr($allwork['content'], 0, 15)."...";
+                                        echo tool::csubstr($allwork['content'], 0, 10)."...";
                                         ?>
                         </td>
                         <td>
@@ -65,7 +65,7 @@
                         </td>     
                         
                         <td>
-                            <a href="./index.php?r=teacher/AddExamExercise&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>detail.png">添加</a>
+                            <a href="./index.php?r=teacher/AddExamExercise&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>                            
                         </td>
                     </tr>            

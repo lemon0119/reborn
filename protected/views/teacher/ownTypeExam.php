@@ -37,17 +37,17 @@
                     <tr>
                         <td ><?php echo $work['exerciseID'];?></td>
                         <td>
-                            <?php  if(strlen($work['title'])<=15)
+                            <?php  if(Tool::clength($work['title'])<=7)
                                         echo $work['title'];
                                     else
-                                        echo substr($work['title'], 0, 15)."...";
+                                        echo Tool::csubstr($work['title'], 0, 7)."...";
                                         ?>
                         </td>
                         <td>
-                            <?php  if(strlen($work['content'])<=15)
+                            <?php  if(Tool::clength($work['content'])<=10)
                                         echo $work['content'];
                                     else
-                                        echo substr($work['content'], 0, 15)."...";
+                                        echo Tool::csubstr($work['content'], 0, 10)."...";
                                         ?>
                         </td>
                         <td>

@@ -29,10 +29,10 @@
                     <tr>
                         <td style="width: 150px"><?php echo $work['exerciseID'];?></td>
                         <td>
-                            <?php  if(strlen($work['requirements'])<=15)
+                            <?php  if(Tool::clength($work['requirements'])<=10)
                                         echo $work['requirements'];
                                     else
-                                        echo substr($work['requirements'], 0, 15)."...";
+                                        echo Tool::csubstr($work['requirements'], 0, 10)."...";
                                         ?>
                         </td>
                         <td>

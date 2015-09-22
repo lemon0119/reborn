@@ -1853,9 +1853,12 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
 	background-position:-384px -96px
 }
 .icon-plus {
-	padding: 4px 4px;
+    padding: 4px 4px;
     background: url(../../img/UI_adm/icon_addperson.png);
     background-repeat: no-repeat;
+}
+.icon-plus-editwork {
+        background-position: -408px -96px
 }
 .icon-minus {
 	background-position:-433px -96px

@@ -85,7 +85,7 @@
              <div class="controls">
                  <input name="in1" type="text" class="input-xlarge" id="input2" value="<?php echo $optArr[0];?>" />
                  <?php if(!isset($action)) {?>
-                    <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus icon-white"></i></a> 
+                    <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> 
                     <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
                  <?php }?>
              </div>

@@ -39,13 +39,13 @@
                 <tbody>        
                     <?php foreach($workLst as $allwork):?>
                     <tr>
-                        <td style="width: 150px"><?php echo $allwork['exerciseID'];?></td>
+                        <td style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
                         <td><?php echo $allwork['courseID'];
                             ?></td>
-                         <td><?php  if(Tool::clength($allwork['title'])<=7)
+                         <td><?php  if(Tool::clength($allwork['title'])<=5)
                                         echo $allwork['title'];
                                     else
-                                        echo Tool::csubstr($allwork['title'], 0, 7)."...";?></td>
+                                        echo Tool::csubstr($allwork['title'], 0, 5)."...";?></td>
                         
                         <td><?php  if(Tool::clength($allwork['content'])<=10)
                                         echo $allwork['content'];
@@ -67,11 +67,11 @@
                             if($allwork['createPerson'] == Yii::app()->session['userid_now']){ ?>
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>   
-                            <a href="./index.php?r=teacher/AddWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>detail.png">添加</a>
+                            <a href="./index.php?r=teacher/AddWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
                                                      
                             <?php }else{ ?>
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
-                            <a href="./index.php?r=teacher/AddWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>edit.png">添加</a>
+                            <a href="./index.php?r=teacher/AddWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
                             <?php }?>
                         </td>
                     </tr>            
