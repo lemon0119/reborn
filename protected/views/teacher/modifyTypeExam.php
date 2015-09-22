@@ -75,7 +75,7 @@ function test()
 </div>
 
 <div class="span9">
-    <iframe src="./index.php?r=teacher/ToOwnTypeExam&&type=<?php echo $type;?>&&examID=<?php echo $exam['examID'];?>" id="iframe1" frameborder="0"  scrolling="no" width="770px" height="350px" name="iframe1"></iframe>
+    <iframe src="./index.php?r=teacher/ToOwnTypeExam&&type=<?php echo $type;?>&&examID=<?php echo $exam['examID'];?>" id="iframe1" frameborder="0"  scrolling="no" width="770px" height="400px" name="iframe1"></iframe>
     
     <iframe src="./index.php?r=teacher/ToAllTypeExam&&type=<?php echo $type;?>&&examID=<?php echo $exam['examID'];?>" id="iframe2" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe2"></iframe>
 

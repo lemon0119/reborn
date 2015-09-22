@@ -86,6 +86,8 @@
     </div>
 
 <script>
+   
+    
     $(document).ready(function(){
         var result = <?php echo "'$maniResult'";?>;
         if(result != "")

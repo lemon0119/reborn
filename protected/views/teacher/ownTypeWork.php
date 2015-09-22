@@ -58,6 +58,8 @@
     </div>
     
 <script>
+    
+    
     $(document).ready(function(){
         
      parent.setCurrentPage1(<?php echo $pages->currentPage+1?>);

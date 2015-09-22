@@ -15,8 +15,8 @@ else {
 <div clas="span9">
     <?php if($isExam == true){?>
     <center id="time">
-    <h6>距离考试开始还有</h6>
-    <p id="timeCounter"></p>
+    <h6 class="welcome">距离考试开始还有</h6>
+    <p  class="welcome"id="timeCounter"></p>
     </center>
     <?php }else { ?>
     <h3 class="welcome" align="center"> 在左侧选择题目开始答题。 </h3>

@@ -6,7 +6,7 @@
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
         <table border = '0px'>
             <tr>
-                <td width = '200px'><h3><?php echo $exerOne['title']?></h3></td>
+                <td width = '200px'><h3 ><?php echo $exerOne['title']?></h3></td>
             </tr>
         </table>
         <br/>
