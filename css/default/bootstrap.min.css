@@ -4710,3 +4710,15 @@ to {
     background-image: url("../../img/user_ui.png");
  
 }
+#send-msg{
+    
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    background:url("../../img/UI_stu/send.png");
+}
+
+#send-msg:hover{
+     background-repeat: no-repeat;
+    padding: 10px 55px;
+    background: url("../../img/UI_stu/sendHover.png");
+}
