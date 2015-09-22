@@ -645,11 +645,13 @@ public function actionfilling(){
         $classworks = Suite::model()->getClassworkAll($currentLesn);
         
         $classwork = array();
+        if($classwork==null){
+                return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork]);
+            }  
         foreach ($classworks as $c){
-        array_push($classwork, $c);
+            array_push($classwork, $c);
+            $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
         
-        $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
-            
         }
         
         
