@@ -20,7 +20,7 @@
             </li>
         </form>
             <li class="divider"></li>
-            <li class="nav-header">查看</li>
+            <li class="nav-header"><i class="icon-knowlage"></i>查看</li>
             <li id="classLst"><a href="./index.php?r=admin/classLst"><i class="icon-list-alt"></i> 班级列表</a></li>
             <li id="stuLst"><a href="./index.php?r=admin/stuDontHaveClass"><i class="icon-list-alt"></i> 未分班学生</a></li>
         </ul>

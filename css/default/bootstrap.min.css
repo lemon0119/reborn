@@ -1605,7 +1605,9 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
 	background-position:-432px 0
 }
 .icon-trash {
-	background-position:-456px 0
+	padding: 4px 4px;
+    background: url(../../img/UI_adm/icon_delete.png);
+    background-repeat: no-repeat;
 }
 .icon-home {
 	background-position:0 -24px
@@ -1641,7 +1643,9 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
 	background-position:-240px -24px
 }
 .icon-list-alt {
-	background-position:-264px -24px
+	padding: 4px 4px;
+    background: url(../../img/icon_answer.png);
+    background-repeat: no-repeat;
 }
 .icon-lock {
 	background-position:-287px -24px
@@ -1849,7 +1853,9 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
 	background-position:-384px -96px
 }
 .icon-plus {
-	background-position:-408px -96px
+	padding: 4px 4px;
+    background: url(../../img/UI_adm/icon_addperson.png);
+    background-repeat: no-repeat;
 }
 .icon-minus {
 	background-position:-433px -96px
@@ -4648,6 +4654,12 @@ to {
     padding: 18px 112px;
     background-repeat: no-repeat;
     background: url(../../img/UI_adm/btn_bigserch.png);
+}
+.btn_bigserch:hover{
+   border: 0px;
+    padding: 18px 112px;
+    background-repeat: no-repeat;
+    background: url(../../img/UI_adm/on_btn_bigserch.png);
 }
 
 #onlineCourse{

@@ -58,7 +58,7 @@ endforeach;
                         <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $model['courseID'];?>&&courseName=<?php echo $model['courseName'];?>&&createPerson=<?php if($model['createPerson']=="0")
                                                                                                                                                                                     echo "管理员";
                                                                                                                                                                                     else echo $teachers[$model['createPerson']];
-                                                                                                                                                                            ?>"><img src="<?php echo IMG_URL; ?>detail.png">信息</a>
+                                                                                                                                                                            ?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 

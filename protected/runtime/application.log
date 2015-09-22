@@ -4613,3 +4613,13 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=student/classwork
 in E:\php_workstation\reborn\protected\controllers\StudentController.php (661)
 in E:\php_workstation\reborn\index.php (30)
+2015/09/22 11:27:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "addchoic" 动作.' in E:\php_workstation\framework\web\CController.php:483
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(270): CController->missingAction('addchoic')
+#1 E:\php_workstation\framework\web\CWebApplication.php(284): CController->run('addchoic')
+#2 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/addchoic')
+#3 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 E:\php_workstation\reborn\index.php(30): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=admin/addchoic
+---
