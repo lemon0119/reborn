@@ -36,8 +36,8 @@ class Suite extends CActiveRecord
     public function getClassworkAll($lesnID){
         $userid =Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($userid);
-        $select = 'select begintime , endtime , classwork.suiteID , suite.suiteName , class_lesson_suite.open as open, class_lesson_suite.workID from classwork, class_lesson_suite, suite';
-        $condition = " where classwork.suiteID=suite.suiteID and class_lesson_suite.suiteID=classwork.suiteID and class_lesson_suite.classID='$classID' and class_lesson_suite.lessonID='$lesnID'";
+        $select = 'select  suite.suiteID , suite.suiteName , class_lesson_suite.open as open, class_lesson_suite.workID from class_lesson_suite, suite';
+        $condition = " where class_lesson_suite.suiteID=suite.suiteID and class_lesson_suite.classID='$classID' and class_lesson_suite.lessonID='$lesnID'";
         $order = 'order by suite.suiteID';
         $sql = $select.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();

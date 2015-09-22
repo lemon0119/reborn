@@ -3487,7 +3487,8 @@ class TeacherController extends CController {
                  $render = "suiteListen";
                  break;
          }           
-         $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$exerciseID));
+         $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$work['exerciseID']));
+        
          $this->renderPartial($render,array(
              'work'=> $work,
              'ansWork'=>$ansWork,
