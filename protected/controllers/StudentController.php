@@ -651,10 +651,11 @@ public function actionfilling(){
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $workID = Yii::app()->session['workID'];
+        print_r($classID."-"."-".$currentLesn."-".$workID);
         $classworks = Suite::model()->getClassworkAll($currentLesn);
         
         $classwork = array();
-        if($classwork==null){
+        if($classworks==null){
                 return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork]);
             }  
         foreach ($classworks as $c){
