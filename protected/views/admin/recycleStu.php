@@ -4,8 +4,8 @@
     <h2>被删除学生列表</h2>
 <form id="myForm" method="post" action="" onkeydown="if(event.keyCode==13){return false;}"> 
     <input type="checkbox" name="all" onclick="check_all(this,'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
-<a href="./index.php?r=admin/revokeStu" id="submit"><img src="<?php echo IMG_URL; ?>reborn.png">恢复</a>
-<a href="./index.php?r=admin/confirmPass" id="submit"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+<a href="./index.php?r=admin/revokeStu" id="submit"><img src="<?php echo IMG_URL; ?>reborn.png"></a>
+<a href="./index.php?r=admin/confirmPass" id="submit"><img src="<?php echo IMG_URL; ?>delete.png"></a>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -24,8 +24,8 @@
                     <td><?php echo $model['userName'];?></td>
                     <td><?php if($model['classID']=="0") echo "无"; else echo $model['classID']; ?></td>
                     <td>
-                        <a href="./index.php?r=admin/revokeStu&&userID=<?php echo $model['userID'];?>" id="submit"><img src="<?php echo IMG_URL; ?>reborn.png">恢复</a>
-                        <a href="./index.php?r=admin/confirmPass&&userID=<?php echo $model['userID'];?>" id="submit"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                        <a href="./index.php?r=admin/revokeStu&&userID=<?php echo $model['userID'];?>" id="submit"><img src="<?php echo IMG_URL; ?>reborn.png"></a>
+                        <a href="./index.php?r=admin/confirmPass&&userID=<?php echo $model['userID'];?>" id="submit"><img src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>
                 <?php endforeach;?> 

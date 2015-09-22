@@ -4538,17 +4538,24 @@ to {
     padding: 28px 60px;
     background-image: url("../../img/UI_tea/on_exam_manager.png");
 }
-#userUI{
-    font-weight: bolder;
-    padding: 18px 21px;
+.userUI{
+    position: absolute;
+    height: 55px;
+    width: 120px;
+    line-height:55px;
     background-image: url("../../img/user_ui.png");
 }
+#userUI{
+    margin-left: 30px;
+    text-align: center;
+    font-weight: bolder;
+    color: #393939;
+}
 #userUI:hover{
+    margin-left: 30px;
+    text-align: center;
     font-weight: bolder;
     color: #f46500;
-    padding: 18px 21px;
-    background-image: url("../../img/user_ui.png");
- 
 }
 .user_dropdown_logo{
     padding: 0px 18px;

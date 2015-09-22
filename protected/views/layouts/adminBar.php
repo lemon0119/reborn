@@ -51,13 +51,15 @@
                                                             </li>
                                                             <li><a id="course_manager"  href="./index.php?r=admin/courseLst"></a></li>
                                                             <li class="dropdown">
+                                                                <div class="userUI">
                                                                     <a href="" id="userUI" data-toggle="dropdown">管理员<b class="user_dropdown_logo"></b></a>
                                                                     <ul class="dropdown-menu">
                                                                             <li>
                                                                                     <a href="./index.php?r=admin/set">设置</a>
                                                                                     <a href="./index.php?r=user/login&exit=1">退出</a>
                                                                             </li>
-                                                                    </ul>                    
+                                                                    </ul>   
+                                                                </div>
                                                         </li>
                                                     </ul>
                                                         
