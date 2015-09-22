@@ -4531,6 +4531,7 @@ to {
     padding: 28px 60px;
     background-image: url("../../img/UI_tea/on_topic_manager.png");
 }
+
 #homework{
     padding: 28px 60px;
     background-image: url("../../img/UI_tea/home_work.png");
@@ -4578,6 +4579,8 @@ to {
     background-image: url("../../img/UI_tea/down_wite.png");
 }
 .welcome{
+        margin-top: 100px;
+        margin-left: 300px;
         color: #fff;
 	width:700px
         

@@ -48,7 +48,7 @@
                     }
                 ?>                    
                 <tr>
-                    <td style="width: 150px"><?php echo $exam['examName']; ?></td>                        
+                    <td style="width: 130px"><?php echo $exam['examName']; ?></td>                        
 
                     <td>
                         <?php echo $exam['begintime'] ?>
