@@ -4656,3 +4656,41 @@ to {
     background-repeat: no-repeat;
     background: url(../../img/UI_adm/btn_bigserch.png);
 }
+
+#onlineCourse{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/onlineCourse.png");
+}
+#onlineCourse:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/onlineCourseY.png");
+}
+#courseExam{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/courseExam.png");
+}
+#courseExam:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/courseExamY.png");
+}
+#myCourse{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/myCourse.png");
+}
+#myCourse:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/myCourseY.png");
+}
+
+#nameStu{
+    font-weight: bolder;
+    padding: 18px 21px;
+    background-image: url("../../img/user_ui.png");
+}
+#nameStu:hover{
+    font-weight: bolder;
+    color: #f46500;
+    padding: 18px 21px;
+    background-image: url("../../img/user_ui.png");
+ 
+}
