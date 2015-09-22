@@ -176,7 +176,7 @@ class StudentController extends CController {
                 echo '保存答案失败，请重新提交!';
         }
     }
-    
+    //我的课程
     public function actionMyCourse(){
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
@@ -261,7 +261,7 @@ class StudentController extends CController {
         ));
     }
     
-   
+   //课堂看打练习
     public function actionlookType(){
         $suiteID = Yii::app()->session['suiteID'];
         $arg=$_GET['cent'];
@@ -328,7 +328,7 @@ class StudentController extends CController {
     }
     
 
-   
+   //课堂键位练习
     public function actionKeyType(){
         $suiteID = Yii::app()->session['suiteID'];
         $arg=$_GET['cent'];
@@ -397,7 +397,7 @@ class StudentController extends CController {
         ));
     }
     
-    
+   //课堂作业简答题 
      public function actionQuestion(){
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
@@ -451,7 +451,7 @@ class StudentController extends CController {
         return $this->render('questionExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo,'typeNow' => 'question']);
     }
     
-    
+   //课堂作业选择题 
     public function actionChoice(){
         $suiteID = Yii::app()->session['suiteID'];
         $workID = Yii::app()->session['workID'];
@@ -499,7 +499,7 @@ class StudentController extends CController {
         $isExam = true;
         return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']);
     }
-    
+ //课堂作业填空题   
 public function actionfilling(){
         $suiteID = Yii::app()->session['suiteID'];
         $workID = Yii::app()->session['workID'];
@@ -554,7 +554,7 @@ public function actionfilling(){
     }
     
     
-    
+  //课堂作业套题  
    public function actionClswkOne(){
         $workID = $_GET['suiteID'];
          $isExam = false;
@@ -645,6 +645,7 @@ public function actionfilling(){
         $answer = Yii::app()->session['answer'];
         return $this ->render('ansDetail',['exer'=>$exer, 'answer'=>$answer]);
     }
+    //课堂作业
     public function actionClasswork(){
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
@@ -654,18 +655,25 @@ public function actionfilling(){
         $classworks = Suite::model()->getClassworkAll($currentLesn);
         
         $classwork = array();
-        if($classwork==null){
-                return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork]);
-            }  
+         
+        $ratio_accomplish='0';
         foreach ($classworks as $c){
             array_push($classwork, $c);
             $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
-        
+            print_r($recordID);
+            if($recordID==null){
+                print_r("n");
+            }else{
+                $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
+            }
         }
         
         
         
-        $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
+            
+        
+            
+        
         return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork,'ratio_accomplish'=>$ratio_accomplish]);
     }
     
