@@ -4583,6 +4583,7 @@ to {
 }
 .btn_add:hover{
     padding: 10px 55px;
+    margin-left: 10px;
     background: url(../../img/on_btn_add.png);
 }
 .icon-navsearch{
@@ -4641,4 +4642,10 @@ to {
 #course_manager:hover{
     padding: 28px 60px;
     background-image: url("../../img/UI_adm/on_course_manager.png");
+}
+.btn_bigserch{
+   border: 0px;
+    padding: 18px 112px;
+    background-repeat: no-repeat;
+    background: url(../../img/UI_adm/btn_bigserch.png);
 }

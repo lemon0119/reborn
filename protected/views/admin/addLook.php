@@ -16,8 +16,8 @@
                     <input name="value" type="text" class="search-query span2" placeholder="Search" />
             </li>
             <li style="margin-top:10px">
-                    <button type="submit" class="btn btn-primary">查询</button>
-                    <a href="./index.php?r=admin/AddLook" class="btn">添加</a>
+                    <button type="submit" class="btn_serch"></button>
+                    <a href="./index.php?r=admin/AddLook" class="btn_add"></a>
             </li>
         </form>
             <li class="divider"></li>

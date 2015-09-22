@@ -14,7 +14,7 @@
                                 <input name="value" type="text" class="search-query span2" placeholder="Search" />
                         </li>
                         <li style="margin-top:10px">
-                                <button type="submit" class="btn_serch"></button>
+                                <button type="submit" class="btn_bigserch"></button>
                         </li>
                 </form>
                         <li class="divider"></li>
