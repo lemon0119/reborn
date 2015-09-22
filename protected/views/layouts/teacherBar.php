@@ -69,13 +69,16 @@ if (isset(Yii::app()->session['userid_now'])) {
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="" data-toggle="dropdown" id="userUI">
-                                            <?php echo Yii::app()->user->name; ?><b class="user_dropdown_logo"></b>
+                                        <div class="userUI">
+                                        <a href="" data-toggle="dropdown" id="userUI" >
+                                             <?php echo Yii::app()->user->name; ?><b class="user_dropdown_logo"></b>
                                         </a>
+                                       
                                         <ul class="dropdown-menu">
                                             <li><a href="./index.php?r=teacher/set">设置</a></li>
                                             <li><a href="./index.php?r=user/login&exit=1">退出</a></li>
                                         </ul>
+                                             </div>
                                     </li>
                                 </ul>
                             </div>

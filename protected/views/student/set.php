@@ -38,7 +38,7 @@ function test()
                 </div>
                 
             </div>
-            <div class="form-actions">
+            <div>
                 <button type="submit" class="btn btn-primary">确认</button> 
                 <a href="./index.php?r=student/index" class="btn">取消</a>
             </div>

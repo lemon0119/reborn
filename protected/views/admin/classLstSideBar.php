@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-        <li class="nav-header">查询</li>
+        <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
         <form action="./index.php?r=admin/searchCLass" method="post">
             <li>
                 <select name="which" style="width: 185px">

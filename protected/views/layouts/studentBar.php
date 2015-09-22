@@ -33,22 +33,25 @@
                                                                 <li><a href="./index.php?r=student/classwork">课堂作业</a></li>
                                                             </ul>
                                                         </li>
-                                                            <li><a id="myCourse" href="./index.php?r=student/myCourse"></a></li>
+                                                             <li><a id="myCourse" href="./index.php?r=student/myCourse"></a></li>
                                                             <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
-                                                    
-                                                
-                                                        <li class="dropdown">
-                                                                    <a href="" id="nameStu" class="dropdown-toggle" data-toggle="dropdown">
+                                                            <li class="dropdown">
+                                                            <div class="userUI">
+                                                                <a href="" id="userUI" class="dropdown-toggle" data-toggle="dropdown">
                                                                         <?php echo Yii::app()->user->name; ?><b class="user_dropdown_logo"></b>
                                                                     </a>
+                                                            
                                                                     <ul class="dropdown-menu">
                                                                             <li>
                                                                                     <a href="./index.php?r=student/set">设置</a>
                                                                                     <a href="./index.php?r=user/login&exit=1">退出</a>
                                                                             </li>
-                                                                    </ul>                    
+                                                                            
+                                                                    </ul>   
+                                                                </div>
                                                         </li>
                                                     </ul>
+                                                        
                                             </div>
                                     </div>
                             </div>
