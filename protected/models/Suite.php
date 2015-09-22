@@ -36,8 +36,8 @@ class Suite extends CActiveRecord
     public function getClassworkAll($lesnID){
         $userid =Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($userid);
-        $select = 'select begintime , endtime , classwork.suiteID , suite.suiteName , class_lesson_suite.open as open, class_lesson_suite.workID from classwork, class_lesson_suite, suite';
-        $condition = " where classwork.suiteID=suite.suiteID and class_lesson_suite.suiteID=classwork.suiteID and class_lesson_suite.classID='$classID' and class_lesson_suite.lessonID='$lesnID'";
+        $select = 'select suite.suiteID , suite.suiteName , class_lesson_suite.open as open, class_lesson_suite.workID from class_lesson_suite, suite';
+        $condition = " where class_lesson_suite.suiteID=suite.suiteID and class_lesson_suite.classID='$classID' and class_lesson_suite.lessonID='$lesnID'";
         $order = 'order by suite.suiteID';
         $sql = $select.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
@@ -168,8 +168,16 @@ class Suite extends CActiveRecord
         return $result;
     }
     public function getChoice2($suiteID){
+        $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
         $order = " order by exerciseID ASC";
-        $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='choice')";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='choice')";
         $select = "select * from choice";
         $sql = $select.$condition.$order;
         $criteria   =   new CDbCriteria();
@@ -202,8 +210,15 @@ class Suite extends CActiveRecord
     }
     public function getFilling2($suiteID){
         
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
         $order = " order by exerciseID ASC";
-        $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='filling')";
+        $condition = " where exerciseID in (select exerciseID from suite_exercise where $findID='$suiteID' and type='filling')";
         $select = "select * from filling";
         $sql = $select.$condition.$order;
         $criteria   =   new CDbCriteria();
@@ -238,9 +253,16 @@ class Suite extends CActiveRecord
     }
     public function getQuestion2($suiteID)
     {
-       
+       $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
         $order = " order by exerciseID ASC";
-        $condition = " where exerciseID in (select exerciseID from suite_exercise where suiteID='$suiteID' and type='question')";
+        $condition = " where exerciseID in (select exerciseID from suite_exercise where $findID='$suiteID' and type='question')";
         $select = "select * from question";
         $sql = $select.$condition.$order;
         $criteria   =   new CDbCriteria();

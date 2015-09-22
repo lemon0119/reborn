@@ -182,6 +182,7 @@ class StudentController extends CController {
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
+        print_r($currentLesn);
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:$currentLesn;
          print_r($classID."-".$currentLesn);
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
@@ -190,12 +191,14 @@ class StudentController extends CController {
         if($myCourse==null){
                return $this->render('myCourse',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'myCourse'=>$myCourse]);
             }  
+            $ratio_accomplish='0';
         foreach ($myCourse as $c){
             array_push($myCourses, $c);
             $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
+            $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
         
         }  
-        $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
+        
         
         return $this->render('myCourse',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'myCourse'=>$myCourses,'ratio_accomplish'=>$ratio_accomplish]);
     }
