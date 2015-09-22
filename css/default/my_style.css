@@ -68,6 +68,8 @@ video {
 
 .sendfoot {
     width: 80%;
+    height: 40px;
+    line-height: 40px;
     margin-left:auto; 
     margin-right:auto;
     overflow:auto;        
