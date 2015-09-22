@@ -22,14 +22,14 @@ class AdminController extends CController {
             $email = $_POST['email'];
             $usertype = Yii::app()->session['role_now'];
             $user = Admin::model()->find('userID=?', array($userid_now));
-            if ($user->password !== md5($_POST['old'])) {
+            if ($user->password != md5($_POST['old'])) {
                 $result = 'old error';
                 $this->render('set', ['result' => $result, 'mail' => $mail]);
                 return;
             }
             $user->password = md5($new1);
             $user->mail_address = $email;
-            $result = $user->save();
+            $result = $user->update();
             $mail = $email;
         }
 
