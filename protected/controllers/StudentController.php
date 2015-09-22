@@ -445,10 +445,21 @@ class StudentController extends CController {
         $classexam = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+            $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         $examInfo = Exam::model()->find($suiteID);
+        //
+        $workID = Yii::app()->session['workID'];
+        $studentID = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansQuest = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'question');
+        $ansArr = AnswerRecord::model()->ansToArray($ansQuest);
+        //分页
+        $result = Suite::model()->getQuestion2($suiteID);
+        $questionLst = $result ['questionLst'];
+        $pages = $result ['pages'];
         $isExam = true;
-        return $this->render('questionExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo,'typeNow' => 'question']);
+        return $this->render('questionExer',['ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'pages'=>$pages,'exercise2'=>$classexam2 ,'exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo,'typeNow' => 'question']);
     }
     
    //课堂作业选择题 
@@ -491,16 +502,27 @@ class StudentController extends CController {
    //2015-8-3 宋杰 获取试题，跳转到选择题页面 isExam为true加载examsidebar
     public function actionExamChoice(){
        $suiteID = Yii::app()->session['examsuiteID'];
+       $workID = Yii::app()->session['workID'];
+         $studentID = Yii::app()->session['userid_now'];
         $classexam = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+            $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         $examInfo = Exam::model()->find($suiteID);
+        //
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansChoice = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'choice');
+        $ansArr = AnswerRecord::model()->ansToArray($ansChoice);
+        //显示选择题列表并分页  
+        $result = Suite::model()->getChoice2($suiteID);
+        $choiceLst = $result['choiceLst'];
+        $pages = $result['pages'];
         $isExam = true;
-        return $this->render('choiceExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']);
+        return $this->render('choiceExer',['ansChoice'=>$ansArr,'exercise'=>$classexam ,'exercise2'=>$classexam2 ,'choiceLst'=>$choiceLst,'pages'=>$pages, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']);
     }
  //课堂作业填空题   
-public function actionfilling(){
+    public function actionfilling(){
         $suiteID = Yii::app()->session['suiteID'];
         $workID = Yii::app()->session['workID'];
          $studentID = Yii::app()->session['userid_now'];
@@ -542,15 +564,26 @@ public function actionfilling(){
 
     
     //2015-8-3 宋杰 加载考试填空题
-        public function actionExamfilling(){
+    public function actionExamfilling(){
        $suiteID = Yii::app()->session['examsuiteID'];
+       $workID = Yii::app()->session['workID'];
+         $studentID = Yii::app()->session['userid_now'];
         $classexam = Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+            $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         $examInfo = Exam::model()->find($suiteID);
+        //
+        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
+        $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
+        //分页
+        $result = Suite::model()->getFilling2($suiteID);
+        $fillingLst = $result ['fillingLst'];
+        $pages = $result ['pages'];
         $isExam = true;
-        return $this->render('fillingExer',['exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'filling']);
+        return $this->render('fillingExer',['ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classexam2 ,'pages'=>$pages,'exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'filling']);
     }
     
     
