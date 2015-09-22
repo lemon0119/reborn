@@ -36,11 +36,8 @@ class Suite extends CActiveRecord
     public function getClassworkAll($lesnID){
         $userid =Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($userid);
-<<<<<<< HEAD
         $select = 'select suite.suiteID , suite.suiteName , class_lesson_suite.open as open, class_lesson_suite.workID from class_lesson_suite, suite';
-=======
-        $select = 'select  suite.suiteID , suite.suiteName , class_lesson_suite.open as open, class_lesson_suite.workID from class_lesson_suite, suite';
->>>>>>> origin/master
+
         $condition = " where class_lesson_suite.suiteID=suite.suiteID and class_lesson_suite.classID='$classID' and class_lesson_suite.lessonID='$lesnID'";
         $order = 'order by suite.suiteID';
         $sql = $select.$condition.$order;
@@ -213,7 +210,7 @@ class Suite extends CActiveRecord
         return $result;
     }
     public function getFilling2($suiteID){
-        
+        $isExam = Yii::app()->session['isExam'];
         if($isExam){
             $suite_exer = 'exam_exercise';
             $findID = 'examID';
@@ -222,7 +219,7 @@ class Suite extends CActiveRecord
             $findID = 'suiteID';
         }
         $order = " order by exerciseID ASC";
-        $condition = " where exerciseID in (select exerciseID from suite_exercise where $findID='$suiteID' and type='filling')";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='filling')";
         $select = "select * from filling";
         $sql = $select.$condition.$order;
         $criteria   =   new CDbCriteria();
@@ -266,7 +263,7 @@ class Suite extends CActiveRecord
             $findID = 'suiteID';
         }
         $order = " order by exerciseID ASC";
-        $condition = " where exerciseID in (select exerciseID from suite_exercise where $findID='$suiteID' and type='question')";
+        $condition = " where exerciseID in (select exerciseID from $suite_exer where $findID='$suiteID' and type='question')";
         $select = "select * from question";
         $sql = $select.$condition.$order;
         $criteria   =   new CDbCriteria();
