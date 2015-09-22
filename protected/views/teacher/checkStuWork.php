@@ -41,7 +41,8 @@
 
 <script>
    $(document).ready(function(){
-        var user = {
+       
+        var user = {           
             recordID:<?php if($record != NULL)echo $record['recordID'];else echo 1;?>,
             type:"<?php echo $type;?>",
             suiteID:<?php echo $work['suiteID'];?>,

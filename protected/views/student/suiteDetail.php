@@ -19,7 +19,7 @@ else {
     <p id="timeCounter"></p>
     </center>
     <?php }else { ?>
-    <h3 align="center"> 在左侧选择题目开始答题。 </h3>
+    <h3 class="welcome" align="center"> 在左侧选择题目开始答题。 </h3>
     <?php } ?>
 </div>
 <script>
@@ -32,7 +32,7 @@ $(document).ready(function(){
     var curtime = <?php echo time();?>;
     var beginTime = <?php if($isExam) echo strtotime($examInfo['begintime']);?>;
     function endTimer(endID){
-        document.getElementById('time').innerHTML = '考试已经开始，可以开始答题。';
+        document.getElementById('time').innerHTML = '<h3 class="welcome" align="center"> 考试已经开始，可以开始答题。</h3>';
         $('#leftTime').show();
         $('.queTitle').unbind('click');
     }
