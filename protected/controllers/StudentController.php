@@ -184,7 +184,16 @@ class StudentController extends CController {
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:$currentLesn;
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
-        $ratio_accomplish = ExamRecord::model()->getExamAccomplish($studentID);
+        $myCourse = array();
+        if($myCourse==null){
+               return $this->render('myCourse',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'myCourse'=>$myCourse]);
+            }  
+        foreach ($myCourse as $c){
+            array_push($myCourse, $c);
+            $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
+        
+        }  
+        $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
         return $this->render('myCourse',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'myCourse'=>$myCourse,'ratio_accomplish'=>$ratio_accomplish]);
     }
     public function actionlistenType(){

@@ -137,11 +137,4 @@ class ExamRecord extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-	/* *
-	 * 返回作业的完成度
-	 *  */
-	public function getExamAccomplish($studentID){
-		$ratio_accomplish = $this->find("studentid = '$studentID'");
-		return $ratio_accomplish->ratio_accomplish;
-	}
 }
