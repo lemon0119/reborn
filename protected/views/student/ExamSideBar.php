@@ -17,13 +17,28 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header" id="leftTime">考试剩余：<font id = "sideTime"></font></li>
                         <li class="nav-header">基础知识</li>
                         <li id="li-choice">
-                            <a class="queTitle" href="./index.php?r=student/examchoice"><i class="icon-font"></i> 选 择 题</a>
+                            <a class="queTitle" href="./index.php?r=student/examchoice&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-font"></i> 选 择 题
+                                <div id= "container" style="height: 5px;border:1px solid white;">
+                                    <div id="progress-bar" style="width:<?php echo "$cent[0]";?>;background-color:springgreen;height:5px;">
+                                    </div>
+                                </div> 
+                            </a>
                         </li>
                         <li id="li-filling">
-                                <a class="queTitle" href="./index.php?r=student/examfilling"><i class="icon-text-width"></i> 填 空 题</a>
+                                <a class="queTitle" href="./index.php?r=student/examfilling&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-text-width"></i> 填 空 题
+                                    <div id= "container" style="height: 5px;border:1px solid white;">
+                                        <div id="progress-bar" style="width:<?php echo "$cent[1]";?>;background-color: springgreen;height:5px;">
+                                        </div>
+                                    </div>
+                                </a>
                         </li>
                         <li id="li-question">
-                                <a class="queTitle" href="./index.php?r=student/examquestion"><i class="icon-align-left"></i> 简 答 题</a>
+                                <a class="queTitle" href="./index.php?r=student/examquestion&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-align-left"></i> 简 答 题
+                                    <div id= "container" style="height: 5px;border:1px solid white;">
+                                        <div id="progress-bar" style="width:<?php echo "$cent[2]";?>;background-color: springgreen;height:5px;">
+                                        </div>
+                                    </div>
+                                </a>
                         </li>
                         <li class="nav-header">键位练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>

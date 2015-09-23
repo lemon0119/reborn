@@ -16,6 +16,17 @@
  */
 class ExamRecord extends CActiveRecord
 {
+    
+        public static function getRecord($workID, $createPerson, $lesnID = '0') {
+            //$select = "select recordID from suite_record ";
+            //$condition = "where studentID = '$createPerson' and workID = ";
+            $record = ExamRecord::model()->find('workID=? and studentID=?', array($workID,$createPerson));
+            if($record == null) {
+                return null;
+            } else {
+                return $record->recordID;
+            }
+        }
 	/**
 	 * @return string the associated database table name
 	 */
