@@ -63,11 +63,11 @@
        $adminVdir             = "resources/admin/001/$courseID/$on/video/";
         if(!is_dir($adminPdir))
         {//true表示可以创建多级目录
-           mkdir($pdir,0777,true);
+           mkdir($adminPdir,0777,true);
         }
         if(!is_dir($adminVdir))
         {//true表示可以创建多级目录
-           mkdir($pdir,0777,true);
+           mkdir($adminVdir,0777,true);
         }
     ?>
     <div class="well summary">
