@@ -63,7 +63,7 @@
             var isover = setInterval(function(){
                 var time = getSeconds();
                 //console.log(time + "time");
-                var seconds = <?php echo $exerOne['time'];?>;
+                var seconds = <?php if($isExam) echo $exerOne['time']; else echo '0';?>;
                 //console.log(seconds + "seconds");
                 if(time >= seconds){
                     clearInterval(isover);

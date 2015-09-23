@@ -62,7 +62,7 @@ require 'suiteSideBar.php';
         <input name="nm_correct" id="id_correct" type="hidden">
         <a aline="center" type="button" class="btn btn-primary btn-large" onclick="onSubmit()" style="margin-left: 200px">保存</a>
         <?php 
-          $last = Tool::getLastExer($exercise);
+          $last = Tool::getLastExer($exercise2);
           if($last['type'] == 'key'&& $last['exerciseID'] == $_GET['exerID']){
         ?>
           <a class="btn btn-large" style="margin-left: 200px" onclick="submitSuite();">提交</a>
@@ -79,7 +79,7 @@ require 'suiteSideBar.php';
         if(isExam){
             var isover = setInterval(function(){
                 var time = getSeconds();
-                var seconds = <?php echo $exerOne['time'];?>;
+                var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;
                 if(time >= seconds){
                     clearInterval(isover);
                     doSubmit(true,function(){
