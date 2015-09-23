@@ -43,7 +43,7 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">键位练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                    <a class="queTitle" href="./index.php?r=student/examkeyType&&exerID=<?php echo $keyType['exerciseID'];?>">
+                                    <a class="queTitle" href="./index.php?r=student/examkeyType&&exerID=<?php echo $keyType['exerciseID']?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>">
                                         <i class="icon-th"></i>
                                         <?php echo $keyType['title']?>
                                     </a>
@@ -52,7 +52,7 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">看打练习</li>
                         <?php foreach ($exercise['look'] as $lookType) :?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
-                                    <a class="queTitle"href="./index.php?r=student/examlookType&&exerID=<?php echo $lookType['exerciseID'];?>">
+                                    <a class="queTitle"href="./index.php?r=student/examlookType&&exerID=<?php echo $lookType['exerciseID']?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>">
                                         <i class="icon-eye-open"></i>
                                         <?php echo $lookType['title']?>
                                     </a>
@@ -61,7 +61,7 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                                <a class="queTitle" href="./index.php?r=student/examlistenType&&exerID=<?php echo $listenType['exerciseID'];?>">
+                                <a class="queTitle" href="./index.php?r=student/examlistenType&&exerID=<?php echo $listenType['exerciseID']?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>">
                                     <i class="icon-headphones"></i> 
                                     <?php echo $listenType['title']?>
                                 </a>

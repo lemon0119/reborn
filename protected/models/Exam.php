@@ -149,6 +149,14 @@ class Exam extends CActiveRecord
     
         public function getchoice($examID)
 	{
+             $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
             $order = " order by exerciseID ASC";
             $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='choice')";
             $select = "select * from choice";
@@ -156,8 +164,41 @@ class Exam extends CActiveRecord
             $result = Yii::app()->db->createCommand($sql)->query();
             return $result;
 	}
-    	public function getFilling($examID)
+          public function getchoice2($examID)
 	{
+               $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='choice')";
+            $select = "select * from choice";
+            $sql = $select.$condition.$order;
+          $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   2; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $choiceLst  =   $result->query();
+        
+        return ['choiceLst'=>$choiceLst,'pages'=>$pages,];
+	}
+    	public function getFilling($examID)
+	{ $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
             $order = " order by exerciseID ASC";
             $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='filling')";
             $select = "select * from filling";
@@ -165,8 +206,41 @@ class Exam extends CActiveRecord
             $result = Yii::app()->db->createCommand($sql)->query();
             return $result;
 	}
-    	public function getQuestion($examID)
+        public function getFilling2($examID)
 	{
+             $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='filling')";
+            $select = "select * from filling";
+            $sql = $select.$condition.$order;
+             $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   2; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $fillingLst  =   $result->query();
+        
+        return ['fillingLst'=>$fillingLst,'pages'=>$pages,];
+	}
+    	public function getQuestion($examID)
+	{ $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
             $order = " order by exerciseID ASC";
             $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='question')";
             $select = "select * from question";
@@ -174,8 +248,41 @@ class Exam extends CActiveRecord
             $result = Yii::app()->db->createCommand($sql)->query();
             return $result;
 	}
+        public function getQuestion2($examID)
+	{ $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
+            $order = " order by exerciseID ASC";
+            $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='question')";
+            $select = "select * from question";
+            $sql = $select.$condition.$order;
+            $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   2; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $questionLst  =   $result->query();
+        
+        return ['questionLst'=>$questionLst,'pages'=>$pages,];
+	}
         public function getKeyExer($examID)
 	{
+            $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
             $order = " order by exerciseID ASC";
             $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='key')";
             $select = "select * from key_type";
@@ -185,6 +292,14 @@ class Exam extends CActiveRecord
 	}
         public function getListenExer($examID)
 	{
+            $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
             $order = " order by exerciseID ASC";
             $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='listen')";
             $select = "select * from listen_type";
@@ -194,6 +309,14 @@ class Exam extends CActiveRecord
 	}
         public function getLookExer($examID)
 	{
+            $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            $suite_exer = 'exam_exercise';
+            $findID = 'examID';
+        } else {
+            $suite_exer = 'suite_exercise';
+            $findID = 'suiteID';
+        }
             $order = " order by exerciseID ASC";
             $condition = " where exerciseID in (select exerciseID from exam_exercise where examID='$examID' and type='look')";
             $select = "select * from look_type";
