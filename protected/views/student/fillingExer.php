@@ -30,14 +30,18 @@ $SNum = 0;
                     echo $str.'<br/>';
                     $i = 1;
                     while($i < count($ansArr)+1){
+                        $f=0;
                         echo '('.$i.') ';
-                          $v=$ansFilling[$n];
-                        if($v!='0'){
-                             echo '<input type="text" value="'.$v.'" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
-
-                        }else{
-                         echo '<input type="text" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';   
+                        foreach ($number as $s){
+                            if($value['exerciseID']==$s['exerciseID']){
+                                $f=1;
+                                echo '<input type="text" value="'.$ansFilling[$s['exerciseID']].'" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
+                            }
                         }
+                        if($f==0){
+                            echo '<input type="text" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';  
+                        }
+                         
                         
                         $i++;
                     }

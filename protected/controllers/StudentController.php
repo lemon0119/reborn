@@ -429,6 +429,7 @@ class StudentController extends CController {
         $suiteID = Yii::app()->session['suiteID'];
         $classwork = Array();
         $classwork = Array();
+        $number=Array();
         $arg=$_GET['cent'];
         $cent= explode(',', $arg);
        
@@ -455,13 +456,14 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
         }
         if($record==null){
-           return $this->render('questionExer',['ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]); 
+           return $this->render('questionExer',['number'=>$number,'ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]); 
         }
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
          }
+         $number= AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'question'));
          $n=0;
         foreach(Tool::$EXER_TYPE as $type){
             if($finishRecord[$type]!=null && $classwork[$type]!=null)
@@ -472,7 +474,7 @@ class StudentController extends CController {
         }
        
 
-        return $this->render('questionExer',['ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
+        return $this->render('questionExer',['number'=>$number,'ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
     }
 
     
@@ -486,6 +488,7 @@ class StudentController extends CController {
         $classexam = Array();
         $classexam2 = Array();
         $finishRecord=Array();
+        $number=Array();
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
         $examInfo = Exam::model()->find($suiteID);
@@ -503,7 +506,7 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
           }
         if($record==null){
-           return $this->render('questionExer',['cent'=>$cent,'workID'=>$workID,'ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'pages'=>$pages,'exercise2'=>$classexam2 ,'exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo,'typeNow' => 'question']);
+           return $this->render('questionExer',['number'=>$number,'cent'=>$cent,'workID'=>$workID,'ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'pages'=>$pages,'exercise2'=>$classexam2 ,'exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo,'typeNow' => 'question']);
     
         }
         foreach(Tool::$EXER_TYPE as $type){
@@ -511,13 +514,14 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
         }
+        $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'question'));
         $n=0;
         foreach(Tool::$EXER_TYPE as $type){
             $cent[$n]=round(count($finishRecord[$type])*100/count($classexam[$type]),2)."%"; 
             $n++;
         }
         
-        return $this->render('questionExer',['cent'=>$cent,'workID'=>$workID,'ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'pages'=>$pages,'exercise2'=>$classexam2 ,'exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo,'typeNow' => 'question']);
+        return $this->render('questionExer',['number'=>$number,'cent'=>$cent,'workID'=>$workID,'ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'pages'=>$pages,'exercise2'=>$classexam2 ,'exercise'=>$classexam , 'isExam' => $isExam , 'examInfo'=>$examInfo,'typeNow' => 'question']);
     }
     
    //课堂作业选择题 
@@ -529,6 +533,7 @@ class StudentController extends CController {
          $studentID = Yii::app()->session['userid_now'];
         $classwork = Array();
         $classwork2 = Array();
+        $number=Array();
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
@@ -555,13 +560,14 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
          }
         if($record==null){
-           return $this->render('choiceExer',['ansChoice'=>$ansArr,'choiceLst'=>$choiceLst,'pages'=>$pages,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'isExam' =>$isExam ,'cent'=>$cent,'workID'=>$wID]); 
+           return $this->render('choiceExer',['number'=>$number,'ansChoice'=>$ansArr,'choiceLst'=>$choiceLst,'pages'=>$pages,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'isExam' =>$isExam ,'cent'=>$cent,'workID'=>$wID]); 
         }
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
          }
+         $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'choice'));
          $n=0;
         foreach(Tool::$EXER_TYPE as $type){
             if($finishRecord[$type]!=null && $classwork[$type]!=null)
@@ -573,7 +579,7 @@ class StudentController extends CController {
        
        
         
-        return $this->render('choiceExer',['ansChoice'=>$ansArr,'choiceLst'=>$choiceLst,'pages'=>$pages,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'isExam' =>$isExam ,'cent'=>$cent,'workID'=>$wID]);
+        return $this->render('choiceExer',['number'=>$number,'ansChoice'=>$ansArr,'choiceLst'=>$choiceLst,'pages'=>$pages,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'isExam' =>$isExam ,'cent'=>$cent,'workID'=>$wID]);
     }
     
    //2015-8-3 宋杰 获取试题，跳转到选择题页面 isExam为true加载examsidebar
@@ -585,6 +591,7 @@ class StudentController extends CController {
         $classexam = Array();
         $classexam2 = Array();
         $finishRecord=Array();
+        $number=Array();
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
         $examInfo = Exam::model()->find($suiteID);
@@ -603,20 +610,21 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
        if( $record==null){
-          return $this->render('choiceExer',['cent'=>$cent,'workID'=>$workID,'ansChoice'=>$ansArr,'exercise'=>$classexam ,'exercise2'=>$classexam2 ,'choiceLst'=>$choiceLst,'pages'=>$pages, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']); 
+          return $this->render('choiceExer',['number'=>$number,'cent'=>$cent,'workID'=>$workID,'ansChoice'=>$ansArr,'exercise'=>$classexam ,'exercise2'=>$classexam2 ,'choiceLst'=>$choiceLst,'pages'=>$pages, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']); 
        }
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
         }
+        $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'choice'));
         $n=0;
         foreach(Tool::$EXER_TYPE as $type){
             $cent[$n]=round(count($finishRecord[$type])*100/count($classexam[$type]),2)."%"; 
             $n++;
         }
         
-        return $this->render('choiceExer',['cent'=>$cent,'workID'=>$workID,'ansChoice'=>$ansArr,'exercise'=>$classexam ,'exercise2'=>$classexam2 ,'choiceLst'=>$choiceLst,'pages'=>$pages, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']);
+        return $this->render('choiceExer',['number'=>$number,'cent'=>$cent,'workID'=>$workID,'ansChoice'=>$ansArr,'exercise'=>$classexam ,'exercise2'=>$classexam2 ,'choiceLst'=>$choiceLst,'pages'=>$pages, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'choice']);
     }
  //课堂作业填空题   
     public function actionfilling(){
@@ -625,6 +633,7 @@ class StudentController extends CController {
          $studentID = Yii::app()->session['userid_now'];
         $classwork = Array();
         $classwork2 = Array();
+        $number=Array();
         $arg=$_GET['cent'];
         $cent= explode(',', $arg);
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
@@ -644,7 +653,7 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
         }
         if($record==null){
-           return $this->render('fillingExer',['ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
+           return $this->render('fillingExer',['number'=>$number,'ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
      
         }
          foreach(Tool::$EXER_TYPE as $type){
@@ -652,6 +661,7 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
          }
+         $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'filling'));
          $n=0;
         foreach(Tool::$EXER_TYPE as $type){
             if($finishRecord[$type]!=null && $classwork[$type]!=null)
@@ -662,7 +672,7 @@ class StudentController extends CController {
         }
        
         
-        return $this->render('fillingExer',['ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
+        return $this->render('fillingExer',['number'=>$number,'ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
     }
 
 
@@ -676,6 +686,7 @@ class StudentController extends CController {
         $classexam = Array();
         $classexam2 = Array();
         $finishRecord=Array();
+        $number=Array();
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
         $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
@@ -693,7 +704,7 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
          }
         if($recordID==null){
-            return $this->render('fillingExer',['cent'=>$cent,'workID'=>$workID,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst ,'pages'=>$pages,'exercise'=>$classexam ,'exercise2'=>$classexam2, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'filling']);
+            return $this->render('fillingExer',['number'=>$number,'cent'=>$cent,'workID'=>$workID,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst ,'pages'=>$pages,'exercise'=>$classexam ,'exercise2'=>$classexam2, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'filling']);
      
         }
         foreach(Tool::$EXER_TYPE as $type){
@@ -701,13 +712,14 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
         }
+        $number= AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'filling'));
         $n=0;
         foreach(Tool::$EXER_TYPE as $type){
             $cent[$n]=round(count($finishRecord[$type])*100/count($classexam[$type]),2)."%"; 
             $n++;
         }
        
-        return $this->render('fillingExer',['cent'=>$cent,'workID'=>$workID,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst ,'pages'=>$pages,'exercise'=>$classexam ,'exercise2'=>$classexam2, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'filling']);
+        return $this->render('fillingExer',['number'=>$number,'cent'=>$cent,'workID'=>$workID,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst ,'pages'=>$pages,'exercise'=>$classexam ,'exercise2'=>$classexam2, 'isExam' => $isExam , 'examInfo'=>$examInfo, 'typeNow' => 'filling']);
     }
     
     

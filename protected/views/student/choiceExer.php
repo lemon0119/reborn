@@ -33,14 +33,22 @@ $SNum = 0;
                 $optArr = explode("$$",$opt);
                 $mark = 'A';
                 foreach ($optArr as $aOpt) {
-                    if($ansChoice[$n]==$mark){
-                         echo '<input type="radio" checked="true" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
-                    }  else {
+                    $f=0;
+                    foreach ($number as $s){
+                        if($value['exerciseID']==$s['exerciseID']){
+                            if($ansChoice[$s['exerciseID']]==$mark) {
+                                $f=1;
+                                echo '<input type="radio" checked="true" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
+                            }else 
+                                echo '<input type="radio" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
+                        }
+                    }
+                    if($f=0){
                         echo '<input type="radio" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
                     }
-                    
                     $mark++;
                 }
+                    
                 echo '<br/>';
                $n++;
             }

@@ -26,13 +26,19 @@ $SNum = 0;
                     echo ($n).'. ';
                     echo $value['requirements'];
                     echo '<br/>';
-                    $v = $ansQuest[$n];
-                   if($v!='0')    
-                        echo '<textarea style="width:600px; height:200px;"  name = "quest'.$value["exerciseID"].'">'.$v.'</textarea>';
-                    else
-                        echo ' <textarea style="width:600px; height:200px;" name = "quest'.$value["exerciseID"].'"></textarea>';
- 
-     
+                    $f=0;
+                    if($number!=null){
+                        foreach ($number as $s){
+                                if($value['exerciseID']==$s['exerciseID']){
+                                    $f=1;
+                                    echo '<textarea style="width:600px; height:200px;"  name = "quest'.$value["exerciseID"].'">'.$ansQuest[$s['exerciseID']].'</textarea>';
+                                    continue;
+                                }
+                        }
+                    }
+                    if($f==0){
+                        echo '<textarea style="width:600px; height:200px;" name = "quest'.$value["exerciseID"].'"></textarea>';
+                    }
                     echo '<br/>';
                    $n++;
                 }
