@@ -21,10 +21,10 @@
                                 else echo $model['classID'];
                         ?></td>
                     <td>  
-                        <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
-                        <a href="./index.php?r=admin/editStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                        <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
+                        <a href="./index.php?r=admin/editStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php $userID=$model['userID'];
-                                                    echo "'$userID'"; ?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                                                    echo "'$userID'"; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 

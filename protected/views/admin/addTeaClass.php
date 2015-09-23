@@ -17,6 +17,7 @@ $corr=$posts->read();
         <th>选择</th>
         <th>工号</th>
         <th>用户名</th>
+        <th>所属部门</th>
     </tr>
 </thead>
         <tbody> 
@@ -28,6 +29,7 @@ $corr=$posts->read();
                     echo  "<td style=\"width: 75px\"> <input type=\"checkbox\" name=\"checkbox[]\" value= " . $teacher['userID'] ."  /> </td>";                     
                     echo  "<td style=width: 75px>". $teacher['userID'] ."</td>";
                     echo  "<td>" .  $teacher['userName']  . "</td>";
+                    echo  "<td>" .  $teacher['department']  . "</td>";
                     echo  "</tr> ";
                  $teacher=$teachers->read();   
                 }else if($teacher['userID']==$corr['teacherID']) {
@@ -39,7 +41,7 @@ $corr=$posts->read();
         </tbody>
 </table>
     <div class="form-actions">
-        <input type="submit" name="submit" value="提交"> <a href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" class="btn">取消</a>
+        <button type="submit" name="submit" class="btn btn-primary" value="提交">提交</button> <a href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" class="btn">取消</a>
     </div>
 </form>   
 

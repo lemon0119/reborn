@@ -60,11 +60,11 @@
                     <tr>
                         <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <td><?php echo $model['courseID'];?></td>
-                        <td><?php  if(Tool::clength($model['requirements'])<=15)
+                        <td><?php  if(Tool::clength($model['requirements'])<=10)
                                     {   
                                         echo $model['requirements'];                               
                                     }else{
-                                        echo Tool::csubstr($model['requirements'], 0, 15)."...";
+                                        echo Tool::csubstr($model['requirements'], 0, 10)."...";
                                     }   ?></td>
                         <td><?php if($model['createPerson']=="0")
                                         echo "管理员";
@@ -72,9 +72,9 @@
                             ?></td>
                         <td><?php echo $model['createTime'];?></td>
                         <td>
-                            <a href="./index.php?r=admin/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png"></a>
-                            <a href="./index.php?r=admin/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
-                            <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>
+                            <a href="./index.php?r=admin/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <a href="./index.php?r=admin/editChoice&&exerciseID=<?php echo $model['exerciseID'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 

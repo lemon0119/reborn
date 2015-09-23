@@ -3,7 +3,7 @@
 <div class="span9">
     <h2>老师列表</h2>
     <input type="checkbox" name="all" onclick="check_all(this,'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
-<a href="#" onclick="deleCheck()"><img src="<?php echo IMG_URL; ?>delete.png"></a>
+<a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -23,10 +23,10 @@
                     <td><?php echo $model['userName'];?></td>
                     <td><?php echo $model['department'];?></td>
                     <td>  
-                        <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
-                        <a href="./index.php?r=admin/editTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
+                        <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
+                        <a href="./index.php?r=admin/editTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php $userID=$model['userID'];
-                                                    echo "'$userID'"; ?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>
+                                                    echo "'$userID'"; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 

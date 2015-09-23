@@ -38,8 +38,8 @@
                         <td style="width: 75px"><?php echo $model['teacherID'];?></td>
                         <td><?php echo $teachers[$model['teacherID']];?></td>
                         <td>
-                            <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['teacherID']; ?>&&name=<?php echo $teachers[$model['teacherID']]; ?>&&classID=<?php echo $classID; ?>"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
-                            <a href="./index.php?r=admin/infoClass&&flag=deleteTea&&id=<?php echo $model['teacherID'];?>&&classID=<?php echo $classID;?>"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                            <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['teacherID']; ?>&&name=<?php echo $teachers[$model['teacherID']]; ?>&&classID=<?php echo $classID; ?>"><img title="查看资料" src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <a href="./index.php?r=admin/infoClass&&flag=deleteTea&&id=<?php echo $model['teacherID'];?>&&classID=<?php echo $classID;?>"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
