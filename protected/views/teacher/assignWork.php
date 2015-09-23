@@ -55,11 +55,8 @@
                             <font style="color:red">关闭</font>
                         <?php } else { ?>
                             <font style="color:red">开放</font>
-                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1; ?>">关闭</a>
+                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1;  ?>" style="color:green">关闭</a>
                         <?php } ?>
-
-
-
                     </td>             
                     <td>
                         <a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $suite['suiteID']; ?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
