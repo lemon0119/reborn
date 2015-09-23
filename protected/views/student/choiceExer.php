@@ -43,7 +43,7 @@ $SNum = 0;
                                 echo '<input type="radio" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
                         }
                     }
-                    if($f=0){
+                    if($f==0){
                         echo '<input type="radio" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
                     }
                     $mark++;
