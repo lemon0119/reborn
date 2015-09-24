@@ -29,13 +29,23 @@ $SNum = 0;
                     $ansArr = explode('$$', $answer);
                     echo $str.'<br/>';
                     $i = 1;
+                    $m=0;
                     while($i < count($ansArr)+1){
                         $f=0;
+                        
                         echo '('.$i.') ';
                         foreach ($number as $s){
                             if($value['exerciseID']==$s['exerciseID']){
                                 $f=1;
-                                echo '<input type="text" value="'.$ansFilling[$s['exerciseID']].'" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
+                                $str=$ansFilling[$s['exerciseID']];
+                                $arr=Array();
+                                if(strstr($str,"$$")){
+                                    $arr= explode("$$", $str);
+                                    echo '<input type="text" value="'.$arr[$m].'" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
+                                    $m++;
+                                }else{
+                                    echo '<input type="text" value="'.$str.'" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
+                                }
                             }
                         }
                         if($f==0){
