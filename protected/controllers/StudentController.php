@@ -247,7 +247,7 @@ class StudentController extends CController {
         }
         //end
         $isExam = true;
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
         $workID = Yii::app()->session['workID'];
@@ -322,7 +322,7 @@ class StudentController extends CController {
         }
         //end
         $isExam = true;
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
         $workID = Yii::app()->session['workID'];
@@ -399,7 +399,7 @@ class StudentController extends CController {
         }
         //end
         $isExam = true;
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
         $workID = Yii::app()->session['workID'];
@@ -495,7 +495,7 @@ class StudentController extends CController {
         $number=Array();
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $ansQuest = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'question');
         $ansArr = AnswerRecord::model()->ansToArray($ansQuest);
@@ -602,7 +602,7 @@ class StudentController extends CController {
         $number=Array();
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
-        $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->findByPK($suiteID);
         //
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $ansChoice = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'choice');
@@ -702,7 +702,7 @@ class StudentController extends CController {
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
         $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
-         $examInfo = Exam::model()->find($suiteID);
+         $examInfo = Exam::model()->findByPK($suiteID);
         //
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
