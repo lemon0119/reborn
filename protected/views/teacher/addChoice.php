@@ -34,7 +34,7 @@
 </div>
 
 <div class="span9">
-    <h2>添加看打练习</h2>
+    <h2>添加选择题</h2>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/addChoice" id="myForm"> 
         <fieldset>
         <legend>填写题目</legend>
