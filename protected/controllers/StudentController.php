@@ -823,10 +823,13 @@ class StudentController extends CController {
             return $this->render('suiteDetail',['exercise'=>$classexam,'isExam' => $isExam,'examInfo'=>$examInfo,'cent'=>$cent]);
         }
         $finishRecord=Array();
-       
+       print_r($record->recordID."-----");
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
+            
+            
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            
          }
         $n=0;
         $cNum=count($classexam['choice']);
@@ -838,7 +841,10 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
         
             if(count($classexam[$type])!=0 ){
-              $cent[$n]=round(count($finishRecord[$type])*100/count($classexam[$type]),2)."%";    
+              $cent[$n]=round(count($finishRecord[$type])*100/count($classexam[$type]),2)."%";  
+              print_r(count($classexam[$type]));
+              print_r(count($finishRecord));
+              print_r($cent[$n]);
             }          
             $n++;
         }
@@ -883,14 +889,16 @@ class StudentController extends CController {
         $classworks = Suite::model()->getClassworkAll($currentLesn);
         $classwork = array();
         $ratio_accomplish='0';
+        $n=0;
         foreach ($classworks as $c){
             array_push($classwork, $c);
-            $recordID=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
+            $recordID[$n]=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
             if($recordID==null){
                return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork]);
             }else{
-                $ratio_accomplish = SuiteRecord::model()->getSuitRecordAccomplish($recordID);
+                $ratio_accomplish[$n] = SuiteRecord::model()->getSuitRecordAccomplish($recordID[$n]);
             }
+           $n++;
         }     
         return $this->render('classwork',['lessons'=>$lessons,'currentLesn'=>$currentLesn,'classwork'=>$classwork,'ratio_accomplish'=>$ratio_accomplish]);
     }
@@ -907,7 +915,7 @@ class StudentController extends CController {
             array_push($classexam, $c);
             $recordID=  ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
             if($recordID==null){
-                return $this->render('classexam',['classexams'=>$classexams]);
+                return $this->render('classexam',['classexams'=>$classexam]);
             }else{
                 $ratio_accomplish = ExamRecord::model()->getExamRecordAccomplish($recordID);
             }
