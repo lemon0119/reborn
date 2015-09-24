@@ -16,7 +16,11 @@
  */
 class Choice extends CActiveRecord
 {
-    
+    public function choiceCount($type){
+        $sql="select max(exerciseID) from choice";
+        $max_id = Yii::app()->db->createCommand($sql)->query();
+        return $max_id->read()['max(exerciseID)'];
+    }
     public function insertChoice($requirements,$options,$answer,$createPerson){
         //得到当前最大的exerciseID
         $sql="select max(exerciseID) as id from choice";

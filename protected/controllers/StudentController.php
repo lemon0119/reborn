@@ -427,6 +427,8 @@ class StudentController extends CController {
    //课堂作业简答题 
      public function actionQuestion(){
         $suiteID = Yii::app()->session['suiteID'];
+        $qNum=  Choice::model()->choiceCount('question');
+       Yii::app()->session['num']=$qNum;
         $classwork = Array();
         $classwork = Array();
         $number=Array();
@@ -485,6 +487,8 @@ class StudentController extends CController {
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['workID'];
         $studentID = Yii::app()->session['userid_now'];
+        $qNum=  Choice::model()->choiceCount('question');
+       Yii::app()->session['num']=$qNum;
         $classexam = Array();
         $classexam2 = Array();
         $finishRecord=Array();
@@ -531,6 +535,8 @@ class StudentController extends CController {
         $suiteID = Yii::app()->session['suiteID'];
         $workID = Yii::app()->session['workID'];
          $studentID = Yii::app()->session['userid_now'];
+         $cNum=  Choice::model()->choiceCount('choice');   //动态长度
+        Yii::app()->session['num']=$cNum;
         $classwork = Array();
         $classwork2 = Array();
         $number=Array();
@@ -588,6 +594,8 @@ class StudentController extends CController {
         $suiteID = Yii::app()->session['suiteID'];
         $workID = Yii::app()->session['workID'];
         $studentID = Yii::app()->session['userid_now'];
+        $cNum=  Choice::model()->choiceCount('choice');   //动态长度
+        Yii::app()->session['num']=$cNum;
         $classexam = Array();
         $classexam2 = Array();
         $finishRecord=Array();
@@ -631,6 +639,8 @@ class StudentController extends CController {
         $suiteID = Yii::app()->session['suiteID'];
         $workID = Yii::app()->session['workID'];
          $studentID = Yii::app()->session['userid_now'];
+         $fNum=Choice::model()->choiceCount('filling');
+        Yii::app()->session['num']=$fNum;
         $classwork = Array();
         $classwork2 = Array();
         $number=Array();
@@ -683,6 +693,8 @@ class StudentController extends CController {
        $suiteID = Yii::app()->session['examsuiteID'];
        $workID = Yii::app()->session['workID'];
          $studentID = Yii::app()->session['userid_now'];
+         $fNum=Choice::model()->choiceCount('filling');
+        Yii::app()->session['num']=$fNum;
         $classexam = Array();
         $classexam2 = Array();
         $finishRecord=Array();
