@@ -175,7 +175,7 @@ class StudentController extends CController {
         //查看是否有answer，即是否是用户提交了答案。
         if(isset($_POST['qType']) && $_POST['qType']=="filling") {
             if(Yii::app()->session['isExam'])
-             ExamRecord::saveExamRecord($recordID);
+                ExamRecord::saveExamRecord($recordID);
             else
                 SuiteRecord::saveSuiteRecord($recordID);
             $result = AnswerRecord::saveFilling($recordID);

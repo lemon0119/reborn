@@ -34,11 +34,11 @@ class AnswerRecord extends CActiveRecord
         $res = true;
         $filling = Suite::model()->getFilling(Yii::app()->session['suiteID']);
         foreach ($filling as $record) {
-            $str = $record['requirements'];
+            $str = $record['answer'];
             $strArry = explode("$$",$str);
             $name = '1'.'filling'.$record['exerciseID'];
             $answer = isset($_POST[$name]) ? $_POST[$name] : '';
-            for($i = 2;$i < count($strArry); $i++){
+            for($i = 2;$i <= count($strArry); $i++){
                 $name = $i.'filling'.$record['exerciseID'];
                 $answer = isset($_POST[$name]) ? $answer.'$$'.$_POST[$name] : $answer.'$$'.'';
             }

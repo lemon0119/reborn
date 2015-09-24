@@ -15,7 +15,7 @@ require 'ansSideBar.php';
                 foreach ($exercise['filling'] as $value) {
                     echo ($SNum+1).'. ';
                     $str = $value['requirements'];
-                    $answer = $ansFilling[$value['exerciseID']];
+                    $answer = isset($ansFilling[$value['exerciseID']]) ? $ansFilling[$value['exerciseID']] : '';
                     $ansArr = explode('$$', $answer);
                     echo $str.'<br/>';
                     $i = 1;
