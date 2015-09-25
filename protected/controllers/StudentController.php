@@ -909,7 +909,7 @@ class StudentController extends CController {
         $workID = Yii::app()->session['workID']; 
         $classexams = Exam::model()->getClassexamAll($classID);
         $classexam = array();
-        $ratio_accomplish=Array();
+        $ratio_accomplish='0';
         $n=0;       
         foreach ($classexams as $c){
             array_push($classexam, $c);

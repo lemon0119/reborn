@@ -66,13 +66,7 @@
         <input name="nm_answer" id="id_answer" type="hidden">
         <input name="nm_cost" id="id_cost" type="hidden">
         <input name="nm_correct" id="id_correct" type="hidden">
-        <a aline="center" type="button" class="btn btn-primary btn-large" onclick="onSubmit()" style="margin-left: 200px">保存</a>
-        <?php 
-          $last = Tool::getLastExer($exercise2);
-          if($last['type'] == 'key'&& $last['exerciseID'] == $_GET['exerID']){
-        ?>
-          <a class="btn btn-large" style="margin-left: 200px" onclick="submitSuite();">提交</a>
-        <?php }?>
+       
     </form>
 </div>
  <?php } else {?>
