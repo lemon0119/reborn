@@ -19,7 +19,9 @@
                     </tr>
             </thead>
             <tbody>
-                <?php foreach ($classexams as $exam){?>
+                <?php 
+                $n=0;
+                foreach ($classexams as $exam){?>
                     <tr>
                             <td>
                                     <?php echo $exam['examName'];?>
@@ -30,11 +32,15 @@
                             <td>
                                     <?php echo $exam['endtime'];?>
                             </td>
+                             <td>
+                                    <?php if ($ratio_accomplish[$n] ==1){
+                                    	echo '已完成';
+                                    }else {
+                                    	echo '未完成';
+                                    }?>
+                           </td>
                             <td>
-                                    <?php echo '已完成';?>
-                            </td>
-                            <td>
-                                <?php if(time() < strtotime($exam['endtime'])){?>
+                                <?php if(time() < strtotime($exam['endtime'])&& $ratio_accomplish[$n] ==0){?>
                                 <a href="./index.php?r=student/clsexamOne&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '进　　入';?></a>
                                 <?php } else { ?>
                                     <?php echo '<font color="#ff0000">已经截止</font>'; ?>

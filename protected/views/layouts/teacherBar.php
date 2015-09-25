@@ -68,7 +68,8 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
                                     </li>
-                                    <li class="dropdown">
+                                    <li><a id="blank_admin"></a></li>
+                                    <li >
                                         <div class="userUI">
                                         <a href="" data-toggle="dropdown" id="userUI" >
                                              <?php echo Yii::app()->user->name; ?><b class="user_dropdown_logo"></b>

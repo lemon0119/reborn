@@ -16,7 +16,36 @@
  */
 class ExamRecord extends CActiveRecord
 {
-    
+        public static function saveExamRecord (&$recordID) {
+            $suiteID = Yii::app()->session['suiteID'];
+            $workID = Yii::app()->session['workID'];
+            $createPerson = Yii::app()->session['userid_now'];
+            $oldID = ExamRecord::getRecord($workID, $createPerson);
+            if($oldID == null) {
+                $newID = Tool::createID();
+                $newRecord = new ExamRecord();
+                $newRecord->recordID = $newID;
+                $newRecord->studentID = $createPerson;
+                $newRecord->workID = $workID;
+                $newRecord->createTime = date("Y-m-d  H:i:s");
+                $newRecord->modifyTime = $newRecord->createTime;
+                if(!($newRecord->insert())) {
+                    echo Tool::jsLog('创建练习记录失败！');
+                    return false;
+                }
+                $recordID = $newID;
+                return true;
+            } else {
+                $oldRecord = ExamRecord::model()->find('recordID=?', array($oldID));
+                $oldRecord->modifyTime = date("Y-m-d H:i:s");
+                if(!($oldRecord->upDate())) {
+                    echo Tool::jsLog('更新练习记录失败！');
+                    return false;
+                }
+                $recordID = $oldRecord->recordID;
+                return true;
+            }
+        }
         public static function getRecord($workID, $createPerson, $lesnID = '0') {
             //$select = "select recordID from suite_record ";
             //$condition = "where studentID = '$createPerson' and workID = ";
@@ -27,6 +56,20 @@ class ExamRecord extends CActiveRecord
                 return $record->recordID;
             }
         }
+        public static function overExam($recordID){
+        $record = ExamRecord::model()->findByPK($recordID);
+        $record -> ratio_accomplish = 1;
+        if(!($record->upDate())) {
+            echo Tool::jsLog('最后提交失败！');
+            return false;
+        }
+        return true;
+    }
+     public function getExamRecordAccomplish($recordID){
+        $ratio_accomplish = $this->find("recordID = '$recordID'");
+		return $ratio_accomplish['ratio_accomplish'];
+    }
+
 	/**
 	 * @return string the associated database table name
 	 */

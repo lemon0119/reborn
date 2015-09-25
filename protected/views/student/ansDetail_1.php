@@ -53,7 +53,9 @@
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($answer);?>');
+        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($answer);?>');        
+        if(lcs == null)
+            return;
         lcs.doLCS();
         var tem = lcs.getStrOrg(1);
         var ans = lcs.getStrOrg(2);

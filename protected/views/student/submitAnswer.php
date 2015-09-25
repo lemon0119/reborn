@@ -25,6 +25,8 @@
         var text = document.getElementById("content").value;
         document.getElementById("id_answer").value = theString;
         var lcs = new LCS(text, theString);
+        if(lcs == null)
+            return;
         lcs.doLCS();
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
         document.getElementById("id_correct").value = correct;

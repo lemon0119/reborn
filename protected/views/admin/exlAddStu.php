@@ -40,7 +40,7 @@ $(document).ready(function(){
 						} else {
 							// 解析文件并存入数据库逻辑
 							/* 设置上传路径 */
-							$savePath = dirname ( Yii::app ()->BasePath ) . '/public/upload/excel/';
+							$savePath = dirname ( Yii::app ()->BasePath ) . '\\public\\upload\\excel\\';
 							/* 以时间来命名上传的文件 */
 							$str = date ( 'Ymdhis' );
 							$file_name = "Stu".$str . ".xls";

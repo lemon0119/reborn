@@ -3121,11 +3121,11 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
     *z-index:2;
     margin-bottom:20px;
     overflow:visible
+    
 }
 .navbar-inner {
     min-height:40px;
     padding-right:20px;
-    padding-left:20px;
 }
 .navbar-inner:before,.navbar-inner:after {
     display:table;
@@ -3146,7 +3146,6 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
     display:block;
     float:left;
     padding:30px 120px;
-    margin-left:-20px;
     text-shadow:0 1px 0 #fff;
     background:url(../../img/logoDM.png);
     background-repeat:no-repeat;
@@ -3273,10 +3272,13 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 }
 .navbar .nav {
     position:relative;
+    border-radius: 6px;
     left:0;
     display:block;
     float:left;
-    margin:0 10px 0 0
+    background:-moz-linear-gradient(left,#393939,#fff);
+    //background-color: #aaa9a9;
+    margin:0 0px 0 0
 }
 .navbar .nav.pull-right {
     float:right;
@@ -4552,11 +4554,14 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 
 .userUI{
-    position: absolute;
+    background:-moz-linear-gradient(left,#e3e3e2,#fff);
+    position: relative;
+    float: right;
+    right: 0px;
     height: 55px;
     width: 120px;
     line-height:55px;
-    background-image: url("../../img/user_ui.png");
+    border-radius: 4px;
 }
 
 #userUI{
@@ -4729,4 +4734,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 #tb tbody tr td,#tb tbody tr th{
     border-style:none;
+}
+#blank_stu{
+    padding: 28px 215px;
+}
+#blank_admin{
+    padding: 28px 155px;
+}
+.nav-userID{
+    position: relative;
+    right:120px;
+    float: right;
+    margin: 0px 0px 0px 0px;
 }

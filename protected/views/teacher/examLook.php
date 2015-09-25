@@ -62,6 +62,8 @@
     }
     function start(){
         var lcs = new LCS('<?php echo ($work['content']);?>', '<?php echo ($ansWork['answer']);?>');
+        if(lcs == null)
+            return;
         lcs.doLCS();
         var tem = lcs.getStrOrg(1);
         var ans = lcs.getStrOrg(2);

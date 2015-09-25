@@ -7,6 +7,8 @@ function max(p1,p2) {
     return p1 > p2 ? p1 : p2;
 }
 function LCS(str1,str2){
+    if(str1 == null || str2 == null)
+        return null;
     //设置字符串长度
     this.substringLength1 = str1.length;
     this.substringLength2 = str2.length;

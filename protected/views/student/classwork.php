@@ -20,33 +20,35 @@ require 'lessonSideBar.php';
                     </tr>
             </thead>
             <tbody>
-                <?php foreach ($classwork as $work){?>
+                <?php $n=0;
+                foreach ($classwork as $work){?>
                     <tr>
                             <td>
                                     <?php echo $work['suiteName'];?>
                             </td>
                            <td>
-                                    <?php if ($ratio_accomplish ==1){
+                                    <?php if ($ratio_accomplish[$n] ==1){
                                     	echo '已提交';
                                     }else {
                                     	echo '未提交';
                                     }?>
                            </td>
                             <td>
-                              <?php if ($ratio_accomplish==1){
+                              <?php if ($ratio_accomplish[$n]==1){
                               	echo  '答题';
                               }else {?>
                                 <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img src="<?php echo IMG_UIStu_URL; ?>answer.png"></a>
                                 <?php }?>
-                               <?php if ($ratio_accomplish==1){?>
+                               <?php if ($ratio_accomplish[$n]==1){?>
                                	<a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                                <?php }else {?>
                                	<img src="<?php echo IMG_URL; ?>detail.png">
-                              <?php }?>
+                              <?php } $n++;?>
                                 
                                
                             </td>
                     </tr>
+                    
                 <?php }?>
             </tbody>
     </table>

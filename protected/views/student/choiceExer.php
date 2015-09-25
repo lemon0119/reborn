@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -18,7 +18,7 @@ $page = '/index.php?r='.$rout;
 $SNum = 0;
 ?>
 
-<div class="span9">
+<div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;">
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host.$path.$page;?>">
         <div class="hero-unit">
         <input name ="qType" type="hidden" value="choice"/>
@@ -53,26 +53,9 @@ $SNum = 0;
             }
         ?>
 
-        <!-- 显示翻页标签 -->
-    <div align=center>
-        <?php
-        $this->widget('CLinkPager', array('pages' => $pages));
-        ?>
-    </div>
-    <!-- 翻页标签结束 -->
+ 
 
-        <tr>
-        <?php if(count($exercise['choice']) > 0){//this.submit()?>
-            <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();" style="margin-left: 200px">保存</a>
-            <!--<a  href="./index.php?r=student/classwork" type="button" class="btn btn-primary btn-large" style="margin-left: 350px">退出</a>-->
-        <?php }?>
-        <?php 
-            $last = Tool::getLastExer($exercise2);
-            if($last['type'] == 'choice'){
-        ?>
-            <a class="btn btn-large" style="margin-left: 200px" onclick="submitSuite();">提交</a>
-        <?php }?>
-        </tr>
+        
     </form>
 </div>
 <script>

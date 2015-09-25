@@ -34,15 +34,17 @@ class AnswerRecord extends CActiveRecord
         $res = true;
         $filling = Suite::model()->getFilling(Yii::app()->session['suiteID']);
         foreach ($filling as $record) {
-            $str = $record['requirements'];
+            $str = $record['answer'];
             $strArry = explode("$$",$str);
             $name = '1'.'filling'.$record['exerciseID'];
             $answer = isset($_POST[$name]) ? $_POST[$name] : '';
-            for($i = 2;$i < count($strArry); $i++){
+            $nullAnswer = '';
+            for($i = 2;$i <= count($strArry); $i++){
                 $name = $i.'filling'.$record['exerciseID'];
                 $answer = isset($_POST[$name]) ? $answer.'$$'.$_POST[$name] : $answer.'$$'.'';
+                $nullAnswer .= '$$';
             }
-            if($answer !== '') {
+            if($answer !== $nullAnswer) {
                 $res = AnswerRecord::saveKnlgAnswer($recordID, $answer, "filling", $record['exerciseID']);
                 if($res === false)
                     return false;
