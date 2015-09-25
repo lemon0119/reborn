@@ -39,9 +39,9 @@
                 
             </tbody>
     </table>
-        <?php if(Yii::app()->session['lastUrl']=="classLst"){?>
+        <?php if(Yii::app()->session['lastUrl']=="classLst"){ ?>
         <a href="./index.php?r=admin/classLst&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
-        <?php }else if(Yii::app()->session['lastUrl']=="searchClass"){?>
+        <?php  }else if(Yii::app()->session['lastUrl']=="searchClass"){?>
         <a href="./index.php?r=admin/searchClass&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
         <?php }else if(Yii::app()->session['lastUrl']=="infoClass"){?>
         <a href="./index.php?r=admin/infoClass&&classID=<?php echo $_GET['classID'];?>" class="btn">返回</a>

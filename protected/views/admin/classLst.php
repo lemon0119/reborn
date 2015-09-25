@@ -60,6 +60,7 @@
                         <td><?php $couID = $model['currentCourse']; echo $courseName[$couID];?></td>
                         <td>  
                             <a href="./index.php?r=admin/infoClass&&classID=<?php echo $model['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href=""  <?php if(isset($model['classID'])){?>onclick="deleteClass(<?php echo $model['classID']; ?>)" <?php }?>><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -72,7 +73,6 @@
         $this->widget('CLinkPager',array('pages'=>$pages));
     ?>
     <!-- 翻页标签结束 -->
-   
     </div>
 
     <!-- 右侧内容展示结束-->
@@ -81,5 +81,18 @@
 <script>
     $(document).ready(function(){
         $("#classLst").attr("class","active");
+        
     });
+    
+    function deleteClass(id){
+        if(confirm("确定要删除班级："+id+"？这样做将无法恢复！")){
+            window.location.href="./index.php?r=admin/classLst&&flag=deleteClass&&ClassID="+id;
+        }else{
+            return false;
+        };
+    }
+    
+    
 </script>
+
+  

@@ -510,7 +510,7 @@ class AdminController extends CController {
         if (Yii::app()->session ['lastUrl'] == "infoClass") {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
-                'name' => $_GET ['name'],
+                'name' => $student ['userName'],
                 'department' => $student ['department'],
                 'sex' => $student['sex'],
                 'age' => $student['age'],
@@ -521,7 +521,7 @@ class AdminController extends CController {
         } else if (isset($_GET ['flag'])) {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
-                'name' => $_GET ['name'],
+                'name' => $student ['userName'],
                 'department' => $student ['department'],
                 'sex' => $student['sex'],
                 'age' => $student['age'],
@@ -798,13 +798,30 @@ class AdminController extends CController {
     }
 
     public function actionClassLst() {
+        //删除班级同时删除与之关联的学生，老师
+        $act_result ='';
+        if (isset($_GET ['flag'])) {
+            if ($_GET ['flag'] == 'deleteClass') {
+                $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
+                //SQL删除关联学生
+                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+                //SQL删除关联老师
+                $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
+                Yii::app()->db->createCommand($sql)->query();
+                Yii::app()->db->createCommand($sql_teacher)->query();
+                Yii::app()->db->createCommand($sql_student)->query();
+                
+            }
+            unset($_GET ['flag']);
+        }
+        
         if (isset($_GET ['page'])) {
             Yii::app()->session ['lastPage'] = $_GET ['page'];
         } else {
             Yii::app()->session ['lastPage'] = 1;
         }
         // 显示结果列表并分页
-        Yii::app()->session ['lastClassUrl'] = "classLst";
+        Yii::app()->session ['lastUrl'] = "classLst";
         $result = TbClass::model()->getClassLst();
         $this->render('classLst', array(
             'posts' => $result ['classLst'],

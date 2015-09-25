@@ -22,8 +22,9 @@
         ?>
             
         <h3><?php echo $classID; echo '&nbsp; &nbsp;'; echo $className;?></h3>
-        <p>人数：<?php echo $nums; echo '&nbsp; &nbsp;';?> 课程： <?php echo $courseName; echo '&nbsp; &nbsp;';?> 当前进度： <?php echo $lessonName; echo '&nbsp; &nbsp;';?>   
+        <p >学生人数：<font class="normal_checked_font"><?php echo $nums; echo '&nbsp; &nbsp;';?></font>课程：<font class="normal_checked_font"> <?php echo $courseName; echo '&nbsp; &nbsp;';?></font> 当前进度：<font class="normal_checked_font"> <?php echo $lessonName; echo '&nbsp; &nbsp;';?></font>   
         </p>
+        <h4>任课老师：</h4>
          <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -45,7 +46,7 @@
                     <?php endforeach;?> 
                 </tbody>
         </table>
-        
+        <h4>本班学生：</h4>
         <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -60,8 +61,8 @@
                         <td style="width: 75px"><?php echo $model['userID'];?></td>
                         <td><?php echo $model['userName'];?></td>
                         <td>  
-                            <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID']; ?>&&name=<?php echo $model['userName']; ?>&&classID=<?php echo $classID; ?>"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
-                            <a href="./index.php?r=admin/infoClass&&flag=deleteStu&&id=<?php echo $model['userID'];?>&&classID=<?php echo $model['classID'];?>"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                            <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID']; ?>&&name=<?php echo $model['userName']; ?>&&classID=<?php echo $classID; ?>"><img title="详细资料" src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <a href="./index.php?r=admin/infoClass&&flag=deleteStu&&id=<?php echo $model['userID'];?>&&classID=<?php echo $model['classID'];?>"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -76,7 +77,7 @@
         <script>
         function back()
         {
-             <?php if(Yii::app()->session['lastClassUrl']=="classLst"){?>
+             <?php if(Yii::app()->session['lastUrl']=="infoClass"){?>
                 window.location.href="./index.php?r=admin/classLst&&page=<?php echo Yii::app()->session['lastPage'];?>";
              <?php } else { ?>
                 window.location.href="./index.php?r=admin/searchClass&&page=<?php echo Yii::app()->session['lastPage'];?>";
