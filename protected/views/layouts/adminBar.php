@@ -51,7 +51,10 @@
                                                             <li><a id="blank_admin"></a></li>
                                                             <li >
                                                                 <div class="userUI">
-                                                                    <a href="" id="userUI" data-toggle="dropdown">管理员<b class="user_dropdown_logo"></b></a>
+                                                                    <a href="" id="userUI" data-toggle="dropdown">
+                                                                        <?php echo Yii::app()->session['userName']; ?>
+                                                                        <b class="user_dropdown_logo"></b>
+                                                                    </a>
                                                                     
                                                                     <ul class="dropdown-menu">
                                                                             <li>

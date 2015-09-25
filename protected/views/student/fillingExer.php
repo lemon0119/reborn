@@ -5,18 +5,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
- if($isExam == false){ 
-require 'suiteSideBar.php';
- }else{ 
-    require 'examSideBar.php';
- } 
-$host = Yii::app()->request->hostInfo;
-$path = Yii::app()->request->baseUrl;
-$rout = 'student/saveFilling';
-$page = '/index.php?r='.$rout;
-$SNum = 0;
+    if($isExam == false){ 
+        require 'suiteSideBar.php';
+    }else{ 
+        require 'examSideBar.php';
+    } 
+    $host = Yii::app()->request->hostInfo;
+    $path = Yii::app()->request->baseUrl;
+    $rout = 'student/saveFilling';
+    $page = '/index.php?r='.$rout;
+    $SNum = 0;
 ?>
-<div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;"
+<div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;">
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host.$path.$page;?>">
         <div class="hero-unit">
             <input name ="qType" type="hidden" value="filling"/>

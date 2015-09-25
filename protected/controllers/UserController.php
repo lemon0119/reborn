@@ -69,20 +69,23 @@ class UserController extends Controller
                 $username_now=$login_model->username;
                 $role_now = $login_model->usertype;
                 if ($role_now === 'teacher') {
-                    //$user = (new Teacher())->find("userid='$username_now'");
-                    //$userid = $user->userID;
+                    $user = (new Teacher())->find("userid='$username_now'");
+                    $userName = $user->userName;
+                    Yii::app()->session['userName']=$userName;
                     Yii::app()->session['userid_now']=$username_now;
                     Yii::app()->session['role_now']=$role_now;
                     $this->redirect(['/teacher/index']);
                 } else if ($role_now === 'student'){
-                    //$user = (new Student())->find("userid='$username_now'");
-                    //$userid = $user->userID;
+                    $user = (new Student())->find("userid='$username_now'");
+                    $userName = $user->userName;
+                    Yii::app()->session['userName']=$userName;
                     Yii::app()->session['userid_now']=$username_now;
                     Yii::app()->session['role_now']=$role_now;
                     $this->redirect(['/student/index']);
                 } else if($role_now === 'admin'){
-                    //$user = (new Admin())->find("username='$username_now'");
-                    //$userid = $user->userID;
+                    $user = (new Admin())->find("userid='$username_now'");
+                    $userName = $user->userName;
+                    Yii::app()->session['userName']=$userName;
                     Yii::app()->session['userid_now']=$username_now;
                     Yii::app()->session['role_now']=$role_now;
                     $this->redirect(['/admin/index']);

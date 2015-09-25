@@ -36,7 +36,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     <li >
                                         <div class="userUI">
                                             <a href="#" id="userUI"  data-toggle="dropdown">
-                                                <?php echo Yii::app()->user->name; ?><b class="user_dropdown_logo"></b>
+                                                <?php echo Yii::app()->session['userName']; ?><b class="user_dropdown_logo"></b>
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <li>

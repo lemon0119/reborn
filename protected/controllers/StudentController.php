@@ -173,7 +173,11 @@ class StudentController extends CController {
     
     public function actionSaveFilling(){
         //查看是否有answer，即是否是用户提交了答案。
+        echo 'actionSaveFilling';
+        $is = isset($_POST['qType']) ? 0 : 1;
+        echo "...$is...";
         if(isset($_POST['qType']) && $_POST['qType']=="filling") {
+            echo 'filling';
             if(Yii::app()->session['isExam'])
                 ExamRecord::saveExamRecord($recordID);
             else
