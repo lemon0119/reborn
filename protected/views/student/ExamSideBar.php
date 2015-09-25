@@ -68,11 +68,14 @@ $currtime = $examInfo['endtime'];
                         </li>
                         <?php endforeach;?>
                 </ul>
+            
         </div>
-     <div>
-         <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();">保存</a>
-         <a class="btn btn-large" style="margin-left: 115px" onclick="submitSuite();">提交</a>
+      <div>
+                             <a type="button" class="btn btn-primary btn-large" onclick="formSubmit();">保存</a>
+                             <a class="btn btn-large"  onclick="submitSuite();">提交</a>
+   
     </div>
+        
 </div>
 <script>
     $(document).ready(function(){
