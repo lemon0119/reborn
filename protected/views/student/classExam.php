@@ -46,7 +46,7 @@
                                     <?php echo '<font color="#ff0000">已经截止</font>'; ?>
                                   &nbsp;&nbsp;&nbsp|  &nbsp;&nbsp;&nbsp    
                                   <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '查看成绩';?></a>
-                                <?php } ?>
+                                <?php } $n++;?>
                             </td>
                     </tr>
                 <?php }?>

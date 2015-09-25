@@ -910,15 +910,17 @@ class StudentController extends CController {
         $workID = Yii::app()->session['workID']; 
         $classexams = Exam::model()->getClassexamAll($classID);
         $classexam = array();
-        $ratio_accomplish='0';
-        $n=0;
+        $ratio_accomplish=Array();
+        $n=0;       
         foreach ($classexams as $c){
             array_push($classexam, $c);
             $recordID[$n]=ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
+            
             if($recordID==null){
                 return $this->render('classexam',['classexams'=>$classexam]);
             }else{
                 $ratio_accomplish[$n] = ExamRecord::model()->getExamRecordAccomplish($recordID[$n]);
+                print_r($ratio_accomplish[$n]."-");
             }
             $n++;
         }     
