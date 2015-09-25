@@ -4,7 +4,7 @@
         <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
         <form action="./index.php?r=admin/searchCLass" method="post">
             <li>
-                <select name="which" style="width: 185px">
+                <select name="which" >
                         <option value="classID" selected="selected">班号</option>
                         <option value="className" >班级名</option>
                         <option value="courseName" >课程</option>

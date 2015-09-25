@@ -4,7 +4,7 @@
                 <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
                 <form action="./index.php?r=admin/searchStu&&page=1" method="post">
                         <li>
-                                <select name="type" style="width: 185px">
+                                <select name="type">
                                         <option value="userID" selected="selected">学号</option>
                                         <option value="userName">姓名</option>
                                         <option value="classID">班级</option>

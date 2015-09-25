@@ -207,13 +207,13 @@ a:hover,a:focus {
     margin-left:20px
 }
 .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container {
-    width:940px
+    width:1100px
 }
 .span12 {
-    width:940px
+    width:1070px
 }
 .span11 {
-    width:860px
+    width:1070px
 }
 .span10 {
     width:780px
@@ -222,6 +222,8 @@ a:hover,a:focus {
     border-radius: 5px;
     background-color: #fff;
     position:relative;
+    float: right;
+    right:30px;
     padding: 40px;
     width:700px
 }
@@ -241,7 +243,7 @@ a:hover,a:focus {
     width:300px
 }
 .span3 {
-    width:220px
+    width:265px
 }
 .span2 {
     width:140px
@@ -856,7 +858,7 @@ select,input[type="file"] {
     line-height:30px
 }
 select {
-    width:220px;
+    width:225px;
     background-color:#303030;
     border:1px solid #aaa9a9;
     appearance:none;
@@ -1244,6 +1246,7 @@ input:focus:invalid:focus,textarea:focus:invalid:focus,select:focus:invalid:focu
     margin-left:0
 }
 input.search-query {
+    width: 195px;
     padding-right:14px;
     padding-right:4px \9;
     padding-left:14px;
@@ -3136,7 +3139,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
     clear:both
 }
 .navbar .container {
-    width:auto;
+    width:1100;
 }
 .nav-collapse.collapse {
     height:auto;
@@ -3145,7 +3148,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 .navbar .brand {
     display:block;
     float:left;
-    padding:30px 120px;
+    padding:30px 133px;
     text-shadow:0 1px 0 #fff;
     background:url(../../img/logoDM.png);
     background-repeat:no-repeat;
@@ -3275,7 +3278,6 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
     border-radius: 6px;
     left:0;
     display:block;
-    float:left;
     background:-moz-linear-gradient(left,#393939,#fff);
     //background-color: #aaa9a9;
     margin:0 0px 0 0
@@ -4554,25 +4556,28 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 
 .userUI{
-    background:-moz-linear-gradient(left,#e3e3e2,#fff);
+   
+    background-color: #fff;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
     position: relative;
     float: right;
-    right: 0px;
-    height: 55px;
-    width: 120px;
+    height: 54px;
+    width: 130px;
     line-height:55px;
-    border-radius: 4px;
 }
 
 #userUI{
+    float: right;
     font-weight: bolder;
-    padding: 18px 21px;
+    padding: 0px 21px;
     color: #393939;
 }
 #userUI:hover{
+    float: right;
     font-weight: bolder;
     color: #f46500;
-    padding: 18px 21px;
+    padding: 0px 21px;
 
 }
 .user_dropdown_logo{
@@ -4736,10 +4741,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     border-style:none;
 }
 #blank_stu{
-    padding: 28px 215px;
+     background:-moz-linear-gradient(left,#505050,#fff);
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 27px 156px;
 }
 #blank_admin{
-    padding: 28px 155px;
+    background:-moz-linear-gradient(left,#505050,#fff);
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 27px 97px;
 }
 .nav-userID{
     position: relative;

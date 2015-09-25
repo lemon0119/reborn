@@ -5,7 +5,7 @@
                 <form action="./index.php?r=teacher/searchChoice" method="post">
                         <li>
                             <div class="selectoption">
-                                <select  name="type" style="width: 185px">
+                                <select  name="type" >
                                     <option  value="exerciseID" selected="selected">编号</option>
                                         <option  value="courseID" >课程号</option>
                                         <option  value="createPerson" >创建人</option>
