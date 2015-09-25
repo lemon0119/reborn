@@ -36,10 +36,7 @@ class UserIdentity extends CUserIdentity
     public function authenticate(){
         $user;
         if ($this->_usertype === 'student') {
-            $user = Student::model()->find('userName=?', array($this->username));
-            if ($user === null) {
-                $user = Student::model()->find('userID=?', array($this->username));
-            }
+            $user = Student::model()->find('userID=?', array($this->username));
             if($user === null){
                 $this->errorCode=self::ERROR_USERNAME_INVALID;
             }elseif($user->password !== md5($this->password)){                 //先不使用MD5加密
@@ -49,10 +46,7 @@ class UserIdentity extends CUserIdentity
                 $this->_userid = $user->userID;
             }
         } else if ($this->_usertype === 'teacher') {
-            $user = Teacher::model()->find('userName=?', array($this->username));
-            if ($user === null) {
-                $user = Teacher::model()->find('userID=?', array($this->username));
-            }
+            $user = Teacher::model()->find('userID=?', array($this->username));
             if($user === null){
                 $this->errorCode=self::ERROR_USERNAME_INVALID;
             }elseif($user->password !== md5($this->password)){                 //先不使用MD5加密
@@ -62,10 +56,7 @@ class UserIdentity extends CUserIdentity
                 $this->_userid = $user->userID;
             }
         }else if ($this->_usertype === 'admin') {
-            $user = Admin::model()->find('userName=?', array($this->username));
-            if ($user === null) {
-                $user = Admin::model()->find('userID=?', array($this->username));
-            }
+            $user = Admin::model()->find('userID=?', array($this->username));
             if($user === null){
                 $this->errorCode=self::ERROR_USERNAME_INVALID;
             }elseif($user->password !== md5($this->password)){                 //先不使用MD5加密

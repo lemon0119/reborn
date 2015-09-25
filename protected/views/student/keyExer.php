@@ -1,9 +1,9 @@
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
 <?php  if($isExam == false){ 
-require 'suiteSideBar.php';
- }else{ 
+    require 'suiteSideBar.php';
+}else{ 
     require 'examSideBar.php';
- } 
+} 
      //add by lc 
     $type = 'key'; 
     if($isExam){
@@ -35,12 +35,18 @@ require 'suiteSideBar.php';
                 </tr>
         </table>
         <br/>
-        <div id ="templet" class ="questionBlock" onselectstart="return false">
+        <table id="keyMode" style="height: 60px; font-size: 60px; border: 1px solid #000" onclick="next()">
+            <tr>
+                <td id="left-key" style="border-right: 1px solid #000; width: 300px;text-align:right;">ABCDEF</td>
+                <td id="right-key" style="border-left: 1px solid #000; width: 300px">AS</td>
+            </tr>
+        </table>
+        <br/>
+        <div id ="templet" class ="questionBlock" onselectstart="return false" style="display: none">
             <font id="id_right"style="color:#808080"> </font><font id="id_wrong" style="color:#ff0000"> </font><font id="id_new" style="color:#000000"> </font>
         </div>
-        <br/><br/>
         <div style="width: 750px; height: 350px;">
-        <?php require  Yii::app()->basePath."\\views\\student\\keyboard.php";?>
+            <?php require  Yii::app()->basePath."\\views\\student\\keyboard.php";?>
         </div>
         <?php
             $host = Yii::app()->request->hostInfo;
@@ -73,6 +79,12 @@ require 'suiteSideBar.php';
     <h3>本题时间已经用完。</h3>
 <?php }?>
 <script>
+    
+    function next(){
+        $('#keyMode').fadeOut(50);
+        $('#keyMode').fadeIn(50);
+    }
+    
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){

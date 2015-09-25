@@ -679,10 +679,10 @@ class StudentController extends CController {
     
     //2015-8-3 宋杰 加载考试填空题
     public function actionExamfilling(){
-       $isExam = true;
-       $suiteID = Yii::app()->session['examsuiteID'];
-       $workID = Yii::app()->session['workID'];
-         $studentID = Yii::app()->session['userid_now'];
+        $isExam = true;
+        $suiteID = Yii::app()->session['examsuiteID'];
+        $workID = Yii::app()->session['workID'];
+        $studentID = Yii::app()->session['userid_now'];
         $classexam = Array();
         $classexam2 = Array();
         $finishRecord=Array();
@@ -690,7 +690,7 @@ class StudentController extends CController {
         $arg=$_GET['cent'];
         $cent=  explode(',', $arg);
         $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
-         $examInfo = Exam::model()->find($suiteID);
+        $examInfo = Exam::model()->find($suiteID);
         //
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');

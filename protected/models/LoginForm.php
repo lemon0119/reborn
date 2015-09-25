@@ -48,12 +48,14 @@ class LoginForm extends CFormModel
 	 */
 	public function authenticate($attribute,$params)
 	{	//当没有input errors时，一个UserIdentity的对象被创建，username、password被传入构造函数。Useridentity对象的authenticate()方法被调用
-		if(!$this->hasErrors())
-		{
-           $this->_identity=new UserIdentity($this->username,$this->password);
-           $this->_identity->setUserType($this->usertype);
-           if(!$this->_identity->authenticate())
-              $this->addError('password','Incorrect username or password.');     //添加错误消息
+		if(!$this->hasErrors()){
+                    echo 'authenticate';
+                    $this->_identity=new UserIdentity($this->username,$this->password);
+                    $this->_identity->setUserType($this->usertype);
+                    if(!$this->_identity->authenticate()){
+                        $this->addError('password','Incorrect username or password.');     //添加错误消息
+                        echo 'addError';
+                    }
 		}
 	}
 
@@ -74,11 +76,11 @@ class LoginForm extends CFormModel
 			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
 			Yii::app()->user->login($this->_identity,$duration);     //调用Yii::app()->user->login()保存数据（session）
 			
-			$cookie = new CHttpCookie('usernamecookie',$this->username); 
+			$cookie = new CHttpCookie('usernamecookie',$this->username);     //用户名cookie
 			$cookie->expire = time()+60*60*24*30; //有限期30天 
 			Yii::app()->request->cookies['mycookie']=$cookie;
 			
-			$cookie = new CHttpCookie('usertypecookie',$this->usertype);
+			$cookie = new CHttpCookie('usertypecookie',$this->usertype);     //用户类型cookie
 			$cookie->expire = time()+60*60*24*30; //有限期30天
 			Yii::app()->request->cookies['usertypecookie']=$cookie;
 			
@@ -87,7 +89,7 @@ class LoginForm extends CFormModel
 				$cookie = new CHttpCookie('remcookie',$this->rememberMe);
 				$cookie->expire = time()+60*60*24*30; //有限期30天
 				Yii::app()->request->cookies['remcookie']=$cookie;
-			}else {
+			}else {                                            //清空cookie
 				$cookie=Yii::app()->request->getCookies();
 				unset($cookie['remcookie']);
 				$cookie=Yii::app()->request->getCookies();
