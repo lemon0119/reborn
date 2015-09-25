@@ -911,14 +911,16 @@ class StudentController extends CController {
         $classexams = Exam::model()->getClassexamAll($classID);
         $classexam = array();
         $ratio_accomplish='0';
+        $n=0;
         foreach ($classexams as $c){
             array_push($classexam, $c);
-            $recordID=  ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
+            $recordID[$n]=ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
             if($recordID==null){
                 return $this->render('classexam',['classexams'=>$classexam]);
             }else{
-                $ratio_accomplish = ExamRecord::model()->getExamRecordAccomplish($recordID);
+                $ratio_accomplish[$n] = ExamRecord::model()->getExamRecordAccomplish($recordID[$n]);
             }
+            $n++;
         }     
         return $this->render('classexam',['classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish]);
     }

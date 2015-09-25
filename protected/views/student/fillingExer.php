@@ -16,7 +16,7 @@ $rout = 'student/saveFilling';
 $page = '/index.php?r='.$rout;
 $SNum = 0;
 ?>
-<div class="span9">
+<div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;">
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host.$path.$page;?>">
         <div class="hero-unit">
             <input name ="qType" type="hidden" value="filling"/>
@@ -67,16 +67,7 @@ $SNum = 0;
     </div>
     <!-- 翻页标签结束 -->
         </div>
-        <?php if(count($exercise['filling']) > 0){?>
-            <a type="button" class="btn btn-primary btn-large" onclick="formSubmit()" style="margin-left: 200px">保存</a>
-            <!--<a href="./index.php?r=student/clswkOne&&suiteID=15"type="button" class="btn btn-primary btn-large"  style="margin-left: 350px">退出</a>-->
-        <?php }?>
-        <?php 
-            $last = Tool::getLastExer($exercise2);
-            if($last['type'] == 'filling'){
-        ?>
-            <a class="btn btn-large" style="margin-left: 200px" onclick="submitSuite();">提交</a>
-        <?php }?>
+       
     </form>
 </div>
 <script>
