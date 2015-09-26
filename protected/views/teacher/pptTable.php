@@ -28,7 +28,7 @@
             ?>
             <tr>
                 <td>
-                    <?php echo iconv("gb2312","UTF-8",$file);?>
+                    <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
                 </td>
                 <td>管理员</td>
                 <td>
@@ -53,7 +53,7 @@
             ?>
             <tr>
                 <td>
-                    <?php echo iconv("gb2312","UTF-8",$file);?>
+                    <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
                 </td>
                 <td>自己</td>
                 <td>

@@ -114,8 +114,10 @@ class TeacherController extends CController {
                         }
                         else
                         {
-                             move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-//                             sleep(14);
+                            $newName = Tool::createID().".ppt";
+                            $oldName = $_FILES["file"]["name"]; 
+                            move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                            Resourse::model()->insertRela($newName, $oldName);
                             $result = "上传成功！";
                       }
                     }
