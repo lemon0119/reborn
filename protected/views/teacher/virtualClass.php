@@ -32,7 +32,7 @@
                                 if((!is_dir("$$adminVdir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {
                     ?>
-                    <option value ="<?php echo $adminVideoFilePath.iconv("gb2312","UTF-8",$file);?>"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                    <option value ="<?php echo $adminVideoFilePath.iconv("gb2312","UTF-8",$file);?>"><?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?></option>   
                     <?php     
                                 } 
                         } 
@@ -45,7 +45,7 @@
                                 if((!is_dir("$vdir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {
                     ?>
-                    <option value ="<?php echo $videoFilePath.iconv("gb2312","UTF-8",$file);?>"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                    <option value ="<?php echo $videoFilePath.iconv("gb2312","UTF-8",$file);?>"><?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?></option>   
                     <?php     
                                 } 
                         } 
@@ -72,7 +72,7 @@
                                                                     $dir = "$adminPdir/$file"; 
                                                                     $num = sizeof(scandir($dir)); 
                                                                     $num = ($num>2)?($num-2):0; 
-                                                                    echo $num;?>+-+admin"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                                                                    echo $num;?>+-+admin"><?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file.".ppt"));?></option>   
                     <?php     
                                 } 
                         } 
@@ -89,7 +89,7 @@
                                                                     $dir = "$pdir/$file"; 
                                                                     $num = sizeof(scandir($dir)); 
                                                                     $num = ($num>2)?($num-2):0; 
-                                                                    echo $num;?>+-+tea"><?php echo iconv("gb2312","UTF-8",$file);?></option>   
+                                                                    echo $num;?>+-+tea"><?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file.".ppt"));?></option>   
                     <?php     
                                 } 
                         } 

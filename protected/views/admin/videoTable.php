@@ -17,7 +17,7 @@
                 ?>
                 <tr>
                     <td>
-                        <?php echo iconv("gb2312","UTF-8",$file);?>
+                        <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
                     </td>
                     <td>
                         <a href="./index.php?r=admin/lookVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&vdir=<?php echo $vdir;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>

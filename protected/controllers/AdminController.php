@@ -2447,16 +2447,11 @@ class AdminController extends CController {
                 }
               else
                 {
-                    if (file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
-                    {
-                        $result = $_FILES["file"]["name"] . "已经存在！";
-                    }
-                    else
-                    {
-                         move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-//                             sleep(14);
-                        $result = "上传成功！";
-                  }
+                    $newName = Tool::createID().".ppt";
+                    $oldName = $_FILES["file"]["name"]; 
+                    move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                    Resourse::model()->insertRela($newName, $oldName);
+                    $result = "上传成功！";
                 }
             }else{
                 $reult = "PPT文件限定大小为30M！";
@@ -2478,6 +2473,7 @@ class AdminController extends CController {
         $fileName       =   $_GET['ppt'];
         $dir            =   $_GET['pdir'];
         $file           =   $dir.$fileName;
+        Resourse::model()->delName($fileName);
         unlink(iconv('utf-8','gb2312',$file));
         $result         =   "删除成功！";    
         echo $result;
@@ -2535,16 +2531,11 @@ class AdminController extends CController {
                     }
                   else
                     {
-                        if (file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
-                        {
-                            $result = $_FILES["file"]["name"] . "已经存在！";
-                        }
-                        else
-                        {
-                             move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-//                             sleep(14);
-                            $result = "上传成功！";
-                      }
+                        $oldName = $_FILES["file"]["name"]; 
+                        $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                        move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                        Resourse::model()->insertRela($newName, $oldName);
+                        $result = "上传成功！";
                     }
                 }else{
                     $reult = "视频文件限定大小为200M！";
@@ -2559,6 +2550,7 @@ class AdminController extends CController {
         $fileName       =   $_GET['video'];
         $dir            =   $_GET['vdir'];
         $file           =   $dir.$fileName;
+        Resourse::model()->delName($fileName);
         unlink(iconv('utf-8','gb2312',$file));
         $result         =   "删除成功！";    
         echo $result;

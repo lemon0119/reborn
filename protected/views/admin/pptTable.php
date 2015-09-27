@@ -17,7 +17,7 @@
                 ?>
                 <tr>
                     <td>
-                        <?php echo iconv("gb2312","UTF-8",$file);?>
+                        <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
                     </td>
                     <td>
                         <a href="./index.php?r=admin/lookPpt&&pdir=<?php echo $pdir;?>&&ppt=<?php  

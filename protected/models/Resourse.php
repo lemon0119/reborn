@@ -49,6 +49,17 @@ class Resourse extends CActiveRecord
 
         /**
          * @author Wang fei <1018484601@qq.com>
+         * @param $name  该资源存在本地的名称
+         * @return  该资源上传时候名称
+         */
+        public function  delName($name)
+        {
+            $resource      =   new Resourse();
+            $thisRes       =   $resource->deleteAll("resourseID = '$name'");
+        }
+        
+        /**
+         * @author Wang fei <1018484601@qq.com>
          * @param $oldID   被删除的资源的名称
          *         $newName 变化的资源的新的随机的名称
          *         $oldName 新增资源的原名称
