@@ -59,6 +59,7 @@ endforeach;
                                                                                                                                                                                     echo "管理员";
                                                                                                                                                                                     else echo $teachers[$model['createPerson']];
                                                                                                                                                                             ?>"><img title="编辑课业" src="<?php echo IMG_URL; ?>edit.png"></a>
+                        <a href="#"  onclick="deleteCourse(<?php echo $model['courseID'];?>,'<?php echo $model['courseName'];?>')" ><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 
@@ -76,3 +77,22 @@ endforeach;
 <!-- 右侧内容展示结束-->
 </div>
 
+<script>
+    
+$(document).ready(function(){
+    var result = <?php echo "'$result'";?>;
+    if(result === '1')
+        alert("删除成功！");
+    else if(result === '0')
+        alert("已有班级进行该课程，无法删除！");  
+});
+    
+    function deleteCourse(id,name){
+        if(confirm("确定要删除课程："+name+"?这样做将无法恢复！")){
+            window.location.href="./index.php?r=admin/deleteCourse&&courseID="+id+"&&page=<?php echo Yii::app()->session ['lastPage'];?>";
+        }else{
+            return false;
+        };
+    }
+    
+</script>

@@ -2279,20 +2279,54 @@ class AdminController extends CController {
         ]);
     }
 
+    public function actionDeleteCourse(){
+        if (isset($_GET ['page'])) {
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        } else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+        $result     = '';
+        $courseID   = $_GET['courseID'];
+        if(!isset(Yii::app()->session ['delCourseID'])
+                || (Yii::app()->session ['delCourseID'] != $courseID)){
+            $classes    = TbClass::model()->findall("currentCourse = $courseID");
+            if(count($classes)>0){
+                $result = 0 ; 
+            }else{
+                $rows   = Course::model()->deleteAll('courseID=?', array($courseID));
+                $rows   = Lesson::model()->deleteAll('courseID=?', array($courseID));
+                $result = 1;
+            }
+            Yii::app()->session ['delCourseID'] = $courseID;
+        }
+        
+        $courses    = Course::model()->getCourseLst("", "");
+        $courseLst  = $courses ['courseLst'];
+        $pages      = $courses ['pages'];
+        
+        $this->render('courseLst', array(
+            'courseLst' => $courseLst,
+            'pages'     => $pages,
+            'teacher'   => Teacher::model()->findall(),
+            'result'    => $result
+        ));
+    }
+    
     public function actionCourseLst() {
         if (isset($_GET ['page'])) {
             Yii::app()->session ['lastPage'] = $_GET ['page'];
         } else {
             Yii::app()->session ['lastPage'] = 1;
         }
-        $result = Course::model()->getCourseLst("", "");
-        $courseLst = $result ['courseLst'];
-        $pages = $result ['pages'];
-        Yii::app()->session ['lastUrl'] = "courseLst";
+        $result                              = Course::model()->getCourseLst("", "");
+        $courseLst                           = $result ['courseLst'];
+        $pages                               = $result ['pages'];
+        Yii::app()->session ['lastUrl']      = "courseLst";
         $this->render('courseLst', array(
             'courseLst' => $courseLst,
-            'pages' => $pages,
-            'teacher' => Teacher::model()->findall()
+            'pages'     => $pages,
+            'teacher'   => Teacher::model()->findall(),
+            'result'    => ''
         ));
     }
 
@@ -2328,8 +2362,8 @@ class AdminController extends CController {
         $pages = $result ['pages'];
         $this->render('searchCourse', array(
             'courseLst' => $courseLst,
-            'pages' => $pages,
-            'teacher' => Teacher::model()->findall()
+            'pages'     => $pages,
+            'teacher'   => Teacher::model()->findall()
         ));
     }
 
