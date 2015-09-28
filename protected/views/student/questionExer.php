@@ -31,7 +31,7 @@ $SNum = 0;
                         foreach ($number as $s){
                                 if($value['exerciseID']==$s['exerciseID']){
                                     $f=1;
-                                    echo '<textarea style="width:600px; height:200px;max-width: 600px;"  name = "quest'.$value["exerciseID"].'">'.$ansQuest[$s['exerciseID']].'</textarea>';
+                                    echo '<textarea style="width:760px;resize:none; height:200px;max-width: 760px;"  name = "quest'.$value["exerciseID"].'">'.$ansQuest[$s['exerciseID']].'</textarea>';
                                     continue;
                                 }
                         }
