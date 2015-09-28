@@ -1,5 +1,5 @@
 <div class="span3">
-    <table class="table table-bordered table-striped">       
+    <table class="table table-bordered table-backgroundcolor">       
         <tbody>
             <tr>
                 <th>姓名:</th>    
@@ -19,8 +19,8 @@
             </tr>         
         </tbody>   
     </table> 
-    <a href="./index.php?r=teacher/NextStuWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $work['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>">下一人</a>
-   <div>
+    <a class="fr" href="./index.php?r=teacher/NextStuWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $work['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>">下一人</a>
+    <div class="well">
     <ul class="nav nav-list">
         <li <?php if($type == "choice") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID']?>&&type=choice&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>"><i class="icon-font"></i> 选择</a></li>
         <li <?php if($type == "filling") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=filling&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>"><i class="icon-text-width"></i> 填空</a></li>

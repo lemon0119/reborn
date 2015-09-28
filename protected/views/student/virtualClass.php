@@ -43,7 +43,7 @@ echo "<script>var role='$role';</script>";
         <div id="chat-box">
             <div id="chatroom" class="chatroom"></div>
             <div class="sendfoot">
-                <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px;">
+                <input type='text' id='messageInput' style="width:53%;margin-top:0px;margin-bottom:0px;">
                 
                 <a id="send-msg" ></a>
             </div>

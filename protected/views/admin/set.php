@@ -40,7 +40,7 @@ function test()
             </div>
             <div>
                 <button type="submit" class="btn btn-primary">确认</button> 
-                <a href="./index.php?r=admin/index" class="btn">取消</a>
+                <a href="./index.php?r=admin/index" class="btn">返回</a>
             </div>
         </fieldset>
     </form>   

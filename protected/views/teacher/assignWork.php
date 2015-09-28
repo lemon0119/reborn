@@ -52,10 +52,10 @@
                     <td>
                         <?php if ($isOpen == false) { ?>
                             <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color:green">开放</a>
-                            <font style="color:red">关闭</font>
+                            <font style="color:grey">关闭</font>
                         <?php } else { ?>
-                            <font style="color:red">开放</font>
-                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1;  ?>" style="color:green">关闭</a>
+                            <font style="color:grey">开放</font>
+                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1;  ?>" style="color:red">关闭</a>
                         <?php } ?>
                     </td>             
                     <td>

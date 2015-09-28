@@ -49,9 +49,9 @@
                             </td>
                             <td>
                                    <?php if ($ratio_accomplish[$n]==1){
-                                    	echo '已提交';
+                                    	echo '<font style="color:green">已提交</font>';
                                     }else {
-                                    	echo '未提交';
+                                    	echo '<font style="color:red">未提交</font>';
                                     }?>
                             </td>
                             <td>
@@ -63,7 +63,6 @@
                                <?php if ($ratio_accomplish[$n]==1){?>
                                 <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                                 <?php }else {?>
-                               	<img src="<?php echo IMG_URL; ?>detail.png">
                                <?php }$n++;?>
                             </td>
                     </tr>

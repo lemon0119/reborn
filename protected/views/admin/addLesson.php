@@ -18,7 +18,7 @@
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">添加</button> 
-                <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>" class="btn">取消</a>
+                <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>" class="btn">返回</a>
             </div>
         </fieldset>
     </form>   

@@ -103,7 +103,7 @@ input[type="search"]::-webkit-search-decoration,input[type="search"]::-webkit-se
     -webkit-appearance:none
 }
 textarea {
-    overflow:auto;
+    overflow: visible;
     vertical-align:top
 }
 @media print {
@@ -4726,7 +4726,6 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #send-msg{
-
     background-repeat: no-repeat;
     padding: 10px 55px;
     background:url("../../img/UI_stu/send.png");
@@ -4761,3 +4760,15 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .normal_checked_font{
     color: green;
 }
+
+.fr{
+    float: right;
+}
+.fl{
+    float: left;
+}
+.table-backgroundcolor{
+    background-color: ghostwhite;
+}
+
+   

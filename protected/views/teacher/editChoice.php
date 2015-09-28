@@ -43,7 +43,7 @@
     <?php } else if($action == 'look') {?>
         <h3>查看选择题</h3>
     <?php }?>
-    <form class="form-horizontal" method="post" action="./index.php?r=teacher/editChoiceInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
+    <form id="myForm" class="form-horizontal" method="post" action="./index.php?r=teacher/editChoiceInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
     <?php if(!isset($action)) {?>
         <legend>编辑题目</legend>
@@ -53,7 +53,7 @@
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="requirements" style="width:600px; height:50px;" id="input01"><?php echo $requirements;?></textarea>
+                <textarea name="requirements" style="width:450px; height:50px;" id="input01"><?php echo $requirements;?></textarea>
             </div>
         </div>
         <div class="control-group">
@@ -92,7 +92,7 @@
         <?php if(!isset($action)) {?>
             <button type="submit" class="btn btn-primary">修改</button> 
         <?php }?>
-        <a href="./index.php?r=teacher/returnFromAddChoice" class="btn">取消</a>
+        <a href="./index.php?r=teacher/returnFromAddChoice" class="btn">返回</a>
     </div>
     </fieldset>
 </form>   

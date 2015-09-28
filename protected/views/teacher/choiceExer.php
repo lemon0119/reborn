@@ -28,7 +28,9 @@
             }
         ?>
         </div>
+   
 </div>
+ 
 <script>
 $(document).ready(function(){
     $("li#li-choice").attr('class','active');

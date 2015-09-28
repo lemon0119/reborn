@@ -27,7 +27,7 @@
                 <tbody>        
                     <?php foreach($suiteWork as $work):?>
                     <tr>
-                        <td style="width: 150px"><?php echo $work['exerciseID'];?></td>
+                        <td style="width: 50px"><?php echo $work['exerciseID'];?></td>
                         <td>
                             <?php  if(Tool::clength($work['requirements'])<=10)
                                         echo $work['requirements'];

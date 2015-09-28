@@ -53,7 +53,7 @@
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="requirements" style="width:600px; height:50px;" id="input01"><?php echo $requirements;?></textarea>
+                <textarea name="requirements" style="width:450px; height:50px;" id="input01"><?php echo $requirements;?></textarea>
             </div>
         </div>
         <div class="control-group">
@@ -92,7 +92,7 @@
         <?php if(!isset($action)) {?>
             <button type="submit" class="btn btn-primary">修改</button> 
         <?php }?>
-            <a href="./index.php?r=admin/returnFromAddChoice&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">取消</a>
+            <a href="./index.php?r=admin/returnFromAddChoice&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
     </div>
     </fieldset>
 </form>   
