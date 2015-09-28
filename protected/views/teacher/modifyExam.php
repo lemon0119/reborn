@@ -62,6 +62,7 @@ function test()
                         <tr><td>结束时间:
                                 <input style="width:233px;" placeholder="选择结束时间" name="endTime" id="endTime" value="<?php echo $exam['endtime'] ?>" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" onblur="test()">
                             </td></tr>
+                        
                         <tr><td>时长:<?php echo $exam['duration'] ?>秒</td></tr>
                         <tr><td><div id="totalScore">总分:<?php echo $totalScore?></div></td></tr>
                     </table>                
@@ -72,7 +73,7 @@ function test()
 
     </form>
 
-    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass']; ?>"  class="btn btn-primary">返回布置作业</a>
+    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass']; ?>"  class="btn">返回</a>
 </div>
 
 <div class="span9">
