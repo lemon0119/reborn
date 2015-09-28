@@ -37,7 +37,7 @@ $SNum = 0;
                         }
                     }
                     if($f==0){
-                        echo '<textarea style="width:600px; height:200px;resize:none;max-width: 600px;" name = "quest'.$value["exerciseID"].'"></textarea>';
+                        echo '<textarea style="width:760px; height:200px;resize:none;max-width: 760px;" name = "quest'.$value["exerciseID"].'"></textarea>';
                     }
                     echo '<br/>';
                    $n++;

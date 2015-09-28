@@ -26,9 +26,9 @@
 </div>
 
 <div class="span9">
-    <iframe  src="./index.php?r=teacher/ToOwnWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe1" frameborder="0" scrolling="no" width="700px" height="400px" name="iframe1"></iframe>
+    <iframe  src="./index.php?r=teacher/ToOwnWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe1" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe1"></iframe>
     
-    <iframe  src="./index.php?r=teacher/ToAllWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe2" frameborder="0" scrolling="no" width="700px" height="400px" name="iframe2"></iframe>
+    <iframe  src="./index.php?r=teacher/ToAllWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe2" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe2"></iframe>
 
 <div >
     

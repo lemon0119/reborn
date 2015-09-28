@@ -207,7 +207,7 @@ a:hover,a:focus {
     margin-left:20px
 }
 .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container {
-    width:1100px
+    width:1200px
 }
 .span12 {
     width:1070px
@@ -225,7 +225,7 @@ a:hover,a:focus {
     float: right;
     right:30px;
     padding: 40px;
-    width:700px
+    width:770px
 }
 .span8 {
     width:620px
@@ -819,7 +819,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
     border-radius:4px
 }
 input,textarea,.uneditable-input {
-    width:206px
+    width:306px
 }
 textarea {
     height:auto
@@ -4743,13 +4743,13 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
      background:-moz-linear-gradient(left,#505050,#fff);
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
-    padding: 27px 156px;
+    padding: 27px 207px;
 }
 #blank_admin{
     background:-moz-linear-gradient(left,#505050,#fff);
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
-    padding: 27px 97px;
+    padding: 27px 147px;
 }
 .nav-userID{
     position: relative;
