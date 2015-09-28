@@ -135,7 +135,7 @@
         return cnum / tl;
     }
     function formSubmit(){
-        if(!confirm("确定要提交答案？"))
+        if(!confirm("保存答案成功！！！"))
             return ;
         doSubmit(false);
     }
