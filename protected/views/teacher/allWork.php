@@ -75,13 +75,14 @@
                     </tr>            
                     <?php endforeach;?> 
                 </tbody>
-    </table>
-    <!-- 学生列表结束 -->   
-   <div align=center>
+                 <div align=center>
     <?php   
         $this->widget('CLinkPager',array('pages'=>$pages));
     ?>
     </div>
+    </table>
+    <!-- 学生列表结束 -->   
+  
     
     
 <script>

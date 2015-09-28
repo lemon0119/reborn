@@ -48,7 +48,7 @@
                     }
                 ?>                    
                 <tr>
-                    <td style="width: 130px"><?php echo $exam['examName']; ?></td>                        
+                    <td style="width: 100px"><?php echo $exam['examName']; ?></td>                        
 
                     <td>
                         <?php echo $exam['begintime'] ?>
@@ -72,7 +72,7 @@
                     <td>
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a> 
-                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img src="<?php echo IMG_URL; ?>edit.png">立即开始</a> 
+                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img src="<?php echo IMG_URL; ?>edit.png">开始</a> 
                     </td>
                 </tr>            
             <?php endforeach; ?> 

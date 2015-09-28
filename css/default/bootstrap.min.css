@@ -4771,4 +4771,6 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-color: ghostwhite;
 }
 
-   
+.tt{
+    width: 10px;
+}
