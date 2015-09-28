@@ -75,12 +75,6 @@
     <h3>本题时间已经用完。</h3>
 <?php }?>
 <script>
-    
-    function next(){
-        $('#keyMode').fadeOut(50);
-        $('#keyMode').fadeIn(50);
-    }
-    
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
@@ -97,6 +91,7 @@
                 }
             },1000);
         }
+        startParse();
     });
     
     $(document).ready(function(){
@@ -111,7 +106,7 @@
         var length = res === null ? 0 : res.length;
         return length;
     }
-    
+    /*
     function getCorrect(pattern , answer){
         var ap = pattern.split(' ');
         var aa = answer.split(' ');
@@ -130,5 +125,5 @@
         }
         return cnum / tl;
     }
-   
+    */
 </script>
