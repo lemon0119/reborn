@@ -109,7 +109,8 @@ class Exam extends CActiveRecord
     
     public function getAllExamByPage($pagesize)
     {
-        $sql  = "select * from exam";
+        $id=Yii::app()->session['userid_now'];
+        $sql  = "select * from exam where createPerson='$id'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria   =   new CDbCriteria();
         $pages     =   new CPagination($result->rowCount);
