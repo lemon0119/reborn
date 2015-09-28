@@ -17,8 +17,8 @@
 class ExamRecord extends CActiveRecord
 {
         public static function saveExamRecord (&$recordID) {
-            $suiteID = Yii::app()->session['suiteID'];
-            $workID = Yii::app()->session['workID'];
+            $suiteID = Yii::app()->session['examsuiteID'];
+            $workID = Yii::app()->session['examworkID'];
             $createPerson = Yii::app()->session['userid_now'];
             $oldID = ExamRecord::getRecord($workID, $createPerson);
             if($oldID == null) {

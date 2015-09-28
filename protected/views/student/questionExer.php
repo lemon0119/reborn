@@ -79,6 +79,7 @@ $(document).ready(function(){
     $("li#li-question").attr('class','active');
 });
 function submitSuite(){
+    formSubmit2();
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     if(confirm("提交以后，不能重新进行答题，你确定提交吗？")){
         $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){});
@@ -94,6 +95,13 @@ function formSubmit(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
       alert(result);
      location.reload(); 
+  });
+}
+function formSubmit2(){
+  $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
+      alert(result);
+      location.reload(); 
+
   });
 }
 </script>

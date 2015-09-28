@@ -808,9 +808,11 @@ class StudentController extends CController {
     
     //获取考试套题
     public function actionClsexamOne(){
+        $isExam = true;
         $suiteID = $_GET['suiteID'];
         $workID = $_GET['workID'];
         $studentID = Yii::app()->session['userid_now'];
+        Yii::app()->session['isExam'] = $isExam;
         Yii::app()->session['examsuiteID'] = $suiteID;
         Yii::app()->session['examworkID'] = $_GET['workID'];
         //Yii::app()->session['examID'] = $suiteID;
@@ -820,7 +822,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
-        $isExam = true;
+        
         $examInfo = Exam::model()->findByPK($suiteID);
         if($record==null){
             return $this->render('suiteDetail',['exercise'=>$classexam,'isExam' => $isExam,'examInfo'=>$examInfo,'cent'=>$cent]);
@@ -840,7 +842,7 @@ class StudentController extends CController {
         $qNum=count($classexam['question']);
        $num=(($cNum>$fNum)?$cNum:$fNum)>$qNum?(($cNum>$fNum)?$cNum:$fNum):$qNum;
        Yii::app()->session['num']=$num;
-        Yii::app()->session['isExam'] = $isExam;
+        
         foreach(Tool::$EXER_TYPE as $type){
         
             if(count($classexam[$type])!=0 ){

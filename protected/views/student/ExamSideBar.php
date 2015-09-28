@@ -79,6 +79,18 @@ $currtime = $examInfo['endtime'];
 </div>
 <script>
     $(document).ready(function(){
+    $("div.span3 div.well ul li").find("a").click(function() {
+        var url=$(this).attr("href");
+        if(url.indexOf("index.php")>0){
+            $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),
+            function(result){
+                console.log(result);
+                window.location.href = url;
+            });
+            return false;
+        }
+    });
+   
         var curtime = <?php echo time();?>;
         var endTime = <?php echo strtotime($examInfo['endtime']);?>;
         function endTimer(endID){

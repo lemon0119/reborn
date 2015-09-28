@@ -1,6 +1,6 @@
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script>
-    function onSubmit(){
+    function formSubmit(){
         if(!confirm("确定要提交答案？"))
             return ;
         doSubmit(false);

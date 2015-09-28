@@ -66,7 +66,13 @@
         <input name="nm_answer" id="id_answer" type="hidden">
         <input name="nm_cost" id="id_cost" type="hidden">
         <input name="nm_correct" id="id_correct" type="hidden">
-       
+     
+        <?php 
+          $last = Tool::getLastExer($exercise2);
+          if($last['type'] == 'key'&& $last['exerciseID'] == $_GET['exerID']){
+        ?>
+          <a class="btn btn-large" style="margin-left: 200px" onclick="submitSuite();"></a>
+        <?php }?>
     </form>
 </div>
  <?php } else {?>
@@ -128,7 +134,7 @@
         }
         return cnum / tl;
     }
-    function onSubmit(){
+    function formSubmit(){
         if(!confirm("确定要提交答案？"))
             return ;
         doSubmit(false);

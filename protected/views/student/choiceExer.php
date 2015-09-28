@@ -79,6 +79,7 @@ $(document).ready(function(){
 function submitSuite(){
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     if(confirm("提交以后，不能重新进行答题，你确定提交吗？")){
+        formSubmit2();
         $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){});
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
             if(isExam)
@@ -94,6 +95,12 @@ function formSubmit(){
       location.reload(); 
 
   });
-  
+}
+function formSubmit2(){
+  $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
+      alert(result);
+      location.reload(); 
+
+  });
 }
 </script>
