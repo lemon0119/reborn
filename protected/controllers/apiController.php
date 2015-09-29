@@ -70,5 +70,21 @@ class apiController extends Controller {
     public function actionGetTime(){
         echo time();
     }
-    
+
+    /**
+     * @author Wang fei <1018484601@qq.com>
+     * @purpose 返回一个不包含子文件夹的文件家中的文件数目
+     * @return  返回文件数目，不存在文件夹时亦返回0
+     */
+    public function actionGetDirFileNums() {
+        $dir = $_GET['dirName'];
+        if(is_dir(iconv("UTF-8","gb2312",$dir)))
+        {
+            $num = sizeof(scandir(iconv("UTF-8","gb2312",$dir))); 
+            $num = ($num>2)?($num-2):0; 
+            echo $num;
+        }else {
+            echo 0;
+        }
+    }
 }
