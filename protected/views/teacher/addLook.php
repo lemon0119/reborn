@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="input02">内容</label>
+            <label class="control-label" for="input02">看打答案</label>
             <div class="controls">               
                 <textarea name="content" style="width:450px; height:200px;"></textarea>
             </div>

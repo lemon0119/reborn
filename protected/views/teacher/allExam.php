@@ -29,38 +29,38 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>编号</th>
-                <th>课程</th>
-                <th>内容</th>
-                <th>创建人</th>
-                <th>创建时间</th>         
-                <th>操作</th>               
+                <th class="font-center">编号</th>
+                <th class="font-center"> 课程</th>
+                <th class="font-center">内容</th>
+                <th class="font-center">创建人</th>
+                <th class="font-center">创建时间</th>         
+                <th class="font-center">操作</th>               
             </tr>
         </thead>
                 <tbody>        
                     <?php foreach($workLst as $allwork):?>
                     <tr>
-                        <td style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
-                       <td><?php  if(Tool::clength($allwork['courseID'])<=7)
+                        <td class="font-center" style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
+                       <td class="font-center"><?php  if(Tool::clength($allwork['courseID'])<=7)
                                         echo $allwork['courseID'];
                                     else
                                         echo Tool::csubstr($allwork['courseID'], 0, 7)."...";?></td>
-                        <td><?php  if(Tool::clength($allwork['requirements'])<=10)
+                        <td class="font-center"><?php  if(Tool::clength($allwork['requirements'])<=10)
                                         echo $allwork['requirements'];
                                     else
                                         echo Tool::csubstr($allwork['requirements'], 0,10)."...";
                                         ?></td>
-                        <td>
+                        <td class="font-center">
                             <?php  if($allwork['createPerson']=="0")
                                         echo "管理员";
                                     else echo  $teachers[$allwork['createPerson']];                         
                             ?>
                         </td>     
-                        <td>
+                        <td class="font-center">
                             <?php  echo $allwork['createTime']?>
                         </td>     
                         
-                        <td>
+                        <td class="font-center" style="width: 100px">
                             <?php 
                             if($allwork['createPerson'] == Yii::app()->session['userid_now']){ ?>
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>

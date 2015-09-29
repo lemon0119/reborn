@@ -17,7 +17,7 @@ require 'ansSideBar.php';
                 echo ($SNum+1).'. ';
                 echo $value['requirements'];
                 echo '<br/>';
-                echo '<div class=\'answer-tip-text1\'>您的回答：</div>';
+                echo '<div class=\'answer-tip-text1\'>作答结果：</div>';
                 echo '<div class=\'answer-question\'>'.$ansQuest[$value['exerciseID']].'</div>';
                 echo '<div class=\'answer-tip-text2\'>正确答案：</div>';
                 echo '<div class=\'answer-question\'>'.$value['answer'].'</div>';

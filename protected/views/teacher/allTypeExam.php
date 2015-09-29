@@ -27,44 +27,44 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>编号</th>
-                <th>课程</th>
-                <th>题目</th>
-                <th>内容</th>
-                <th>创建人</th>
-                <th>创建时间</th>         
-                <th>操作</th>               
+                <th class="font-center">编号</th>
+                <th class="font-center">课程</th>
+                <th class="font-center">题目</th>
+                <th class="font-center">内容</th>
+                <th class="font-center">创建人</th>
+                <th class="font-center">创建时间</th>         
+                <th class="font-center">操作</th>               
             </tr>
         </thead>
                 <tbody>        
                     <?php foreach($workLst as $allwork):?>
                     <tr>
-                        <td style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
-                        <td><?php echo $allwork['courseID'];
+                        <td class="font-center" style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
+                        <td class="font-center"><?php echo $allwork['courseID'];
                             ?></td>
-                        <td> <?php  if(tool::clength($allwork['title'])<=7)
+                        <td class="font-center"> <?php  if(tool::clength($allwork['title'])<=7)
                                         echo $allwork['title'];
                                     else
                                         echo tool::csubstr($allwork['title'], 0, 7)."...";
                                         ?>
                         </td>
-                        <td> <?php  if(tool::clength($allwork['content'])<=10)
+                        <td class="font-center"> <?php  if(tool::clength($allwork['content'])<=10)
                                         echo $allwork['content'];
                                     else
                                         echo tool::csubstr($allwork['content'], 0, 10)."...";
                                         ?>
                         </td>
-                        <td>
+                        <td class="font-center">
                             <?php  if($allwork['createPerson']=="0")
                                         echo "管理员";
                                     else echo  $teachers[$allwork['createPerson']];                         
                             ?>
                         </td>     
-                        <td>
+                        <td class="font-center">
                             <?php  echo $allwork['createTime']?>
                         </td>     
                         
-                        <td>
+                        <td class="font-center" style="width: 100px">
                             <a href="./index.php?r=teacher/AddExamExercise&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>                            
                         </td>

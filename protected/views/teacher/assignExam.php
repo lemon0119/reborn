@@ -29,12 +29,12 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>标题</th> 
-                <th>开始时间</th>
-                <th>结束时间</th>
-                <th>时长</th>    
-                <th>状态</th> 
-                <th>操作</th> 
+                <th class="font-center">标题</th> 
+                <th class="font-center">开始时间</th>
+                <th class="font-center">结束时间</th>
+                <th class="font-center">时长</th>    
+                <th class="font-center">状态</th> 
+                <th class="font-center">操作</th> 
             </tr>
         </thead>
         <tbody>        
@@ -48,18 +48,18 @@
                     }
                 ?>                    
                 <tr>
-                    <td style="width: 100px"><?php echo $exam['examName']; ?></td>                        
+                    <td class="font-center" style="width: 100px"><?php echo $exam['examName']; ?></td>                        
 
-                    <td>
+                    <td class="font-center">
                         <?php echo $exam['begintime'] ?>
                     </td>
-                    <td>
+                    <td class="font-center">
                         <?php echo $exam['endtime'] ?>
                     </td>
-                    <td>
+                    <td class="font-center">
                         <?php echo $exam['duration'] . "分钟" ?>
                     </td>
-                    <td>
+                    <td class="font-center">
                         <?php if ($isOpen == false) { ?>
                         <a href="./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $exam['examID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color: green">开放</a>
                             <font style="color:grey">关闭</font>
@@ -69,10 +69,10 @@
                         <?php } ?>  
                     </td>   
 
-                    <td>
-                        <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img src="<?php echo IMG_URL; ?>edit.png"></a>
-                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a> 
-                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img src="<?php echo IMG_URL; ?>edit.png">开始</a> 
+                    <td class="font-center" style="width: 100px">
+                        <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
+                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
+                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="立即开始" src="<?php echo IMG_URL; ?>edit.png"></a> 
                     </td>
                 </tr>            
             <?php endforeach; ?> 
