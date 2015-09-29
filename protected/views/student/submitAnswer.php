@@ -1,7 +1,7 @@
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script>
     function formSubmit(){
-        if(!confirm("保存答案成功！！！"))
+        if(!confirm("是否确认保存答案！！"))
             return ;
         doSubmit(false);
     }
