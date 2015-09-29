@@ -32,7 +32,7 @@ $teacherID=$model['userID'];
 $teachers["$teacherID"]=$model['userName'];
 endforeach;
 ?>
-
+<h2>课程列表</h2>
 <!-- 课程列表-->
 <table class="table table-bordered table-striped">
     <thead>
