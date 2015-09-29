@@ -2391,7 +2391,7 @@ class TeacherController extends CController {
             $date+=($date/24);
             $hour=$hour%24;
         }
-        $duration=strtotime($endTime)-strtotime($startTime);
+        $duration=(strtotime($endTime)-strtotime($startTime))/60;
          Exam::model()->updateByPk($examID,array('begintime'=>$startTime,'endtime'=>$endTime,'duration'=>$duration));
          $this->renderModifyExam($type, $examID);
      }

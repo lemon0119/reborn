@@ -4635,8 +4635,13 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .span_set{
     position: relative;
-    left:210px;
+    left:220px;
 }
+.span_icon{
+    position: relative;
+   
+}
+
 .view-link{
     color:green;
 }

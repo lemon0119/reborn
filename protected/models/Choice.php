@@ -76,16 +76,17 @@ class Choice extends CActiveRecord
     //可以设置pagesize大小
       public function getChoiceLstPage($type,$value,$pagesize){
         $order  =   " order by exerciseID ASC";
+        $teacher_id=Yii::app()->session['userid_now'];
         if($type!="")
             if($type == "requirements")
             {
-            $condition = " where $type like '%$value%'";
+            $condition = " where $type like '%$value%' and createPerson='$teacher_id'";
             }else
             {
-            $condition = " WHERE $type = '$value'";
+            $condition = " WHERE $type = '$value' and createPerson='$teacher_id'";
             }
         else
-            $condition= "";
+            $condition= " where createPerson='$teacher_id'";
         $select     =   "SELECT * FROM choice";
         $sql        =   $select.$condition.$order;
         $criteria   =   new CDbCriteria();

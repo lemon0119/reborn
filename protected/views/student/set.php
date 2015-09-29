@@ -14,9 +14,10 @@ function test()
 }
 </script>
 <div class="span9">
+    
     <div class="span_set">
     <h3>设置密码</h3>
-    <form id="myForm" method="post" action="./index.php?r=student/set"> 
+    <form id="myForm" method="post" action="./index.php?r=student/set" enctype="multipart/form-data"> 
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
@@ -37,6 +38,10 @@ function test()
                     <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
                 </div>
                 
+                <label class="control-label" for="input03">上传头像：</label>
+                <input type="hidden" name="flag" id="flag" value="1" />
+                <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+                <input type="file" name="file"  id="file"/><br>
             </div>
             <div>
                 <button type="submit" class="btn btn-primary">确认</button> 
@@ -44,6 +49,15 @@ function test()
             </div>
         </fieldset>
     </form>   
+    </div>
+    <div class="span_set fl">
+        <div class="controls" style="border:1px solid blue;">
+                    <?php if($picAddress=='0') {}else{?>
+                    
+                    <img style="width:200px;height:100px;" src="<?php echo $picAddress; ?>">
+                    <?php }?>
+                </div>
+        
     </div>
 </div>
 

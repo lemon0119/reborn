@@ -1172,8 +1172,41 @@ class StudentController extends CController {
     public function actionSet(){       //set
     	$result ='no';
         $mail='';
+        //head img
+        $y='0';
+        $picAddress='0';
+        $flag = 'no';
+        if (isset($_POST ['flag'])) {
+            $flag = '1';
+        }
+        if($flag == '1'){
+            echo $_FILES ['file'] ['name'];
+            if (! empty ( $_FILES ['file'] ['name'] )) {
+                if ((($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg")) && ($_FILES ["file"] ["size"] < 90000000)) {
+                        if ($_FILES ["file"] ["error"] > 0) {
+                                echo "Return Code: " . $_FILES ["file"] ["error"] . "<br />";
+                        } else {
+                                if (file_exists ( "img/head/" . $_FILES ["file"] ["name"] )) {
+                                        echo "alert('already exists.');";
+                                } else {
+                                    $y='1';
+                                    $oldName = $_FILES["file"]["name"]; 
+                                    $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                                    move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
+                                    echo "alert('Stored');";
+
+                                }
+
+                        }
+                } else {
+                        echo "alert('Invalid file');";
+                }
+            }
+        }
+        
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
+        $picAddress=$user->img_address;
         if (!empty($user->mail_address)) {
             $mail = $user->mail_address;
         }
@@ -1187,19 +1220,20 @@ class StudentController extends CController {
                 if($user->password== md5($_POST['old'])){
                     $user->password=md5($new1);
                     $user->mail_address=$email;
+                    if($y=='1')
+                        $user->img_address="img/head/" .$newName; 
+                    $picAddress=$user->img_address;
                     $result=$user->update();
-                    echo $result;
                     $mail=$email;
     			
     		}else{
                     $result='old error';
-    			$this->render('set',['result'=>$result,'mail'=>$mail]);
+    			$this->render('set',['flag' => $flag,'result'=>$result,'mail'=>$mail,'picAddress'=>$picAddress]);
     			return;
                 }
     		
     	}
-    	
-    	$this->render('set',['result'=>$result,'mail'=>$mail]);
+    	$this->render('set',['flag' => $flag,'result'=>$result,'mail'=>$mail,'picAddress'=>$picAddress]);
     }
     
     public function actionHello(){
