@@ -73,7 +73,7 @@
            </div>
             
         <div class="control-group">
-            <label class="control-label" for="input03">内容</label>
+            <label class="control-label" for="input03">听打答案</label>
             <div class="controls">               
                 <textarea name="content" style="width:450px; height:200px;" id="input03" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $content; ?></textarea>
             </div>

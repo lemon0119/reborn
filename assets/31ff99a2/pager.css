@@ -61,7 +61,7 @@ ul.yiiPager .selected a
 ul.yiiPager .hidden a
 {
     border:solid 1px #e3e3e3;
-    color:#888888;
+    color:#fff;
 }
 
 /**

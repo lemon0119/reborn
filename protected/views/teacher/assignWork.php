@@ -32,9 +32,9 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>标题</th>
-                <th>状态</th>
-                <th>操作</th>               
+                <th class="font-center">标题</th>
+                <th class="font-center">状态</th>
+                <th class="font-center">操作</th>               
             </tr>
         </thead>
         <tbody>        
@@ -48,8 +48,8 @@
                     }
                 ?>                    
                 <tr>
-                    <td style="width: 150px"><?php echo $suite['suiteName']; ?></td>
-                    <td>
+                    <td class="font-center" ><?php echo $suite['suiteName']; ?></td>
+                    <td class="font-center" style="width: 100px">
                         <?php if ($isOpen == false) { ?>
                             <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color:green">开放</a>
                             <font style="color:grey">关闭</font>
@@ -58,7 +58,7 @@
                             <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1;  ?>" style="color:red">关闭</a>
                         <?php } ?>
                     </td>             
-                    <td>
+                    <td class="font-center" style="width: 100px">
                         <a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $suite['suiteID']; ?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
 
                         <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID']; ?>&&type=choice"><img title="修改作业内容" src="<?php echo IMG_URL; ?>edit.png"></a>

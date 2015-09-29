@@ -191,7 +191,6 @@ class StudentController extends CController {
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
-        print_r($currentLesn);
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:$currentLesn;
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
         $myCourses = array();
@@ -909,13 +908,11 @@ class StudentController extends CController {
         $cent=Array("0"=>"0","1"=>"0","2"=>"0","3"=>"0","4"=>"0","5"=>"0");
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
-            print_r(count($classwork[$type]));
          }
         if($record==null){
             return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);
         }     
         $finishRecord=Array();
-        print_r($clsLesnSuite->suiteID);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
@@ -959,7 +956,6 @@ class StudentController extends CController {
             return $this->render('suiteDetail',['exercise'=>$classexam,'isExam' => $isExam,'examInfo'=>$examInfo,'cent'=>$cent]);
         }
         $finishRecord=Array();
-       print_r($record->recordID."-----");
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             
@@ -978,9 +974,6 @@ class StudentController extends CController {
         
             if(count($classexam[$type])!=0 ){
               $cent[$n]=round(count($finishRecord[$type])*100/count($classexam[$type]),2)."%";  
-              print_r(count($classexam[$type]));
-              print_r(count($finishRecord));
-              print_r($cent[$n]);
             }          
             $n++;
         }
@@ -1056,7 +1049,6 @@ class StudentController extends CController {
                 return $this->render('classexam',['classexams'=>$classexam]);
             }else{
                 $ratio_accomplish[$n] = ExamRecord::model()->getExamRecordAccomplish($recordID[$n]);
-                print_r($ratio_accomplish[$n]."-");
             }
             $n++;
         }     
