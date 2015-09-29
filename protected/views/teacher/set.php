@@ -50,12 +50,12 @@ function test()
 <script>  
 $(document).ready(function(){
     var result = '<?php echo $result;?>';
-    if(result === '1')
+    if(result == '1')
         alert('密码修改成功！');
-    else if(result === '0')
+    else if(result == '0')
         alert('密码修改失败！'); 
-    else if(result==='old error')
-        alert('原密码错误！'); 
+    else if(result=='old error')
+        alert('旧密码错误！'); 
 }); 
 $("#myForm").submit(function(){
     var old = $("#input01")[0].value;
