@@ -83,9 +83,6 @@
     }
     
     function checkChar(char,isleft){
-        var nextWord = getNextWord();
-        if(nextWord == "" || nextWord == " ")
-            return false;
         var wordArr = nextWord.split("");
         var left = true;
 
@@ -110,6 +107,10 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
+        if(totalNum == 0){
+            alert('键位练习已完成');
+            return ;
+        }
         var charSet = pszStenoString.split("");
         var left = true;
         storyKey(pszStenoString);
@@ -134,44 +135,67 @@
         }
         changTemplet(pszStenoString);
     }
-    /*
-    function getNextWord(){
-        var nextWord = document.getElementById("id_wrong").firstChild.nodeValue.trim();
-        if(nextWord != " " && nextWord != "")
-            return nextWord;
-        var strarr= new Array();
-        var newWord = document.getElementById("id_new").firstChild.nodeValue;
-        strarr=newWord.split(" ");
-        return strarr[0];
-    }
-    function clearWord(){
-        var answer = document.getElementById("id_answer");
-        answer.value = '';
-    }
-    function clearTemplate(){
-        document.getElementById("id_new").firstChild.nodeValue=document.getElementById("id_content").value;
-        document.getElementById("id_right").firstChild.nodeValue = '';
-        document.getElementById("id_wrong").firstChild.nodeValue = ' ';
-    }
-    function changTemplet(thisWord){
-        var newWord = document.getElementById("id_new").firstChild.nodeValue;
-        var rightWord = document.getElementById("id_right").firstChild.nodeValue;
-        var wrongWord = document.getElementById("id_wrong").firstChild.nodeValue;
-        var nextWord = getNextWord();
-        if(thisWord == nextWord){
-            document.getElementById("id_right").firstChild.nodeValue = rightWord + " " + thisWord;
-            if(wrongWord == " "){
-                document.getElementById("id_new").firstChild.nodeValue = newWord.substr(nextWord.length + 1);
-            }else {
-                document.getElementById("id_wrong").firstChild.nodeValue = " ";
-            }
-        } else {
-            if(wrongWord == " "){
-                document.getElementById("id_wrong").firstChild.nodeValue = " " + nextWord + " ";
-                document.getElementById("id_new").firstChild.nodeValue = newWord.substr(nextWord.length + 1);
-            }
+    var wordArray = new Array();
+    var wordNum = new Array();
+    var totalNum = 0;
+    var nextWord = "";
+    var numKeyDown = 0;
+    var numKeyRight = 0;
+    function startParse(){
+        var content = document.getElementById("id_content").value;
+        var cont_array = content.split("$");
+        for(var i = 0; i < cont_array.length; i += 3){
+            wordArray.push(cont_array[i] + ":" + cont_array[i+1]);
+            wordNum.push(cont_array[i+2]);
+            totalNum += parseInt(cont_array[i+2]);
         }
-    }*/
+        nextWord = getNextWord();
+        setWordView(nextWord);
+    }
+    function setWordView(word){
+        var a = word.split(":");
+        document.getElementById("left-key").innerHTML = a[0];
+        document.getElementById("right-key").innerHTML = a[1];
+        $('#keyMode').fadeOut(50);
+        $('#keyMode').fadeIn(50);
+    }
+    function changTemplet(pszStenoString){
+        if(pszStenoString == nextWord){
+            nextWord = "";
+            nextWord = getNextWord();
+            setWordView(nextWord);
+            ++numKeyDown;
+            ++numKeyRight;
+        } else {
+            setWordView(nextWord);
+            ++numKeyDown;
+        }
+    }
+    function getCorrect(pattern , answer){
+        return numKeyRight / numKeyDown;
+    }
+    function getNextWord(){
+        if(totalNum == 0){
+            alert('键位练习完成');
+            return '';
+        }
+        if(nextWord != "")
+            return nextWord;
+        var randIndex = Math.round(Math.random() * totalNum);
+        var sum = 0;
+        for(var i = 0; i < wordNum.length && sum < randIndex; ++i)
+            sum += wordNum[i];
+        if(i != 0){
+            --wordNum[i - 1];
+            --totalNum;
+            return wordArray[i - 1];
+        }
+        else{
+            --wordNum[0];
+            --totalNum;
+            return wordArray[0];
+        }
+    }
 </script>
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
