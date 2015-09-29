@@ -65,7 +65,6 @@
 <?php }?>
 <script>
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-
     $(document).ready(function(){
         if(isExam){
             var isover = setInterval(function(){
