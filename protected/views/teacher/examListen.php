@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td colspan='3'>
-                    <div class='answer-tip-text1'>您的回答：</div>
+                    <div class='answer-tip-text1'>作答结果：</div>
                     <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
                 </td>
             </tr>

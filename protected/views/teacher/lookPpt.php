@@ -31,25 +31,45 @@
       <button id="page-go" class="btn btn-primary">跳转</button>
       <button id="page-down" class="btn btn-primary">下页</button>
     </div>
-    <div id="ppt-container" align="center" style="height: 100%; width: 100% ; margin-top:0px">
+    <div id="ppt-container" align="center" style="height: 100%; width: 100% ; margin-top:0px ; display:none">
         <img id="ppt-img" src="" style="width: 100%;"/>
     </div>
 </div>
 <script>
-    
+    var flag        = 0;
     var cur_ppt     = -1;
     var ppt_pages   = -1;
     var ppt_dir     = null;
     $(document).ready(function(){
         $("#li-<?php echo $on;?>").attr("class","active");
       
-            cur_ppt = 1;
-            ppt_dir= "<?php echo $dir;?>";
-            ppt_pages =<?php   $num = sizeof(scandir(iconv("UTF-8","gb2312",$dir))); 
+        cur_ppt = 1;
+        ppt_dir= "<?php echo $dir;?>";
+        ppt_pages =<?php   if(is_dir(iconv("UTF-8","gb2312",$dir)))
+                            {
+                                $num = sizeof(scandir(iconv("UTF-8","gb2312",$dir))); 
                                 $num = ($num>2)?($num-2):0; 
-                                echo $num;?>;
-            $("#all-yeshu").val(ppt_pages);
+                                echo $num;
+                            }else {
+                                echo 0;
+                            }?>;
+        $("#all-yeshu").val(ppt_pages);
+        if(ppt_pages >0){
             goCurPage();
+            $("#ppt-container").show();
+            flag = 1;
+        }
+        setInterval(function() {
+             $.get("index.php?r=api/getDirFileNums&&dirName=<?php echo iconv("UTF-8","gb2312",$dir);?>",function(data){
+                ppt_pages = data - 1 + 1;
+                $("#all-yeshu").val(ppt_pages);
+                if(ppt_pages >0&&flag==0){
+                    goCurPage();
+                    $("#ppt-container").show();
+                    flag = 1;
+                }
+              });
+        }, 3000);
 
         $("#page-up").click(function(){
             if(cur_ppt<=1){

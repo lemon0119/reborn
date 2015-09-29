@@ -213,7 +213,7 @@ a:hover,a:focus {
     width:1070px
 }
 .span11 {
-    width:1070px
+    width:1170px
 }
 .span10 {
     width:780px
@@ -822,6 +822,8 @@ input,textarea,.uneditable-input {
     width:306px
 }
 textarea {
+    overflow: visible;
+    resize: none;
     height:auto
 }
 textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input {
@@ -1390,7 +1392,6 @@ table {
     border:1px solid #ddd;
     border-collapse:separate;
     *border-collapse:collapse;
-    border-left:0;
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
     border-radius:4px
@@ -1442,7 +1443,7 @@ table {
     -moz-border-radius-topright:4px
 }
 .table-striped tbody>tr:nth-child(odd)>td,.table-striped tbody>tr:nth-child(odd)>th {
-    background-color:#fff
+    background-color:#efefef;
 }
 .table-hover tbody tr:hover>td,.table-hover tbody tr:hover>th {
     background-color:#f5f5f5
@@ -4641,7 +4642,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     color:green;
 }
 #ppt{
-    color:#fff;
+    color:#f46500;
 }
 #person_manager{
     padding: 28px 60px;
@@ -4743,7 +4744,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
      background:-moz-linear-gradient(left,#505050,#fff);
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
-    padding: 27px 150px;
+    padding: 27px 207px;
 }
 #blank_admin{
     background:-moz-linear-gradient(left,#505050,#fff);
@@ -4769,4 +4770,62 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .table-backgroundcolor{
     background-color: ghostwhite;
+}
+.font-orange{
+    color:#f46500; 
+}
+.font-center{
+    text-align: center !important;
+}
+.font-startcourse{
+    padding: 15px 15px 0 15px;
+    font-size: 20px;
+}
+.startcourse-virtualclass{
+    background-color: #ffa668;
+    position: relative;
+    padding: 50px 133px 50px 133px;
+    font-size: 30px;
+    right: 1px;
+    bottom: -70px;
+    float: bottom;
+    border-bottom-left-radius: 5px;
+    color: #fff;
+     margin: 0px 0px 0px 0px;
+}
+.startcourse-virtualclass:hover{
+    background-color: #ffa668;
+    position: relative;
+    padding: 50px 133px 50px 133px;
+    font-size: 30px;
+    right: 1px;
+    bottom: -70px;
+    float: bottom;
+    border-bottom-left-radius: 5px;
+    color: #fff;
+     margin: 0px 0px 0px 0px;
+}
+.startcourse-startclass{
+    background-color: #e5e5e5;
+    position: relative;
+    right: 6px;
+    padding: 50px 133px 50px 133px;
+    font-size: 30px;
+    bottom: -70px;
+    float: bottom;
+    border-bottom-right-radius: 5px;
+    color: #fff;
+    margin: 0px 0px 0px 0px;
+}
+.startcourse-startclass:hover{
+    background-color: #e5e5e5;
+    position: relative;
+    right: 6px;
+    padding: 50px 133px 50px 133px;
+    font-size: 30px;
+    bottom: -70px;
+    float: bottom;
+    border-bottom-right-radius: 5px;
+    color: #fff;
+    margin: 0px 0px 0px 0px;
 }

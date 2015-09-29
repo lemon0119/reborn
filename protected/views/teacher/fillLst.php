@@ -49,30 +49,30 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>编号</th>
-            <th>课程号</th>
-            <th>内容</th>
-            <th>创建人</th>
-            <th>创建时间</th>
-            <th>操作</th>
+            <th class="font-center">编号</th>
+            <th class="font-center">课程号</th>
+            <th class="font-center">内容</th>
+            <th class="font-center">创建人</th>
+            <th class="font-center">创建时间</th>
+            <th class="font-center">操作</th>
         </tr>
     </thead>
             <tbody>        
                 <?php foreach($fillLst as $model):?>
                 <tr>
-                    <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
-                    <td><?php echo $model['courseID'];?></td>
-                    <td><?php  if(strlen($model['requirements'])<=15)
+                    <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
+                    <td class="font-center"><?php echo $model['courseID'];?></td>
+                    <td class="font-center"><?php  if(strlen($model['requirements'])<=15)
                                    echo  str_replace("$$","__",$model['requirements']);
                                else
                                    echo str_replace("$$","__",substr($model['requirements'], 0, 15)."...");
                    ?></td>
-                    <td><?php if($model['createPerson']=="0")
+                    <td class="font-center"><?php if($model['createPerson']=="0")
                                         echo "管理员";
                                     else echo  $teachers[$model['createPerson']];
                         ?></td>
-                    <td><?php echo $model['createTime'];?></td>
-                    <td>
+                    <td class="font-center"><?php echo $model['createTime'];?></td>
+                    <td class="font-center" style="width: 100px">
                         <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img title="查看"src="<?php echo IMG_URL; ?>detail.png"></a>
                           <?php if($model['createPerson'] == Yii::app()->session['userid_now']){?>
                             <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
