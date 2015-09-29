@@ -71,7 +71,7 @@ function test()
 
     </form>
      
-    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass'];?>"  class="btn btn-primary">返回布置作业</a>
+    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass'];?>"  class="btn">返回</a>
 </div>
 
 <div class="span9">

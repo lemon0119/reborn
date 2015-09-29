@@ -9,19 +9,19 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>选择</th>
-            <th>学号</th>
-            <th>用户名</th>
-            <th>操作</th>
+            <th class="font-center">选择</th>
+            <th class="font-center">学号</th>
+            <th class="font-center">用户名</th>
+            <th class="font-center">操作</th>
         </tr>
     </thead>
             <tbody>        
                 <?php foreach($teaLst as $model):?>
                 <tr>
-                    <td style="width: 75px"> <input type="checkbox" name="checkbox[]" value=<?php echo $model['userID'];?> /> </td>
-                    <td style="width: 75px"><?php echo $model['userID'];?></td>
-                    <td><?php echo $model['userName'];?></td>
-                    <td>
+                    <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value=<?php echo $model['userID'];?> /> </td>
+                    <td class="font-center" style="width: 75px"><?php echo $model['userID'];?></td>
+                    <td class="font-center"><?php echo $model['userName'];?></td>
+                    <td class="font-center" style="width: 100px">
                         <a href="./index.php?r=admin/revokeTea&&userID=<?php echo $model['userID'];?>" id="submit"><img title="撤销" src="<?php echo IMG_URL; ?>reborn.png"></a>
                       
                         <a href="./index.php?r=admin/confirmTeaPass&&userID=<?php echo $model['userID'];?>" id="submit"><img title="彻底删除" src="<?php echo IMG_URL; ?>delete.png"></a>

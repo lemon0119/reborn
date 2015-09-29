@@ -19,7 +19,7 @@ require 'ansSideBar.php';
                     $ansArr = explode('$$', $answer);
                     echo $str.'<br/>';
                     $i = 1;
-                    echo '<div class=\'answer-tip-text1\'>您的回答：</div>';
+                    echo '<div class=\'answer-tip-text1\'>作答结果：</div>';
                     echo '<div>';
                     while($i < count($ansArr)+1){
                         echo '('.$i.') ';
