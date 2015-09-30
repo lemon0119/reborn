@@ -28,7 +28,7 @@ ul.yiiPager a:visited
 {
 	border:solid 1px #9aafe5;
 	font-weight:bold;
-	color:#0e509e;
+	color:#0e509e ;
 	padding:1px 6px;
 	text-decoration:none;
 }
@@ -53,7 +53,7 @@ ul.yiiPager .selected a
 ul.yiiPager .hidden a
 {
 	border:solid 1px #DEDEDE;
-	color:#888888;
+	color:#fff ;
 }
 
 /**

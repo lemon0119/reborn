@@ -14,24 +14,43 @@
       <button id="page-down" class="btn btn-primary">下页</button>
       <a href="./index.php?r=admin/pptLst&&pdir=<?php echo $pdir;?>&&courseID=<?php echo Yii::app()->session['courseID'];?>&&courseName=<?php echo Yii::app()->session['courseName'];?>&&createPerson=<?php echo Yii::app()->session['createPerson'];?>" class="btn btn-primary">返回</a>
     </div>
-    <div id="ppt-container" align="center" style="height: 100%; width: 100% ; margin-top:0px">
+    <div id="ppt-container" align="center" style="height: 100%; width: 100% ; margin-top:0px ; display:none">
         <img id="ppt-img" src="" style="width: 100%;"/>
     </div>
 </div>
 <script>
-    
+    var flag        = 0;
     var cur_ppt     = -1;
     var ppt_pages   = -1;
     var ppt_dir     = null;
     $(document).ready(function(){
         cur_ppt = 1;
         ppt_dir= "<?php echo $dir;?>";
-        ppt_pages =<?php   $num = sizeof(scandir(iconv("UTF-8","gb2312",$dir))); 
-                            $num = ($num>2)?($num-2):0; 
-                            echo $num;?>;
+        ppt_pages =<?php   if(is_dir(iconv("UTF-8","gb2312",$dir)))
+                            {
+                                $num = sizeof(scandir(iconv("UTF-8","gb2312",$dir))); 
+                                $num = ($num>2)?($num-2):0; 
+                                echo $num;
+                            }else {
+                                echo 0;
+                            }?>;
         $("#all-yeshu").val(ppt_pages);
-        goCurPage();
-
+        if(ppt_pages >0){
+            goCurPage();
+            $("#ppt-container").show();
+            flag = 1;
+        }
+        setInterval(function() {
+             $.get("index.php?r=api/getDirFileNums&&dirName=<?php echo iconv("UTF-8","gb2312",$dir);?>",function(data){
+                ppt_pages = data - 1 + 1;
+                $("#all-yeshu").val(ppt_pages);
+                if(ppt_pages >0&&flag==0){
+                    goCurPage();
+                    $("#ppt-container").show();
+                    flag = 1;
+                }
+              });
+        }, 3000);
         $("#page-up").click(function(){
             if(cur_ppt<=1){
                 cur_ppt=1;

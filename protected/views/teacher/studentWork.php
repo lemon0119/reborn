@@ -43,7 +43,7 @@
                             }                     
                             ?>
                     <tr>
-                        <td style="width: 150px">
+                        <td style="width: 100px">
                             <?php echo $id++;?>
                         </td>
                         <td>
@@ -61,7 +61,8 @@
                              echo $thisSuite['suiteName']?>                    
                         </td>
                         <td>            
-                            <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>                      
+                            <a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $thisSuite['suiteID']?>"><img title="查看" src="<?php echo IMG_URL;?>detail.png"/></a>                      
+                           
 
                         </td>
                     </tr>            
@@ -86,24 +87,24 @@
                 <th>姓名</th>
                 <th>学号</th>
                 <th>完成情况</th>   
-                <th>查看</th>
+                <th>批阅</th>
             </tr>
         </thead>
                 <tbody>        
                     <?php foreach($array_accomplished as $student):
                             ?>
                     <tr>
-                        <td style="width: 50px">
+                        <td class="font-orange" style="width: 50px">
                             <?php echo $student['userName'];?>
                         </td>
                         <td style="width: 50px">
                             <?php  echo $student['userID'];?>       
                         </td>
                         <td >
-                            完成
+                            <font style="color: green">完成</font>
                         </td>  
                         <td >
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice"><img title="批阅" src="<?php echo IMG_URL;?>edit.png"/></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -126,17 +127,17 @@
                     <?php foreach($array_unaccomplished as $student):
                             ?>
                     <tr>
-                        <td style="width: 50px">
+                        <td class="font-orange" style="width: 50px">
                            <?php echo $student['userName'];?>
                         </td>
                         <td>
                             <?php  echo $student['userID'];?>          
                         </td>
                         <td>
-                            未完成
+                            <font style="color: red">未完成</font>
                         </td>  
                         <td>
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice">查看</a>
+                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice"><img title="查看" src="<?php echo IMG_URL;?>detail.png"/></a>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 

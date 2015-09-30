@@ -2473,8 +2473,8 @@ class AdminController extends CController {
         $fileName       =   $_GET['ppt'];
         $dir            =   $_GET['pdir'];
         $file           =   $dir.$fileName;
-        Resourse::model()->delName($fileName);
         unlink(iconv('utf-8','gb2312',$file));
+        Resourse::model()->delName($fileName);
         $result         =   "删除成功！";    
         echo $result;
     }

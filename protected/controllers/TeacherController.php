@@ -2282,7 +2282,7 @@ class TeacherController extends CController {
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();          
          $array_class = array();
-         $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
+         $result = Suite::model()->getAllSuiteByPage(10,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
          if(!empty($teacher_class))
@@ -2326,7 +2326,7 @@ class TeacherController extends CController {
          foreach ($result as $class)
              array_push ($array_class, $class);
          
-         $result = Exam::model()->getAllExamByPage(5);
+         $result = Exam::model()->getAllExamByPage(10);
          $array_allexam = $result['examLst'];
          $pages = $result['pages'];
          //得到当前显示班级
@@ -2391,7 +2391,7 @@ class TeacherController extends CController {
             $date+=($date/24);
             $hour=$hour%24;
         }
-        $duration=strtotime($endTime)-strtotime($startTime);
+        $duration=(strtotime($endTime)-strtotime($startTime))/60;
          Exam::model()->updateByPk($examID,array('begintime'=>$startTime,'endtime'=>$endTime,'duration'=>$duration));
          $this->renderModifyExam($type, $examID);
      }
@@ -3088,7 +3088,7 @@ class TeacherController extends CController {
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();        
          $array_class = array();
-         $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
+         $result = Suite::model()->getAllSuiteByPage(10,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
    
@@ -3136,7 +3136,7 @@ class TeacherController extends CController {
          foreach ($result as $class)
              array_push ($array_class, $class);
          
-         $result = Exam::model()->getAllExamByPage(5);
+         $result = Exam::model()->getAllExamByPage(10);
          $array_allexam = $result['examLst'];
          $pages = $result['pages'];
          

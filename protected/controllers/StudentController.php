@@ -191,11 +191,11 @@ class StudentController extends CController {
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
-        print_r($currentLesn);
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:$currentLesn;
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
         $myCourses = array();
          $n=0;
+        $ratio_accomplish = array();
         foreach ($myCourse as $c){
             array_push($myCourses, $c);
             $recordID[$n]=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
@@ -909,13 +909,11 @@ class StudentController extends CController {
         $cent=Array("0"=>"0","1"=>"0","2"=>"0","3"=>"0","4"=>"0","5"=>"0");
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
-            print_r(count($classwork[$type]));
          }
         if($record==null){
             return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);
         }     
         $finishRecord=Array();
-        print_r($clsLesnSuite->suiteID);
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
@@ -959,7 +957,6 @@ class StudentController extends CController {
             return $this->render('suiteDetail',['exercise'=>$classexam,'isExam' => $isExam,'examInfo'=>$examInfo,'cent'=>$cent]);
         }
         $finishRecord=Array();
-       print_r($record->recordID."-----");
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             
@@ -978,9 +975,6 @@ class StudentController extends CController {
         
             if(count($classexam[$type])!=0 ){
               $cent[$n]=round(count($finishRecord[$type])*100/count($classexam[$type]),2)."%";  
-              print_r(count($classexam[$type]));
-              print_r(count($finishRecord));
-              print_r($cent[$n]);
             }          
             $n++;
         }
@@ -1056,7 +1050,6 @@ class StudentController extends CController {
                 return $this->render('classexam',['classexams'=>$classexam]);
             }else{
                 $ratio_accomplish[$n] = ExamRecord::model()->getExamRecordAccomplish($recordID[$n]);
-                print_r($ratio_accomplish[$n]."-");
             }
             $n++;
         }     
@@ -1172,8 +1165,41 @@ class StudentController extends CController {
     public function actionSet(){       //set
     	$result ='no';
         $mail='';
+        //head img
+        $y='0';
+        $picAddress='0';
+        $flag = 'no';
+        if (isset($_POST ['flag'])) {
+            $flag = '1';
+        }
+        if($flag == '1'){
+            echo $_FILES ['file'] ['name'];
+            if (! empty ( $_FILES ['file'] ['name'] )) {
+                if ((($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg")) && ($_FILES ["file"] ["size"] < 90000000)) {
+                        if ($_FILES ["file"] ["error"] > 0) {
+                                echo "Return Code: " . $_FILES ["file"] ["error"] . "<br />";
+                        } else {
+                                if (file_exists ( "img/head/" . $_FILES ["file"] ["name"] )) {
+                                        echo "alert('already exists.');";
+                                } else {
+                                    $y='1';
+                                    $oldName = $_FILES["file"]["name"]; 
+                                    $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                                    move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
+                                    echo "alert('Stored');";
+
+                                }
+
+                        }
+                } else {
+                        echo "alert('Invalid file');";
+                }
+            }
+        }
+        
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
+        $picAddress=$user->img_address;
         if (!empty($user->mail_address)) {
             $mail = $user->mail_address;
         }
@@ -1187,19 +1213,20 @@ class StudentController extends CController {
                 if($user->password== md5($_POST['old'])){
                     $user->password=md5($new1);
                     $user->mail_address=$email;
+                    if($y=='1')
+                        $user->img_address="img/head/" .$newName; 
+                    $picAddress=$user->img_address;
                     $result=$user->update();
-                    echo $result;
                     $mail=$email;
     			
     		}else{
                     $result='old error';
-    			$this->render('set',['result'=>$result,'mail'=>$mail]);
+    			$this->render('set',['flag' => $flag,'result'=>$result,'mail'=>$mail,'picAddress'=>$picAddress]);
     			return;
                 }
     		
     	}
-    	
-    	$this->render('set',['result'=>$result,'mail'=>$mail]);
+    	$this->render('set',['flag' => $flag,'result'=>$result,'mail'=>$mail,'picAddress'=>$picAddress]);
     }
     
     public function actionHello(){

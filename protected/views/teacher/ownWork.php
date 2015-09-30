@@ -27,18 +27,18 @@
                 <tbody>        
                     <?php foreach($suiteWork as $work):?>
                     <tr>
-                        <td style="width: 50px"><?php echo $work['exerciseID'];?></td>
-                        <td>
+                        <td class="font-center" style="width: 50px"><?php echo $work['exerciseID'];?></td>
+                        <td class="font-center">
                             <?php  if(Tool::clength($work['requirements'])<=10)
                                         echo $work['requirements'];
                                     else
                                         echo Tool::csubstr($work['requirements'], 0, 10)."...";
                                         ?>
                         </td>
-                        <td>
+                        <td class="font-center">
                             <?php  echo $work['createTime']?>
                         </td>           
-                        <td>            
+                        <td class="font-center" style="width: 100px">            
                             <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $suite['suiteID'] ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>                          
                         </td>
                     </tr>            
