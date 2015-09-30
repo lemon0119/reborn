@@ -59,7 +59,7 @@ class Student extends CActiveRecord
     
     public function findClassByStudentID ($studentID) {
         $student = $this->find("userid = '$studentID'");
-        return $student->classID;
+        return $student['classID'];
 //    }
 //    public function getAnswerRecordAll($suiteID){
 //        $userID = Yii::app()->session['userid_now'];

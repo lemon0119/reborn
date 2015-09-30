@@ -1,19 +1,27 @@
-<?php
-$lessons = Lesson::model()->findall("classID='$classID'");
-foreach ($lessons as $key => $value) {
-    $lessonsName[$value['number']] = $value['lessonName'];
-}
+<?php 
+    $lessonsName=Array();
+    $lessons=Lesson::model()->findall("classID='$classID'");
+    if($lessons!=null)
+        foreach ($lessons as $key => $value) {
+            $lessonsName[$value['number']]=$value['lessonName'];
+        }
 ?>
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
-        <ul class="nav nav-list">
-            <li class="nav-header">当前课程</li>
-            <li id="li-<?php echo $progress; ?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $progress; ?>"><i class="icon-list-alt"></i> <?php echo $lessonsName[$progress]; ?></a></li>
-            <li class="divider"></li>
-            <li class="nav-header">其余课程</li>
-            <?php
-            foreach ($lessonsName as $key => $value):
-                if ($key != $progress) {
+                <ul class="nav nav-list">
+                <li class="nav-header">当前课程</li>
+                <?php  if($lessonsName!=null){?>
+                <li id="li-<?php echo $progress;?>">
+                    <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>">
+                        <i class="icon-list-alt"></i> 
+                        <?php echo $lessonsName[$progress]; ?>
+                    </a>
+                </li>
+                <?php }?>
+                <li class="divider"></li>
+                <li class="nav-header">其余课程</li>
+                <?php foreach($lessonsName as $key => $value):
+                    if($key!=$progress){
                     ?>
                     <li id="li-<?php echo $key; ?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $key; ?>"><i class="icon-list-alt"></i> <?php echo $value; ?></a></li>
                     <?php
@@ -24,8 +32,13 @@ foreach ($lessons as $key => $value) {
     </div>
 </div>
 <div class="span9">
+    <?php 
+        if($lessonsName!=null) {  ?>
+    
     <h1>
-<?php echo $lessonsName[$progress]; ?>
+       <?php  
+         if($lessonsName!=null)
+            echo $lessonsName[$progress];?>
     </h1>
     <div class="hero-unit table-bordered" style="height:200px; width: 770px">
         <p class="font-startcourse">
@@ -92,9 +105,11 @@ foreach ($lessons as $key => $value) {
             </ul>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $("#li-<?php echo $on; ?>").attr("class", "active");
-        });
-    </script>
+    <?php }?>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#li-<?php echo $on;?>").attr("class","active");
+    });
+</script>
 

@@ -41,15 +41,16 @@ class ListenType extends CActiveRecord
     
     public function getListenLstPage($type,$value,$pagesize){
         $order  =   " order by exerciseID ASC";
+        $user_id=Yii::app()->session['userid_now'];
         if($type!="")
             if($type == "content")
             {
-                $condition = " WHERE $type like '%$value%'";
+                $condition = " WHERE $type like '%$value%' and createPerson='$user_id'";
             }else{
-                $condition = " WHERE $type = '$value'";
+                $condition = " WHERE $type = '$value' and createPerson='$user_id'";
             }          
         else
-            $condition= "";
+            $condition= " where createPerson='$user_id'";
         $select     =   "SELECT * FROM listen_type";
         $sql        =   $select.$condition.$order;
         $criteria   =   new CDbCriteria();

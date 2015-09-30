@@ -1,5 +1,4 @@
 <div id="ziji">
-<div class="span9">
     <div class="hero-unit">
                 <?php if($ansWork['answer'] == "")
                     {
@@ -18,7 +17,6 @@
                 </td>
             </tr>
         </table>
-    </div>
 </div>
     配分:<?php echo $exam_exercise['score'];?>
    得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      

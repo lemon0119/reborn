@@ -64,16 +64,17 @@ class Question extends CActiveRecord
     
         public function getQuestionLstPage($type,$value,$pagesize){
         $order = " order by exerciseID ASC";
+        $user_id=Yii::app()->session['userid_now'];
         if($type!="")
             if($type == "requirements")
             {
-               $condition = " where $type like '%$value%'";
+               $condition = " where $type like '%$value%' and createPerson='$user_id'";
             }else
             {
-            $condition = " WHERE $type = '$value'";
+            $condition = " WHERE $type = '$value' and createPerson='$user_id'";
             }
         else
-            $condition= "";
+            $condition= " where createPerson='$user_id'";
         $select = "SELECT * FROM question";
         $sql = $select.$condition.$order;
         $criteria=new CDbCriteria();
