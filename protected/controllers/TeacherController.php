@@ -3540,7 +3540,7 @@ class TeacherController extends CController {
          } 
          
          $this->renderPartial($render,array(
-             'work'=> $work,
+             'works'=> $array_exercise,
              'ansWork'=>$ansWork,
              'exam_exercise' => $exam_exercise,
              'isLast'=>$isLast,
