@@ -1,5 +1,5 @@
 <div class="span3">
-    <table class="table table-bordered table-backgroundcolor">       
+    <table class="table table-bordered table-striped table-backgroundcolor">       
         <tbody>
             <tr>
                 <th>姓名:</th>    
