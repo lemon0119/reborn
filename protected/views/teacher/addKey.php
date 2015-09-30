@@ -62,7 +62,7 @@
                 <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12">                
                 <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12">
                 <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2">
-                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
             </div>             
         </div>
         <div class="control-group" id="div2">           
