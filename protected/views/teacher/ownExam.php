@@ -83,7 +83,11 @@ function dele( type ,exerciseID,examID,page){
   
 function configScore(type,exerciseID,examID,page)
 {
-     var score=prompt("分值","<?php  echo $thisExam['score']?>");//将输入的内容赋给变量 name ，
+    var v="";
+    <?php if($examExercise!=null){?>;
+            v=<?php  echo $thisExam['score']?>;
+    <?php }?>
+     var score=prompt("分值",v);//将输入的内容赋给变量 name ，
  
     //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
    
