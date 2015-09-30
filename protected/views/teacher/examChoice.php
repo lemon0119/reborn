@@ -7,8 +7,8 @@
          //print_r($exam_exercise);
          //print_r($isLast);
          //print_r($score);
-          
-         //error_log($ansWork['answer']);
+         foreach ($works as $work){
+             
                 $right = $work['answer'];
                 $uAns = $ansWork['answer'];              
                 if($uAns == "")
@@ -31,7 +31,7 @@
                         <span class='answer-check'></span>
                     <?php }?>
                     <br/>
-                <?php $mark++;}?>
+         <?php $mark++;}}?>
 </div>
    配分:<?php echo $exam_exercise['score'];?>
    得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $ansWork['score']?>" > 
