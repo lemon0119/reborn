@@ -111,7 +111,14 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $isExam=Yii::app()->session['isExam'];
+        if($isExam){
+            $recordID = ExamRecord::getRecord($workID, $studentID);
+        }
+        else{
+            $recordID = SuiteRecord::getRecord($workID, $studentID);
+        }
+            
         $ansChoice = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'choice');
         $ansArr = AnswerRecord::model()->ansToArray($ansChoice);
         return $this->render('ansChoice',['exercise'=>$classwork,'ansChoice'=>$ansArr]);
@@ -135,7 +142,7 @@ class StudentController extends CController {
             }
         } else {
             foreach(Tool::$EXER_TYPE as $type){
-                $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+                $classwork[$type] = Exam::model()->getExamExerByType($suiteID, $type);
             }
         }
         
@@ -947,6 +954,7 @@ class StudentController extends CController {
         //Yii::app()->session['examID'] = $suiteID;
         $classexam = Array();
         $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        
         $cent=Array("0"=>"0","1"=>"0","2"=>"0","3"=>"0","4"=>"0","5"=>"0");
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -1011,6 +1019,8 @@ class StudentController extends CController {
     }
     //课堂作业
     public function actionClasswork(){
+        $isExam=false;
+        Yii::app()->session['isExam']=$isExam;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
@@ -1035,9 +1045,9 @@ class StudentController extends CController {
     
     //宋杰 2015-7-30 课堂考试
     public function actionClassExam(){
+        Yii::app()->session['isExam']=true;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
-        $workID = Yii::app()->session['workID']; 
         $classexams = Exam::model()->getClassexamAll($classID);
         $classexam = array();
         $ratio_accomplish='0';
@@ -1045,15 +1055,15 @@ class StudentController extends CController {
         foreach ($classexams as $c){
             array_push($classexam, $c);
             $recordID[$n]=ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
-            
-            if($recordID==null){
-                return $this->render('classexam',['classexams'=>$classexam]);
+            $score[$n] = ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['score'];
+            if($recordID==null||$score==null){
+                return $this->render('classexam',['score'=>$score,'classexams'=>$classexam]);
             }else{
                 $ratio_accomplish[$n] = ExamRecord::model()->getExamRecordAccomplish($recordID[$n]);
             }
             $n++;
         }     
-        return $this->render('classexam',['classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish]);
+        return $this->render('classexam',['score'=>$score,'classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish]);
     }
 
 
@@ -1173,26 +1183,28 @@ class StudentController extends CController {
             $flag = '1';
         }
         if($flag == '1'){
-            echo $_FILES ['file'] ['name'];
+            if(!isset($_FILES["file"]))
+            {
+                echo "请选择文件！";
+                return ;
+            }
             if (! empty ( $_FILES ['file'] ['name'] )) {
-                if ((($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg")) && ($_FILES ["file"] ["size"] < 90000000)) {
+                if ((($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg")) && ($_FILES ["file"] ["size"] < 200000000)) {
                         if ($_FILES ["file"] ["error"] > 0) {
-                                echo "Return Code: " . $_FILES ["file"] ["error"] . "<br />";
+                                $result = "Return Code: " . $_FILES["file"]["error"];
                         } else {
                                 if (file_exists ( "img/head/" . $_FILES ["file"] ["name"] )) {
-                                        echo "alert('already exists.');";
+                                        $result = "already exists.";
                                 } else {
                                     $y='1';
                                     $oldName = $_FILES["file"]["name"]; 
                                     $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
                                     move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
-                                    echo "alert('Stored');";
-
+                                    $result = "Stored.";
                                 }
-
                         }
                 } else {
-                        echo "alert('Invalid file');";
+                        $result = "Invalid file.";
                 }
             }
         }
