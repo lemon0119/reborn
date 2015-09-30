@@ -57,7 +57,7 @@
         </div>
             
             <div class="control-group" id="div1">
-            <label class="control-label" >内容</label>
+            <label class="control-label" >键位码</label>
             <div class="controls">               
                 <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12">                
                 <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12">

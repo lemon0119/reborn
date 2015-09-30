@@ -18,11 +18,11 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>编号</th>
-                <th>内容</th>
-                <th>创建时间</th>
-                <th>分值</th>
-                <th>操作</th>               
+                <th class="font-center">编号</th>
+                <th class="font-center">内容</th>
+                <th class="font-center">创建时间</th>
+                <th class="font-center">分值</th>
+                <th class="font-center">操作</th>               
             </tr>
         </thead>
                 <tbody>        
@@ -38,21 +38,21 @@
                         ?>
                        
                     <tr>
-                        <td style="width: 150px"><?php echo $work['exerciseID'];?></td>
-                        <td>
+                        <td class="font-center" style="width: 50px"><?php echo $work['exerciseID'];?></td>
+                        <td class="font-center">
                             <?php  if(strlen($work['requirements'])<=15)
                                         echo $work['requirements'];
                                     else
                                         echo substr($work['requirements'], 0, 15)."...";
                                         ?>
                         </td>
-                        <td>
+                        <td class="font-center" >
                             <?php  echo $work['createTime']?>
                         </td>      
-                        <td>
+                        <td class="font-center" >
                             <?php  echo $thisExam['score']?>
                         </td>
-                        <td>            
+                        <td class="font-center" style="width: 100px">            
                             <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>  
                             <a href="#"  onclick="configScore('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png">配分</a>
                         </td>

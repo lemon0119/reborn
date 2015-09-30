@@ -66,25 +66,12 @@
         <input name="nm_answer" id="id_answer" type="hidden">
         <input name="nm_cost" id="id_cost" type="hidden">
         <input name="nm_correct" id="id_correct" type="hidden">
-     
-        <?php 
-          $last = Tool::getLastExer($exercise2);
-          if($last['type'] == 'key'&& $last['exerciseID'] == $_GET['exerID']){
-        ?>
-          <a class="btn btn-large" style="margin-left: 200px" onclick="submitSuite();"></a>
-        <?php }?>
     </form>
 </div>
  <?php } else {?>
     <h3>本题时间已经用完。</h3>
 <?php }?>
 <script>
-    
-    function next(){
-        $('#keyMode').fadeOut(50);
-        $('#keyMode').fadeIn(50);
-    }
-    
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
@@ -101,6 +88,7 @@
                 }
             },1000);
         }
+        startParse();
     });
     
     $(document).ready(function(){
@@ -115,7 +103,7 @@
         var length = res === null ? 0 : res.length;
         return length;
     }
-    
+    /*
     function getCorrect(pattern , answer){
         var ap = pattern.split(' ');
         var aa = answer.split(' ');
@@ -134,8 +122,9 @@
         }
         return cnum / tl;
     }
-    function formSubmit(){
-        if(!confirm("保存答案成功！！！"))
+    */
+   function formSubmit(){
+        if(!confirm("是否确认保存答案！！"))
             return ;
         doSubmit(false);
     }
@@ -169,7 +158,7 @@
             }
         });
     }
-    document.getElementById("id_new").firstChild.nodeValue = document.getElementById("id_content").value;
+     document.getElementById("id_new").firstChild.nodeValue = document.getElementById("id_content").value;
     function restart(){
         var obj =  document.getElementById("typeOCX");
         if(confirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？")){
