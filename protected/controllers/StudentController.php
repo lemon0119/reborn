@@ -195,6 +195,7 @@ class StudentController extends CController {
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
         $myCourses = array();
          $n=0;
+        $ratio_accomplish = array();
         foreach ($myCourse as $c){
             array_push($myCourses, $c);
             $recordID[$n]=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
