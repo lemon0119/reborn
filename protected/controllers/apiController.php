@@ -37,7 +37,6 @@ class apiController extends Controller {
         echo $identity;
         $username = (string) Yii::app()->request->getParam('username');
         $chat = (string) Yii::app()->request->getParam('chat');
-        //$publishtime = (string) Yii::app()->request->getParam('time');
         //改为使用服务器时间
         $publishtime = date('y-m-d H:i:s',time());
         $connection = Yii::app()->db;
