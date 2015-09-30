@@ -2,6 +2,13 @@
 <div id="ziji">
 <div class="hero-unit">
           <?php
+          //print_r($work);
+         //print_r($ansWork['answer']); 无法打印
+         //print_r($exam_exercise);
+         //print_r($isLast);
+         //print_r($score);
+          
+         //error_log($ansWork['answer']);
                 $right = $work['answer'];
                 $uAns = $ansWork['answer'];              
                 if($uAns == "")
@@ -11,7 +18,7 @@
                 }
                 else{
                 ?>
-        <div class="<?php if($uAns === $right ) echo 'answer-right'; else echo 'answer-wrong';?>"></div>
+                 <div class="<?php if($uAns === $right ) echo 'answer-right'; else echo 'answer-wrong';?>"></div>
         <?php }?>
         <?php  echo $work['requirements'];
                 echo '<br/>';
@@ -27,7 +34,7 @@
                 <?php $mark++;}?>
 </div>
    配分:<?php echo $exam_exercise['score'];?>
-  得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" > 
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $ansWork['score']?>" > 
    <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
 </div>
 <script>
