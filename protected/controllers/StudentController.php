@@ -1180,26 +1180,28 @@ class StudentController extends CController {
             $flag = '1';
         }
         if($flag == '1'){
-            echo $_FILES ['file'] ['name'];
+            if(!isset($_FILES["file"]))
+            {
+                echo "请选择文件！";
+                return ;
+            }
             if (! empty ( $_FILES ['file'] ['name'] )) {
-                if ((($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg")) && ($_FILES ["file"] ["size"] < 90000000)) {
+                if ((($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg")) && ($_FILES ["file"] ["size"] < 200000000)) {
                         if ($_FILES ["file"] ["error"] > 0) {
-                                echo "Return Code: " . $_FILES ["file"] ["error"] . "<br />";
+                                $result = "Return Code: " . $_FILES["file"]["error"];
                         } else {
                                 if (file_exists ( "img/head/" . $_FILES ["file"] ["name"] )) {
-                                        echo "alert('already exists.');";
+                                        $result = "already exists.";
                                 } else {
                                     $y='1';
                                     $oldName = $_FILES["file"]["name"]; 
                                     $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
                                     move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
-                                    echo "alert('Stored');";
-
+                                    $result = "Stored.";
                                 }
-
                         }
                 } else {
-                        echo "alert('Invalid file');";
+                        $result = "Invalid file.";
                 }
             }
         }
