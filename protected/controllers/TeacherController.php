@@ -3538,6 +3538,7 @@ class TeacherController extends CController {
                  $render = "examListen";
                  break;
          } 
+         
          $this->renderPartial($render,array(
              'work'=> $work,
              'ansWork'=>$ansWork,
