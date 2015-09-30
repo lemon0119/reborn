@@ -294,7 +294,6 @@ class StudentController extends CController {
         $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
-        $workID = Yii::app()->session['workID'];
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'listen', $exerID);
         $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;
@@ -415,7 +414,6 @@ class StudentController extends CController {
         $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
-        $workID = Yii::app()->session['workID'];
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'look', $exerID);
         $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;
@@ -545,7 +543,6 @@ class StudentController extends CController {
         $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
-        $workID = Yii::app()->session['workID'];
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
         $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;

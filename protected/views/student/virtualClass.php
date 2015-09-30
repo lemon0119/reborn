@@ -158,7 +158,10 @@ function pollChatRoom() {
             var html = "";
             var obj = eval(data);
             $.each(obj, function(entryIndex, entry) {
-                html += entry['username'] + "：" + entry['chat'] + "<br>";
+               if(entry['identity']=='teacher')
+                     html += "<font color=\"red\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
+                else
+                     html += entry['username']+ "：" + entry['chat'] + "<br>";
             });
             $("#chatroom").append(html);
             //$("#chatroom").scrollTop($("#chatroom").height);
