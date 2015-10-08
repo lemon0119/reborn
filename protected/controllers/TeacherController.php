@@ -1643,26 +1643,26 @@ class TeacherController extends CController {
             {
                 $type       =   Yii::app()->session['searchChoiceType'];
                 $value      =   Yii::app()->session['searchChoiceValue'];
-           if($type=='createPerson')
-            {
-                if($value   ==  "管理员")
-                    $value  =   0;
-                else
+                if($type=='createPerson')
+                 {
+                     if($value   ==  "管理员")
+                         $value  =   0;
+                     else
+                     {
+                         $tea    =  Teacher::model()->find("userName = '$value'");
+                         if($tea['userID']!="")
+                             $value =$tea['userID'];
+                         else 
+                             $value  =    -1;
+                     }
+                 }
+                if($type == "requirements")
                 {
-                    $tea    =  Teacher::model()->find("userName = '$value'");
-                    if($tea['userID']!="")
-                        $value =$tea['userID'];
-                    else 
-                        $value  =    -1;
+                    $searchKey = $value;
+                }else
+                {
+                    $searchKey = "no";
                 }
-            }
-            if($type == "requirements")
-            {
-                $searchKey = $value;
-            }else
-            {
-                $searchKey = "no";
-            }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -1875,17 +1875,17 @@ class TeacherController extends CController {
             }
 
             
-            if(Yii::app()->session['lastUrl']=="searchChoice")
+            if(Yii::app()->session['lastUrl']=="searchChoice")        //search choice
             {
                 $type       =   Yii::app()->session['searchChoiceType'];
                 $value      =   Yii::app()->session['searchChoiceValue'];
-            if($type == "requirements")
-            {
-                $searchKey = $value;
-            }else
-            {
-                $searchKey = "no";
-            }
+                if($type == "requirements")
+                {
+                    $searchKey = $value;
+                }else
+                {
+                    $searchKey = "no";
+                }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
