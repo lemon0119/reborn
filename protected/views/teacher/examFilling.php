@@ -57,6 +57,9 @@
         var user = {
             recordID:recordID,
             type:"filling",
+            workID:"<?php echo $workID;?>",
+            studentID:"<?php echo $studentID;?>",
+            accomplish:"<?php echo $accomplish;?>",
             examID:examID,
             exerciseID:exerciseID,
             score:$("#input")[0].value,

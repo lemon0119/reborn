@@ -5,19 +5,19 @@
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                    <label class="control-label" for="input01">工号</label>
+                    <label class="control-label" for="input01"><span class="must-fill" >*</span>工号</label>
                     <div class="controls">
                             <input name="userID" type="text" class="input-xlarge" id="input01" value="" />
                     </div>
             </div>
             <div class="control-group">
-                    <label class="control-label" for="input02">姓名</label>
+                    <label class="control-label" for="input02"><span class="must-fill" >*</span>姓名</label>
                     <div class="controls">
                             <input name="userName" type="text" class="input-xlarge" id="input02" value="" />
                     </div>
             </div>
            <div class="control-group">
-                <label class="control-label" for="input06">性别</label>
+                <label class="control-label" for="input06"><span class="must-fill" >*</span>性别</label>
                 <div class="controls">
                     男
                     <input name="sex" type="radio" class="input-xlarge" id="input06" value="男" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
