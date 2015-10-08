@@ -32,7 +32,11 @@ class AnswerRecord extends CActiveRecord
     }
     public static function saveFilling($recordID){
         $res = true;
-        $filling = Suite::model()->getFilling(Yii::app()->session['suiteID']);
+        if(Yii::app()->session['isExam'])
+            $suiteID = Yii::app()->session['examsuiteID'];
+        else
+            $suiteID = Yii::app()->session['suiteID'];
+        $filling = Suite::model()->getFilling($suiteID);
         foreach ($filling as $record) {
             $str = $record['answer'];
             $strArry = explode("$$",$str);
@@ -55,7 +59,11 @@ class AnswerRecord extends CActiveRecord
     
     public static function saveChoice($recordID){
         $res = true;
-        $choice = Suite::model()->getchoice(Yii::app()->session['suiteID']);
+        if(Yii::app()->session['isExam'])
+            $suiteID = Yii::app()->session['examsuiteID'];
+        else
+            $suiteID = Yii::app()->session['suiteID'];
+        $choice = Suite::model()->getchoice($suiteID);
         foreach ($choice as $record) {
             $name = 'choice'.$record['exerciseID'];
             $answer = isset($_POST[$name]) ? $_POST[$name] : '';
@@ -70,7 +78,11 @@ class AnswerRecord extends CActiveRecord
     
     public static function saveQuestion($recordID){
         $res = true;
-        $quest = Suite::model()->getQuestion(Yii::app()->session['suiteID']);
+        if(Yii::app()->session['isExam'])
+            $suiteID = Yii::app()->session['examsuiteID'];
+        else
+            $suiteID = Yii::app()->session['suiteID'];
+        $quest = Suite::model()->getQuestion($suiteID);
         foreach ($quest as $record) {
             $name = 'quest'.$record['exerciseID'];
             $answer = isset($_POST[$name]) ? $_POST[$name] : '';
