@@ -133,7 +133,7 @@
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">修改</button>
             <?php }?>
-            <a href="./index.php?r=teacher/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">取消</a>
+            <a href="./index.php?r=teacher/keyLst" class="btn">取消</a>
         </div>
         </fieldset>
     </form>   

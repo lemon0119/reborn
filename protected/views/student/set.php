@@ -52,7 +52,7 @@ function test()
     </div>
     <div class="span_set fl">
         <div class="controls" style="border:1px solid blue;">
-                    <?php if($picAddress=='0') {}else{?>
+                    <?php if($picAddress=='0'||$picAddress==null) {}else{?>
                     
                     <img style="width:200px;height:100px;" src="<?php echo $picAddress; ?>">
                     <?php }?>
