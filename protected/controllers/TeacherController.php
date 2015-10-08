@@ -2309,7 +2309,12 @@ class TeacherController extends CController {
                  $currentLesson = Yii::app()->session['currentLesson'];
              }
          }
-         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
+         if(isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])){
+              $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
+         }else{
+             $array_suite = 0;
+         }
+        
          $this->render('assignWork',array(
              'array_class' => $array_class,
              'array_lesson' => $array_lesson,

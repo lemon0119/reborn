@@ -1,6 +1,6 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <div id="ziji">
-<div class="hero-unit">
+<div class="hero-unit-choice">
           <?php
           $totalScore=0;
           $realScore=0;
