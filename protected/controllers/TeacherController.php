@@ -3489,6 +3489,11 @@ class TeacherController extends CController {
          ));       
      }  
     public function ActionAjaxExam(){
+        if(isset($_POST['workID'])){
+         $workID=$_POST['workID'];
+         $studentID = $_POST['studentID'];
+         $accomplish = $_POST['accomplish']; 
+        }
          $type = $_POST['type'];
          $recordID = $_POST['recordID'];
          $examID = $_POST['examID'];
@@ -3540,7 +3545,11 @@ class TeacherController extends CController {
          } 
          
          $this->renderPartial($render,array(
+             'workID'=>$workID,
+             'studentID'=>$studentID,
+             'accomplish'=>$accomplish,
              'works'=> $array_exercise,
+             'work'=>$work,
              'ansWork'=>$ansWork,
              'exam_exercise' => $exam_exercise,
              'isLast'=>$isLast,

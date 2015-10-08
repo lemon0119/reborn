@@ -2,11 +2,8 @@
 <div id="ziji">
 <div class="hero-unit">
           <?php
-          //print_r($work);
-         //print_r($ansWork['answer']); 无法打印
-         //print_r($exam_exercise);
-         //print_r($isLast);
-         //print_r($score);
+          $totalScore=0;
+          $realScore=0;
          foreach ($works as $work){
              
                 $right = $work['answer'];
@@ -18,9 +15,9 @@
                 }
                 else{
                 ?>
-                 <div class="<?php if($uAns === $right ) echo 'answer-right'; else echo 'answer-wrong';?>"></div>
+                 <div class="<?php if($uAns === $right ){ echo 'answer-right-choice'; $realScore=$realScore+$exam_exercise['score'];} else {echo 'answer-wrong-choice';}?>"></div>
         <?php }?>
-        <?php  echo $work['requirements'];
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  echo $work['requirements'];
                 echo '<br/>';
                 $opt = $work['options'];
                 $optArr = explode("$$",$opt);
@@ -31,19 +28,18 @@
                         <span class='answer-check'></span>
                     <?php }?>
                     <br/>
-         <?php $mark++;}}?>
+         <?php $mark++;} $totalScore=$totalScore+$exam_exercise['score'];}?>
 </div>
-   配分:<?php echo $exam_exercise['score'];?>
-   得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $ansWork['score']?>" > 
-   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
+   配分总分:<?php echo $totalScore;?><br/>
+   实际得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $realScore?>" > 
+   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存</button>
 </div>
 <script>
    $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
        if(<?php echo $isLast?> == 1)
         {
-            alert("已是最后一题");
-            return ;
+                window.location.href="./index.php?r=teacher/CheckStuExam&&workID=<?php echo $workID;?>&&type=filling&&studentID=<?php echo $studentID;?>&&accomplish=<?php echo $accomplish;?>";
         }
     });
      
@@ -52,6 +48,9 @@
         var user = {
             recordID:recordID,
             type:"choice",
+            workID:"<?php echo $workID;?>",
+            studentID:"<?php echo $studentID;?>",
+            accomplish:"<?php echo $accomplish;?>",
             examID:examID,
             exerciseID:exerciseID,
             score:value1,

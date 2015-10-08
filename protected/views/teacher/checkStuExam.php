@@ -47,10 +47,13 @@
 <script>
    $(document).ready(function(){
         var user = {
+            workID:"<?php echo $_GET['workID'];?>",
+            studentID:"<?php echo $_GET['studentID'];?>",
+            accomplish:"<?php echo $_GET['accomplish'];?>",
             recordID:<?php if($record != NULL)echo $record['recordID'];else echo 1;?>,
             type:"<?php echo $type;?>",
             examID:<?php echo $work['examID'];?>,
-            exerciseID:0      
+            exerciseID:0
         };
       $.ajax({
           type:"POST",

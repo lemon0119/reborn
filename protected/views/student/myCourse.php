@@ -56,7 +56,7 @@
                             </td>
                             <td>
                                 <?php if ($ratio_accomplish[$n]==1){
-                              	echo  '答题';
+//                              	echo  '答题';
                               }else {?>
                                 <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img src="<?php echo IMG_UIStu_URL; ?>answer.png"></a>
                                 <?php }?>
