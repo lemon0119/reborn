@@ -8,7 +8,7 @@
 require 'ansSideBar.php';
 ?>
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div class="span9">
+<div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;">
         <div class="hero-unit">
             <?php 
                 $SNum = 0;
