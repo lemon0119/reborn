@@ -62,7 +62,7 @@
                         </td>
                         <td>     
                             <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看学生</a>     
-                            <a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $thisSuite['suiteID']?>"><img title="查看" src="<?php echo IMG_URL;?>detail.png"/></a>                      
+                            <a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $thisSuite['suiteID']?>"><img title="查看习题" src="<?php echo IMG_URL;?>detail.png"/></a>                      
                            
 
                         </td>

@@ -284,10 +284,15 @@ class TeacherController extends CController {
         $classID=$_GET['classID'];
         $progress=$_GET['progress'];
         $on=$_GET['on'];
+        
+        //get student
+        $stu=Array();
+        $stu= Student::model()->findAll("classID=?",$classID);
         return $this->render('startCourse',[
             'classID'=>$classID,
             'progress'=>$progress,
-            'on'=>$on
+            'on'=>$on,
+            'stu'=>$stu,
         ]);
     }
             
@@ -2309,7 +2314,12 @@ class TeacherController extends CController {
                  $currentLesson = Yii::app()->session['currentLesson'];
              }
          }
-         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
+         if(isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])){
+              $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
+         }else{
+             $array_suite = 0;
+         }
+        
          $this->render('assignWork',array(
              'array_class' => $array_class,
              'array_lesson' => $array_lesson,
@@ -2371,7 +2381,7 @@ class TeacherController extends CController {
          $examID = $_GET['examID'];
          $startTime=$_POST['startTime'];
          $endTime=$_POST['endTime'];
-         
+         $examTime=$_POST['examTime'];
 
 
        $date=floor((strtotime($endTime)-strtotime($startTime))/86400);
@@ -2392,6 +2402,7 @@ class TeacherController extends CController {
             $hour=$hour%24;
         }
         $duration=(strtotime($endTime)-strtotime($startTime))/60;
+        $duration=$examTime;
          Exam::model()->updateByPk($examID,array('begintime'=>$startTime,'endtime'=>$endTime,'duration'=>$duration));
          $this->renderModifyExam($type, $examID);
      }
@@ -3489,6 +3500,11 @@ class TeacherController extends CController {
          ));       
      }  
     public function ActionAjaxExam(){
+        if(isset($_POST['workID'])){
+         $workID=$_POST['workID'];
+         $studentID = $_POST['studentID'];
+         $accomplish = $_POST['accomplish']; 
+        }
          $type = $_POST['type'];
          $recordID = $_POST['recordID'];
          $examID = $_POST['examID'];
@@ -3540,7 +3556,11 @@ class TeacherController extends CController {
          } 
          
          $this->renderPartial($render,array(
+             'workID'=>$workID,
+             'studentID'=>$studentID,
+             'accomplish'=>$accomplish,
              'works'=> $array_exercise,
+             'work'=>$work,
              'ansWork'=>$ansWork,
              'exam_exercise' => $exam_exercise,
              'isLast'=>$isLast,
