@@ -80,16 +80,22 @@
 <script>
     function dele(suiteID, currentPage)
     {
-        if (confirm("您确定删除吗？")) {
-            window.location.href = "./index.php?r=teacher/deleteSuite&&suiteID=" + suiteID + "&&page=" + currentPage;
-        }
+      
+        var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							 window.location.href = "./index.php?r=teacher/deleteSuite&&suiteID=" + suiteID + "&&page=" + currentPage;
+						}
+					}
+					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
     }
 
     $("#myForm").submit(function(){
         var title = $("#title")[0].value;
         if (title == "")
         {
-            alert("题目不能为空");
+            window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
     });

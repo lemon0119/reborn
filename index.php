@@ -21,6 +21,7 @@ defined('IMG_UITea_URL') or define('IMG_UITea_URL',SITE_URL.'img/UI_tea/');
 defined('IMG_UIStu_URL') or define('IMG_UIStu_URL',SITE_URL.'img/UI_stu/');
 defined('JS_URL') or define('JS_URL',SITE_URL.'js/');
 defined('EXER_LISTEN_URL') or define('EXER_LISTEN_URL',SITE_URL.'resources/');
+defined('XC_Confirm') or define('XC_Confirm',SITE_URL.'protected/extensions/xcConfirm/');
 
 // remove the following lines when in production mode
 defined('YII_DEBUG') or define('YII_DEBUG',true);

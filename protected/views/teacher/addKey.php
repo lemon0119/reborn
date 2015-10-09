@@ -145,14 +145,14 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert('添加键位练习成功！');
+    window.wxc.xcConfirm('添加键位练习成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('添加键位练习失败！');  
+    window.wxc.xcConfirm('添加键位练习失败！', window.wxc.xcConfirm.typeEnum.error);
 });
 $("#myForm").submit(function(){
     var requirements = $("#input")[0].value;
     if(requirements === ""){
-        alert('题目内容不能为空');
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var i ,j ,k, y = 3*divCount;
@@ -166,7 +166,7 @@ $("#myForm").submit(function(){
             if(!numpatrn.exec(input))
             {
                 j = Math.floor(i/3);               
-                alert('第'+ j +'行第三空循环次数应设为0-100');
+                window.wxc.xcConfirm('第'+ j +'行第三空循环次数应设为0-100', window.wxc.xcConfirm.typeEnum.warning);
                return false;
            }
         }else{
@@ -174,7 +174,7 @@ $("#myForm").submit(function(){
             {
                 j = Math.floor(i/3)+1;
                 k = i%3;
-                alert('第' + j + '行第' + k + '空应输入指定大写字母');
+                window.wxc.xcConfirm('第' + j + '行第' + k + '空应输入指定大写字母', window.wxc.xcConfirm.typeEnum.warning);
                 return false;
             }
         }           
@@ -188,7 +188,7 @@ $("#myForm").submit(function(){
             $("#div"+divCount).show();
         }else
         {
-            alert("最多添加十个选项");
+            window.wxc.xcConfirm("最多添加十个选项", window.wxc.xcConfirm.typeEnum.warning);
         }
     }
     function deleteIn()
@@ -198,7 +198,7 @@ $("#myForm").submit(function(){
             divCount--;
         }else
         {
-            alert("必须有一个答案");
+            window.wxc.xcConfirm("必须有一个答案", window.wxc.xcConfirm.typeEnum.warning);
         }
     }
 

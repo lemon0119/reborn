@@ -85,9 +85,9 @@
             $(document).ready(function(){
     var result = <?php echo "'$result'"; ?>;
             if (result === '1')
-            alert('添加学生成功！');
+        window.wxc.xcConfirm('添加学生成功！', window.wxc.xcConfirm.typeEnum.success);
             else if (result === '0')
-            alert('添加学生失败！');
+        window.wxc.xcConfirm('添加学生失败！', window.wxc.xcConfirm.typeEnum.error);
             });
             function getUserID(){
             var result = new Array();
@@ -123,16 +123,16 @@ foreach ($classAll as $key => $value) {
     $("#form-addStu").submit(function(){
     var userID = $("#input01")[0].value;
             if (userID === ""){
-    alert('学生学号不能为空');
+    window.wxc.xcConfirm('学生学号不能为空', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
     if (getUserID().indexOf(userID) >= 0){
-    alert('学生学号已存在！');
+    window.wxc.xcConfirm('学生学号已存在！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
     var userName = $("#input02")[0].value;
             if (userName === ""){
-    alert('学生姓名不能为空');
+    window.wxc.xcConfirm('学生姓名不能为空', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
 //    var pass1 = $("#input04")[0].value;
@@ -159,7 +159,7 @@ foreach ($classAll as $key => $value) {
             }
         }
         if(i===1){
-            alert("请选择学生性别！");
+            window.wxc.xcConfirm("请选择学生性别！", window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
     }
@@ -167,7 +167,7 @@ foreach ($classAll as $key => $value) {
     
     var phone_number = $("#input09")[0].value;
             if (phone_number.length !== 11 && phone_number !== ""){
-    alert('请输入正确的联系电话！');
+    window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
 
