@@ -1643,26 +1643,26 @@ class TeacherController extends CController {
             {
                 $type       =   Yii::app()->session['searchChoiceType'];
                 $value      =   Yii::app()->session['searchChoiceValue'];
-           if($type=='createPerson')
-            {
-                if($value   ==  "管理员")
-                    $value  =   0;
-                else
+                if($type=='createPerson')
+                 {
+                     if($value   ==  "管理员")
+                         $value  =   0;
+                     else
+                     {
+                         $tea    =  Teacher::model()->find("userName = '$value'");
+                         if($tea['userID']!="")
+                             $value =$tea['userID'];
+                         else 
+                             $value  =    -1;
+                     }
+                 }
+                if($type == "requirements")
                 {
-                    $tea    =  Teacher::model()->find("userName = '$value'");
-                    if($tea['userID']!="")
-                        $value =$tea['userID'];
-                    else 
-                        $value  =    -1;
+                    $searchKey = $value;
+                }else
+                {
+                    $searchKey = "no";
                 }
-            }
-            if($type == "requirements")
-            {
-                $searchKey = $value;
-            }else
-            {
-                $searchKey = "no";
-            }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -1875,17 +1875,17 @@ class TeacherController extends CController {
             }
 
             
-            if(Yii::app()->session['lastUrl']=="searchChoice")
+            if(Yii::app()->session['lastUrl']=="searchChoice")        //search choice
             {
                 $type       =   Yii::app()->session['searchChoiceType'];
                 $value      =   Yii::app()->session['searchChoiceValue'];
-            if($type == "requirements")
-            {
-                $searchKey = $value;
-            }else
-            {
-                $searchKey = "no";
-            }
+                if($type == "requirements")
+                {
+                    $searchKey = $value;
+                }else
+                {
+                    $searchKey = "no";
+                }
                 $result     =   Choice::model()->getChoiceLst($type, $value);
                 $choiceLst  =   $result['choiceLst'];
                 $pages      =   $result['pages'];
@@ -2309,7 +2309,12 @@ class TeacherController extends CController {
                  $currentLesson = Yii::app()->session['currentLesson'];
              }
          }
-         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
+         if(isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])){
+              $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson'],1));
+         }else{
+             $array_suite = 0;
+         }
+        
          $this->render('assignWork',array(
              'array_class' => $array_class,
              'array_lesson' => $array_lesson,
@@ -3489,6 +3494,11 @@ class TeacherController extends CController {
          ));       
      }  
     public function ActionAjaxExam(){
+        if(isset($_POST['workID'])){
+         $workID=$_POST['workID'];
+         $studentID = $_POST['studentID'];
+         $accomplish = $_POST['accomplish']; 
+        }
          $type = $_POST['type'];
          $recordID = $_POST['recordID'];
          $examID = $_POST['examID'];
@@ -3540,7 +3550,11 @@ class TeacherController extends CController {
          } 
          
          $this->renderPartial($render,array(
-             'work'=> $work,
+             'workID'=>$workID,
+             'studentID'=>$studentID,
+             'accomplish'=>$accomplish,
+             'works'=> $array_exercise,
+             'work'=>$work,
              'ansWork'=>$ansWork,
              'exam_exercise' => $exam_exercise,
              'isLast'=>$isLast,
