@@ -41,6 +41,8 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <a href="./index.php?r=student/set">设置</a></li>
+                                                <li>
+                                                    <a href="./index.php?r=student/headPic">头像</a></li>
                                                 <li><a href="./index.php?r=user/login&exit=1">退出</a> </li>
                                             </ul>   
                                         </div>

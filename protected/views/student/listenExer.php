@@ -27,7 +27,7 @@
         $strTime .= $ss < 10 ? "0".$ss : $ss;
     }//end
 ?>
-  
+  <?php if(!$isOver){?>
 <div class="span9">
         <div class="hero-unit"  align="center">
             <table border = '0px'>
@@ -35,11 +35,8 @@
                 <tr>
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
-                        <?php if($isOver){?>
-                        
-                        <?php }?>
+                        <td width = '250px'>总时间：<?php echo $strTime?></td>
                     <?php }?>
-                    <td width = '250px'>总时间：<?php echo $strTime?></td>    
                     <td width = '250px'>计时：<span id="time">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                 </tr>
@@ -63,6 +60,9 @@
         </div>
     <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
 </div>
+  <?php } else {?>
+ <h3 align="center">本题时间已经用完</h3>
+<?php }?>
 <script>
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     $(document).ready(function(){

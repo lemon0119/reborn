@@ -63,7 +63,8 @@ function test()
                                 <input style="width:180px;color:white;"  class="search-query span2" placeholder="选择结束时间" name="endTime" id="endTime" value="<?php echo $exam['endtime'] ?>" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" onblur="test()">
                             </td></tr>
                         
-                        <tr><td>时长:<?php echo $exam['duration'] ?>分钟</td></tr>
+                        <tr><td>时长:
+                                <input style="width:180px;" class="search-query span2" type="text" placeholder="分钟" name="examTime" id="examTime" value="<?php echo $exam['duration'] ?>分钟"></td></tr>
                         <tr><td><div id="totalScore">总分:<?php echo $totalScore?></div></td></tr>
                     </table>                
                 </center>                   
