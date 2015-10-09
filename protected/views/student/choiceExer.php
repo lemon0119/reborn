@@ -52,10 +52,6 @@ $SNum = 0;
                $n++;
             }
         ?>
-
- 
-
-        
     </form>
 </div>
 <script>
