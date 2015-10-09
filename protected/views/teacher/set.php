@@ -50,18 +50,25 @@ function test()
 <script>  
 $(document).ready(function(){
     var result = '<?php echo $result;?>';
-    if(result === '1')
+    if(result == '1')
         alert('密码修改成功！');
-    else if(result === '0')
+    else if(result == '0')
         alert('密码修改失败！'); 
-    else if(result==='old error')
-        alert('原密码错误！'); 
+    else if(result=='old error')
+        alert('旧密码错误！'); 
 }); 
 $("#myForm").submit(function(){
     var old = $("#input01")[0].value;
     var new1 = $("#input02")[0].value;
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
+    if(old!="" &&new1!=""&&old==new1){
+        alert('新旧密码不能一样');
+        $("#input01")[0].value="";
+        $("#input02")[0].value="";
+    	$("#input03")[0].value="";
+        return false;
+    }
     if(new1===defnew){
     }else
     {

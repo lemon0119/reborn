@@ -51,7 +51,7 @@
         <thead>
             <tr>
                 <th class="font-center">编号</th>
-                <th class="font-center">课程号</th>
+                <!--<th class="font-center">课程号</th>-->
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>
@@ -62,7 +62,7 @@
                     <?php foreach($choiceLst as $model):?>
                     <tr>
                         <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
-                        <td class="font-center"><?php echo $model['courseID'];?></td>
+                        <!--<td class="font-center"><?php echo $model['courseID'];?></td>-->
                         <td class="font-center"><?php  if(strlen($model['requirements'])<=15)
                                         echo $model['requirements'];
                                     else
@@ -101,16 +101,22 @@
     $(document).ready(function(){
     var result = <?php  if(isset($result)) echo "'$result'"; else echo'1';?>;
     if(result === '1')
-        alert('复制选择题成功！');
+    window.wxc.xcConfirm('复制选择题成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('复制选择题失败！');
+    window.wxc.xcConfirm('复制选择题失败！', window.wxc.xcConfirm.typeEnum.error);
     result = "";
 }      
 );
    function dele(exerciseID){
-      if(confirm("您确定删除吗？")){
-          window.location.href = "./index.php?r=teacher/deleteChoice&&exerciseID=" + exerciseID;
-      }
+     
+      var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							   window.location.href = "./index.php?r=teacher/deleteChoice&&exerciseID=" + exerciseID;
+						}
+					}
+					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
   }
 
 </script>

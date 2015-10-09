@@ -3149,6 +3149,8 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
 .navbar .brand {
     display:block;
     float:left;
+    position: relative;
+    left:1px;
     padding:30px 133px;
     text-shadow:0 1px 0 #fff;
     background:url(../../img/logoDM.png);
@@ -4482,8 +4484,20 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .carousel-caption p {
     margin-bottom:0
 }
+.hero-unit-choice {
+    overflow: auto;
+    height: 500px;
+    width: 800px;
+    margin-bottom:30px;
+    font-size:18px;
+    font-weight:200;
+    line-height:30px;
+    color:inherit;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border-radius:6px
+}
 .hero-unit {
-    padding:0px 0px;
     margin-bottom:30px;
     font-size:18px;
     font-weight:200;
@@ -4557,14 +4571,15 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 
 .userUI{
-   
+   position: relative;
+    top: 1px;
     background-color: #fff;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     position: relative;
     float: right;
     height: 54px;
-    width: 130px;
+    width: 150px;
     line-height:55px;
 }
 
@@ -4583,6 +4598,8 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .user_dropdown_logo{
     padding: 0px 18px;
+    position: relative;
+    top:3px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_tea/down_black.png");
 }
@@ -4636,8 +4653,13 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .span_set{
     position: relative;
-    left:210px;
+    left:220px;
 }
+.span_icon{
+    position: relative;
+   
+}
+
 .view-link{
     color:green;
 }
@@ -4741,16 +4763,20 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     border-style:none;
 }
 #blank_stu{
+    position: relative;
+    top: 1px;
      background:-moz-linear-gradient(left,#505050,#fff);
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
-    padding: 27px 207px;
+    padding: 27px 197px;
 }
 #blank_admin{
+    position: relative;
+    top: 1px;
     background:-moz-linear-gradient(left,#505050,#fff);
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
-    padding: 27px 147px;
+    padding: 27px 137px;
 }
 .nav-userID{
     position: relative;
@@ -4828,4 +4854,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     border-bottom-right-radius: 5px;
     color: #fff;
     margin: 0px 0px 0px 0px;
+}
+.must-fill{
+    font-size: 30px;
+    position: relative;
+    top: 8px;
+    left:115px;
+    float: left;
+    color: red
 }

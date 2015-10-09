@@ -48,8 +48,10 @@ class SuiteRecord extends CActiveRecord
     }
     
     public static function saveSuiteRecord (&$recordID) {
-        $suiteID = Yii::app()->session['suiteID'];
-        $workID = Yii::app()->session['workID'];
+        if(Yii::app()->session['isExam'])
+            $workID = Yii::app()->session['examworkID'];
+        else
+            $workID = Yii::app()->session['workID'];
         $createPerson = Yii::app()->session['userid_now'];
         $oldID = SuiteRecord::getRecord($workID, $createPerson);
         if($oldID == null) {

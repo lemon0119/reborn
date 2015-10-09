@@ -90,14 +90,14 @@
                     <?php foreach($array_accomplished as $student):
                             ?>
                     <tr>
-                        <td style="width: 50px">
+                        <td class="font-orange" style="width: 50px">
                             <?php echo $student['userName'];?>
                         </td>
                         <td style="width: 50px">
                             <?php  echo $student['userID'];?>       
                         </td>
                         <td >
-                            完成
+                            <font style="color: green">完成</font>
                         </td> 
                         <td style="width: 50px">
                             <?php  echo $student['score'];?>   
@@ -133,10 +133,10 @@
                             <?php  echo $student['userID'];?>          
                         </td>
                         <td>
-                            未完成
+                           <font style="color: red">未完成</font>
                         </td>  
                         <td>
-                            <a href="./index.php?r=teacher/checkStuExam&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice">批阅</a>
+                            <font style="color: gray">批阅</font>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 

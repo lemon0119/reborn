@@ -5,19 +5,19 @@
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                <label class="control-label" for="input01">学号</label>
+                <label class="control-label" for="input01"><span class="must-fill" >*</span>学号</label>
                 <div class="controls">
-                    <input name="userID" type="text" class="input-xlarge" id="input01" value="" />
+                    <input name="userID" type="text" class="input-xlarge" id="input01" value="" onblur="chkIt()"/><span id="usertips" style="margin-left: 5px;"></span>  
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input02">姓名</label>
+               <label class="control-label" for="input02"><span class="must-fill" >*</span>姓名</label>
                 <div class="controls">
-                    <input name="userName" type="text" class="input-xlarge" id="input02" value="" />
+                   <input name="userName" type="text" class="input-xlarge" id="input02" value="" />
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="input06">性别</label>
+             <div class="control-group">
+              <label class="control-label" for="input06"><span class="must-fill" >*</span>性别</label> 
                 <div class="controls">
                     男
                     <input name="sex" type="radio" class="input-xlarge" id="input06" value="男" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -85,9 +85,9 @@
             $(document).ready(function(){
     var result = <?php echo "'$result'"; ?>;
             if (result === '1')
-            alert('添加学生成功！');
+        window.wxc.xcConfirm('添加学生成功！', window.wxc.xcConfirm.typeEnum.success);
             else if (result === '0')
-            alert('添加学生失败！');
+        window.wxc.xcConfirm('添加学生失败！', window.wxc.xcConfirm.typeEnum.error);
             });
             function getUserID(){
             var result = new Array();
@@ -123,16 +123,16 @@ foreach ($classAll as $key => $value) {
     $("#form-addStu").submit(function(){
     var userID = $("#input01")[0].value;
             if (userID === ""){
-    alert('学生学号不能为空');
+    window.wxc.xcConfirm('学生学号不能为空', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
     if (getUserID().indexOf(userID) >= 0){
-    alert('学生学号已存在！');
+    window.wxc.xcConfirm('学生学号已存在！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
     var userName = $("#input02")[0].value;
             if (userName === ""){
-    alert('学生姓名不能为空');
+    window.wxc.xcConfirm('学生姓名不能为空', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
 //    var pass1 = $("#input04")[0].value;
@@ -159,7 +159,7 @@ foreach ($classAll as $key => $value) {
             }
         }
         if(i===1){
-            alert("请选择学生性别！");
+            window.wxc.xcConfirm("请选择学生性别！", window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
     }
@@ -167,9 +167,29 @@ foreach ($classAll as $key => $value) {
     
     var phone_number = $("#input09")[0].value;
             if (phone_number.length !== 11 && phone_number !== ""){
-    alert('请输入正确的联系电话！');
+    window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
 
     });
+    //学号受限
+    function chkIt(){
+    var usernameVal = document.getElementById("input01").value;  
+  
+    usertipsSpan = document.getElementById("usertips");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!usernameVal.match( /^[A-Za-z0-9]+$/)) {  
+        usertipsSpan.innerHTML="必须由数字、英文字母线组成";  
+        document.getElementById("input01").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+      
+    if(usernameVal.length > 20){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="大于20个字符！";  
+        document.getElementById("input01").value="";
+    }  
+}
 </script>

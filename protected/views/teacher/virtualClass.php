@@ -5,8 +5,8 @@
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 
     <?php
-    $username = Yii::app()->user->name;
-    echo "<script>var current_username=\"$username\";</script>";
+   
+    echo "<script>var current_username=\"$userName\";</script>";
 
     $role               = Yii::app()->session['role_now'];
     $userid             = Yii::app()->session['userid_now'];
@@ -127,16 +127,16 @@
             <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none">
 
-            <textarea id="bulletin-textarea" style="margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+            <textarea id="bulletin-textarea" style="color:gray;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
             <button id="postnotice" name="发布公告" class="btn btn-primary" style="margin-left: 100px; margin-top: 5px;">发布公告</button>
 
             </div>
             <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
             <div id="chat-box">
-            <div id="chatroom" class="chatroom"></div>
+                <div id="chatroom" class="chatroom"></div>
             <div class="sendfoot">
-                <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px">
-                <button id="send-msg" style="padding-top:4px;padding-bottom:4px;height:30px;width:25%;font-size:10px">发送</button>
+                <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px;color:gray" oninput="this.style.color='black'">
+                <a id="send-msg" ></a>
             </div>
             </div>
         </div>
@@ -210,14 +210,16 @@ $(document).ready(function(){
     }, 1000);
 
     // ------------------------------------------------------ send chat
-    $("#send-msg").click(function() {
-        var messageField = $('#messageInput');
-        var msg = messageField.val();
-        messageField.val('');
+    //綁定enter
+     document.onkeydown=function(event){
+         e = event ? event :(window.event ? window.event : null);
+         if(e.keyCode==13){
+           var messageField = $('#messageInput');
+           var msg = messageField.val();
+            messageField.val('');
 
         var current_date = new Date();
         var current_time = current_date.toLocaleTimeString();
-
         $.ajax({
             type: "POST",
             url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
@@ -225,6 +227,24 @@ $(document).ready(function(){
                 username: '"' + current_username + '"',
                 chat: '"' + msg + '"',
                 time: '"' + current_time + '"'
+            }
+        });
+           }
+        }
+    $("#send-msg").click(function() {
+        var messageField = $('#messageInput');
+        var msg = messageField.val();
+        messageField.val('');
+
+        var current_date = new Date();
+        var current_time = current_date.toLocaleTimeString();
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
+            data: {
+                username: '"' + current_username + '"',
+                chat: '"' + msg + '"',
+                time: '"' + current_time + '"',
             }
         });
     });
@@ -240,8 +260,11 @@ function pollChatRoom() {
             var html = "";
             var obj = eval(data);
             $.each(obj, function(entryIndex, entry) {
-                html += entry['username'] + "：" + entry['chat'] + "<br>";
-            });
+                if(entry['identity']=='teacher')
+                     html += "<font color=\"red\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
+                else
+                     html += entry['username']+ "：" + entry['chat'] + "<br>";
+            }); 
             $("#chatroom").append(html);
             //$("#chatroom").scrollTop($("#chatroom").height);
         }

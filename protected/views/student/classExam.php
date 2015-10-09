@@ -16,6 +16,7 @@
                             <th>截止时间</th>
                             <th>是否完成</th>
                             <th>操　　作</th>
+                            <th>分    数</th>
                     </tr>
             </thead>
             <tbody>
@@ -46,7 +47,14 @@
                                     <?php echo '<font color="#ff0000">已经截止</font>'; ?>
                                   &nbsp;&nbsp;&nbsp|  &nbsp;&nbsp;&nbsp    
                                   <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '查看成绩';?></a>
-                                <?php } $n++;?>
+                                <?php }?>
+                            </td>
+                            <td>
+                                 <?php if($score[$n]==null){
+                                         echo "未完成";
+                                 } else {
+                                 echo $score[$n];
+                                 }$n++;?> 
                             </td>
                     </tr>
                 <?php }?>

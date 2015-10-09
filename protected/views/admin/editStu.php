@@ -16,7 +16,7 @@ else
             <div class="control-group">
                 <label class="control-label" for="input01">学号</label>
                 <div class="controls">
-                    <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID ?>" />
+                    <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID ?>" readonly="true"/>
                 </div>
             </div>
             <div class="control-group">
@@ -29,13 +29,17 @@ else
                 <label class="control-label" for="input04">性别</label>
                 <div class="controls">
                     男
-                    <input name="sex" type="radio"<?php if ($sex == "男") {
-              echo 'checked="checked"';
-          } ?>  class="input-xlarge"  value="男" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input name="sex" type="radio"<?php
+                    if ($sex == "男") {
+                        echo 'checked="checked"';
+                    }
+                    ?>  class="input-xlarge"  value="男" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     女
-                    <input name="sex" type="radio" <?php if ($sex == "女") {
-              echo 'checked="checked"';
-          } ?> class="input-xlarge"  value="女" />
+                    <input name="sex" type="radio" <?php
+                    if ($sex == "女") {
+                        echo 'checked="checked"';
+                    }
+                    ?> class="input-xlarge"  value="女" />
                 </div>
             </div>
             <div class="control-group">
@@ -47,17 +51,18 @@ else
             <div class="control-group">
                 <label class="control-label" for="input03">班级</label>
                 <div class="controls">
-                        <select name="classID" style="width: 285px">
+                    <select name="classID" style="width: 285px">
                         <option value="0" >以后再选</option>
-                        <?php 
-                            $classes = TbClass::model()->findall();
-                            foreach ($classes as $value) {
-                                if($value['classID']==$classID){
-                        ?>
-                        <option value="<?php echo $value['classID']; ?>" selected="selected"><?php echo $value['className']; ?></option>
-                        <?php } else{?>
-                            <option value="<?php echo $value['classID']; ?>" ><?php echo $value['className']; ?></option>
-                        <?php }}?>
+                        <?php
+                        $classes = TbClass::model()->findall();
+                        foreach ($classes as $value) {
+                            if ($value['classID'] == $classID) {
+                                ?>
+                                <option value="<?php echo $value['classID']; ?>" selected="selected"><?php echo $value['className']; ?></option>
+    <?php } else { ?>
+                                <option value="<?php echo $value['classID']; ?>" ><?php echo $value['className']; ?></option>
+    <?php }
+} ?>
                     </select>
                 </div>
             </div>
@@ -98,14 +103,18 @@ if (isset($result)) {
 }
 ?>
     function resetPass() {
-        if (confirm("这将会重置这名学生的密码为：000，您确定这样吗？")) {
-            window.location.href = "./index.php?r=admin/resetPass&&id=<?php
+        var option = {
+            title: "警告",
+            btn: parseInt("0011", 2),
+            onOk: function () {
+                window.location.href = "./index.php?r=admin/resetPass&&id=<?php
 echo $userID;
 if (isset($flag))
     echo "&&flag=search";
 ?>";
-        } else
-            return false;
+            }
+        }
+        window.wxc.xcConfirm("这将会重置这名学生的密码为：000，您确定这样吗？", "custom", option);
     }
     function getUserID() {
         var result = new Array();
@@ -136,23 +145,23 @@ foreach ($classAll as $key => $value) {
     $("#form-addStu").submit(function () {
         var userID = $("#input01")[0].value;
         if (userID === "") {
-            alert('学生学号不能为空');
+            window.wxc.xcConfirm('学生学号不能为空', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
         if (getUserID().indexOf(userID) >= 0) {
-            alert('学生学号已存在！');
+            window.wxc.xcConfirm('学生学号已存在！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
         var userName = $("#input02")[0].value;
         if (userName === "") {
-            alert('学生姓名不能为空');
+            window.wxc.xcConfirm('学生姓名不能为空', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
         var phone_number = $("#input06")[0].value;
-        if (phone_number !=="" && phone_number.length!==11 ) {
-            alert('联系电话格式有误');
+        if (phone_number !== "" && phone_number.length !== 11) {
+            window.wxc.xcConfirm('联系电话格式有误', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
-        
+
     });
 </script>

@@ -83,7 +83,14 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $isExam=Yii::app()->session['isExam'];
+        if($isExam){
+            $recordID = ExamRecord::getRecord($workID, $studentID);
+        }
+        else{
+            $recordID = SuiteRecord::getRecord($workID, $studentID);
+        }
+            
         $ansQuest = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'question');
         $ansArr = AnswerRecord::model()->ansToArray($ansQuest);
         return $this->render('ansQuest',['exercise'=>$classwork,'ansQuest'=>$ansArr]);
@@ -97,7 +104,13 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $isExam=Yii::app()->session['isExam'];
+        if($isExam){
+            $recordID = ExamRecord::getRecord($workID, $studentID);
+        }
+        else{
+            $recordID = SuiteRecord::getRecord($workID, $studentID);
+        }
         $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
         $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
         return $this->render('ansFilling',['exercise'=>$classwork,'ansFilling'=>$ansArr]);
@@ -111,7 +124,14 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $isExam=Yii::app()->session['isExam'];
+        if($isExam){
+            $recordID = ExamRecord::getRecord($workID, $studentID);
+        }
+        else{
+            $recordID = SuiteRecord::getRecord($workID, $studentID);
+        }
+            
         $ansChoice = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'choice');
         $ansArr = AnswerRecord::model()->ansToArray($ansChoice);
         return $this->render('ansChoice',['exercise'=>$classwork,'ansChoice'=>$ansArr]);
@@ -135,7 +155,7 @@ class StudentController extends CController {
             }
         } else {
             foreach(Tool::$EXER_TYPE as $type){
-                $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+                $classwork[$type] = Exam::model()->getExamExerByType($suiteID, $type);
             }
         }
         
@@ -187,6 +207,8 @@ class StudentController extends CController {
     }
     //我的课程
     public function actionMyCourse(){
+        $isExam=false;
+        Yii::app()->session['isExam']=$isExam;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
@@ -195,6 +217,7 @@ class StudentController extends CController {
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
         $myCourses = array();
          $n=0;
+        $ratio_accomplish = array();
         foreach ($myCourse as $c){
             array_push($myCourses, $c);
             $recordID[$n]=SuiteRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
@@ -286,7 +309,6 @@ class StudentController extends CController {
         $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
-        $workID = Yii::app()->session['workID'];
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'listen', $exerID);
         $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;
@@ -407,7 +429,6 @@ class StudentController extends CController {
         $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
-        $workID = Yii::app()->session['workID'];
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'look', $exerID);
         $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;
@@ -447,10 +468,10 @@ class StudentController extends CController {
         return $this->render('lookExer',array( 
             'exercise'=>$classexam,
             'exercise2'=>$classexam2,
-                'exerOne'=>$result,
+            'exerOne'=>$result,
             'cent'=>$cent,
             'isExam'=>$isExam,
-                'examInfo'=>$examInfo,
+            'examInfo'=>$examInfo,
             'typeNow' => 'look',
             'isOver' => $isOver, //edit by LC
             'costTime' => $costTime
@@ -537,7 +558,6 @@ class StudentController extends CController {
         $examInfo = Exam::model()->findByPK($suiteID);
         //edit by LC
         $studentID = Yii::app()->session['userid_now'];
-        $workID = Yii::app()->session['workID'];
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
         $costTime = isset($answer['costTime']) ? $answer['costTime'] : 0;
@@ -946,6 +966,7 @@ class StudentController extends CController {
         //Yii::app()->session['examID'] = $suiteID;
         $classexam = Array();
         $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        
         $cent=Array("0"=>"0","1"=>"0","2"=>"0","3"=>"0","4"=>"0","5"=>"0");
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -1010,6 +1031,8 @@ class StudentController extends CController {
     }
     //课堂作业
     public function actionClasswork(){
+        $isExam=false;
+        Yii::app()->session['isExam']=$isExam;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
@@ -1034,25 +1057,26 @@ class StudentController extends CController {
     
     //宋杰 2015-7-30 课堂考试
     public function actionClassExam(){
+        Yii::app()->session['isExam']=true;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
-        $workID = Yii::app()->session['workID']; 
         $classexams = Exam::model()->getClassexamAll($classID);
         $classexam = array();
         $ratio_accomplish='0';
-        $n=0;       
+        $n=0;
+        $score='';
         foreach ($classexams as $c){
             array_push($classexam, $c);
             $recordID[$n]=ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
-            
-            if($recordID==null){
-                return $this->render('classexam',['classexams'=>$classexam]);
+            $score[$n] = ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['score'];
+            if($recordID==null||$score==null){
+                return $this->render('classexam',['score'=>$score,'classexams'=>$classexam]);
             }else{
                 $ratio_accomplish[$n] = ExamRecord::model()->getExamRecordAccomplish($recordID[$n]);
             }
             $n++;
         }     
-        return $this->render('classexam',['classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish]);
+        return $this->render('classexam',['score'=>$score,'classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish]);
     }
 
 
@@ -1101,8 +1125,13 @@ class StudentController extends CController {
         if(isset($_POST['nm_answer'])) {
             $answer = $_POST['nm_answer'];
             $seconds = $_POST['nm_cost'];
-            if(!SuiteRecord::saveSuiteRecord ($recordID))
-                return false;
+            if(Yii::app()->session['isExam']){
+                if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+            } else {
+                if(!SuiteRecord::saveSuiteRecord ($recordID))
+                    return false;
+            }
             return AnswerRecord::saveAnswer($recordID, $answer, $seconds);
         }
     }
@@ -1161,11 +1190,92 @@ class StudentController extends CController {
     public function actionIndex(){
         $this->render('index');
     }
+    public function actionHeadPic(){
+        $picAddress="";
+        $result="";
+        $userid_now = Yii::app()->session['userid_now'];
+        $user = Student::model()->find('userID=?', array($userid_now));
+        $picAddress=$user['img_address'];
+        $this->render('headPic',['result'=>$result,'picAddress'=>$picAddress]);
+    }
+    public function actionAddHeadPic(){
+        $result ="上传失败!";
+        $picAddress="";
+        $userid_now = Yii::app()->session['userid_now'];
+        $user = Student::model()->find('userID=?', array($userid_now));
+        $picAddress=$user['img_address'];
+        if(!isset($_FILES["file"]))
+        {
+            $result= "请选择文件！";
+            $this->render('headPic',['result'=>$result,'picAddress'=>$picAddress]);
+        }
+        if (($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg"))
+        {   
+            if($_FILES["file"]["size"] < 30000000)
+            {
+                if ($_FILES["file"]["error"] > 0)
+                {
+                    $result = "Return Code: " . $_FILES["file"]["error"];
+                }
+              else
+                {
+                    $oldName = $_FILES["file"]["name"]; 
+                    $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                    move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
+                    $result = "上传成功！";
+                    
+                    $user->img_address="img/head/" .$newName;
+                    $picAddress="img/head/" .$newName;
+                    $user->update();
+                }
+            }else{
+                $reult = "文件限定大小为30M！";
+            }
+        }else {
+            $result = "请上传正确类型的文件！";
+        }
+        $this->render('headPic',['result'=>$result,'picAddress'=>$picAddress]);
+    }
     public function actionSet(){       //set
     	$result ='no';
         $mail='';
+        //head img
+        $y='0';
+        $picAddress='0';
+        $flag = 'no';
+        if (isset($_POST ['flag'])) {
+            $flag = '1';
+        }
+        if($flag == '1'){
+            if(!isset($_FILES["file"]))
+            {
+                echo "请选择文件！";
+                return ;
+            }
+            if (! empty ( $_FILES ['file'] ['name'] )) {
+                if ((($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg")) && ($_FILES ["file"] ["size"] < 200000000)) {
+                        if ($_FILES ["file"] ["error"] > 0) {
+                                $result = "Return Code: " . $_FILES["file"]["error"];
+                        } else {
+                                if (file_exists ( "img/head/" . $_FILES ["file"] ["name"] )) {
+                                        $result = "already exists.";
+                                } else {
+                                    $y='1';
+                                    $oldName = $_FILES["file"]["name"]; 
+                                    $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                                    move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
+                                    $result = "Stored.";
+                                }
+                        }
+                } else {
+                        $result = "Invalid file.";
+                }
+            }
+        }
+        
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
+        $picAddress=$user->img_address;
         if (!empty($user->mail_address)) {
             $mail = $user->mail_address;
         }
@@ -1179,19 +1289,20 @@ class StudentController extends CController {
                 if($user->password== md5($_POST['old'])){
                     $user->password=md5($new1);
                     $user->mail_address=$email;
+                    if($y=='1')
+                        $user->img_address="img/head/" .$newName; 
+                    $picAddress=$user->img_address;
                     $result=$user->update();
-                    echo $result;
                     $mail=$email;
     			
     		}else{
                     $result='old error';
-    			$this->render('set',['result'=>$result,'mail'=>$mail]);
+    			$this->render('set',['flag' => $flag,'result'=>$result,'mail'=>$mail,'picAddress'=>$picAddress]);
     			return;
                 }
     		
     	}
-    	
-    	$this->render('set',['result'=>$result,'mail'=>$mail]);
+    	$this->render('set',['flag' => $flag,'result'=>$result,'mail'=>$mail,'picAddress'=>$picAddress]);
     }
     
     public function actionHello(){

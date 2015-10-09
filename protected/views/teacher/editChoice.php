@@ -92,7 +92,7 @@
         <?php if(!isset($action)) {?>
             <button type="submit" class="btn btn-primary">修改</button> 
         <?php }?>
-        <a href="./index.php?r=teacher/returnFromAddChoice" class="btn">返回</a>
+        <a href="./index.php?r=teacher/choiceLst" class="btn">返回</a>
     </div>
     </fieldset>
 </form>   
@@ -106,32 +106,32 @@ $(document).ready(function(){
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        alert('题目内容不能为空');
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;
     if(A === ""){
-        alert('选项A内容不能为空');
+      	window.wxc.xcConfirm('选项A内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var B = $("#input03")[0].value;
     if(B === ""){
-        alert('选项B内容不能为空');
+      	window.wxc.xcConfirm('选项B内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var C = $("#input04")[0].value;
     if(C === ""){
-        alert('选项C内容不能为空');
+        	window.wxc.xcConfirm('选项C内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var D = $("#input05")[0].value;
     if(D === ""){
-        alert('选项D内容不能为空');
+        	window.wxc.xcConfirm('选项D内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var answer = $('input:radio[name="answer"]:checked').val();
     if(answer == null){
-        alert('请选择一个答案选项');
+        	window.wxc.xcConfirm('请选择一个答案选项', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
 

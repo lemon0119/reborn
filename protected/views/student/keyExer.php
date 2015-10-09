@@ -19,7 +19,7 @@
         $strTime .= $ss < 10 ? "0".$ss : $ss;
     }//end
  ?>
- <?php if(!$isOver){?>
+
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
@@ -28,14 +28,16 @@
                 <tr>
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
+                        <?php if($isOver){?>
                         <td width = '250px'>总时间：<?php echo $strTime?></td>
+                        <?php }?>
                     <?php }?>
                     <td width = '250px'>计时：<span id="time">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                 </tr>
         </table>
         <br/>
-        <table id="keyMode" style="height: 60px; font-size: 60px; border: 1px solid #000" onclick="next()">
+        <table id="keyMode" style="height: 60px; font-size: 60px; border: 1px solid #000">
             <tr>
                 <td id="left-key" style="border-right: 1px solid #000; width: 300px;text-align:right;">ABCDEF</td>
                 <td id="right-key" style="border-left: 1px solid #000; width: 300px">AS</td>
@@ -68,12 +70,6 @@
         <input name="nm_correct" id="id_correct" type="hidden">
     </form>
 </div>
- </div>
-    <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
-</div>
- <?php } else {?>
-    <h3>本题时间已经用完。</h3>
-<?php }?>
 <script>
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
@@ -126,4 +122,50 @@
         return cnum / tl;
     }
     */
+   function formSubmit(){
+        if(!confirm("是否确认保存答案！！"))
+            return ;
+        doSubmit(false);
+    }
+    function submitSuite(simple){
+        if(!simple){
+            if(!confirm("提交以后，不能重新进行答题，你确定提交吗？"))
+                return ;
+        }
+        doSubmit(true);
+        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
+            if(isExam)
+                window.location.href="index.php?r=student/classExam";
+            else
+                window.location.href="index.php?r=student/classwork";
+        });
+    }
+    function doSubmit(simple,doFunction){
+    console.log('simple1'+simple);
+        var answer = document.getElementById("id_answer").value;
+        var modtext = document.getElementById("id_content").value;
+        var correct = getCorrect(answer , modtext);
+        document.getElementById("id_correct").value = correct;
+        var time = getSeconds();
+        document.getElementById("id_cost").value = time;
+        //$('#id_answer_form').submit();
+        $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
+            if(!simple){
+                alert(result);
+            }else{
+                doFunction();
+            }
+        });
+    }
+     document.getElementById("id_new").firstChild.nodeValue = document.getElementById("id_content").value;
+    function restart(){
+        var obj =  document.getElementById("typeOCX");
+        if(confirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？")){
+            clearContent(obj);
+            reloadTime();
+            keyReSet();
+            clearWord();
+            clearTemplate();
+        }
+    }
 </script>

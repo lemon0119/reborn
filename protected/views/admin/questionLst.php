@@ -47,7 +47,7 @@
     <thead>
         <tr>
             <th class="font-center">编号</th>
-            <th class="font-center">课程号</th>
+            
             <th class="font-center">内容</th>
             <th class="font-center">创建人</th>
             <th class="font-center">创建时间</th>
@@ -58,7 +58,7 @@
                 <?php foreach($questionLst as $model):?>
                 <tr>
                     <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
-                    <td class="font-center"><?php echo $model['courseID'];?></td>                
+                          
                     <td class="font-center"><?php  
                                if(Tool::clength($model['requirements'])<=15)
                                     echo $model['requirements'];

@@ -108,7 +108,7 @@
     
     function onStenoPressKey(pszStenoString ,device){
         if(totalNum == 0){
-            alert('键位练习已完成');
+            window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success);
             return ;
         }
         var charSet = pszStenoString.split("");
@@ -176,7 +176,7 @@
     }
     function getNextWord(){
         if(totalNum == 0){
-            alert('键位练习完成');
+            window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
         }
         if(nextWord != "")

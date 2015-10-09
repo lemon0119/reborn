@@ -1,7 +1,7 @@
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script>
     function formSubmit(){
-        if(!confirm("保存答案成功！！！"))
+        if(!confirm("是否确认保存答案！！"))
             return ;
         doSubmit(false);
     }
@@ -32,7 +32,7 @@
         document.getElementById("id_correct").value = correct;
         var time = getSeconds();
         document.getElementById("id_cost").value = time;
-        //console.log("answer = "+theString);\
+        //console.log("answer = "+theString);
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
             if(!simple){
                 alert(result);

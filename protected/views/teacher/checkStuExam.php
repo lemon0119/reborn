@@ -1,5 +1,5 @@
 <div class="span3">
-    <table id="tb" class="table table-bordered table-backgroundcolor" style="border-style:none">       
+    <table id="tb" class="table table-bordered table-striped" style="border-style:none">       
         <tbody>
             <tr style="border-style:none">
                 <th>姓名:</th>    
@@ -47,10 +47,13 @@
 <script>
    $(document).ready(function(){
         var user = {
+            workID:"<?php echo $_GET['workID'];?>",
+            studentID:"<?php echo $_GET['studentID'];?>",
+            accomplish:"<?php echo $_GET['accomplish'];?>",
             recordID:<?php if($record != NULL)echo $record['recordID'];else echo 1;?>,
             type:"<?php echo $type;?>",
             examID:<?php echo $work['examID'];?>,
-            exerciseID:0      
+            exerciseID:0
         };
       $.ajax({
           type:"POST",

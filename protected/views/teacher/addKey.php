@@ -62,7 +62,7 @@
                 <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12">                
                 <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12">
                 <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2">
-                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
             </div>             
         </div>
         <div class="control-group" id="div2">           
@@ -145,14 +145,14 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert('添加键位练习成功！');
+    window.wxc.xcConfirm('添加键位练习成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('添加键位练习失败！');  
+    window.wxc.xcConfirm('添加键位练习失败！', window.wxc.xcConfirm.typeEnum.error);
 });
 $("#myForm").submit(function(){
     var requirements = $("#input")[0].value;
     if(requirements === ""){
-        alert('题目内容不能为空');
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var i ,j ,k, y = 3*divCount;
@@ -166,7 +166,7 @@ $("#myForm").submit(function(){
             if(!numpatrn.exec(input))
             {
                 j = Math.floor(i/3);               
-                alert('第'+ j +'行第三空循环次数应设为0-100');
+                window.wxc.xcConfirm('第'+ j +'行第三空循环次数应设为0-100', window.wxc.xcConfirm.typeEnum.warning);
                return false;
            }
         }else{
@@ -174,7 +174,7 @@ $("#myForm").submit(function(){
             {
                 j = Math.floor(i/3)+1;
                 k = i%3;
-                alert('第' + j + '行第' + k + '空应输入指定大写字母');
+                window.wxc.xcConfirm('第' + j + '行第' + k + '空应输入指定大写字母', window.wxc.xcConfirm.typeEnum.warning);
                 return false;
             }
         }           
@@ -188,7 +188,7 @@ $("#myForm").submit(function(){
             $("#div"+divCount).show();
         }else
         {
-            alert("最多添加十个选项");
+            window.wxc.xcConfirm("最多添加十个选项", window.wxc.xcConfirm.typeEnum.warning);
         }
     }
     function deleteIn()
@@ -198,7 +198,7 @@ $("#myForm").submit(function(){
             divCount--;
         }else
         {
-            alert("必须有一个答案");
+            window.wxc.xcConfirm("必须有一个答案", window.wxc.xcConfirm.typeEnum.warning);
         }
     }
 

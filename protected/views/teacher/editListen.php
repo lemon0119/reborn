@@ -83,7 +83,7 @@
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">修改</button>
             <?php }?>
-            <a href="./index.php?r=teacher/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
+            <a href="./index.php?r=teacher/listenLst" class="btn">返回</a>
         </div>
             
         </fieldset>
@@ -100,12 +100,12 @@ $(document).ready(function(){
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        alert('题目不能为空');
+        window.wxc.xcConfirm('题目不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input03")[0].value;
     if(A === ""){
-        alert('内容不能为空');
+        window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
 });

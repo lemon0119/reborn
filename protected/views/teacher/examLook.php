@@ -107,12 +107,15 @@
      function nextWork(answerID,recordID,examID,exerciseID){
         if(<?php echo $isLast?> == 1)
         {
-            alert("已是最后一题");
+            window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.warning);
             return ;
         }
         var user = {
             recordID:recordID,
             type:"look",
+            workID:"<?php echo $workID;?>",
+            studentID:"<?php echo $studentID;?>",
+            accomplish:"<?php echo $accomplish;?>",
             examID:examID,
             exerciseID:exerciseID,
             score:$("#input")[0].value,

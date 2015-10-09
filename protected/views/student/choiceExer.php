@@ -52,12 +52,8 @@ $SNum = 0;
                $n++;
             }
         ?>
-
- 
-
-        
+        </div>
     </form>
-</div>
 <script>
  
 $(document).ready(function(){
@@ -90,15 +86,14 @@ function submitSuite(){
     }
 }
 function formSubmit(){
-  $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
-      alert(result);
-      location.reload(); 
-
-  });
-  
+    $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
+        alert(result);
+        location.reload(); 
+    });
 }
 function formSubmit2(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
+      alert(result);
       location.reload(); 
 
   });

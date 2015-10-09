@@ -35,7 +35,7 @@ $(document).ready(function(){
 						
 						// 判别是不是excel文件
 						if (strtolower ( $file_type ) != "sheet" && strtolower ( $file_type ) != "ms-excel") {
-							echo " alert('不是Exale文件');";
+							echo "window.wxc.xcConfirm('不是Exale文件', window.wxc.xcConfirm.typeEnum.warning);";
 							error_log ( $file_type, 0 );
 						} else {
 							// 解析文件并存入数据库逻辑
@@ -45,7 +45,7 @@ $(document).ready(function(){
 							$str = date ( 'Ymdhis' );
 							$file_name = "Stu".$str . ".xls";
 							if (! copy ( $tmp_file, $savePath . $file_name )) {
-								echo "alert('上传失败');";
+								echo " window.wxc.xcConfirm('上传失败', window.wxc.xcConfirm.typeEnum.error);";
 							} else {
 								$res = Tool::excelreadToArray ( $savePath . $file_name, $file_type );
 								$uploadResult = Tool::excelreadToDatabase ( $res );
@@ -53,7 +53,7 @@ $(document).ready(function(){
 							}
 						}
 					} else {
-						echo "alert('没有文件');";
+						echo "window.wxc.xcConfirm('没有文件', window.wxc.xcConfirm.typeEnum.warning);";
 					}
 					?>
         }

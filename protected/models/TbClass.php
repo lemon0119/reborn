@@ -16,6 +16,8 @@ class TbClass extends CActiveRecord
     public function findlessonByClassID($classID){
     	//得到当前的学生的当前课程
     	$tb_class = $this->find("classid = '$classID'");
+        if($tb_class==null)
+            return null;
         $c=$tb_class->currentLesson;
         return Lesson::model()->find("classID=? and number=?",array($classID,$c))['lessonID'];
     }

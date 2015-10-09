@@ -32,7 +32,7 @@ $teacherID=$model['userID'];
 $teachers["$teacherID"]=$model['userName'];
 endforeach;
 ?>
-
+<h2>课程列表</h2>
 <!-- 课程列表-->
 <table class="table table-bordered table-striped">
     <thead>
@@ -82,17 +82,20 @@ endforeach;
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert("删除成功！");
+    window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert("已有班级进行该课程，无法删除！");  
+    window.wxc.xcConfirm("已有班级进行该课程，无法删除！", window.wxc.xcConfirm.typeEnum.error);
 });
     
     function deleteCourse(id,name){
-        if(confirm("确定要删除课程："+name+"?这样做将无法恢复！")){
-            window.location.href="./index.php?r=admin/deleteCourse&&courseID="+id+"&&page=<?php echo Yii::app()->session ['lastPage'];?>";
-        }else{
-            return false;
-        };
+        var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							 window.location.href="./index.php?r=admin/deleteCourse&&courseID="+id+"&&page=<?php echo Yii::app()->session ['lastPage'];?>";
+						}
+					}
+					window.wxc.xcConfirm("确定要删除课程："+name+"?这样做将无法恢复！", "custom", option);
     }
     
 </script>

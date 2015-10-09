@@ -14,6 +14,11 @@ if (isset(Yii::app()->session['userid_now'])) {
             <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
             <script src="<?php echo JS_URL; ?>bootstrap.min.js"></script>
             <script src="<?php echo JS_URL; ?>site.js"></script>
+            <!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
+                <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
+		<script src="<?php echo XC_Confirm; ?>js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+<!--            -->
         </head>
         <body>
             <div class="container">
@@ -41,6 +46,8 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <ul class="dropdown-menu">
                                                 <li>
                                                     <a href="./index.php?r=student/set">设置</a></li>
+                                                <li>
+                                                    <a href="./index.php?r=student/headPic">头像</a></li>
                                                 <li><a href="./index.php?r=user/login&exit=1">退出</a> </li>
                                             </ul>   
                                         </div>

@@ -5,19 +5,19 @@
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                    <label class="control-label" for="input01">工号</label>
+                    <label class="control-label" for="input01"><span class="must-fill" >*</span>工号</label>
                     <div class="controls">
                             <input name="userID" type="text" class="input-xlarge" id="input01" value="" />
                     </div>
             </div>
             <div class="control-group">
-                    <label class="control-label" for="input02">姓名</label>
+                    <label class="control-label" for="input02"><span class="must-fill" >*</span>姓名</label>
                     <div class="controls">
                             <input name="userName" type="text" class="input-xlarge" id="input02" value="" />
                     </div>
             </div>
            <div class="control-group">
-                <label class="control-label" for="input06">性别</label>
+                <label class="control-label" for="input06"><span class="must-fill" >*</span>性别</label>
                 <div class="controls">
                     男
                     <input name="sex" type="radio" class="input-xlarge" id="input06" value="男" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -75,8 +75,10 @@ $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
         alert('添加老师成功！');
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
         alert('添加老师失败！');
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);
         
 });
 function getUserID(){
@@ -90,16 +92,16 @@ function getUserID(){
 $("#form-addTea").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        alert('老师工号不能为空');
+        window.wxc.xcConfirm('老师工号不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     if(getUserID().indexOf(userID) >= 0){
-        alert('老师工号已存在！');
+        window.wxc.xcConfirm('老师工号已存在！', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var userName = $("#input02")[0].value;
     if(userName === ""){
-        alert('老师姓名不能为空');
+        window.wxc.xcConfirm('老师姓名不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     
@@ -127,14 +129,14 @@ $("#form-addTea").submit(function(){
             }
         }
         if(i===1){
-            alert("请选择老师性别！");
+            window.wxc.xcConfirm("请选择老师性别！", window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
     }
     
     var phone_number = $("#input09")[0].value;
             if (phone_number.length !== 11 && phone_number !== ""){
-     alert('请输入正确的联系电话！');
+     window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
 });
