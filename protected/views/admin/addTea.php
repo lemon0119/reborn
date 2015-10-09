@@ -75,8 +75,10 @@ $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
         alert('添加老师成功！');
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
         alert('添加老师失败！');
+    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);
         
 });
 function getUserID(){
@@ -90,16 +92,16 @@ function getUserID(){
 $("#form-addTea").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        alert('老师工号不能为空');
+        window.wxc.xcConfirm('老师工号不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     if(getUserID().indexOf(userID) >= 0){
-        alert('老师工号已存在！');
+        window.wxc.xcConfirm('老师工号已存在！', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var userName = $("#input02")[0].value;
     if(userName === ""){
-        alert('老师姓名不能为空');
+        window.wxc.xcConfirm('老师姓名不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     
@@ -127,14 +129,14 @@ $("#form-addTea").submit(function(){
             }
         }
         if(i===1){
-            alert("请选择老师性别！");
+            window.wxc.xcConfirm("请选择老师性别！", window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
     }
     
     var phone_number = $("#input09")[0].value;
             if (phone_number.length !== 11 && phone_number !== ""){
-     alert('请输入正确的联系电话！');
+     window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
 });

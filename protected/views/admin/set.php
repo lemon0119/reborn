@@ -6,7 +6,7 @@ function test()
 	 var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 	 if(!myreg.test(temp.value))
 	 {
-	     alert('请输入有效的email！');
+             window.wxc.xcConfirm('请输入有效的email！', window.wxc.xcConfirm.typeEnum.warning);
 	     temp.value="";
 	     myreg.focus();
 	     return false;
@@ -51,11 +51,11 @@ function test()
 $(document).ready(function(){
     var result = '<?php echo $result;?>';
     if(result === '1')
-        alert('密码修改成功！');
+    window.wxc.xcConfirm('密码修改成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('密码修改失败！'); 
+    window.wxc.xcConfirm('密码修改失败！', window.wxc.xcConfirm.typeEnum.error);
     else if(result==='old error')
-        alert('原密码错误！'); 
+    window.wxc.xcConfirm('原密码错误！', window.wxc.xcConfirm.typeEnum.error);
 }); 
 $("#myForm").submit(function(){
     var old = $("#input01")[0].value;
@@ -71,11 +71,11 @@ $("#myForm").submit(function(){
         //return false;
     }
     if(new1 === "" ||old === ""||defnew === "" ){
-        alert('密码不能为空');
+        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.error);
         return false;
     }
     if(email === "" ){
-        alert('email不能为空');
+        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.error);
         return false;
     }
         

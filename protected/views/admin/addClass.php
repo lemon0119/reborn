@@ -34,20 +34,20 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert('添加班级成功！');
+    window.wxc.xcConfirm('添加班级成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('添加班级失败！');  
+    window.wxc.xcConfirm('添加班级失败！', window.wxc.xcConfirm.typeEnum.error);
 });    
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        alert('班级名称不能为空');
+        window.wxc.xcConfirm('班级名称不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
    
     var pass2 = $("#input02")[0].value;
     if(pass2 === ""){
-        alert('请选择合适的课程');
+        window.wxc.xcConfirm('请选择合适的课程', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });

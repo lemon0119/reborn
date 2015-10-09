@@ -77,13 +77,17 @@
     }
 ?>
 function resetPass(){
-    if(confirm("这将会重置这名老师的密码为：000，您确定这样吗？")){
-        window.location.href = "./index.php?r=admin/resetTeaPass&&id=<?php echo $userID;
+    var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							 window.location.href = "./index.php?r=admin/resetTeaPass&&id=<?php echo $userID;
                                                                         if(isset($flag))
                                                                             echo "&&flag=search";
                                                                     ?>";
-    } else 
-        return false;
+						}
+					}
+					window.wxc.xcConfirm("这将会重置这名老师的密码为：000，您确定这样吗？", "custom", option);
 }
 function getUserID(){
     var result = new Array();
@@ -105,21 +109,21 @@ function getUserID(){
 $("#form-addTea").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        alert('老师工号不能为空');
+        window.wxc.xcConfirm('老师工号不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     if(getUserID().indexOf(userID) >= 0){
-        alert('老师工号已存在！');
+        window.wxc.xcConfirm('老师工号已存在！', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var userName = $("#input02")[0].value;
     if(userName === ""){
-        alert('老师姓名不能为空');
+        window.wxc.xcConfirm('老师姓名不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var phone_number = $("#input06")[0].value;
         if (phone_number !=="" && phone_number.length!==11 ) {
-            alert('联系电话格式有误');
+            window.wxc.xcConfirm('联系电话格式有误', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
         
