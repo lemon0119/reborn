@@ -1125,8 +1125,13 @@ class StudentController extends CController {
         if(isset($_POST['nm_answer'])) {
             $answer = $_POST['nm_answer'];
             $seconds = $_POST['nm_cost'];
-            if(!SuiteRecord::saveSuiteRecord ($recordID))
-                return false;
+            if(Yii::app()->session['isExam']){
+                if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+            } else {
+                if(!SuiteRecord::saveSuiteRecord ($recordID))
+                    return false;
+            }
             return AnswerRecord::saveAnswer($recordID, $answer, $seconds);
         }
     }
