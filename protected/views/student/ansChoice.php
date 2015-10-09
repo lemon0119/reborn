@@ -8,7 +8,7 @@
 require 'ansSideBar.php';
 ?>
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div class="span9">
+<div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;">
     <div class="hero-unit">
         <?php $SNum = 0;
             foreach ($exercise['choice'] as $value){
@@ -28,7 +28,7 @@ require 'ansSideBar.php';
                     <?php }?>
                     <br/>
                 <?php $mark++;}?>
-                    <button id = 'view-answer-<?php echo $SNum;?>' class="btn btn-primary">显示答案</button>
+                    <!--<button id = 'view-answer-<?php echo $SNum;?>' class="btn btn-primary">显示答案</button>-->
         <?php $SNum++;}?>
     </div>
 </div>
@@ -41,15 +41,15 @@ $(document).ready(function(){
         $('.answer-check').hide();
     });
     
-    $('button.btn').click(function(){
+    /**$('button.btn').click(function(){
         var id = $(this).attr('id');
         var index = id.substring('view-answer-'.length);
         var checkID = '#answer-check-'+index;
         $(checkID).toggle(200);
         if($(this).html() === '显示答案')
             $(this).html('隐藏答案');
-        else
-            $(this).html('显示答案');
-    });
+       else
+           $(this).html('显示答案');
+    });*/
 });
 </script>

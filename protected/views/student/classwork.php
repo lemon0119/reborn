@@ -33,12 +33,12 @@ require 'lessonSideBar.php';
                            </td>
                             <td>
                               <?php if ($ratio_accomplish[$n]==1){
-                              	echo  '答题';
+                              //	echo  '答题';
                               }else {?>
-                                <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img src="<?php echo IMG_UIStu_URL; ?>answer.png"></a>
+                                <a href="./index.php?r=student/clswkOne&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img title="开始答题" src="<?php echo IMG_UIStu_URL; ?>answer.png"></a>
                                 <?php }?>
                                <?php if ($ratio_accomplish[$n]==1){?>
-                               	<a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                               	<a href="./index.php?r=student/viewAns&&suiteID=<?php echo $work['workID'];?>" class="view-link"><img title="查看答案" src="<?php echo IMG_URL; ?>detail.png"></a>
                                <?php }else {?>
                               <?php } $n++;?>
                                 

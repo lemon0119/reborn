@@ -83,7 +83,14 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $isExam=Yii::app()->session['isExam'];
+        if($isExam){
+            $recordID = ExamRecord::getRecord($workID, $studentID);
+        }
+        else{
+            $recordID = SuiteRecord::getRecord($workID, $studentID);
+        }
+            
         $ansQuest = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'question');
         $ansArr = AnswerRecord::model()->ansToArray($ansQuest);
         return $this->render('ansQuest',['exercise'=>$classwork,'ansQuest'=>$ansArr]);
@@ -97,7 +104,13 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $isExam=Yii::app()->session['isExam'];
+        if($isExam){
+            $recordID = ExamRecord::getRecord($workID, $studentID);
+        }
+        else{
+            $recordID = SuiteRecord::getRecord($workID, $studentID);
+        }
         $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
         $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
         return $this->render('ansFilling',['exercise'=>$classwork,'ansFilling'=>$ansArr]);
@@ -194,6 +207,8 @@ class StudentController extends CController {
     }
     //我的课程
     public function actionMyCourse(){
+        $isExam=false;
+        Yii::app()->session['isExam']=$isExam;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
@@ -453,10 +468,10 @@ class StudentController extends CController {
         return $this->render('lookExer',array( 
             'exercise'=>$classexam,
             'exercise2'=>$classexam2,
-                'exerOne'=>$result,
+            'exerOne'=>$result,
             'cent'=>$cent,
             'isExam'=>$isExam,
-                'examInfo'=>$examInfo,
+            'examInfo'=>$examInfo,
             'typeNow' => 'look',
             'isOver' => $isOver, //edit by LC
             'costTime' => $costTime
@@ -1048,7 +1063,8 @@ class StudentController extends CController {
         $classexams = Exam::model()->getClassexamAll($classID);
         $classexam = array();
         $ratio_accomplish='0';
-        $n=0;       
+        $n=0;
+        $score='';
         foreach ($classexams as $c){
             array_push($classexam, $c);
             $recordID[$n]=ExamRecord::model()->find("workID=? and studentID=?",array($c['workID'],$studentID))['recordID'];
