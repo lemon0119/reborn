@@ -70,9 +70,9 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert('添加听打练习成功！');
+    window.wxc.xcConfirm('添加听打练习成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('添加听打练习失败！');
+    window.wxc.xcConfirm('添加听打练习失败！', window.wxc.xcConfirm.typeEnum.error);
     else if(result != 'no')
     {      
         alert(result);      
@@ -83,19 +83,19 @@ $("#myForm").submit(function(){
 
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        alert('题目内容不能为空');
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var uploadFile = $("#input02")[0].value;
     if(uploadFile === "")
     {
-        alert('上传文件不能为空');
+        window.wxc.xcConfirm('上传文件不能为空', window.wxc.xcConfirm.typeEnum.warning);
     return false;
     }
     
     var A = $("#input03")[0].value;
         if(A === ""){
-        alert('内容不能为空');
+        window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     

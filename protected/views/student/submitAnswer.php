@@ -32,7 +32,7 @@
         document.getElementById("id_correct").value = correct;
         var time = getSeconds();
         document.getElementById("id_cost").value = time;
-        //console.log("answer = "+theString);\
+        //console.log("answer = "+theString);
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
             if(!simple){
                 alert(result);

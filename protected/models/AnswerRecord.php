@@ -34,8 +34,8 @@ class AnswerRecord extends CActiveRecord
         $res = true;
         if(Yii::app()->session['isExam'])
             $suiteID = Yii::app()->session['examsuiteID'];
-        else 
-            $suiteID = Yii::app()->session['suiteID']; 
+        else
+            $suiteID = Yii::app()->session['suiteID'];
         $filling = Suite::model()->getFilling($suiteID);
         foreach ($filling as $record) {
             $str = $record['answer'];
@@ -61,8 +61,8 @@ class AnswerRecord extends CActiveRecord
         $res = true;
         if(Yii::app()->session['isExam'])
             $suiteID = Yii::app()->session['examsuiteID'];
-        else 
-            $suiteID = Yii::app()->session['suiteID']; 
+        else
+            $suiteID = Yii::app()->session['suiteID'];
         $choice = Suite::model()->getchoice($suiteID);
         foreach ($choice as $record) {
             $name = 'choice'.$record['exerciseID'];
@@ -80,8 +80,8 @@ class AnswerRecord extends CActiveRecord
         $res = true;
         if(Yii::app()->session['isExam'])
             $suiteID = Yii::app()->session['examsuiteID'];
-        else 
-            $suiteID = Yii::app()->session['suiteID']; 
+        else
+            $suiteID = Yii::app()->session['suiteID'];
         $quest = Suite::model()->getQuestion($suiteID);
         foreach ($quest as $record) {
             $name = 'quest'.$record['exerciseID'];

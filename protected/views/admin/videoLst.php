@@ -40,7 +40,7 @@
         error: function(xhr, type, exception){
             console.log('upload erroe', type);
             console.log(xhr.responseText, "Failed");
-            alert("上传失败！");
+            window.wxc.xcConfirm("上传失败！", window.wxc.xcConfirm.typeEnum.warning);
             $("#upload").hide();
         }
     };

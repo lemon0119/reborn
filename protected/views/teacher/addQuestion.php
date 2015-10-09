@@ -58,19 +58,19 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert('添加简答题成功！');
+    window.wxc.xcConfirm('添加简答题成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('添加简答题失败！');  
+    window.wxc.xcConfirm('添加简答题失败！', window.wxc.xcConfirm.typeEnum.error);
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        alert('题目内容不能为空');
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;
     if(A === ""){
-        alert('答案不能为空');
+        window.wxc.xcConfirm('答案不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
 });
