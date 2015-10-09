@@ -92,7 +92,7 @@ $currtime = $examInfo['endtime'];
         var endTime = <?php echo strtotime($examInfo['endtime']);?>;
         var beginTime = <?php echo strtotime($examInfo['begintime']);?>;
         function endTimer(endID){
-            alert("考试时间已到，即将交卷。");
+            window.wxc.xcConfirm("考试时间已到，即将交卷。", window.wxc.xcConfirm.typeEnum.warning);
             submitSuite(true);
         }
         tCounter(curtime,beginTime+60*<?php echo $examInfo['duration']?>,"sideTime", endTimer);

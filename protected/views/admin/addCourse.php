@@ -46,14 +46,14 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert('添加课程成功！');
+    window.wxc.xcConfirm('添加课程成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('添加课程失败！');  
+    window.wxc.xcConfirm('添加课程失败！', window.wxc.xcConfirm.typeEnum.warning);
 });    
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        alert('课程名不能为空');
+        window.wxc.xcConfirm('课程名不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });
