@@ -16,7 +16,7 @@ else
             <div class="control-group">
                 <label class="control-label" for="input01">学号</label>
                 <div class="controls">
-                    <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID ?>" />
+                    <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID ?>" readonly="true"/>
                 </div>
             </div>
             <div class="control-group">
