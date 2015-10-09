@@ -47,7 +47,7 @@
       $("#score").html(<?php echo $score;?>);
        if(<?php echo $isLast?> == 1)
         {
-            alert("已是最后一题");
+            window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.warning);
             return ;
         }
     });

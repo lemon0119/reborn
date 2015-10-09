@@ -78,12 +78,12 @@ $(document).ready(function(){
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        alert('题目内容不能为空');
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;
     if(A === ""){
-        alert('答案不能为空');
+        window.wxc.xcConfirm('答案不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
 });
