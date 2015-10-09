@@ -37,11 +37,11 @@ function test()
                 <div class="controls">
                     <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
                 </div>
-                
+                <!--
                 <label class="control-label" for="input03">上传头像：</label>
                 <input type="hidden" name="flag" id="flag" value="1" />
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-                <input type="file" name="file"  id="file"/><br>
+                <input type="file" name="file"  id="file"/><br>   -->
             </div>
             <div>
                 <button type="submit" class="btn btn-primary">确认</button> 
@@ -50,15 +50,8 @@ function test()
         </fieldset>
     </form>   
     </div>
-    <div class="span_set fl">
-        <div class="controls" style="border:1px solid blue;">
-                    <?php if($picAddress=='0'||$picAddress==null) {}else{?>
-                    
-                    <img style="width:200px;height:100px;" src="<?php echo $picAddress; ?>">
-                    <?php }?>
-                </div>
-        
-    </div>
+    
+     
 </div>
 
 <script>  
@@ -76,6 +69,13 @@ $("#myForm").submit(function(){
     var new1 = $("#input02")[0].value;
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
+    if(old!="" &&new1!=""&&old==new1){
+        alert('新旧密码不能一样');
+        $("#input01")[0].value="";
+        $("#input02")[0].value="";
+    	$("#input03")[0].value="";
+        return false;
+    }
     if(new1===defnew){
     }else
     {

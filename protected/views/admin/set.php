@@ -62,6 +62,13 @@ $("#myForm").submit(function(){
     var new1 = $("#input02")[0].value;
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
+    if(old!="" &&new1!=""&&old==new1){
+        alert('新旧密码不能一样');
+        $("#input01")[0].value="";
+        $("#input02")[0].value="";
+    	$("#input03")[0].value="";
+        return false;
+    }
     if(new1===defnew){
     }else
     {

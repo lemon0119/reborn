@@ -284,10 +284,15 @@ class TeacherController extends CController {
         $classID=$_GET['classID'];
         $progress=$_GET['progress'];
         $on=$_GET['on'];
+        
+        //get student
+        $stu=Array();
+        $stu= Student::model()->findAll("classID=?",$classID);
         return $this->render('startCourse',[
             'classID'=>$classID,
             'progress'=>$progress,
-            'on'=>$on
+            'on'=>$on,
+            'stu'=>$stu,
         ]);
     }
             
@@ -2376,7 +2381,7 @@ class TeacherController extends CController {
          $examID = $_GET['examID'];
          $startTime=$_POST['startTime'];
          $endTime=$_POST['endTime'];
-         
+         $examTime=$_POST['examTime'];
 
 
        $date=floor((strtotime($endTime)-strtotime($startTime))/86400);
@@ -2397,6 +2402,7 @@ class TeacherController extends CController {
             $hour=$hour%24;
         }
         $duration=(strtotime($endTime)-strtotime($startTime))/60;
+        $duration=$examTime;
          Exam::model()->updateByPk($examID,array('begintime'=>$startTime,'endtime'=>$endTime,'duration'=>$duration));
          $this->renderModifyExam($type, $examID);
      }

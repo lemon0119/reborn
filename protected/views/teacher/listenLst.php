@@ -50,7 +50,7 @@
         <thead>
             <tr>
                 <th class="font-center">编号</th>
-                <th class="font-center">课程号</th>
+                
                 <th class="font-center">题目</th>
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
@@ -62,7 +62,7 @@
                     <?php foreach($listenLst as $model):?>
                     <tr>
                         <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
-                        <td class="font-center"><?php echo $model['courseID'];?></td>
+                      
                         <td class="font-center"><?php  if(Tool::clength($model['title'])<=7)
                                         echo $model['title'];
                                     else

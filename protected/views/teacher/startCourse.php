@@ -6,6 +6,7 @@
             $lessonsName[$value['number']]=$value['lessonName'];
         }
 ?>
+
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
@@ -28,6 +29,22 @@
                 }
             endforeach;
             ?>
+        </ul>
+    </div>
+    
+    <div class="well" style="padding: 8px 0;">
+                <ul class="nav nav-list">
+                <li class="nav-header"></li>
+                <li class="nav-header">学生列表</li>
+                <div class="scroll" style="padding: 8px 0;height:100px;overflow:auto;margin-left: 20px;">
+                <?php foreach($stu as $student){
+                    ?>
+                    <li id="li-<?php echo $key; ?>"><?php echo $student['userName']?></li>
+                <?php
+                }
+                
+            ?>
+                    </div>
         </ul>
     </div>
 </div>

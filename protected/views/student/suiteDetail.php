@@ -23,6 +23,17 @@ else {
     <?php } ?>
 </div>
 <script>
+function submitSuite(simple){
+        var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
+        if(!simple){
+            if(!confirm("提交以后，不能重新进行答题，你确定提交吗？"))
+                return ;
+        }
+        if(isExam)
+            window.location.href="index.php?r=student/classExam";
+        else
+            window.location.href="index.php?r=student/classwork";
+    }
 $(document).ready(function(){
     $('.queTitle').bind('click', function(e){
         e.preventDefault();
