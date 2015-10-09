@@ -2760,6 +2760,18 @@ class TeacherController extends CController {
      {
         $currentLesson = Yii::app()->session['currentLesson'];
         $currentClass = Yii::app()->session['currentClass'];
+        $suite=Array();
+        $class=Array();
+        $lesson=Array();
+        if($currentClass==null&&$currentLesson==null&&$suiteID==null){
+           $this->render($render , array(
+            'suite' => $suite,
+            'currentClass' =>$class,
+            'currentLesson'=>$lesson,
+            'teacher'=>  Teacher::model()->findall(),      
+            'type' => $type,));    
+           return;
+        }
         $class = TbClass::model()->findAll("classID='$currentClass'")[0];
         $lesson = Lesson::model()->findAll("lessonID='$currentLesson'")[0];
         $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
