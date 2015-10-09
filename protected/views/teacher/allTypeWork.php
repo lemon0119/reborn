@@ -66,9 +66,8 @@
                             <?php 
                             if($allwork['createPerson'] == Yii::app()->session['userid_now']){ ?>
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>   
                             <a href="./index.php?r=teacher/AddWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
-                                                     
+                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>                            
                             <?php }else{ ?>
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID'];?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                             <a href="./index.php?r=teacher/AddWork&&suiteID=<?php echo $suite['suiteID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>

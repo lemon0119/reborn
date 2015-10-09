@@ -7,7 +7,7 @@
             <div class="control-group">
                 <label class="control-label" for="input01"><span class="must-fill" >*</span>学号</label>
                 <div class="controls">
-                   <input name="userID" type="text" class="input-xlarge" id="input01" value="" />
+                    <input name="userID" type="text" class="input-xlarge" id="input01" value="" onblur="chkIt()"/><span id="usertips" style="margin-left: 5px;"></span>  
                 </div>
             </div>
             <div class="control-group">
@@ -172,4 +172,24 @@ foreach ($classAll as $key => $value) {
     }
 
     });
+    //学号受限
+    function chkIt(){
+    var usernameVal = document.getElementById("input01").value;  
+  
+    usertipsSpan = document.getElementById("usertips");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!usernameVal.match( /^[A-Za-z0-9]+$/)) {  
+        usertipsSpan.innerHTML="必须由数字、英文字母线组成";  
+        document.getElementById("input01").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+      
+    if(usernameVal.length > 20){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="大于20个字符！";  
+        document.getElementById("input01").value="";
+    }  
+}
 </script>
