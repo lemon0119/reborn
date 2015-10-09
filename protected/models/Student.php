@@ -24,8 +24,8 @@ class Student extends CActiveRecord
      */
     public function delStuRes($userID){
         AnswerRecord::model()->deleteAll('createPerson = ?', array($userID));
-        ExamRecord::model()->deleteAll('createPerson = ?', array($userID));
-        SuiteRecord::model()->deleteAll('createPerson = ?', array($userID));
+        ExamRecord::model()->deleteAll('studentID = ?', array($userID));
+        SuiteRecord::model()->deleteAll('studentID = ?', array($userID));
     }
     
     public function insertStu($userID,$userName,$sex,$age,$pass,$mail_address,$phone_number,$classID){
