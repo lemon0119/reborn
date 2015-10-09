@@ -1185,6 +1185,52 @@ class StudentController extends CController {
     public function actionIndex(){
         $this->render('index');
     }
+    public function actionHeadPic(){
+        $picAddress="";
+        $result="";
+        $userid_now = Yii::app()->session['userid_now'];
+        $user = Student::model()->find('userID=?', array($userid_now));
+        $picAddress=$user['img_address'];
+        $this->render('headPic',['result'=>$result,'picAddress'=>$picAddress]);
+    }
+    public function actionAddHeadPic(){
+        $result ="上传失败!";
+        $picAddress="";
+        $userid_now = Yii::app()->session['userid_now'];
+        $user = Student::model()->find('userID=?', array($userid_now));
+        $picAddress=$user['img_address'];
+        if(!isset($_FILES["file"]))
+        {
+            $result= "请选择文件！";
+            $this->render('headPic',['result'=>$result,'picAddress'=>$picAddress]);
+        }
+        if (($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg"))
+        {   
+            if($_FILES["file"]["size"] < 30000000)
+            {
+                if ($_FILES["file"]["error"] > 0)
+                {
+                    $result = "Return Code: " . $_FILES["file"]["error"];
+                }
+              else
+                {
+                    $oldName = $_FILES["file"]["name"]; 
+                    $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                    move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
+                    $result = "上传成功！";
+                    
+                    $user->img_address="img/head/" .$newName;
+                    $picAddress="img/head/" .$newName;
+                    $user->update();
+                }
+            }else{
+                $reult = "文件限定大小为30M！";
+            }
+        }else {
+            $result = "请上传正确类型的文件！";
+        }
+        $this->render('headPic',['result'=>$result,'picAddress'=>$picAddress]);
+    }
     public function actionSet(){       //set
     	$result ='no';
         $mail='';
