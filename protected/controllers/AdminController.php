@@ -50,12 +50,14 @@ class AdminController extends CController {
             $userID = Yii::app()->session ['deleteStuID'];
             unset(Yii::app()->session ['deleteStuID']);
             $rows = Student::model()->deleteByPK("$userID");
+            Student::model()->delStuRes($userID);
         } else if (isset(Yii::app()->session ['deleteStuBox'])) {
             $ids = Yii::app()->session ['deleteStuBox'];
             unset(Yii::app()->session ['deleteStuBox']);
             $condition = '';
             foreach ($ids as $value) {
                 $condition = $condition . "'$value',";
+                Student::model()->delStuRes($value);
             }
             $condition = $condition . "''";
             $rows = Student::model()->deleteAll("userID in ($condition)");
