@@ -28,7 +28,6 @@ require 'ansSideBar.php';
                     <?php }?>
                     <br/>
                 <?php $mark++;}?>
-                    <!--<button id = 'view-answer-<?php echo $SNum;?>' class="btn btn-primary">显示答案</button>-->
         <?php $SNum++;}?>
     </div>
 </div>
@@ -36,20 +35,5 @@ require 'ansSideBar.php';
 $(document).ready(function(){
     
     $("li#li-choice").attr('class','active');
-    
-    $(function(){
-        $('.answer-check').hide();
-    });
-    
-    /**$('button.btn').click(function(){
-        var id = $(this).attr('id');
-        var index = id.substring('view-answer-'.length);
-        var checkID = '#answer-check-'+index;
-        $(checkID).toggle(200);
-        if($(this).html() === '显示答案')
-            $(this).html('隐藏答案');
-       else
-           $(this).html('显示答案');
-    });*/
 });
 </script>
