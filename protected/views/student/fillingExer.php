@@ -88,8 +88,11 @@ $(document).ready(function(){
 });
 function submitSuite(){
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-    if(confirm("提交以后，不能重新进行答题，你确定提交吗？")){
-        formSubmit2();
+    var option = {
+						title: "提交",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							formSubmit2();
         $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){});
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
             if(isExam)
@@ -97,19 +100,35 @@ function submitSuite(){
             else
                 window.location.href="index.php?r=student/classwork";
         });
-    }
+						}
+					};
+					window.wxc.xcConfirm("提交以后，不能重新进行答题，你确定提交吗？", "custom", option);
+   
 }
 function formSubmit(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
-      window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
-      location.reload(); 
+      var option = {
+						title: "警告",
+						btn: parseInt("001",2),
+						onOk: function(){
+							location.reload(); 
+						}
+					};
+					window.wxc.xcConfirm(result, "custom", option);
+      
 
   });
 }
 function formSubmit2(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
-      alert(result);
-      location.reload(); 
+     var option = {
+						title: "警告",
+						btn: parseInt("001",2),
+						onOk: function(){
+							location.reload(); 
+						}
+					};
+					window.wxc.xcConfirm(result, "custom", option);
 
   });
 }

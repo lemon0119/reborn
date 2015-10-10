@@ -38,28 +38,28 @@ endforeach;
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>编号</th>
-            <th>课程名</th>
-            <th>创建人</th>
-            <th>创建时间</th>
-            <th>操作</th>
+            <th class="font-center">编号</th>
+            <th class="font-center">课程名</th>
+            <th class="font-center">创建人</th>
+            <th class="font-center">创建时间</th>
+            <th class="font-center">操作</th>
         </tr>
     </thead>
             <tbody>        
                 <?php foreach($courseLst as $model):?>
                 <tr>
-                    <td style="width: 75px"><?php echo $model['courseID'];?></td>
-                    <td><?php echo $model['courseName'];?></td>
-                    <td><?php if($model['createPerson']=="0")
+                    <td class="font-center" style="width: 75px"><?php echo $model['courseID'];?></td>
+                    <td class="font-center"><?php echo $model['courseName'];?></td>
+                    <td class="font-center"><?php if($model['createPerson']=="0")
                                     echo "管理员";
                                 else echo $teachers[$model['createPerson']];
                         ?></td>
-                    <td><?php echo $model['createTime'];?></td>
-                    <td>  
+                    <td class="font-center"><?php echo $model['createTime'];?></td>
+                    <td class="font-center" style="width: 100px">  
                         <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $model['courseID'];?>&&courseName=<?php echo $model['courseName'];?>&&createPerson=<?php if($model['createPerson']=="0")
                                                                                                                                                                                     echo "管理员";
                                                                                                                                                                                     else echo $teachers[$model['createPerson']];
-                                                                                                                                                                            ?>"><img src="<?php echo IMG_URL; ?>detail.png">信息</a>
+                                                                                                                                                                                    ?>"><img title="信息" src="<?php echo IMG_URL; ?>detail.png"></a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 

@@ -89,27 +89,27 @@ $(document).ready(function(){
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
-    if(requirements === ""){
+    if(requirements === ""||requirements.replace(/\s/g, "").length===0){
         window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     var A = $("#input02")[0].value;
-    if(A === ""){
+    if(A === ""||A.replace(/\s/g, "").length===0){
         window.wxc.xcConfirm('选项A内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     var B = $("#input03")[0].value;
-    if(B === ""){
+    if(B === ""||B.replace(/\s/g, "").length===0){
         window.wxc.xcConfirm('选项B内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     var C = $("#input04")[0].value;
-    if(C === ""){
+    if(C === ""||C.replace(/\s/g, "").length===0){
         window.wxc.xcConfirm('选项C内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     var D = $("#input05")[0].value;
-    if(D === ""){
+    if(D === ""||D.replace(/\s/g, "").length===0){
         window.wxc.xcConfirm('选项D内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }

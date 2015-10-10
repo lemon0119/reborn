@@ -60,7 +60,7 @@
                         <td class="font-center"><?php $couID = $model['currentCourse']; echo $courseName[$couID];?></td>
                         <td class="font-center" style="width: 100px">  
                             <a href="./index.php?r=admin/infoClass&&classID=<?php echo $model['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
-                            <a href=""  <?php if(isset($model['classID'])){?>onclick="deleteClass(<?php echo $model['classID']; ?>)" <?php }?>><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
+                            <a href="#"  <?php if(isset($model['classID'])){?>onclick="deleteClass(<?php echo $model['classID']; ?>)" <?php }?>><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -85,11 +85,15 @@
     });
     
     function deleteClass(id){
-        if(confirm("确定要删除班级："+id+"？这样做将无法恢复！")){
-            window.location.href="./index.php?r=admin/classLst&&flag=deleteClass&&ClassID="+id;
-        }else{
-            return false;
-        };
+      
+        var option = {
+						title: "自定义",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							window.location.href="./index.php?r=admin/classLst&&flag=deleteClass&&ClassID="+id;
+						}
+					}
+					window.wxc.xcConfirm("确定要删除班级："+id+"？这样做将无法恢复！", "custom", option);
     }
     
     

@@ -56,7 +56,27 @@
     } 
      
     function deleCheck(){
-        $('#deleForm').submit();
+        var checkboxs = document.getElementsByName('checkbox[]');
+        var flag = 0;
+        for (var i = 0; i < checkboxs.length; i++) {
+           if(checkboxs[i].checked){
+                flag=1;
+                break;
+           }
+        } 
+        if(flag===0){
+           window.wxc.xcConfirm('未选中任何老师', window.wxc.xcConfirm.typeEnum.info);
+        }else{
+             var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							$('#deleForm').submit();
+						}
+					};
+					window.wxc.xcConfirm("这将会移动选中老师至回收站，您确定这样吗？", "custom", option);
+        }
+       
     }
     $(document).ready(function(){
         $("#li-stuLst").attr("class","active");

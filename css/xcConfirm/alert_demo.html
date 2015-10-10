@@ -42,7 +42,7 @@
 					var txt=  "输入框！请输入";
 					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
 						onOk:function(v){
-							console.log(v);
+							alert(v);
 						}
 					});
 				});
@@ -54,8 +54,8 @@
 						btn: parseInt("0011",2),
 						onOk: function(){
 							alert("确认啦");
-						}
-					}
+						} 
+					};
 					window.wxc.xcConfirm(txt, "custom", option);
 				});
 				

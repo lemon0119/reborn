@@ -96,6 +96,7 @@
 			//处理特殊类型input
 			if(popType["input"] === itype){
 				$txt.append($input);
+                                
 			}
 			
 			creatDom();

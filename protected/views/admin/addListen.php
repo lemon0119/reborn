@@ -70,10 +70,10 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-    window.wxc.xcConfirm('添加看打练习成功！', window.wxc.xcConfirm.typeEnum.success);
+    window.wxc.xcConfirm('添加听打练习成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-    window.wxc.xcConfirm('添加看打练习失败！', window.wxc.xcConfirm.typeEnum.error);
-    else if(result != 'no')
+    window.wxc.xcConfirm('添加听打练习失败！', window.wxc.xcConfirm.typeEnum.error);
+    else if(result !== 'no')
     {      
         alert(result);      
     }
