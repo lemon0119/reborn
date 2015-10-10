@@ -1498,14 +1498,15 @@ class AdminController extends CController {
                 $result = '文件格式不正确，应为MP3格式';
             } else if ($_FILES ['file'] ['error'] > 0) {
                 $result = '文件上传失败';
-            } else if (file_exists($dir . iconv("UTF-8", "gb2312", $_FILES ["file"] ["name"]))) {
-                $result = '服务器存在相同文件';
             } else {
-                move_uploaded_file($_FILES ["file"] ["tmp_name"], $dir . iconv("UTF-8", "gb2312", $_FILES ["file"] ["name"]));
+                $oldName = $_FILES["file"]["name"]; 
+                $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                Resourse::model()->insertRela($newName, $oldName);
                 $result = '1';
             }
             if ($result == '1') {
-                $result = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $_FILES ["file"] ["name"], $filePath, 0);
+                $result = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $newName, $filePath, 0);
             }
         }
         $this->render('addListen', array(
@@ -1571,6 +1572,7 @@ class AdminController extends CController {
             // 怎么用EXER_LISTEN_URL
             $path = 'resources/' . $filePath . iconv("UTF-8", "gb2312", $fileName);
             unlink($path);
+            Resourse::model()->delName($fileName);
         }
         if (Yii::app()->session ['lastUrl'] == "listenLst") {
             $result = ListenType::model()->getListenLst("", "");
@@ -1654,25 +1656,20 @@ class AdminController extends CController {
                 $result = '文件格式不正确，应为MP3格式';
             } else if ($_FILES ['modifyfile'] ['error'] > 0) {
                 $result = '文件上传失败';
-            } else if (file_exists($dir . iconv("UTF-8", "gb2312", $_FILES ["modifyfile"] ["name"]))) {
-                $result = '服务器存在相同文件';
-            } else {
-                move_uploaded_file($_FILES ["modifyfile"] ["tmp_name"], $dir . iconv("UTF-8", "gb2312", $_FILES ["modifyfile"] ["name"]));
+            } else { 
+                $newName = Tool::createID().".".pathinfo($_FILES["modifyfile"]["name"],PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
                 unlink($dir . iconv("UTF-8", "gb2312", $filename));
+                Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
+                
+                $thisListen = new ListenType ();
+                $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
+                $thisListen->title = $_POST ['title'];
+                $thisListen->fileName = $newName;
+                $thisListen->content = $_POST ['content'];
+                $thisListen->update();
+                $result = "修改成功";
             }
-        }
-        $thisListen = new ListenType ();
-        $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
-        $thisListen->title = $_POST ['title'];
-        if ($result == '修改失败' && $_FILES['modifyfile']['name'] != NULL) {
-            $thisListen->fileName = $_FILES ['modifyfile'] ['name'];
-        } else {
-            $thisListen->fileName = $filename;
-        }
-        $thisListen->content = $_POST ['content'];
-        if ($result == '修改失败') {
-            $thisListen->update();
-            $result = "修改成功";
         }
         $this->render("editListen", array(
             'exerciseID' => $thisListen->exerciseID,
