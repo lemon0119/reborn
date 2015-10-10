@@ -68,7 +68,13 @@
                     <td class="font-center" style="width: 130px">
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
-                        <a href="#" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')">立即开始</a> 
+                        <?php if ($isOpen==false) {?>
+                         
+                            <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')">立即开始</a> 
+                        <?php} ?>
+                            
+                        <?php }?>
+                        
                     </td>
                 </tr>            
             <?php endforeach; ?> 
@@ -118,15 +124,16 @@ function openExam(examID,duration,begintime)
          window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+duration+"&&beginTime="+beginTime+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;     
      }
 }
-function begin_now(examID,d,time)
+function begin_now(examID,d,time,isOpen)
 {
-    var begin=time;
-    if(d==0){
-        d=prompt("时长不能为0！！！",d);
-    }
-    if(confirm("你确定要立即开始？")){
-        window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
-    }
+        var begin=time;
+        if(d==0){
+            d=prompt("时长不能为0！！！",d);
+        }
+        if(confirm("你确定要立即开始？")){
+            window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
+        }
+    
 }
 </script>
 
