@@ -29,7 +29,7 @@ function test()
 	 var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 	 if(!myreg.test(temp.value))
 	 {
-	     alert('请输入有效的email！');
+             window.wxc.xcConfirm('请输入有效的email！', window.wxc.xcConfirm.typeEnum.info);
 	     temp.value="";
 	     myreg.focus();
 	     return false;
@@ -110,7 +110,7 @@ function test()
                 endTime = date.getTime().toString().substr(0, 10);
                 
                if(endTime<startTime){
-                   alert('开始时间>结束时间');
+                   window.wxc.xcConfirm('开始时间>结束时间', window.wxc.xcConfirm.typeEnum.info);
                    document.getElementById("startTime").value="<?php echo $exam['begintime'] ?>";
                    document.getElementById("endTime").value="<?php echo $exam['endtime'] ?>";
                    return false;

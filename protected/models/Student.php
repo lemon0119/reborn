@@ -17,6 +17,17 @@
 class Student extends CActiveRecord
 {
 
+    //会彻底删除该学生的所有记录，谨慎使用
+    /**
+     * 
+     * @param type $userID 要删除的学生的ID
+     */
+    public function delStuRes($userID){
+        AnswerRecord::model()->deleteAll('createPerson = ?', array($userID));
+        ExamRecord::model()->deleteAll('studentID = ?', array($userID));
+        SuiteRecord::model()->deleteAll('studentID = ?', array($userID));
+    }
+    
     public function insertStu($userID,$userName,$sex,$age,$pass,$mail_address,$phone_number,$classID){
         $newStu = new Student();
         $newStu->userID = $userID;

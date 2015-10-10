@@ -36,17 +36,17 @@
 <script>     
 $(document).ready(function(){
     <?php if(isset($result))
-            echo "alert('$result');";?>
+            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        alert('题目内容不能为空');
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     var A = $("#input02")[0].value;
     if(A === ""){
-        alert('答案不能为空');
+        window.wxc.xcConfirm('答案不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });

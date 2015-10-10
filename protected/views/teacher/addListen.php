@@ -75,7 +75,7 @@ $(document).ready(function(){
     window.wxc.xcConfirm('添加听打练习失败！', window.wxc.xcConfirm.typeEnum.error);
     else if(result != 'no')
     {      
-        alert(result);      
+        window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
     }
         
 });

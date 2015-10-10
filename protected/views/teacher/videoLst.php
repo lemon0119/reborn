@@ -56,14 +56,14 @@
 
     var options = {  
         success: function(info){
-            alert(info);
+            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.info);
             $("#video-table").load("./index.php?r=teacher/videoTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
             $("#upload").hide();
         },
         error: function(xhr, type, exception){
             console.log('upload erroe', type);
             console.log(xhr.responseText, "Failed");
-            alert("上传失败！");
+            window.wxc.xcConfirm(上传失败！, window.wxc.xcConfirm.typeEnum.error);
             $("#upload").hide();
         }
     };
