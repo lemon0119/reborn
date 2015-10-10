@@ -70,7 +70,7 @@ $("#myForm").submit(function(){
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
     if(old!="" &&new1!=""&&old==new1){
-        alert('新旧密码不能一样');
+        window.wxc.xcConfirm('新旧密码不能一样', window.wxc.xcConfirm.typeEnum.info);
         $("#input01")[0].value="";
         $("#input02")[0].value="";
     	$("#input03")[0].value="";
@@ -80,7 +80,7 @@ $("#myForm").submit(function(){
     }else
     {
         window.wxc.xcConfirm('不一致', window.wxc.xcConfirm.typeEnum.warning);
-        alert(new1+','+defnew);
+        window.wxc.xcConfirm(new1+','+defnew, window.wxc.xcConfirm.typeEnum.info);
     	$("#input02")[0].value="";
     	$("#input03")[0].value="";
         return false;

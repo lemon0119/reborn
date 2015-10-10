@@ -155,7 +155,7 @@
     } else if(docelem.msRequestFullscreen) {
         docelem.msRequestFullscreen();
     } 
-    alert("按方向键左右进行跳转，按Esc退出！");
+    window.wxc.xcConfirm("按方向键左右进行跳转，按Esc退出！", window.wxc.xcConfirm.typeEnum.info);
     });
     
     function keyDown(e) {   
@@ -188,9 +188,9 @@ $(document).ready(function(){
             type: "POST",
             url: "index.php?r=api/putBulletin&&classID=<?php echo $classID;?>",
             data: {bulletin: '"' + text + '"', time: '"' + current_time + '"'},
-            success: function(){alert('公告发布成功！');},
+            success: function(){ window.wxc.xcConfirm('公告发布成功！', window.wxc.xcConfirm.typeEnum.success);},
             error: function(xhr, type, exception){
-                alert('出错了...');
+                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr.responseText, "Failed");
             }
         });
@@ -360,7 +360,7 @@ $(document).ready(function(){
             cur_ppt=input_page;
             goCurPage();
         }else{
-            alert("请输入合适范围的页数！");
+            window.wxc.xcConfirm("请输入合适范围的页数！", window.wxc.xcConfirm.typeEnum.info);
         }
     });
     $("#page-down").click(function(){
@@ -463,7 +463,7 @@ function goCurPage(){
 function pageUp(){
     if(cur_ppt<=1){
         cur_ppt=1;
-        alert("已到第一页！");
+        window.wxc.xcConfirm("已到第一页！", window.wxc.xcConfirm.typeEnum.info);
     }else{
         cur_ppt = cur_ppt -1;
     }
@@ -473,7 +473,7 @@ function pageUp(){
 function pageDown(){
     if(cur_ppt>=ppt_pages){
         cur_ppt=ppt_pages;
-        alert("已到最后页！");
+        window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
     }else{
         cur_ppt = cur_ppt +1;
     }

@@ -65,7 +65,7 @@
 <script>     
 $(document).ready(function(){
     <?php if(isset($result))
-            echo "alert('$result');";?>
+            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
