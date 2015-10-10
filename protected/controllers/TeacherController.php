@@ -55,10 +55,13 @@ class TeacherController extends CController {
         $class      =   $class->find("classID = '$classID'");
         $class->currentLesson =   $on ;
         $class-> update();
+        $stu=Array();
+        $stu= Student::model()->findAll("classID=? and is_delete=?",array($classID,0));
         return $this->render('startCourse',[
             'classID'=>$classID,
             'progress'=>$on,
-            'on'=>$on
+            'on'=>$on,
+            'stu'=>$stu
         ]);
     }
     
@@ -287,7 +290,7 @@ class TeacherController extends CController {
         
         //get student
         $stu=Array();
-        $stu= Student::model()->findAll("classID=?",$classID);
+        $stu= Student::model()->findAll("classID=? and is_delete=?",array($classID,0));
         return $this->render('startCourse',[
             'classID'=>$classID,
             'progress'=>$progress,
@@ -2379,6 +2382,7 @@ class TeacherController extends CController {
      public function ActionUpdateTime(){      //更新时间
          $type=$_GET['type'];
          $examID = $_GET['examID'];
+         /*
          $startTime=$_POST['startTime'];
          $endTime=$_POST['endTime'];
          $examTime=$_POST['examTime'];
@@ -2404,6 +2408,8 @@ class TeacherController extends CController {
         $duration=(strtotime($endTime)-strtotime($startTime))/60;
         $duration=$examTime;
          Exam::model()->updateByPk($examID,array('begintime'=>$startTime,'endtime'=>$endTime,'duration'=>$duration));
+          * 
+          */
          $this->renderModifyExam($type, $examID);
      }
      
@@ -3128,6 +3134,10 @@ class TeacherController extends CController {
      {
          $examID = $_GET['examID'];
          $isOpen = $_GET['isOpen'];
+         $duration=$_GET['duration'];
+         $startTime=$_GET['beginTime'];
+         if($isOpen==0)
+             Exam::model()->updateByPk($examID,array('begintime'=>$startTime,'duration'=>$duration));
          $currentClass = Yii::app()->session['currentClass'];
          $result = ClassExam::model()->find("classID=? and examID=?" , array($currentClass,$examID));
          if($result == NULL)
