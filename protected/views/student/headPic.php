@@ -19,7 +19,7 @@
 
 <script>  
 $(document).ready(function(){
-    if(<?php echo $result;?>!="")
-        window.wxc.xcConfirm('<?php echo $result;?>', window.wxc.xcConfirm.typeEnum.confirm);
+     if(<?php echo $result;?>!="")
+        alert('<?php echo $result;?>');
 }); 
     </script>

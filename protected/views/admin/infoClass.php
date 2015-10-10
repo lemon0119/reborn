@@ -107,7 +107,7 @@
     ?>
    <script>
        if(result != null){
-           window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
+           window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
            result = null;
        }
    </script>

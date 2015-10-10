@@ -117,14 +117,14 @@ $(document).ready(function(){
 });
 $("#myForm").submit(function(){
     var requirements = $("#input1")[0].value;
-    if(requirements === ""){
+    if(requirements === ""||requirements.replace(/\s/g, "").length===0){
         window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     var x,y;
     for(x=2;x<=count;x++){
     var an = $("#input"+x)[0].value;
-    if(an === ""){
+    if(an === ""||an.replace(/\s/g, "").length===0){
         y=x-1;
         window.wxc.xcConfirm("空"+y+"内容不能为空", window.wxc.xcConfirm.typeEnum.info);
         return false;

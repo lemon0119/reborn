@@ -52,7 +52,7 @@ $(document).ready(function(){
 });    
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
-    if(userID === ""){
+    if(userID === ""||userID.replace(/\s/g, "").length===0){
         window.wxc.xcConfirm('课程名不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
