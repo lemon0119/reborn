@@ -20,12 +20,15 @@
                 $optArr = explode("$$",$opt);
                 $mark = 'A';
                 foreach ($optArr as $aOpt) {?>
+                      $n=1;
                     <input type="radio" disabled <?php if($mark === $uAns) echo 'checked';?> >&nbsp <?php echo $mark.'.'.$aOpt;?>
                     <?php if($mark === $right){?>
                         <span class='answer-check'></span>
                     <?php }?>
                     <br/>
-                <?php $mark++;}?>
+                <?php $mark++;
+                       $n++;
+                    }?>
 </div>
    <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $suite_exercise['suiteID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button> 
 </div>

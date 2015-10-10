@@ -45,7 +45,13 @@ class StudentController extends CController {
         $type = $_GET['type'];
         $exer = Exercise::getExerise($exerID, $type);
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $isExam=Yii::app()->session['isExam'];
+         if($isExam){
+            $recordID = ExamRecord::getRecord($workID, $studentID);
+        }
+        else{
+            $recordID = SuiteRecord::getRecord($workID, $studentID);
+        }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
         return $this->render('ansDetail_1',['exercise' => $classwork,
             'exer' => $exer,
@@ -66,7 +72,13 @@ class StudentController extends CController {
         $result = KeyType::model()->findByPK($exerID);
         
         $studentID = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::getRecord($workID, $studentID);
+        $isExam=Yii::app()->session['isExam'];
+         if($isExam){
+            $recordID = ExamRecord::getRecord($workID, $studentID);
+        }
+        else{
+            $recordID = SuiteRecord::getRecord($workID, $studentID);
+        }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
         return $this->render('ansKey',
             ['exercise' => $classwork,
