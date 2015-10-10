@@ -33,7 +33,7 @@
 
     var options = {  
         success: function(info){
-            alert(info);
+            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.confirm);
             $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
             $("#upload").hide();
         },

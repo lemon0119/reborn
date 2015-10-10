@@ -35,7 +35,7 @@
         //console.log("answer = "+theString);
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
             if(!simple){
-                alert(result);
+                window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
             }else{
                 doFunction();
             }

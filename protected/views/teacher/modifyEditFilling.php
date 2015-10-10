@@ -10,7 +10,7 @@
             $("#input"+count).show();
         }else
         {
-            alert("最多添加五个选项");
+            window.wxc.xcConfirm("最多添加五个选项", window.wxc.xcConfirm.typeEnum.info);
         }
     }
     function deleteIn()
@@ -21,7 +21,7 @@
             count--;
         }else
         {
-            alert("必须有一个答案");
+            window.wxc.xcConfirm("必须有一个答案", window.wxc.xcConfirm.typeEnum.info);
         }
     }
     </script>  
@@ -95,7 +95,7 @@ $(document).ready(function(){
 $("#myForm").submit(function(){
     var requirements = $("#input1")[0].value;
     if(requirements === ""){
-        alert('题目内容不能为空');
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     var x,y;
@@ -103,7 +103,7 @@ $("#myForm").submit(function(){
     var an = $("#input"+x)[0].value;
     if(an === ""){
         y=x-1;
-        alert("空"+y+"内容不能为空");
+        window.wxc.xcConfirm("空"+y+"内容不能为空", window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     }

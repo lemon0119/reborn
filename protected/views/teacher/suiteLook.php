@@ -104,7 +104,7 @@
   $(document).ready(function(){
     var isLast = <?php if($isLast !=NULL) echo $isLast; else echo 0;?>;
     if(isLast == 1)
-        alert("已是最后一题");
+    window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.info);
     });
    start();  
    

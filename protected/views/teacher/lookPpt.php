@@ -74,7 +74,7 @@
         $("#page-up").click(function(){
             if(cur_ppt<=1){
                 cur_ppt=1;
-                alert("已到第一页！");
+                window.wxc.xcConfirm("已到第一页！", window.wxc.xcConfirm.typeEnum.info);
             }else{
                 cur_ppt = cur_ppt -1;
             }
@@ -88,13 +88,13 @@
                 cur_ppt=input_page;
                 goCurPage();
             }else{
-                alert("请输入合适范围的页数！");
+                window.wxc.xcConfirm("请输入合适范围的页数！", window.wxc.xcConfirm.typeEnum.info);
             }
         });
         $("#page-down").click(function(){
             if(cur_ppt>=ppt_pages){
                 cur_ppt=ppt_pages;
-                alert("已到最后页！");
+                window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
             }else{
                 cur_ppt = cur_ppt +1;
             }
