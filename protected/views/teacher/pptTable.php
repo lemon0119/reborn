@@ -80,7 +80,7 @@
         $("#dele").click(function(){
             $.get($(this).attr("href"),function(data,status){
                 $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
-                alert(data);
+                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
             });  
             return false;     
         });

@@ -74,11 +74,9 @@ $(document).ready(function(){
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-        alert('添加老师成功！');
-    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+    window.wxc.xcConfirm('添加老师成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('添加老师失败！');
-    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);
+    window.wxc.xcConfirm('添加老师失败！', window.wxc.xcConfirm.typeEnum.error);
         
 });
 function getUserID(){

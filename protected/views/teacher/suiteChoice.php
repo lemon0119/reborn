@@ -33,7 +33,7 @@
     $(document).ready(function(){
     var isLast = <?php echo $isLast?>;
     if(isLast == 1)
-        alert("已是最后一题");
+    window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.info);
     });
     
      function nextWork(answerID,recordID,suiteID,exerciseID){

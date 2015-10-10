@@ -46,7 +46,7 @@ $(document).ready(function(){
 });
 function formSubmit(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
-      alert(result);
+      window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
   });
 }
 </script>

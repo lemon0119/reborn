@@ -6,7 +6,7 @@ function test()
 	 var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 	 if(!myreg.test(temp.value))
 	 {
-	     alert('请输入有效的email！');
+             window.wxc.xcConfirm('请输入有效的email！', window.wxc.xcConfirm.typeEnum.info);
 	     temp.value="";
 	     myreg.focus();
 	     return false;
@@ -57,18 +57,18 @@ function test()
 $(document).ready(function(){
     var result = '<?php echo $result;?>';
     if(result === '1')
-        alert('成功！');
+    window.wxc.xcConfirm('成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('失败！'); 
+    window.wxc.xcConfirm('失败！', window.wxc.xcConfirm.typeEnum.error);
     else if(result==='email error')
-        alert('邮箱错误！'); 
+    window.wxc.xcConfirm('邮箱错误！', window.wxc.xcConfirm.typeEnum.info);
 }); 
 $("#myForm").submit(function(){
     var account = $("#input01")[0].value;
     var email = $("#input02")[0].value;
     
     if(account === "" ||email === ""){
-        alert('不能为空');
+        window.wxc.xcConfirm('不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
         
