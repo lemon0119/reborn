@@ -20,19 +20,19 @@ function test()
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                <label class="control-label" for="input01">旧密码</label>
+                <label class="control-label" for="input01">旧密码<span style="font-size:20px;color:#ff0000">*</span></label>
                 <div class="controls">
                         <input name="old" type="password" class="input-xlarge" id="input01" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input02">新密码</label>
+                <label class="control-label" for="input02">新密码<span style="font-size:20px;color:#ff0000">*</span></label>
                 <div class="controls">
                         <input name="new1" type="password" class="input-xlarge" id="input02" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input03">确认密码</label>
+                <label class="control-label" for="input03">确认密码<span style="font-size:20px;color:#ff0000">*</span></label>
                 <div class="controls">
                         <input name="defnew" type="password" class="input-xlarge" id="input03" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input03">邮箱</label>
+                <label class="control-label" for="input03">邮箱<span style="font-size:20px;color:#ff0000">*</span></label>
                 <div class="controls">
                     <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
                 </div>
