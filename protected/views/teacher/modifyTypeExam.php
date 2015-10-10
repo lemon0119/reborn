@@ -48,27 +48,29 @@ function test()
                         <li <?php if($type == "listen") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID']?>&&type=listen"><i class="icon-headphones"></i> 听打练习</a></li>                           
         </ul>
         
-    </div>  
-    <form id="updateForm" action="./index.php?r=teacher/UpdateTime&&examID=<?php echo $examID; ?>&&type=<?php echo $type; ?>" method="post" >  
+    </div> 
+    <!--
+    <form id="updateForm" action="./index.php?r=teacher/UpdateTime&&examID=<?php echo $examID; ?>&&type=<?php echo $type; ?>" method="post" >  -->
         <div class="well" style="padding: 8px 0;">
-            <ul class="nav nav-list">
+            <ul class="nav nav-list" style="margin-left: -80px;">
                 <center>
                     <table>
                         <tr><td>试卷名称:<?php echo $exam['examName']?></td></tr>
+                        <!--
                         <tr><td>开始时间: 
                                 <div class="inline layinput"><input style="width:180px;color:white;" class="search-query span2" placeholder="选择开始时间" name="startTime" id="startTime" value="<?php echo $exam['begintime'] ?> " onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" ></div>       
                             </td></tr>
                         <tr><td>结束时间:                                <input style="width:180px;color:white;" class="search-query span2" placeholder="选择结束时间" name="endTime" id="endTime" value="<?php echo $exam['endtime'] ?>" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" onblur="test()">
                             </td></tr>
-                        <tr><td>时长:<?php echo $exam['duration'] ?>秒</td></tr>
+                        <tr><td>时长:<?php echo $exam['duration'] ?>秒</td></tr>   -->
                         <tr><td><div id="totalScore">总分:<?php echo $totalScore?></div></td></tr>
                     </table>                
                 </center>                   
             </ul>
         </div>   
-        <button type="submit" class="btn btn-primary">更新时间</button>
+   <!--     <button type="submit" class="btn btn-primary">更新时间</button>
 
-    </form>
+    </form>  -->
      
     <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass'];?>"  class="btn">返回</a>
 </div>

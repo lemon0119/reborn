@@ -1244,7 +1244,7 @@ class StudentController extends CController {
                 $reult = "文件限定大小为30M！";
             }
         }else {
-            $result = "请上传正确类型的文件！";
+            $result = "请上传正确的文件！";
         }
         $this->render('headPic',['result'=>$result,'picAddress'=>$picAddress]);
     }
