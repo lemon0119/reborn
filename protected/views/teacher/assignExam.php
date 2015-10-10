@@ -121,8 +121,9 @@ function openExam(examID,duration,begintime)
 function begin_now(examID,d,time)
 {
     var begin=time;
-    if(d==0)
+    if(d==0){
         d=prompt("时长不能为0！！！",d);
+    }
     if(confirm("你确定要立即开始？")){
         window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
     }
