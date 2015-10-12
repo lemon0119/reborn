@@ -57,12 +57,16 @@
                 <textarea name="title" style="width:450px; height:20px;" id="input01"><?php echo $title; ?></textarea>
             </div>
         </div>
-            
-        <div class="control-group">
-            <label class="control-label" ></label>
-          <audio  src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
-        </div>
-            
+ 
+<div class="control-group">
+        <label class="control-label" ></label>
+        <?php if(file_exists($listenpath)){?>
+            <audio  src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
+        <?php }else {?>
+            <p>原音频文件丢失或损坏！</p>
+        <?php } ?>
+</div>
+
         <?php if(!isset($action)) {?>
             <div class="control-group">
                 <label class="control-label" for="input02">修改</label>

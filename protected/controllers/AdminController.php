@@ -1571,7 +1571,8 @@ class AdminController extends CController {
             $userid = Yii::app()->session ['userid_now'];
             // 怎么用EXER_LISTEN_URL
             $path = 'resources/' . $filePath . iconv("UTF-8", "gb2312", $fileName);
-            unlink($path);
+            if(file_exists($path))
+                unlink($path);
             Resourse::model()->delName($fileName);
         }
         if (Yii::app()->session ['lastUrl'] == "listenLst") {
@@ -1659,7 +1660,8 @@ class AdminController extends CController {
             } else { 
                 $newName = Tool::createID().".".pathinfo($_FILES["modifyfile"]["name"],PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
-                unlink($dir . iconv("UTF-8", "gb2312", $filename));
+                if(file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
+                    unlink($dir . iconv("UTF-8", "gb2312", $filename));
                 Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
                 
                 $thisListen = new ListenType ();
@@ -2472,7 +2474,8 @@ class AdminController extends CController {
         $fileName       =   $_GET['ppt'];
         $dir            =   $_GET['pdir'];
         $file           =   $dir.$fileName;
-        unlink(iconv('utf-8','gb2312',$file));
+        if(file_exists(iconv('utf-8','gb2312',$file)))
+            unlink(iconv('utf-8','gb2312',$file));
         Resourse::model()->delName($fileName);
         $result         =   "删除成功！";    
         echo $result;
@@ -2550,7 +2553,8 @@ class AdminController extends CController {
         $dir            =   $_GET['vdir'];
         $file           =   $dir.$fileName;
         Resourse::model()->delName($fileName);
-        unlink(iconv('utf-8','gb2312',$file));
+        if(file_exists(iconv('utf-8','gb2312',$file)))
+            unlink(iconv('utf-8','gb2312',$file));
         $result         =   "删除成功！";    
         echo $result;
     }
