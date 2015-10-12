@@ -37,7 +37,8 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<h3>编辑听打练习题</h3>
+<h3 style="display:inline-block;">编辑听打练习题</h3>
+<span>(支持mp3及wav格式)</span>
 <?php } else if($action == 'look') {?>
 <h3>查看听打练习题</h3>
 <?php }?>
@@ -105,7 +106,7 @@ $(document).ready(function(){
     <?php 
         if(isset($result)){
             echo '$("#upload").hide();';
-            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.warning);";
         }
     ?>
 });

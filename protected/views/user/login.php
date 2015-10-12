@@ -6,6 +6,7 @@
     <META HTTP-EQUIV="pragma" CONTENT="no-cache">
     <META HTTP-EQUIV="expires" CONTENT="0"> 
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
     <link href="<?php echo CSS_URL; ?>login.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo CSS_URL; ?>font-awesome.min.css" rel="stylesheet" type="text/css"/>
