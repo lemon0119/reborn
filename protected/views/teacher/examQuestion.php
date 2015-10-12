@@ -25,7 +25,7 @@
         if(<?php echo $isLast?> == 1)
         {
             window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.warning);
-            return ;
+            return;
         }
         var user = {
             recordID:recordID,

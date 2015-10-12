@@ -812,7 +812,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
     margin-bottom:10px;
     font-size:14px;
     line-height:20px;
-    color:#aaa9a9;
+    color:#3d3d3d;
     vertical-align:middle;
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
@@ -861,15 +861,14 @@ select,input[type="file"] {
 }
 select {
     width:225px;
-    background-color:#303030;
+    color: #aaa9a9;
+    background-color:#aaa9a9;
     border:1px solid #aaa9a9;
     appearance:none;
     -moz-appearance:none;
     -webkit-appearance:none;
     /*在选择框的最右侧中间显示小箭头图片*/
     background: url("../../img/UI_tea/down_wite.png") no-repeat scroll right center transparent;
-
-
     /*为下拉小箭头留出一点位置，避免被文字覆盖*/
     padding-right: 14px;
 }
@@ -1254,7 +1253,7 @@ input.search-query {
     padding-left:14px;
     padding-left:4px \9;
     margin-bottom:0;
-    background-color: #303030;
+    background-color: #aaa9a9;
     -webkit-border-radius:15px;
     -moz-border-radius:15px;
     border-radius:15px

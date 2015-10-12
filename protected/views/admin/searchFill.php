@@ -50,20 +50,20 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>编号</th>
-            <th>课程号</th>
-            <th>内容</th>
-            <th>创建人</th>
-            <th>创建时间</th>
-            <th>操作</th>
+            <th class="font-center">编号</th>
+            <th class="font-center">课程号</th>
+            <th class="font-center">内容</th>
+            <th class="font-center">创建人</th>
+            <th class="font-center">创建时间</th>
+            <th class="font-center">操作</th>
         </tr>
     </thead>
             <tbody>        
                 <?php foreach($fillLst as $model):?>
                 <tr>
-                    <td style="width: 50px"><?php echo $model['exerciseID'];?></td>
-                    <td><?php echo $model['courseID'];?></td>
-                    <td><?php  if($searchKey == 'no' || strpos($model['requirements'],$searchKey)===false)
+                    <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
+                    <td class="font-center"><?php echo $model['courseID'];?></td>
+                    <td class="font-center"><?php  if($searchKey == 'no' || strpos($model['requirements'],$searchKey)===false)
                     {
                                if(strlen($model['requirements'])<=30)
                                     echo $model['requirements'];
@@ -81,15 +81,15 @@
                        echo $content;
                      }
                    ?></td>
-                    <td><?php if($model['createPerson']=="0")
+                    <td class="font-center"><?php if($model['createPerson']=="0")
                                     echo "管理员";
                                 else echo  $teachers[$model['createPerson']];
                         ?></td>
-                    <td><?php echo $model['createTime'];?></td>
-                    <td>
-                        <a href="./index.php?r=admin/editFill&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
-                        <a href="./index.php?r=admin/editFill&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
-                         <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                    <td class="font-center"><?php echo $model['createTime'];?></td>
+                    <td class="font-center" style="width: 100px">
+                        <a href="./index.php?r=admin/editFill&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
+                        <a href="./index.php?r=admin/editFill&&exerciseID=<?php echo $model['exerciseID'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                        <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 

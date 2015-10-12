@@ -6,23 +6,23 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>工号</th>
-            <th>用户名</th>
-            <th>所属部门</th>
-            <th>操作</th>
+            <th class="font-center">工号</th>
+            <th class="font-center">用户名</th>
+            <th class="font-center">所属部门</th>
+            <th class="font-center">操作</th>
         </tr>
     </thead>
             <tbody>        
                 <?php foreach($teaLst as $model):?>
                 <tr>
-                    <td style="width: 75px"><?php echo $model['userID'];?></td>
-                    <td><?php echo $model['userName'];?></td>
-                    <td><?php echo $model['department'];?></td>
-                    <td>  
-                        <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&flag=search"><img src="<?php echo IMG_URL; ?>detail.png">资料</a>
-                        <a href="./index.php?r=admin/editTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&flag=search"><img src="<?php echo IMG_URL; ?>edit.png">编辑</a>
+                    <td class="font-center" style="width: 75px"><?php echo $model['userID'];?></td>
+                    <td class="font-center"><?php echo $model['userName'];?></td>
+                    <td class="font-center"><?php echo $model['department'];?></td>
+                    <td class="font-center" style="width: 100px">  
+                        <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&flag=search"><img title="资料" src="<?php echo IMG_URL; ?>detail.png"></a>
+                        <a href="./index.php?r=admin/editTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&flag=search"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php $userID=$model['userID'];
-                                                         echo "'$userID'"; ?>)"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                        echo "'$userID'"; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 
