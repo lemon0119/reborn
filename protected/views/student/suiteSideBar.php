@@ -57,8 +57,8 @@
                         <?php endforeach;?>
                 </ul>
              <li>
-                 <a type="button" class="btn btn-large" style="width: 34%"  onclick="submitSuite();">提交</a>    
-                 <a type="button" style="width:34%" class="btn btn-primary btn-large" onclick="formSubmit();">保存</a>
+                 <a type="button" href="#" class="btn btn-large" style="width: 34%"  onclick="submitSuite();">提交</a>    
+                 <a type="button" href="#" style="width:34%" class="btn btn-primary btn-large" onclick="formSubmit();">保存</a>
              </li>
         </div>
 </div>

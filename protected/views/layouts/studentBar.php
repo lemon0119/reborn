@@ -16,7 +16,7 @@ if (isset(Yii::app()->session['userid_now'])) {
             <script src="<?php echo JS_URL; ?>site.js"></script>
             <!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
                 <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
-		<script src="<?php echo XC_Confirm; ?>js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
 <!--            -->
         </head>

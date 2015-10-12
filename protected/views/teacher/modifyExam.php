@@ -3,7 +3,7 @@
 <script type="text/javascript">
 function test()
 {
-    alert('y');
+    window.wxc.xcConfirm('y', window.wxc.xcConfirm.typeEnum.info);
          var startTime = document.getElementById("startTime");
 	 var endTime = document.getElementById("endTime");
          SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
@@ -29,7 +29,7 @@ function test()
 	 var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 	 if(!myreg.test(temp.value))
 	 {
-	     alert('请输入有效的email！');
+             window.wxc.xcConfirm('请输入有效的email！', window.wxc.xcConfirm.typeEnum.info);
 	     temp.value="";
 	     myreg.focus();
 	     return false;
@@ -49,13 +49,14 @@ function test()
         </ul>
 
     </div>  
-
-    <form id="updateForm" action="./index.php?r=teacher/UpdateTime&&examID=<?php echo $examID; ?>&&type=<?php echo $type; ?>" method="post" >  
+<!--
+    <form id="updateForm" action="./index.php?r=teacher/UpdateTime&&examID=<?php echo $examID; ?>&&type=<?php echo $type; ?>" method="post" >     -->
         <div class="well" style="padding: 8px 0;">
-            <ul class="nav nav-list">
+            <ul class="nav nav-list" style="margin-left: -80px;">
                 <center>
                     <table>
                         <tr><td>试卷名称:<?php echo $exam['examName']?></td></tr>
+                        <!--
                         <tr><td>开始时间: 
                                 <div class="inline layinput"><input  style="width:180px;color:white;" class="search-query span2" placeholder="选择开始时间" name="startTime" id="startTime" value="<?php echo $exam['begintime'] ?> " onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" ></div>       
                             </td></tr>
@@ -65,14 +66,15 @@ function test()
                         
                         <tr><td>时长:
                                 <input style="width:180px;" class="search-query span2" type="text" placeholder="分钟" name="examTime" id="examTime" value="<?php echo $exam['duration'] ?>分钟"></td></tr>
+                        -->
                         <tr><td><div id="totalScore">总分:<?php echo $totalScore?></div></td></tr>
                     </table>                
                 </center>                   
             </ul>
         </div>   
-        <button type="submit" class="btn btn-primary">更新时间</button>
+        <!--<button type="submit" class="btn btn-primary">更新时间</button>
 
-    </form>
+    </form>-->
 
     <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass']; ?>"  class="btn">返回</a>
 </div>
@@ -112,7 +114,7 @@ function test()
                 endTime = date.getTime().toString().substr(0, 10);
                 
                if(endTime<startTime){
-                   alert('开始时间>结束时间');
+                   window.wxc.xcConfirm('开始时间>结束时间', window.wxc.xcConfirm.typeEnum.info);
                    document.getElementById("startTime").value="<?php echo $exam['begintime'] ?>";
                    document.getElementById("endTime").value="<?php echo $exam['endtime'] ?>";
                    return false;

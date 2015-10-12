@@ -106,16 +106,22 @@
     $(document).ready(function(){
     var result = <?php  if(isset($result)) echo "'$result'"; else echo'1';?>;
     if(result === '1')
-        alert('复制选择题成功！');
+    window.wxc.xcConfirm('复制选择题成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-        alert('复制选择题失败！');
+    window.wxc.xcConfirm('复制选择题失败！', window.wxc.xcConfirm.typeEnum.error);
     result = "";
 }      
 );
    function dele(exerciseID){
-      if(confirm("您确定删除吗？")){
-          window.location.href = "./index.php?r=teacher/deleteKey&&exerciseID=" + exerciseID;
-      }
+     
+      var option = {
+						title: "自定义",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							 window.location.href = "./index.php?r=teacher/deleteKey&&exerciseID=" + exerciseID;
+						}
+					}
+					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
   }
 
 </script>

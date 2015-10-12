@@ -20,19 +20,19 @@ function test()
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                <label class="control-label" for="input01">旧密码</label>
+                <label class="control-label" for="input01">旧密码<span style="font-size:20px;color:#ff0000">*</span></label>
                 <div class="controls">
                         <input name="old" type="password" class="input-xlarge" id="input01" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input02">新密码</label>
+                <label class="control-label" for="input02">新密码<span style="font-size:20px;color:#ff0000">*</span></label>
                 <div class="controls">
                         <input name="new1" type="password" class="input-xlarge" id="input02" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input03">确认密码</label>
+                <label class="control-label" for="input03">确认密码<span style="font-size:20px;color:#ff0000">*</span></label>
                 <div class="controls">
                         <input name="defnew" type="password" class="input-xlarge" id="input03" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input03">邮箱</label>
+                <label class="control-label" for="input03">邮箱<span style="font-size:20px;color:#ff0000">*</span></label>
                 <div class="controls">
                     <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
                 </div>
@@ -63,7 +63,7 @@ $("#myForm").submit(function(){
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
     if(old!="" &&new1!=""&&old==new1){
-        alert('新旧密码不能一样');
+        window.wxc.xcConfirm('新旧密码不能一样', window.wxc.xcConfirm.typeEnum.info);
         $("#input01")[0].value="";
         $("#input02")[0].value="";
     	$("#input03")[0].value="";

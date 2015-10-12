@@ -49,7 +49,7 @@ $(document).ready(function(){
 							} else {
 								$res = Tool::excelreadToArray ( $savePath . $file_name, $file_type );
 								$uploadResult = Tool::excelreadToDatabase ( $res );
-								echo " alert ('$uploadResult');";
+								echo "  window.wxc.xcConfirm('$uploadResult', window.wxc.xcConfirm.typeEnum.confirm);";
 							}
 						}
 					} else {
