@@ -71,7 +71,7 @@ class Resourse extends CActiveRecord
             $thisRes              = $resource->find("resourseID = '$oldID'");
             $thisRes->resourseID  = $newName;
             $thisRes->name        = $oldName;
-            return $resource->update();
+            return $thisRes->update();
         }
         
         /**

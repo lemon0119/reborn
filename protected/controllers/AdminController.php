@@ -294,7 +294,6 @@ class AdminController extends CController {
         ));
         }
         
-        
     }
 
     public function actionDeleteStuDontHaveClass() {
@@ -319,8 +318,8 @@ class AdminController extends CController {
         if (isset($_GET ['flag'])) {
             $this->render('editStu', array(
                 'userID' => $_GET ['id'],
-                'userName' => $_GET ['name'],
-                'classID' => $_GET ['class'],
+                'userName' => $sqlStudentInfo['name'],
+                'classID' => $sqlStudentInfo['classID'],
                 'classAll' => $classAll,
                 'userAll' => $userAll,
                 'sex' => $sqlStudentInfo['sex'],
@@ -1489,29 +1488,28 @@ class AdminController extends CController {
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
         }
-        $title = "";
-        $content = "";
+        $title      = "";
+        $content    = "";
         if (isset($_POST ['title'])) {
-            $title = $_POST ['title'];
-            $content = $_POST ['content'];
+            $title    = $_POST ['title'];
+            $content  = $_POST ['content'];
             if ($_FILES ['file'] ['type'] != "audio/mpeg") {
                 $result = '文件格式不正确，应为MP3格式';
             } else if ($_FILES ['file'] ['error'] > 0) {
                 $result = '文件上传失败';
-            } else if (file_exists($dir . iconv("UTF-8", "gb2312", $_FILES ["file"] ["name"]))) {
-                $result = '服务器存在相同文件';
             } else {
-                move_uploaded_file($_FILES ["file"] ["tmp_name"], $dir . iconv("UTF-8", "gb2312", $_FILES ["file"] ["name"]));
-                $result = '1';
-            }
-            if ($result == '1') {
-                $result = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $_FILES ["file"] ["name"], $filePath, 0);
+                $oldName = $_FILES["file"]["name"]; 
+                $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                Resourse::model()->insertRela($newName, $oldName);
+                $result  = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $newName, $filePath, 0);
+                $result  = '1';
             }
         }
         $this->render('addListen', array(
-            'result' => $result,
-            'title' => $title,
-            'content' => $content
+            'result'    => $result,
+            'title'     => $title,
+            'content'   => $content
         ));
     }
 
@@ -1570,7 +1568,9 @@ class AdminController extends CController {
             $userid = Yii::app()->session ['userid_now'];
             // 怎么用EXER_LISTEN_URL
             $path = 'resources/' . $filePath . iconv("UTF-8", "gb2312", $fileName);
-            unlink($path);
+            if(file_exists($path))
+                unlink($path);
+            Resourse::model()->delName($fileName);
         }
         if (Yii::app()->session ['lastUrl'] == "listenLst") {
             $result = ListenType::model()->getListenLst("", "");
@@ -1654,25 +1654,21 @@ class AdminController extends CController {
                 $result = '文件格式不正确，应为MP3格式';
             } else if ($_FILES ['modifyfile'] ['error'] > 0) {
                 $result = '文件上传失败';
-            } else if (file_exists($dir . iconv("UTF-8", "gb2312", $_FILES ["modifyfile"] ["name"]))) {
-                $result = '服务器存在相同文件';
-            } else {
-                move_uploaded_file($_FILES ["modifyfile"] ["tmp_name"], $dir . iconv("UTF-8", "gb2312", $_FILES ["modifyfile"] ["name"]));
-                unlink($dir . iconv("UTF-8", "gb2312", $filename));
+            } else { 
+                $newName = Tool::createID().".".pathinfo($_FILES["modifyfile"]["name"],PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                if(file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
+                    unlink($dir . iconv("UTF-8", "gb2312", $filename));
+                Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
+                
+                $thisListen = new ListenType ();
+                $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
+                $thisListen->title = $_POST ['title'];
+                $thisListen->fileName = $newName;
+                $thisListen->content = $_POST ['content'];
+                $thisListen->update();
+                $result = "修改成功";
             }
-        }
-        $thisListen = new ListenType ();
-        $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
-        $thisListen->title = $_POST ['title'];
-        if ($result == '修改失败' && $_FILES['modifyfile']['name'] != NULL) {
-            $thisListen->fileName = $_FILES ['modifyfile'] ['name'];
-        } else {
-            $thisListen->fileName = $filename;
-        }
-        $thisListen->content = $_POST ['content'];
-        if ($result == '修改失败') {
-            $thisListen->update();
-            $result = "修改成功";
         }
         $this->render("editListen", array(
             'exerciseID' => $thisListen->exerciseID,
@@ -1939,7 +1935,7 @@ class AdminController extends CController {
                     $value = - 1;
             }
         }
-        if ($type == "requirements") {
+        if ($type == "requirements"&&$value!=="") {
             $searchKey = $value;
         } else {
             $searchKey = "no";
@@ -2475,7 +2471,8 @@ class AdminController extends CController {
         $fileName       =   $_GET['ppt'];
         $dir            =   $_GET['pdir'];
         $file           =   $dir.$fileName;
-        unlink(iconv('utf-8','gb2312',$file));
+        if(file_exists(iconv('utf-8','gb2312',$file)))
+            unlink(iconv('utf-8','gb2312',$file));
         Resourse::model()->delName($fileName);
         $result         =   "删除成功！";    
         echo $result;
@@ -2553,7 +2550,8 @@ class AdminController extends CController {
         $dir            =   $_GET['vdir'];
         $file           =   $dir.$fileName;
         Resourse::model()->delName($fileName);
-        unlink(iconv('utf-8','gb2312',$file));
+        if(file_exists(iconv('utf-8','gb2312',$file)))
+            unlink(iconv('utf-8','gb2312',$file));
         $result         =   "删除成功！";    
         echo $result;
     }
