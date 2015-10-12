@@ -14,6 +14,7 @@
                 <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></li>
             <?php endforeach; ?>   
             <li class="divider"></li>
+            <?php if(Yii::app()->session['currentClass']&&Yii::app()->session['currentLesson']){?>
             <form id="myForm" action="./index.php?r=teacher/AddSuite" method="post" >  
                 <li class="nav-header" >作业题目</li>
                 <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
@@ -21,6 +22,7 @@
                     <button type="submit" class="btn btn-primary">创建作业</button>
                 </li>
             </form>
+           <?php }?>
         </ul>
     </div>
 
@@ -41,11 +43,13 @@
             <?php
             foreach ($array_allsuite as $suite):
                 $isOpen = false;
+            if($array_suite){
                 foreach ($array_suite as $exitsuite)
                     if ($suite['suiteID'] == $exitsuite['suiteID']) {
                         $isOpen = true;
                         break;
                     }
+            }
                 ?>                    
                 <tr>
                     <td class="font-center" ><?php echo $suite['suiteName']; ?></td>
