@@ -62,8 +62,7 @@ class UserController extends Controller
         }
 	$this->render('forgetpassword',['result'=>$result]);
     }
-    protected function setuser() {
-        $login_model=new LoginForm;
+    protected function setuser(&$login_model) {
         $login_model->attributes=$_POST['LoginForm'];
             if($login_model->validate()&&$login_model->login()){  //用户名密码session持久化
                 $username_now=$login_model->username;
@@ -95,7 +94,7 @@ class UserController extends Controller
     public function actionLogin(){
         $login_model=new LoginForm;
         if(isset($_POST['LoginForm'])){
-            $this->setuser();
+            $this->setuser($login_model);
         }
         if(isset($_GET['exit'])) {
             $this->clearTrace();
