@@ -3350,7 +3350,6 @@ class TeacherController extends CController {
         $studentID = $_GET['studentID'];
         $accomplish = $_GET['accomplish'];
         $classID = $_GET['classID']; 
-        echo $workID;
        $nextStudentID = ExamRecord::model()->getNextStudentID($workID,$studentID,$accomplish,$classID);
        if($nextStudentID == -1)
         {
