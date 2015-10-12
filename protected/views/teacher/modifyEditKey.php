@@ -105,7 +105,8 @@
 <script>     
  $(document).ready(function(){
     <?php if(isset($result))
-            echo "alert('$result');";?>
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";
+    ?>
 });
  var divCount = <?php echo $count?>;
  var inputCount = 1;

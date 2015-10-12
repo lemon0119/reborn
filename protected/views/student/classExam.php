@@ -49,7 +49,7 @@
                             </td>
                             <td>
                                  <?php if($score[$n]==null){
-                                         echo "未完成";
+                                         echo "未批卷";
                                  } else {
                                  echo $score[$n];
                                  }$n++;?> 

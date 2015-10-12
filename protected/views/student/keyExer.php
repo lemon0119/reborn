@@ -123,22 +123,32 @@
     }
     */
    function formSubmit(){
-        if(!confirm("是否确认保存答案！！"))
-            return ;
-        doSubmit(false);
+					var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+                                                   doSubmit(false);
+						} 
+					};
+					window.wxc.xcConfirm("是否确认保存答案！！", "custom", option);
     }
     function submitSuite(simple){
-        if(!simple){
-            if(!confirm("提交以后，不能重新进行答题，你确定提交吗？"))
-                return ;
-        }
-        doSubmit(true);
+      
+        var option = {
+						title: "提交试卷",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							 doSubmit(true);
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
             if(isExam)
                 window.location.href="index.php?r=student/classExam";
             else
                 window.location.href="index.php?r=student/classwork";
         });
+						} 
+					};
+					window.wxc.xcConfirm("提交以后，不能重新进行答题，你确定提交吗？", "custom", option);
+       
     }
     function doSubmit(simple,doFunction){
     console.log('simple1'+simple);
@@ -151,7 +161,7 @@
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
             if(!simple){
-                window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
+                window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
             }else{
                 doFunction();
             }
@@ -160,12 +170,17 @@
      document.getElementById("id_new").firstChild.nodeValue = document.getElementById("id_content").value;
     function restart(){
         var obj =  document.getElementById("typeOCX");
-        if(confirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？")){
-            clearContent(obj);
-            reloadTime();
-            keyReSet();
-            clearWord();
-            clearTemplate();
-        }
+        var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							clearContent(obj);
+                                                        reloadTime();
+                                                        keyReSet();
+                                                        clearWord();
+                                                        clearTemplate();
+						} 
+					};
+					window.wxc.xcConfirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？", "custom", option);
     }
 </script>

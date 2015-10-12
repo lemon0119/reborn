@@ -13,7 +13,7 @@
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>学生答案：</div>
-                    <div ><?php echo $ansWork['answer'];?></div>
+                    <div ><?php echo error_log($ansWork['answerID']."recordID:".$ansWork['recordID']."type:".$ansWork['type']); $ansWork['answer'];?></div>
                 </td>
             </tr>
         </table>
@@ -27,7 +27,7 @@
       $("#score").html(<?php echo $score;?>);
        if(<?php echo $isLast?> == 1)
         {
-            window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.warning);
+            window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.info);
             return ;
         }
     });
