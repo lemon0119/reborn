@@ -1175,7 +1175,6 @@ class TeacherController extends CController {
         $thisListen = new ListenType ();
         $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
         $filename   = $_GET['oldfilename'];
-        $result     = "修改失败";
         if($_FILES['modifyfile']['tmp_name'])
         { 
             if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
@@ -1190,13 +1189,18 @@ class TeacherController extends CController {
                 if(file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
                     unlink($dir . iconv("UTF-8", "gb2312", $filename));
                 Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
-                $thisListen->title = $_POST ['title'];
                 $thisListen->fileName = $newName;
-                $thisListen->content = $_POST ['content'];
-                $thisListen->update();
-                $result = "修改成功";
+                $result = "上传成功";
            }
-       }           
+       }
+       if(!isset($result)||$result == "上传成功"){
+            $thisListen->title = $_POST ['title'];
+            $thisListen->content = $_POST ['content'];
+            $thisListen->update();
+            $result = "修改成功!";
+       }else{
+            $result = "修改失败!";
+       }
        if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
        {       
            $this->render("ModifyEditListen",array(
