@@ -31,7 +31,8 @@
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
 </div>
 <div class="span9">
-    <h2>PPT列表</h2>
+    <h2 style="display:inline-block;">PPT列表</h2>
+    <span>(支持PPT格式)</span>
     <div id ="ppt-table"></div>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/addPpt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 
     <div class="control-group">

@@ -7,7 +7,8 @@
     </div>
 </div>
 <div class="span9">
-    <h2>PPT列表</h2>
+    <h2 style="display:inline-block;">PPT列表</h2>
+    <span>(支持PPT格式)</span>
     <div id ="ppt-table"></div>
     <form class="form-horizontal" method="post" action="./index.php?r=admin/addPpt&&pdir=<?php echo $pdir;?>" id="myForm" enctype="multipart/form-data"> 
     <div class="control-group">

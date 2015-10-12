@@ -31,9 +31,10 @@
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
 </div>
 <div class="span9">
-    <h2>视频列表</h2>
+    <h2 style="display:inline-block;">视频列表</h2>
+    <span>(支持mp4及flv格式)</span>
     <div id ="video-table"></div>
-    <form class="form-horizontal" method="post" action="./index.php?r=teacher/addVideo&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 
+    <form class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addVideo&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" enctype="multipart/form-data"> 
     <div class="control-group">
        <label class="control-label" for="input02">上传</label>
        <div class="controls">
@@ -63,7 +64,7 @@
         error: function(xhr, type, exception){
             console.log('upload erroe', type);
             console.log(xhr.responseText, "Failed");
-            window.wxc.xcConfirm(上传失败！, window.wxc.xcConfirm.typeEnum.error);
+            window.wxc.xcConfirm("上传失败！", window.wxc.xcConfirm.typeEnum.error);
             $("#upload").hide();
         }
     };
