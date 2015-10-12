@@ -58,19 +58,24 @@
             </div>
         </div>
             
-          <div class="control-group">
-              
-              <label class="control-label" ></label>
+<div class="control-group">
+        <label class="control-label" ></label>
+        <?php if(file_exists($listenpath)){?>
             <audio  src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
-         </div>
+        <?php }else {?>
+            <p style="color: red">原音频文件丢失或损坏！</p>
+        <?php } ?>
+</div>
             
-            
-           <div class="control-group">
-               <label class="control-label" for="input02">修改</label>
-               <div class="controls">
-               <input type="file" name="modifyfile" id="input02">      
-               </div>
-           </div>
+        <?php if(!isset($action)) {?>   
+            <div class="control-group">
+                <label class="control-label" for="input02">修改</label>
+                <div class="controls">
+                <input type="file" name="modifyfile" id="input02">      
+                </div>
+            </div>
+        <?php } else if($action == 'look') {?>
+        <?php }?>     
             
         <div class="control-group">
             <label class="control-label" for="input03">听打答案</label>

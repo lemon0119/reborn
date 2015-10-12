@@ -136,7 +136,8 @@ class TeacherController extends CController {
             $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir            =   "resources/".$pptFilePath; 
             $file           =   $dir.$fileName;
-            unlink(iconv('utf-8','gb2312',$file));
+            if(file_exists(iconv('utf-8','gb2312',$file)))
+                unlink(iconv('utf-8','gb2312',$file));
             Resourse::model()->delName($fileName);
             $result         =   "删除成功！";    
             echo $result;
@@ -236,7 +237,8 @@ class TeacherController extends CController {
             $videoFilePath    =   $typename."/".$userid."/".$classID."/".$on."/video/"; 
             $dir            =   "resources/".$videoFilePath; 
             $file           =   $dir.$fileName;
-            unlink(iconv('utf-8','gb2312',$file));
+            if(file_exists(iconv('utf-8','gb2312',$file)))
+                unlink(iconv('utf-8','gb2312',$file));
             $result         =   "删除成功！";    
             echo $result;
     }
@@ -922,42 +924,42 @@ class TeacherController extends CController {
     }
 
     public function actionAddListen(){
-       $result =   'no';            
-       $typename = Yii::app()->session['role_now'];
-       $userid = Yii::app()->session['userid_now'];
-       $filePath =$typename."/".$userid."/"; 
-       $dir = "resources/".$filePath;        
+        $result     = 'no';            
+        $typename   = Yii::app()->session['role_now'];
+        $userid     = Yii::app()->session['userid_now'];
+        $filePath   = $typename."/".$userid."/"; 
+        $dir        = "resources/".$filePath;        
 
-      if(!is_dir($dir))
-      {
-          mkdir($dir,0777);
-      }
-      $title = "";
-      $content = "";
-      if(isset($_POST['title'])){
-          $title = $_POST['title'];
-          $content = $_POST["content"];
-          if($_FILES['file']['type']!= "audio/mpeg")
-          {
-              $result = '文件格式不正确，应为MP3格式';            
-          }else if($_FILES['file']['error'] > 0)
-          {
-              $result = '文件上传失败';
-          }else{
-               move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-               $result = '1';
-          }
-          if($result == '1')
-          {
-              $result = ListenType::model()->insertListen($_POST['title'],$_POST['content'],$_FILES["file"]["name"],$filePath,Yii::app()->session['userid_now']);                  
-          }             
-      }
-      $this->render('addListen',array(
-         'result' => $result,
-          'title' => $title,
-          'content' => $content
-      ));
-   }
+        if(!is_dir($dir))
+        {
+             mkdir($dir,0777);
+        }
+        $title   = "";
+        $content = "";
+        if(isset($_POST['title'])){
+            $title = $_POST['title'];
+            $content = $_POST["content"];
+            if($_FILES['file']['type']!= "audio/mpeg")
+            {
+                $result = '文件格式不正确，应为MP3格式';            
+            }else if($_FILES['file']['error'] > 0)
+            {
+                $result = '文件上传失败';
+            }else{
+                $oldName = $_FILES["file"]["name"]; 
+                $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                Resourse::model()->insertRela($newName, $oldName);
+                $result = ListenType::model()->insertListen($_POST['title'],$_POST['content'],$newName,$filePath,Yii::app()->session['userid_now']);
+                $result  = '1';
+            }                         
+        }
+        $this->render('addListen',array(
+           'result'     => $result,
+            'title'     => $title,
+            'content'   => $content
+        ));
+     }
         
      public function actionSearchListen()
         {
@@ -1083,7 +1085,8 @@ class TeacherController extends CController {
                 $userid = Yii::app()->session['userid_now'];    
                 //怎么用EXER_LISTEN_URL
                 $path = 'resources/'.$filePath.iconv("UTF-8","gb2312",$fileName);
-                unlink($path);
+                if(file_exists($path))
+                    unlink($path);
             }
             if(Yii::app()->session['lastUrl']=="listenLst")
             {
@@ -1160,71 +1163,61 @@ class TeacherController extends CController {
             }
         }
         
-             public function actionEditListenInfo()
-     {                  
-             $typename = Yii::app()->session['role_now'];
-             $userid = Yii::app()->session['userid_now'];
-             $filePath = $typename."/".$userid."/";
-             $dir = "resources/".$filePath;
-            $exerciseID    =   $_GET['exerciseID'];
-            $filename = $_GET['oldfilename'];
-            $result = "修改失败";
-            if($_FILES['modifyfile']['tmp_name'])
-            { 
-               if($_FILES['modifyfile']['size']>80000000)
-                {
-                    $result = '大小不能超过8M';
-                }else if($_FILES['modifyfile']['type']!= "audio/mpeg")
-                {
-                    $result = '文件格式不正确，应为MP3格式';            
-                }else if($_FILES['modifyfile']['error'] > 0)
-                {
-                    $result = '文件上传失败';
-                }else if(file_exists($dir.iconv("UTF-8","gb2312",$_FILES["modifyfile"]["name"])))
-                {
-                    $result='服务器存在相同文件';
-                }else{
-                     move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["modifyfile"]["name"]));
-                     unlink($dir.iconv("UTF-8","gb2312",$filename));
-                }
-            }           
-            $thisListen      =   new ListenType();
-            $thisListen       =   $thisListen->find("exerciseID = '$exerciseID'");
-            $thisListen->title =   $_POST['title'];
-            if($result == '修改失败' && $_FILES['modifyfile']['name'] != NULL)
-            {
-                $thisListen->fileName = $_FILES['modifyfile']['name'];               
-            }  else {
-                $thisListen->fileName = $filename;
-            }
-            $thisListen->content  =   $_POST['content'];
-            if($result == '修改失败')
-            {
-              $thisListen -> update();
-              $result = "修改成功";
-            }
-            if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
-            {       
-                $this->render("ModifyEditListen",array(
-                    'type' => "listen",
-                    'exerciseID'      =>    $exerciseID,
-                    'title' => $thisListen->title,
-                    'content' => $thisListen->content,
-                   'filename' => $thisListen->fileName,
-                   'filepath' =>$thisListen->filePath,
-                    'result'          =>    $result
-                ));       
-            }else{           
-            $this->render("editListen",array(
-                'exerciseID'      =>  $thisListen->exerciseID,
-                'filename' => $thisListen->fileName,
-                'filepath' =>$thisListen->filePath,
-                'title'    =>  $thisListen->title,
-                'content'          =>  $thisListen->content,
-                'result'          =>  $result
-            ));
-        }
-     }
+    public function actionEditListenInfo()
+   {                  
+        $typename   = Yii::app()->session['role_now'];
+        $userid     = Yii::app()->session['userid_now'];
+        $filePath   = $typename."/".$userid."/";
+        $dir        = "resources/".$filePath;
+        $exerciseID = $_GET['exerciseID'];
+        $filename   = $_GET['oldfilename'];
+        $result     = "修改失败";
+       if($_FILES['modifyfile']['tmp_name'])
+       { 
+          if($_FILES['modifyfile']['type']!= "audio/mpeg")
+           {
+               $result = '文件格式不正确，应为MP3格式';            
+           }else if($_FILES['modifyfile']['error'] > 0)
+           {
+               $result = '文件上传失败';
+           }else{
+                $newName = Tool::createID().".".pathinfo($_FILES["modifyfile"]["name"],PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                if(file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
+                    unlink($dir . iconv("UTF-8", "gb2312", $filename));
+                Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
+                
+                $thisListen = new ListenType ();
+                $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
+                $thisListen->title = $_POST ['title'];
+                $thisListen->fileName = $newName;
+                $thisListen->content = $_POST ['content'];
+                $thisListen->update();
+                $result = "修改成功";
+           }
+       }           
+       if(Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam")
+       {       
+           $this->render("ModifyEditListen",array(
+               'type' => "listen",
+               'exerciseID'      =>    $exerciseID,
+               'title' => $thisListen->title,
+               'content' => $thisListen->content,
+              'filename' => $thisListen->fileName,
+              'filepath' =>$thisListen->filePath,
+               'result'          =>    $result
+           ));       
+       }else{           
+       $this->render("editListen",array(
+           'exerciseID'      =>  $thisListen->exerciseID,
+           'filename' => $thisListen->fileName,
+           'filepath' =>$thisListen->filePath,
+           'title'    =>  $thisListen->title,
+           'content'          =>  $thisListen->content,
+           'result'          =>  $result
+       ));
+   }
+    }
         
         
       public function actionCopyListen(){

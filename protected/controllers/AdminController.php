@@ -1488,11 +1488,11 @@ class AdminController extends CController {
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
         }
-        $title = "";
-        $content = "";
+        $title      = "";
+        $content    = "";
         if (isset($_POST ['title'])) {
-            $title = $_POST ['title'];
-            $content = $_POST ['content'];
+            $title    = $_POST ['title'];
+            $content  = $_POST ['content'];
             if ($_FILES ['file'] ['type'] != "audio/mpeg") {
                 $result = '文件格式不正确，应为MP3格式';
             } else if ($_FILES ['file'] ['error'] > 0) {
@@ -1502,16 +1502,14 @@ class AdminController extends CController {
                 $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
                 Resourse::model()->insertRela($newName, $oldName);
-                $result = '1';
-            }
-            if ($result == '1') {
-                $result = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $newName, $filePath, 0);
+                $result  = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $newName, $filePath, 0);
+                $result  = '1';
             }
         }
         $this->render('addListen', array(
-            'result' => $result,
-            'title' => $title,
-            'content' => $content
+            'result'    => $result,
+            'title'     => $title,
+            'content'   => $content
         ));
     }
 
