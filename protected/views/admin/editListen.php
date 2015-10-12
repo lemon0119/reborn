@@ -63,7 +63,7 @@
         <?php if(file_exists($listenpath)){?>
             <audio  src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
         <?php }else {?>
-            <p>原音频文件丢失或损坏！</p>
+            <p style="color: red">原音频文件丢失或损坏！</p>
         <?php } ?>
 </div>
 

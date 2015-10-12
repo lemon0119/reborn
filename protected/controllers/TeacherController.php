@@ -918,49 +918,43 @@ class TeacherController extends CController {
             ));
     }
 
- public function actionAddListen(){
-             $result =   'no';            
-             $typename = Yii::app()->session['role_now'];
-             $userid = Yii::app()->session['userid_now'];
-             $filePath =$typename."/".$userid."/"; 
-             $dir = "resources/".$filePath;        
-            
-             if(!is_dir($dir))
-             {
-             mkdir($dir,0777);
-             }
-            $title = "";
-            $content = "";
-            if(isset($_POST['title'])){
-                $title = $_POST['title'];
-                $content = $_POST["content"];
-                if($_FILES['file']['size']>80000000)
-                {
-                    $result = '大小不能超过8M';
-                }else if($_FILES['file']['type']!= "audio/mpeg")
-                {
-                    $result = '文件格式不正确，应为MP3格式';            
-                }else if($_FILES['file']['error'] > 0)
-                {
-                    $result = '文件上传失败';
-                }else if(file_exists($dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"])))
-                {
-                    $result='服务器存在相同文件';
-                }else{
-                     move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
-                     $result = '1';
-                }
-                if($result == '1')
-                {
-                    $result = ListenType::model()->insertListen($_POST['title'],$_POST['content'],$_FILES["file"]["name"],$filePath,Yii::app()->session['userid_now']);                  
-                }             
-            }
-            $this->render('addListen',array(
-               'result' => $result,
-                'title' => $title,
-                'content' => $content
-            ));
-        }
+    public function actionAddListen(){
+       $result =   'no';            
+       $typename = Yii::app()->session['role_now'];
+       $userid = Yii::app()->session['userid_now'];
+       $filePath =$typename."/".$userid."/"; 
+       $dir = "resources/".$filePath;        
+
+      if(!is_dir($dir))
+      {
+          mkdir($dir,0777);
+      }
+      $title = "";
+      $content = "";
+      if(isset($_POST['title'])){
+          $title = $_POST['title'];
+          $content = $_POST["content"];
+          if($_FILES['file']['type']!= "audio/mpeg")
+          {
+              $result = '文件格式不正确，应为MP3格式';            
+          }else if($_FILES['file']['error'] > 0)
+          {
+              $result = '文件上传失败';
+          }else{
+               move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$_FILES["file"]["name"]));
+               $result = '1';
+          }
+          if($result == '1')
+          {
+              $result = ListenType::model()->insertListen($_POST['title'],$_POST['content'],$_FILES["file"]["name"],$filePath,Yii::app()->session['userid_now']);                  
+          }             
+      }
+      $this->render('addListen',array(
+         'result' => $result,
+          'title' => $title,
+          'content' => $content
+      ));
+   }
         
      public function actionSearchListen()
         {
