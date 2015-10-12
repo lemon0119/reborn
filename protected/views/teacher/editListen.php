@@ -72,7 +72,11 @@
             <div class="control-group">
                 <label class="control-label" for="input02">修改</label>
                 <div class="controls">
-                <input type="file" name="modifyfile" id="input02">      
+                    <input type="file" name="modifyfile" id="input02"> 
+                    <div id="upload" style="display:inline;" hidden="true">
+                    <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+                        正在上传，请稍等...
+                    </div>
                 </div>
             </div>
         <?php } else if($action == 'look') {?>
@@ -97,6 +101,7 @@
 </div>
 <script>     
 $(document).ready(function(){
+    $("#upload").hide();
     <?php if(isset($result))
             echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
 });
@@ -104,6 +109,7 @@ $(document).ready(function(){
 
 
 $("#myForm").submit(function(){
+    $("#upload").show();
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
         window.wxc.xcConfirm('题目不能为空', window.wxc.xcConfirm.typeEnum.warning);
