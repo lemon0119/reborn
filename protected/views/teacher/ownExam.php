@@ -40,10 +40,10 @@
                     <tr>
                         <td class="font-center" style="width: 50px"><?php echo $work['exerciseID'];?></td>
                         <td class="font-center">
-                            <?php  if(strlen($work['requirements'])<=15)
+                            <?php  if(Tool::clength($work['requirements'])<=10)
                                         echo $work['requirements'];
                                     else
-                                        echo substr($work['requirements'], 0, 15)."...";
+                                        echo Tool::csubstr($work['requirements'], 0,10)."...";
                                         ?>
                         </td>
                         <td class="font-center" >

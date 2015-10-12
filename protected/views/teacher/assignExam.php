@@ -133,7 +133,7 @@ function begin_now(examID,d,time,isOpen)
         if(confirm("你确定要立即开始？")){
             window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
         }
-    
+   
 }
 </script>
 

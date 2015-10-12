@@ -64,13 +64,13 @@
                 //console.log(time + "time");
                 var seconds = <?php if($isExam) echo $exerOne['time']; else echo '0';?>;
                 //console.log(seconds + "seconds");
-                if(time >= seconds){
+                /*if(time >= seconds){
                     clearInterval(isover);
                     doSubmit(true,function(){
                         window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['suiteID'];?>&&workID=<?php echo Yii::app()->session['workID']?>";
                     });
                     
-                }
+                }*/
             },1000);
         }
     });
