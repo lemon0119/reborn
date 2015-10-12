@@ -56,7 +56,7 @@
 <script>     
 $(document).ready(function(){
     <?php if(isset($result))
-            echo "alert('$result');";?>
+            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
 });
 
 
@@ -64,12 +64,12 @@ $(document).ready(function(){
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        alert('题目不能为空');
+        window.wxc.xcConfirm('题目不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     var A = $("#input03")[0].value;
     if(A === ""){
-        alert('内容不能为空');
+        window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });

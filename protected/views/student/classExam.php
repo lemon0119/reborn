@@ -13,7 +13,7 @@
                     <tr>
                             <th>标　　题</th>
                             <th>开始时间</th>
-                            <th>截止时间</th>
+                           
                             <th>是否完成</th>
                             <th>操　　作</th>
                             <th>分    数</th>
@@ -30,9 +30,7 @@
                             <td>
                                     <?php echo $exam['begintime'];?>
                             </td>
-                            <td>
-                                    <?php echo $exam['endtime'];?>
-                            </td>
+                      
                              <td>
                                     <?php if ($ratio_accomplish[$n] ==1){
                                     	echo '已完成';
@@ -41,7 +39,7 @@
                                     }?>
                            </td>
                             <td>
-                                <?php if(time() < strtotime($exam['endtime'])&& $ratio_accomplish[$n] ==0){?>
+                               <?php if((time() <strtotime($exam['begintime'])+60*$exam['duration'])&& $ratio_accomplish[$n] ==0){?>
                                 <a href="./index.php?r=student/clsexamOne&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '进　　入';?></a>
                                 <?php } else { ?>
                                     <?php echo '<font color="#ff0000">已经截止</font>'; ?>

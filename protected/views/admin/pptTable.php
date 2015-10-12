@@ -45,7 +45,8 @@
         $("#dele").click(function(){
             $.get($(this).attr("href"),function(data,status){
                 $("#ppt-table").load("./index.php?r=admin/pptTable&&pdir=<?php echo $pdir;?>");
-                alert(data);
+
+    window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.confirm);
             });  
             return false;     
         });

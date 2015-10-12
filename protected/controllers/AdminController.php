@@ -294,7 +294,6 @@ class AdminController extends CController {
         ));
         }
         
-        
     }
 
     public function actionDeleteStuDontHaveClass() {
@@ -319,8 +318,8 @@ class AdminController extends CController {
         if (isset($_GET ['flag'])) {
             $this->render('editStu', array(
                 'userID' => $_GET ['id'],
-                'userName' => $_GET ['name'],
-                'classID' => $_GET ['class'],
+                'userName' => $sqlStudentInfo['name'],
+                'classID' => $sqlStudentInfo['classID'],
                 'classAll' => $classAll,
                 'userAll' => $userAll,
                 'sex' => $sqlStudentInfo['sex'],
@@ -1938,7 +1937,7 @@ class AdminController extends CController {
                     $value = - 1;
             }
         }
-        if ($type == "requirements") {
+        if ($type == "requirements"&&$value!=="") {
             $searchKey = $value;
         } else {
             $searchKey = "no";

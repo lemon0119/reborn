@@ -17,13 +17,13 @@
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
+                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"><?php echo ($ansWork['answer']);?></div>
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
+                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"><?php echo ($work['content']);?></div>
                 </td>
             </tr>
         </table>
@@ -102,7 +102,6 @@
         if(i < modTem.length)
             createFont(id,'#ff0000',modTem.substr(i));
     }   
-   start();  
    
      function nextWork(answerID,recordID,examID,exerciseID){
         if(<?php echo $isLast?> == 1)

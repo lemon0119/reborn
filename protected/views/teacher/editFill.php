@@ -124,7 +124,7 @@
 <script>     
 $(document).ready(function(){
     <?php if(isset($result))
-            echo "alert('$result');";?>
+            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>
 });
 $("#myForm").submit(function(){
     var requirements = $("#input1")[0].value;

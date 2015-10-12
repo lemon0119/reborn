@@ -90,7 +90,7 @@
                     <?php foreach($array_accomplished as $student):
                             ?>
                     <tr>
-                        <td class="font-orange" style="width: 50px">
+                        <td class="font-orange" style="width: 75px">
                             <?php echo $student['userName'];?>
                         </td>
                         <td style="width: 50px">
@@ -126,7 +126,7 @@
                     <?php foreach($array_unaccomplished as $student):
                             ?>
                     <tr>
-                        <td style="width: 50px">
+                        <td style="width: 75px">
                            <?php echo $student['userName'];?>
                         </td>
                         <td>

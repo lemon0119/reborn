@@ -84,7 +84,7 @@
     $(document).ready(function(){
         var result = <?php echo "'$maniResult'";?>;
         if(result != "")
-            alert(result);
+        window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
         else
             parent.refresh();
     });  
