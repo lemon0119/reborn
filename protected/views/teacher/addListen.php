@@ -35,7 +35,8 @@
 </div>
 
 <div class="span9">        
-<h3>添加听打练习题</h3>
+<h3 style="display:inline-block;">添加听打练习题</h3>
+<span>(支持mp3及wav格式)</span>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/AddListen" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
            <legend>填写题目</legend>

@@ -1493,8 +1493,9 @@ class AdminController extends CController {
         if (isset($_POST ['title'])) {
             $title    = $_POST ['title'];
             $content  = $_POST ['content'];
-            if ($_FILES ['file'] ['type'] != "audio/mpeg") {
-                $result = '文件格式不正确，应为MP3格式';
+            if ($_FILES ['file'] ['type'] != "audio/mpeg" &&
+                $_FILES ['file'] ['type'] != "audio/wav"    ) {
+                $result = '文件格式不正确，应为MP3或WAV格式';
             } else if ($_FILES ['file'] ['error'] > 0) {
                 $result = '文件上传失败';
             } else {
@@ -1647,11 +1648,14 @@ class AdminController extends CController {
         $filePath = $_GET['filepath'];
         $dir = "resources/" . $filePath;
         $exerciseID = $_GET ['exerciseID'];
+        $thisListen = new ListenType ();
+        $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
         $filename = $_GET ['oldfilename'];
         $result = "修改失败";
         if ($_FILES ['modifyfile'] ['tmp_name']) {
-            if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg") {
-                $result = '文件格式不正确，应为MP3格式';
+            if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
+                $_FILES ['modifyfile'] ['type'] != "audio/wav"    ) {
+                $result = '文件格式不正确，应为MP3或WAV格式';
             } else if ($_FILES ['modifyfile'] ['error'] > 0) {
                 $result = '文件上传失败';
             } else { 
@@ -1659,10 +1663,7 @@ class AdminController extends CController {
                 move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
                 if(file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
                     unlink($dir . iconv("UTF-8", "gb2312", $filename));
-                Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
-                
-                $thisListen = new ListenType ();
-                $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
+                Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);               
                 $thisListen->title = $_POST ['title'];
                 $thisListen->fileName = $newName;
                 $thisListen->content = $_POST ['content'];
