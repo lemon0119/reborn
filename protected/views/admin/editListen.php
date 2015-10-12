@@ -57,24 +57,30 @@
                 <textarea name="title" style="width:450px; height:20px;" id="input01"><?php echo $title; ?></textarea>
             </div>
         </div>
-            
-          <div class="control-group">
-              
-              <label class="control-label" ></label>
+ 
+<div class="control-group">
+        <label class="control-label" ></label>
+        <?php if(file_exists($listenpath)){?>
             <audio  src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
-         </div>
-            
-            
-           <div class="control-group">
-               <label class="control-label" for="input02">修改</label>
-               <div class="controls">
-               <input type="file" name="modifyfile" id="input02">
-               <div id="upload" style="display:inline;" hidden="true">
-               <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
-                　　正在上传，请稍等...
-               </div>
-               </div>
-           </div>
+        <?php }else {?>
+            <p style="color: red">原音频文件丢失或损坏！</p>
+        <?php } ?>
+</div>
+
+        <?php if(!isset($action)) {?>
+            <div class="control-group">
+                <label class="control-label" for="input02">修改</label>
+                <div class="controls">
+                <input type="file" name="modifyfile" id="input02">
+                <div id="upload" style="display:inline;" hidden="true">
+                <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+                     正在上传，请稍等...
+                </div>
+                </div>
+            </div>                   
+        <?php } else if($action == 'look') {?>
+        <?php }?>   
+
             
         <div class="control-group">
             <label class="control-label" for="input03">内容</label>
