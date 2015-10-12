@@ -39,7 +39,7 @@
                 <div class="scroll" style="padding: 8px 0;height:100px;overflow:auto;margin-left: 20px;">
                 <?php foreach($stu as $student){
                     ?>
-                    <li id="li-<?php echo $key; ?>"><?php echo $student['userName']?></li>
+                    <li><?php echo $student['userName']?></li>
                 <?php
                 }
                 
