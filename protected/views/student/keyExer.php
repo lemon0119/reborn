@@ -35,7 +35,7 @@
                 </tr>
         </table>
         <br/>
-        <table id="keyMode" style="height: 60px; font-size: 60px; border: 1px solid #000">
+        <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
                 <td id="left-key" style="border-right: 1px solid #000; width: 300px;text-align:right;">ABCDEF</td>
                 <td id="right-key" style="border-left: 1px solid #000; width: 300px">AS</td>
@@ -76,6 +76,7 @@
     
     $(document).ready(function(){
         if(isExam){
+            alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
             var isover = setInterval(function(){
                 var time = getSeconds();
                 var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;

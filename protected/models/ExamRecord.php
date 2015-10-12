@@ -140,8 +140,6 @@ class ExamRecord extends CActiveRecord
                  return -1;
         }else
         {   
-            echo $workID;
-            echo $studentID;
             $result =  ExamRecord::model()->find('workID=? and studentID>? and ratio_accomplish=1 order by studentID ASC', array($workID,$studentID));
             if($result != NULL)
                 return $result['studentID'];

@@ -21,7 +21,7 @@
         $strTime .= $ss < 10 ? "0".$ss : $ss;
     }//end
 ?>
-<?php if(!$isOver){?>
+ <?php if(!$isOver){?>
 <div class="span9">
     <div class="hero-unit" align="center">
             <?php 
@@ -60,6 +60,7 @@
     
     $(document).ready(function(){
         if(isExam){
+            alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
             var isover = setInterval(function(){
                 var time = getSeconds();
                 //console.log(time + "time");
