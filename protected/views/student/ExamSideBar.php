@@ -88,11 +88,11 @@ $currtime = $examInfo['endtime'];
                 return false;
             }
         });
-        var curtime = <?php echo time();?>;
-        var endTime = <?php echo strtotime($examInfo['endtime']);?>;
+        var curtime = <?php echo time();?>;     
+        //var endTime = <?php echo strtotime($examInfo['endtime']);?>;
         var beginTime = <?php echo strtotime($examInfo['begintime']);?>;
         function endTimer(endID){
-            window.wxc.xcConfirm("考试时间已到，即将交卷。", window.wxc.xcConfirm.typeEnum.warning);
+            //window.wxc.xcConfirm("考试时间已到，即将交卷。", window.wxc.xcConfirm.typeEnum.warning);
             submitSuite(true);
         }
         tCounter(curtime,beginTime+60*<?php echo $examInfo['duration']?>,"sideTime", endTimer);
