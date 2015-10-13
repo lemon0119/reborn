@@ -39,17 +39,17 @@
                                     }?>
                            </td>
                             <td>
-                               <?php if((time() <strtotime($exam['begintime'])+60*$exam['duration'])&& $ratio_accomplish[$n] ==0){?>
+                               <?php if(time()>=strtotime($exam['begintime'])&&(time() <strtotime($exam['begintime'])+60*$exam['duration'])&& $ratio_accomplish[$n] ==0){?>
                                 <a href="./index.php?r=student/clsexamOne&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '进　　入';?></a>
-                                <?php } else { ?>
-                                    <?php echo '<font color="#ff0000">已经截止</font>'; ?>
-                                  &nbsp;&nbsp;&nbsp|  &nbsp;&nbsp;&nbsp    
-                                  <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '查看成绩';?></a>
-                                <?php }?>
+                                <?php } else if(time()>strtotime($exam['begintime'])&& $ratio_accomplish[$n] ==1){ ?>
+                                                <?php echo '<font color="#ff0000">已经截止</font>'?>
+                                                |  &nbsp;&nbsp;&nbsp    
+                                                 <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '查看成绩';?></a>
+                                <?php }else { echo '<font color="#ff0000">时间未到</font>';}?>
                             </td>
                             <td>
                                  <?php if($score[$n]==null){
-                                         echo "未完成";
+                                         echo "未批阅";
                                  } else {
                                  echo $score[$n];
                                  }$n++;?> 
