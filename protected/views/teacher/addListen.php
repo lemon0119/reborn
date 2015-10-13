@@ -35,7 +35,8 @@
 </div>
 
 <div class="span9">        
-<h3>添加听打练习题</h3>
+<h3 style="display:inline-block;">添加听打练习题</h3>
+<span>(支持mp3及wav格式)</span>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/AddListen" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
            <legend>填写题目</legend>
@@ -46,10 +47,14 @@
             </div>
         </div>
         <div class="control-group">
-               <label class="control-label" for="input02">文件</label>
-               <div class="controls">
-               <input type="file" name="file" id="input02">      
-               </div>
+                <label class="control-label" for="input02">文件</label>
+                <div class="controls">
+                    <input type="file" name="file" id="input02">      
+                    <div id="upload" style="display:inline;" hidden="true">
+                    <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+                        正在上传，请稍等...
+                    </div>
+                </div>
            </div>
         <div class="control-group">
             <label class="control-label" for="input03">听打答案</label>
@@ -68,6 +73,8 @@
 </div>
 <script>     
 $(document).ready(function(){
+    $("#upload").hide();
+    
     var result = <?php echo "'$result'";?>;
     if(result === '1')
     window.wxc.xcConfirm('添加听打练习成功！', window.wxc.xcConfirm.typeEnum.success);
@@ -80,7 +87,7 @@ $(document).ready(function(){
         
 });
 $("#myForm").submit(function(){
-
+    $("#upload").show();
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
         window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);

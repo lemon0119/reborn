@@ -19,7 +19,7 @@
         $strTime .= $ss < 10 ? "0".$ss : $ss;
     }//end
  ?>
-
+<?php if(!$isOver){?>
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
@@ -28,16 +28,14 @@
                 <tr>
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
-                        <?php if($isOver){?>
                         <td width = '250px'>总时间：<?php echo $strTime?></td>
-                        <?php }?>
                     <?php }?>
                     <td width = '250px'>计时：<span id="time">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                 </tr>
         </table>
         <br/>
-        <table id="keyMode" style="height: 60px; font-size: 60px; border: 1px solid #000">
+        <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
                 <td id="left-key" style="border-right: 1px solid #000; width: 300px;text-align:right;">ABCDEF</td>
                 <td id="right-key" style="border-left: 1px solid #000; width: 300px">AS</td>
@@ -70,21 +68,26 @@
         <input name="nm_correct" id="id_correct" type="hidden">
     </form>
 </div>
+  <?php } else {?>
+ <h3 align="center">本题时间已经用完</h3>
+<?php }?>
 <script>
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
         if(isExam){
+            alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
             var isover = setInterval(function(){
                 var time = getSeconds();
                 var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;
-                if(time >= seconds){
+                if(time >= seconds &&second!=0){
                     clearInterval(isover);
                     doSubmit(true,function(){
                         window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['suiteID'];?>&&workID=<?php echo Yii::app()->session['workID']?>";
                     });
                     
                 }
+                
             },1000);
         }
         startParse();
