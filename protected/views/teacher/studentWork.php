@@ -61,8 +61,12 @@
                              echo $thisSuite['suiteName']?>                    
                         </td>
                         <td>     
-                            <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看学生</a>     
-                            <a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $thisSuite['suiteID']?>"><img title="查看习题" src="<?php echo IMG_URL;?>detail.png"/></a>                      
+                            <?php if($workID==$suiteLesson['workID']){?>
+                                <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>   
+                            <?php }else{?>
+                                <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>"  style="color:gray">查看</a> 
+                            <?php }?>
+                            <!--<a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $thisSuite['suiteID']?>"><img title="查看习题" src="<?php echo IMG_URL;?>detail.png"/></a>   -->                   
                            
 
                         </td>
