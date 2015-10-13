@@ -77,13 +77,13 @@
          <div class="control-group">
              <label class="control-label" for="input1">题目</label>
              <div class="controls">
-                 <textarea name="requirements" style="width:450px; height:50px;" id="input1"><?php echo $requirements; ?></textarea>
+                 <textarea name="requirements" style="width:450px; height:50px;" id="input1" <?php if(isset($action)) {?> readOnly="true"<?php }?>><?php echo $requirements; ?></textarea>
              </div>
          </div>
          <div class="control-group">
              <label class="control-label" for="input2">答案</label>
              <div class="controls">
-                 <input name="in1" type="text" class="input-xlarge" id="input2" value="<?php echo $optArr[0];?>" />
+                 <input name="in1" type="text" class="input-xlarge" id="input2" value="<?php echo $optArr[0];?>"  <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
                  <?php if(!isset($action)) {?>
                     <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> 
                     <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
