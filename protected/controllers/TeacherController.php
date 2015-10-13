@@ -483,7 +483,7 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
-                        if($type == "content")
+                        if($type == "content"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -994,7 +994,7 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
-                        if($type == "content")
+                        if($type == "content"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -1345,7 +1345,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-                        if($type == "requirements")
+                        if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -1721,7 +1721,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-                        if($type == "requirements")
+                        if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -2005,7 +2005,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-            if($type == "requirements")
+            if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
