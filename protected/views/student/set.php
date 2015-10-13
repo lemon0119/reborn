@@ -12,6 +12,22 @@ function test()
 	     return false;
 	 } 
 }
+function long(){
+    var temp = document.getElementById("input02").value;
+    var reg=/^[A-Za-z0-9]+$/;
+    if(!reg.test(temp)||temp.length<3||temp.length>15){
+        alert('密码必须为3-15位的数字和字母的组合');
+        document.getElementById("input02").value="";
+    }
+}
+function long2(){
+    var temp = document.getElementById("input03").value;
+    var reg=/^[A-Za-z0-9]+$/;
+    if(!reg.test(temp)||temp.length<3||temp.length>15){
+        alert('密码必须为3-15位的数字和字母的组合');
+        document.getElementById("input03").value="";
+    }
+}
 </script>
 <div class="span9">
     
@@ -27,11 +43,11 @@ function test()
                 </div>
                 <label class="control-label" for="input02">新密码</label>
                 <div class="controls">
-                        <input name="new1" type="password" class="input-xlarge" id="input02" style="height: 30px;"/>
+                        <input name="new1" type="password" onblur="long()" class="input-xlarge" id="input02" style="height: 30px;"/>
                 </div>
                 <label class="control-label" for="input03">确认密码</label>
                 <div class="controls">
-                        <input name="defnew" type="password" class="input-xlarge" id="input03" style="height: 30px;"/>
+                        <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/>
                 </div>
                 <label class="control-label" for="input03">邮箱</label>
                 <div class="controls">
