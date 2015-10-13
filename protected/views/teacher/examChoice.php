@@ -5,9 +5,9 @@
           $totalScore=0;
           $realScore=0;
           $n=1;
-         foreach ($works as $work){         
+         foreach ($works  as $k=>$work){         
                 $right = $work['answer'];
-                $uAns = $ansWork['answer'];              
+                $uAns = $choiceAnsWork[$k];              
                 if($uAns == "")
                 {
                     echo "<font color=red>未作答</font>";
@@ -15,7 +15,7 @@
                 }
                 else{
                 ?>
-    <div class="<?php if($uAns === $right ){ echo 'answer-right-choice'; $realScore=$realScore+$exam_exercise['score'];} else {echo 'answer-wrong-choice';}?>"></div>
+    <div class="<?php if($uAns === $right ){   echo 'answer-right-choice'; $realScore=$realScore+$exam_exercise['score'];} else {echo 'answer-wrong-choice';}?>"></div>
         <?php }?>
                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo "<font color=green size=5px>$n</font>"?>.<?php  echo $work['requirements'];
                 echo '<br/>';
@@ -23,7 +23,7 @@
                 $optArr = explode("$$",$opt);
                 $mark = 'A';
                 foreach ($optArr as $aOpt) {?>
-                    <input style="margin-left: 60px;" type="radio" disabled <?php if($mark === $uAns) echo 'checked';?> >&nbsp <?php echo $mark.'.'.$aOpt;?>
+                 <input style="margin-left: 60px;" type="radio" disabled <?php  if($mark === $uAns) echo 'checked';?> >&nbsp <?php echo $mark.'.'.$aOpt;?>
                     <?php if($mark === $right){?>
                         <span class='answer-check'></span>
                     <?php }?>
