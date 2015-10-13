@@ -327,6 +327,8 @@ class StudentController extends CController {
         //echo '$costTime'.$costTime;
         $totalTime = $result['time'];
         //echo '$totalTime'.$totalTime;
+        $isOver=0;
+        if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
         //end
          if($recordID==null){
@@ -447,6 +449,8 @@ class StudentController extends CController {
         //echo '$costTime'.$costTime;
         $totalTime = $result['time'];
         //echo '$totalTime'.$totalTime;
+        $isOver=0;
+        if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
         //end
        if($recordID==null){
@@ -576,6 +580,8 @@ class StudentController extends CController {
         //echo '$costTime'.$costTime;
         $totalTime = $result['time'];
         //echo '$costTime'.$costTime;
+        $isOver=0;
+        if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
         //end
          if($recordID==null){
