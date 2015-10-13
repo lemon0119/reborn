@@ -16,7 +16,7 @@ function test()
 <div class="span9">
     <div class="span_set">
     <h3>设置密码</h3>
-    <form id="myForm" method="post" action="./index.php?r=admin/set"> 
+    <form id="myForm"  method="post" action="./index.php?r=admin/set"> 
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
