@@ -49,13 +49,13 @@
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="requirements" style="width:450px; height:50px;" id="input01"><?php echo $requirements; ?></textarea>
+                <textarea name="requirements" style="width:450px; height:50px;" id="input01" <?php if(isset($action)) {?> readOnly="true"<?php }?>><?php echo $requirements; ?></textarea>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="input02">答案</label>
             <div class="controls">               
-                <textarea name="answer" style="width:450px; height:200px;"><?php echo $answer; ?></textarea>
+                <textarea name="answer" style="width:450px; height:200px;" <?php if(isset($action)) {?> readOnly="true"<?php }?>><?php echo $answer; ?></textarea>
             </div>
         </div> 
         <div class="form-actions">
