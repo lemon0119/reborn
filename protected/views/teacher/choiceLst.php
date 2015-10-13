@@ -63,10 +63,10 @@
                     <tr>
                         <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
                         <!--<td class="font-center"><?php echo $model['courseID'];?></td>-->
-                        <td class="font-center"><?php  if(strlen($model['requirements'])<=15)
-                                        echo $model['requirements'];
-                                    else
-                                        echo substr($model['requirements'], 0, 15)."...";
+                        <td class="font-center"><?php  if(Tool::clength($model['requirements'])<=10)
+                                   echo  $model['requirements'];
+                               else
+                                   echo Tool::csubstr($model['requirements'], 0, 10)."...";
                                         ?></td>
                         <td class="font-center"><?php  if($model['createPerson']=="0")
                                         echo "管理员";

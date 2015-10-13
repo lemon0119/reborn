@@ -7,8 +7,8 @@
                 <img style="width:200px;height:100px;" src="<?php echo $picAddress; ?>">
             <?php }?>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="input03">上传头像：</label>
+        <div style="margin-left: 100px;">
+            <label >上传头像：(*仅限gif,png,jpeg,pjpeg)</label>
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
                 <input type="file" name="file"  id="file"/>
                 <button type="submit" class="btn btn-primary">上传</button>
@@ -19,6 +19,7 @@
 
 <script>  
 $(document).ready(function(){
+    if(<?php echo $result;?>!="")
         window.wxc.xcConfirm('<?php echo $result;?>', window.wxc.xcConfirm.typeEnum.confirm);
 }); 
     </script>
