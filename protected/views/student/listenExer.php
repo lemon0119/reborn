@@ -35,10 +35,7 @@
                 <tr>
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
-                        <td width = '250px'>总时间：<?php echo $strTime?></td>    
-                        <?php if($isOver){?>
-                        
-                        <?php }?>
+                        <td width = '250px'>总时间：<?php echo $strTime?></td>  
                     <?php }?>
                     <td width = '250px'>计时：<span id="time">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
@@ -70,12 +67,13 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     $(document).ready(function(){
         if(isExam){
+            alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
             var isover = setInterval(function(){
                 var time = getSeconds();
                 //console.log(time + "time");
                 var seconds = <?php if($isExam) echo $exerOne['time']; else echo '0';?>;
                 //console.log(seconds + "seconds");
-                if(time >= seconds){
+                if(time >= seconds &&second!=0){
                     clearInterval(isover);
                     doSubmit(true,function(){
                         window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['suiteID'];?>&&workID=<?php echo Yii::app()->session['workID']?>";
