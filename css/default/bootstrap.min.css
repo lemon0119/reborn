@@ -4831,7 +4831,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
      margin: 0px 0px 0px 0px;
 }
 .startcourse-startclass{
-    background-color: #e5e5e5;
+    background-color: gray;
     position: relative;
     right: 6px;
     padding: 50px 133px 50px 133px;
@@ -4858,7 +4858,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     font-size: 30px;
     position: relative;
     top: 8px;
-    left:115px;
+    left:163px;
     float: left;
     color: red
 }

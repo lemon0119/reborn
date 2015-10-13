@@ -35,7 +35,7 @@ echo "<script>var role='$role';</script>";
     </div>
         <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
         <div id="bulletin" class="bulletin" style="display:none">
-                <textarea disabled id="bulletin-textarea" style="color:gray;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both" oninput="this.style.color='red'"></textarea>
+                <textarea disabled id="bulletin-textarea" style="color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
         </div>
         <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
         <div id="chat-box">

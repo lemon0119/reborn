@@ -483,7 +483,7 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
-                        if($type == "content")
+                        if($type == "content"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -994,7 +994,7 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
-                        if($type == "content")
+                        if($type == "content"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -1345,7 +1345,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-                        if($type == "requirements")
+                        if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -1721,7 +1721,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-                        if($type == "requirements")
+                        if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -2005,7 +2005,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-            if($type == "requirements")
+            if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -3355,7 +3355,6 @@ class TeacherController extends CController {
         $studentID = $_GET['studentID'];
         $accomplish = $_GET['accomplish'];
         $classID = $_GET['classID']; 
-        echo $workID;
        $nextStudentID = ExamRecord::model()->getNextStudentID($workID,$studentID,$accomplish,$classID);
        if($nextStudentID == -1)
         {
@@ -3504,7 +3503,6 @@ class TeacherController extends CController {
                  break;
          }           
          $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$work['exerciseID']));
-        
          $this->renderPartial($render,array(
              'work'=> $work,
              'ansWork'=>$ansWork,

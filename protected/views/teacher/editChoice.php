@@ -53,7 +53,7 @@
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="requirements" style="width:450px; height:50px;" id="input01"><?php echo $requirements;?></textarea>
+                <textarea name="requirements" style="width:450px; height:50px;" id="input01" <?php if(isset($action)) {?> readOnly="true"<?php }?>><?php echo $requirements;?></textarea>
             </div>
         </div>
         <div class="control-group">
@@ -61,7 +61,7 @@
             <div class="controls">
                 <input type="radio"  value="A" name="answer" <?php if($mark==$answer)
                                                                     echo "checked='checked'"; $mark++; ?>></input>
-                <input name="A" type="text" class="input-xlarge" id="input02" value="<?php echo $optArr[0]; ?>" />
+                <input name="A" type="text" class="input-xlarge" id="input02" value="<?php echo $optArr[0]; ?>"  <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
             </div>
         </div>
         <div class="control-group">
@@ -69,7 +69,7 @@
             <div class="controls">
                 <input type="radio"  value="B" name="answer" <?php if($mark==$answer)
                                                                     echo "checked='checked'"; $mark++; ?>></input>
-                <input name="B" type="text" class="input-xlarge" id="input03" value="<?php echo $optArr[1]; ?>" />
+                <input name="B" type="text" class="input-xlarge" id="input03" value="<?php echo $optArr[1]; ?>"  <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
             </div>
         </div>
         <div class="control-group">
@@ -77,7 +77,7 @@
             <div class="controls">
                 <input type="radio"  value="C" name="answer" <?php if($mark==$answer)
                                                                     echo "checked='checked'"; $mark++; ?>></input>
-                <input name="C" type="text" class="input-xlarge" id="input04" value="<?php echo $optArr[2]; ?>" />
+                <input name="C" type="text" class="input-xlarge" id="input04" value="<?php echo $optArr[2]; ?>"  <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
             </div>
         </div>
         <div class="control-group">
@@ -85,7 +85,7 @@
             <div class="controls">
                 <input type="radio"  value="D" name="answer" <?php if($mark==$answer)
                                                                     echo "checked='checked'";?>></input>
-                <input name="D" type="text" class="input-xlarge" id="input05" value="<?php echo $optArr[3]; ?>"/>
+                <input name="D" type="text" class="input-xlarge" id="input05" value="<?php echo $optArr[3]; ?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
             </div>
         </div>
     <div class="form-actions">
