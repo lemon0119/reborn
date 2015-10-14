@@ -37,8 +37,8 @@ $(document).ready(function(){
     window.wxc.xcConfirm('添加班级成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
     window.wxc.xcConfirm('添加班级失败！', window.wxc.xcConfirm.typeEnum.error);
-    else
-    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.error);    
+    else if(result === '2')
+    window.wxc.xcConfirm('存在同名班级!', window.wxc.xcConfirm.typeEnum.error);    
 });    
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
