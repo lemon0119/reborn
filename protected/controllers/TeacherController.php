@@ -50,18 +50,21 @@ class TeacherController extends CController {
             $choiceAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'choice']);
             foreach ($choiceAll as $choice) {
                 $choice->score = $choiceScore;
+                $choice->update();
             }
         }
         if(!!$fillScore){
             $fillingAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'filling']);
             foreach ($fillingAll as $exer) {
                 $exer->score = $fillScore;
+                $exer->update();
             }
         }
         if(!!$questScore){
             $questAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'question']);
             foreach ($questAll as $exer) {
                 $exer->score = $questScore;
+                $exer->update();
             }
         }
         $listenAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'listen']);
