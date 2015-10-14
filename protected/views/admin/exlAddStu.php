@@ -13,7 +13,7 @@
                     <input type="file" name="file" id="file" />
                 </div>
             </div>
-            <h3>异常列表</h3>
+            <h3>异常添加列表</h3>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
