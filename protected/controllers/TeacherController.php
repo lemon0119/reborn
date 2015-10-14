@@ -3636,6 +3636,12 @@ class TeacherController extends CController {
          }
          $exam_exercise = ExamExercise::model()->find("exerciseID=? and examID=? and type=?" ,array($work['exerciseID'],$examID,$type));        
          $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$work['exerciseID']));
+         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID",array($recordID ,$type));
+         $choiceAnsWork = array();
+         foreach ($SQLchoiceAnsWork as $v){
+             $answer = $v['answer'];
+             array_push($choiceAnsWork, $answer);
+         }
          $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
          switch($type)
          {
@@ -3666,6 +3672,7 @@ class TeacherController extends CController {
              'works'=> $array_exercise,
              'work'=>$work,
              'ansWork'=>$ansWork,
+             'choiceAnsWork'=>$choiceAnsWork,
              'exam_exercise' => $exam_exercise,
              'isLast'=>$isLast,
              'score'=>$score           
