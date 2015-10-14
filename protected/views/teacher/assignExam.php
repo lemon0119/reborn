@@ -65,14 +65,13 @@
                         <?php } ?>  
                     </td>   
 
-                    <td class="font-center" style="width: 130px">
+                    <td class="font-center" style="width: 180px">
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                         <?php if ($isOpen==false) {?>
-                         
                             <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')">立即开始</a> 
                         <?php} ?>
-                            
+                            <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php echo IMG_URL; ?>edit.png">配置</a>
                         <?php }?>
                         
                     </td>
