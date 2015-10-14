@@ -1257,7 +1257,7 @@ class AdminController extends CController {
             $classes    = TbClass::model()->findAll("className = '$className'");
             if(count($classes) > 0)
             {
-                $result     = "已存在同名班级！";
+                $result     = 2;
             }else{
                 $classID    = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
                 $lessons    = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
