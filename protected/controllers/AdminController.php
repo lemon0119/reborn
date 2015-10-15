@@ -1251,12 +1251,19 @@ class AdminController extends CController {
     public function actionAddClass() {
         $result = 'no';
         if (isset($_POST ['className'])) {
-            $classID = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
-            $lessons = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
-            foreach ($lessons as $lesson) {
-                Lesson::model()->insertLesson($lesson['lessonName'], $lesson['courseID'], 0, $classID);
+            $className  = $_POST ['className'];
+            $classes    = TbClass::model()->findAll("className = '$className'");
+            if(count($classes) > 0)
+            {
+                $result     = 2;
+            }else{
+                $classID    = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
+                $lessons    = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
+                foreach ($lessons as $lesson) {
+                    Lesson::model()->insertLesson($lesson['lessonName'], $lesson['courseID'], 0, $classID);
+                }
+                $result     = 1;
             }
-            $result = 1;
         }
         $this->render('addClass', [
             'result' => $result
