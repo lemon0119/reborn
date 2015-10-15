@@ -13,15 +13,14 @@
                     <input type="file" name="file" id="file" />
                 </div>
             </div>
-            <h3>异常列表</h3>
+            <h3>异常添加列表</h3>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th class="font-center">学号</th>
                         <th class="font-center">姓名</th>
-                        <th class="font-center">失败原因</th>         
+                        <th class="font-center">异常原因</th>         
                         <th class="font-center">是否自动解决</th>               
-                        <th class="font-center">操作</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -32,11 +31,6 @@
                       <td class="font-center"><?php echo $stu_fail[0]; ?></td> 
                       <td class="font-center"  <?php if($stu_fail[3]=="需手动修复"){
   echo 'style="color: red"';}else{echo 'style="color: green"';}?>><?php echo $stu_fail[3]; ?></td>  
-                       <td class="font-center" style="width: 100px">  
-                         <?php if(!$stu_fail[3]=="需手动修复"){ ?>
-                              <a><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
-                         <?php }else{  echo '/';}?>
-                       </td>
                     <tr>
                    <?php } }?>
                 </tbody>

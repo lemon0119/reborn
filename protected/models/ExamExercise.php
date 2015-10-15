@@ -104,6 +104,20 @@ class ExamExercise extends CActiveRecord
                 return $newSuiteExercise->insert();
             }
         }
+    /*
+     * 
+     * LC add
+     */
+    public function getExamExerAll($suiteID){
+        $examExer = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $thisExer = $this->getExamExerByType($suiteID, $type);
+            if($thisExer != NULL){
+                $examExer[$type] = $thisExer;
+            }
+        }
+        return $examExer;
+    }
         
  //宋杰 2015-7-31 根据题目类型从相应题库中获取题目       
     public function getExamExerByType( $suiteID, $type)
