@@ -112,7 +112,11 @@
    start();
    
   function nextWork(answerID,recordID,examID,exerciseID){
-        
+        var value1 = $("#input")[0].value;
+         var totalscore = <?php echo $exam_exercise['score'];?>;
+        if(value1>totalscore){
+            window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
+        }else{
         var user = {
             recordID:recordID,
             type:"listen",
@@ -132,7 +136,8 @@
           success:function(html){     
               $("#ziji").html(html);
           }
-      })
+      });
+      }
     }
 </script>
 

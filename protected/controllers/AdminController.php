@@ -880,7 +880,7 @@ class AdminController extends CController {
     public function actionAddTea() {
         $result = 'no';
         if (isset($_POST ['userID']) && isset($_POST['sex'])) {
-            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'], $_POST ['sex'], $_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $_POST['department']);
+            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'], $_POST ['sex'], $_POST ['age'], '000', $_POST ['phone_number'], $_POST ['mail_address'], $_POST['department']);
         }
         $userAll = Teacher::model()->findAll();
         $this->render('addTea', [
@@ -2910,90 +2910,42 @@ class AdminController extends CController {
                        $class_v = array("classID"=>$v['classID'],"className"=>$v['className'],"currentCourse"=>$v['currentCourse'],"currentLesson"=>$v['currentLesson'],"courseName"=>$sqlCourse['courseName']);
                        array_push($class_course, $class_v);
                    }
-                   return $this->render('schedule',['class'=>$class_course]);
+                   return $this->render('schedule',['class_search'=>$class_course]);
                }
             }else if($type=="teaName"){
                 $teacher = Teacher::model()->findAll("userName = '$value'");
                 if(empty($teacher)||$value==""){
                     return $this->render('schedule',['noResult'=>'1']);
                 }else{
-                    return $this->render('schedule',['teacher'=>$teacher]); 
+                    return $this->render('schedule',['teacher_search'=>$teacher]); 
                 }
             }
         }
-         return $this->render('schedule');
+        
+        
+        $class = TbClass::model()->findAll(""); 
+        $class_course = array();
+                   foreach ($class as $v){
+                       $courseID = $v['currentCourse'];
+                       $sqlCourse = Course::model()->find("courseID='$courseID'");
+                       $class_v = array("classID"=>$v['classID'],"className"=>$v['className'],"currentCourse"=>$v['currentCourse'],"currentLesson"=>$v['currentLesson'],"courseName"=>$sqlCourse['courseName']);
+                       array_push($class_course, $class_v);
+                   }
+        $teacher = Teacher::model()->findAll("");
+         return $this->render('schedule',['teacher'=>$teacher,'class'=>$class_course]);
         
     }
-
-    public function actionSearchClassSchedule() {
-        if (isset($_GET ['page'])) {
-            Yii::app()->session ['lastPage'] = $_GET ['page'];
-        } else {
-            Yii::app()->session ['lastPage'] = 1;
+    
+    public function actionScheduleDetil(){
+        if(isset($_GET['teacherId'])){
+            $userID = $_GET['teacherId'];
+            $sqlTeacher = Teacher::model()->find("userID = '$userID'");
+             return $this->render('scheduleDetil',['teacher'=>$sqlTeacher]);
         }
-        Yii::app()->session ['lastUrl'] = "schedule";
-        if (isset($_POST ['which'])) {
-            $type = $_POST ['which'];
-            $value = $_POST ['value'];
-            Yii::app()->session ['searchType'] = $type;
-            Yii::app()->session ['searchValue'] = $value;
-        } else {
-            $type = Yii::app()->session ['searchType'];
-            $value = Yii::app()->session ['searchValue'];
-        }
-        $ex_sq = "";
-        if (isset($type)) {
-            if ($type == "classID" || $type == "className") {
-                $ex_sq = " WHERE " . $type . " = '" . $value . "'";
-            } else if ($type == "courseName") {
-                $course = Course::model()->find("courseName = ?", array($value));
-                $ex_sq = " WHERE currentCourse = '" . $course->courseID . "'";
-            } else if ($type == "teaName") {
-                $sql = "SELECT * FROM teacher WHERE userName ='" . $value . "'";
-                $an = Yii::app()->db->createCommand($sql)->query();
-                $temp = $an->read();
-                if (!empty($temp))
-                    $teaID = $temp ['userID'];
-                else
-                    $teaID = - 1;
-                $sql = "SELECT * FROM teacher_class WHERE teacherID ='" . $teaID . "'";
-                $an = Yii::app()->db->createCommand($sql)->query();
-                $temp = $an->read();
-                if (!empty($temp)) {
-                    $ex_sq = " WHERE ";
-                    $id = $temp ['classID'];
-                    $ex_sq = $ex_sq . "classID = '$id'";
-                    $temp = $an->read();
-                    while (!empty($temp)) {
-                        $id = $temp ['classID'];
-                        $ex_sq = $ex_sq . " OR classID = '$id'";
-                        $temp = $an->read();
-                    }
-                } else {
-                    $ex_sq = " WHERE classID = 0";
-                }
-            } else {
-                $ex_sq = "";
-            }
-        }
-        $sql = "SELECT * FROM tb_class " . $ex_sq;
-        $criteria = new CDbCriteria ();
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $pages = new CPagination($result->rowCount);
-        $pages->pageSize = 10;
-        $pages->applyLimit($criteria);
-        $result = Yii::app()->db->createCommand($sql . " LIMIT :offset,:limit");
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize);
-        $result->bindValue(':limit', $pages->pageSize);
-        $posts = $result->query();
-        $this->renderPartial('schedule', array(
-            'posts' => $posts,
-            'pages' => $pages,
-            'nums' => TbClass::model()->numInClass(),
-            'teacher' => TbClass::model()->teaInClass(),
-            'teacherOfClass' => TbClass::model()->teaByClass()
-        ));
+        return $this->render('scheduleDetil');
     }
+
+
 
     // Uncomment the following methods and override them if needed
     /*
