@@ -38,7 +38,7 @@
     function createFont(element, color, text){
         var father = document.getElementById(element);
         var f = document.createElement("font");
-        f.style = "color:"+color;
+        f.style = "color:"+color+";word-wrap:break-word;white-space:-moz-pre-wrap;";
         f.innerHTML = text;
         father.appendChild(f);
     }
