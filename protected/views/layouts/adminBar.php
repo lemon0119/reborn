@@ -52,6 +52,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                         </ul>
                                     </li>
                                     <li><a id="course_manager"  href="./index.php?r=admin/courseLst"></a></li>
+                                    <li><a id="schedule"  href="./index.php?r=admin/schedule">课 程 表</a></li>
                                     <li><a id="blank_admin"></a></li>
                                     <li >
                                         <div class="userUI">

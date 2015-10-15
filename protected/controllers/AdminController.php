@@ -207,167 +207,166 @@ class AdminController extends CController {
                     $this->render('exlAddStu', ['result' => $result]);
                 } else {
                     $res = Tool::excelreadToArray($savePath . $file_name, $file_type);
-                     //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
-            $array_fail = array();
-            $array_success = array();
-            $flag = 0;
-        foreach ($res as $k => $v) {
-            // 判断第一行表格头内容
-            if ($k == 1) {
-                if (isset($v [0])) {
-                    if($v [0]!="学号"){
-                        $result="表格A列名应为“学号”！";
-                        $flag=1;
-                        $this->render('exlAddStu', ['result' => $result]);
-                        break;
+                    //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
+                    $array_fail = array();
+                    $array_success = array();
+                    $flag = 0;
+                    foreach ($res as $k => $v) {
+                        // 判断第一行表格头内容
+                        if ($k == 1) {
+                            if (isset($v [0])) {
+                                if ($v [0] != "学号") {
+                                    $result = "表格A列名应为“学号”！";
+                                    $flag = 1;
+                                    $this->render('exlAddStu', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少A列“学号”";
+                                $flag = 1;
+                                $this->render('exlAddStu', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [1])) {
+                                if ($v [1] != "姓名") {
+                                    $result = "表格B列名应为“姓名”！";
+                                    $flag = 1;
+                                    $this->render('exlAddStu', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $flag = 1;
+                                $result = "表格缺少B列“姓名”";
+                                $this->render('exlAddStu', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [2])) {
+                                if ($v [2] != "性别") {
+                                    $result = "表格C列名应为“性别”！";
+                                    $flag = 1;
+                                    $this->render('exlAddStu', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少C列“性别”";
+                                $flag = 1;
+                                $this->render('exlAddStu', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [3])) {
+                                if ($v [3] != "年龄") {
+                                    $result = "表格D列名应为“年龄”！";
+                                    $flag = 1;
+                                    $this->render('exlAddStu', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少D列“年龄”";
+                                $flag = 1;
+                                $this->render('exlAddStu', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [4])) {
+                                if ($v [4] != "班级") {
+                                    $result = "表格E列名应为“班级”！";
+                                    $flag = 1;
+                                    $this->render('exlAddStu', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少E列“班级”";
+                                $flag = 1;
+                                $this->render('exlAddStu', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [5])) {
+                                if ($v [5] != "联系邮箱") {
+                                    $result = "表格F列名应为“联系邮箱”！";
+                                    $flag = 1;
+                                    $this->render('exlAddStu', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少F列“联系邮箱”";
+                                $flag = 1;
+                                $this->render('exlAddStu', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [6])) {
+                                if ($v [6] != "联系电话") {
+                                    $result = "表格G列名应为“联系电话”！";
+                                    $flag = 1;
+                                    $this->render('exlAddStu', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少G列“联系电话”";
+                                $flag = 1;
+                                $this->render('exlAddStu', ['result' => $result]);
+                                break;
+                            }
+                        }
+                        //判断内容逻辑
+                        if ($k > 1) {
+                            $data ['uid'] = $v [0];
+                            $data ['userName'] = $v [1];
+                            $data ['sex'] = $v [2];
+                            $data ['age'] = $v[3];
+                            $data ['className'] = $v[4];
+                            $data ['mail_address'] = $v[5];
+                            $data ['phone_number'] = $v[6];
+
+                            if ($data ['uid'] === "" || ctype_space($data ['uid'])) {
+                                $result = "学号不能为空";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if (Tool::excelreadUserID($data ['uid'])) {
+                                $result = "学号已存在！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } elseif ($data['sex'] === "") {
+                                $result = "性别不能为空";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data['sex'] != "男" && $data['sex'] != "女") {
+                                $result = "性别输入有误！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data ['userName'] === "" || ctype_space($data ['userName'])) {
+                                $result = "姓名不能为空";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if (!Tool::excelreadClass($data ['className'])) {
+                                $result = "班级不存在";
+                                $fixed = "班级信息已置空";
+                                $data['className'] = "";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                array_push($array_success, $data);
+                            } else {
+                                array_push($array_success, $data);
+                            }
+                        }
                     }
-                } else {
-                    $result = "表格缺少A列“学号”";
-                    $flag=1;
-                    $this->render('exlAddStu', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [1])) {
-                    if($v [1]!="姓名"){
-                        $result="表格B列名应为“姓名”！";
-                        $flag=1;
-                        $this->render('exlAddStu', ['result' => $result]);
-                        break;
+                    if ($flag === 0) {
+                        $count_success = Tool::excelreadToDatabase($array_success);
+                        $count_fail = $k - $count_success - 1;
+                        $this->render('exlAddStu', ['result' => $count_success, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
                     }
-                } else {
-                    $flag=1;
-                    $result = "表格缺少B列“姓名”";
-                    $this->render('exlAddStu', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [2])) {
-                    if($v [2]!="性别"){
-                        $result="表格C列名应为“性别”！";
-                        $flag=1;
-                        $this->render('exlAddStu', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少C列“性别”";
-                    $flag=1;
-                    $this->render('exlAddStu', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [3])) {
-                    if($v [3]!="年龄"){
-                        $result="表格D列名应为“年龄”！";
-                        $flag=1;
-                        $this->render('exlAddStu', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少D列“年龄”";
-                    $flag=1;
-                    $this->render('exlAddStu', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [4])) {
-                    if($v [4]!="班级"){
-                        $result="表格E列名应为“班级”！";
-                        $flag=1;
-                        $this->render('exlAddStu', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少E列“班级”";
-                    $flag=1;
-                    $this->render('exlAddStu', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [5])) {
-                    if($v [5]!="联系邮箱"){
-                        $result="表格F列名应为“联系邮箱”！";
-                        $flag=1;
-                        $this->render('exlAddStu', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少F列“联系邮箱”";
-                    $flag=1;
-                    $this->render('exlAddStu', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [6])) {
-                    if($v [6]!="联系电话"){
-                        $result="表格G列名应为“联系电话”！";
-                        $flag=1;
-                        $this->render('exlAddStu', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少G列“联系电话”";
-                    $flag=1;
-                    $this->render('exlAddStu', ['result' => $result]);
-                    break;
                 }
             }
-            //判断内容逻辑
-            if ($k > 1) {
-                $data ['uid'] = $v [0];
-                $data ['userName'] = $v [1];
-                $data ['sex'] = $v [2];
-                $data ['age'] = $v[3];
-                $data ['className'] = $v[4];
-                $data ['mail_address'] = $v[5];
-                $data ['phone_number'] = $v[6];
-                
-                if ($data ['uid'] === ""||ctype_space($data ['uid'])) {
-                    $result = "学号不能为空";
-                    $fixed = "需手动添加";
-                    $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                } else if (Tool::excelreadUserID($data ['uid'])) {
-                    $result = "学号已存在！";
-                    $fixed = "需手动添加";
-                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                } elseif ($data['sex'] === "") {
-                    $result = "性别不能为空";
-                    $fixed = "需手动添加";
-                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                } else if ($data['sex'] != "男" && $data['sex'] != "女") {
-                    $result = "性别输入有误！";
-                    $fixed = "需手动添加";
-                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                } else if ($data ['userName'] === ""||ctype_space($data ['userName'])) {
-                    $result = "姓名不能为空";
-                    $fixed = "需手动添加";
-                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                }else if(!Tool::excelreadClass($data ['className'])){
-                    $result = "班级不存在";
-                    $fixed = "班级信息已置空";
-                    $data['className']="";
-                    $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                    array_push($array_success, $data);
-                }else {
-                    array_push($array_success, $data);
-                }
-            }
-        }
-        if($flag===0){
-            $count_success= Tool::excelreadToDatabase($array_success);
-            $count_fail = $k-$count_success-1;
-            $this->render('exlAddStu',['result'=>$count_success,'count_fail'=>$count_fail,'array_fail'=>$array_fail]);
-        }
-                }
-            }
-           
-        }else{
+        } else {
             $this->render('exlAddStu');
         }
     }
 
     public function actionExlAddTea() {
-       if (!empty($_FILES ['file'] ['name'])) {
+        if (!empty($_FILES ['file'] ['name'])) {
             $tmp_file = $_FILES ['file'] ['tmp_name'];
             $file_types = explode(".", $_FILES ['file'] ['type']);
             $file_type = $file_types [count($file_types) - 1];
@@ -388,154 +387,153 @@ class AdminController extends CController {
                     $this->render('exlAddStu', ['result' => $result]);
                 } else {
                     $res = Tool::excelreadToArray($savePath . $file_name, $file_type);
-                     //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
-            $array_fail = array();
-            $array_success = array();
-            $flag = 0;
-        foreach ($res as $k => $v) {
-            // 判断第一行表格头内容
-            if ($k == 1) {
-                if (isset($v [0])) {
-                    if($v [0]!="工号"){
-                        $result="表格A列名应为“工号”！";
-                        $flag=1;
-                        $this->render('exlAddTea', ['result' => $result]);
-                        break;
+                    //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
+                    $array_fail = array();
+                    $array_success = array();
+                    $flag = 0;
+                    foreach ($res as $k => $v) {
+                        // 判断第一行表格头内容
+                        if ($k == 1) {
+                            if (isset($v [0])) {
+                                if ($v [0] != "工号") {
+                                    $result = "表格A列名应为“工号”！";
+                                    $flag = 1;
+                                    $this->render('exlAddTea', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少A列“工号”";
+                                $flag = 1;
+                                $this->render('exlAddTea', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [1])) {
+                                if ($v [1] != "姓名") {
+                                    $result = "表格B列名应为“姓名”！";
+                                    $flag = 1;
+                                    $this->render('exlAddTea', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $flag = 1;
+                                $result = "表格缺少B列“姓名”";
+                                $this->render('exlAddTea', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [2])) {
+                                if ($v [2] != "性别") {
+                                    $result = "表格C列名应为“性别”！";
+                                    $flag = 1;
+                                    $this->render('exlAddTea', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少C列“性别”";
+                                $flag = 1;
+                                $this->render('exlAddTea', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [3])) {
+                                if ($v [3] != "年龄") {
+                                    $result = "表格D列名应为“年龄”！";
+                                    $flag = 1;
+                                    $this->render('exlAddTea', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少D列“年龄”";
+                                $flag = 1;
+                                $this->render('exlAddTea', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [4])) {
+                                if ($v [4] != "联系邮箱") {
+                                    $result = "表格E列名应为“联系邮箱”！";
+                                    $flag = 1;
+                                    $this->render('exlAddTea', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少E列“联系邮箱”";
+                                $flag = 1;
+                                $this->render('exlAddTea', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [5])) {
+                                if ($v [5] != "联系电话") {
+                                    $result = "表格F列名应为“联系电话”！";
+                                    $flag = 1;
+                                    $this->render('exlAddTea', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少F列“联系电话”";
+                                $flag = 1;
+                                $this->render('exlAddTea', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [6])) {
+                                if ($v [6] != "所属部门") {
+                                    $result = "表格G列名应为“所属部门”！";
+                                    $flag = 1;
+                                    $this->render('exlAddTea', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少G列“所属部门”";
+                                $flag = 1;
+                                $this->render('exlAddTea', ['result' => $result]);
+                                break;
+                            }
+                        }
+                        //判断内容逻辑
+                        if ($k > 1) {
+                            $data ['uid'] = $v [0];
+                            $data ['userName'] = $v [1];
+                            $data ['sex'] = $v [2];
+                            $data ['age'] = $v[3];
+                            $data ['mail_address'] = $v[4];
+                            $data ['phone_number'] = $v[5];
+                            $data ['department'] = $v[6];
+
+                            if ($data ['uid'] === "" || ctype_space($data ['uid'])) {
+                                $result = "工号不能为空";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if (Tool::excelreadTeaUserID($data ['uid'])) {
+                                $result = "工号已存在！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } elseif ($data['sex'] === "") {
+                                $result = "性别不能为空";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data['sex'] != "男" && $data['sex'] != "女") {
+                                $result = "性别输入有误！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data ['userName'] === "" || ctype_space($data ['userName'])) {
+                                $result = "姓名不能为空";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else {
+                                array_push($array_success, $data);
+                            }
+                        }
                     }
-                } else {
-                    $result = "表格缺少A列“工号”";
-                    $flag=1;
-                    $this->render('exlAddTea', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [1])) {
-                    if($v [1]!="姓名"){
-                        $result="表格B列名应为“姓名”！";
-                        $flag=1;
-                        $this->render('exlAddTea', ['result' => $result]);
-                        break;
+                    if ($flag === 0) {
+                        $count_success = Tool::excelreadTeaToDatabase($array_success);
+                        $count_fail = $k - $count_success - 1;
+                        $this->render('exlAddTea', ['result' => $count_success, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
                     }
-                } else {
-                    $flag=1;
-                    $result = "表格缺少B列“姓名”";
-                    $this->render('exlAddTea', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [2])) {
-                    if($v [2]!="性别"){
-                        $result="表格C列名应为“性别”！";
-                        $flag=1;
-                        $this->render('exlAddTea', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少C列“性别”";
-                    $flag=1;
-                    $this->render('exlAddTea', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [3])) {
-                    if($v [3]!="年龄"){
-                        $result="表格D列名应为“年龄”！";
-                        $flag=1;
-                        $this->render('exlAddTea', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少D列“年龄”";
-                    $flag=1;
-                    $this->render('exlAddTea', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [4])) {
-                    if($v [4]!="联系邮箱"){
-                        $result="表格E列名应为“联系邮箱”！";
-                        $flag=1;
-                        $this->render('exlAddTea', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少E列“联系邮箱”";
-                    $flag=1;
-                    $this->render('exlAddTea', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [5])) {
-                    if($v [5]!="联系电话"){
-                        $result="表格F列名应为“联系电话”！";
-                        $flag=1;
-                        $this->render('exlAddTea', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少F列“联系电话”";
-                    $flag=1;
-                    $this->render('exlAddTea', ['result' => $result]);
-                    break;
-                }
-                if (isset($v [6])) {
-                    if($v [6]!="所属部门"){
-                        $result="表格G列名应为“所属部门”！";
-                        $flag=1;
-                        $this->render('exlAddTea', ['result' => $result]);
-                        break;
-                    }
-                } else {
-                    $result = "表格缺少G列“所属部门”";
-                    $flag=1;
-                    $this->render('exlAddTea', ['result' => $result]);
-                    break;
                 }
             }
-            //判断内容逻辑
-            if ($k > 1) {
-                $data ['uid'] = $v [0];
-                $data ['userName'] = $v [1];
-                $data ['sex'] = $v [2];
-                $data ['age'] = $v[3];
-                $data ['mail_address'] = $v[4];
-                $data ['phone_number'] = $v[5];
-                $data ['department'] = $v[6];
-                
-                if ($data ['uid'] === ""||ctype_space($data ['uid'])) {
-                    $result = "工号不能为空";
-                    $fixed = "需手动添加";
-                    $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                } else if (Tool::excelreadTeaUserID($data ['uid'])) {
-                    $result = "工号已存在！";
-                    $fixed = "需手动添加";
-                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                } elseif ($data['sex'] === "") {
-                    $result = "性别不能为空";
-                    $fixed = "需手动添加";
-                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                } else if ($data['sex'] != "男" && $data['sex'] != "女") {
-                    $result = "性别输入有误！";
-                    $fixed = "需手动添加";
-                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                } else if ($data ['userName'] === ""||ctype_space($data ['userName'])) {
-                    $result = "姓名不能为空";
-                    $fixed = "需手动添加";
-                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
-                    array_push($array_fail, $stu_fail);
-                }else {
-                    array_push($array_success, $data);
-                }
-            }
-        }
-        if($flag===0){
-            $count_success= Tool::excelreadTeaToDatabase($array_success);
-            $count_fail = $k-$count_success-1;
-            $this->render('exlAddTea',['result'=>$count_success,'count_fail'=>$count_fail,'array_fail'=>$array_fail]);
-        }
-                }
-            }
-           
-        }else{
+        } else {
             $this->render('exlAddTea');
         }
     }
@@ -1824,10 +1822,10 @@ class AdminController extends CController {
         $title = "";
         $content = "";
         if (isset($_POST ['title'])) {
-            $title    = $_POST ['title'];
-            $content  = $_POST ['content'];
+            $title = $_POST ['title'];
+            $content = $_POST ['content'];
             if ($_FILES ['file'] ['type'] != "audio/mpeg" &&
-                $_FILES ['file'] ['type'] != "audio/wav"    ) {
+                    $_FILES ['file'] ['type'] != "audio/wav") {
                 $result = '文件格式不正确，应为MP3或WAV格式';
             } else if ($_FILES ['file'] ['error'] > 0) {
                 $result = '文件上传失败';
@@ -1986,7 +1984,7 @@ class AdminController extends CController {
         $filename = $_GET ['oldfilename'];
         if ($_FILES ['modifyfile'] ['tmp_name']) {
             if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
-                $_FILES ['modifyfile'] ['type'] != "audio/wav"    ) {
+                    $_FILES ['modifyfile'] ['type'] != "audio/wav") {
                 $result = '文件格式不正确，应为MP3或WAV格式';
             } else if ($_FILES ['modifyfile'] ['error'] > 0) {
                 $result = '文件上传失败';
@@ -1995,19 +1993,19 @@ class AdminController extends CController {
                 move_uploaded_file($_FILES["modifyfile"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
                 if (file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
                     unlink($dir . iconv("UTF-8", "gb2312", $filename));
-                Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);               
+                Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
                 $thisListen->fileName = $newName;
                 $result = "上传成功";
             }
         }
-        if(!isset($result)||$result == "上传成功"){
+        if (!isset($result) || $result == "上传成功") {
             $thisListen->title = $_POST ['title'];
             $thisListen->content = $_POST ['content'];
             $thisListen->update();
             $result = "修改成功!";
-       }else{
+        } else {
             $result = "修改失败!";
-       }
+        }
         $this->render("editListen", array(
             'exerciseID' => $thisListen->exerciseID,
             'filename' => $thisListen->fileName,
@@ -2887,6 +2885,107 @@ class AdminController extends CController {
                     'vdir' => $vdir,
                     'file' => $vdir . $file,
         ]);
+    }
+
+    public function actionSchedule() {
+        if(isset($_POST['which'])){
+            $type = $_POST['which'];
+            $value = $_POST['value'];
+            if($type=="className"){
+               $class = TbClass::model()->findAll("className='$value'"); 
+               if(empty($class)||$value==""){
+                   return $this->render('schedule',['noResult'=>'1']);
+               }else{
+                   $class_course = array();
+                   foreach ($class as $v){
+                       $courseID = $v['currentCourse'];
+                       $sqlCourse = Course::model()->find("courseID='$courseID'");
+                       $class_v = array("classID"=>$v['classID'],"className"=>$v['className'],"currentCourse"=>$v['currentCourse'],"currentLesson"=>$v['currentLesson'],"courseName"=>$sqlCourse['courseName']);
+                       array_push($class_course, $class_v);
+                   }
+                   return $this->render('schedule',['class'=>$class_course]);
+               }
+            }else if($type=="teaName"){
+                $teacher = Teacher::model()->findAll("userName = '$value'");
+                if(empty($teacher)||$value==""){
+                    return $this->render('schedule',['noResult'=>'1']);
+                }else{
+                    return $this->render('schedule',['teacher'=>$teacher]); 
+                }
+            }
+        }
+         return $this->render('schedule');
+        
+    }
+
+    public function actionSearchClassSchedule() {
+        if (isset($_GET ['page'])) {
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        } else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+        Yii::app()->session ['lastUrl'] = "schedule";
+        if (isset($_POST ['which'])) {
+            $type = $_POST ['which'];
+            $value = $_POST ['value'];
+            Yii::app()->session ['searchType'] = $type;
+            Yii::app()->session ['searchValue'] = $value;
+        } else {
+            $type = Yii::app()->session ['searchType'];
+            $value = Yii::app()->session ['searchValue'];
+        }
+        $ex_sq = "";
+        if (isset($type)) {
+            if ($type == "classID" || $type == "className") {
+                $ex_sq = " WHERE " . $type . " = '" . $value . "'";
+            } else if ($type == "courseName") {
+                $course = Course::model()->find("courseName = ?", array($value));
+                $ex_sq = " WHERE currentCourse = '" . $course->courseID . "'";
+            } else if ($type == "teaName") {
+                $sql = "SELECT * FROM teacher WHERE userName ='" . $value . "'";
+                $an = Yii::app()->db->createCommand($sql)->query();
+                $temp = $an->read();
+                if (!empty($temp))
+                    $teaID = $temp ['userID'];
+                else
+                    $teaID = - 1;
+                $sql = "SELECT * FROM teacher_class WHERE teacherID ='" . $teaID . "'";
+                $an = Yii::app()->db->createCommand($sql)->query();
+                $temp = $an->read();
+                if (!empty($temp)) {
+                    $ex_sq = " WHERE ";
+                    $id = $temp ['classID'];
+                    $ex_sq = $ex_sq . "classID = '$id'";
+                    $temp = $an->read();
+                    while (!empty($temp)) {
+                        $id = $temp ['classID'];
+                        $ex_sq = $ex_sq . " OR classID = '$id'";
+                        $temp = $an->read();
+                    }
+                } else {
+                    $ex_sq = " WHERE classID = 0";
+                }
+            } else {
+                $ex_sq = "";
+            }
+        }
+        $sql = "SELECT * FROM tb_class " . $ex_sq;
+        $criteria = new CDbCriteria ();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages = new CPagination($result->rowCount);
+        $pages->pageSize = 10;
+        $pages->applyLimit($criteria);
+        $result = Yii::app()->db->createCommand($sql . " LIMIT :offset,:limit");
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize);
+        $result->bindValue(':limit', $pages->pageSize);
+        $posts = $result->query();
+        $this->renderPartial('schedule', array(
+            'posts' => $posts,
+            'pages' => $pages,
+            'nums' => TbClass::model()->numInClass(),
+            'teacher' => TbClass::model()->teaInClass(),
+            'teacherOfClass' => TbClass::model()->teaByClass()
+        ));
     }
 
     // Uncomment the following methods and override them if needed

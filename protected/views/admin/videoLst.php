@@ -6,7 +6,7 @@
         </ul>
     </div>
 </div>
-<div class="span9">
+<div class="span9" >
     <h2  style="display:inline-block;">视频列表</h2>
     <span>(支持mp4及flv格式)</span>
     <div id ="video-table"></div>
