@@ -39,8 +39,8 @@
                 </tr>
         </table>
         <br/>
-        <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
-        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false">
+        <input id="content" type="hidden" style="height: 5px;" value="<?php echo $exerOne['content'];?>">
+        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 120px">
         </div>
         <br/>
         <object id="typeOCX" type="application/x-itst-activex" 
@@ -102,8 +102,8 @@
         var input = getContent(document.getElementById("typeOCX"));
         var div = document.getElementById('templet');
         var line = parseInt(input.length / 23);
-        if (line > 5){
-            div.scrollTop = (line - 5) * 30;
+        if (line > 3){
+            div.scrollTop = (line - 3) * 30;
         }
     }
     function onChange(){
