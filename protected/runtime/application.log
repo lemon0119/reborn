@@ -5210,3 +5210,16 @@ REQUEST_URI=/reborn/index.php?r=admin/searchChoice
 in E:\php_workstation\reborn\protected\views\admin\searchChoice.php (64)
 in E:\php_workstation\reborn\protected\controllers\AdminController.php (1954)
 in E:\php_workstation\reborn\index.php (32)
+2015/10/14 10:27:04 [error] [php] Undefined index: department (E:\php_workstation\reborn\protected\components\Tool.php:202)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 E:\php_workstation\framework\web\CController.php(286): AdminController->runAction()
+#2 E:\php_workstation\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#3 E:\php_workstation\framework\web\CWebApplication.php(284): AdminController->run()
+#4 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 E:\php_workstation\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/exlAddTea
+in E:\php_workstation\reborn\protected\components\Tool.php (202)
+in E:\php_workstation\reborn\protected\controllers\AdminController.php (531)
+in E:\php_workstation\reborn\index.php (32)
