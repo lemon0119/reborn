@@ -28,8 +28,8 @@
                     <tr>
                       <td class="font-center" style="width: 125px"><?php echo $stu_fail[1]; ?></td>   
                       <td class="font-center"><?php echo $stu_fail[2]; ?></td>  
-                      <td class="font-center"><?php echo $stu_fail[0]; ?></td> 
-                      <td class="font-center"  <?php if($stu_fail[3]=="需手动修复"){
+                      <td class="font-center" style="color: #f46500"><?php echo $stu_fail[0]; ?></td> 
+                      <td class="font-center"  <?php if($stu_fail[3]=="需手动添加"){
   echo 'style="color: red"';}else{echo 'style="color: green"';}?>><?php echo $stu_fail[3]; ?></td>  
                     <tr>
                    <?php } }?>

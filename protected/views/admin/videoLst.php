@@ -6,7 +6,7 @@
         </ul>
     </div>
 </div>
-<div class="span9">
+<div class="span9" style="position: relative; left: 20px">
     <h2  style="display:inline-block;">视频列表</h2>
     <span>(支持mp4及flv格式)</span>
     <div id ="video-table"></div>
@@ -16,7 +16,7 @@
        <div class="controls">
        <input type="file" name="file" id="input02"> 
        <div id="upload" style="display:inline;" hidden="true">
-       <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+       <img src="./img/default/upload-small.gif"  alt="正在努力上传..."/>
             正在上传，请稍等...
        </div>
        <button type="submit" class="btn btn-primary">上传</button>
@@ -33,14 +33,14 @@
 
     var options = {  
         success: function(info){
-            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.confirm);
+            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.success);
             $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
             $("#upload").hide();
         },
         error: function(xhr, type, exception){
             console.log('upload erroe', type);
             console.log(xhr.responseText, "Failed");
-            window.wxc.xcConfirm("上传失败！", window.wxc.xcConfirm.typeEnum.warning);
+            window.wxc.xcConfirm("上传失败！", window.wxc.xcConfirm.typeEnum.error);
             $("#upload").hide();
         }
     };

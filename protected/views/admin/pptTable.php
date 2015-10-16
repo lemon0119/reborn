@@ -12,7 +12,7 @@
                     $mydir = dir($pdir); 
                     while($file = $mydir->read())
                     { 
-                            if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                            if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")AND(substr($file,0,2)!="~$")) 
                             {
                 ?>
                 <tr>
@@ -37,18 +37,3 @@
                 ?>
             </tbody>
 </table>
-<script>  
-    $(document).ready(function(){
-        $('#dele').bind('click', function(e){
-            e.preventDefault();
-        });
-        $("#dele").click(function(){
-            $.get($(this).attr("href"),function(data,status){
-                $("#ppt-table").load("./index.php?r=admin/pptTable&&pdir=<?php echo $pdir;?>");
-
-    window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.confirm);
-            });  
-            return false;     
-        });
-    });
-</script>

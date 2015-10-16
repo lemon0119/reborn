@@ -40,7 +40,7 @@
         $("#dele").click(function(){
             $.get($(this).attr("href"),function(data,status){
                 $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
-                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.confirm);
+                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
             });  
             return false;     
         });
