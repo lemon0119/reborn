@@ -51,6 +51,12 @@
 <script>
     $(document).ready(function(){
     $("#upload").hide();
+    
+    <?php if(isset($result)){?>
+    var result = <?php echo "'$result'";?>;
+    if(result !== '0')
+    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
+    <?php }?>
 });
 
     $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");

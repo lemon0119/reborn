@@ -2804,14 +2804,29 @@ class AdminController extends CController {
     }
 
     public function actionDeletePpt() {
-        $fileName = $_GET['ppt'];
-        $dir = $_GET['pdir'];
-        $file = $dir . $fileName;
-        if (file_exists(iconv('utf-8', 'gb2312', $file)))
-            unlink(iconv('utf-8', 'gb2312', $file));
-        Resourse::model()->delName($fileName);
-        $result = "删除成功！";
-        echo $result;
+        $fileName   = $_GET['ppt'];
+        $dir        = $_GET['pdir'];
+        $result     = 0;               //不显示提示
+        if(!isset(Yii::app()->session['ppt2del']) ||
+            Yii::app()->session['ppt2del'] != $fileName)
+        {
+            Yii::app()->session['ppt2del'] = $fileName;  
+            $file = $dir . $fileName;
+            if (file_exists(iconv('utf-8', 'gb2312', $file)))
+                unlink(iconv('utf-8', 'gb2312', $file));
+            Resourse::model()->delName($fileName);
+            $result = "删除成功！";
+        }
+        $courseID       = Yii::app()->session['courseID']  ;
+        $courseName     = Yii::app()->session['courseName']  ;
+        $createPerson   = Yii::app()->session['createPerson'] ;
+        $this->render("pptLst", array(
+            'courseID'      => $courseID,
+            'courseName'    => $courseName,
+            'createPerson'  => $createPerson,
+            'pdir'          => $dir,
+            'result'        => $result,
+        ));
     }
 
     public function actionLookPpt() {
