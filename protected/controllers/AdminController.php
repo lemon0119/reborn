@@ -326,7 +326,12 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } elseif ($data['sex'] === "") {
+                            } else if (Tool::checkID($data ['uid'])) {
+                                $result = "学号须由数字、英文字母线组成！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data['sex'] === "") {
                                 $result = "性别不能为空";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -345,6 +350,13 @@ class AdminController extends CController {
                                 $result = "班级不存在";
                                 $fixed = "班级信息已置空";
                                 $data['className'] = "";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                array_push($array_success, $data);
+                            } else if (!Tool::checkMailAddress($data ['mail_address'])) {
+                                $result = "邮箱格式不正确";
+                                $fixed = "邮箱信息已置空";
+                                $data['mail_address'] = "";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
                                 array_push($array_success, $data);
@@ -506,7 +518,12 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } elseif ($data['sex'] === "") {
+                            } else if (Tool::checkID($data ['uid'])) {
+                                $result = "工号须由数字、英文字母线组成！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data['sex'] === "") {
                                 $result = "性别不能为空";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -521,6 +538,13 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
+                            } else if (!Tool::checkMailAddress($data ['mail_address'])) {
+                                $result = "邮箱格式不正确";
+                                $fixed = "邮箱信息已置空";
+                                $data['mail_address'] = "";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                array_push($array_success, $data);
                             } else {
                                 array_push($array_success, $data);
                             }
@@ -1251,18 +1275,17 @@ class AdminController extends CController {
     public function actionAddClass() {
         $result = 'no';
         if (isset($_POST ['className'])) {
-            $className  = $_POST ['className'];
-            $classes    = TbClass::model()->findAll("className = '$className'");
-            if(count($classes) > 0)
-            {
-                $result     = 2;
-            }else{
-                $classID    = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
-                $lessons    = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
+            $className = $_POST ['className'];
+            $classes = TbClass::model()->findAll("className = '$className'");
+            if (count($classes) > 0) {
+                $result = 2;
+            } else {
+                $classID = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
+                $lessons = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
                 foreach ($lessons as $lesson) {
                     Lesson::model()->insertLesson($lesson['lessonName'], $lesson['courseID'], 0, $classID);
                 }
-                $result     = 1;
+                $result = 1;
             }
         }
         $this->render('addClass', [
@@ -2804,28 +2827,27 @@ class AdminController extends CController {
     }
 
     public function actionDeletePpt() {
-        $fileName   = $_GET['ppt'];
-        $dir        = $_GET['pdir'];
-        $result     = 0;               //不显示提示
-        if(!isset(Yii::app()->session['ppt2del']) ||
-            Yii::app()->session['ppt2del'] != $fileName)
-        {
-            Yii::app()->session['ppt2del'] = $fileName;  
+        $fileName = $_GET['ppt'];
+        $dir = $_GET['pdir'];
+        $result = 0;               //不显示提示
+        if (!isset(Yii::app()->session['ppt2del']) ||
+                Yii::app()->session['ppt2del'] != $fileName) {
+            Yii::app()->session['ppt2del'] = $fileName;
             $file = $dir . $fileName;
             if (file_exists(iconv('utf-8', 'gb2312', $file)))
                 unlink(iconv('utf-8', 'gb2312', $file));
             Resourse::model()->delName($fileName);
             $result = "删除成功！";
         }
-        $courseID       = Yii::app()->session['courseID']  ;
-        $courseName     = Yii::app()->session['courseName']  ;
-        $createPerson   = Yii::app()->session['createPerson'] ;
+        $courseID = Yii::app()->session['courseID'];
+        $courseName = Yii::app()->session['courseName'];
+        $createPerson = Yii::app()->session['createPerson'];
         $this->render("pptLst", array(
-            'courseID'      => $courseID,
-            'courseName'    => $courseName,
-            'createPerson'  => $createPerson,
-            'pdir'          => $dir,
-            'result'        => $result,
+            'courseID' => $courseID,
+            'courseName' => $courseName,
+            'createPerson' => $createPerson,
+            'pdir' => $dir,
+            'result' => $result,
         ));
     }
 
@@ -2910,57 +2932,85 @@ class AdminController extends CController {
     }
 
     public function actionSchedule() {
-        if(isset($_POST['which'])){
+        if (isset($_POST['which'])) {
             $type = $_POST['which'];
             $value = $_POST['value'];
-            if($type=="className"){
-               $class = TbClass::model()->findAll("className='$value'"); 
-               if(empty($class)||$value==""){
-                   return $this->render('schedule',['noResult'=>'1']);
-               }else{
-                   $class_course = array();
-                   foreach ($class as $v){
-                       $courseID = $v['currentCourse'];
-                       $sqlCourse = Course::model()->find("courseID='$courseID'");
-                       $class_v = array("classID"=>$v['classID'],"className"=>$v['className'],"currentCourse"=>$v['currentCourse'],"currentLesson"=>$v['currentLesson'],"courseName"=>$sqlCourse['courseName']);
-                       array_push($class_course, $class_v);
-                   }
-                   return $this->render('schedule',['class_search'=>$class_course]);
-               }
-            }else if($type=="teaName"){
+            if ($type == "className") {
+                $class = TbClass::model()->findAll("className='$value'");
+                if (empty($class) || $value == "") {
+                    return $this->render('schedule', ['noResult' => '1']);
+                } else {
+                    $class_course = array();
+                    foreach ($class as $v) {
+                        $courseID = $v['currentCourse'];
+                        $sqlCourse = Course::model()->find("courseID='$courseID'");
+                        $class_v = array("classID" => $v['classID'], "className" => $v['className'], "currentCourse" => $v['currentCourse'], "currentLesson" => $v['currentLesson'], "courseName" => $sqlCourse['courseName']);
+                        array_push($class_course, $class_v);
+                    }
+                    return $this->render('schedule', ['class_search' => $class_course]);
+                }
+            } else if ($type == "teaName") {
                 $teacher = Teacher::model()->findAll("userName = '$value'");
-                if(empty($teacher)||$value==""){
-                    return $this->render('schedule',['noResult'=>'1']);
-                }else{
-                    return $this->render('schedule',['teacher_search'=>$teacher]); 
+                if (empty($teacher) || $value == "") {
+                    return $this->render('schedule', ['noResult' => '1']);
+                } else {
+                    return $this->render('schedule', ['teacher_search' => $teacher]);
                 }
             }
         }
-        
-        
-        $class = TbClass::model()->findAll(""); 
+
+
+        $class = TbClass::model()->findAll("");
         $class_course = array();
-                   foreach ($class as $v){
-                       $courseID = $v['currentCourse'];
-                       $sqlCourse = Course::model()->find("courseID='$courseID'");
-                       $class_v = array("classID"=>$v['classID'],"className"=>$v['className'],"currentCourse"=>$v['currentCourse'],"currentLesson"=>$v['currentLesson'],"courseName"=>$sqlCourse['courseName']);
-                       array_push($class_course, $class_v);
-                   }
+        foreach ($class as $v) {
+            $courseID = $v['currentCourse'];
+            $sqlCourse = Course::model()->find("courseID='$courseID'");
+            $class_v = array("classID" => $v['classID'], "className" => $v['className'], "currentCourse" => $v['currentCourse'], "currentLesson" => $v['currentLesson'], "courseName" => $sqlCourse['courseName']);
+            array_push($class_course, $class_v);
+        }
         $teacher = Teacher::model()->findAll("");
-         return $this->render('schedule',['teacher'=>$teacher,'class'=>$class_course]);
-        
+        return $this->render('schedule', ['teacher' => $teacher, 'class' => $class_course]);
     }
-    
-    public function actionScheduleDetil(){
-        if(isset($_GET['teacherId'])){
+
+    public function actionScheduleDetil() {
+        if (isset($_GET['teacherId'])) {
+            Yii::app()->session['teacherId'] = $_GET['teacherId'];
             $userID = $_GET['teacherId'];
             $sqlTeacher = Teacher::model()->find("userID = '$userID'");
-             return $this->render('scheduleDetil',['teacher'=>$sqlTeacher]);
+            $sqlTeacherClass = TeacherClass::model()->findAll("teacherID = '$userID'");
+            $array_courseName = array();
+            foreach ($sqlTeacherClass as $v) {
+                $ClassID = $v['classID'];
+                $sqlTbClass = TbClass::model()->find("classID = '$ClassID'");
+                $courseID = $sqlTbClass['currentCourse'];
+                $sqlCourse = Course::model()->find("courseID = '$courseID'");
+                $courseName = $sqlCourse['courseName'];
+                array_push($array_courseName, $courseName);
+            }
+            //查重
+            $uniqueCourseName = array_unique($array_courseName);
+            //判断内容并导入
+            for ($s = 0; $s < 6; $s++) {
+                for ($d = 0; $d < 7; $d++) {
+                    $index = "$d/$s";
+                    if (isset($_POST[$index])) {
+                        if($_POST[$index]!=""){
+                            $sqlScheduleCourseID = Course::model()->find("courseName = '$_POST[$index]'");
+                            $scheduleCourseID = $sqlScheduleCourseID['courseID'];
+                            $sql = "INSERT INTO `yawei001`.`teacher_schedule` (`userID`, `sequence`, `day`, `courseID`) VALUES ('$userID', '$s', '$d', '$scheduleCourseID');";        
+                            $result = Yii::app()->db->createCommand($sql)->query();
+                        }
+                    }else{
+                        $result="";
+                    }
+                }
+            }
+            return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'courseName' => $uniqueCourseName,'result'=>$result]);
+        } else if (isset($_GET['classId'])) {
+            $uniqueCourseName = array();
+            return $this->render('scheduleDetil', ['class' => $_GET['classId'], 'courseName' => $uniqueCourseName]);
         }
-        return $this->render('scheduleDetil');
     }
-
-
 
     // Uncomment the following methods and override them if needed
     /*
