@@ -2940,7 +2940,19 @@ class AdminController extends CController {
         if(isset($_GET['teacherId'])){
             $userID = $_GET['teacherId'];
             $sqlTeacher = Teacher::model()->find("userID = '$userID'");
-             return $this->render('scheduleDetil',['teacher'=>$sqlTeacher]);
+            $sqlTeacherClass = TeacherClass::model()->findAll("teacherID = '$userID'");
+            $array_courseName = array();
+            foreach ($sqlTeacherClass as $v){
+                $ClassID = $v['classID'];
+                $sqlTbClass = TbClass::model()->find("classID = '$ClassID'");
+                $courseID = $sqlTbClass['currentCourse'];
+                $sqlCourse = Course::model()->find("courseID = '$courseID'");
+                $courseName = $sqlCourse['courseName'];
+                array_push($array_courseName, $courseName);
+            }
+            //查重
+            $uniqueCourseName = array_unique($array_courseName);
+             return $this->render('scheduleDetil',['teacher'=>$sqlTeacher,'courseName'=>$uniqueCourseName]);
         }
         return $this->render('scheduleDetil');
     }

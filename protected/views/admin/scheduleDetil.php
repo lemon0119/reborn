@@ -26,43 +26,34 @@
 <div class="span9">
     <h3><font style="color: #f46500"><?php echo $teacher['userName'];?></font>&nbsp;&nbsp;老师的课程安排</h3>
     <br/>
+    <?php                 print_r($courseName); ?>
     <form>
         <table class="table table-bordered table-striped">
-            <thead>
+                <thead>
+                    <tr>
+                        <th colspan="2" style="width: 40px"></th>
+                        <th >星期一</th>
+                        <th >星期二</th>
+                        <th >星期三</th>
+                        <th >星期四</th>
+                        <th >星期五</th>
+                        <th >星期六</th>
+                        <th >星期日</th>
+                    </tr>
+                </thead>
+            <tbody>
+                <?php for($s=0;$s<6;$s++){ ?>
                 <tr>
-                    <th class="font-center" style="width: 40px"></th>
-                    <th class="font-center" style="width: 40px"></th>
-                    <th class="font-center">星期一</th>
-                    <th class="font-center">星期二</th>
-                    <th class="font-center">星期三</th>
-                    <th class="font-center">星期四</th>
-                    <th class="font-center">星期五</th>
-                    <th class="font-center">星期六</th>
-                    <th class="font-center">星期日</th>
+                    <?php switch ($s){case 0: echo '<td rowspan="2">';break;case 2:echo '<td rowspan="2">';break;case 4:echo '<td rowspan="2">';break;}?><?php switch ($s){case 0: echo '上午';break;case 2:echo '下午';break;case 4:echo '晚上';break;}?></td>
+                    <td><?php switch ($s){case 0: echo '一';break;case 1: echo '二';break;case 2: echo '三';break;case 3: echo '四';break;case 4: echo '五';break;case 5: echo '六';break;}?></td>
+                        <?php for($d=0;$d<7;$d++ ){ ?>
+                        <td>
+                            <?php echo $d;?>
+                        </td>
+                        <?php }?>
                 </tr>
-                <tr>
-                    <th rowspan="2" class="font-center" >上午</th>
-                    <th class="font-center">一</th>
-                </tr>
-                <tr>
-                    <th class="font-center">二</th>
-                </tr>
-                <tr>
-                    <th rowspan="2" class="font-center" >下午</th>
-                    <th class="font-center">三</th>
-                </tr>
-                <tr>
-                    <th class="font-center">四</th>
-                </tr>
-                <tr>
-                    <th rowspan="2" class="font-center" >晚上</th>
-                    <th class="font-center">五</th>
-                </tr>
-                <tr>
-                    <th class="font-center">六</th>
-                </tr>
-            </thead>
-            
+                <?php } ?>
+            </tbody>
         </table>
     </form>
 </div>

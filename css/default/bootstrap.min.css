@@ -4814,6 +4814,14 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     text-align: center !important;
     vertical-align: middle !important;
 }
+table tr th{
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+table tr td{
+    text-align: center !important;
+    vertical-align: middle !important;
+}
 .font-startcourse{
     padding: 15px 15px 0 15px;
     font-size: 20px;
