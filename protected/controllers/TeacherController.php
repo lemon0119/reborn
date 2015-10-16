@@ -231,11 +231,22 @@ class TeacherController extends CController {
             $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir            =   "resources/".$pptFilePath; 
             $file           =   $dir.$fileName;
-            if(file_exists(iconv('utf-8','gb2312',$file)))
-                unlink(iconv('utf-8','gb2312',$file));
-            Resourse::model()->delName($fileName);
-            $result         =   "删除成功！";    
-            echo $result;
+            $result     = 0;               //不显示提示
+            if(!isset(Yii::app()->session['ppt2del']) ||
+                Yii::app()->session['ppt2del'] != $fileName)
+            {
+                Yii::app()->session['ppt2del'] = $fileName; 
+                if(file_exists(iconv('utf-8','gb2312',$file)))
+                    unlink(iconv('utf-8','gb2312',$file));
+                Resourse::model()->delName($fileName);
+                $result         =   "删除成功！";  
+            }
+            return $this->render('pptLst',[
+            'classID'   =>  $classID,
+            'progress'  =>  $progress,
+            'on'        =>  $on,
+            'result'    =>  $result
+        ]);
     }
     
     public function actionLookPpt(){
