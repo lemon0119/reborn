@@ -70,7 +70,7 @@
                             <td class="font-center" ><?php echo $c_value['className'];?></td>
                             <td class="font-center" ><?php echo $c_value['courseName'];?></td>
                             <td class="font-center" style="width: 75px" >
-                                 <a href="./index.php?r=admin/scheduleDetil&&teacherId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                                 <a href="./index.php?r=admin/scheduleDetil&&classId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
                    <?php }?>
@@ -98,7 +98,7 @@
                             <td class="font-center" ><?php echo $c_value['className'];?></td>
                             <td class="font-center" ><?php echo $c_value['courseName'];?></td>
                             <td class="font-center" style="width: 75px" >
-                                 <a href="./index.php?r=admin/scheduleDetil&&teacherId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                                 <a href="./index.php?r=admin/scheduleDetil&&classId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
                    <?php }?>

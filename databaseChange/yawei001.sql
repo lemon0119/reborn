@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-10-16 05:30:28
+-- Generation Time: 2015-10-16 11:46:17
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -167,6 +167,21 @@ CREATE TABLE IF NOT EXISTS `class_lesson_suite` (
   `open` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`workID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `class_schedule`
+--
+
+CREATE TABLE IF NOT EXISTS `class_schedule` (
+  `classID` int(30) NOT NULL,
+  `sequence` int(10) NOT NULL,
+  `day` int(10) NOT NULL,
+  `courseID` int(30) NOT NULL,
+  KEY `classID` (`classID`),
+  KEY `courseID` (`courseID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -377,21 +392,6 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `student_schedule`
---
-
-CREATE TABLE IF NOT EXISTS `student_schedule` (
-  `userID` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `sequence` int(10) NOT NULL,
-  `day` int(10) NOT NULL,
-  `courseID` int(30) NOT NULL,
-  PRIMARY KEY (`userID`,`courseID`),
-  KEY `student_schedule_courseID` (`courseID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `suite`
 --
 
@@ -447,7 +447,7 @@ CREATE TABLE IF NOT EXISTS `tb_class` (
   `className` varchar(30) NOT NULL,
   `currentCourse` int(30) NOT NULL,
   `currentLesson` int(30) NOT NULL,
-  PRIMARY KEY (`classID`,`currentCourse`),
+  PRIMARY KEY (`classID`),
   KEY `tb_claas_courseID` (`currentCourse`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -477,12 +477,12 @@ CREATE TABLE IF NOT EXISTS `teacher` (
 --
 
 CREATE TABLE IF NOT EXISTS `teacher_class` (
-  `teacherID` varchar(30) NOT NULL,
+  `teacherID` varchar(30) CHARACTER SET utf8 NOT NULL,
   `classID` int(30) NOT NULL,
-  `remark` varchar(30) NOT NULL,
-  PRIMARY KEY (`teacherID`,`classID`),
-  KEY `teacher_class_classID` (`classID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `remark` varchar(30) CHARACTER SET utf8 NOT NULL,
+  KEY `classID` (`classID`),
+  KEY `teacherID` (`teacherID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -495,8 +495,9 @@ CREATE TABLE IF NOT EXISTS `teacher_schedule` (
   `sequence` int(10) NOT NULL,
   `day` int(10) NOT NULL,
   `courseID` int(30) NOT NULL,
-  PRIMARY KEY (`userID`,`courseID`),
-  KEY `teacher_schedule_courseID` (`courseID`)
+  KEY `teacher_schedule_courseID` (`courseID`),
+  KEY `userID` (`userID`,`courseID`),
+  KEY `userID_2` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -532,30 +533,23 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 --
+-- 限制表 `class_schedule`
+--
+ALTER TABLE `class_schedule`
+  ADD CONSTRAINT `class_schedule_courseID` FOREIGN KEY (`courseID`) REFERENCES `course` (`courseID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `class_schedule_classID` FOREIGN KEY (`classID`) REFERENCES `tb_class` (`classID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- 限制表 `lesson`
 --
 ALTER TABLE `lesson`
   ADD CONSTRAINT `lesson_courseID` FOREIGN KEY (`courseID`) REFERENCES `course` (`courseID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- 限制表 `student_schedule`
---
-ALTER TABLE `student_schedule`
-  ADD CONSTRAINT `student_schedule_courseID` FOREIGN KEY (`courseID`) REFERENCES `course` (`courseID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_schedule_userID` FOREIGN KEY (`userID`) REFERENCES `student` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- 限制表 `tb_class`
 --
 ALTER TABLE `tb_class`
   ADD CONSTRAINT `tb_claas_courseID` FOREIGN KEY (`currentCourse`) REFERENCES `course` (`courseID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- 限制表 `teacher_class`
---
-ALTER TABLE `teacher_class`
-  ADD CONSTRAINT `teacher_class_classID` FOREIGN KEY (`classID`) REFERENCES `tb_class` (`classID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `teacher_class_userID` FOREIGN KEY (`teacherID`) REFERENCES `teacher` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- 限制表 `teacher_schedule`

@@ -4882,3 +4882,8 @@ table tr td{
     float: left;
     color: red
 }
+.course_option{
+    width: 80px;
+    border:1px solid #fff;
+    color:#aaa9a9;
+}
