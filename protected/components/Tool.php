@@ -11,13 +11,12 @@ class Tool {
         'listen',
     ];
 
-
-    public static function getLastExer($exercise){
+    public static function getLastExer($exercise) {
         $result = Array();
         $result['type'] = '';
         $result['exerciseID'] = 0;
-        foreach(Tool::$EXER_TYPE as $type){
-            foreach( $exercise[$type] as $oneexer){
+        foreach (Tool::$EXER_TYPE as $type) {
+            foreach ($exercise[$type] as $oneexer) {
                 $result['type'] = $type;
                 $result['exerciseID'] = $oneexer['exerciseID'];
             }
@@ -168,142 +167,42 @@ class Tool {
      * $excelData:传入Excle解析结果数组
      * return $result:导入结果
      */
-    public static function excelreadToDatabase($excelData) {
-        foreach ($excelData as $k => $v) {
-            // 第一行表格头内容
-            if ($k == 1) {
-                // 防止表格字段缺少造成数组越界
-                if (isset($v [0]) && isset($v [1]) && isset($v [2]) && isset($v [3]) && isset($v [4]) && isset($v [5]) && isset($v [6])) {
-                    // 防止表格格式有误
-                    if ($v [0] != "学号" || $v [1] != "姓名" || $v [2] != "性别" || $v [3] != "年龄" || $v [4] != "班级" || $v [5] != "联系邮箱" || $v [6] != "联系电话") {
-                        return $result = "表格格式不正确！请选择正确格式的表格！";
-                    }
-                } else {
-                    return $result = "表格格式不正确！请选择正确格式的表格！";
-                }
-            }
-            if ($k > 1) {
-                $data ['uid'] = $v [0];
-                $data ['userName'] = $v [1];
-                $data ['sex'] = $v [2];
-                $data ['age'] = $v[3];
-                $data ['className'] = $v[4];
-                $data ['mail_address'] = $v[5];
-                $data ['phone_number'] = $v[6];
-
-                if ($data ['uid'] === "") {
-                    $result = "学号" . $data ['uid'] . '不能为空';
-                    return $result;
-                } else if (Tool::excelreadUserID($data ['uid'])) {
-                    $result = "学号" . $data ['uid'] . '已存在！';
-                    return $result;
-                } elseif ($data['sex'] === "") {
-                    $result = "学号" . $data ['uid'] . '性别不能为空';
-                    return $result;
-                } else if ($data['sex'] != "男" && $data['sex'] != "女") {
-                    $result = "学号" . $data['uid'] . "性别输入有误！";
-                    return $result;
-                } else if ($data ['userName'] === "") {
-                    $result = "学号" . $data ['uid'] . '姓名不能为空';
-                    return $result;
-                } else {
-                    // 标记！内容检验无误可以导入
-                    $flag = 1;
-                }
-            }
+    public static function excelConfirmStuRule($RowName, $RowCode, $value) {
+        if ($value != $RowName) {
+            return $result = "$RowCode.列表格名应为“.$RowName.”";
+        } else {
+            return $result = TRUE;
         }
-        // 正式导入数据库
-        if ($flag == 1) {
-            foreach ($excelData as $k => $v) {
-                if ($k > 1) {
-                    $data ['uid'] = $v [0];
-                    $data ['userName'] = $v [1];
-                    $data ['sex'] = $v [2];
-                    $data ['age'] = $v[3];
-                    $data ['className'] = $v[4];
-                    $data ['mail_address'] = $v[5];
-                    $data ['phone_number'] = $v[6];
-                    if (!Tool::excelreadClass($data ['className'])) {
+    }
+
+    public static function excelreadToDatabase($arry_success) {
+        // 正式导入数据库,返回成功导入的人数
+        $count = 0;
+            foreach ($arry_success as $data) {
+                    if ($data ['className']=="") {
                         $classID = "0";
-                    } else{
+                    } else {
                         $className = $data ['className'];
                         $subClass = TbClass::model()->find("className = '$className'");
                         $classID = $subClass ['classID'];
                     }
-                    if (strlen($data['phone_number']) !=11) {
-                        $data['phone_number']="";
-                    } 
-                        Student::model()->insertStu($data ['uid'], $data ['userName'],$data ['sex'] ,$data ['age'], "000",$data ['mail_address'],$data ['phone_number'], $classID);
-                }
+                    Student::model()->insertStu($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['mail_address'], $data ['phone_number'], $classID);
+             $count++;       
             }
-             return $result = '导入成功！';
-        }
+            return $count;
     }
 
     /**
      * 老师的excel导入条件判断，逻辑同学生
      */
-    public static function excelReadTeaToDatabase($excelData) {
-        foreach ($excelData as $k => $v) {
-            if ($k == 1) {
-                // 防止表格字段缺少造成数组越界
-                if (isset($v [0]) && isset($v [1]) && isset($v [2]) && isset($v [3]) && isset($v [4]) && isset($v [5]) && isset($v [6])) {
-                    // 防止表格格式有误
-                    if ($v [0] != "工号" || $v [1] != "姓名" || $v [2] != "性别" || $v [3] != "年龄" || $v [4] != "所属部门" || $v [5] != "联系邮箱" || $v [6] != "联系电话") {
-                        return $result = "表格格式不正确！请选择正确格式的表格！";
-                    }
-                } else {
-                    return $result = "表格格式不正确！请选择正确格式的表格！";
-                }
-            }
-            if ($k > 1) {
-                $data ['uid'] = $v [0];
-                $data ['userName'] = $v [1];
-                $data ['sex'] = $v [2];
-                $data ['age'] = $v[3];
-                $data ['department'] = $v[4];
-                $data ['mail_address'] = $v[5];
-                $data ['phone_number'] = $v[6];
-
-                if ($data ['uid'] === "") {
-                    $result = "工号" . $data ['uid'] . '不能为空';
-                    return $result;
-                } else if (Tool::excelReadTeaUserID($data ['uid'])) {
-                    $result = "工号" . $data ['uid'] . '已存在！';
-                    return $result;
-                } elseif ($data['sex'] === "") {
-                    $result = "工号" . $data ['uid'] . '性别不能为空';
-                    return $result;
-                } else if ($data['sex'] != "男" && $data['sex'] != "女") {
-                    $result = "工号" . $data['uid'] . "性别输入有误！";
-                    return $result;
-                } else if ($data ['userName'] === "") {
-                    $result = "工号" . $data ['uid'] . '姓名不能为空';
-                    return $result;
-                } else {
-                    // 标记！内容检验无误可以导入
-                    $flag = 1;
-                }
-            }
+    public static function excelReadTeaToDatabase($arry_success) {
+      
+        $count = 0;
+            foreach ($arry_success as $data) {
+                    Teacher::model()->insertTea($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department']);
+                    $count++;   
         }
-        if ($flag == 1) {
-            foreach ($excelData as $k => $v) {
-                if ($k > 1) {
-                    $data ['uid'] = $v [0];
-                    $data ['userName'] = $v [1];
-                    $data ['sex'] = $v [2];
-                    $data ['age'] = $v[3];
-                    $data ['department'] = $v[4];
-                    $data ['mail_address'] = $v[5];
-                    $data ['phone_number'] = $v[6];
-                    if (strlen($data['phone_number']) !=11) {
-                        $data['phone_number']="";
-                    } 
-                    Teacher::model()->insertTea($data ['uid'], $data ['userName'],$data ['sex'] ,$data ['age'], "000",$data ['phone_number'],$data ['mail_address'],$data['department']);
-                }
-            }
-        }
-        return $result = '导入成功！';
+        return $count;
     }
 
     /**

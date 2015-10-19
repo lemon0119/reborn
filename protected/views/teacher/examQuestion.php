@@ -21,12 +21,15 @@
    <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
 </div>
 <script>
-     function nextWork(answerID,recordID,examID,exerciseID){
-        if(<?php echo $isLast?> == 1)
+    $(document).ready(function(){   
+      $("#score").html(<?php echo $score;?>);
+       if(<?php echo $isLast?> == 1)
         {
-            window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.warning);
-            return;
+            window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.info);
+            return ;
         }
+    });
+     function nextWork(answerID,recordID,examID,exerciseID){
         var user = {
             recordID:recordID,
             type:"question",

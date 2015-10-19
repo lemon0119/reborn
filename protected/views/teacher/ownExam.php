@@ -40,10 +40,10 @@
                     <tr>
                         <td class="font-center" style="width: 50px"><?php echo $work['exerciseID'];?></td>
                         <td class="font-center">
-                            <?php  if(strlen($work['requirements'])<=15)
+                            <?php  if(Tool::clength($work['requirements'])<=10)
                                         echo $work['requirements'];
                                     else
-                                        echo substr($work['requirements'], 0, 15)."...";
+                                        echo Tool::csubstr($work['requirements'], 0,10)."...";
                                         ?>
                         </td>
                         <td class="font-center" >
@@ -54,7 +54,7 @@
                         </td>
                         <td class="font-center" style="width: 100px">            
                             <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>  
-                            <a href="#"  onclick="configScore('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png">配分</a>
+                            <!--<a href="#"  onclick="configScore('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png">配分</a>-->
                         </td>
                     </tr>            
                     <?php endforeach;?> 

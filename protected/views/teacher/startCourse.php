@@ -113,11 +113,26 @@
                 <li class="last">
                     <a href="./index.php?r=teacher/pptLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>" id="ppt">
                         <span class="count"><?php
-                            $num1 = sizeof(scandir($pdir));
-                            $num1 = ($num1 > 2) ? ($num1 - 2) / 2 : 0;
-                            $num2 = sizeof(scandir($adminPdir));
-                            $num2 = ($num2 > 2) ? ($num2 - 2) / 2 : 0;
-                            echo $num1 + $num2;
+                            $num    = 0;                                                    
+                            $mydir = dir($pdir); 
+                            while($file = $mydir->read())
+                            { 
+                                if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $num = $num + 1;
+                                } 
+                            } 
+                            $mydir->close();
+                            $mydir = dir($adminPdir); 
+                            while($file = $mydir->read())
+                            { 
+                                if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $num = $num + 1;
+                                } 
+                            } 
+                            $mydir->close(); 
+                            echo    $num;
                             ?></span> <font style="color:#000">PPT</font></a>
             </ul>
         </div>

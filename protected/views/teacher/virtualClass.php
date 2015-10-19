@@ -7,7 +7,8 @@
     <?php
    
     echo "<script>var current_username=\"$userName\";</script>";
-
+    $role = Yii::app()->session['role_now'];
+    echo "<script>var role='$role';</script>";
     $role               = Yii::app()->session['role_now'];
     $userid             = Yii::app()->session['userid_now'];
     $videoFilePath      = $role."/".$userid."/".$classID."/".$on."/video/"; 
@@ -127,7 +128,7 @@
             <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none">
 
-            <textarea id="bulletin-textarea" style="color:gray;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
+            <textarea id="bulletin-textarea" style="color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
             <button id="postnotice" name="发布公告" class="btn btn-primary" style="margin-left: 100px; margin-top: 5px;">发布公告</button>
 
             </div>

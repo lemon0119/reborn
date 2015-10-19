@@ -15,6 +15,101 @@ class TeacherController extends CController {
         $userName   = Teacher::model()->findByPK($userID)->userName;
         return $this->render('virtualClass',['userName'=>$userName,'classID'=>$_GET['classID'],'on'=>$_GET['on']]);
     }
+//add by LC 2015-10-13
+    public function actionSetTimeAndScoreExam(){
+        $examID = $_GET['examID'];
+        $teacherID = Yii::app()->session['userid_now'];
+        $array_class = array();
+        $result = TbClass::model()->getClassByTeacherID($teacherID);   
+        foreach ($result as $class) {
+            array_push ($array_class, $class);
+        }
+        //得到当前显示班级
+        if(isset($_GET['classID'])){
+            Yii::app()->session['currentClass'] = $_GET['classID'];
+        } else if($array_class != NULL){
+            Yii::app()->session['currentClass'] = $array_class[0]['classID'];
+        } else {
+            Yii::app()->session['currentClass'] =0;
+        }
+        $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'],1));
+        $examExer = ExamExercise::model()->getExamExerAll($examID);
+        $this->render('setExamExerTime' ,
+                array( 'array_class' => $array_class,
+                        'array_exam'  => $array_suite,
+                        'examExer' => $examExer,
+                        'examID' =>$examID
+                    ));
+    }
+    public function actionSaveTimeAll(){
+        $examID = (isset($_GET['examID']))?$_GET['examID']:0;
+        $choiceScore = (isset($_POST['choiceScore']))?$_POST['choiceScore']:0;
+        $fillScore = (isset($_POST['fillScore']))?$_POST['fillScore']:0;
+        $questScore = (isset($_POST['questScore']))?$_POST['questScore']:0;
+        if(!!$choiceScore){
+            $choiceAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'choice']);
+            foreach ($choiceAll as $choice) {
+                $choice->score = $choiceScore;
+                $choice->update();
+            }
+        }
+        if(!!$fillScore){
+            $fillingAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'filling']);
+            foreach ($fillingAll as $exer) {
+                $exer->score = $fillScore;
+                $exer->update();
+            }
+        }
+        if(!!$questScore){
+            $questAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'question']);
+            foreach ($questAll as $exer) {
+                $exer->score = $questScore;
+                $exer->update();
+            }
+        }
+        $listenAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'listen']);
+        foreach ($listenAll as $one) {
+            $scoreGetKey = "listen".$one['exerciseID'].'Score';
+            $timeGetKey = "listen".$one['exerciseID'].'Time';
+            $score = $_POST[$scoreGetKey];
+            $time = $_POST[$timeGetKey];
+            if(!!$score){
+                $one->score = $score;
+            }
+            if(!!$time){
+                $one->time = $time;
+            }
+            $one->update();
+        }
+        $lookAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'look']);
+        foreach ($lookAll as $one) {
+            $scoreGetKey = "look".$one['exerciseID'].'Score';
+            $timeGetKey = "look".$one['exerciseID'].'Time';
+            $score = $_POST[$scoreGetKey];
+            $time = $_POST[$timeGetKey];
+            if(!!$score){
+                $one->score = $score;
+            }
+            if(!!$time){
+                $one->time = $time;
+            }
+            $one->update();
+        }
+        $keyAll = ExamExercise::model()->findAll("examID = ? and type = ?",[$examID,'key']);
+        foreach ($keyAll as $one) {
+            $scoreGetKey = "key".$one['exerciseID'].'Score';
+            $timeGetKey = "key".$one['exerciseID'].'Time';
+            $score = $_POST[$scoreGetKey];
+            $time = $_POST[$timeGetKey];
+            if(!!$score){
+                $one->score = $score;
+                $one->time = $time;
+                $one->update();
+            }
+        }
+        echo '保存成功';
+    }
+//end add by LC    
     public function actionSet(){       //set
     	$result ='no';
         $mail='';
@@ -483,7 +578,7 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
-                        if($type == "content")
+                        if($type == "content"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -995,7 +1090,7 @@ class TeacherController extends CController {
                         $value = -1;
                 }
             }
-                        if($type == "content")
+                        if($type == "content"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -1347,7 +1442,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-                        if($type == "requirements")
+                        if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -1723,7 +1818,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-                        if($type == "requirements")
+                        if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -2007,7 +2102,7 @@ class TeacherController extends CController {
                         $value  =    -1;
                 }
             }
-            if($type == "requirements")
+            if($type == "requirements"&&$value!=="")
             {
                 $searchKey = $value;
             }else
@@ -3505,7 +3600,6 @@ class TeacherController extends CController {
                  break;
          }           
          $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$work['exerciseID']));
-        
          $this->renderPartial($render,array(
              'work'=> $work,
              'ansWork'=>$ansWork,
@@ -3547,6 +3641,12 @@ class TeacherController extends CController {
          }
          $exam_exercise = ExamExercise::model()->find("exerciseID=? and examID=? and type=?" ,array($work['exerciseID'],$examID,$type));        
          $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?",array($recordID ,$type,$work['exerciseID']));
+         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID",array($recordID ,$type));
+         $choiceAnsWork = array();
+         foreach ($SQLchoiceAnsWork as $v){
+             $answer = $v['answer'];
+             array_push($choiceAnsWork, $answer);
+         }
          $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
          switch($type)
          {
@@ -3577,6 +3677,7 @@ class TeacherController extends CController {
              'works'=> $array_exercise,
              'work'=>$work,
              'ansWork'=>$ansWork,
+             'choiceAnsWork'=>$choiceAnsWork,
              'exam_exercise' => $exam_exercise,
              'isLast'=>$isLast,
              'score'=>$score           

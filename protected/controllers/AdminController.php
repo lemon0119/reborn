@@ -150,7 +150,7 @@ class AdminController extends CController {
         if (isset($_POST ['type'])) {
             $type = $_POST ['type'];
             $value = $_POST ['value'];
-            if($type=='classID'){
+            if ($type == 'classID') {
                 $className = $value;
                 $sqlClass = TbClass::model()->find("className = '$className'");
                 $value = $sqlClass['classID'];
@@ -172,9 +172,9 @@ class AdminController extends CController {
 
     public function actionAddStu() {
         $result = 'no';
-        if (isset($_POST ['userID'])&&isset($_POST['sex'])) {
+        if (isset($_POST ['userID']) && isset($_POST['sex'])) {
             $classID = $_POST ['classID'];
-            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $classID);
+            $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'], $_POST ['sex'], $_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $classID);
         }
         $classAll = TbClass::model()->findAll("");
         $userAll = Student::model()->findAll();
@@ -186,23 +186,358 @@ class AdminController extends CController {
     }
 
     public function actionExlAddStu() {
-        $flag = 'no';
-        if (isset($_POST ['flag'])) {
-            $flag = "1";
+        if (!empty($_FILES ['file'] ['name'])) {
+            $tmp_file = $_FILES ['file'] ['tmp_name'];
+            $file_types = explode(".", $_FILES ['file'] ['type']);
+            $file_type = $file_types [count($file_types) - 1];
+
+            // 判别是不是excel文件
+            if (strtolower($file_type) != "sheet" && strtolower($file_type) != "ms-excel") {
+                $result = '不是Excel文件';
+                $this->render('exlAddStu', ['result' => $result]);
+            } else {
+                // 解析文件并存入数据库逻辑
+                /* 设置上传路径 */
+                $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\excel\\';
+                /* 以时间来命名上传的文件 */
+                $str = date('Ymdhis');
+                $file_name = "Stu" . $str . ".xls";
+                if (!copy($tmp_file, $savePath . $file_name)) {
+                    $result = '上传失败';
+                    $this->render('exlAddStu', ['result' => $result]);
+                } else {
+                    $res = Tool::excelreadToArray($savePath . $file_name, $file_type);
+                     //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
+            $array_fail = array();
+            $array_success = array();
+            $flag = 0;
+        foreach ($res as $k => $v) {
+            // 判断第一行表格头内容
+            if ($k == 1) {
+                if (isset($v [0])) {
+                    if($v [0]!="学号"){
+                        $result="表格A列名应为“学号”！";
+                        $flag=1;
+                        $this->render('exlAddStu', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少A列“学号”";
+                    $flag=1;
+                    $this->render('exlAddStu', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [1])) {
+                    if($v [1]!="姓名"){
+                        $result="表格B列名应为“姓名”！";
+                        $flag=1;
+                        $this->render('exlAddStu', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $flag=1;
+                    $result = "表格缺少B列“姓名”";
+                    $this->render('exlAddStu', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [2])) {
+                    if($v [2]!="性别"){
+                        $result="表格C列名应为“性别”！";
+                        $flag=1;
+                        $this->render('exlAddStu', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少C列“性别”";
+                    $flag=1;
+                    $this->render('exlAddStu', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [3])) {
+                    if($v [3]!="年龄"){
+                        $result="表格D列名应为“年龄”！";
+                        $flag=1;
+                        $this->render('exlAddStu', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少D列“年龄”";
+                    $flag=1;
+                    $this->render('exlAddStu', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [4])) {
+                    if($v [4]!="班级"){
+                        $result="表格E列名应为“班级”！";
+                        $flag=1;
+                        $this->render('exlAddStu', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少E列“班级”";
+                    $flag=1;
+                    $this->render('exlAddStu', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [5])) {
+                    if($v [5]!="联系邮箱"){
+                        $result="表格F列名应为“联系邮箱”！";
+                        $flag=1;
+                        $this->render('exlAddStu', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少F列“联系邮箱”";
+                    $flag=1;
+                    $this->render('exlAddStu', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [6])) {
+                    if($v [6]!="联系电话"){
+                        $result="表格G列名应为“联系电话”！";
+                        $flag=1;
+                        $this->render('exlAddStu', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少G列“联系电话”";
+                    $flag=1;
+                    $this->render('exlAddStu', ['result' => $result]);
+                    break;
+                }
+            }
+            //判断内容逻辑
+            if ($k > 1) {
+                $data ['uid'] = $v [0];
+                $data ['userName'] = $v [1];
+                $data ['sex'] = $v [2];
+                $data ['age'] = $v[3];
+                $data ['className'] = $v[4];
+                $data ['mail_address'] = $v[5];
+                $data ['phone_number'] = $v[6];
+                
+                if ($data ['uid'] === ""||ctype_space($data ['uid'])) {
+                    $result = "学号不能为空";
+                    $fixed = "需手动添加";
+                    $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                } else if (Tool::excelreadUserID($data ['uid'])) {
+                    $result = "学号已存在！";
+                    $fixed = "需手动添加";
+                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                } elseif ($data['sex'] === "") {
+                    $result = "性别不能为空";
+                    $fixed = "需手动添加";
+                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                } else if ($data['sex'] != "男" && $data['sex'] != "女") {
+                    $result = "性别输入有误！";
+                    $fixed = "需手动添加";
+                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                } else if ($data ['userName'] === ""||ctype_space($data ['userName'])) {
+                    $result = "姓名不能为空";
+                    $fixed = "需手动添加";
+                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                }else if(!Tool::excelreadClass($data ['className'])){
+                    $result = "班级不存在";
+                    $fixed = "班级信息已置空";
+                    $data['className']="";
+                    $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                    array_push($array_success, $data);
+                }else {
+                    array_push($array_success, $data);
+                }
+            }
         }
-        $this->render('exlAddStu', [
-            'flag' => $flag
-        ]);
+        if($flag===0){
+            $count_success= Tool::excelreadToDatabase($array_success);
+            $count_fail = $k-$count_success-1;
+            $this->render('exlAddStu',['result'=>$count_success,'count_fail'=>$count_fail,'array_fail'=>$array_fail]);
+        }
+                }
+            }
+           
+        }else{
+            $this->render('exlAddStu');
+        }
     }
 
     public function actionExlAddTea() {
-        $flag = 'no';
-        if (isset($_POST ['flag'])) {
-            $flag = "1";
+       if (!empty($_FILES ['file'] ['name'])) {
+            $tmp_file = $_FILES ['file'] ['tmp_name'];
+            $file_types = explode(".", $_FILES ['file'] ['type']);
+            $file_type = $file_types [count($file_types) - 1];
+
+            // 判别是不是excel文件
+            if (strtolower($file_type) != "sheet" && strtolower($file_type) != "ms-excel") {
+                $result = '不是Excel文件';
+                $this->render('exlAddStu', ['result' => $result]);
+            } else {
+                // 解析文件并存入数据库逻辑
+                /* 设置上传路径 */
+                $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\excel\\';
+                /* 以时间来命名上传的文件 */
+                $str = date('Ymdhis');
+                $file_name = "Stu" . $str . ".xls";
+                if (!copy($tmp_file, $savePath . $file_name)) {
+                    $result = '上传失败';
+                    $this->render('exlAddStu', ['result' => $result]);
+                } else {
+                    $res = Tool::excelreadToArray($savePath . $file_name, $file_type);
+                     //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
+            $array_fail = array();
+            $array_success = array();
+            $flag = 0;
+        foreach ($res as $k => $v) {
+            // 判断第一行表格头内容
+            if ($k == 1) {
+                if (isset($v [0])) {
+                    if($v [0]!="工号"){
+                        $result="表格A列名应为“工号”！";
+                        $flag=1;
+                        $this->render('exlAddTea', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少A列“工号”";
+                    $flag=1;
+                    $this->render('exlAddTea', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [1])) {
+                    if($v [1]!="姓名"){
+                        $result="表格B列名应为“姓名”！";
+                        $flag=1;
+                        $this->render('exlAddTea', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $flag=1;
+                    $result = "表格缺少B列“姓名”";
+                    $this->render('exlAddTea', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [2])) {
+                    if($v [2]!="性别"){
+                        $result="表格C列名应为“性别”！";
+                        $flag=1;
+                        $this->render('exlAddTea', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少C列“性别”";
+                    $flag=1;
+                    $this->render('exlAddTea', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [3])) {
+                    if($v [3]!="年龄"){
+                        $result="表格D列名应为“年龄”！";
+                        $flag=1;
+                        $this->render('exlAddTea', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少D列“年龄”";
+                    $flag=1;
+                    $this->render('exlAddTea', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [4])) {
+                    if($v [4]!="联系邮箱"){
+                        $result="表格E列名应为“联系邮箱”！";
+                        $flag=1;
+                        $this->render('exlAddTea', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少E列“联系邮箱”";
+                    $flag=1;
+                    $this->render('exlAddTea', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [5])) {
+                    if($v [5]!="联系电话"){
+                        $result="表格F列名应为“联系电话”！";
+                        $flag=1;
+                        $this->render('exlAddTea', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少F列“联系电话”";
+                    $flag=1;
+                    $this->render('exlAddTea', ['result' => $result]);
+                    break;
+                }
+                if (isset($v [6])) {
+                    if($v [6]!="所属部门"){
+                        $result="表格G列名应为“所属部门”！";
+                        $flag=1;
+                        $this->render('exlAddTea', ['result' => $result]);
+                        break;
+                    }
+                } else {
+                    $result = "表格缺少G列“所属部门”";
+                    $flag=1;
+                    $this->render('exlAddTea', ['result' => $result]);
+                    break;
+                }
+            }
+            //判断内容逻辑
+            if ($k > 1) {
+                $data ['uid'] = $v [0];
+                $data ['userName'] = $v [1];
+                $data ['sex'] = $v [2];
+                $data ['age'] = $v[3];
+                $data ['mail_address'] = $v[4];
+                $data ['phone_number'] = $v[5];
+                $data ['department'] = $v[6];
+                
+                if ($data ['uid'] === ""||ctype_space($data ['uid'])) {
+                    $result = "工号不能为空";
+                    $fixed = "需手动添加";
+                    $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                } else if (Tool::excelreadTeaUserID($data ['uid'])) {
+                    $result = "工号已存在！";
+                    $fixed = "需手动添加";
+                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                } elseif ($data['sex'] === "") {
+                    $result = "性别不能为空";
+                    $fixed = "需手动添加";
+                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                } else if ($data['sex'] != "男" && $data['sex'] != "女") {
+                    $result = "性别输入有误！";
+                    $fixed = "需手动添加";
+                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                } else if ($data ['userName'] === ""||ctype_space($data ['userName'])) {
+                    $result = "姓名不能为空";
+                    $fixed = "需手动添加";
+                     $stu_fail = array($result,$data['uid'],$data['userName'],$fixed,$data);
+                    array_push($array_fail, $stu_fail);
+                }else {
+                    array_push($array_success, $data);
+                }
+            }
         }
-        $this->render('exlAddTea', [
-            'flag' => $flag
-        ]);
+        if($flag===0){
+            $count_success= Tool::excelreadTeaToDatabase($array_success);
+            $count_fail = $k-$count_success-1;
+            $this->render('exlAddTea',['result'=>$count_success,'count_fail'=>$count_fail,'array_fail'=>$array_fail]);
+        }
+                }
+            }
+           
+        }else{
+            $this->render('exlAddTea');
+        }
     }
 
     public function actionInfoStu() {
@@ -263,37 +598,36 @@ class AdminController extends CController {
     }
 
     public function actionDeleteStu() {
-        if(isset($_GET ['id'])){
-        $userID = $_GET ['id'];
-        $thisStu = new Student ();
-        $thisStu = $thisStu->find("userID = '$userID'");
-        $thisStu->is_delete = '1';
-        $thisStu->update();
-        $result = Student::model()->getStuLst("", "");
-        $stuLst = $result ['stuLst'];
-        $pages = $result ['pages'];
-        $this->render('stuLst', array(
-            'stuLst' => $stuLst,
-            'pages' => $pages
-        ));
-        }
-        if(isset($_POST['checkbox'])){
-        $userIDlist = $_POST['checkbox'];
-        foreach ($userIDlist as $v){
+        if (isset($_GET ['id'])) {
+            $userID = $_GET ['id'];
             $thisStu = new Student ();
-            $thisStu = $thisStu->find("userID = '$v'");
+            $thisStu = $thisStu->find("userID = '$userID'");
             $thisStu->is_delete = '1';
             $thisStu->update();
+            $result = Student::model()->getStuLst("", "");
+            $stuLst = $result ['stuLst'];
+            $pages = $result ['pages'];
+            $this->render('stuLst', array(
+                'stuLst' => $stuLst,
+                'pages' => $pages
+            ));
         }
-        $result = Student::model()->getStuLst("", "");
-        $stuLst = $result ['stuLst'];
-        $pages = $result ['pages'];
-        $this->render('stuLst', array(
-            'stuLst' => $stuLst,
-            'pages' => $pages
-        ));
+        if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $thisStu = new Student ();
+                $thisStu = $thisStu->find("userID = '$v'");
+                $thisStu->is_delete = '1';
+                $thisStu->update();
+            }
+            $result = Student::model()->getStuLst("", "");
+            $stuLst = $result ['stuLst'];
+            $pages = $result ['pages'];
+            $this->render('stuLst', array(
+                'stuLst' => $stuLst,
+                'pages' => $pages
+            ));
         }
-        
     }
 
     public function actionDeleteStuDontHaveClass() {
@@ -329,7 +663,7 @@ class AdminController extends CController {
                 'flag' => 'search'
             ));
         }
-        
+
         $userID = $_GET ['id'];
         $thisStu = new Student ();
         $thisStu = $thisStu->find("userID = '$userID'");
@@ -375,10 +709,10 @@ class AdminController extends CController {
         $thisStu = $thisStu->find("userID = '$userID'");
         $thisStu->userID = $_POST ['userID'];
         $thisStu->userName = $_POST ['userName'];
-        if(isset($_POST ['sex'])){
+        if (isset($_POST ['sex'])) {
             $thisStu->sex = $_POST ['sex'];
-        }else{
-            $thisStu->sex ="";
+        } else {
+            $thisStu->sex = "";
         }
         $thisStu->age = $_POST ['age'];
         $thisStu->mail_address = $_POST ['mail_address'];
@@ -547,8 +881,8 @@ class AdminController extends CController {
 
     public function actionAddTea() {
         $result = 'no';
-        if (isset($_POST ['userID'])&&isset($_POST['sex'])) {
-            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'],$_POST ['sex'] ,$_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $_POST['department']);
+        if (isset($_POST ['userID']) && isset($_POST['sex'])) {
+            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'], $_POST ['sex'], $_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $_POST['department']);
         }
         $userAll = Teacher::model()->findAll();
         $this->render('addTea', [
@@ -558,7 +892,7 @@ class AdminController extends CController {
     }
 
     public function actionResetTeaPass() {
-        
+
         $userID = $_GET ['id'];
         $thisTea = new Teacher ();
         $thisTea = $thisTea->find("userID = '$userID'");
@@ -601,10 +935,10 @@ class AdminController extends CController {
         $thisTea = $thisTea->find("userID = '$userID'");
         $thisTea->userID = $_POST ['userID'];
         $thisTea->userName = $_POST ['userName'];
-        if(isset($_POST ['sex'])){
+        if (isset($_POST ['sex'])) {
             $thisTea->sex = $_POST ['sex'];
-        }else{
-            $thisTea->sex ="";
+        } else {
+            $thisTea->sex = "";
         }
         $thisTea->age = $_POST ['age'];
         $thisTea->mail_address = $_POST ['mail_address'];
@@ -618,7 +952,7 @@ class AdminController extends CController {
             $this->render('editTea', array(
                 'userID' => $thisTea->userID,
                 'userName' => $thisTea->userName,
-                'department'=>$thisTea->department,
+                'department' => $thisTea->department,
                 'userAll' => $userAll,
                 'sex' => $sqlTeaInof['sex'],
                 'age' => $sqlTeaInof['age'],
@@ -631,7 +965,7 @@ class AdminController extends CController {
             $this->render('editTea', array(
                 'userID' => $thisTea->userID,
                 'userName' => $thisTea->userName,
-                'department'=>$thisTea->department,
+                'department' => $thisTea->department,
                 'userAll' => $userAll,
                 'sex' => $sqlTeaInof['sex'],
                 'age' => $sqlTeaInof['age'],
@@ -690,35 +1024,35 @@ class AdminController extends CController {
     }
 
     public function actionDeleteTea() {
-         if(isset($_GET ['id'])){
-        $userID = $_GET ['id'];
-        $thisTea = new Teacher ();
-        $thisTea = $thisTea->find("userID = '$userID'");
-        $thisTea->is_delete = '1';
-        $thisTea->update();
-        $result = Teacher::model()->getTeaLst("", "");
-        $teaLst = $result ['teaLst'];
-        $pages = $result ['pages'];
-        $this->render('teaLst', array(
-            'teaLst' => $teaLst,
-            'pages' => $pages
-        ));
-        }
-        if(isset($_POST['checkbox'])){
-        $userIDlist = $_POST['checkbox'];
-        foreach ($userIDlist as $v){
+        if (isset($_GET ['id'])) {
+            $userID = $_GET ['id'];
             $thisTea = new Teacher ();
-            $thisTea = $thisTea->find("userID = '$v'");
+            $thisTea = $thisTea->find("userID = '$userID'");
             $thisTea->is_delete = '1';
             $thisTea->update();
+            $result = Teacher::model()->getTeaLst("", "");
+            $teaLst = $result ['teaLst'];
+            $pages = $result ['pages'];
+            $this->render('teaLst', array(
+                'teaLst' => $teaLst,
+                'pages' => $pages
+            ));
         }
-        $result = Teacher::model()->getTeaLst("", "");
-        $teaLst = $result ['teaLst'];
-        $pages = $result ['pages'];
-        $this->render('teaLst', array(
-            'teaLst' => $teaLst,
-            'pages' => $pages
-        ));
+        if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $thisTea = new Teacher ();
+                $thisTea = $thisTea->find("userID = '$v'");
+                $thisTea->is_delete = '1';
+                $thisTea->update();
+            }
+            $result = Teacher::model()->getTeaLst("", "");
+            $teaLst = $result ['teaLst'];
+            $pages = $result ['pages'];
+            $this->render('teaLst', array(
+                'teaLst' => $teaLst,
+                'pages' => $pages
+            ));
         }
     }
 
@@ -800,7 +1134,7 @@ class AdminController extends CController {
 
     public function actionClassLst() {
         //删除班级同时删除与之关联的学生，老师
-        $act_result ='';
+        $act_result = '';
         if (isset($_GET ['flag'])) {
             if ($_GET ['flag'] == 'deleteClass') {
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
@@ -811,11 +1145,10 @@ class AdminController extends CController {
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();
-                
             }
             unset($_GET ['flag']);
         }
-        
+
         if (isset($_GET ['page'])) {
             Yii::app()->session ['lastPage'] = $_GET ['page'];
         } else {
@@ -868,7 +1201,7 @@ class AdminController extends CController {
             if ($type == "classID" || $type == "className") {
                 $ex_sq = " WHERE " . $type . " = '" . $value . "'";
             } else if ($type == "courseName") {
-                $course = Course::model()->find("courseName = ?",array($value));
+                $course = Course::model()->find("courseName = ?", array($value));
                 $ex_sq = " WHERE currentCourse = '" . $course->courseID . "'";
             } else if ($type == "teaName") {
                 $sql = "SELECT * FROM teacher WHERE userName ='" . $value . "'";
@@ -918,14 +1251,21 @@ class AdminController extends CController {
     }
 
     public function actionAddClass() {
-        $result         = 'no';
+        $result = 'no';
         if (isset($_POST ['className'])) {
-            $classID    = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
-            $lessons    = Lesson::model()->findall('classID=? and courseID=?', array(0,$_POST ['courseID']));
-            foreach ($lessons as $lesson) {
-                Lesson::model()->insertLesson($lesson['lessonName'], $lesson['courseID'],0, $classID);
+            $className  = $_POST ['className'];
+            $classes    = TbClass::model()->findAll("className = '$className'");
+            if(count($classes) > 0)
+            {
+                $result     = 2;
+            }else{
+                $classID    = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
+                $lessons    = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
+                foreach ($lessons as $lesson) {
+                    Lesson::model()->insertLesson($lesson['lessonName'], $lesson['courseID'], 0, $classID);
+                }
+                $result     = 1;
             }
-            $result     = 1;
         }
         $this->render('addClass', [
             'result' => $result
@@ -1068,7 +1408,7 @@ class AdminController extends CController {
                     $value = - 1;
             }
         }
-        if ($type == "content") {
+        if ($type == "content" && $value !== "") {
             $searchKey = $value;
         } else {
             $searchKey = "no";
@@ -1463,7 +1803,7 @@ class AdminController extends CController {
                     $value = - 1;
             }
         }
-        if ($type == "content") {
+        if ($type == "content" && $value !== "") {
             $searchKey = $value;
         } else {
             $searchKey = "no";
@@ -1488,8 +1828,8 @@ class AdminController extends CController {
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
         }
-        $title      = "";
-        $content    = "";
+        $title = "";
+        $content = "";
         if (isset($_POST ['title'])) {
             $title    = $_POST ['title'];
             $content  = $_POST ['content'];
@@ -1500,18 +1840,18 @@ class AdminController extends CController {
             } else if ($_FILES ['file'] ['error'] > 0) {
                 $result = '文件上传失败';
             } else {
-                $oldName = $_FILES["file"]["name"]; 
-                $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
-                move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
                 Resourse::model()->insertRela($newName, $oldName);
-                $result  = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $newName, $filePath, 0);
-                $result  = '1';
+                $result = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $newName, $filePath, 0);
+                $result = '1';
             }
         }
         $this->render('addListen', array(
-            'result'    => $result,
-            'title'     => $title,
-            'content'   => $content
+            'result' => $result,
+            'title' => $title,
+            'content' => $content
         ));
     }
 
@@ -1570,7 +1910,7 @@ class AdminController extends CController {
             $userid = Yii::app()->session ['userid_now'];
             // 怎么用EXER_LISTEN_URL
             $path = 'resources/' . $filePath . iconv("UTF-8", "gb2312", $fileName);
-            if(file_exists($path))
+            if (file_exists($path))
                 unlink($path);
             Resourse::model()->delName($fileName);
         }
@@ -1659,10 +1999,10 @@ class AdminController extends CController {
                 $result = '文件格式不正确，应为MP3或WAV格式：';
             } else if ($_FILES ['modifyfile'] ['error'] > 0) {
                 $result = '文件上传失败';
-            } else { 
-                $newName = Tool::createID().".".pathinfo($_FILES["modifyfile"]["name"],PATHINFO_EXTENSION);
-                move_uploaded_file($_FILES["modifyfile"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
-                if(file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
+            } else {
+                $newName = Tool::createID() . "." . pathinfo($_FILES["modifyfile"]["name"], PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["modifyfile"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                if (file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
                     unlink($dir . iconv("UTF-8", "gb2312", $filename));
                 Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);               
                 $thisListen->fileName = $newName;
@@ -1731,7 +2071,7 @@ class AdminController extends CController {
                     $value = - 1;
             }
         }
-        if ($type == "requirements") {
+        if ($type == "requirements" && $value !== "") {
             $searchKey = $value;
         } else {
             $searchKey = "no";
@@ -1942,7 +2282,7 @@ class AdminController extends CController {
                     $value = - 1;
             }
         }
-        if ($type == "requirements"&&$value!=="") {
+        if ($type == "requirements" && $value !== "") {
             $searchKey = $value;
         } else {
             $searchKey = "no";
@@ -2132,7 +2472,7 @@ class AdminController extends CController {
                     $value = - 1;
             }
         }
-        if ($type == "requirements") {
+        if ($type == "requirements" && $value !== "") {
             $searchKey = $value;
         } else {
             $searchKey = "no";
@@ -2284,54 +2624,53 @@ class AdminController extends CController {
         ]);
     }
 
-    public function actionDeleteCourse(){
+    public function actionDeleteCourse() {
         if (isset($_GET ['page'])) {
             Yii::app()->session ['lastPage'] = $_GET ['page'];
         } else {
             Yii::app()->session ['lastPage'] = 1;
         }
-        $result     = '';
-        $courseID   = $_GET['courseID'];
-        if(!isset(Yii::app()->session ['delCourseID'])
-                || (Yii::app()->session ['delCourseID'] != $courseID)){
-            $classes    = TbClass::model()->findall("currentCourse = $courseID");
-            if(count($classes)>0){
-                $result = 0 ; 
-            }else{
-                $rows   = Course::model()->deleteAll('courseID=?', array($courseID));
-                $rows   = Lesson::model()->deleteAll('courseID=?', array($courseID));
+        $result = '';
+        $courseID = $_GET['courseID'];
+        if (!isset(Yii::app()->session ['delCourseID']) || (Yii::app()->session ['delCourseID'] != $courseID)) {
+            $classes = TbClass::model()->findall("currentCourse = $courseID");
+            if (count($classes) > 0) {
+                $result = 0;
+            } else {
+                $rows = Course::model()->deleteAll('courseID=?', array($courseID));
+                $rows = Lesson::model()->deleteAll('courseID=?', array($courseID));
                 $result = 1;
             }
             Yii::app()->session ['delCourseID'] = $courseID;
         }
-        
-        $courses    = Course::model()->getCourseLst("", "");
-        $courseLst  = $courses ['courseLst'];
-        $pages      = $courses ['pages'];
-        
+
+        $courses = Course::model()->getCourseLst("", "");
+        $courseLst = $courses ['courseLst'];
+        $pages = $courses ['pages'];
+
         $this->render('courseLst', array(
             'courseLst' => $courseLst,
-            'pages'     => $pages,
-            'teacher'   => Teacher::model()->findall(),
-            'result'    => $result
+            'pages' => $pages,
+            'teacher' => Teacher::model()->findall(),
+            'result' => $result
         ));
     }
-    
+
     public function actionCourseLst() {
         if (isset($_GET ['page'])) {
             Yii::app()->session ['lastPage'] = $_GET ['page'];
         } else {
             Yii::app()->session ['lastPage'] = 1;
         }
-        $result                              = Course::model()->getCourseLst("", "");
-        $courseLst                           = $result ['courseLst'];
-        $pages                               = $result ['pages'];
-        Yii::app()->session ['lastUrl']      = "courseLst";
+        $result = Course::model()->getCourseLst("", "");
+        $courseLst = $result ['courseLst'];
+        $pages = $result ['pages'];
+        Yii::app()->session ['lastUrl'] = "courseLst";
         $this->render('courseLst', array(
             'courseLst' => $courseLst,
-            'pages'     => $pages,
-            'teacher'   => Teacher::model()->findall(),
-            'result'    => ''
+            'pages' => $pages,
+            'teacher' => Teacher::model()->findall(),
+            'result' => ''
         ));
     }
 
@@ -2352,9 +2691,9 @@ class AdminController extends CController {
         }
         Yii::app()->session ['lastUrl'] = "searchCourse";
         if ($type == 'createPerson') {
-            if ($value == "管理员"){
+            if ($value == "管理员") {
                 $value = 0;
-            }else {
+            } else {
                 $tea = Teacher::model()->find("userName = '$value'");
                 if ($tea ['userID'] != "")
                     $value = $tea ['userID'];
@@ -2367,8 +2706,8 @@ class AdminController extends CController {
         $pages = $result ['pages'];
         $this->render('searchCourse', array(
             'courseLst' => $courseLst,
-            'pages'     => $pages,
-            'teacher'   => Teacher::model()->findall()
+            'pages' => $pages,
+            'teacher' => Teacher::model()->findall()
         ));
     }
 
@@ -2383,195 +2722,182 @@ class AdminController extends CController {
     }
 
     public function actionInfoCourse() {
-        $courseID       = $_GET ['courseID'];
-        $courseName     = $_GET ['courseName'];
-        $createPerson   = $_GET ['createPerson'];
-        $result         = Lesson::model()->getLessonLst("", "",$courseID);
-        $lessonLst      = $result ['lessonLst'];
-        $pages          = $result ['pages'];
+        $courseID = $_GET ['courseID'];
+        $courseName = $_GET ['courseName'];
+        $createPerson = $_GET ['createPerson'];
+        $result = Lesson::model()->getLessonLst("", "", $courseID);
+        $lessonLst = $result ['lessonLst'];
+        $pages = $result ['pages'];
         $this->render('infoCourse', array(
-            'courseID'      => $courseID,
-            'courseName'    => $courseName,
-            'createPerson'  => $createPerson,
-            'posts'         => $lessonLst,
-            'pages'         => $pages,
-                ));
+            'courseID' => $courseID,
+            'courseName' => $courseName,
+            'createPerson' => $createPerson,
+            'posts' => $lessonLst,
+            'pages' => $pages,
+        ));
     }
 
     public function actionAddLesson() {
-        $courseID       = $_GET ['courseID'];
-        $courseName     = $_GET ['courseName'];
-        $createPerson   = $_GET ['createPerson'];
+        $courseID = $_GET ['courseID'];
+        $courseName = $_GET ['courseName'];
+        $createPerson = $_GET ['createPerson'];
         $result = 'no';
         if (isset($_POST['lessonName'])) {
-            $result     = Lesson::model()->insertLesson($_POST['lessonName'],$courseID, 0,0);
-            $classes    = TbClass::model()->findall("currentCourse = '$courseID'");
+            $result = Lesson::model()->insertLesson($_POST['lessonName'], $courseID, 0, 0);
+            $classes = TbClass::model()->findall("currentCourse = '$courseID'");
             foreach ($classes as $class) {
-                $result = Lesson::model()->insertLesson($_POST['lessonName'],$courseID, 0,$class['classID']);
+                $result = Lesson::model()->insertLesson($_POST['lessonName'], $courseID, 0, $class['classID']);
             }
         }
         $this->render('addLesson', array(
-            'courseID'      => $courseID,
-            'courseName'    => $courseName,
-            'createPerson'  => $createPerson,
-            'result'        => $result
+            'courseID' => $courseID,
+            'courseName' => $courseName,
+            'createPerson' => $createPerson,
+            'result' => $result
         ));
     }
 
     public function actionPptLst() {
-        $courseID       = $_GET ['courseID'];
-        $courseName     = $_GET ['courseName'];
-        $createPerson   = $_GET ['createPerson'];
-        $pdir           = $_GET ['pdir'];
-        Yii::app()->session['courseID']      = $courseID;
-        Yii::app()->session['courseName']    = $courseName;
-        Yii::app()->session['createPerson']  = $createPerson;
-        $this->render("pptLst",array(
-            'courseID'      => $courseID,
-            'courseName'    => $courseName,
-            'createPerson'  => $createPerson,
-            'pdir'          => $pdir
+        $courseID = $_GET ['courseID'];
+        $courseName = $_GET ['courseName'];
+        $createPerson = $_GET ['createPerson'];
+        $pdir = $_GET ['pdir'];
+        Yii::app()->session['courseID'] = $courseID;
+        Yii::app()->session['courseName'] = $courseName;
+        Yii::app()->session['createPerson'] = $createPerson;
+        $this->render("pptLst", array(
+            'courseID' => $courseID,
+            'courseName' => $courseName,
+            'createPerson' => $createPerson,
+            'pdir' => $pdir
         ));
     }
-    
-    public function actionAddPpt(){
-        $dir            =   $_GET['pdir']; 
-        $result         =   "上传失败!";
-        if(!isset($_FILES["file"]))
-        {
+
+    public function actionAddPpt() {
+        $dir = $_GET['pdir'];
+        $result = "上传失败!";
+        if (!isset($_FILES["file"])) {
             echo "请选择文件！";
-            return ;
+            return;
         }
-        if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint")
-        {   
-            if($_FILES["file"]["size"] < 30000000)
-            {
-                if ($_FILES["file"]["error"] > 0)
-                {
+        if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint") {
+            if ($_FILES["file"]["size"] < 30000000) {
+                if ($_FILES["file"]["error"] > 0) {
                     $result = "Return Code: " . $_FILES["file"]["error"];
-                }
-              else
-                {
-                    $newName = Tool::createID().".ppt";
-                    $oldName = $_FILES["file"]["name"]; 
-                    move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
+                } else {
+                    $newName = Tool::createID() . ".ppt";
+                    $oldName = $_FILES["file"]["name"];
+                    move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
                     Resourse::model()->insertRela($newName, $oldName);
                     $result = "上传成功！";
                 }
-            }else{
+            } else {
                 $reult = "PPT文件限定大小为30M！";
             }
-        }else {
+        } else {
             $result = "请上传正确类型的文件！";
         }
         echo $result;
     }
-    
-    public function actionPptTable(){
-        $pdir           = $_GET ['pdir'];        
-        return $this->renderPartial('pptTable',[
-            'pdir'   =>  $pdir,
-        ]);
-    }
-    
-    public function actionDeletePpt(){
-        $fileName       =   $_GET['ppt'];
-        $dir            =   $_GET['pdir'];
-        $file           =   $dir.$fileName;
-        if(file_exists(iconv('utf-8','gb2312',$file)))
-            unlink(iconv('utf-8','gb2312',$file));
-        Resourse::model()->delName($fileName);
-        $result         =   "删除成功！";    
-        echo $result;
-    }
-    
-    public function actionLookPpt(){
-        $fileDir         =   $_GET['ppt'];
-        $pdir            =   $_GET['pdir'];
-        $dir             =   $pdir.$fileDir;
-        return $this->render('lookPpt',[
-                'pdir'   =>  $pdir,
-                'dir'    =>  $dir,    
+
+    public function actionPptTable() {
+        $pdir = $_GET ['pdir'];
+        return $this->renderPartial('pptTable', [
+                    'pdir' => $pdir,
         ]);
     }
 
-    public function actionVideoLst(){
-        $courseID       = $_GET ['courseID'];
-        $courseName     = $_GET ['courseName'];
-        $createPerson   = $_GET ['createPerson'];
-        $vdir           = $_GET ['vdir'];
-        Yii::app()->session['courseID']      = $courseID;
-        Yii::app()->session['courseName']    = $courseName;
-        Yii::app()->session['createPerson']  = $createPerson;
-        $this->render("videoLst",array(
-            'courseID'      => $courseID,
-            'courseName'    => $courseName,
-            'createPerson'  => $createPerson,
-            'vdir'          => $vdir
-        ));
-    }
-    
-    public function actionVideoTable(){
-        $vdir           = $_GET ['vdir'];        
-        return $this->renderPartial('videoTable',[
-            'vdir'   =>  $vdir,
-        ]);
-    }
-    
-    public function actionAddVideo(){
-            $dir            =   $_GET['vdir']; 
-            $result         =   "上传失败!";
-            if(!isset($_FILES["file"]))
-            {
-                echo "请选择文件！";
-                return ;
-            }
-            if ($_FILES["file"]["type"] == "video/mp4"
-                    || $_FILES["file"]["type"] == "application/octet-stream")
-            {   
-                if($_FILES["file"]["size"] < 200000000)
-                {
-                    if ($_FILES["file"]["error"] > 0)
-                    {
-                        $result = "Return Code: " . $_FILES["file"]["error"];
-                    }
-                  else
-                    {
-                        $oldName = $_FILES["file"]["name"]; 
-                        $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
-                        move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
-                        Resourse::model()->insertRela($newName, $oldName);
-                        $result = "上传成功！";
-                    }
-                }else{
-                    $reult = "视频文件限定大小为200M！";
-                }
-            }else {
-                $result = "请上传正确类型的文件！";
-            }
-            echo $result;
-    }
-    
-    public function actionDeleteVideo(){
-        $fileName       =   $_GET['video'];
-        $dir            =   $_GET['vdir'];
-        $file           =   $dir.$fileName;
+    public function actionDeletePpt() {
+        $fileName = $_GET['ppt'];
+        $dir = $_GET['pdir'];
+        $file = $dir . $fileName;
+        if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            unlink(iconv('utf-8', 'gb2312', $file));
         Resourse::model()->delName($fileName);
-        if(file_exists(iconv('utf-8','gb2312',$file)))
-            unlink(iconv('utf-8','gb2312',$file));
-        $result         =   "删除成功！";    
+        $result = "删除成功！";
         echo $result;
     }
-    
-    public function actionLookVideo(){
-        $file            =   $_GET['video'];
-        $vdir            =   $_GET['vdir'];
-        return $this->render('lookVideo',[
-                'vdir'   =>  $vdir,
-                'file'   =>  $vdir.$file,   
+
+    public function actionLookPpt() {
+        $fileDir = $_GET['ppt'];
+        $pdir = $_GET['pdir'];
+        $dir = $pdir . $fileDir;
+        return $this->render('lookPpt', [
+                    'pdir' => $pdir,
+                    'dir' => $dir,
         ]);
     }
-    
+
+    public function actionVideoLst() {
+        $courseID = $_GET ['courseID'];
+        $courseName = $_GET ['courseName'];
+        $createPerson = $_GET ['createPerson'];
+        $vdir = $_GET ['vdir'];
+        Yii::app()->session['courseID'] = $courseID;
+        Yii::app()->session['courseName'] = $courseName;
+        Yii::app()->session['createPerson'] = $createPerson;
+        $this->render("videoLst", array(
+            'courseID' => $courseID,
+            'courseName' => $courseName,
+            'createPerson' => $createPerson,
+            'vdir' => $vdir
+        ));
+    }
+
+    public function actionVideoTable() {
+        $vdir = $_GET ['vdir'];
+        return $this->renderPartial('videoTable', [
+                    'vdir' => $vdir,
+        ]);
+    }
+
+    public function actionAddVideo() {
+        $dir = $_GET['vdir'];
+        $result = "上传失败!";
+        if (!isset($_FILES["file"])) {
+            echo "请选择文件！";
+            return;
+        }
+        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
+            if ($_FILES["file"]["size"] < 200000000) {
+                if ($_FILES["file"]["error"] > 0) {
+                    $result = "Return Code: " . $_FILES["file"]["error"];
+                } else {
+                    $oldName = $_FILES["file"]["name"];
+                    $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                    move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                    Resourse::model()->insertRela($newName, $oldName);
+                    $result = "上传成功！";
+                }
+            } else {
+                $reult = "视频文件限定大小为200M！";
+            }
+        } else {
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+    }
+
+    public function actionDeleteVideo() {
+        $fileName = $_GET['video'];
+        $dir = $_GET['vdir'];
+        $file = $dir . $fileName;
+        Resourse::model()->delName($fileName);
+        if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            unlink(iconv('utf-8', 'gb2312', $file));
+        $result = "删除成功！";
+        echo $result;
+    }
+
+    public function actionLookVideo() {
+        $file = $_GET['video'];
+        $vdir = $_GET['vdir'];
+        return $this->render('lookVideo', [
+                    'vdir' => $vdir,
+                    'file' => $vdir . $file,
+        ]);
+    }
+
     // Uncomment the following methods and override them if needed
     /*
      * public function filters()
