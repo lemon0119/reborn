@@ -235,11 +235,22 @@ class TeacherController extends CController {
             $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir            =   "resources/".$pptFilePath; 
             $file           =   $dir.$fileName;
-            if(file_exists(iconv('utf-8','gb2312',$file)))
-                unlink(iconv('utf-8','gb2312',$file));
-            Resourse::model()->delName($fileName);
-            $result         =   "删除成功！";    
-            echo $result;
+            $result     = 0;               //不显示提示
+            if(!isset(Yii::app()->session['ppt2del']) ||
+                Yii::app()->session['ppt2del'] != $fileName)
+            {
+                Yii::app()->session['ppt2del'] = $fileName; 
+                if(file_exists(iconv('utf-8','gb2312',$file)))
+                    unlink(iconv('utf-8','gb2312',$file));
+                Resourse::model()->delName($fileName);
+                $result         =   "删除成功！";  
+            }
+            return $this->render('pptLst',[
+            'classID'   =>  $classID,
+            'progress'  =>  $progress,
+            'on'        =>  $on,
+            'result'    =>  $result
+        ]);
     }
     
     public function actionLookPpt(){
@@ -1354,8 +1365,10 @@ class TeacherController extends CController {
                 //表示复制的文件已存在
                 $insertresult = '2';
             }else{
-                copy($sourcefilePath.iconv("UTF-8","gb2312",$fileName),$dir.iconv("UTF-8","gb2312",$fileName) );
-                $insertresult = ListenType::model()->insertListen($oldListen[0]['title'],$oldListen[0]['content'],$oldListen[0]['fileName'],$filePath , Yii::app()->session['userid_now']);
+                 $newName = Tool::createID().".".pathinfo($fileName,PATHINFO_EXTENSION);
+                if(file_exists($sourcefilePath.iconv("UTF-8","gb2312",$fileName)))
+                    copy($sourcefilePath.iconv("UTF-8","gb2312",$fileName),$dir.iconv("UTF-8","gb2312",$newName) );
+                $insertresult = ListenType::model()->insertListen($oldListen[0]['title'],$oldListen[0]['content'],$newName,$filePath , Yii::app()->session['userid_now']);
             }          
             Yii::app()->session['code'] = $_GET["code"];
             }

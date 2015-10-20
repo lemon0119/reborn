@@ -56,7 +56,7 @@
           success:function(html){
               $("#work").append(html);
           }
-      })
+      });
     }); 
     
 </script>

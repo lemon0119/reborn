@@ -45,9 +45,17 @@
                     <td><?php echo $createPerson;?></td>
                     <td><?php echo $model['createTime'];?></td>
                     <td><a href="./index.php?r=admin/pptLst&&pdir=<?php echo $pdir;?>&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><img src="<?php echo IMG_URL; ?>ppt.png"><?php
-                                                        $num    = sizeof(scandir($pdir)); 
-                                                        $num    = ($num>2)?($num-2)/2:0;
-                                                        echo    $num;?></a></td>
+                                                    $num    = 0;                                                    
+                                                    $mydir = dir($pdir); 
+                                                    while($file = $mydir->read())
+                                                    { 
+                                                        if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                                        {   
+                                                            $num = $num + 1;
+                                                        } 
+                                                    } 
+                                                    $mydir->close(); 
+                                                    echo    $num;    ?></a></td>
                     <td><a href="./index.php?r=admin/videoLst&&vdir=<?php echo $vdir;?>&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><img src="<?php echo IMG_URL; ?>video.png"><?php
                                                         $num = sizeof(scandir($vdir));                                                                                         
                                                         $num = ($num>2)?($num-2):0;
