@@ -71,8 +71,21 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
                                     </li>
-                                    <li><a id="blank_admin"></a></li>
+
+                                    <li><a id="blank_teacher"></a></li>
+                                     <li>
+                                       <?php if(Tool::teacherNotice() == 0){?>
+                                       <a id="stuMail_off" href="./index.php?r=teacher/teacherNotice"></a>
+                                       <?php }else {?>
+                                          <a id="stuMail_on" href="./index.php?r=teacher/teacherNotice"></a>  
+                                       <?php }?>
+                                   </li> 
+                                   
+                                  
+
+                                
                                     <li class="dropdown">
+
                                         <div class="userUI">
                                         <a href="" data-toggle="dropdown" id="userUI" >
                                              <?php echo Yii::app()->session['userName']; ?><b class="user_dropdown_logo"></b>
@@ -84,6 +97,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                         </ul>
                                              </div>
                                     </li>
+                                   
                                 </ul>
                             </div>
                         </div>
@@ -98,3 +112,11 @@ if (isset(Yii::app()->session['userid_now'])) {
 <?php } else { ?>
     <script>    window.location.href = "./index.php?r=user/login"</script>
 <?php } ?>
+<script language="JavaScript">
+    $(document).ready(function(){
+            //这个就是定时器
+           setTimeout(function(){
+               window.location.reload();
+           },10000); 
+       });
+</script>

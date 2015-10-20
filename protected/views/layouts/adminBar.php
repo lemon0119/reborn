@@ -52,9 +52,9 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=admin/listenLst">听打练习</a></li>
                                         </ul>
                                     </li>
-                                   
-                                    <li><a id="schedule"  href="./index.php?r=admin/schedule">课 程 表</a></li>
-                                    <li><a id="blank_admin"></a></li>
+
+                                       <li><a id="schedule"  href="./index.php?r=admin/schedule">课 程 表</a></li>
+                                    <li><a id="notice_manager" href="./index.php?r=admin/noticeLst"></a></li>
                                     <li >
                                         <div class="userUI">
                                             <a href="" id="userUI" data-toggle="dropdown">

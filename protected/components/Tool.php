@@ -249,6 +249,19 @@ class Tool {
         }
         return false;
     }
+
+    //检查学生公告状态
+public static function stuNotice(){
+    $userId= Yii::app()->session['userid_now'];
+    $noticeState = Student::model()->findByPK($userId)->noticestate;
+    return $noticeState;
+}
+ //检查老师公告状态
+public static function teacherNotice(){
+    $userId= Yii::app()->session['userid_now'];
+    $noticeState = Teacher::model()->findByPK($userId)->noticestate;
+    return $noticeState;
+}
     /**
      * 验证邮箱格式是否正确
      * return true 正确; false 不正确
