@@ -112,11 +112,3 @@ if (isset(Yii::app()->session['userid_now'])) {
 <?php } else { ?>
     <script>    window.location.href = "./index.php?r=user/login"</script>
 <?php } ?>
-<script language="JavaScript">
-    $(document).ready(function(){
-            //这个就是定时器
-           setTimeout(function(){
-               window.location.reload();
-           },10000); 
-       });
-</script>
