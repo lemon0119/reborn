@@ -1,31 +1,10 @@
 <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
 <script>
-    /*
-　　　function checkLeave(){
-       $.ajax({
-            type: "GET",
-            url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID;?>",
-            data: {},
-            /*
-            success: function(){ 
-
-               window.wxc.xcConfirm('更新成功！', window.wxc.xcConfirm.typeEnum.success);
-                },
-            error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了呀...', window.wxc.xcConfirm.typeEnum.error);
-                console.log(xhr, "Failed");
-                console.log(type, "Failed");
-                console.log(exception, "Failed");
-            }
-            
-        });
-　　　}
-   */
+　　　
    </script>
   
 <!--直播begin-->
-<body onbeforeunload="checkLeave()"> 
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
     <?php
    
@@ -166,7 +145,6 @@
             </div>
         </div>
     </div>
-</body>
 <script>
 //全屏
     $('#full-screen-button').on('click', function(){
@@ -204,10 +182,7 @@
 <script>
     //chat and bulletin
 $(document).ready(function(){
-    //$(window).bind('beforeunload',function(){
-    //    return '您确定离开此页面吗？';
-    //});
-    
+    /*
    $("div.container div.navbar div.navbar-inner div.container div.nav-collapse ul.nav li.dropdown ul.dropdown-menu li").find("a").click(function() {
             var url=$(this).attr("href");
             if(url.indexOf("index.php")>0){
@@ -226,8 +201,7 @@ $(document).ready(function(){
                 });
                 return false;
             }
-    });
-        
+    });*/
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
 
@@ -244,6 +218,10 @@ $(document).ready(function(){
             }
         });
     });
+    //每5秒，发送一次时间
+    setInterval(function() {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
+        checkLeave();
+    }, 5000);
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -298,7 +276,19 @@ $(document).ready(function(){
         });
     });
 });
-
+function checkLeave(){
+        $.ajax({
+             type: "POST",
+             url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID;?>",
+             data: {},
+             success: function(){ console.log("set time");},
+                error: function(xhr, type, exception){
+                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr, "Failed");
+                }
+         });
+        return false;
+　　　}
 function pollChatRoom() {
     $.ajax({
         type: "GET",
