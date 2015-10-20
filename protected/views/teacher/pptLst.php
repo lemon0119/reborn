@@ -30,7 +30,7 @@
     </div>
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
 </div>
-<div class="span9">
+<div class="span9" style="position: relative; left: 20px">
     <h2 style="display:inline-block;">PPT列表</h2>
     <span>(支持PPT格式)</span>
     <div id ="ppt-table"></div>
@@ -51,6 +51,12 @@
 <script>
     $(document).ready(function(){
     $("#upload").hide();
+    
+    <?php if(isset($result)){?>
+    var result = <?php echo "'$result'";?>;
+    if(result !== '0')
+    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
+    <?php }?>
 });
 
     $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");

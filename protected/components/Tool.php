@@ -249,6 +249,7 @@ class Tool {
         }
         return false;
     }
+
     //检查学生公告状态
 public static function stuNotice(){
     $userId= Yii::app()->session['userid_now'];
@@ -261,4 +262,26 @@ public static function teacherNotice(){
     $noticeState = Teacher::model()->findByPK($userId)->noticestate;
     return $noticeState;
 }
+    /**
+     * 验证邮箱格式是否正确
+     * return true 正确; false 不正确
+     */
+    public static function checkMailAddress($email){
+        if (ereg("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i; ",$email)||$email==""){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+    /**
+     * 验证ID格式是否正确
+     * return true 正确; false 不正确
+     */
+    public static function checkID($ID){
+        if (ereg("/^[A-Za-z0-9]+$/",$ID)||$ID==""){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
 }

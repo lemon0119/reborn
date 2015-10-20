@@ -226,6 +226,7 @@ a:hover,a:focus {
     right:30px;
     padding: 40px;
     width:770px
+    
 }
 .span8 {
     width:620px
@@ -4746,6 +4747,15 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     top:1px;
     background-image: url("../../img/bell.gif");
 }
+#suLu{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/encyclopedia.png");
+}
+#suLu:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/on_encyclopedia.png");
+
+}
 #myCourse{
     padding: 28px 60px;
     background-image: url("../../img/UI_stu/myCourse.png");
@@ -4786,7 +4796,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     top: 1px;
      background:-moz-linear-gradient(left,#505050,#fff);
     
-    padding: 27px 167px;
+    padding: 27px 107px;
 }
 #blank_admin{
     position: relative;
@@ -4799,6 +4809,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     top: 1px;
     background:-moz-linear-gradient(left,#505050,#fff);
     padding: 27px 107px;
+}
+#schedule{
+     position: relative;
+    top: 1px;
+    font-size:18px;
+    color: #fff;
+    background:-moz-linear-gradient(left,#505050,#fff);
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 17px 40px;
 }
 .nav-userID{
     position: relative;
@@ -4824,6 +4844,15 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .font-center{
     text-align: center !important;
+    vertical-align: middle !important;
+}
+table tr th{
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+table tr td{
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 .font-startcourse{
     padding: 15px 15px 0 15px;
@@ -4884,4 +4913,9 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     left:163px;
     float: left;
     color: red
+}
+.course_option{
+    width: 80px;
+    border:1px solid #fff;
+    color:#aaa9a9;
 }

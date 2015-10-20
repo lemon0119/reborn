@@ -71,6 +71,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
                                     </li>
+
                                     <li><a id="blank_teacher"></a></li>
                                      <li>
                                        <?php if(Tool::teacherNotice() == 0){?>
@@ -80,7 +81,11 @@ if (isset(Yii::app()->session['userid_now'])) {
                                        <?php }?>
                                    </li> 
                                    
-                                    <li >
+                                  
+
+                                
+                                    <li class="dropdown">
+
                                         <div class="userUI">
                                         <a href="" data-toggle="dropdown" id="userUI" >
                                              <?php echo Yii::app()->session['userName']; ?><b class="user_dropdown_logo"></b>

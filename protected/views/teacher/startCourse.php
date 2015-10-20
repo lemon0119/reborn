@@ -63,7 +63,7 @@
         </p>
         <div style="height:200px; width: 780px">
             <?php if ($on == $progress) { ?>
-                <a href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass">虚拟课堂</a> 
+            <a href="#" onclick="beginVirClass()"class="startcourse-virtualclass">虚拟课堂</a> 
             <?php } else { ?>
                 <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass">开始本课</a> 
                <?php } ?>
@@ -113,11 +113,26 @@
                 <li class="last">
                     <a href="./index.php?r=teacher/pptLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>" id="ppt">
                         <span class="count"><?php
-                            $num1 = sizeof(scandir($pdir));
-                            $num1 = ($num1 > 2) ? ($num1 - 2) / 2 : 0;
-                            $num2 = sizeof(scandir($adminPdir));
-                            $num2 = ($num2 > 2) ? ($num2 - 2) / 2 : 0;
-                            echo $num1 + $num2;
+                            $num    = 0;                                                    
+                            $mydir = dir($pdir); 
+                            while($file = $mydir->read())
+                            { 
+                                if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $num = $num + 1;
+                                } 
+                            } 
+                            $mydir->close();
+                            $mydir = dir($adminPdir); 
+                            while($file = $mydir->read())
+                            { 
+                                if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $num = $num + 1;
+                                } 
+                            } 
+                            $mydir->close(); 
+                            echo    $num;
                             ?></span> <font style="color:#000">PPT</font></a>
             </ul>
         </div>
@@ -128,5 +143,12 @@
     $(document).ready(function(){
         $("#li-<?php echo $on;?>").attr("class","active");
     });
+    function beginVirClass(){
+        if(<?php echo $result;?>=='1'){
+            alert("此班级正在上课！")
+        }else{
+            window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";
+        }
+    }
 </script>
 

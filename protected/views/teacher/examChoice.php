@@ -47,7 +47,10 @@
      
     function nextWork(answerID,recordID,examID,exerciseID){
         var value1 = $("#input")[0].value;
-        var user = {
+        if(value1><?php echo $totalScore;?>){
+            window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
+        }else{
+            var user = {
             recordID:recordID,
             type:"choice",
             workID:"<?php echo $workID;?>",
@@ -66,7 +69,9 @@
           success:function(html){     
               $("#ziji").html(html);           
           }
-      })
+      });
+        }
+        
     }
 </script>
 

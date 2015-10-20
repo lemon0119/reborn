@@ -1337,4 +1337,8 @@ class StudentController extends CController {
         $noticeS->update();
        $this->render('stuNotice',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
     }
+    public function actionSuLu(){
+        return $this->render('suLu');
+
+    }
 }

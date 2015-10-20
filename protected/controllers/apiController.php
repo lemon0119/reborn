@@ -44,6 +44,14 @@ class apiController extends Controller {
         $command = $connection->createCommand($sql);
         $command->execute();
     }
+    
+    public function actionUpdateVirClass(){
+        $classID = $_GET['classID'];
+        $connection = Yii::app()->db;
+        $sql = "UPDATE tb_class SET isClass='0' WHERE classID='$classID'";
+        $command = $connection->createCommand($sql);
+        echo $command->execute();
+    }
 
     public function actionGetLatestBulletin() {
         $classID = $_GET['classID'];

@@ -7,7 +7,7 @@
             <div class="control-group">
                     <label class="control-label" for="input01"><span class="must-fill" >*</span>工号</label>
                     <div class="controls">
-                            <input name="userID" type="text" class="input-xlarge" id="input01" value="" />
+                            <input name="userID" type="text" class="input-xlarge" id="input01" value="" onblur="chkIt()"/>
                     </div>
             </div>
             <div class="control-group">
@@ -137,5 +137,35 @@ $("#form-addTea").submit(function(){
      window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
     }
+    
+    var mail_address = $("#input10")[0].value;
+        var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;  
+        if(mail_address==""){
+            return true;
+        }else if (!pattern.test(mail_address)) {  
+            window.wxc.xcConfirm('请输入正确的邮箱地址', window.wxc.xcConfirm.typeEnum.info);
+            return false;
+        }
 });
+
+  //学号受限
+    function chkIt(){
+    var usernameVal = document.getElementById("input01").value;  
+  
+    usertipsSpan = document.getElementById("usertips");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!usernameVal.match( /^[A-Za-z0-9]+$/)) {  
+        usertipsSpan.innerHTML="必须由数字、英文字母线组成";  
+        document.getElementById("input01").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+      
+    if(usernameVal.length > 20){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="大于20个字符！";  
+        document.getElementById("input01").value="";
+    }  
+}
 </script>
