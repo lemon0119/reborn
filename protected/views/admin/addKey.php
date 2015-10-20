@@ -33,7 +33,7 @@
 </div>
 
     
-<div class="span9">        
+<div class="span9" >        
 <?php if(!isset($action)) {?>
 <h3>编辑键位练习题</h3>
 <?php } else if($action == 'look') {?>
