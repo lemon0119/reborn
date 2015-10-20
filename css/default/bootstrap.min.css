@@ -4579,7 +4579,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     position: relative;
     float: right;
     height: 54px;
-    width: 150px;
+    width: 140px;
     line-height:55px;
 }
 
@@ -4698,6 +4698,14 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 28px 60px;
     background-image: url("../../img/UI_adm/on_course_manager.png");
 }
+#notice_manager{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/Notice.png");
+}
+#notice_manager:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/on_Notice.png");
+}
 .btn_bigserch{
     border: 0px;
     padding: 18px 112px;
@@ -4726,6 +4734,27 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #courseExam:hover{
     padding: 28px 60px;
     background-image: url("../../img/UI_stu/courseExamY.png");
+}
+#stuMail_off{
+    padding: 27px 35px;
+    position: relative;
+    top:1px;
+    background-image: url("../../img/bell_off.jpg");
+}
+#stuMail_on{
+    padding: 27px 35px;
+    position: relative;
+    top:1px;
+    background-image: url("../../img/bell.gif");
+}
+#suLu{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/encyclopedia.png");
+}
+#suLu:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/on_encyclopedia.png");
+
 }
 #myCourse{
     padding: 28px 60px;
@@ -4766,17 +4795,20 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     position: relative;
     top: 1px;
      background:-moz-linear-gradient(left,#505050,#fff);
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
-    padding: 27px 197px;
+    
+    padding: 27px 107px;
 }
 #blank_admin{
     position: relative;
     top: 1px;
     background:-moz-linear-gradient(left,#505050,#fff);
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
-    padding: 27px 65px;
+    padding: 27px 82px;
+}
+#blank_teacher{
+    position: relative;
+    top: 1px;
+    background:-moz-linear-gradient(left,#505050,#fff);
+    padding: 27px 107px;
 }
 #schedule{
      position: relative;

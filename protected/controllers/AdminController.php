@@ -2692,6 +2692,7 @@ class AdminController extends CController {
             'result' => ''
         ));
     }
+    
 
     public function actionSearchCourse() {
         if (isset($_GET ['page'])) {
@@ -2930,6 +2931,24 @@ class AdminController extends CController {
                     'file' => $vdir . $file,
         ]);
     }
+
+   public function actionNoticeLst(){
+        $result=Notice::model()->findNotice();
+        $noticeRecord=$result ['noticeLst'];
+        $pages = $result ['pages'];
+       $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+   }
+   public function ActionDeleteNotice()
+     {
+         $id = $_GET['id'];
+         Notice::model()->deleteAll("id='$id'");
+         
+         $result=Notice::model()->findNotice();
+        $noticeRecord=$result ['noticeLst'];
+        $pages = $result ['pages'];
+       $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+     }
+
 
     public function actionSchedule() {
         if (isset($_POST['which'])) {

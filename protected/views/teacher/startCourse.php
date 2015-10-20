@@ -63,7 +63,7 @@
         </p>
         <div style="height:200px; width: 780px">
             <?php if ($on == $progress) { ?>
-                <a href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass">虚拟课堂</a> 
+            <a href="#" onclick="beginVirClass()"class="startcourse-virtualclass">虚拟课堂</a> 
             <?php } else { ?>
                 <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass">开始本课</a> 
                <?php } ?>
@@ -143,5 +143,12 @@
     $(document).ready(function(){
         $("#li-<?php echo $on;?>").attr("class","active");
     });
+    function beginVirClass(){
+        if(<?php echo $result;?>=='1'){
+            alert("此班级正在上课！")
+        }else{
+            window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";
+        }
+    }
 </script>
 

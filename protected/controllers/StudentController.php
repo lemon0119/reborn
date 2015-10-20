@@ -1326,4 +1326,19 @@ class StudentController extends CController {
     public function actionHello(){
         return $this->render('hello',array(null));
     }
+    //公告信息
+    public function actionStuNotice(){
+        $result=Notice::model()->findNotice();
+        $noticeRecord=$result ['noticeLst'];
+        $pages = $result ['pages'];
+        $studentID = Yii::app()->session['userid_now'];
+        $noticeS = Student::model()->findByPK($studentID);
+        $noticeS->noticestate = '0';
+        $noticeS->update();
+       $this->render('stuNotice',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+    }
+    public function actionSuLu(){
+        return $this->render('suLu');
+
+    }
 }
