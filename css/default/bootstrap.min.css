@@ -4803,8 +4803,10 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     position: relative;
     top: 1px;
      background:-moz-linear-gradient(left,#505050,#fff);
+
     
     padding: 27px 107px;
+
 }
 #blank_admin{
     position: relative;

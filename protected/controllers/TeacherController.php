@@ -14,7 +14,8 @@ class TeacherController extends CController {
         $classID=$_GET['classID'];
         $cls=TbClass::model()->findByPK($classID);
         $userID     = Yii::app()->session['userid_now'];
-        $cls->isClass='1';
+        $backtime = date('y-m-d H:i:s',time());
+        $cls->backTime=$backtime;
         $cls->update();
         $userName   = Teacher::model()->findByPK($userID)->userName;
         return $this->render('virtualClass',['userName'=>$userName,'classID'=>$_GET['classID'],'on'=>$_GET['on']]);
@@ -398,11 +399,7 @@ class TeacherController extends CController {
     
     public function actionStartCourse(){
         $classID=$_GET['classID'];
-        $cls=TbClass::model()->findByPK($classID);
-        if($cls->isClass=='1')
-            $result='1';
-        else
-            $result='0';
+        $result='1';
         $progress=$_GET['progress'];
         $on=$_GET['on'];
         

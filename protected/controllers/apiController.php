@@ -47,8 +47,9 @@ class apiController extends Controller {
     
     public function actionUpdateVirClass(){
         $classID = $_GET['classID'];
+        $backtime = date('y-m-d H:i:s',time());
         $connection = Yii::app()->db;
-        $sql = "UPDATE tb_class SET isClass='0' WHERE classID='$classID'";
+        $sql = "UPDATE tb_class SET backTime='$backtime' WHERE classID='$classID'";
         $command = $connection->createCommand($sql);
         echo $command->execute();
     }
@@ -63,7 +64,26 @@ class apiController extends Controller {
 
         $this->renderJSON($bulletin);
     }
-
+    public function actionGetBackTime(){
+        $classID = $_GET['classID'];
+        $connection = Yii::app()->db;
+        $sql = "SELECT backTime FROM tb_class where classID = '$classID'";
+        $command = $connection->createCommand($sql);
+        $dataReader = $command->query();
+        $time = $dataReader->readAll();
+        $time[0]['backTime']=strtotime($time[0]['backTime']);
+        $this->renderJSON($time);
+    }
+    public function actionGetClassState(){
+        $classID = $_GET['classID'];
+        $connection = Yii::app()->db;
+        $sql = "SELECT backTime FROM tb_class where classID = '$classID'";
+        $command = $connection->createCommand($sql);
+        $dataReader = $command->query();
+        $time = $dataReader->readAll();
+        $state = time()-strtotime($time[0]['backTime']) > 10 ? false : true;
+        $this->renderJSON($state);
+    }
     public function actionPutBulletin() {
         $bulletin = (string) Yii::app()->request->getParam('bulletin');
         //$publishtime = (string) Yii::app()->request->getParam('time');
