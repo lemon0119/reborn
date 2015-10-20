@@ -4706,6 +4706,14 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 28px 60px;
     background-image: url("../../img/UI_adm/on_Notice.png");
 }
+#schedule_manager{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/schedule.png");
+}
+#schedule_manager:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_adm/on_schedule.png");
+}
 .btn_bigserch{
     border: 0px;
     padding: 18px 112px;
@@ -4816,8 +4824,6 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     font-size:18px;
     color: #fff;
     background:-moz-linear-gradient(left,#505050,#fff);
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
     padding: 17px 40px;
 }
 .nav-userID{
