@@ -95,6 +95,26 @@ class apiController extends Controller {
         $command = $connection->createCommand($sql);
         $command->execute();
     }
+    public function actionPutNotice() {
+        $notice = (string) Yii::app()->request->getParam('notice');
+        //改为使用服务器时间
+        $publishtime = date('y-m-d H:i:s',time());
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO notice (noticetime,content) values ( '$publishtime',$notice)";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        
+        $connection = Yii::app()->db;
+        $sql = "UPDATE student SET noticestate='1'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        
+        $connection = Yii::app()->db;
+        $sql = "UPDATE teacher SET noticestate='1'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+
+    }
 
     public function actionGetTime(){
         echo time();

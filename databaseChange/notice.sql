@@ -1,0 +1,57 @@
+-- phpMyAdmin SQL Dump
+-- version 4.1.14
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: 2015-10-20 09:41:39
+-- 服务器版本： 5.6.17
+-- PHP Version: 5.5.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `yawei001`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `notice`
+--
+
+CREATE TABLE IF NOT EXISTS `notice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `noticetime` datetime DEFAULT NULL,
+  `content` text CHARACTER SET utf8,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=63 ;
+
+--
+-- 转存表中的数据 `notice`
+--
+
+INSERT INTO `notice` (`id`, `noticetime`, `content`) VALUES
+(50, '2015-10-19 13:56:11', '透明你们工资'),
+(51, '2015-10-19 13:56:16', '刹住了\n'),
+(52, '2015-10-19 13:56:22', '你黑哈\n'),
+(53, '2015-10-19 14:21:46', '0000000'),
+(54, '2015-10-19 14:48:52', 'sdfsdsdafsd'),
+(55, '2015-10-19 16:48:07', '11111111111111111111111111111'),
+(56, '2015-10-20 10:36:13', '99999999999999999999999999999999'),
+(57, '2015-10-20 11:40:20', '000000000000000000000000000000000000000000000000000000000000000000000000000000'),
+(58, '2015-10-20 11:50:24', 'hjbhjsdkhsdhjk '),
+(59, '2015-10-20 14:02:11', '刚回家了货款合计'),
+(60, '2015-10-20 14:11:02', '好看就看'),
+(61, '2015-10-20 14:15:50', '杀死的方法'),
+(62, '2015-10-20 15:20:07', '他会让他');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

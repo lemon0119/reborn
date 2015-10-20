@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * This is the model class for table "schedule_class".
+ *
+ * The followings are the available columns in table 'schedule_class':
+ * @property integer $classID
+ * @property integer $sequence
+ * @property integer $day
+ * @property string $courseInfo
+ *
+ * The followings are the available model relations:
+ * @property TbClass $class
+ */
+class ScheduleClass extends CActiveRecord
+{
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'schedule_class';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('classID, sequence, day, courseInfo', 'required'),
+			array('classID, sequence, day', 'numerical', 'integerOnly'=>true),
+			array('courseInfo', 'length', 'max'=>50),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('classID, sequence, day, courseInfo', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'class' => array(self::BELONGS_TO, 'TbClass', 'classID'),
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'classID' => 'Class',
+			'sequence' => 'Sequence',
+			'day' => 'Day',
+			'courseInfo' => 'Course Info',
+		);
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('classID',$this->classID);
+		$criteria->compare('sequence',$this->sequence);
+		$criteria->compare('day',$this->day);
+		$criteria->compare('courseInfo',$this->courseInfo,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return ScheduleClass the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+}
