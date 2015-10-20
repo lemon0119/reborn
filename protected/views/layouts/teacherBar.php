@@ -72,7 +72,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                         </ul>
                                     </li>
                                     <li><a id="blank_admin"></a></li>
-                                    <li >
+                                    <li class="dropdown">
                                         <div class="userUI">
                                         <a href="" data-toggle="dropdown" id="userUI" >
                                              <?php echo Yii::app()->session['userName']; ?><b class="user_dropdown_logo"></b>

@@ -4727,6 +4727,14 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 28px 60px;
     background-image: url("../../img/UI_stu/courseExamY.png");
 }
+#suLu{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/encyclopedia.png");
+}
+#suLu:hover{
+    padding: 28px 60px;
+    background-image: url("../../img/UI_stu/on_encyclopedia.png");
+}
 #myCourse{
     padding: 28px 60px;
     background-image: url("../../img/UI_stu/myCourse.png");

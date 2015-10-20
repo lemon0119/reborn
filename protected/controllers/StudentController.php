@@ -1326,4 +1326,7 @@ class StudentController extends CController {
     public function actionHello(){
         return $this->render('hello',array(null));
     }
+    public function actionSuLu(){
+        return $this->render('suLu');
+    }
 }
