@@ -1,4 +1,4 @@
-<?php
+                                                                                                                                                                                                                <?php
 
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -59,3 +59,11 @@
             </tbody>
     </table>
 </div>
+<script language="JavaScript">
+    $(document).ready(function(){
+            //这个就是定时器
+           setTimeout(function(){
+               window.location.reload();
+           },5000); 
+       });
+</script>

@@ -52,7 +52,8 @@ if (isset(Yii::app()->session['userid_now'])) {
                                         </ul>
                                     </li>
                                     <li><a id="course_manager"  href="./index.php?r=admin/courseLst"></a></li>
-                                    <li><a id="blank_admin"></a></li>
+                                    <li><a id="notice_manager" href="./index.php?r=admin/noticeLst"></a></li>
+                                   <li><a id="blank_admin"></a></li>
                                     <li >
                                         <div class="userUI">
                                             <a href="" id="userUI" data-toggle="dropdown">
