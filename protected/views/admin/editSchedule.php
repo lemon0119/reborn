@@ -26,21 +26,21 @@
     <div class="control-group" id="div1">
             <h3 >课程信息</h3>
             <div class="controls">               
-                <span>1.&nbsp;</span><input type="text" name="in1" style="width:280px; height:30px;" id="input1" maxlength="12" value="<?php $courseInfo = explode("&&", $result['courseInfo']); echo $courseInfo[0];?>">                
-                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                <span>1.&nbsp;</span><input type="text"  name="in1" style="width:280px; height:30px;" id="input1" maxlength="15" value="<?php $courseInfo = explode("&&", $result['courseInfo']); echo $courseInfo[0];?>">                
             </div>             
         </div>
         <div class="control-group"  id="div2">           
             <div class="controls">               
-                <span>2.&nbsp;</span><input type="text"  name="in2" style="width:280px; height:30px;" id="input2" maxlength="12" value="<?php if(isset($courseInfo[1])){echo $courseInfo[1];} ?>">                
+                <span>2.&nbsp;</span><input type="text"  name="in2" style="width:280px; height:30px;" id="input2" maxlength="15" value="<?php if(isset($courseInfo[1])){echo $courseInfo[1];} ?>">                
             </div>             
         </div>
-        <div class="control-group" <?php if(isset($courseInfo[2])){   echo '';}else{  echo 'style="display: none"';}?>  id="div3">           
+        <div class="control-group"   id="div3">           
             <div class="controls">               
-                <span>3.&nbsp;</span><input type="text" name="in3" style="width:280px; height:30px;"  id="input3" maxlength="12" value="<?php if(isset($courseInfo[2])){echo $courseInfo[2];}?>">                
+                <span>3.&nbsp;</span><input type="text" name="in3" style="width:280px; height:30px;"  id="input3" maxlength="15" value="<?php if(isset($courseInfo[2])){echo $courseInfo[2];}?>">                
             </div>             
         </div>
         <button type="submit"  class="btn btn-primary">确定</button>
+        <a onclick="deleteAll();" class="btn">清空</a>
     </form>
     
 </div>
@@ -54,28 +54,10 @@
         <?php  }?>
     });
     
-    var divCount = 2;
-    function addIn()
-    {
-        if (divCount < 4) {
-            divCount++;
-            $("#div" + divCount).show();
-        } else
-        {
-            window.wxc.xcConfirm("最多添加三个选项", window.wxc.xcConfirm.typeEnum.info);
-        }
-    }
-
- function deleteIn()
-    {
-        if(divCount>1){
-            $("#div"+divCount).hide();           
-            divCount--;
-        }else
-        {
-            window.wxc.xcConfirm("当前仅剩一项！", window.wxc.xcConfirm.typeEnum.info);
-        }
+    function deleteAll(){
+        $("#input3")[0].value = "";
+        $("#input2")[0].value = "";
+        $("#input1")[0].value = "";
     }
     
-
 </script>

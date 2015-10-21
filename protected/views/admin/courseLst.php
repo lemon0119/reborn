@@ -45,7 +45,7 @@ endforeach;
         </tr>
     </thead>
             <tbody>        
-                <?php foreach($courseLst as $model):?>
+                <?php  foreach($courseLst as $model):?>
                 <tr>
                     <td class="font-center" style="width: 75px"><?php echo $model['courseID'];?></td>
                     <td class="font-center"><?php echo $model['courseName'];?></td>

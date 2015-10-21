@@ -1,42 +1,34 @@
+
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
-        <ul class="nav nav-list">
-            <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
-            <form action="./index.php?r=admin/schedule" method="post">
-                <li>
-                    <select name="which" >
-                        <option value="className" selected="selected" >班级名</option>
-                        <option value="teaName" >老师</option>
-                    </select>
-                </li>
-                <li>
-                    <input name="value" type="text" class="search-query span2" placeholder="Search" />
-                </li>
-                <li style="margin-top:10px">
-                    <button type="submit"class="btn_bigserch"></button>
-                </li>
-            </form>
-            <li class="divider"></li>
+        <ul class="nav nav-list">       
             <li class="nav-header"><i class="icon-knowlage"></i>操作</li>
-            <li class="active"  ><a <?php
-                if (isset($_GET['teacherId'])) {
-                    echo 'href="./index.php?r=admin/schedule"';
-                } else {
-                    echo 'href="./index.php?r=admin/schedule&&type=class"';
-                }
-                ?>><i class="icon-list-alt"></i> 返回上级</a></li>
+            <li <?php if(isset($_GET['classID'])){}else{echo "class='active'";}?>  ><a href="./index.php?r=teacher/scheduleDetil"><i class="icon-list-alt"></i> 您的课表</a></li>
+            <li class="nav-header">任课班级</li>
+            <?php foreach ($array_class as $class): ?>
+            <li <?php if (Yii::app()->session['currentClass'] == $class['classID']&&(isset($_GET['classID']))) echo "class='active'"; ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
+            <?php endforeach; ?>
+
+            <li class="divider"></li>
+            <li class="nav-header">课程列表</li>
+
+            <?php foreach ($array_lesson as $lesson): ?>
+                <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></li>
+            <?php endforeach; ?>   
+            
+            
         </ul>
     </div>
+
 </div>
 <div class="span9">
-        <?php if (isset($_GET['teacherId'])) { ?>
-        <h3><font style="color: #f46500"><?php echo $teacher['userName']; ?></font>&nbsp;&nbsp;老师的课程安排</h3>
-        <br/>
+        <?php if (isset($_GET['classID'])) { ?>
+        <h3><font style="color: #f46500"><?php echo $sqlcurrentClass['className']; ?></font>&nbsp;&nbsp;的课程安排</h3>
             <?php } else { ?>
-            <h3><font style="color: #f46500"><?php echo $class['className']; ?></font>&nbsp;&nbsp;的课程安排</h3>
-            <br/>
+            <h3><font style="color: #f46500">您</font>的课程安排</h3>
 <?php } ?>
-            <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（鼠标悬浮显示详细信息）</p>
+        <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（鼠标悬浮显示详细信息）</p>
+        <br/>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -102,13 +94,13 @@
                                     foreach ($result as $v) {
                                         if (($v['sequence'] == $s) && ($v['day'] == $d)) {
                                             ?>
-                            <td class="table_schedule" <?php if (isset($_GET['teacherId'])) {
-                                       echo 'onclick="change('.$s .','.$d.');"';
-                                   }else{
+                                        <td class="table_schedule" <?php if (isset($_GET['classID'])) {
                                        echo 'onclick="changeClass('.$s.','.$d.');"';
+                                   }else{
+                                       echo 'onclick="change('.$s .','.$d.');"';
                                    }
                                             ?> >
-                                            <span title="<?php
+                                            <span  title="<?php
                                         $array_v = explode("&&", $v['courseInfo']);
                                         foreach ($array_v as $value) {
                                             echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -129,13 +121,13 @@
         }
         if ($flag == 1) {
             ?>
-                                    <td class="table_schedule" <?php if (isset($_GET['teacherId'])) {
-                                       echo 'onclick="change('.$s .','.$d.');"';
-                                   } else {
+                                    <td class="table_schedule" <?php if (isset($_GET['classID'])) {
                                        echo 'onclick="changeClass('.$s.','.$d.');"';
+                                   }else{
+                                       echo 'onclick="change('.$s .','.$d.');"';
                                    }
-                                            ?> >
-                                        <span style="color: #aaa9a9" title="-"  >-</span></td>
+                                            ?>>
+                                        <span  style="color: #aaa9a9" title="-"  >-</span></td>
         <?php
         }
     }
@@ -147,9 +139,9 @@
 </div>
 <script>
     function change(s, d) {
-        window.open("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['teacherId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        window.open("./index.php?r=teacher/editSchedule&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['userid_now']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
     }
     function changeClass(s, d) {
-        window.open("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['classId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        window.open("./index.php?r=teacher/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['currentClass']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
     }
 </script>

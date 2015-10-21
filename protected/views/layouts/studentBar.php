@@ -38,6 +38,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     <li><a id="myCourse" href="./index.php?r=student/myCourse"></a></li>
                                     <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
                                     <li><a id="suLu" href="./index.php?r=student/suLu"></a></li>
+                                    <li><a id="schedule_manager"  href="./index.php?r=student/scheduleDetil"></a></li>
                                     <li><a id="blank_stu"></a></li>
                                      <li>
                                        <?php if(Tool::stuNotice() == 0){?>                                         

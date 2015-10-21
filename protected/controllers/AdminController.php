@@ -3037,7 +3037,7 @@ class AdminController extends CController {
                 }
             }else{
                     //改
-                    $courseInfo = $sqlSchedule['courseInfo'];
+                    $courseInfo = "";
                     if (isset($_POST['in1']) && !$_POST['in1'] == "") {
                         $courseInfo = $_POST['in1'];
                     }
@@ -3047,7 +3047,7 @@ class AdminController extends CController {
                     if (isset($_POST['in3']) && !$_POST['in3'] == "") {
                         $courseInfo = $courseInfo . "&&" . $_POST['in3'];
                     }
-                    if($courseInfo=="&&&&"){
+                    if($courseInfo==""){
                         //删
                         $sql= "DELETE FROM `schedule_teacher` WHERE userID ='$teacherID' and sequence =$sequence and day = $day";
                         Yii::app()->db->createCommand($sql)->query();
@@ -3080,7 +3080,7 @@ class AdminController extends CController {
                 }
             }else{
                     //改
-                    $courseInfo = $sqlSchedule['courseInfo'];
+                    $courseInfo = "";
                     if (isset($_POST['in1']) && !$_POST['in1'] == "") {
                         $courseInfo = $_POST['in1'];
                     }
@@ -3090,7 +3090,7 @@ class AdminController extends CController {
                     if (isset($_POST['in3']) && !$_POST['in3'] == "") {
                         $courseInfo = $courseInfo . "&&" . $_POST['in3'];
                     }
-                    if($courseInfo=="&&&&"){
+                    if($courseInfo==""){
                         //删
                         $sql= "DELETE FROM `schedule_class` WHERE classID ='$classID' and sequence =$sequence and day = $day";
                         Yii::app()->db->createCommand($sql)->query();
