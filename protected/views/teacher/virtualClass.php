@@ -1,9 +1,11 @@
 <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
-
+<script>
+　　　
+   </script>
+  
 <!--直播begin-->
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
-
     <?php
    
     echo "<script>var current_username=\"$userName\";</script>";
@@ -22,6 +24,7 @@
     $adminVideoFilePath = "admin/001/$courseID/$on/video/"; 
     $adminVdir          = "./resources/admin/001/$courseID/$on/video/";
     ?>
+
     <div class="left">
             <div style="display:inline;">
                 <button id="teacher-dianbo" class="btn btn-primary">点播视频</button>
@@ -142,7 +145,6 @@
             </div>
         </div>
     </div>
-
 <script>
 //全屏
     $('#full-screen-button').on('click', function(){
@@ -180,6 +182,26 @@
 <script>
     //chat and bulletin
 $(document).ready(function(){
+    /*
+   $("div.container div.navbar div.navbar-inner div.container div.nav-collapse ul.nav li.dropdown ul.dropdown-menu li").find("a").click(function() {
+            var url=$(this).attr("href");
+            if(url.indexOf("index.php")>0){
+                $.ajax({
+                    type: "POST",
+                    url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID;?>",
+                    data: {},
+                    success: function(){ 
+                        window.location.href = url;
+                        //window.wxc.xcConfirm('更新成功！', window.wxc.xcConfirm.typeEnum.success);
+                        },
+                    error: function(xhr, type, exception){
+                        window.wxc.xcConfirm('出错了呀...', window.wxc.xcConfirm.typeEnum.error);
+                        console.log(xhr.responseText, "Failed");
+                    }
+                });
+                return false;
+            }
+    });*/
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
 
@@ -196,6 +218,10 @@ $(document).ready(function(){
             }
         });
     });
+    //每5秒，发送一次时间
+    setInterval(function() {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
+        checkLeave();
+    }, 5000);
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -250,7 +276,19 @@ $(document).ready(function(){
         });
     });
 });
-
+function checkLeave(){
+        $.ajax({
+             type: "POST",
+             url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID;?>",
+             data: {},
+             success: function(){ console.log("set time");},
+                error: function(xhr, type, exception){
+                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr, "Failed");
+                }
+         });
+        return false;
+　　　}
 function pollChatRoom() {
     $.ajax({
         type: "GET",
@@ -293,10 +331,12 @@ function pollBulletin() {
         }
     });
 }
-
 </script>
 
 <script>
+    function js_method(){
+        alert("ty");
+    }
     //sunpy: switch camera and bulletin
 $(document).ready(function(){
     $("#sw-teacher-camera").click(function() {

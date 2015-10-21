@@ -1,4 +1,4 @@
-<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
+ <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
 
@@ -14,7 +14,7 @@ echo "<script>var role='$role';</script>";
 <!--自定义css end-->
 
 <div class="left">
-    <!-- local/remote videos container -->
+    <!-- local/remote videos container --> 
     <div id="ppt-container" align="center" style="width: 100% ; height: 549px;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 275px; top: 20px;display:none;">
             <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3"/> 

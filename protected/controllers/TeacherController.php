@@ -11,7 +11,12 @@ class TeacherController extends CController {
     
     public $layout='//layouts/teacherBar';
     public function actionVirtualClass() {
+        $classID=$_GET['classID'];
+        $cls=TbClass::model()->findByPK($classID);
         $userID     = Yii::app()->session['userid_now'];
+        $backtime = date('y-m-d H:i:s',time());
+        $cls->backTime=$backtime;
+        $cls->update();
         $userName   = Teacher::model()->findByPK($userID)->userName;
         return $this->render('virtualClass',['userName'=>$userName,'classID'=>$_GET['classID'],'on'=>$_GET['on']]);
     }
@@ -394,6 +399,7 @@ class TeacherController extends CController {
     
     public function actionStartCourse(){
         $classID=$_GET['classID'];
+        $result='1';
         $progress=$_GET['progress'];
         $on=$_GET['on'];
         
@@ -405,6 +411,7 @@ class TeacherController extends CController {
             'progress'=>$progress,
             'on'=>$on,
             'stu'=>$stu,
+            'result'=>$result
         ]);
     }
             
@@ -3728,5 +3735,16 @@ class TeacherController extends CController {
          {
               $this->ActionToOwnExam();
          }
-     }  
+     }
+     //公告信息
+    public function actionteacherNotice(){
+        $result=Notice::model()->findNotice();
+        $noticeRecord=$result ['noticeLst'];
+        $pages = $result ['pages'];
+        $teacherID = Yii::app()->session['userid_now'];
+        $noticeS = Teacher::model()->findByPK($teacherID);
+        $noticeS->noticestate = '0';
+        $noticeS->update();
+       $this->render('teacherNotice', array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+    }
 }

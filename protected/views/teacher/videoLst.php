@@ -30,7 +30,7 @@
     </div>
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
 </div>
-<div class="span9">
+<div class="span9" style="position: relative; left: 20px">
     <h2 style="display:inline-block;">视频列表</h2>
     <span>(支持mp4及flv格式)</span>
     <div id ="video-table"></div>

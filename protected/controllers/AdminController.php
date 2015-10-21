@@ -326,7 +326,7 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } else if (Tool::checkID($data ['uid'])) {
+                            } else if (!Tool::checkID($data ['uid'])) {
                                 $result = "学号须由数字、英文字母线组成！";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -518,7 +518,7 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } else if (Tool::checkID($data ['uid'])) {
+                            } else if (!Tool::checkID($data ['uid'])) {
                                 $result = "工号须由数字、英文字母线组成！";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -2694,6 +2694,7 @@ class AdminController extends CController {
             'result' => ''
         ));
     }
+    
 
     public function actionSearchCourse() {
         if (isset($_GET ['page'])) {
@@ -2933,6 +2934,24 @@ class AdminController extends CController {
         ]);
     }
 
+   public function actionNoticeLst(){
+        $result=Notice::model()->findNotice();
+        $noticeRecord=$result ['noticeLst'];
+        $pages = $result ['pages'];
+       $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+   }
+   public function ActionDeleteNotice()
+     {
+         $id = $_GET['id'];
+         Notice::model()->deleteAll("id='$id'");
+         
+         $result=Notice::model()->findNotice();
+        $noticeRecord=$result ['noticeLst'];
+        $pages = $result ['pages'];
+       $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+     }
+
+
     public function actionSchedule() {
         if (isset($_POST['which'])) {
             $type = $_POST['which'];
@@ -2976,42 +2995,115 @@ class AdminController extends CController {
 
     public function actionScheduleDetil() {
         if (isset($_GET['teacherId'])) {
+            unset($_GET['classId']);
             Yii::app()->session['teacherId'] = $_GET['teacherId'];
             $userID = $_GET['teacherId'];
             $sqlTeacher = Teacher::model()->find("userID = '$userID'");
-            $sqlTeacherClass = TeacherClass::model()->findAll("teacherID = '$userID'");
-            $array_courseName = array();
-            foreach ($sqlTeacherClass as $v) {
-                $ClassID = $v['classID'];
-                $sqlTbClass = TbClass::model()->find("classID = '$ClassID'");
-                $courseID = $sqlTbClass['currentCourse'];
-                $sqlCourse = Course::model()->find("courseID = '$courseID'");
-                $courseName = $sqlCourse['courseName'];
-                array_push($array_courseName, $courseName);
-            }
-            //查重
-            $uniqueCourseName = array_unique($array_courseName);
-            //判断内容并导入
-            for ($s = 0; $s < 6; $s++) {
-                for ($d = 0; $d < 7; $d++) {
-                    $index = "$d/$s";
-                    if (isset($_POST[$index])) {
-                        if($_POST[$index]!=""){
-                            $sqlScheduleCourseID = Course::model()->find("courseName = '$_POST[$index]'");
-                            $scheduleCourseID = $sqlScheduleCourseID['courseID'];
-                            $sql = "INSERT INTO `yawei001`.`teacher_schedule` (`userID`, `sequence`, `day`, `courseID`) VALUES ('$userID', '$s', '$d', '$scheduleCourseID');";        
-                            $result = Yii::app()->db->createCommand($sql)->query();
-                        }
+            //查询老师课程表
+            $teaResult = ScheduleTeacher::model()->findAll("userID='$userID'");
+            return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult]);
+        } else if (isset($_GET['classId'])) {
+            unset($_GET['teacherId']);
+            Yii::app()->session['classId'] = $_GET['classId'];
+            $classID = $_GET['classId'];
+            $sqlClass = TbClass::model()->find("classID='$classID'");
+            $classResult = ScheduleClass::model()->findAll("classID='$classID'");
+            return $this->render('scheduleDetil', ['class' => $sqlClass, 'result'=>$classResult]);
+        }
+    }
+
+    public function actionEditSchedule() {
+        $sequence = $_GET['sequence'];
+        $day = $_GET['day'];
+        
+        if (isset($_GET['teacherID'])) {
+            $teacherID = Yii::app()->session['teacherId'];
+            $sql = "SELECT * FROM schedule_teacher WHERE userID = '$teacherID' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+            
+                if ($sqlSchedule == "") {
+                    //增
+                    $courseInfo = "";
+                    if (isset($_POST['in1']) && !$_POST['in1'] == "") {
+                        $courseInfo = $_POST['in1'];
+                    }
+                    if (isset($_POST['in2']) && !$_POST['in2'] == "") {
+                        $courseInfo = $courseInfo . "&&" . $_POST['in2'];
+                    }
+                    if (isset($_POST['in3']) && !$_POST['in3'] == "") {
+                        $courseInfo = $courseInfo . "&&" . $_POST['in3'];
+                    }
+                    if ($courseInfo != "") {
+                    $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            }else{
+                    //改
+                    $courseInfo = $sqlSchedule['courseInfo'];
+                    if (isset($_POST['in1']) && !$_POST['in1'] == "") {
+                        $courseInfo = $_POST['in1'];
+                    }
+                    if (isset($_POST['in2']) && !$_POST['in2'] == "") {
+                        $courseInfo = $courseInfo . "&&" . $_POST['in2'];
+                    }
+                    if (isset($_POST['in3']) && !$_POST['in3'] == "") {
+                        $courseInfo = $courseInfo . "&&" . $_POST['in3'];
+                    }
+                    if($courseInfo=="&&&&"){
+                        //删
+                        $sql= "DELETE FROM `schedule_teacher` WHERE userID ='$teacherID' and sequence =$sequence and day = $day";
+                        Yii::app()->db->createCommand($sql)->query();
                     }else{
-                        $result="";
+                         $sql = "UPDATE `schedule_teacher` SET courseInfo ='$courseInfo' WHERE userID ='$teacherID' and sequence =$sequence and day = $day";
+                        Yii::app()->db->createCommand($sql)->query();
                     }
                 }
-            }
-            return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'courseName' => $uniqueCourseName,'result'=>$result]);
-        } else if (isset($_GET['classId'])) {
-            $uniqueCourseName = array();
-            return $this->render('scheduleDetil', ['class' => $_GET['classId'], 'courseName' => $uniqueCourseName]);
+            
+        }else if(isset($_GET['classID'])) {
+            $classID = $_GET['classID'];
+            $teacherID = Yii::app()->session['classId'];
+            $sql = "SELECT * FROM schedule_class WHERE classID = '$classID' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+                if ($sqlSchedule == "") {
+                    //增
+                    $courseInfo = "";
+                    if (isset($_POST['in1']) && !$_POST['in1'] == "") {
+                        $courseInfo = $_POST['in1'];
+                    }
+                    if (isset($_POST['in2']) && !$_POST['in2'] == "") {
+                        $courseInfo = $courseInfo . "&&" . $_POST['in2'];
+                    }
+                    if (isset($_POST['in3']) && !$_POST['in3'] == "") {
+                        $courseInfo = $courseInfo . "&&" . $_POST['in3'];
+                    }
+                    if ($courseInfo != "") {
+                    $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            }else{
+                    //改
+                    $courseInfo = $sqlSchedule['courseInfo'];
+                    if (isset($_POST['in1']) && !$_POST['in1'] == "") {
+                        $courseInfo = $_POST['in1'];
+                    }
+                    if (isset($_POST['in2']) && !$_POST['in2'] == "") {
+                        $courseInfo = $courseInfo . "&&" . $_POST['in2'];
+                    }
+                    if (isset($_POST['in3']) && !$_POST['in3'] == "") {
+                        $courseInfo = $courseInfo . "&&" . $_POST['in3'];
+                    }
+                    if($courseInfo=="&&&&"){
+                        //删
+                        $sql= "DELETE FROM `schedule_class` WHERE classID ='$classID' and sequence =$sequence and day = $day";
+                        Yii::app()->db->createCommand($sql)->query();
+                    }else{
+                         $sql = "UPDATE `schedule_class` SET courseInfo ='$courseInfo' WHERE classID ='$classID' and sequence =$sequence and day = $day";
+                        Yii::app()->db->createCommand($sql)->query();
+                    }
+                }
+            
         }
+        return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
     }
 
     // Uncomment the following methods and override them if needed

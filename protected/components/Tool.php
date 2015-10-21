@@ -249,12 +249,26 @@ class Tool {
         }
         return false;
     }
+
+    //检查学生公告状态
+public static function stuNotice(){
+    $userId= Yii::app()->session['userid_now'];
+    $noticeState = Student::model()->findByPK($userId)->noticestate;
+    return $noticeState;
+}
+ //检查老师公告状态
+public static function teacherNotice(){
+    $userId= Yii::app()->session['userid_now'];
+    $noticeState = Teacher::model()->findByPK($userId)->noticestate;
+    return $noticeState;
+}
     /**
      * 验证邮箱格式是否正确
      * return true 正确; false 不正确
      */
     public static function checkMailAddress($email){
-        if (ereg("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i; ",$email)||$email==""){
+        $regex = '/^[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[-_a-z0-9][-_a-z0-9]*\.)*(?:[a-z0-9][-a-z0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/i';
+        if (preg_match($regex, $email)) {
             return TRUE;
         }else{
             return FALSE;
@@ -265,7 +279,8 @@ class Tool {
      * return true 正确; false 不正确
      */
     public static function checkID($ID){
-        if (ereg("/^[A-Za-z0-9]+$/",$ID)||$ID==""){
+        $regex = '/^[A-Za-z0-9]+$/';
+        if (preg_match($regex, $ID)) {
             return TRUE;
         }else{
             return FALSE;
