@@ -7,7 +7,13 @@
           $n=1;
          foreach ($works  as $k=>$work){         
                 $right = $work['answer'];
-                $uAns = $choiceAnsWork[$k];              
+                
+                if(isset($choiceAnsWork[$k])){
+                   $uAns = $choiceAnsWork[$k];     
+                }else{
+                    $uAns = "";
+                }
+                          
                 if($uAns == "")
                 {
                     echo "<font color=red>未作答</font>";
