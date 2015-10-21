@@ -1341,4 +1341,24 @@ class StudentController extends CController {
         return $this->render('suLu');
 
     }
+    
+     public function actionScheduleDetil() {
+             //查询任课班级课程
+             $userID= Yii::app()->session['userid_now'];
+             $sqlStudent = Student::model()->find("userID = '$userID'");
+             $currentClass = $sqlStudent['classID'];
+             Yii::app()->session['ScheduleCurrentClass'] = $currentClass;
+             $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
+              return $this->render('scheduleDetil', [ 'result' => $classResult]);
+    }
+    
+     public function actionEditSchedule() {
+        $sequence = $_GET['sequence'];
+        $day = $_GET['day'];
+             $currentClass = Yii::app()->session['ScheduleCurrentClass'];
+             $sql = "SELECT * FROM schedule_class WHERE classID = '$currentClass' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+        return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
+    }
+    
 }
