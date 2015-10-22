@@ -19,7 +19,12 @@
 
 <script>  
 $(document).ready(function(){
-    if(<?php echo $result;?>!="")
-        window.wxc.xcConfirm('<?php echo $result;?>', window.wxc.xcConfirm.typeEnum.confirm);
+    <?php if(isset($result)){?>
+    var result = <?php echo "'$result'";?>;
+    if(result !== '0')
+    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
+    <?php }?>
+        
+    
 }); 
     </script>

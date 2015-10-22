@@ -14,11 +14,11 @@
             <div class="control-group">
                     <label class="control-label" for="input02">选择课程</label>
                     <div class="controls">
-                        <select name="courseID"  id="input02">
+                        <select name="courseID"  id="input02" >
                             <option value="" selected="selected">请选择课程</option>
                             <?php 
                                 foreach ($courses as $key => $value) {?>
-                            <option value="<?php echo $value['courseID']; ?>"><?php echo $value['courseName']; ?></option>     
+                            <option  style="color:#000;" value="<?php echo $value['courseID']; ?>"><?php echo $value['courseName']; ?></option>     
                             <?php  }?>
                         </select>
                     </div>

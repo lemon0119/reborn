@@ -17,7 +17,12 @@
                 <table style="margin-left: -60px;">
                     <tr><td><?php echo $currentClass['className']?></td></tr>
                     <tr><td>&nbsp;&nbsp;&nbsp;<?php echo $currentLesson['lessonName']?></td></tr>
-                    <tr><td>&nbsp;  &nbsp;  &nbsp;   &nbsp;<?php echo $suite['suiteName']?></td></tr>
+                    <tr><td>&nbsp;  &nbsp;  &nbsp;   &nbsp;
+                            <?php  if(Tool::clength($suite['suiteName'])<=7)
+                                        echo $suite['suiteName'];
+                                    else
+                                        echo Tool::csubstr($suite['suiteName'], 0, 7)."...";?>
+                        </td></tr>
                 </table>                
             </center>                   
         </ul>

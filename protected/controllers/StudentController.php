@@ -1210,7 +1210,7 @@ class StudentController extends CController {
     }
     public function actionHeadPic(){
         $picAddress="";
-        $result="";
+        $result=0;
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
         $picAddress=$user['img_address'];
@@ -1218,6 +1218,7 @@ class StudentController extends CController {
     }
     public function actionAddHeadPic(){
         $result ="上传失败!";
+        $flag=0;
         $picAddress="";
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
@@ -1241,10 +1242,11 @@ class StudentController extends CController {
                     $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
                     move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
                     $result = "上传成功！";
-                    
+
                     $user->img_address="img/head/" .$newName;
                     $picAddress="img/head/" .$newName;
                     $user->update();
+                    
                 }
             }else{
                 $reult = "文件限定大小为30M！";

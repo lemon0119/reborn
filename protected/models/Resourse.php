@@ -32,6 +32,7 @@ class Resourse extends CActiveRecord
             $resource             = new Resourse();
             $resource->resourseID = $newName;
             $resource->name       = $oldName;
+            $resource->type="ppt";
             return $resource->insert();
         }
         
@@ -73,7 +74,6 @@ class Resourse extends CActiveRecord
             $thisRes->name        = $oldName;
             return $thisRes->update();
         }
-        
         /**
 	 * @return string the associated database table name
 	 */

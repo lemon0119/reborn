@@ -72,7 +72,7 @@
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
+          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
           data:user,
           dataType:"html",
           success:function(html){     
