@@ -41,7 +41,7 @@
       $("#score").html(<?php echo $score;?>);
        if(<?php echo $isLast?> == 1)
         {
-                window.location.href="./index.php?r=teacher/CheckStuExam&&workID=<?php echo $workID;?>&&type=filling&&studentID=<?php echo $studentID;?>&&accomplish=<?php echo $accomplish;?>";
+                window.location.href="./index.php?r=teacher/CheckStuExam&&workID=<?php echo $workID;?>&&type=filling&&studentID=<?php echo $studentID;?>&&accomplish=<?php echo $accomplish;?>&&classID=<?php echo $classID?>";
         }
     });
      
@@ -63,7 +63,7 @@
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
+          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
           data:user,
           dataType:"html",
           success:function(html){     

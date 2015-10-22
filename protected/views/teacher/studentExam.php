@@ -107,7 +107,7 @@
                             <?php  echo $student['score'];?>   
                         </td> 
                         <td >
-                            <a href="./index.php?r=teacher/checkStuExam&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice">批阅</a>
+                            <a href="./index.php?r=teacher/checkStuExam&&classID=<?php echo $classexam['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice">批阅</a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
