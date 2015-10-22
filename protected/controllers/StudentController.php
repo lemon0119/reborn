@@ -1337,6 +1337,13 @@ class StudentController extends CController {
         $noticeS->update();
        $this->render('stuNotice',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
     }
+    //公告内容
+     public function ActionNoticeContent(){
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
+     //速录百科
     public function actionSuLu(){
         return $this->render('suLu');
 

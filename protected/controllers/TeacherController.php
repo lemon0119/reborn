@@ -3598,6 +3598,12 @@ class TeacherController extends CController {
             }             
          }
           $suite_exercise = SuiteExercise::model()->find("exerciseID=? and suiteID=? and type=?" ,array($work['exerciseID'],$suiteID,$type));
+         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID",array($recordID ,$type));
+         $choiceAnsWork = array();
+         foreach ($SQLchoiceAnsWork as $v){
+             $answer = $v['answer'];
+             array_push($choiceAnsWork, $answer);
+         }
          
          switch($type)
          {
@@ -3624,6 +3630,8 @@ class TeacherController extends CController {
          $this->renderPartial($render,array(
              'work'=> $work,
              'ansWork'=>$ansWork,
+             'works'=> $array_exercise,
+             'choiceAnsWork'=>$choiceAnsWork,
              'suite_exercise' => $suite_exercise,
              'isLast' => $isLast,
              
@@ -3748,4 +3756,9 @@ class TeacherController extends CController {
         $noticeS->update();
        $this->render('teacherNotice', array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
     }
+     public function ActionNoticeContent(){
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
 }

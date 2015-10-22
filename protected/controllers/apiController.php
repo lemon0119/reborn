@@ -76,11 +76,12 @@ class apiController extends Controller {
         $command->execute();
     }
     public function actionPutNotice() {
-        $notice = (string) Yii::app()->request->getParam('notice');
+        $title = (string) Yii::app()->request->getParam('title');
+        $content = (string) Yii::app()->request->getParam('content');
         //改为使用服务器时间
         $publishtime = date('y-m-d H:i:s',time());
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO notice (noticetime,content) values ( '$publishtime',$notice)";
+        $sql = "INSERT INTO notice (noticetime,noticetitle,content) values ( '$publishtime','$title','$content')";
         $command = $connection->createCommand($sql);
         $command->execute();
         

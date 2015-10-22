@@ -1,4 +1,4 @@
-<script src="<?php echo JS_URL; ?>/My97DatePicker"></script>
+
 <div class="span11">
 <h2>公告列表</h2>
 <!-- 公告列表-->
@@ -6,7 +6,7 @@
     <thead>
         <tr>
             <th class="font-center">日期</th>
-            <th class="font-center">内容</th>  
+            <th class="font-center">标题</th>  
         </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
                  <?php echo $notice['noticetime'];?>
             </td>
             <td>
-                 <?php echo $notice['content'];?>
+                <a href="./index.php?r=teacher/noticeContent&&id=<?php echo $notice['id'];?>"><?php echo $notice['noticetitle'];?></a>
             </td>
         </tr>
                <?php }?>

@@ -1,10 +1,16 @@
 
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <div id="ziji">
-<div class="hero-unit">
+<div class="hero-unit" style="height: 480px;overflow:auto">
           <?php
+           $n=1;
+           foreach ($works  as $k=>$work){ 
                 $right = $work['answer'];
-                $uAns = $ansWork['answer'];
+                if(isset($choiceAnsWork[$k])){
+                    $uAns = $choiceAnsWork[$k];
+                }else{
+                    $uAns="";
+                }
                 if($uAns == "")
                 {
                     echo "<font color=red>未作答</font>";
@@ -14,7 +20,7 @@
                 ?>
         <div class="<?php if($uAns === $right ) echo 'answer-right'; else echo 'answer-wrong';?>"></div>
         <?php }?>
-        <?php  echo $work['requirements'];
+        <?php echo "<font color=black size=5px>$n</font>"?>.<?php  echo $work['requirements'];
                 echo '<br/>';
                 $opt = $work['options'];
                 $optArr = explode("$$",$opt);
@@ -26,10 +32,7 @@
                     <?php }?>
                     <br/>
                 <?php $mark++;
-                    }?>
-</div>
-   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $suite_exercise['suiteID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button> 
-</div>
+                    }$n++;}?>
 <script>
     $(document).ready(function(){
     var isLast = <?php echo $isLast?>;
