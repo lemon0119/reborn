@@ -2778,13 +2778,23 @@ class AdminController extends CController {
     }
 
     public function actionInfoCourse() {
+        $deleteResult = 'no';
+        if(isset($_GET['lessonID'])){
+            $lessonID = $_GET['lessonID'];
+            $deleteResult = Lesson::model()->deleteAll("lessonID = '$lessonID'");
+        }
         $courseID = $_GET ['courseID'];
         $courseName = $_GET ['courseName'];
         $createPerson = $_GET ['createPerson'];
+        Yii::app()->session['courseID'] = $courseID;
+        Yii::app()->session['courseName'] = $courseName;
+        Yii::app()->session['createPerson'] = $createPerson;
         $result = Lesson::model()->getLessonLst("", "", $courseID);
         $lessonLst = $result ['lessonLst'];
         $pages = $result ['pages'];
+        
         $this->render('infoCourse', array(
+            'deleteResult'=>$deleteResult,
             'courseID' => $courseID,
             'courseName' => $courseName,
             'createPerson' => $createPerson,
