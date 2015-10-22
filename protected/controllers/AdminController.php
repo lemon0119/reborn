@@ -2948,7 +2948,11 @@ class AdminController extends CController {
         $pages = $result ['pages'];
        $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
      }
-
+     public function ActionNoticeContent(){
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
 
     public function actionSchedule() {
         if (isset($_POST['which'])) {

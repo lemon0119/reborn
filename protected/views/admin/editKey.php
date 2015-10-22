@@ -53,23 +53,25 @@
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="title" style="width:450px; height:20px;" id="input"><?php echo $title; ?></textarea>
+                <textarea name="title" style="width:450px; height:20px;" id="input"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $title; ?></textarea>
             </div>
         </div>
            <div class="control-group" id="div1">
-            <label class="control-label" >内容</label>
+            <label class="control-label" >键位码</label>
             <div class="controls">               
-                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12" value="<?php if ($count>0) echo $optArr[0];?>">                
-                <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12" value="<?php if ($count>0)echo $optArr[1];?>">
-                <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2" value="<?php if ($count>0)echo $optArr[2];?>">
+                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>0) echo $optArr[0];?>">                
+                <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>0) echo $optArr[1];?>">
+                <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2"  <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>0) echo $optArr[2];?>">
+                <?php if(!isset($action)) {?> 
                 <a class=" btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white" ></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                <?php }?>
             </div>             
         </div>
             <div class="control-group" id="div2" style="<?php if ($count<2) echo "display:none";?>">           
             <div class="controls">               
-                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12" value="<?php if ($count>1)echo $optArr[3];?>">                
-                <input type="text"  name="in5" style="width:150px; height:15px;" id="input5"  maxlength="12"value="<?php if ($count>1)echo $optArr[4];?>">
-                <input type="text"  name="in6" style="width:40px; height:15px;" id="input6" maxlength="2"value="<?php if ($count>1)echo $optArr[5];?>">              
+                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?> value="<?php if ($count>1)echo $optArr[3];?>">                
+                <input type="text"  name="in5" style="width:150px; height:15px;" id="input5"  maxlength="12"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>1)echo $optArr[4];?>">
+                <input type="text"  name="in6" style="width:40px; height:15px;" id="input6" maxlength="2"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>1)echo $optArr[5];?>">              
             </div>             
         </div>
         <div class="control-group" id="div3" style="<?php if ($count<3) echo "display:none";?>">           
