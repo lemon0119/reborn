@@ -71,6 +71,7 @@
   <?php } else {?>
  <h3 align="center">本题时间已经用完</h3>
 <?php }?>
+ <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
 <script>
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     

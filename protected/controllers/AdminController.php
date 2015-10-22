@@ -2972,18 +2972,23 @@ class AdminController extends CController {
         $result = Notice::model()->findNotice();
         $noticeRecord = $result ['noticeLst'];
         $pages = $result ['pages'];
-        $this->render('noticeLst', array('noticeRecord' => $noticeRecord, 'pages' => $pages));
-    }
-
-    public function ActionDeleteNotice() {
-        $id = $_GET['id'];
-        Notice::model()->deleteAll("id='$id'");
-
-        $result = Notice::model()->findNotice();
-        $noticeRecord = $result ['noticeLst'];
+       $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+   }
+   public function ActionDeleteNotice()
+     {
+         $id = $_GET['id'];
+         Notice::model()->deleteAll("id='$id'");
+         
+         $result=Notice::model()->findNotice();
+        $noticeRecord=$result ['noticeLst'];
         $pages = $result ['pages'];
-        $this->render('noticeLst', array('noticeRecord' => $noticeRecord, 'pages' => $pages));
-    }
+       $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+     }
+     public function ActionNoticeContent(){
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
 
     public function actionSchedule() {
         if (isset($_POST['which'])) {

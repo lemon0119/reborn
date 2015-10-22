@@ -18,7 +18,7 @@
                             <option value="" selected="selected">请选择科目</option>
                             <?php 
                                 foreach ($courses as $key => $value) {?>
-                            <option value="<?php echo $value['courseID']; ?>"><?php echo $value['courseName']; ?></option>     
+                            <option  style="color:#000;" value="<?php echo $value['courseID']; ?>"><?php echo $value['courseName']; ?></option>     
                             <?php  }?>
                         </select>
                     </div>

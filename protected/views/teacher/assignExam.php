@@ -12,7 +12,7 @@
                 <li class="divider"></li>
                 <li class="nav-header">试卷标题</li>
                 <li style="margin-top:10px">
-                    <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value="" />
+                    <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value=""  onblur="chkIt()"/><span id="usertips" style="margin-left: 5px;"></span>
                 </li>
                 <li style="margin-top:10px">
                 <button type="submit" class="btn btn-primary">创建试卷</button>
@@ -133,6 +133,17 @@ function begin_now(examID,d,time,isOpen)
             window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
         }
    
+}
+function chkIt(){
+    var usernameVal = document.getElementById("title").value;  
+  
+    usertipsSpan = document.getElementById("usertips");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if(usernameVal.length > 30){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="大于30个字符！";  
+        document.getElementById("title").value="";
+    }  
 }
 </script>
 

@@ -196,6 +196,7 @@ class TeacherController extends CController {
             $pptFilePath    =   $typename."/".$userid."/".$classID."/".$on."/ppt/"; 
             $dir            =   "resources/".$pptFilePath; 
             $result         =   "上传失败!";
+            $flag=0;
             if(!isset($_FILES["file"]))
             {
                 echo "请选择文件！";
@@ -211,11 +212,23 @@ class TeacherController extends CController {
                     }
                   else
                     {
+                      $allName=Resourse::model()->findAll("type=?",array("ppt"));
+                      foreach ($allName as $all) {
+                          if($all['name']==$_FILES["file"]["name"]){
+                              $flag=1;
+                              break;
+                          }
+                      }
+                      
+                      if ($flag==1) {
+			$result =" PPT已经存在！";
+                      } else {
                         $newName = Tool::createID().".ppt";
                         $oldName = $_FILES["file"]["name"]; 
                         move_uploaded_file($_FILES["file"]["tmp_name"],$dir.iconv("UTF-8","gb2312",$newName));
                         Resourse::model()->insertRela($newName, $oldName);
                         $result = "上传成功！";
+                      }
                     }
                 }else{
                     $reult = "PPT文件限定大小为30M！";
@@ -759,9 +772,11 @@ class TeacherController extends CController {
                 $answer =   $_POST['in1'];
                 for(;$i<=3*10;$i++)
                 {
-                    if($_POST['in'.$i]!="")
-                        $answer =   $answer."$".$_POST['in'.$i];
-                    else
+                    if($_POST['in'.$i]!=""){
+                        if($i%3==0)
+                            $answer =   $answer."_".$_POST['in'.$i];
+                        else $answer =   $answer.":".$_POST['in'.$i];
+                    }else
                         break;
                 }
                 $result = KeyType::model()->insertKey($_POST['title'], $answer, Yii::app()->session['userid_now']);
@@ -774,6 +789,7 @@ class TeacherController extends CController {
             $sql = "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
             $result = Yii::app()->db->createCommand($sql)->query();
             $result =$result->read();
+            $result['content']=str_replace("_", ":", $result['content']);
            if(!isset($_GET['action']))
             {
                 $this->render("editKey",array(
@@ -3467,16 +3483,52 @@ class TeacherController extends CController {
         public function ActionNextStuExam()
     {
         $workID = $_GET['workID'];
+              
+              $classID=$_GET['classID'];
+              $class_student = Student::model()->findAll("classID = '$classID'");
+             $array_accomplished=Array();
+             $array_unaccomplished=Array();
+                foreach ($class_student as $student)
+                {
+                    $userID = $student['userID'];
+                    $result = ExamRecord::model()->find("workID=? and studentID=?" , array($workID,$userID));
+                    if($result!=NULL && $result['ratio_accomplish'] == 1)
+                    {
+                        $score = $result['score'];
+                        array_push ($array_accomplished, array(
+                            'userID' => $student['userID'],
+                            'userName' => $student['userName'],
+                            'score' => $score
+                        ));
+                    }
+                    else
+                    {
+                        array_push ($array_unaccomplished, array(
+                            'userID' => $student['userID'],
+                            'userName' => $student['userName'],
+                            'score' => 0
+                        ));  
+                 
+                    }
+                }
+                
+                
+                
         $studentID = $_GET['studentID'];
         $accomplish = $_GET['accomplish'];
         $classID = $_GET['classID']; 
+        $this->renderStuExam($_GET['studentID'],$workID,"choice",$accomplish,$array_accomplished);
+       
        $nextStudentID = ExamRecord::model()->getNextStudentID($workID,$studentID,$accomplish,$classID);
-       if($nextStudentID == -1)
+       print_r($nextStudentID);
+        /*if($nextStudentID == -1)
         {
-            $this->renderStuExam($studentID,$workID,"choice",$accomplish);
+            $this->renderStuExam($studentID,$workID,"choice",$accomplish,$array_accomplished);
         }else{
-            $this->renderStuExam($nextStudentID,$workID,"choice",$accomplish);
+            $this->renderStuExam($nextStudentID,$workID,"choice",$accomplish,$array_accomplished);
         }      
+         * 
+         */
     }
     
     public function renderStuWork($studentID,$workID,$type,$accomplish){
@@ -3498,7 +3550,7 @@ class TeacherController extends CController {
          ));
     }
     
-        public function renderStuExam($studentID,$workID,$type,$accomplish){
+        public function renderStuExam($studentID,$workID,$type,$accomplish,$array_accomplished){
          $student = Student::model()->find("userID='$studentID'");
          $work = ClassExam::model()->find("workID='$workID'");
          $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$student['userID']));
@@ -3512,7 +3564,8 @@ class TeacherController extends CController {
              'record' =>$record,
              'work' => $work,
              'accomplish'=>$accomplish,
-             'score' => $score
+             'score' => $score,
+             'array_accomplished'=>$array_accomplished
          ));
     }
      
@@ -3548,7 +3601,40 @@ class TeacherController extends CController {
 
           public function ActionCheckStuExam()
      {
-         $workID = $_GET['workID'];
+              $workID = $_GET['workID'];
+              
+              $classID=$_GET['classID'];
+              $class_student = Student::model()->findAll("classID = '$classID'");
+             $array_accomplished=Array();
+             $array_unaccomplished=Array();
+                foreach ($class_student as $stu)
+                {
+                    $userID = $stu['userID'];
+                    $result = ExamRecord::model()->find("workID=? and studentID=?" , array($workID,$userID));
+                    if($result!=NULL && $result['ratio_accomplish'] == 1)
+                    {
+                        $score = $result['score'];
+                        array_push ($array_accomplished, array(
+                            'userID' => $stu['userID'],
+                            'userName' => $stu['userName'],
+                            'score' => $score
+                        ));
+                    }
+                    else
+                    {
+                        array_push ($array_unaccomplished, array(
+                            'userID' => $stu['userID'],
+                            'userName' => $stu['userName'],
+                            'score' => 0
+                        ));  
+                 
+                    }
+                }
+             
+             
+             
+             
+         
          $studentID = $_GET['studentID'];
          $accomplish = $_GET['accomplish'];
          $type = $_GET['type'];
@@ -3567,7 +3653,8 @@ class TeacherController extends CController {
              'record' =>$record,
              'work' => $work,
              'accomplish'=>$accomplish,
-             'score' => $score
+             'score' => $score,
+             'array_accomplished'=>$array_accomplished
          ));
      }
      
@@ -3595,6 +3682,12 @@ class TeacherController extends CController {
             }             
          }
           $suite_exercise = SuiteExercise::model()->find("exerciseID=? and suiteID=? and type=?" ,array($work['exerciseID'],$suiteID,$type));
+         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID",array($recordID ,$type));
+         $choiceAnsWork = array();
+         foreach ($SQLchoiceAnsWork as $v){
+             $answer = $v['answer'];
+             array_push($choiceAnsWork, $answer);
+         }
          
          switch($type)
          {
@@ -3621,12 +3714,15 @@ class TeacherController extends CController {
          $this->renderPartial($render,array(
              'work'=> $work,
              'ansWork'=>$ansWork,
+             'works'=> $array_exercise,
+             'choiceAnsWork'=>$choiceAnsWork,
              'suite_exercise' => $suite_exercise,
              'isLast' => $isLast,
              
          ));       
      }  
     public function ActionAjaxExam(){
+        $classID=$_GET['classID'];
         if(isset($_POST['workID'])){
          $workID=$_POST['workID'];
          $studentID = $_POST['studentID'];
@@ -3698,7 +3794,8 @@ class TeacherController extends CController {
              'choiceAnsWork'=>$choiceAnsWork,
              'exam_exercise' => $exam_exercise,
              'isLast'=>$isLast,
-             'score'=>$score           
+             'score'=>$score,
+             'classID'=>$classID
          ));       
      }
      
@@ -3745,6 +3842,11 @@ class TeacherController extends CController {
         $noticeS->update();
        $this->render('teacherNotice', array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
     }
+     public function ActionNoticeContent(){
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
     
     public function actionScheduleDetil() {
             $teacherID = Yii::app()->session['userid_now'];

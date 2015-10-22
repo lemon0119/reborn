@@ -14,7 +14,7 @@
             <?php if(Yii::app()->session['currentClass']&&Yii::app()->session['currentLesson']){?>
             <form id="myForm" action="./index.php?r=teacher/AddSuite" method="post" >  
                 <li class="nav-header" >作业题目</li>
-                <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
+                <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" onblur="chkIt()"/><span id="usertips" style="margin-left: 5px;"></span>
                 <li style="margin-top:10px">
                     <button type="submit" class="btn btn-primary">创建作业</button>
                 </li>
@@ -109,6 +109,17 @@
             return false;
         }
     });
+    function chkIt(){
+    var usernameVal = document.getElementById("title").value;  
+  
+    usertipsSpan = document.getElementById("usertips");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if(usernameVal.length > 30){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="大于30个字符！";  
+        document.getElementById("title").value="";
+    }  
+}
 </script>
 
 

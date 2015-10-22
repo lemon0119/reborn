@@ -29,7 +29,7 @@
     </div>
 配分:<?php echo $exam_exercise['score'];?>
    得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
-   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
+   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo '1';?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo '1';?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
 </div>
 <?php
     if(isset(Yii::app()->session['type'])){
@@ -112,6 +112,7 @@
    start();
    
   function nextWork(answerID,recordID,examID,exerciseID){
+      console.log("yy");
         var value1 = $("#input")[0].value;
          var totalscore = <?php echo $exam_exercise['score'];?>;
         if(value1>totalscore){
@@ -130,7 +131,7 @@
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
+          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
           data:user,
           dataType:"html",
           success:function(html){     
