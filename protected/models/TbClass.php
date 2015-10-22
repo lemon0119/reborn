@@ -14,7 +14,7 @@
 class TbClass extends CActiveRecord
 {
     public function findlessonByClassID($classID){
-    	//得到当前的学生的当前课程
+    	//得到当前的学生的当前科目
     	$tb_class = $this->find("classid = '$classID'");
         if($tb_class==null)
             return null;
@@ -23,7 +23,7 @@ class TbClass extends CActiveRecord
     }
     
     public function findCourseIDByClassID($classID){
-    	//得到当前的学生的当前课程
+    	//得到当前的学生的当前科目
     	$tb_class = $this->find("classid = '$classID'");
     	return $tb_class['currentCourse'];
     }

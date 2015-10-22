@@ -22,7 +22,7 @@
         ?>
             
         <h3><?php echo $classID; echo '&nbsp; &nbsp;'; echo $className;?></h3>
-        <p >学生人数：<font class="normal_checked_font"><?php echo $nums; echo '&nbsp; &nbsp;';?></font>课程：<font class="normal_checked_font"> <?php echo $courseName; echo '&nbsp; &nbsp;';?></font> 当前进度：<font class="normal_checked_font"> <?php echo $lessonName; echo '&nbsp; &nbsp;';?></font>   
+        <p >学生人数：<font class="normal_checked_font"><?php echo $nums; echo '&nbsp; &nbsp;';?></font>科目：<font class="normal_checked_font"> <?php echo $courseName; echo '&nbsp; &nbsp;';?></font> 当前进度：<font class="normal_checked_font"> <?php echo $lessonName; echo '&nbsp; &nbsp;';?></font>   
         </p>
         <h4>任课老师：</h4>
          <table class="table table-bordered table-striped">
