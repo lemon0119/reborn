@@ -3779,12 +3779,12 @@ class TeacherController extends CController {
          }
          
          if(isset($_GET['classID'])){
-             //查询任课班级课程
+             //查询任课班级科目
              $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
               return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $classResult, 'array_class' => $array_class,
              'array_lesson' => $array_lesson,'sqlcurrentClass'=>$sqlcurrentClass]);
          }else{
-              //查询老师课程表
+              //查询老师科目表
              $teaResult = ScheduleTeacher::model()->findAll("userID='$teacherID'");
             return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult, 'array_class' => $array_class,
              'array_lesson' => $array_lesson,'sqlcurrentClass'=>$sqlcurrentClass]);

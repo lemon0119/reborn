@@ -12,10 +12,10 @@
                     </div>
             </div>
             <div class="control-group">
-                    <label class="control-label" for="input02">选择课程</label>
+                    <label class="control-label" for="input02">选择科目</label>
                     <div class="controls">
                         <select name="courseID"  id="input02">
-                            <option value="" selected="selected">请选择课程</option>
+                            <option value="" selected="selected">请选择科目</option>
                             <?php 
                                 foreach ($courses as $key => $value) {?>
                             <option value="<?php echo $value['courseID']; ?>"><?php echo $value['courseName']; ?></option>     
@@ -49,7 +49,7 @@ $("#myForm").submit(function(){
    
     var pass2 = $("#input02")[0].value;
     if(pass2 === ""){
-        window.wxc.xcConfirm('请选择合适的课程', window.wxc.xcConfirm.typeEnum.info);
+        window.wxc.xcConfirm('请选择合适的科目', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });

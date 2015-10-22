@@ -217,7 +217,7 @@ class StudentController extends CController {
                 echo '保存答案失败，请重新提交!';
         }
     }
-    //我的课程
+    //我的科目
     public function actionMyCourse(){
         $isExam=false;
         Yii::app()->session['isExam']=$isExam;
@@ -1343,7 +1343,7 @@ class StudentController extends CController {
     }
     
      public function actionScheduleDetil() {
-             //查询任课班级课程
+             //查询任课班级科目
              $userID= Yii::app()->session['userid_now'];
              $sqlStudent = Student::model()->find("userID = '$userID'");
              $currentClass = $sqlStudent['classID'];
