@@ -76,9 +76,9 @@ function submitSuite(){
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     var option = {
 						title: "提交",
-						btn: parseInt("0011",2),
+						btn: parseInt("0011",4),
 						onOk: function(){
-							formSubmit2;
+							formSubmit2();
         $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){});
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
             if(isExam)
