@@ -3682,6 +3682,12 @@ class TeacherController extends CController {
             }             
          }
           $suite_exercise = SuiteExercise::model()->find("exerciseID=? and suiteID=? and type=?" ,array($work['exerciseID'],$suiteID,$type));
+         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID",array($recordID ,$type));
+         $choiceAnsWork = array();
+         foreach ($SQLchoiceAnsWork as $v){
+             $answer = $v['answer'];
+             array_push($choiceAnsWork, $answer);
+         }
          
          switch($type)
          {
@@ -3708,6 +3714,8 @@ class TeacherController extends CController {
          $this->renderPartial($render,array(
              'work'=> $work,
              'ansWork'=>$ansWork,
+             'works'=> $array_exercise,
+             'choiceAnsWork'=>$choiceAnsWork,
              'suite_exercise' => $suite_exercise,
              'isLast' => $isLast,
              
@@ -3834,4 +3842,71 @@ class TeacherController extends CController {
         $noticeS->update();
        $this->render('teacherNotice', array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
     }
+     public function ActionNoticeContent(){
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
+    
+    public function actionScheduleDetil() {
+            $teacherID = Yii::app()->session['userid_now'];
+            $sqlTeacher = Teacher::model()->find("userID = '$teacherID'");
+            $array_lesson = array();          
+             $array_class = array();
+            $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+            if(!empty($teacher_class))
+         {
+           if(isset($_GET['classID']))
+             Yii::app()->session['currentClass'] = $_GET['classID'];
+           else
+             Yii::app()->session['currentClass'] = $teacher_class[0]['classID'];
+           
+           foreach ($teacher_class as $class)
+             {
+                 $id = $class['classID'];
+                 $result = TbClass::model()->find("classID ='$id'");               
+                 array_push($array_class, $result);
+             }     
+             $currentClass = Yii::app()->session['currentClass'];
+             $sqlcurrentClass = TbClass::model()->find("classID = '$currentClass'");
+             $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
+             if(!empty($array_lesson))
+             {
+                if(isset($_GET['lessonID']))          
+                   Yii::app()->session['currentLesson'] = $_GET['lessonID'];
+                else      
+                   Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
+                 $currentLesson = Yii::app()->session['currentLesson'];
+             }
+         }
+         
+         if(isset($_GET['classID'])){
+             //查询任课班级课程
+             $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
+              return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $classResult, 'array_class' => $array_class,
+             'array_lesson' => $array_lesson,'sqlcurrentClass'=>$sqlcurrentClass]);
+         }else{
+              //查询老师课程表
+             $teaResult = ScheduleTeacher::model()->findAll("userID='$teacherID'");
+            return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult, 'array_class' => $array_class,
+             'array_lesson' => $array_lesson,'sqlcurrentClass'=>$sqlcurrentClass]);
+         }
+    }
+    
+     public function actionEditSchedule() {
+        $sequence = $_GET['sequence'];
+        $day = $_GET['day'];
+        if(isset($_GET['classID'])){
+             $currentClass = Yii::app()->session['currentClass'];
+             $sql = "SELECT * FROM schedule_class WHERE classID = '$currentClass' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+        }else{
+            $teacherID = Yii::app()->session['userid_now'];
+            
+            $sql = "SELECT * FROM schedule_teacher WHERE userID = '$teacherID' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+        }
+        return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
+    }
+    
 }

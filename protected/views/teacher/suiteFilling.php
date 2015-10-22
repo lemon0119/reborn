@@ -1,16 +1,24 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 
 <div id="ziji">
-        <div class="hero-unit">
+        <div class="hero-unit"style="height: 480px;overflow:auto">
             <?php 
+             $n=1;
+           foreach ($works  as $k=>$work){ 
                     $str = $work['requirements'];
-                    $answer = $ansWork['answer'];
+                    
+                    if(isset($choiceAnsWork[$k])){
+                   $answer = $choiceAnsWork[$k];
+                }else{
+                    $answer="";
+                }
                     $ansArr = explode('$$', $answer);
                     if($answer == "")
                     {
                         echo "<font color=red>未作答</font>";
                         echo '</br>';
                     }
+                    echo "<font color=black size=5px>$n</font>.";
                     echo $str.'<br/>';
                     $i = 1;
                     echo '<div class=\'answer-tip-text1\'>作答结果：</div>';
@@ -37,10 +45,8 @@
                     }
                     echo '</div>';
                     echo '<br/>';
-            ?>
-        </div>
-<button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $suite_exercise['suiteID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button> 
-</div>
+           $n++;}?>
+
 
 <script>
     $(document).ready(function(){

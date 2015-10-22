@@ -1339,8 +1339,35 @@ class StudentController extends CController {
         $noticeS->update();
        $this->render('stuNotice',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
     }
+    //公告内容
+     public function ActionNoticeContent(){
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
+     //速录百科
     public function actionSuLu(){
         return $this->render('suLu');
 
     }
+    
+     public function actionScheduleDetil() {
+             //查询任课班级课程
+             $userID= Yii::app()->session['userid_now'];
+             $sqlStudent = Student::model()->find("userID = '$userID'");
+             $currentClass = $sqlStudent['classID'];
+             Yii::app()->session['ScheduleCurrentClass'] = $currentClass;
+             $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
+              return $this->render('scheduleDetil', [ 'result' => $classResult]);
+    }
+    
+     public function actionEditSchedule() {
+        $sequence = $_GET['sequence'];
+        $day = $_GET['day'];
+             $currentClass = Yii::app()->session['ScheduleCurrentClass'];
+             $sql = "SELECT * FROM schedule_class WHERE classID = '$currentClass' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+        return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
+    }
+    
 }

@@ -78,7 +78,7 @@ function submitSuite(){
 						title: "提交",
 						btn: parseInt("0011",2),
 						onOk: function(){
-							formSubmit2();
+							formSubmit2;
         $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){});
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
             if(isExam)
