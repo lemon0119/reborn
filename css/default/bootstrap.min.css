@@ -4802,21 +4802,20 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #blank_stu{
     position: relative;
     top: 1px;
-     background:-moz-linear-gradient(left,#505050,#fff);
-    
-    padding: 27px 107px;
+     background:-moz-linear-gradient(left,#606060,#fff);
+    padding: 27px 47px;
 }
 #blank_admin{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#505050,#fff);
-    padding: 27px 82px;
+    background:-moz-linear-gradient(left,#606060,#fff);
+    padding: 27px 22px;
 }
 #blank_teacher{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#505050,#fff);
-    padding: 27px 107px;
+    background:-moz-linear-gradient(left,#606060,#fff);
+    padding: 27px 47px;
 }
 #schedule{
      position: relative;
@@ -4924,4 +4923,14 @@ table tr td{
     width: 80px;
     border:1px solid #fff;
     color:#aaa9a9;
+}
+.table_schedule{
+    font-family:黑体 !important;
+    color:#606060;
+}
+
+.table_schedule:hover{
+    font-family:黑体 !important;
+    font-weight: bolder !important;
+    box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
 }

@@ -267,7 +267,8 @@ public static function teacherNotice(){
      * return true 正确; false 不正确
      */
     public static function checkMailAddress($email){
-        if (ereg("/^[a-z]([a-z0-9]*[-_\.]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i; ",$email)||$email==""){
+        $regex = '/^[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[-_a-z0-9][-_a-z0-9]*\.)*(?:[a-z0-9][-a-z0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/i';
+        if (preg_match($regex, $email)) {
             return TRUE;
         }else{
             return FALSE;
@@ -278,7 +279,8 @@ public static function teacherNotice(){
      * return true 正确; false 不正确
      */
     public static function checkID($ID){
-        if (ereg("/^[A-Za-z0-9]+$/",$ID)||$ID==""){
+        $regex = '/^[A-Za-z0-9]+$/';
+        if (preg_match($regex, $ID)) {
             return TRUE;
         }else{
             return FALSE;

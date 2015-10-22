@@ -63,7 +63,7 @@
         </p>
         <div style="height:200px; width: 780px">
             <?php if ($on == $progress) { ?>
-            <a href="#" onclick="beginVirClass()"class="startcourse-virtualclass">虚拟课堂</a> 
+            <a href="#" onclick="getBackTime()"class="startcourse-virtualclass">虚拟课堂</a> 
             <?php } else { ?>
                 <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass">开始本课</a> 
                <?php } ?>
@@ -141,14 +141,43 @@
 </div>
 <script>
     $(document).ready(function(){
+        //每5秒，刷新一次
+        //setTimeout(function() {
+        //    getBackTime();
+        //}, 1000);
         $("#li-<?php echo $on;?>").attr("class","active");
     });
-    function beginVirClass(){
-        if(<?php echo $result;?>=='1'){
+    function beginVirClass(){     //点击开始虚拟课堂时触发
+        getBackTime();
+        
+        if($("#txt").val()=='1'){
             alert("此班级正在上课！")
         }else{
             window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";
         }
     }
+    function getBackTime() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: "index.php?r=api/GetBackTime&&classID=<?php echo $classID;?>",
+        url: "index.php?r=api/GetClassState&&classID=<?php echo $classID;?>",
+        success: function(data) {
+            console.log("qq",data);
+            var now=<?php echo time()?>;    //这个时间是页面进入的时候，生成的。
+            //虽然点击的时候，才会执行这个js代码，但是，php是加载的时候就已经生成了
+            //也就是说，等到用户点击，这个时间now的值，是加载页面的时间。
+            if(!data){
+                window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";//$("#txt").val('0');
+            } else{
+                alert("此班级正在上课！");//$("#txt").val('1');
+            }
+        },
+        error: function(xhr, type, exception){
+            console.log('get backtime erroe', type);
+            console.log(xhr, "Failed");
+        }
+    });
+}
 </script>
 
