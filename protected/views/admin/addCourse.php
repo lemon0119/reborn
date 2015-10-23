@@ -6,7 +6,7 @@
                 <li>
                     <select name="type" >
                         <option value="courseID" selected="selected">编号</option>
-                        <option value="courseName">课程名</option>
+                        <option value="courseName">科目名</option>
                         <option value="createPerson">创建人</option>
                     </select>
                 </li>
@@ -19,20 +19,23 @@
                 </li>
             </form>
             <li class="divider"></li>
-            <li ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left"></i> 课程列表</a></li>
+            <li ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left"></i> 科目列表</a></li>
         </ul>
     </div>
 </div>
 <div class="span9">
-    <h3>新建课程</h3>
+    <h3>新建科目</h3>
     <form id="myForm" method="post" action="./index.php?r=admin/addCourse" onkeydown="if(event.keyCode==13){return false;}"> 
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                <label class="control-label" for="input01">课程名</label>
+                <label class="control-label" style="position: relative;left: 288px;top: 25px" for="input02">课程数</label>
+                <label class="control-label" for="input01">科目名</label>
                 <div class="controls">
                         <input name="courseName" type="text" class="input-xlarge" id="input01"/>
+                        <input name="courseNumber" type="number" class="input-mini " id="input02"/>
                 </div>
+               
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">添加</button> 
@@ -46,14 +49,25 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-    window.wxc.xcConfirm('添加课程成功！', window.wxc.xcConfirm.typeEnum.success);
+    window.wxc.xcConfirm('添加科目成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-    window.wxc.xcConfirm('添加课程失败！', window.wxc.xcConfirm.typeEnum.warning);
+    window.wxc.xcConfirm('添加科目失败！', window.wxc.xcConfirm.typeEnum.warning);
 });    
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""||userID.replace(/\s/g, "").length===0){
-        window.wxc.xcConfirm('课程名不能为空', window.wxc.xcConfirm.typeEnum.info);
+        window.wxc.xcConfirm('科目名不能为空', window.wxc.xcConfirm.typeEnum.info);
+        return false;
+    }
+    var classNumber = $("#input02")[0].value;
+    if(classNumber === "" ){
+        window.wxc.xcConfirm('至少有一节课', window.wxc.xcConfirm.typeEnum.info);
+        return false;
+    }else if(classNumber > 100){
+        window.wxc.xcConfirm('科目数超出上限', window.wxc.xcConfirm.typeEnum.info);
+        return false;
+    }else if(classNumber === 0){
+        window.wxc.xcConfirm('至少有一节课', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });

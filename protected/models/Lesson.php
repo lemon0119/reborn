@@ -48,7 +48,7 @@ class Lesson extends CActiveRecord
         }
         
         public function insertLesson($lessonName,$courseID,$createPerson,$classID){   
-            //添加课程
+            //添加科目
             $newLesson                  =   new Lesson();
             $newLesson->lessonID        =   Lesson::model()->newID();
             $newLesson->classID         =   $classID;

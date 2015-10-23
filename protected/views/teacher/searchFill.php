@@ -6,7 +6,7 @@
                         <li>
                                 <select name="type" >
                                         <option value="exerciseID" selected="selected">编号</option>
-                                        <option value="courseID" >课程号</option>
+                                        <option value="courseID" >科目号</option>
                                         <option value="createPerson">创建人</option>
                                         <option value="requirements">内容</option>
                             
@@ -53,7 +53,7 @@
     <thead>
         <tr>
             <th>编号</th>
-            <th>课程号</th>
+            <th>科目号</th>
             <th>内容</th>
             <th>创建人</th>
             <th>创建时间</th>
