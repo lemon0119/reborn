@@ -44,7 +44,7 @@
 			input: {
 				title: "输入",
 				icon: "",
-				btn: btnType.ok
+				btn: btnType.okcancel
 			},
 			custom: {
 				title: "",

@@ -11,7 +11,7 @@
 $dir = "resources/admin/001/$courseID/";
 ?>
 <div class="span9">
-    <!-- 科目列表-->
+    <!-- 课程列表-->
     <h3><?php echo $courseID;
 echo '&nbsp; &nbsp;';
 echo $courseName; ?></h3>
@@ -66,7 +66,7 @@ echo $courseName; ?></h3>
             <?php endforeach; ?> 
         </tbody>
     </table>
-    <!-- 科目列表结束 -->
+    <!-- 课程列表结束 -->
     <!-- 显示翻页标签 -->
     <div align=center>
         <?php
