@@ -84,9 +84,18 @@ endforeach;
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-    window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success);
-    else if(result === '0')
-    window.wxc.xcConfirm("已有班级进行该科目，无法删除！", window.wxc.xcConfirm.typeEnum.error);
+    window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success,{
+       onOk:function(){
+		 window.location.href = "./index.php?r=admin/courseLst";
+						}
+    });
+    else if(result==='0'){
+    window.wxc.xcConfirm("已有班级进行该科目，无法删除！", window.wxc.xcConfirm.typeEnum.error,{
+       onOk:function(){
+		 window.location.href = "./index.php?r=admin/courseLst";
+						}
+    });
+    }
 });
     
     function deleteCourse(id,name){
@@ -96,7 +105,7 @@ $(document).ready(function(){
 						onOk: function(){
 							 window.location.href="./index.php?r=admin/deleteCourse&&courseID="+id+"&&page=<?php echo Yii::app()->session ['lastPage'];?>";
 						}
-					}
+					};
 					window.wxc.xcConfirm("确定要删除科目："+name+"?这样做将无法恢复！", "custom", option);
     }
     

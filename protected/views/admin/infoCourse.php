@@ -61,7 +61,7 @@ echo $courseName; ?></h3>
                         $num = ($num > 2) ? ($num - 2) : 0;
                         echo $num;
                             ?></a></td>
-                    <td style="width: 35px"> <a onclick="deleteLesson(<?php echo $model['lessonID']; ?>, '<?php echo $model['lessonName']; ?>');"  href="#" ><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a></td>
+                    <td style="width: 35px"> <a onclick="deleteLesson( '<?php echo $model['lessonName']; ?>');"  href="#" ><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a></td>
                 </tr>   
             <?php endforeach; ?> 
         </tbody>
@@ -90,12 +90,12 @@ echo $courseName; ?></h3>
         }
     });
 
-    function deleteLesson(id, name) {
+    function deleteLesson(name) {
         var option = {
             title: "警告",
             btn: parseInt("0011", 2),
             onOk: function () {
-                window.location.href = "./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID']; ?>&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>&&lessonID=" + id;
+                window.location.href = "./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID']; ?>&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>&&lessonName="+name;
             }
         };
         window.wxc.xcConfirm("您将删除课程:" + name + "，这样做将无法恢复！", "custom", option);
