@@ -2651,7 +2651,6 @@ class AdminController extends CController {
         }
         $result = '';
         $courseID = $_GET['courseID'];
-        if (!isset(Yii::app()->session ['delCourseID']) || (Yii::app()->session ['delCourseID'] != $courseID)) {
             $classes = TbClass::model()->findall("currentCourse = $courseID");
             if (count($classes) > 0) {
                 $result = 0;
@@ -2660,8 +2659,6 @@ class AdminController extends CController {
                 $rows = Lesson::model()->deleteAll('courseID=?', array($courseID));
                 $result = 1;
             }
-            Yii::app()->session ['delCourseID'] = $courseID;
-        }
 
         $courses = Course::model()->getCourseLst("", "");
         $courseLst = $courses ['courseLst'];
@@ -2687,12 +2684,14 @@ class AdminController extends CController {
         $courseLst_forNumber = $result_forNumber ['courseLst'];
         $array_maxNumber = array();
         foreach ($courseLst_forNumber as $v){
+            $number = 0;
             $courseID = $v['courseID'];
-            $sql = "SELECT MAX(number) AS number FROM lesson WHERE courseID = $courseID";
-            $maxNumber = Yii::app()->db->createCommand($sql)->query()->read();
-            $number =  $maxNumber['number'];
-            if(empty($number)){
-                $number = 0;
+            $lesson = Lesson::model()->findAll("courseID = '$courseID'");
+            if(empty($lesson)){
+            }else{
+                foreach ($lesson as $value){
+                    $number++;
+                }
             }
             array_push($array_maxNumber,$number);
         }
@@ -2779,11 +2778,11 @@ class AdminController extends CController {
 
     public function actionInfoCourse() {
         $deleteResult = 'no';
-        if(isset($_GET['lessonID'])){
-            $lessonID = $_GET['lessonID'];
-            $deleteResult = Lesson::model()->deleteAll("lessonID = '$lessonID'");
-        }
         $courseID = $_GET ['courseID'];
+        if(isset($_GET['lessonName'])){
+            $lessonName = $_GET['lessonName'];
+            $deleteResult = Lesson::model()->deleteAll("courseID = '$courseID' and lessonName = '$lessonName'");
+        }
         $courseName = $_GET ['courseName'];
         $createPerson = $_GET ['createPerson'];
         Yii::app()->session['courseID'] = $courseID;
