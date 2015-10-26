@@ -30,10 +30,10 @@
 </div>
 <div class="span9">
         <?php if (isset($_GET['teacherId'])) { ?>
-        <h3><font style="color: #f46500"><?php echo $teacher['userName']; ?></font>&nbsp;&nbsp;老师的课程安排</h3>
+        <h3><font style="color: #f46500"><?php echo $teacher['userName']; ?></font>&nbsp;&nbsp;老师的科目安排</h3>
         <br/>
             <?php } else { ?>
-            <h3><font style="color: #f46500"><?php echo $class['className']; ?></font>&nbsp;&nbsp;的课程安排</h3>
+            <h3><font style="color: #f46500"><?php echo $class['className']; ?></font>&nbsp;&nbsp;的科目安排</h3>
             <br/>
 <?php } ?>
             <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（鼠标悬浮显示详细信息）</p>

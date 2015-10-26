@@ -1,5 +1,5 @@
 <div class="span3">
-    <div class="well" style="padding: 8px 0;">
+    <div class="well-bottomnoradius" style="padding: 8px 0;">
         <ul class="nav nav-list">                     
             <li class="nav-header">班级列表</li>
 
@@ -7,12 +7,9 @@
                 <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>
 
-            <li class="divider"></li>
-            <li class="nav-header">课程列表</li>
-
-            <?php foreach ($array_lesson as $lesson): ?>
-                <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></li>
-            <?php endforeach; ?>   
+           </ul></div>
+            <div class="well-topnoradius" style="padding: 8px 0;border-bottom-left-radius:0px;border-bottom-right-radius:0px;">
+        <ul class="nav nav-list">    
             <li class="divider"></li>
             <?php if(Yii::app()->session['currentClass']&&Yii::app()->session['currentLesson']){?>
             
@@ -22,8 +19,17 @@
                     <a href="#"onclick="chkIt()" id="bth_create"></a>
                 </li>
            <?php }?>
+             <li class="divider"></li>
+            <li class="nav-header">课程列表</li>
         </ul>
     </div>
+<div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">
+     <ul class="nav nav-list">
+            <?php foreach ($array_lesson as $lesson): ?>
+                <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></li>
+            <?php endforeach; ?> 
+</div>
+    
 
 </div>
 

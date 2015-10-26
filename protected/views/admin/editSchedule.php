@@ -24,7 +24,7 @@
     <?php }?>
         <input type="hidden" name="flag" value="1" />
     <div class="control-group" id="div1">
-            <h3 >课程信息</h3>
+            <h3 >科目信息</h3>
             <div class="controls">               
                 <span>1.&nbsp;</span><input type="text"  name="in1" style="width:280px; height:30px;" id="input1" maxlength="15" value="<?php $courseInfo = explode("&&", $result['courseInfo']); echo $courseInfo[0];?>">                
             </div>             

@@ -29,6 +29,14 @@ function long2(){
     }
 }
 </script>
+
+<div class="span3">
+       <div class="well" style="padding: 8px 0;height: 565px;">
+           <li class="nav-header"><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人设置</h4></li>   
+           <li class="nav-header" id="one"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="cont1" href="./index.php?r=student/set">修改密码</a></li>   
+           <li class="nav-header" id="two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="cont2" href="./index.php?r=student/headPic">修改头像</a></li>   
+        </div>
+</div>
 <div class="span9">
     
     <div class="span_set">
@@ -60,8 +68,8 @@ function long2(){
                 <input type="file" name="file"  id="file"/><br>   -->
             </div>
             <div>
-                <button type="submit" class="btn btn-primary">确认</button> 
-                <a href="./index.php?r=student/index" class="btn">返回</a>
+                <a id="stuBack" href="./index.php?r=student/index"></a>
+                <a id="DeterMine1"type="submit"></a> 
             </div>
         </fieldset>
     </form>   
