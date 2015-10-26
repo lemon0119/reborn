@@ -2739,10 +2739,7 @@ class TeacherController extends CController {
             'examID' => $examID,
             'totalScore' => $totalScore
         ));
-    }
-
-        ));     
-     }
+    }    
      
      //得到修改作业左边框的信息
      public function getSuiteInfo($type , $suiteID)
