@@ -28,22 +28,21 @@ echo "<script>var role='$role';</script>";
 </div>
 
 
-<div class="right">
-    <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
-    <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:220px; clear:both;">
-        <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
+<div class="right"style="background-color: #3b3b3b;border: 0px" >
+    <div align="center" id="sw-teacher-camera"><a href="#" ><h4 style="color: white">教 师 视 频</h4></a></div>
+    <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:220px; clear:both;">
+        <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
-        <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
-        <div id="bulletin" class="bulletin" style="display:none">
-                <textarea disabled id="bulletin-textarea" style="color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+        <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
+        <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
+            <textarea disabled id="bulletin-textarea" style=" background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
         </div>
-        <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
-        <div id="chat-box">
-            <div id="chatroom" class="chatroom"></div>
-            <div class="sendfoot">
-                <input type='text' id='messageInput' style="width:53%;margin-top:0px;margin-bottom:0px;color:gray" oninput="this.style.color='black'">
-                
-                <a id="send-msg" ></a>
+        <div align="center" id="sw-chat" ><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
+        <div id="chat-box" style="border: 0px">
+            <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
+            <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
+                <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
+                <a id="send-msg"></a>
             </div>
         </div>
 </div>
