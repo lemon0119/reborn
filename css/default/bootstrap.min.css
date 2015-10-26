@@ -4514,7 +4514,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .hero-unit-choice {
     overflow: auto;
     height: 500px;
-    width: 800px;
+    width: 750px;
     margin-bottom:30px;
     font-size:18px;
     font-weight:200;
@@ -4854,6 +4854,23 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 10px 40px;
     background: url("../../img/UI_stu/on_btn_message.png");
 }
+#bth_create{
+    position: relative;
+    width: 225px;
+    top: 1px;
+    padding: 18px 0px;
+    margin-left: 0px;
+    background-repeat: no-repeat;
+    background: url("../../img/UI_tea/bth_create.png");
+}
+#bth_create:hover{
+    position: relative;
+    top: 1px;
+    padding: 18px 0px;
+    margin-left: 0px;
+    background-repeat: no-repeat;
+    background: url("../../img/UI_tea/on_bth_create.png");
+}
 #tb tbody tr td,#tb tbody tr th{
     border-style:none;
 }
@@ -4989,6 +5006,7 @@ table tr td{
     font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
 }
+
 .cursor_pointer{
     cursor: pointer;
 }

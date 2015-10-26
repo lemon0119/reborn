@@ -83,6 +83,6 @@ function dele(ppt2,classID2,progress2,on2) {
                         window.location.href="./index.php?r=teacher/deletePpt&&ppt="+ppt2+"&&classID="+classID2+"&&progress="+progress2+"&&on="+on2;
                 }
         }
-        window.wxc.xcConfirm("这将会移动该PPT至回收站，您确定这样吗？", "custom", option);
+        window.wxc.xcConfirm("您确定删除吗？", "custom", option);
     }
 </script>

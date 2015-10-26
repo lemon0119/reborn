@@ -50,7 +50,7 @@
             </tr>    
         </tbody>   
     </table> 
-    <a class="btn" href="./index.php?r=teacher/stuExam">返回</a>
+    <a class="btn btn-primary" href="./index.php?r=teacher/stuExam">返回</a>
 </div>
 
 <div class="span9" id="work">
