@@ -4776,6 +4776,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     top:1px;
     background-image: url("../../img/bell_off.jpg");
 }
+#stuMail_on:hover{
+    padding: 27px 35px;
+    position: relative;
+    top:1px;
+    background-image: url("../../img/on_bell.jpg");
+}
 #stuMail_on{
     padding: 27px 35px;
     position: relative;
@@ -4789,6 +4795,30 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #suLu:hover{
     padding: 28px 60px;
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
+
+}
+#stuBack{
+    margin-left: 15px;
+    padding: 10px 37px;
+    background-image: url("../../img/UI_stu/btn_cancel.png");
+}
+#stuBack:hover{
+    margin-left: 15px;
+    padding: 10px 37px;
+    background-image: url("../../img/UI_stu/on_btn_cancel.png");
+
+}
+#DeterMine1{
+    margin-left: 50px;
+    padding: 10px 100px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/btn_determine.png");
+}
+#DeterMine1:hover{
+     margin-left: 50px;
+    padding: 10px 100px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/on_btn_determine.png");
 
 }
 #myCourse{
@@ -4813,15 +4843,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #send-msg{
+    margin-top: 1px;
     background-repeat: no-repeat;
-    padding: 10px 55px;
-    background:url("../../img/UI_stu/send.png");
+    padding: 10px 40px;
+    background:url("../../img/UI_stu/btn_message.png");
 }
 
 #send-msg:hover{
     background-repeat: no-repeat;
-    padding: 10px 55px;
-    background: url("../../img/UI_stu/sendHover.png");
+    padding: 10px 40px;
+    background: url("../../img/UI_stu/on_btn_message.png");
 }
 #tb tbody tr td,#tb tbody tr th{
     border-style:none;
