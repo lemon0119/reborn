@@ -19,15 +19,16 @@
                     <tr><td>&nbsp;&nbsp;&nbsp;<?php echo $currentLesson['lessonName']?></td></tr>
                     <tr><td>&nbsp;  &nbsp;  &nbsp;   &nbsp;
                             <?php  if(Tool::clength($suite['suiteName'])<=7)
-                                        echo $suite['suiteName'];
+                                        $a= $suite['suiteName'];
                                     else
-                                        echo Tool::csubstr($suite['suiteName'], 0, 7)."...";?>
+                                        $a= Tool::csubstr($suite['suiteName'], 0, 7)."...";?>
+                            <a href="#" title="<?php echo $suite['suiteName']?>" style="text-decoration:none;"><?php echo $a?></a>
                         </td></tr>
                 </table>                
             </center>                   
         </ul>
     </div>      
-    <a href="./index.php?r=teacher/AssignWork&&classID=<?php echo $currentClass['classID'];?>&&lessonID=<?php echo $currentLesson['lessonID'];?>"  class="btn fr">返回</a>
+    <a href="./index.php?r=teacher/AssignWork&&classID=<?php echo $currentClass['classID'];?>&&lessonID=<?php echo $currentLesson['lessonID'];?>"  class="btn btn-primary">返回</a>
 </div>
 
 <div class="span9">
