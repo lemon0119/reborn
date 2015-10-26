@@ -62,8 +62,8 @@
     $(document).ready(function(){
         var v=<?php echo Tool::clength($exerOne['content']);?>;
         $("#wordCount").text(v);
+         alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
         if(isExam){
-            alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
             var isover = setInterval(function(){
                 var time = getSeconds();
                 //console.log(time + "time");

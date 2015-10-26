@@ -66,8 +66,9 @@
 <script>
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     $(document).ready(function(){
+        alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
         if(isExam){
-            alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+            
             var isover = setInterval(function(){
                 var time = getSeconds();
                 //console.log(time + "time");
