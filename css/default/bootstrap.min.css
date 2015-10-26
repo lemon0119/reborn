@@ -4958,3 +4958,9 @@ table tr td{
     font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
 }
+.cursor_pointer{
+    cursor: pointer;
+}
+.cursor_default{
+    cursor:default;
+}

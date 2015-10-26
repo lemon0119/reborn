@@ -41,7 +41,6 @@ echo $courseName; ?></h3>
                 <th>创建时间</th>
                 <th>ppt</th>
                 <th>视频</th>
-                <th>操作</th>
             </tr>
         </thead>
         <tbody>        
@@ -58,7 +57,7 @@ echo $courseName; ?></h3>
                     }
                     ?>
                     <td style="width: 50px"><?php echo $model['number']; ?></td>
-                    <td title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $courseID; ?>)"><?php if(Tool::clength($model['lessonName'], 'utf-8')>12){echo Tool::csubstr($model['lessonName'], 0, 11, 'UTF-8') . "..."; }else{ echo $model['lessonName'];} ?></td>
+                    <td  title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule cursor_pointer" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $courseID; ?>)"><?php if(Tool::clength($model['lessonName'], 'utf-8')>12){echo Tool::csubstr($model['lessonName'], 0, 11, 'UTF-8') . "..."; }else{ echo $model['lessonName'];} ?></td>
                     <td><?php if($createPerson=="0")
                                     echo "管理员";
                          ?></td>
@@ -79,7 +78,6 @@ echo $courseName; ?></h3>
                         $num = ($num > 2) ? ($num - 2) : 0;
                         echo $num;
                             ?></a></td>
-                    <td style="width: 35px"> <a onclick="deleteLesson( '<?php echo $model['lessonName']; ?>');"  href="#" ><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a></td>
                 </tr>   
             <?php endforeach; ?> 
         </tbody>
@@ -169,18 +167,18 @@ echo $courseName; ?></h3>
                                     foreach ($result as $v) {
                                         if (($v['sequence'] == $s) && ($v['day'] == $d)) {
                                             ?>
-                                        <td class="table_schedule" <?php if (isset($_GET['classID'])) {
+                                        <td style="cursor:pointer"  title="<?php
+                                        $array_v = explode("&&", $v['courseInfo']);
+                                        foreach ($array_v as $value) {
+                                            echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
+                                        }
+                                        ?>" class="table_schedule" <?php if (isset($_GET['classID'])) {
                                        echo 'onclick="changeClass('.$s.','.$d.');"';
                                    }else{
                                        echo 'onclick="change('.$s .','.$d.');"';
                                    }
                                             ?> >
-                                            <span  title="<?php
-                                        $array_v = explode("&&", $v['courseInfo']);
-                                        foreach ($array_v as $value) {
-                                            echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
-                                        }
-                                        ?>"  ><?php
+                                            <span style="cursor:pointer"   ><?php
                                         $array_v1 = explode("&&", $v['courseInfo']);
                                         foreach ($array_v1 as $value) {
                                             if (Tool::clength($value, 'utf-8')>5) {
@@ -196,13 +194,13 @@ echo $courseName; ?></h3>
         }
         if ($flag == 1) {
             ?>
-                                    <td class="table_schedule" <?php if (isset($_GET['classID'])) {
+                                    <td style="cursor:pointer" class="table_schedule" <?php if (isset($_GET['classID'])) {
                                        echo 'onclick="changeClass('.$s.','.$d.');"';
                                    }else{
                                        echo 'onclick="change('.$s .','.$d.');"';
                                    }
                                             ?>>
-                                        <span  style="color: #aaa9a9" title="-"  >-</span></td>
+                                        <span   style="color: #aaa9a9;cursor:pointer" title="-"  >-</span></td>
         <?php
         }
     }
