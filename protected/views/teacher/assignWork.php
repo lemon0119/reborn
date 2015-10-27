@@ -12,13 +12,12 @@
         <ul class="nav nav-list">    
             <li class="divider"></li>
             <?php if(Yii::app()->session['currentClass']&&Yii::app()->session['currentLesson']){?>
-            <form id="myForm" action="./index.php?r=teacher/AddSuite" method="post" >  
+            
                 <li class="nav-header" >作业题目</li>
-                <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" onblur="chkIt()"/><span id="usertips" style="margin-left: 5px;"></span>
+                <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
                 <li style="margin-top:10px">
-                    <button type="submit" class="btn btn-primary">创建作业</button>
+                    <a href="#"onclick="chkIt()" id="bth_create"></a>
                 </li>
-            </form>
            <?php }?>
              <li class="divider"></li>
             <li class="nav-header">课程列表</li>
@@ -88,6 +87,13 @@
 
 
 <script>
+    $(document).ready(function(){
+        if(<?php echo $res;?>==1){
+            var txt=  "此作业已经被创建！";
+	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+            document.getElementById("title").value="";
+        }
+    });
     function dele(suiteID, currentPage)
     {
       
@@ -101,24 +107,18 @@
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
     }
 
-    $("#myForm").submit(function(){
-        var title = $("#title")[0].value;
-        if (title == "")
-        {
-            window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
-            return false;
-        }
-    });
+    
     function chkIt(){
     var usernameVal = document.getElementById("title").value;  
-  
-    usertipsSpan = document.getElementById("usertips");  
-    usertipsSpan.style.color = "red";  
-    usertipsSpan.style.marginLeft="25px";
+    if(usernameVal==""){
+        window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
+            return false;
+    }
     if(usernameVal.length > 30){ //一个汉字算一个字符  
-        usertipsSpan.innerHTML="大于30个字符！";  
+        window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.warning);
         document.getElementById("title").value="";
-    }  
+    }
+    window.location.href="./index.php?r=teacher/AddSuite&&title="+usernameVal;
 }
 </script>
 

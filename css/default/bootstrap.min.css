@@ -4514,7 +4514,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .hero-unit-choice {
     overflow: auto;
     height: 500px;
-    width: 800px;
+    width: 750px;
     margin-bottom:30px;
     font-size:18px;
     font-weight:200;
@@ -4776,6 +4776,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     top:1px;
     background-image: url("../../img/bell_off.jpg");
 }
+#stuMail_on:hover{
+    padding: 27px 35px;
+    position: relative;
+    top:1px;
+    background-image: url("../../img/on_bell.jpg");
+}
 #stuMail_on{
     padding: 27px 35px;
     position: relative;
@@ -4789,6 +4795,30 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #suLu:hover{
     padding: 28px 60px;
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
+
+}
+#stuBack{
+    margin-left: 15px;
+    padding: 10px 37px;
+    background-image: url("../../img/UI_stu/btn_cancel.png");
+}
+#stuBack:hover{
+    margin-left: 15px;
+    padding: 10px 37px;
+    background-image: url("../../img/UI_stu/on_btn_cancel.png");
+
+}
+#DeterMine1{
+    margin-left: 50px;
+    padding: 10px 100px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/btn_determine.png");
+}
+#DeterMine1:hover{
+     margin-left: 50px;
+    padding: 10px 100px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/on_btn_determine.png");
 
 }
 #myCourse{
@@ -4813,15 +4843,33 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #send-msg{
+    margin-top: 1px;
     background-repeat: no-repeat;
-    padding: 10px 55px;
-    background:url("../../img/UI_stu/send.png");
+    padding: 10px 40px;
+    background:url("../../img/UI_stu/btn_message.png");
 }
 
 #send-msg:hover{
     background-repeat: no-repeat;
-    padding: 10px 55px;
-    background: url("../../img/UI_stu/sendHover.png");
+    padding: 10px 40px;
+    background: url("../../img/UI_stu/on_btn_message.png");
+}
+#bth_create{
+    position: relative;
+    width: 225px;
+    top: 1px;
+    padding: 18px 0px;
+    margin-left: 0px;
+    background-repeat: no-repeat;
+    background: url("../../img/UI_tea/bth_create.png");
+}
+#bth_create:hover{
+    position: relative;
+    top: 1px;
+    padding: 18px 0px;
+    margin-left: 0px;
+    background-repeat: no-repeat;
+    background: url("../../img/UI_tea/on_bth_create.png");
 }
 #tb tbody tr td,#tb tbody tr th{
     border-style:none;
@@ -4957,4 +5005,11 @@ table tr td{
 .table_schedule:hover{
     font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
+}
+
+.cursor_pointer{
+    cursor: pointer;
+}
+.cursor_default{
+    cursor:default;
 }

@@ -1,3 +1,10 @@
+<div class="span3">
+       <div class="well" style="padding: 8px 0;height: 565px;">
+           <li class="nav-header"><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人设置</h4></li>   
+           <li class="nav-header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./index.php?r=student/set">修改密码</a></li>   
+           <li class="nav-header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./index.php?r=student/headPic">修改头像</a></li>   
+        </div>
+</div>
 <div class="span9">
     <h2>头像</h2>
     <div id ="ppt-table"></div>

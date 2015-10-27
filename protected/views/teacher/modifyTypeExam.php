@@ -55,7 +55,12 @@ function test()
             <ul class="nav nav-list" style="margin-left: -80px;">
                 <center>
                     <table>
-                        <tr><td>试卷名称:<?php echo $exam['examName']?></td></tr>
+                        <tr><td>试卷名称:<?php  if(Tool::clength($exam['examName'])<=7)
+                                        $a= $exam['examName'];
+                                    else
+                                        $a= Tool::csubstr($exam['examName'], 0, 7)."...";?>
+                                <a href="#" title="<?php echo $exam['examName']?>" style="text-decoration:none;"><?php echo $a?></a>
+                            </td></tr>
                         <!--
                         <tr><td>开始时间: 
                                 <div class="inline layinput"><input style="width:180px;color:white;" class="search-query span2" placeholder="选择开始时间" name="startTime" id="startTime" value="<?php echo $exam['begintime'] ?> " onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" ></div>       
@@ -72,7 +77,7 @@ function test()
 
     </form>  -->
      
-    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass'];?>"  class="btn">返回</a>
+    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass'];?>"  class="btn btn-primary">返回</a>
 </div>
 
 <div class="span9">

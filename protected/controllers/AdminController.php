@@ -2661,13 +2661,28 @@ class AdminController extends CController {
                 $rows = Lesson::model()->deleteAll('courseID=?', array($courseID));
                 $result = 1;
             }
-
+         $result_forNumber = Course::model()->getCourseLst("", "");
+        $courseLst_forNumber = $result_forNumber ['courseLst'];
+        $array_maxNumber = array();
+        foreach ($courseLst_forNumber as $v){
+            $number = 0;
+            $courseID = $v['courseID'];
+            $lesson = Lesson::model()->findAll("courseID = '$courseID'");
+            if(empty($lesson)){
+            }else{
+                foreach ($lesson as $value){
+                    $number++;
+                }
+            }
+            array_push($array_maxNumber,$number);
+        }
         $courses = Course::model()->getCourseLst("", "");
         $courseLst = $courses ['courseLst'];
         $pages = $courses ['pages'];
 
         $this->render('courseLst', array(
             'courseLst' => $courseLst,
+            'courseNumber' =>$array_maxNumber,
             'pages' => $pages,
             'teacher' => Teacher::model()->findall(),
             'result' => $result
@@ -2781,9 +2796,26 @@ class AdminController extends CController {
     public function actionInfoCourse() {
         $deleteResult = 'no';
         $courseID = $_GET ['courseID'];
-        if(isset($_GET['lessonName'])){
+       
+        if(isset($_GET['delete'])){
+            //删
             $lessonName = $_GET['lessonName'];
             $deleteResult = Lesson::model()->deleteAll("courseID = '$courseID' and lessonName = '$lessonName'");
+            $allLesson = Lesson::model()->findAll("courseID = '$courseID'");
+            $count=1;
+            foreach ($allLesson as $v){
+                $ln = $v["lessonName"];
+                $sql = "UPDATE `lesson` SET `number`= '$count' WHERE lessonName = '$ln'";
+                Yii::app()->db->createCommand($sql)->query();
+                $count++;
+            }
+            
+        }else if (isset ($_GET['newName'])) {
+            //改
+            $lessonName = $_GET['lessonName'];
+            $newName = $_GET['newName'];
+            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
+            Yii::app()->db->createCommand($sql)->query();
         }
         $courseName = $_GET ['courseName'];
         $createPerson = $_GET ['createPerson'];

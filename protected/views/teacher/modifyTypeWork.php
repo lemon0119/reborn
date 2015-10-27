@@ -17,12 +17,17 @@
                 <table style="margin-left: -60px;">
                     <tr><td><?php echo $currentClass['className']?></td></tr>
                     <tr><td>&nbsp;&nbsp;&nbsp;<?php echo $currentLesson['lessonName']?></td></tr>
-                    <tr><td>&nbsp;  &nbsp;  &nbsp;   &nbsp;<?php echo $suite['suiteName']?></td></tr>
+                    <tr><td>&nbsp;  &nbsp;  &nbsp;   &nbsp;<?php  if(Tool::clength($suite['suiteName'])<=7)
+                                        $a= $suite['suiteName'];
+                                    else
+                                        $a= Tool::csubstr($suite['suiteName'], 0, 7)."...";?>
+                            <a href="#" title="<?php echo $suite['suiteName']?>" style="text-decoration:none;"><?php echo $a?></a>
+                        </td></tr>
                 </table>                
             </center>                   
         </ul>
     </div>  
-    <a href="./index.php?r=teacher/AssignWork&&classID=<?php echo $currentClass['classID'];?>&&lessonID=<?php echo $currentLesson['lessonID'];?>"  class="btn btn-primary fr">返回</a>
+    <a href="./index.php?r=teacher/AssignWork&&classID=<?php echo $currentClass['classID'];?>&&lessonID=<?php echo $currentLesson['lessonID'];?>"  class="btn btn-primary">返回</a>
 </div>
 
 <div class="span9">

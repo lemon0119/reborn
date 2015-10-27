@@ -58,10 +58,10 @@ function test()
                         <tr><td>
                                 试卷名称:
                                 <?php  if(Tool::clength($exam['examName'])<=7)
-                                        echo $exam['examName'];
+                                        $a=$exam['examName'];
                                     else
-                                        echo Tool::csubstr($exam['examName'], 0, 7)."...";?>
-                                   
+                                        $a=Tool::csubstr($exam['examName'], 0, 7)."...";?>
+                                <a href="#" title="<?php echo $exam['examName']?>" style="text-decoration:none;"><?php echo $a?></a>
                             </td></tr>
                         <!--
                         <tr><td>开始时间: 
@@ -83,7 +83,7 @@ function test()
 
     </form>-->
 
-    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass']; ?>"  class="btn">返回</a>
+    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass']; ?>"  class="btn btn-primary">返回</a>
 </div>
 
 <div class="span9">
@@ -148,5 +148,8 @@ function chkIt(){
         document.getElementById("input01").value="";
     }  
 }
+function showFull(){
+    
+    }
 </script>
 

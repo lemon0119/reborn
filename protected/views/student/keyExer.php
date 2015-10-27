@@ -71,17 +71,22 @@
   <?php } else {?>
  <h3 align="center">本题时间已经用完</h3>
 <?php }?>
- <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
 <script>
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
+         alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
         if(isExam){
-            alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+           
             var isover = setInterval(function(){
                 var time = getSeconds();
                 var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;
+<<<<<<< HEAD
                 if(time >= seconds && seconds !== 0){
+=======
+                if(seconds==0){}
+                else if(time >= seconds&&seconds!=0){
+>>>>>>> refs/remotes/origin/master
                     clearInterval(isover);
                     doSubmit(true,function(){
                         window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['examsuiteID'];?>&&workID=<?php echo Yii::app()->session['examworkID']?>";
@@ -129,7 +134,7 @@
    function formSubmit(){
 					var option = {
 						title: "警告",
-						btn: parseInt("0011",2),
+						btn: parseInt("0011",4),
 						onOk: function(){
                                                    doSubmit(false);
 						} 

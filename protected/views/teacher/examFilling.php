@@ -1,5 +1,5 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div id="ziji">
+<div id="ziji" style="height:480px; overflow:auto;">
         <div class="hero-unit">
             <?php 
                     $str = $work['requirements'];
