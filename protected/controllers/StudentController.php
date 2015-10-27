@@ -217,7 +217,7 @@ class StudentController extends CController {
                 echo '保存答案失败，请重新提交!';
         }
     }
-    //我的课程
+    //我的科目
     public function actionMyCourse(){
         $isExam=false;
         Yii::app()->session['isExam']=$isExam;
@@ -1210,7 +1210,7 @@ class StudentController extends CController {
     }
     public function actionHeadPic(){
         $picAddress="";
-        $result="";
+        $result=0;
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
         $picAddress=$user['img_address'];
@@ -1218,6 +1218,7 @@ class StudentController extends CController {
     }
     public function actionAddHeadPic(){
         $result ="上传失败!";
+        $flag=0;
         $picAddress="";
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
@@ -1241,10 +1242,11 @@ class StudentController extends CController {
                     $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
                     move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
                     $result = "上传成功！";
-                    
+
                     $user->img_address="img/head/" .$newName;
                     $picAddress="img/head/" .$newName;
                     $user->update();
+                    
                 }
             }else{
                 $reult = "文件限定大小为30M！";
@@ -1337,8 +1339,35 @@ class StudentController extends CController {
         $noticeS->update();
        $this->render('stuNotice',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
     }
+    //公告内容
+     public function ActionNoticeContent(){
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
+     //速录百科
     public function actionSuLu(){
         return $this->render('suLu');
 
     }
+    
+     public function actionScheduleDetil() {
+             //查询任课班级科目
+             $userID= Yii::app()->session['userid_now'];
+             $sqlStudent = Student::model()->find("userID = '$userID'");
+             $currentClass = $sqlStudent['classID'];
+             Yii::app()->session['ScheduleCurrentClass'] = $currentClass;
+             $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
+              return $this->render('scheduleDetil', [ 'result' => $classResult]);
+    }
+    
+     public function actionEditSchedule() {
+        $sequence = $_GET['sequence'];
+        $day = $_GET['day'];
+             $currentClass = Yii::app()->session['ScheduleCurrentClass'];
+             $sql = "SELECT * FROM schedule_class WHERE classID = '$currentClass' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+        return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
+    }
+    
 }

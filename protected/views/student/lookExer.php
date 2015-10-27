@@ -35,6 +35,7 @@
                         <td width = '250px'>总时间：<?php echo $strTime?></td>
                     <?php }?>
                     <td width = '250px'>计时：<span id="time">00:00:00</span></td>
+                    <td width = '250px'>字数：<span id="wordCount">0</span> 字</td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                 </tr>
         </table>
@@ -59,6 +60,8 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
+        var v=<?php echo strlen($exerOne['content']);?>;
+        $("#wordCount").text(Math.floor(v/3));
         if(isExam){
             alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
             var isover = setInterval(function(){

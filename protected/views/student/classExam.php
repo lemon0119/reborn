@@ -44,7 +44,7 @@
                                 <?php } else if(time()>strtotime($exam['begintime'])+60*$exam['duration']||$ratio_accomplish[$n] ==1){ ?>
                                                 <?php echo '<font color="#ff0000">已经截止</font>'?>
                                                 |  &nbsp;&nbsp;&nbsp    
-                                                 <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '查看成绩';?></a>
+                                                 <a href="./index.php?r=student/viewAns&&suiteID=<?php echo $exam['examID'];?>&&workID=<?php echo $exam['workID'];?>" class="view-link"><?php echo '查看答案';?></a>
                                 <?php }else { echo '<font color="#ff0000">时间未到</font>';}?>
                             </td>
                             <td>

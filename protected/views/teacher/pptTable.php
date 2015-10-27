@@ -62,7 +62,8 @@
                                                                         $path   = substr($fileName,0,$len-4);
                                                                         echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
                     <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>"><img src="<?php echo IMG_URL; ?>edit.png">下载</a>
-                    <a href="./index.php?r=teacher/deletePpt&&ppt=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="dele"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                    <a href="#" onclick="dele('<?php echo iconv("gb2312","UTF-8",$file);?>','<?php echo $classID;?>','<?php echo $progress;?>','<?php echo $on;?>')"><img title="删除" src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                    
                 </td>
             </tr>
             <?php     
@@ -72,3 +73,16 @@
             ?>
         </tbody>
 </table>
+<script>
+function dele(ppt2,classID2,progress2,on2) {
+    console.log("y");
+        var option = {
+                title: "警告",
+                btn: parseInt("0011",2),
+                onOk: function(){
+                        window.location.href="./index.php?r=teacher/deletePpt&&ppt="+ppt2+"&&classID="+classID2+"&&progress="+progress2+"&&on="+on2;
+                }
+        }
+        window.wxc.xcConfirm("这将会移动该PPT至回收站，您确定这样吗？", "custom", option);
+    }
+</script>

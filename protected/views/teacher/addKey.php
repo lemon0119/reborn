@@ -6,7 +6,7 @@
             <li>
                 <select name="type" >
                     <option value="exerciseID" selected="selected">编号</option>
-                    <option value="courseID" >课程号</option>
+                    <option value="courseID" >科目号</option>
                     <option value="createPerson" >创建人</option>                                  
                     <option value="requirements">内容</option>
                 </select>
@@ -59,7 +59,7 @@
             <div class="control-group" id="div1">
             <label class="control-label" >键位码</label>
             <div class="controls">               
-                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12">                
+                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12"> :                
                 <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12">
                 <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2">
                 <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
@@ -67,28 +67,28 @@
         </div>
         <div class="control-group" id="div2">           
             <div class="controls">               
-                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12">                
+                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12"> :               
                 <input type="text"  name="in5" style="width:150px; height:15px;" id="input5"  maxlength="12">
                 <input type="text"  name="in6" style="width:40px; height:15px;" id="input6" maxlength="2">              
             </div>             
         </div>
         <div class="control-group" id="div3">           
             <div class="controls">               
-                <input type="text" name="in7" style="width:150px; height:15px;" id="input7" maxlength="12">                
+                <input type="text" name="in7" style="width:150px; height:15px;" id="input7" maxlength="12"> :                
                 <input type="text" name="in8" style="width:150px; height:15px;" id="input8" maxlength="12">
                 <input type="text" name="in9" style="width:40px; height:15px;" id="input9"  maxlength="2">              
             </div>             
         </div>
         <div class="control-group" id="div4">           
             <div class="controls">               
-                <input type="text" name="in10" style="width:150px; height:15px;" id="input10" maxlength="12">                
+                <input type="text" name="in10" style="width:150px; height:15px;" id="input10" maxlength="12"> :                
                 <input type="text" name="in11" style="width:150px; height:15px;" id="input11"maxlength="12">
                 <input type="text" name="in12" style="width:40px; height:15px;"id="input12" maxlength="2">              
             </div>             
         </div>
         <div class="control-group" id="div5">           
             <div class="controls">               
-                <input type="text" name="in13" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in13" style="width:150px; height:15px;" id="input13" maxlength="12"> :                
                 <input type="text" name="in14" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in15" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
@@ -96,35 +96,35 @@
     
     <div class="control-group" style="display: none"  id="div6">           
             <div class="controls">               
-                <input type="text" name="in16" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in16" style="width:150px; height:15px;" id="input13" maxlength="12"> :                
                 <input type="text" name="in17" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in18" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
                 <div class="control-group" style="display: none"  id="div7">           
             <div class="controls">               
-                <input type="text" name="in19" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in19" style="width:150px; height:15px;" id="input13" maxlength="12"> :                
                 <input type="text" name="in20" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in21" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
     <div class="control-group" style="display: none"  id="div8">           
             <div class="controls">               
-                <input type="text" name="in22" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in22" style="width:150px; height:15px;" id="input13" maxlength="12"> :                
                 <input type="text" name="in23" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in24" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
     <div class="control-group"  style="display: none" id="div9">           
             <div class="controls">               
-                <input type="text" name="in25" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in25" style="width:150px; height:15px;" id="input13" maxlength="12"> :                
                 <input type="text" name="in26" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in27" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
             <div class="control-group"  style="display: none" id="div10">           
             <div class="controls">               
-                <input type="text" name="in28" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in28" style="width:150px; height:15px;" id="input13" maxlength="12"> :                
                 <input type="text" name="in29" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in30" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             

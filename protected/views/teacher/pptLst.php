@@ -15,10 +15,10 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-        <li class="nav-header">当前课程</li>
+        <li class="nav-header">当前科目</li>
         <li id="li-<?php echo $progress;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>"><i class="icon-list-alt"></i> <?php echo $lessonsName[$progress];?></a></li>
         <li class="divider"></li>
-        <li class="nav-header">其余课程</li>
+        <li class="nav-header">其余科目</li>
         <?php foreach($lessonsName as $key => $value):
             if($key!=$progress){
             ?>
@@ -51,12 +51,13 @@
 <script>
     $(document).ready(function(){
     $("#upload").hide();
-    
+    /*
     <?php if(isset($result)){?>
     var result = <?php echo "'$result'";?>;
     if(result !== '0')
     window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
     <?php }?>
+        */
 });
 
     $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");

@@ -153,6 +153,7 @@
         setWordView(nextWord);
     }
     function setWordView(word){
+        word=word.replace("_",":");
         var a = word.split(":");
         document.getElementById("left-key").innerHTML = a[0];
         document.getElementById("right-key").innerHTML = a[1];

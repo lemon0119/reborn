@@ -38,7 +38,7 @@
         echo "<script>var type = '$type';</script>"; 
     }
 ?>
-<script type="text/javascript">
+<script>
     $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
        if(<?php echo $isLast?> == 1)
@@ -117,26 +117,26 @@
         if(value1>totalscore){
             window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
         }else{
-        var user = {
-            recordID:recordID,
-            type:"look",
-            workID:"<?php echo $workID;?>",
-            studentID:"<?php echo $studentID;?>",
-            accomplish:"<?php echo $accomplish;?>",
-            examID:examID,
-            exerciseID:exerciseID,
-            score:$("#input")[0].value,
-            answerID:answerID
-        };
-      $.ajax({
-          type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
-          data:user,
-          dataType:"html",
-          success:function(html){     
-              $("#ziji").html(html);
-          }
-      });
+            var user = {
+                recordID:recordID,
+                type:"look",
+                workID:"<?php echo $workID;?>",
+                studentID:"<?php echo $studentID;?>",
+                accomplish:"<?php echo $accomplish;?>",
+                examID:examID,
+                exerciseID:exerciseID,
+                score:$("#input")[0].value,
+                answerID:answerID
+            };
+            $.ajax({
+                type:"POST",
+                url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
+                data:user,
+                dataType:"html",
+                success:function(html){     
+                    $("#ziji").html(html);
+                }
+            });
       }
     }
 
