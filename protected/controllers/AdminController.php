@@ -1430,10 +1430,14 @@ class AdminController extends CController {
 
     public function actionAddStuClass() {
         $sql = "SELECT * FROM student WHERE classID = '0' AND is_delete = 0";
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $array_class = Tool::pager($sql, 10);
+        $result = $array_class['list'];
+        $pages = $array_class['pages'];
+        
         $this->render('addStuClass', array(
             'classID' => $_GET ["classID"],
-            'posts' => $result
+            'posts' => $result,
+            'pages' =>$pages,
                 )
         );
     }
@@ -1441,11 +1445,16 @@ class AdminController extends CController {
     public function actionAddTeaClass() {
         $classID = $_GET ["classID"];
         $sql = "SELECT teacherID FROM teacher_class WHERE classID = '$classID'  order by teacherID ASC";
+        $sqltea="SELECT * FROM teacher order by userID ASC";
+        $array_tea = Tool::pager($sqltea, 10);
+        $teacher = $array_tea['list'];
+        $pages = $array_tea['pages'];
         $result = Yii::app()->db->createCommand($sql)->query();
         $this->render('addTeaClass', array(
+            'pages'=>$pages,
             'classID' => $classID,
             'posts' => $result,
-            'teachers' => TbClass::model()->teaInClass()
+            'teachers' => $teacher,
                 )
         );
     }
