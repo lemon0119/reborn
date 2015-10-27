@@ -62,8 +62,18 @@ class AdminController extends CController {
             $condition = $condition . "''";
             $rows = Student::model()->deleteAll("userID in ($condition)");
         }
+         if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM teacher WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $pages = $array_stuLst['pages'];
         $stuLst = Student::model()->findAll("is_delete = '1'");
         $this->render('recycleStu', array(
+            'pages' => $pages,
             'stuLst' => $stuLst,
             'rows' => $rows
         ));
@@ -98,8 +108,19 @@ class AdminController extends CController {
                 'is_delete' => '0'
                     ), "userID in ($condition)");
         }
+         if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM student WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $pages = $array_stuLst['pages'];
+        
         $stuLst = Student::model()->findAll("is_delete = '1'");
         $this->render('recycleStu', array(
+            'pages' => $pages,
             'stuLst' => $stuLst,
             'rows' => $rows
         ));
@@ -117,9 +138,19 @@ class AdminController extends CController {
     }
 
     public function actionRecycleStu() {
-        $stuLst = Student::model()->findAll("is_delete = '1'");
+        if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM student WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $stuLst = $array_stuLst['list'];
+        $pages = $array_stuLst['pages'];
         $this->render('recycleStu', array(
-            'stuLst' => $stuLst
+            'stuLst' => $stuLst,
+            'pages' => $pages
         ));
     }
 
@@ -1104,8 +1135,19 @@ class AdminController extends CController {
             TeacherClass::model()->deleteAll("teacherID in ($condition)");
             $rows = Teacher::model()->deleteAll("userID in ($condition)");
         }
+         if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM teacher WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $teaLst = $array_stuLst['list'];
+        $pages = $array_stuLst['pages'];
         $teaLst = Teacher::model()->findAll("is_delete = '1'");
         $this->render('recycleTea', array(
+            'pages' => $pages,
             'teaLst' => $teaLst,
             'rows' => $rows
         ));
@@ -1140,18 +1182,39 @@ class AdminController extends CController {
                 'is_delete' => '0'
                     ), "userID in ($condition)");
         }
+        if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM student WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $pages = $array_stuLst['pages'];
         $teaLst = Teacher::model()->findAll("is_delete = '1'");
         $this->render('recycleTea', array(
+            'pages'=>$pages,
             'teaLst' => $teaLst,
             'rows' => $rows
         ));
     }
 
     public function actionRecycleTea() {
-        $teaLst = Teacher::model()->findAll("is_delete = '1'");
+         if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM teacher WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $teaLst = $array_stuLst['list'];
+        $pages = $array_stuLst['pages'];
         $this->render('recycleTea', array(
-            'teaLst' => $teaLst
+            'teaLst' => $teaLst,
+            'pages' => $pages
         ));
+        
     }
 
     public function actionClassLst() {
@@ -1343,14 +1406,16 @@ class AdminController extends CController {
         $curLesson = $class ['currentLesson'];
 
         $sql = "SELECT * FROM student WHERE classID = '$classID' AND is_delete = 0";
-        $criteria = new CDbCriteria ();
-        $stus = Yii::app()->db->createCommand($sql)->query();
+        $array_stuLst = Tool::pager($sql,4);
+        $stus = $array_stuLst['list'];
         $nums = $stus->rowCount;
-
+        $pages_stu = $array_stuLst['pages'];
+        
         $sql = "SELECT * FROM teacher_class WHERE classID =$classID";
         $teacherOfClass = Yii::app()->db->createCommand($sql)->query();
 
         $this->render('infoCLass', array(
+            'pages_stu' =>$pages_stu,
             'classID' => $classID,
             'className' => $className,
             'curCourse' => $curCourse,
@@ -3060,7 +3125,11 @@ class AdminController extends CController {
         }
 
 
-        $class = TbClass::model()->findAll("");
+        $classsql = "SELECT * FROM tb_class";
+        $array_classLst = Tool::pager($classsql,10);
+        $class = $array_classLst['list'];
+        $classPages = $array_classLst['pages'];
+        
         $class_course = array();
         foreach ($class as $v) {
             $courseID = $v['currentCourse'];
@@ -3068,8 +3137,12 @@ class AdminController extends CController {
             $class_v = array("classID" => $v['classID'], "className" => $v['className'], "currentCourse" => $v['currentCourse'], "currentLesson" => $v['currentLesson'], "courseName" => $sqlCourse['courseName']);
             array_push($class_course, $class_v);
         }
-        $teacher = Teacher::model()->findAll("");
-        return $this->render('schedule', ['teacher' => $teacher, 'class' => $class_course]);
+        $teasql = "SELECT * FROM teacher WHERE is_delete = '0'";
+        $array_teaLst = Tool::pager($teasql,10);
+        $teaLst = $array_teaLst['list'];
+        $teaPages = $array_teaLst['pages'];
+        
+        return $this->render('schedule', ['class_pages'=>$classPages,'tea_pages'=>$teaPages,'teacher' => $teaLst, 'class' => $class_course]);
     }
 
     public function actionScheduleDetil() {
