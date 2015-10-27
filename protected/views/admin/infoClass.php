@@ -36,9 +36,9 @@
                 <tbody>        
                     <?php foreach($teacherOfClass as $model):?>
                     <tr>
-                        <td style="width: 75px"><?php echo $model['teacherID'];?></td>
+                        <td style="width: 120px"><?php echo $model['teacherID'];?></td>
                         <td><?php echo $teachers[$model['teacherID']];?></td>
-                        <td>
+                        <td style="width: 120px">
                             <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['teacherID']; ?>&&name=<?php echo $teachers[$model['teacherID']]; ?>&&classID=<?php echo $classID; ?>"><img title="查看资料" src="<?php echo IMG_URL; ?>detail.png"></a>
                             <a href="./index.php?r=admin/infoClass&&flag=deleteTea&&id=<?php echo $model['teacherID'];?>&&classID=<?php echo $classID;?>"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
@@ -58,9 +58,9 @@
                 <tbody>        
                     <?php foreach($stus as $model):?>
                     <tr>
-                        <td style="width: 75px"><?php echo $model['userID'];?></td>
+                        <td style="width: 120px"><?php echo $model['userID'];?></td>
                         <td><?php echo $model['userName'];?></td>
-                        <td>  
+                        <td style="width: 120px">  
                             <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID']; ?>&&name=<?php echo $model['userName']; ?>&&classID=<?php echo $classID; ?>"><img title="详细资料" src="<?php echo IMG_URL; ?>detail.png"></a>
                             <a href="./index.php?r=admin/infoClass&&flag=deleteStu&&id=<?php echo $model['userID'];?>&&classID=<?php echo $model['classID'];?>"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
@@ -68,6 +68,11 @@
                     <?php endforeach;?> 
                 </tbody>
         </table>
+        <div align=center>
+        <?php
+       $this->widget('CLinkPager', array('pages' => $pages_stu));
+        ?>
+    </div>
     <!-- 翻页标签结束 -->
         <div class="form-actions">
             <button class="btn btn-primary"  onclick="back()">确定</button>
