@@ -2826,9 +2826,21 @@ class AdminController extends CController {
     public function actionAddCourse() {
         $result = 'no';
         if (isset($_POST ['courseName'])) {
+            $flag = 0;
             $courseNumber = $_POST['courseNumber'];
             $courseName = $_POST['courseName'];
-            $result = Course::model()->insertCourse($_POST ['courseName'], 0);
+            $allCourse = Course::model()->findAll();
+            foreach ($allCourse as $v){
+                if($v['courseName']==$courseName){
+                    $result = 'have_same_course';
+                    $flag = 0;
+                    break;
+                }
+                $flag = 1;
+            }
+            if($flag==1){
+                 $result = Course::model()->insertCourse($_POST ['courseName'], 0);
+            }
             if ($result == 1) {
                 $sql = "SELECT MAX(courseID) AS id FROM course";
                 $max_id = Yii::app()->db->createCommand($sql)->query()->read();
@@ -2845,10 +2857,10 @@ class AdminController extends CController {
                         }
                     }
                 }
-                $this->render('addCourse', [
+            }
+            $this->render('addCourse', [
                     'result' => $result
                 ]);
-            }
         } else {
             $this->render('addCourse', [
                 'result' => $result
