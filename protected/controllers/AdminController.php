@@ -1929,7 +1929,8 @@ class AdminController extends CController {
             $title = $_POST ['title'];
             $content = $_POST ['content'];
             if ($_FILES ['file'] ['type'] != "audio/mpeg" &&
-                    $_FILES ['file'] ['type'] != "audio/wav") {
+                $_FILES ['file'] ['type'] != "audio/wav"  &&
+                $_FILES ['file'] ['type'] != "audio/x-wav"    ) {
                 $result = '文件格式不正确，应为MP3或WAV格式';
             } else if ($_FILES ['file'] ['error'] > 0) {
                 $result = '文件上传失败';
@@ -2088,8 +2089,9 @@ class AdminController extends CController {
         $filename = $_GET ['oldfilename'];
         if ($_FILES ['modifyfile'] ['tmp_name']) {
             if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
-                    $_FILES ['modifyfile'] ['type'] != "audio/wav") {
-                $result = '文件格式不正确，应为MP3或WAV格式';
+                $_FILES ['modifyfile'] ['type'] != "audio/wav"  &&
+                $_FILES ['modifyfile'] ['type'] != "audio/x-wav"     ) {
+                $result = '文件格式不正确，应为MP3或WAV格式：';
             } else if ($_FILES ['modifyfile'] ['error'] > 0) {
                 $result = '文件上传失败';
             } else {

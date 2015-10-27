@@ -74,6 +74,7 @@
                 //console.log(time + "time");
                 var seconds = <?php if($isExam) echo $exerOne['time']; else echo '0';?>;
                 //console.log(seconds + "seconds");
+                if(time >= seconds && seconds !== 0){
                 if(seconds==0){}
                 else if(time >= seconds&&seconds!=0){
                     clearInterval(isover);
