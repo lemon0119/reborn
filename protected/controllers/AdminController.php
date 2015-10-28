@@ -2837,7 +2837,7 @@ class AdminController extends CController {
     public function actionAddCourse() {
         $result = 'no';
         if (isset($_POST ['courseName'])) {
-            $flag = 0;
+            $flag = 1;
             $courseNumber = $_POST['courseNumber'];
             $courseName = $_POST['courseName'];
             $allCourse = Course::model()->findAll();
