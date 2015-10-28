@@ -57,8 +57,8 @@
                     ?>
                 </select>
                 <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button>
-                <button id="share-Cam" class="btn btn-primary" style="margin-left: 200px">直播视频</button>
-                <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
+                <h style="margin-left: 330px;">在线<textarea id="ff" disabled="disabled"style="width:10px;height: 15px;background:transparent;border-style:none;"><?php echo $count?></textarea>人</h>
+                 
             </div>
         
             <div style="display:block;"></div>
@@ -101,6 +101,9 @@
                     ?>
                 </select>
                 <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
+                <button id="share-Cam" class="btn btn-primary" style="margin-left: 200px">直播视频</button>
+                <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
+                
             </div>
         
             <div id="scroll-page" style="display:inline;">
@@ -122,28 +125,28 @@
             </div>
     </div>
 
-    <div class="right">
-        <div>
-            <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>  
-            <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:220px; clear:both;">
-                <iframe src="./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
+    <div class="right"style="background-color: #3b3b3b;border: 0px" >
+        
+            <div align="center" id="sw-teacher-camera"><a href="#"><h4 style="color: white">教 师 视 频</h4></a></div>  
+            <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:220px; clear:both;">
+                <iframe src="./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>" name="iframe_b" style="background-color:#5e5e5e; width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
             </div>
-            <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
-            <div id="bulletin" class="bulletin" style="display:none">
+            <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
+            <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
 
-            <textarea id="bulletin-textarea" style="color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
+            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
             <button id="postnotice" name="发布公告" class="btn btn-primary" style="margin-left: 100px; margin-top: 5px;">发布公告</button>
 
             </div>
-            <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
-            <div id="chat-box">
-                <div id="chatroom" class="chatroom"></div>
-            <div class="sendfoot">
-                <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px;color:gray" oninput="this.style.color='black'">
+            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
+            <div id="chat-box" style="border: 0px">
+                <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
+            <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
+                <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
                 <a id="send-msg" ></a>
             </div>
             </div>
-        </div>
+        
     </div>
 <script>
 //全屏
@@ -222,6 +225,12 @@ $(document).ready(function(){
     setInterval(function() {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
         checkLeave();
     }, 5000);
+        
+    // ------------------------------------------------------ on line
+    setInterval(function() {
+        getBackTime();
+        //freshOnline();
+    }, 4000)
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -289,6 +298,24 @@ function checkLeave(){
          });
         return false;
 　　　}
+function getBackTime() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "index.php?r=api/GetStuOnLine&&classID=<?php echo $classID;?>",
+        success: function(data) {
+            console.log("qq",data);
+            var now=<?php echo time()?>;    //这个时间是页面进入的时候，生成的。
+            //虽然点击的时候，才会执行这个js代码，但是，php是加载的时候就已经生成了
+            //也就是说，等到用户点击，这个时间now的值，是加载页面的时间。
+            $("#ff").val(data);
+        },
+        error: function(xhr, type, exception){
+            console.log('get backtime erroe', type);
+            console.log(xhr, "Failed");
+        }
+    });
+}
 function pollChatRoom() {
     $.ajax({
         type: "GET",
