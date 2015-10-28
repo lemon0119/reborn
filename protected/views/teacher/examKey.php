@@ -1,4 +1,4 @@
-<div id="ziji">
+<div id="ziji" style="height:480px; overflow:auto;">
     <div class="hero-unit">
                 <?php if($ansWork['answer'] == "")
                     {

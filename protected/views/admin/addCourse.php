@@ -66,6 +66,9 @@ $("#myForm").submit(function(){
     }else if(classNumber > 100){
         window.wxc.xcConfirm('科目数超出上限', window.wxc.xcConfirm.typeEnum.info);
         return false;
+    }else if(classNumber < 0){
+        window.wxc.xcConfirm('至少有一节课', window.wxc.xcConfirm.typeEnum.info);
+        return false;
     }else if(classNumber === 0){
         window.wxc.xcConfirm('至少有一节课', window.wxc.xcConfirm.typeEnum.info);
         return false;

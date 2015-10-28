@@ -35,7 +35,7 @@ $(document).ready(function(){
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        window.wxc.xcConfirm('科目名不能为空', window.wxc.xcConfirm.typeEnum.confirm);
+        window.wxc.xcConfirm('科目名不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });
