@@ -89,7 +89,7 @@ class Notice extends CActiveRecord
             $criteria   =   new CDbCriteria();
             $result     =   Yii::app()->db->createCommand($sql)->query();
             $pages      =   new CPagination($result->rowCount);
-            $pages->pageSize    =   7; 
+            $pages->pageSize    =   5; 
             $pages->applyLimit($criteria); 
             $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
             $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 

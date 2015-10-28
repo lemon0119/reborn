@@ -40,6 +40,11 @@ $corr=$posts->read();
         ?>
         </tbody>
 </table>
+<div align=center>
+        <?php
+       $this->widget('CLinkPager', array('pages' => $pages));
+        ?>
+    </div>
     <div class="form-actions">
         <button type="submit" name="submit" class="btn btn-primary" value="提交">提交</button> <a href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" class="btn">返回</a>
     </div>

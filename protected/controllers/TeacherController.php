@@ -96,8 +96,8 @@ class TeacherController extends CController {
             $scoreGetKey = "listen" . $one['exerciseID'] . 'Score';
             $timeGetKey = "listen" . $one['exerciseID'] . 'Time';
             $score = $_POST[$scoreGetKey];
-            $time = $_POST[$timeGetKey];
-            if (!!$score) {
+            $time = $_POST[$timeGetKey] * 60;
+            if(!!$score){
                 $one->score = $score;
             }
             if (!!$time) {
@@ -110,8 +110,8 @@ class TeacherController extends CController {
             $scoreGetKey = "look" . $one['exerciseID'] . 'Score';
             $timeGetKey = "look" . $one['exerciseID'] . 'Time';
             $score = $_POST[$scoreGetKey];
-            $time = $_POST[$timeGetKey];
-            if (!!$score) {
+            $time = $_POST[$timeGetKey] * 60;
+            if(!!$score){
                 $one->score = $score;
             }
             if (!!$time) {
@@ -124,8 +124,8 @@ class TeacherController extends CController {
             $scoreGetKey = "key" . $one['exerciseID'] . 'Score';
             $timeGetKey = "key" . $one['exerciseID'] . 'Time';
             $score = $_POST[$scoreGetKey];
-            $time = $_POST[$timeGetKey];
-            if (!!$score) {
+            $time = $_POST[$timeGetKey] * 60;
+            if(!!$score){
                 $one->score = $score;
                 $one->time = $time;
                 $one->update();
@@ -1017,10 +1017,13 @@ class TeacherController extends CController {
         if (isset($_POST['title'])) {
             $title = $_POST['title'];
             $content = $_POST["content"];
-            if ($_FILES ['file'] ['type'] != "audio/mpeg" &&
-                    $_FILES ['file'] ['type'] != "audio/wav") {
-                $result = '文件格式不正确，应为MP3或WAV格式';
-            } else if ($_FILES['file']['error'] > 0) {
+            if($_FILES ['file'] ['type'] != "audio/mpeg" &&
+                $_FILES ['file'] ['type'] != "audio/wav" &&
+                $_FILES ['file'] ['type'] != "audio/x-wav"    )
+            {
+                $result = '文件格式不正确，应为MP3或WAV格式';            
+            }else if($_FILES['file']['error'] > 0)
+            {
                 $result = '文件上传失败';
             } else {
                 $oldName = $_FILES["file"]["name"];
@@ -1227,9 +1230,11 @@ class TeacherController extends CController {
         $filename = $_GET['oldfilename'];
         if ($_FILES['modifyfile']['tmp_name']) {
             if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
-                    $_FILES ['modifyfile'] ['type'] != "audio/wav") {
-                $result = '文件格式不正确，应为MP3或WAV格式';
-            } else if ($_FILES['modifyfile']['error'] > 0) {
+                $_FILES ['modifyfile'] ['type'] != "audio/wav"  &&
+                $_FILES ['modifyfile'] ['type'] != "audio/x-wav"  ) {
+                $result = '文件格式不正确，应为MP3或WAV格式';          
+            }else if($_FILES['modifyfile']['error'] > 0)
+            {    
                 $result = '文件上传失败';
             } else {
                 $newName = Tool::createID() . "." . pathinfo($_FILES["modifyfile"]["name"], PATHINFO_EXTENSION);
