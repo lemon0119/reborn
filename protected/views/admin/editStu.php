@@ -98,7 +98,7 @@ else
     });
 <?php
 if (isset($result)) {
-    echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";
+    echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.success);";
     unset($result);
 }
 ?>

@@ -225,8 +225,9 @@ a:hover,a:focus {
     float: right;
     right:30px;
     padding: 40px;
+    height: 590px;
+    overflow: auto;
     width:770px
-    
 }
 .span8 {
     width:620px
@@ -856,6 +857,8 @@ input[type="file"],input[type="image"],input[type="submit"],input[type="reset"],
     width:auto
 }
 select,input[type="file"] {
+    border-color: #000 !important;
+    color: #000 !important;
     height:30px;
     *margin-top:4px;
     line-height:30px
@@ -4793,8 +4796,19 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_stu/encyclopedia.png");
 }
 #suLu:hover{
-    padding: 28px 60px;
+    padding: 14x 60px;
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
+
+}
+#postnotice{
+    padding: 10px 190px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/btn_announcement.png");
+}
+#postnotice:hover{
+    padding: 10px 190px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/on_btn_announcement.png");
 
 }
 #stuBack{

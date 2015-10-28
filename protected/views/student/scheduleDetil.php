@@ -69,15 +69,15 @@
                                     foreach ($result as $v) {
                                         if (($v['sequence'] == $s) && ($v['day'] == $d)) {
                                             ?>
-                                        <td class="table_schedule" <?php 
-                                       echo 'onclick="changeClass('.$s .','.$d.');"';
-                                            ?> >
-                                            <span  title="<?php
+                                        <td title="<?php
                                         $array_v = explode("&&", $v['courseInfo']);
                                         foreach ($array_v as $value) {
                                             echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
                                         }
-                                        ?>"  ><?php
+                                        ?>" class="table_schedule cursor_pointer" <?php 
+                                       echo 'onclick="changeClass('.$s .','.$d.');"';
+                                            ?> >
+                                            <?php
                                         $array_v1 = explode("&&", $v['courseInfo']);
                                         foreach ($array_v1 as $value) {
                                             if (Tool::clength($value, 'utf-8')>8) {
@@ -86,14 +86,14 @@
                                                 echo $value . "<br/>";
                                             }
                                         }
-                                        ?></span></td>
+                                        ?></td>
                 <?php
                 $flag = 0;
             }
         }
         if ($flag == 1) {
             ?>
-                                    <td class="table_schedule" <?php 
+                                    <td class="table_schedule cursor_pointer" <?php 
                                        echo 'onclick="changeClass('.$s.','.$d.');"';
                                             ?>>
                                         <span style="color: #aaa9a9" title="-"  >-</span></td>

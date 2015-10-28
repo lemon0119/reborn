@@ -61,7 +61,7 @@
                         <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
                       
                         <td class="font-center"><?php echo $model['title']?></td>
-                        <td class="font-center"><?php  if(Tool::clength($model['content'])<=15)
+                        <td title="<?php  echo  str_replace("$",":",$model['content']);?>" class="font-center"><?php  if(Tool::clength($model['content'])<=15)
                                    echo  str_replace("$",":",$model['content']);
                                else
                                    echo str_replace("$",":",Tool::csubstr($model['content'], 0, 15)."...");

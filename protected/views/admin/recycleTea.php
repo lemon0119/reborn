@@ -31,12 +31,22 @@
                 <?php endforeach;?> 
             </tbody>
 </table>
+    <div align=center>
+        <?php
+       $this->widget('CLinkPager', array('pages' => $pages));
+        ?>
+    </div>
 </form>
 <!-- 学生列表结束 -->
 <!-- 右侧内容展示结束-->
 </div>
 
 <script>
+    $(document).ready(function(){
+       <?php if(isset($_POST['checkbox'])){ ?>
+           window.location.href="./index.php?r=admin/recycleTea";
+      <?php }?> 
+    });
 function check_all(obj,cName)
 {    
     var checkboxs = document.getElementsByName(cName); 

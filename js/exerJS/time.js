@@ -59,7 +59,7 @@ function changWordPS(){
         var timeAll = ss / 60 + mm + hh * 60;
     }
     var wps = Math.round(length / timeAll);
-    if(timeAll !== 0)
+    if(timeAll !== 0 && document.getElementById("wordps")!== null)
         document.getElementById("wordps").innerHTML = wps;
 }
 function getSeconds(){
@@ -91,6 +91,7 @@ function reloadTime(){
 	mm = 0;
 	ss = 0;
 	strTime = '00:00:00';
+if(document.getElementById('timej')!==null)
 	document.getElementById('timej').innerHTML = strTime;
 	clearInterval(timer);
 	startTime();

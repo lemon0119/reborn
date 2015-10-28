@@ -87,6 +87,10 @@ echo "<script>var role='$role';</script>";
 $(document).ready(function(){
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
+    //每5秒，发送一次时间
+    setInterval(function() {    
+        checkOnLine();
+    }, 8000);
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -168,6 +172,21 @@ function pollChatRoom() {
     });
 }
 
+function checkOnLine(){
+        $.ajax({
+             type: "GET",
+             dataType: "json",
+             url: "index.php?r=api/updateStuOnLine&&classID=<?php echo $classID;?>&&userid=<?php echo Yii::app()->session['userid_now']?>",
+             data: {},
+             success: function(){ console.log("set time");},
+                error: function(xhr, type, exception){
+                    console.log(xhr, "Failed");
+                    window.wxc.xcConfirm('出错了aa...', window.wxc.xcConfirm.typeEnum.error);
+                    
+                }
+         });
+        return false;
+　　　}
 function pollBulletin() {
     $.ajax({
         type: "GET",
