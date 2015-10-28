@@ -53,6 +53,15 @@ class apiController extends Controller {
         $command = $connection->createCommand($sql);
         echo $command->execute();
     }
+    public function actionUpdateStuOnLine(){
+        $classID = $_GET['classID'];
+        $backtime = date('y-m-d H:i:s',time());
+        $connection = Yii::app()->db;
+        $userID=(string) Yii::app()->request->getParam('userid');
+        $sql = "UPDATE student SET backTime='$backtime' WHERE userID='$userID'";
+        $command = $connection->createCommand($sql);
+        echo $command->execute();
+    }
 
     public function actionGetLatestBulletin() {
         $classID = $_GET['classID'];
@@ -73,6 +82,22 @@ class apiController extends Controller {
         $time = $dataReader->readAll();
         $time[0]['backTime']=strtotime($time[0]['backTime']);
         $this->renderJSON($time);
+    }
+    public function actionGetStuOnLine(){
+        $classID = $_GET['classID'];
+        $connection = Yii::app()->db;
+        $userID=array(Yii::app()->session['userid_now']);
+        $sql = "SELECT backTime FROM student";
+        $command = $connection->createCommand($sql);
+        $dataReader = $command->query();
+        $time = $dataReader->readAll();
+        $n=0;$b=0;
+        foreach ($time as $t) {
+            if(time()-strtotime($time[$b++]['backTime']) < 10){
+                $n++;
+            }
+        }
+        $this->renderJSON($n);
     }
     public function actionGetClassState(){
         $classID = $_GET['classID'];

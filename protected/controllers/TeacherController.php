@@ -13,14 +13,30 @@ class TeacherController extends CController {
     public $layout = '//layouts/teacherBar';
 
     public function actionVirtualClass() {
+        $cou=0;
         $classID = $_GET['classID'];
         $cls = TbClass::model()->findByPK($classID);
         $userID = Yii::app()->session['userid_now'];
         $backtime = date('y-m-d H:i:s', time());
         $cls->backTime = $backtime;
         $cls->update();
-        $userName = Teacher::model()->findByPK($userID)->userName;
-        return $this->render('virtualClass', ['userName' => $userName, 'classID' => $_GET['classID'], 'on' => $_GET['on']]);
+        $username = Teacher::model()->findByPK($userID)->userName;
+        
+        //在线student个数
+        $classID = $_GET['classID'];
+        $connection = Yii::app()->db;
+        $userID=array(Yii::app()->session['userid_now']);
+        $sql = "SELECT backTime FROM student";
+        $command = $connection->createCommand($sql);
+        $dataReader = $command->query();
+        $time = $dataReader->readAll();
+        $n=0;$b=0;
+        foreach ($time as $t) {
+            if(time()-strtotime($time[$b++]['backTime']) < 10){
+                $n++;
+            }
+        }
+        return $this->render('virtualClass', ['userName' => $username, 'classID' => $_GET['classID'], 'on' => $_GET['on'],'count'=>$n]);
     }
 
 //add by LC 2015-10-13
