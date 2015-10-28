@@ -4989,3 +4989,27 @@ table tr td{
     font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
 }
+#postnotice{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/btn_release.png");
+}
+#postnotice:hover{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_release.png");
+}
+#returner{
+    padding: 10px 37px;
+    background-image: url("../../img/UI_adm/btn_ret.png");
+}
+#returner:hover{
+    padding: 10px 37px;
+    background-image: url("../../img/UI_adm/on_btn_ret.png");
+}
+#change{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_save.png");
+}
+#change:hover{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_save.png");
+}

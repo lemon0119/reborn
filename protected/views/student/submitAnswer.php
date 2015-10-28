@@ -34,7 +34,7 @@
         lcs.doLCS();
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
         document.getElementById("id_correct").value = correct;
-        var time = getSeconds();
+        var time = getT();
         document.getElementById("id_cost").value = time;
         //console.log("answer = "+theString);
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){

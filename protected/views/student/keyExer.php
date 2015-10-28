@@ -8,9 +8,9 @@
     $type = 'key'; 
     if($isExam){
         $seconds = $exerOne['time'];
-        $hh = floor(($seconds) / 3600);
-        $mm = floor(($seconds) % 3600 / 60);
-        $ss = floor(($seconds) % 60);
+        $hh = floor(($seconds*60) / 3600);
+        $mm = floor(($seconds*60) % 3600 / 60);
+        $ss = floor(($seconds*60) % 60);
         $strTime = "";
         $strTime .= $hh < 10 ? "0".$hh : $hh;
         $strTime .= ":";
@@ -28,10 +28,12 @@
                 <tr>
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
-                        <td width = '250px'>总时间：<?php echo $strTime?></td>
-                    <?php }?>
-                    <td width = '250px'>计时：<span id="time">00:00:00</span></td>
+                        <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime?></span><input id="timej" type="hidden"/></td>
+                        <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                    <?php }else{?>
+                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                     <?php }?>
                 </tr>
         </table>
         <br/>
@@ -75,14 +77,16 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
+        
          alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
-        if(isExam){
-           
+        <?php if($isExam){?>
+            reloadTime2(<?php echo $exerOne['time'];?>,isExam);
             var isover = setInterval(function(){
                 var time = getSeconds();
                 var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;
-                if(seconds==0){}
-                else if(time >= seconds&&seconds!=0){
+               
+               if(time==0){
+                    alert("time is over");
                     clearInterval(isover);
                     doSubmit(true,function(){
                         window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['examsuiteID'];?>&&workID=<?php echo Yii::app()->session['examworkID']?>";
@@ -91,7 +95,7 @@
                 }
                 
             },1000);
-        }
+     <?php }?>
         startParse();
     });
     
