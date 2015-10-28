@@ -141,6 +141,14 @@ class apiController extends Controller {
         $command->execute();
 
     }
+    public function actionChangeNotice(){
+        $id=$_GET['id'];
+        $content = (string) Yii::app()->request->getParam('content');
+        $connection = Yii::app()->db;
+        $sql = "UPDATE notice SET content='$content' WHERE id='$id'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+    }
 
     public function actionGetTime(){
         echo time();

@@ -3107,16 +3107,19 @@ class AdminController extends CController {
      {
          $id = $_GET['id'];
          Notice::model()->deleteAll("id='$id'");
-         
          $result=Notice::model()->findNotice();
         $noticeRecord=$result ['noticeLst'];
         $pages = $result ['pages'];
        $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
      }
      public function ActionNoticeContent(){
+         $result=0;
+        if(isset($_GET['action'])&&$_GET['action']=='edit'){
+            $result=1;
+        }
        $id = $_GET['id'];
        $noticeRecord=Notice::model()->find("id= '$id'");
-       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord,'result'=>$result));
      }
 
     public function actionSchedule() {
