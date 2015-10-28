@@ -4796,8 +4796,19 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_stu/encyclopedia.png");
 }
 #suLu:hover{
-    padding: 28px 60px;
+    padding: 14x 60px;
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
+
+}
+#postnotice{
+    padding: 10px 190px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/btn_announcement.png");
+}
+#postnotice:hover{
+    padding: 10px 190px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/on_btn_announcement.png");
 
 }
 #stuBack{

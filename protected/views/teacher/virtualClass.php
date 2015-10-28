@@ -135,7 +135,8 @@
             <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
 
             <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
-            <button id="postnotice" name="发布公告" class="btn btn-primary" style="margin-left: 100px; margin-top: 5px;">发布公告</button>
+            <a id="postnotice"></a>
+            
 
             </div>
             <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
