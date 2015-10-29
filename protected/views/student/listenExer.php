@@ -69,6 +69,7 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     $(document).ready(function(){
         alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+        if(<?php echo $exerOne['time']?>!=0){
         <?php if($isExam){?>
             reloadTime2(<?php echo $exerOne['time'];?>,isExam);
             var isover = setInterval(function(){
@@ -77,7 +78,7 @@
                 var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;
                
         if(time==0){
-                    alert("time is over");
+                    alert("本题时间已到，不可答题！");
                     clearInterval(isover);
                    doSubmit(true,function(){
                         window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['examsuiteID'];?>&&workID=<?php echo Yii::app()->session['examworkID']?>";
@@ -85,6 +86,7 @@
                 }
             },1000);
       <?php }?>
+}
     });
     
     $(document).ready(function(){

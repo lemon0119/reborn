@@ -148,6 +148,16 @@ class apiController extends Controller {
         $sql = "UPDATE notice SET content='$content' WHERE id='$id'";
         $command = $connection->createCommand($sql);
         $command->execute();
+        
+        $connection = Yii::app()->db;
+        $sql = "UPDATE student SET noticestate='1'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        
+        $connection = Yii::app()->db;
+        $sql = "UPDATE teacher SET noticestate='1'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
     }
 
     public function actionGetTime(){
