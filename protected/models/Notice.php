@@ -98,6 +98,11 @@ class Notice extends CActiveRecord
 
             return ['noticeLst'=>$noticeLst,'pages'=>$pages,];
         }
+        public function delNotice($id){
+            $sql="delete from notice where id='$id'";
+            $result     =   Yii::app()->db->createCommand($sql)->query();
+            return $result;
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.

@@ -3105,6 +3105,16 @@ class AdminController extends CController {
    }
    public function ActionDeleteNotice()
      {
+       if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                Notice::model()->delNotice($v);
+            }
+            $result = Notice::model()->findNotice();
+            $noticeRecord = $result ['noticeLst'];
+            $pages = $result ['pages'];
+            $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+        }
          $id = $_GET['id'];
          Notice::model()->deleteAll("id='$id'");
          $result=Notice::model()->findNotice();
