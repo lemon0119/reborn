@@ -24,6 +24,11 @@
             <?php endforeach;?> 
         </tbody>
 </table>
+<div align=center>
+        <?php
+       $this->widget('CLinkPager', array('pages' => $pages));
+        ?>
+    </div>
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">提交</button> <a href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" class="btn">返回</a>
     </div>

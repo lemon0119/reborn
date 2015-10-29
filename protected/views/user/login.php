@@ -59,8 +59,8 @@
 			</div>
                         
             <div class="control-group">
-                 <div class="controls">
-                     <div class="input-icon left">
+                 <div  class="controls">
+                     <div  class="input-icon left">
                           <?php
                              $cookie = Yii::app()->request->getCookies();
                              if(!empty($cookie['usertypecookie']->value))

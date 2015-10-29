@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><i class="icon-align-left"></i> 课业列表</a></li>
+            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><i class="icon-align-left"></i> 课程列表</a></li>
         </ul>
     </div>
 </div>
@@ -28,14 +28,14 @@
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-    window.wxc.xcConfirm('添加课程成功！', window.wxc.xcConfirm.typeEnum.success);
+    window.wxc.xcConfirm('添加科目成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
-    window.wxc.xcConfirm('添加课程失败！', window.wxc.xcConfirm.typeEnum.error);
+    window.wxc.xcConfirm('添加科目失败！', window.wxc.xcConfirm.typeEnum.error);
 });    
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        window.wxc.xcConfirm('课程名不能为空', window.wxc.xcConfirm.typeEnum.confirm);
+        window.wxc.xcConfirm('科目名不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });

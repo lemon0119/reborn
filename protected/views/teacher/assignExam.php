@@ -8,16 +8,16 @@
             <?php foreach ($array_class as $class): ?>
                 <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>  
-            <form id="myForm" action="./index.php?r=teacher/AddExam" method="post" >  
+             
                 <li class="divider"></li>
                 <li class="nav-header">试卷标题</li>
                 <li style="margin-top:10px">
-                    <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value="" />
+                    <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value=""/>
                 </li>
                 <li style="margin-top:10px">
-                <button type="submit" class="btn btn-primary">创建试卷</button>
+                    <a href="#"onclick="chkIt()" id="bth_create"></a>
                 </li>
-            </form>
+             
         </ul>
     </div>
 
@@ -89,6 +89,13 @@
 
 
 <script>
+    $(document).ready(function(){
+        if(<?php echo $res;?>==1){
+            var txt=  "此试卷已经被创建！";
+	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+            document.getElementById("title").value="";
+        }
+    });
     function dele(examID, currentPage)
     {
         var option = {
@@ -101,14 +108,7 @@
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
     }
 
-    $("#myForm").submit(function(){
-        var title = $("#title")[0].value;
-        if (title == "")
-        {
-            window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
-            return false;
-        }
-    });
+   
 function openExam(examID,duration,begintime)
 {
      var duration=prompt("时长",duration);//将输入的内容赋给变量 name ，
@@ -125,14 +125,27 @@ function openExam(examID,duration,begintime)
 }
 function begin_now(examID,d,time,isOpen)
 {
-        var begin=time;
+    var begin=time;
         if(d==0){
             d=prompt("时长不能为0！！！",d);
         }
         if(confirm("你确定要立即开始？")){
             window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
         }
+}
    
+
+function chkIt(){
+    var usernameVal = document.getElementById("title").value;  
+    if(usernameVal==""){
+        window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
+            return false;
+    }
+    if(usernameVal.length > 30){ //一个汉字算一个字符  
+        window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.warning);
+        document.getElementById("title").value="";
+    }
+    window.location.href="./index.php?r=teacher/AddExam&&title="+usernameVal;
 }
 </script>
 

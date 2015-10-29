@@ -1,7 +1,7 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/accounting.js"></script>
-<div id="ziji">
+<div id="ziji" style="height:480px; overflow:auto;">
     <div class="hero-unit">
         
         <?php if($ansWork['answer'] == "")
@@ -17,13 +17,13 @@
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"><?php echo ($ansWork['answer']);?></div>
+                    <div id ="answer" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()"><?php echo ($ansWork['answer']);?></div>
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"><?php echo ($work['content']);?></div>
+                    <div id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"><?php echo ($work['content']);?></div>
                 </td>
             </tr>
         </table>
@@ -38,7 +38,7 @@
         echo "<script>var type = '$type';</script>"; 
     }
 ?>
-<script type="text/javascript">
+<script>
     $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
        if(<?php echo $isLast?> == 1)
@@ -117,26 +117,26 @@
         if(value1>totalscore){
             window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
         }else{
-        var user = {
-            recordID:recordID,
-            type:"look",
-            workID:"<?php echo $workID;?>",
-            studentID:"<?php echo $studentID;?>",
-            accomplish:"<?php echo $accomplish;?>",
-            examID:examID,
-            exerciseID:exerciseID,
-            score:$("#input")[0].value,
-            answerID:answerID
-        };
-      $.ajax({
-          type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
-          data:user,
-          dataType:"html",
-          success:function(html){     
-              $("#ziji").html(html);
-          }
-      });
+            var user = {
+                recordID:recordID,
+                type:"look",
+                workID:"<?php echo $workID;?>",
+                studentID:"<?php echo $studentID;?>",
+                accomplish:"<?php echo $accomplish;?>",
+                examID:examID,
+                exerciseID:exerciseID,
+                score:$("#input")[0].value,
+                answerID:answerID
+            };
+            $.ajax({
+                type:"POST",
+                url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
+                data:user,
+                dataType:"html",
+                success:function(html){     
+                    $("#ziji").html(html);
+                }
+            });
       }
     }
 

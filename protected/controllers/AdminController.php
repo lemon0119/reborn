@@ -62,8 +62,18 @@ class AdminController extends CController {
             $condition = $condition . "''";
             $rows = Student::model()->deleteAll("userID in ($condition)");
         }
+         if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM teacher WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $pages = $array_stuLst['pages'];
         $stuLst = Student::model()->findAll("is_delete = '1'");
         $this->render('recycleStu', array(
+            'pages' => $pages,
             'stuLst' => $stuLst,
             'rows' => $rows
         ));
@@ -98,8 +108,19 @@ class AdminController extends CController {
                 'is_delete' => '0'
                     ), "userID in ($condition)");
         }
+         if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM student WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $pages = $array_stuLst['pages'];
+        
         $stuLst = Student::model()->findAll("is_delete = '1'");
         $this->render('recycleStu', array(
+            'pages' => $pages,
             'stuLst' => $stuLst,
             'rows' => $rows
         ));
@@ -117,9 +138,19 @@ class AdminController extends CController {
     }
 
     public function actionRecycleStu() {
-        $stuLst = Student::model()->findAll("is_delete = '1'");
+        if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM student WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $stuLst = $array_stuLst['list'];
+        $pages = $array_stuLst['pages'];
         $this->render('recycleStu', array(
-            'stuLst' => $stuLst
+            'stuLst' => $stuLst,
+            'pages' => $pages
         ));
     }
 
@@ -326,7 +357,12 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } elseif ($data['sex'] === "") {
+                            } else if (!Tool::checkID($data ['uid'])) {
+                                $result = "学号须由数字、英文字母线组成！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data['sex'] === "") {
                                 $result = "性别不能为空";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -345,6 +381,13 @@ class AdminController extends CController {
                                 $result = "班级不存在";
                                 $fixed = "班级信息已置空";
                                 $data['className'] = "";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                array_push($array_success, $data);
+                            } else if (!Tool::checkMailAddress($data ['mail_address'])) {
+                                $result = "邮箱格式不正确";
+                                $fixed = "邮箱信息已置空";
+                                $data['mail_address'] = "";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
                                 array_push($array_success, $data);
@@ -506,7 +549,12 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } elseif ($data['sex'] === "") {
+                            } else if (!Tool::checkID($data ['uid'])) {
+                                $result = "工号须由数字、英文字母线组成！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data['sex'] === "") {
                                 $result = "性别不能为空";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -521,6 +569,13 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
+                            } else if (!Tool::checkMailAddress($data ['mail_address'])) {
+                                $result = "邮箱格式不正确";
+                                $fixed = "邮箱信息已置空";
+                                $data['mail_address'] = "";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                array_push($array_success, $data);
                             } else {
                                 array_push($array_success, $data);
                             }
@@ -1080,8 +1135,19 @@ class AdminController extends CController {
             TeacherClass::model()->deleteAll("teacherID in ($condition)");
             $rows = Teacher::model()->deleteAll("userID in ($condition)");
         }
+         if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM teacher WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $teaLst = $array_stuLst['list'];
+        $pages = $array_stuLst['pages'];
         $teaLst = Teacher::model()->findAll("is_delete = '1'");
         $this->render('recycleTea', array(
+            'pages' => $pages,
             'teaLst' => $teaLst,
             'rows' => $rows
         ));
@@ -1116,18 +1182,39 @@ class AdminController extends CController {
                 'is_delete' => '0'
                     ), "userID in ($condition)");
         }
+        if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM student WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $pages = $array_stuLst['pages'];
         $teaLst = Teacher::model()->findAll("is_delete = '1'");
         $this->render('recycleTea', array(
+            'pages'=>$pages,
             'teaLst' => $teaLst,
             'rows' => $rows
         ));
     }
 
     public function actionRecycleTea() {
-        $teaLst = Teacher::model()->findAll("is_delete = '1'");
+         if(isset($_GET ['page'])){
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        }else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+         Yii::app()->session ['lastUrl'] = "recyclestu";
+        $sql = "SELECT * FROM teacher WHERE is_delete = '1'";
+        $array_stuLst = Tool::pager($sql,10);
+        $teaLst = $array_stuLst['list'];
+        $pages = $array_stuLst['pages'];
         $this->render('recycleTea', array(
-            'teaLst' => $teaLst
+            'teaLst' => $teaLst,
+            'pages' => $pages
         ));
+        
     }
 
     public function actionClassLst() {
@@ -1251,18 +1338,17 @@ class AdminController extends CController {
     public function actionAddClass() {
         $result = 'no';
         if (isset($_POST ['className'])) {
-            $className  = $_POST ['className'];
-            $classes    = TbClass::model()->findAll("className = '$className'");
-            if(count($classes) > 0)
-            {
-                $result     = 2;
-            }else{
-                $classID    = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
-                $lessons    = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
+            $className = $_POST ['className'];
+            $classes = TbClass::model()->findAll("className = '$className'");
+            if (count($classes) > 0) {
+                $result = 2;
+            } else {
+                $classID = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
+                $lessons = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
                 foreach ($lessons as $lesson) {
                     Lesson::model()->insertLesson($lesson['lessonName'], $lesson['courseID'], 0, $classID);
                 }
-                $result     = 1;
+                $result = 1;
             }
         }
         $this->render('addClass', [
@@ -1320,14 +1406,16 @@ class AdminController extends CController {
         $curLesson = $class ['currentLesson'];
 
         $sql = "SELECT * FROM student WHERE classID = '$classID' AND is_delete = 0";
-        $criteria = new CDbCriteria ();
-        $stus = Yii::app()->db->createCommand($sql)->query();
+        $array_stuLst = Tool::pager($sql,4);
+        $stus = $array_stuLst['list'];
         $nums = $stus->rowCount;
-
+        $pages_stu = $array_stuLst['pages'];
+        
         $sql = "SELECT * FROM teacher_class WHERE classID =$classID";
         $teacherOfClass = Yii::app()->db->createCommand($sql)->query();
 
         $this->render('infoCLass', array(
+            'pages_stu' =>$pages_stu,
             'classID' => $classID,
             'className' => $className,
             'curCourse' => $curCourse,
@@ -1342,10 +1430,14 @@ class AdminController extends CController {
 
     public function actionAddStuClass() {
         $sql = "SELECT * FROM student WHERE classID = '0' AND is_delete = 0";
-        $result = Yii::app()->db->createCommand($sql)->query();
+        $array_class = Tool::pager($sql, 10);
+        $result = $array_class['list'];
+        $pages = $array_class['pages'];
+        
         $this->render('addStuClass', array(
             'classID' => $_GET ["classID"],
-            'posts' => $result
+            'posts' => $result,
+            'pages' =>$pages,
                 )
         );
     }
@@ -1353,11 +1445,16 @@ class AdminController extends CController {
     public function actionAddTeaClass() {
         $classID = $_GET ["classID"];
         $sql = "SELECT teacherID FROM teacher_class WHERE classID = '$classID'  order by teacherID ASC";
+        $sqltea="SELECT * FROM teacher order by userID ASC";
+        $array_tea = Tool::pager($sqltea, 10);
+        $teacher = $array_tea['list'];
+        $pages = $array_tea['pages'];
         $result = Yii::app()->db->createCommand($sql)->query();
         $this->render('addTeaClass', array(
+            'pages'=>$pages,
             'classID' => $classID,
             'posts' => $result,
-            'teachers' => TbClass::model()->teaInClass()
+            'teachers' => $teacher,
                 )
         );
     }
@@ -1832,7 +1929,8 @@ class AdminController extends CController {
             $title = $_POST ['title'];
             $content = $_POST ['content'];
             if ($_FILES ['file'] ['type'] != "audio/mpeg" &&
-                    $_FILES ['file'] ['type'] != "audio/wav") {
+                $_FILES ['file'] ['type'] != "audio/wav"  &&
+                $_FILES ['file'] ['type'] != "audio/x-wav"    ) {
                 $result = '文件格式不正确，应为MP3或WAV格式';
             } else if ($_FILES ['file'] ['error'] > 0) {
                 $result = '文件上传失败';
@@ -1991,8 +2089,9 @@ class AdminController extends CController {
         $filename = $_GET ['oldfilename'];
         if ($_FILES ['modifyfile'] ['tmp_name']) {
             if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
-                    $_FILES ['modifyfile'] ['type'] != "audio/wav") {
-                $result = '文件格式不正确，应为MP3或WAV格式';
+                $_FILES ['modifyfile'] ['type'] != "audio/wav"  &&
+                $_FILES ['modifyfile'] ['type'] != "audio/x-wav"     ) {
+                $result = '文件格式不正确，应为MP3或WAV格式：';
             } else if ($_FILES ['modifyfile'] ['error'] > 0) {
                 $result = '文件上传失败';
             } else {
@@ -2628,7 +2727,6 @@ class AdminController extends CController {
         }
         $result = '';
         $courseID = $_GET['courseID'];
-        if (!isset(Yii::app()->session ['delCourseID']) || (Yii::app()->session ['delCourseID'] != $courseID)) {
             $classes = TbClass::model()->findall("currentCourse = $courseID");
             if (count($classes) > 0) {
                 $result = 0;
@@ -2637,15 +2735,28 @@ class AdminController extends CController {
                 $rows = Lesson::model()->deleteAll('courseID=?', array($courseID));
                 $result = 1;
             }
-            Yii::app()->session ['delCourseID'] = $courseID;
+         $result_forNumber = Course::model()->getCourseLst("", "");
+        $courseLst_forNumber = $result_forNumber ['courseLst'];
+        $array_maxNumber = array();
+        foreach ($courseLst_forNumber as $v){
+            $number = 0;
+            $courseID = $v['courseID'];
+            $lesson = Lesson::model()->findAll("courseID = '$courseID'");
+            if(empty($lesson)){
+            }else{
+                foreach ($lesson as $value){
+                    $number++;
+                }
+            }
+            array_push($array_maxNumber,$number);
         }
-
         $courses = Course::model()->getCourseLst("", "");
         $courseLst = $courses ['courseLst'];
         $pages = $courses ['pages'];
 
         $this->render('courseLst', array(
             'courseLst' => $courseLst,
+            'courseNumber' =>$array_maxNumber,
             'pages' => $pages,
             'teacher' => Teacher::model()->findall(),
             'result' => $result
@@ -2660,10 +2771,26 @@ class AdminController extends CController {
         }
         $result = Course::model()->getCourseLst("", "");
         $courseLst = $result ['courseLst'];
+        $result_forNumber = Course::model()->getCourseLst("", "");
+        $courseLst_forNumber = $result_forNumber ['courseLst'];
+        $array_maxNumber = array();
+        foreach ($courseLst_forNumber as $v){
+            $number = 0;
+            $courseID = $v['courseID'];
+            $lesson = Lesson::model()->findAll("courseID = '$courseID'");
+            if(empty($lesson)){
+            }else{
+                foreach ($lesson as $value){
+                    $number++;
+                }
+            }
+            array_push($array_maxNumber,$number);
+        }
         $pages = $result ['pages'];
         Yii::app()->session ['lastUrl'] = "courseLst";
         $this->render('courseLst', array(
             'courseLst' => $courseLst,
+            'courseNumber' =>$array_maxNumber,
             'pages' => $pages,
             'teacher' => Teacher::model()->findall(),
             'result' => ''
@@ -2710,21 +2837,83 @@ class AdminController extends CController {
     public function actionAddCourse() {
         $result = 'no';
         if (isset($_POST ['courseName'])) {
-            $result = Course::model()->insertCourse($_POST ['courseName'], 0);
+            $flag = 1;
+            $courseNumber = $_POST['courseNumber'];
+            $courseName = $_POST['courseName'];
+            $allCourse = Course::model()->findAll();
+            foreach ($allCourse as $v){
+                if($v['courseName']==$courseName){
+                    $result = 'have_same_course';
+                    $flag = 0;
+                    break;
+                }
+                $flag = 1;
+            }
+            if($flag==1){
+                 $result = Course::model()->insertCourse($_POST ['courseName'], 0);
+            }
+            if ($result == 1) {
+                $sql = "SELECT MAX(courseID) AS id FROM course";
+                $max_id = Yii::app()->db->createCommand($sql)->query()->read();
+                $courseID = $max_id['id'];
+                $classes = TbClass::model()->findall("currentCourse = '$courseID'");
+                if (empty($classes)) {
+                    for ($i = 1; $i < ($courseNumber + 1); $i++) {
+                        $result = Lesson::model()->insertLesson( "第".$i."课", $courseID, 0, 0);
+                    }
+                } else {
+                    for ($i = 1; $i < ($courseNumber + 1); $i++) {
+                        foreach ($classes as $class) {
+                            $result = Lesson::model()->insertLesson( "第".$i."课", $courseID, 0, $class['classID']);
+                        }
+                    }
+                }
+            }
+            $this->render('addCourse', [
+                    'result' => $result
+                ]);
+        } else {
+            $this->render('addCourse', [
+                'result' => $result
+            ]);
         }
-        $this->render('addCourse', [
-            'result' => $result
-        ]);
     }
 
     public function actionInfoCourse() {
+        $deleteResult = 'no';
         $courseID = $_GET ['courseID'];
+       
+        if(isset($_GET['delete'])){
+            //删
+            $lessonName = $_GET['lessonName'];
+            $deleteResult = Lesson::model()->deleteAll("courseID = '$courseID' and lessonName = '$lessonName'");
+            $allLesson = Lesson::model()->findAll("courseID = '$courseID'");
+            $count=1;
+            foreach ($allLesson as $v){
+                $ln = $v["lessonName"];
+                $sql = "UPDATE `lesson` SET `number`= '$count' WHERE lessonName = '$ln'";
+                Yii::app()->db->createCommand($sql)->query();
+                $count++;
+            }
+            
+        }else if (isset ($_GET['newName'])) {
+            //改
+            $lessonName = $_GET['lessonName'];
+            $newName = $_GET['newName'];
+            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
+            Yii::app()->db->createCommand($sql)->query();
+        }
         $courseName = $_GET ['courseName'];
         $createPerson = $_GET ['createPerson'];
+        Yii::app()->session['courseID'] = $courseID;
+        Yii::app()->session['courseName'] = $courseName;
+        Yii::app()->session['createPerson'] = $createPerson;
         $result = Lesson::model()->getLessonLst("", "", $courseID);
         $lessonLst = $result ['lessonLst'];
         $pages = $result ['pages'];
+        
         $this->render('infoCourse', array(
+            'deleteResult'=>$deleteResult,
             'courseID' => $courseID,
             'courseName' => $courseName,
             'createPerson' => $createPerson,
@@ -2804,28 +2993,27 @@ class AdminController extends CController {
     }
 
     public function actionDeletePpt() {
-        $fileName   = $_GET['ppt'];
-        $dir        = $_GET['pdir'];
-        $result     = 0;               //不显示提示
-        if(!isset(Yii::app()->session['ppt2del']) ||
-            Yii::app()->session['ppt2del'] != $fileName)
-        {
-            Yii::app()->session['ppt2del'] = $fileName;  
+        $fileName = $_GET['ppt'];
+        $dir = $_GET['pdir'];
+        $result = 0;               //不显示提示
+        if (!isset(Yii::app()->session['ppt2del']) ||
+                Yii::app()->session['ppt2del'] != $fileName) {
+            Yii::app()->session['ppt2del'] = $fileName;
             $file = $dir . $fileName;
             if (file_exists(iconv('utf-8', 'gb2312', $file)))
                 unlink(iconv('utf-8', 'gb2312', $file));
             Resourse::model()->delName($fileName);
             $result = "删除成功！";
         }
-        $courseID       = Yii::app()->session['courseID']  ;
-        $courseName     = Yii::app()->session['courseName']  ;
-        $createPerson   = Yii::app()->session['createPerson'] ;
+        $courseID = Yii::app()->session['courseID'];
+        $courseName = Yii::app()->session['courseName'];
+        $createPerson = Yii::app()->session['createPerson'];
         $this->render("pptLst", array(
-            'courseID'      => $courseID,
-            'courseName'    => $courseName,
-            'createPerson'  => $createPerson,
-            'pdir'          => $dir,
-            'result'        => $result,
+            'courseID' => $courseID,
+            'courseName' => $courseName,
+            'createPerson' => $createPerson,
+            'pdir' => $dir,
+            'result' => $result,
         ));
     }
 
@@ -2909,58 +3097,190 @@ class AdminController extends CController {
         ]);
     }
 
+    public function actionNoticeLst() {
+        $result = Notice::model()->findNotice();
+        $noticeRecord = $result ['noticeLst'];
+        $pages = $result ['pages'];
+       $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+   }
+   public function ActionDeleteNotice()
+     {
+         $id = $_GET['id'];
+         Notice::model()->deleteAll("id='$id'");
+         $result=Notice::model()->findNotice();
+        $noticeRecord=$result ['noticeLst'];
+        $pages = $result ['pages'];
+       $this->render('noticeLst',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
+     }
+     public function ActionNoticeContent(){
+         $result=0;
+        if(isset($_GET['action'])&&$_GET['action']=='edit'){
+            $result=1;
+        }
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord,'result'=>$result));
+     }
+
     public function actionSchedule() {
-        if(isset($_POST['which'])){
+        if (isset($_POST['which'])) {
             $type = $_POST['which'];
             $value = $_POST['value'];
-            if($type=="className"){
-               $class = TbClass::model()->findAll("className='$value'"); 
-               if(empty($class)||$value==""){
-                   return $this->render('schedule',['noResult'=>'1']);
-               }else{
-                   $class_course = array();
-                   foreach ($class as $v){
-                       $courseID = $v['currentCourse'];
-                       $sqlCourse = Course::model()->find("courseID='$courseID'");
-                       $class_v = array("classID"=>$v['classID'],"className"=>$v['className'],"currentCourse"=>$v['currentCourse'],"currentLesson"=>$v['currentLesson'],"courseName"=>$sqlCourse['courseName']);
-                       array_push($class_course, $class_v);
-                   }
-                   return $this->render('schedule',['class_search'=>$class_course]);
-               }
-            }else if($type=="teaName"){
+            if ($type == "className") {
+                $class = TbClass::model()->findAll("className='$value'");
+                if (empty($class) || $value == "") {
+                    return $this->render('schedule', ['noResult' => '1']);
+                } else {
+                    $class_course = array();
+                    foreach ($class as $v) {
+                        $courseID = $v['currentCourse'];
+                        $sqlCourse = Course::model()->find("courseID='$courseID'");
+                        $class_v = array("classID" => $v['classID'], "className" => $v['className'], "currentCourse" => $v['currentCourse'], "currentLesson" => $v['currentLesson'], "courseName" => $sqlCourse['courseName']);
+                        array_push($class_course, $class_v);
+                    }
+                    return $this->render('schedule', ['class_search' => $class_course]);
+                }
+            } else if ($type == "teaName") {
                 $teacher = Teacher::model()->findAll("userName = '$value'");
-                if(empty($teacher)||$value==""){
-                    return $this->render('schedule',['noResult'=>'1']);
-                }else{
-                    return $this->render('schedule',['teacher_search'=>$teacher]); 
+                if (empty($teacher) || $value == "") {
+                    return $this->render('schedule', ['noResult' => '1']);
+                } else {
+                    return $this->render('schedule', ['teacher_search' => $teacher]);
                 }
             }
         }
+
+
+        $classsql = "SELECT * FROM tb_class";
+        $array_classLst = Tool::pager($classsql,10);
+        $class = $array_classLst['list'];
+        $classPages = $array_classLst['pages'];
         
-        
-        $class = TbClass::model()->findAll(""); 
         $class_course = array();
-                   foreach ($class as $v){
-                       $courseID = $v['currentCourse'];
-                       $sqlCourse = Course::model()->find("courseID='$courseID'");
-                       $class_v = array("classID"=>$v['classID'],"className"=>$v['className'],"currentCourse"=>$v['currentCourse'],"currentLesson"=>$v['currentLesson'],"courseName"=>$sqlCourse['courseName']);
-                       array_push($class_course, $class_v);
-                   }
-        $teacher = Teacher::model()->findAll("");
-         return $this->render('schedule',['teacher'=>$teacher,'class'=>$class_course]);
+        foreach ($class as $v) {
+            $courseID = $v['currentCourse'];
+            $sqlCourse = Course::model()->find("courseID='$courseID'");
+            $class_v = array("classID" => $v['classID'], "className" => $v['className'], "currentCourse" => $v['currentCourse'], "currentLesson" => $v['currentLesson'], "courseName" => $sqlCourse['courseName']);
+            array_push($class_course, $class_v);
+        }
+        $teasql = "SELECT * FROM teacher WHERE is_delete = '0'";
+        $array_teaLst = Tool::pager($teasql,10);
+        $teaLst = $array_teaLst['list'];
+        $teaPages = $array_teaLst['pages'];
         
+        return $this->render('schedule', ['class_pages'=>$classPages,'tea_pages'=>$teaPages,'teacher' => $teaLst, 'class' => $class_course]);
     }
-    
-    public function actionScheduleDetil(){
-        if(isset($_GET['teacherId'])){
+
+    public function actionScheduleDetil() {
+        if (isset($_GET['teacherId'])) {
+            unset($_GET['classId']);
+            Yii::app()->session['teacherId'] = $_GET['teacherId'];
             $userID = $_GET['teacherId'];
             $sqlTeacher = Teacher::model()->find("userID = '$userID'");
-             return $this->render('scheduleDetil',['teacher'=>$sqlTeacher]);
+            //查询老师课程表
+            $teaResult = ScheduleTeacher::model()->findAll("userID='$userID'");
+            return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult]);
+        } else if (isset($_GET['classId'])) {
+            unset($_GET['teacherId']);
+            Yii::app()->session['classId'] = $_GET['classId'];
+            $classID = $_GET['classId'];
+            $sqlClass = TbClass::model()->find("classID='$classID'");
+            $classResult = ScheduleClass::model()->findAll("classID='$classID'");
+            return $this->render('scheduleDetil', ['class' => $sqlClass, 'result' => $classResult]);
         }
-        return $this->render('scheduleDetil');
     }
 
+    public function actionEditSchedule() {
+        $sequence = $_GET['sequence'];
+        $day = $_GET['day'];
 
+        if (isset($_GET['teacherID'])) {
+            $teacherID = Yii::app()->session['teacherId'];
+            $sql = "SELECT * FROM schedule_teacher WHERE userID = '$teacherID' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+
+            if ($sqlSchedule == "") {
+                //增
+                $courseInfo = "";
+                if (isset($_POST['in1']) && !$_POST['in1'] == "") {
+                    $courseInfo = $_POST['in1'];
+                }
+                if (isset($_POST['in2']) && !$_POST['in2'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['in2'];
+                }
+                if (isset($_POST['in3']) && !$_POST['in3'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['in3'];
+                }
+                if ($courseInfo != "") {
+                    $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            } else {
+                //改
+                $courseInfo = "";
+                if (isset($_POST['in1']) && !$_POST['in1'] == "") {
+                    $courseInfo = $_POST['in1'];
+                }
+                if (isset($_POST['in2']) && !$_POST['in2'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['in2'];
+                }
+                if (isset($_POST['in3']) && !$_POST['in3'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['in3'];
+                }
+                if ($courseInfo == "") {
+                    //删
+                    $sql = "DELETE FROM `schedule_teacher` WHERE userID ='$teacherID' and sequence =$sequence and day = $day";
+                    Yii::app()->db->createCommand($sql)->query();
+                } else {
+                    $sql = "UPDATE `schedule_teacher` SET courseInfo ='$courseInfo' WHERE userID ='$teacherID' and sequence =$sequence and day = $day";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            }
+        } else if (isset($_GET['classID'])) {
+            $classID = $_GET['classID'];
+            $teacherID = Yii::app()->session['classId'];
+            $sql = "SELECT * FROM schedule_class WHERE classID = '$classID' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+            if ($sqlSchedule == "") {
+                //增
+                $courseInfo = "";
+                if (isset($_POST['in1']) && !$_POST['in1'] == "") {
+                    $courseInfo = $_POST['in1'];
+                }
+                if (isset($_POST['in2']) && !$_POST['in2'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['in2'];
+                }
+                if (isset($_POST['in3']) && !$_POST['in3'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['in3'];
+                }
+                if ($courseInfo != "") {
+                    $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            } else {
+                //改
+                $courseInfo = "";
+                if (isset($_POST['in1']) && !$_POST['in1'] == "") {
+                    $courseInfo = $_POST['in1'];
+                }
+                if (isset($_POST['in2']) && !$_POST['in2'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['in2'];
+                }
+                if (isset($_POST['in3']) && !$_POST['in3'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['in3'];
+                }
+                if ($courseInfo == "") {
+                    //删
+                    $sql = "DELETE FROM `schedule_class` WHERE classID ='$classID' and sequence =$sequence and day = $day";
+                    Yii::app()->db->createCommand($sql)->query();
+                } else {
+                    $sql = "UPDATE `schedule_class` SET courseInfo ='$courseInfo' WHERE classID ='$classID' and sequence =$sequence and day = $day";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            }
+        }
+        return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
+    }
 
     // Uncomment the following methods and override them if needed
     /*

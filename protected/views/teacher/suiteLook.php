@@ -27,9 +27,6 @@
                 </td>
             </tr>
         </table>
-    </div>
-<button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $suite_exercise['suiteID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button> 
-</div>
 <?php
     if(isset(Yii::app()->session['type'])){
         $type = Yii::app()->session['type'];

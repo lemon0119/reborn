@@ -250,4 +250,55 @@ class Tool {
         return false;
     }
 
+    //检查学生公告状态
+public static function stuNotice(){
+    $userId= Yii::app()->session['userid_now'];
+    $noticeState = Student::model()->findByPK($userId)->noticestate;
+    return $noticeState;
+}
+ //检查老师公告状态
+public static function teacherNotice(){
+    $userId= Yii::app()->session['userid_now'];
+    $noticeState = Teacher::model()->findByPK($userId)->noticestate;
+    return $noticeState;
+}
+    /**
+     * 验证邮箱格式是否正确
+     * return true 正确; false 不正确
+     */
+    public static function checkMailAddress($email){
+        $regex = '/^[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[-_a-z0-9][-_a-z0-9]*\.)*(?:[a-z0-9][-a-z0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/i';
+        if (preg_match($regex, $email)) {
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+    /**
+     * 验证ID格式是否正确
+     * return true 正确; false 不正确
+     */
+    public static function checkID($ID){
+        $regex = '/^[A-Za-z0-9]+$/';
+        if (preg_match($regex, $ID)) {
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+    
+    //分页工具，$sql为SQL  返回值list为查询内容，$pages为分页结果
+    
+    public static function pager($sql,$pagesize){
+        $criteria=new CDbCriteria();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages= new CPagination($result->rowCount);
+        $pages->pageSize=$pagesize; 
+        $pages->applyLimit($criteria); 
+        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $list=$result->query();
+        return ['list'=>$list,'pages'=>$pages,];
+    }
 }

@@ -6,7 +6,7 @@
             <li>
                 <select name="type" >
                     <option value="exerciseID" selected="selected">编号</option>
-                    <option value="courseID" >课程号</option>
+                    <option value="courseID" >科目号</option>
                     <option value="createPerson" >创建人</option>
                     <option value="title">题目名</option>
                     <option value="content">内容</option>
@@ -59,6 +59,7 @@
             <label class="control-label" for="input02">内容</label>
             <div class="controls">               
                 <textarea name="content" style="width:450px; height:200px;"><?php echo $content; ?></textarea>
+                <br>字数：<span id="wordCount">0</span> 字
             </div>
         </div> 
         <div class="form-actions">
@@ -74,6 +75,8 @@
 $(document).ready(function(){
     <?php if(isset($result))
             echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
+                    var v=<?php echo Tool::clength($content);?>;
+    $("#wordCount").text(v);
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;

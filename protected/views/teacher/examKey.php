@@ -1,4 +1,4 @@
-<div id="ziji">
+<div id="ziji" style="height:480px; overflow:auto;">
     <div class="hero-unit">
                 <?php if($ansWork['answer'] == "")
                     {
@@ -51,7 +51,7 @@
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
+          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
           data:user,
           dataType:"html",
           success:function(html){     

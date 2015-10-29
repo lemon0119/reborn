@@ -1,68 +1,155 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-        <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
-        <form action="./index.php?r=admin/schedule" method="post">
-            <li>
-                <select name="which" >
+            <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
+            <form action="./index.php?r=admin/schedule" method="post">
+                <li>
+                    <select name="which" >
                         <option value="className" selected="selected" >班级名</option>
                         <option value="teaName" >老师</option>
-                </select>
-            </li>
-            <li>
-                <input name="value" type="text" class="search-query span2" placeholder="Search" />
-            </li>
-            <li style="margin-top:10px">
-                <button type="submit"class="btn_bigserch"></button>
-            </li>
-        </form>
+                    </select>
+                </li>
+                <li>
+                    <input name="value" type="text" class="search-query span2" placeholder="Search" />
+                </li>
+                <li style="margin-top:10px">
+                    <button type="submit"class="btn_bigserch"></button>
+                </li>
+            </form>
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage"></i>查看</li>
-            <li <?php if(isset($_GET['type'])){}else{    echo 'class="active"';} ?> id="stuLst"><a href="./index.php?r=admin/schedule"><i class="icon-list-alt"></i> 老师列表</a></li>
-            <li <?php if(isset($_GET['type'])){  echo 'class="active"';}else{ } ?> id="classLst"><a href="./index.php?r=admin/schedule&&type=class"><i class="icon-list-alt"></i> 班级列表</a></li>
+            <li class="nav-header"><i class="icon-knowlage"></i>操作</li>
+            <li class="active"  ><a <?php
+                if (isset($_GET['teacherId'])) {
+                    echo 'href="./index.php?r=admin/schedule"';
+                } else {
+                    echo 'href="./index.php?r=admin/schedule&&type=class"';
+                }
+                ?>><i class="icon-list-alt"></i> 返回上级</a></li>
         </ul>
     </div>
 </div>
 <div class="span9">
-    <h3><font style="color: #f46500"><?php echo $teacher['userName'];?></font>&nbsp;&nbsp;老师的课程安排</h3>
-    <br/>
-    <form>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th class="font-center" style="width: 40px"></th>
-                    <th class="font-center" style="width: 40px"></th>
-                    <th class="font-center">星期一</th>
-                    <th class="font-center">星期二</th>
-                    <th class="font-center">星期三</th>
-                    <th class="font-center">星期四</th>
-                    <th class="font-center">星期五</th>
-                    <th class="font-center">星期六</th>
-                    <th class="font-center">星期日</th>
-                </tr>
-                <tr>
-                    <th rowspan="2" class="font-center" >上午</th>
-                    <th class="font-center">一</th>
-                </tr>
-                <tr>
-                    <th class="font-center">二</th>
-                </tr>
-                <tr>
-                    <th rowspan="2" class="font-center" >下午</th>
-                    <th class="font-center">三</th>
-                </tr>
-                <tr>
-                    <th class="font-center">四</th>
-                </tr>
-                <tr>
-                    <th rowspan="2" class="font-center" >晚上</th>
-                    <th class="font-center">五</th>
-                </tr>
-                <tr>
-                    <th class="font-center">六</th>
-                </tr>
-            </thead>
-            
-        </table>
-    </form>
+        <?php if (isset($_GET['teacherId'])) { ?>
+        <h3><font style="color: #f46500"><?php echo $teacher['userName']; ?></font>&nbsp;&nbsp;老师的科目安排</h3>
+        <br/>
+            <?php } else { ?>
+            <h3><font style="color: #f46500"><?php echo $class['className']; ?></font>&nbsp;&nbsp;的科目安排</h3>
+            <br/>
+<?php } ?>
+            <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（鼠标悬浮显示详细信息）</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="width: 40px"></td >
+                        <td style="width: 100px" ><span style="font-weight: bolder">星期一</span></td >
+                        <td style="width: 100px"><span style="font-weight: bolder">星期二</span></td >
+                        <td  style="width: 100px"><span style="font-weight: bolder">星期三</span></td >
+                        <td  style="width: 100px"><span style="font-weight: bolder">星期四</span></td >
+                        <td  style="width: 100px"><span style="font-weight: bolder">星期五</span></td >
+                        <td  style="width: 100px"><span style="font-weight: bolder">星期六</span></td >
+                        <td  style="width: 100px" ><span style="font-weight: bolder">星期日</span></td >
+                    </tr>
+                </thead>
+                <tbody>
+                        <?php for ($s = 1; $s < 11; $s++) { ?>
+                        <tr >
+                            <?php
+                            switch ($s) {
+                                case 1: echo '<td  rowspan="4">';
+                                    break;
+                                case 5:echo '<td rowspan="4">';
+                                    break;
+                                case 9:echo '<td rowspan="4">';
+                                    break;
+                            }
+                            ?><?php
+                            switch ($s) {
+                                case 1: echo '<span style="font-weight: bolder">上午</span>';
+                                    break;
+                                case 5:echo '<span style="font-weight: bolder">下午</span>';
+                                    break;
+                                case 9:echo '<span style="font-weight: bolder">晚上</span>';
+                                    break;
+                            }
+                            ?></td>
+                            <td style="height: 62px" ><?php
+                                switch ($s) {
+                                    case 1: echo '<span style="font-weight: bolder">一</span>';
+                                        break;
+                                    case 2: echo '<span style="font-weight: bolder">二</span>';
+                                        break;
+                                    case 3: echo '<span style="font-weight: bolder">三</span>';
+                                        break;
+                                    case 4: echo '<span style="font-weight: bolder">四</span>';
+                                        break;
+                                    case 5: echo '<span style="font-weight: bolder">五</span>';
+                                        break;
+                                    case 6: echo '<span style="font-weight: bolder">六</span>';
+                                        break;
+                                    case 7: echo '<span style="font-weight: bolder">七</span>';
+                                        break;
+                                    case 8: echo '<span style="font-weight: bolder">八</span>';
+                                        break;
+                                    case 9: echo '<span style="font-weight: bolder">九</span>';
+                                        break;
+                                    case 10: echo '<span style="font-weight: bolder">十</span>';
+                                        break;
+                                }
+                                ?></td>
+                                <?php
+                                for ($d = 1; $d < 8; $d++) {
+                                    $flag = 1;
+                                    foreach ($result as $v) {
+                                        if (($v['sequence'] == $s) && ($v['day'] == $d)) {
+                                            ?>
+                            <td class="table_schedule" <?php if (isset($_GET['teacherId'])) {
+                                       echo 'onclick="change('.$s .','.$d.');"';
+                                   }else{
+                                       echo 'onclick="changeClass('.$s.','.$d.');"';
+                                   }
+                                            ?> >
+                                            <span title="<?php
+                                        $array_v = explode("&&", $v['courseInfo']);
+                                        foreach ($array_v as $value) {
+                                            echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
+                                        }
+                                        ?>"  ><?php
+                                        $array_v1 = explode("&&", $v['courseInfo']);
+                                        foreach ($array_v1 as $value) {
+                                            if (Tool::clength($value, 'utf-8')>5) {
+                                                echo Tool::csubstr($value, 0, 4, 'UTF-8') . "...<br/>";
+                                            } else {
+                                                echo $value . "<br/>";
+                                            }
+                                        }
+                                        ?></span></td>
+                <?php
+                $flag = 0;
+            }
+        }
+        if ($flag == 1) {
+            ?>
+                                    <td class="table_schedule" <?php if (isset($_GET['teacherId'])) {
+                                       echo 'onclick="change('.$s .','.$d.');"';
+                                   } else {
+                                       echo 'onclick="changeClass('.$s.','.$d.');"';
+                                   }
+                                            ?> >
+                                        <span style="color: #aaa9a9" title="-"  >-</span></td>
+        <?php
+        }
+    }
+    ?>
+                        </tr>
+<?php } ?>
+                </tbody>
+            </table>
 </div>
+<script>
+    function change(s, d) {
+        window.open("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['teacherId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    }
+    function changeClass(s, d) {
+        window.open("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['classId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    }
+</script>

@@ -1,5 +1,5 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div id="ziji">
+<div id="ziji" style="height:480px; overflow:auto;">
 <div class="hero-unit-choice">
           <?php
           $totalScore=0;
@@ -7,7 +7,13 @@
           $n=1;
          foreach ($works  as $k=>$work){         
                 $right = $work['answer'];
-                $uAns = $choiceAnsWork[$k];              
+                
+                if(isset($choiceAnsWork[$k])){
+                   $uAns = $choiceAnsWork[$k];     
+                }else{
+                    $uAns = "";
+                }
+                          
                 if($uAns == "")
                 {
                     echo "<font color=red>未作答</font>";
@@ -41,7 +47,7 @@
       $("#score").html(<?php echo $score;?>);
        if(<?php echo $isLast?> == 1)
         {
-                window.location.href="./index.php?r=teacher/CheckStuExam&&workID=<?php echo $workID;?>&&type=filling&&studentID=<?php echo $studentID;?>&&accomplish=<?php echo $accomplish;?>";
+                window.location.href="./index.php?r=teacher/CheckStuExam&&workID=<?php echo $workID;?>&&type=filling&&studentID=<?php echo $studentID;?>&&accomplish=<?php echo $accomplish;?>&&classID=<?php echo $classID?>";
         }
     });
      
@@ -63,7 +69,7 @@
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
+          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
           data:user,
           dataType:"html",
           success:function(html){     

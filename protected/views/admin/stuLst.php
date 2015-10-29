@@ -54,6 +54,11 @@
     <!-- 右侧内容展示结束-->
 </div>
 <script>
+    $(document).ready(function(){
+       <?php if(isset($_POST['checkbox'])){ ?>
+           window.location.href="./index.php?r=admin/stuLst";
+      <?php }?> 
+    });
     function check_all(obj, cName)
     {
         var checkboxs = document.getElementsByName(cName);

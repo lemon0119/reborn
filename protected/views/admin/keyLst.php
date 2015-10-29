@@ -6,7 +6,7 @@
                         <li>
                                 <select name="type" >
                                         <option value="exerciseID" selected="selected">编号</option>
-                                        <option value="courseID" >课程号</option>
+                                        <option value="courseID" >科目号</option>
                                         <option value="createPerson" >创建人</option>
                                 </select>
                         </li>
@@ -61,7 +61,7 @@
                         <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
                       
                         <td class="font-center"><?php echo $model['title']?></td>
-                        <td class="font-center"><?php  if(Tool::clength($model['content'])<=15)
+                        <td title="<?php  echo  str_replace("$",":",$model['content']);?>" class="font-center"><?php  if(Tool::clength($model['content'])<=15)
                                    echo  str_replace("$",":",$model['content']);
                                else
                                    echo str_replace("$",":",Tool::csubstr($model['content'], 0, 15)."...");

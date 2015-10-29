@@ -59,7 +59,7 @@
                     <tr>
                         <th class="font-center">班号</th>
                         <th class="font-center">班级名</th>
-                        <th class="font-center">课程</th>
+                        <th class="font-center">科目</th>
                         <th class="font-center">操作</th>
                     </tr>
                 </thead>
@@ -70,7 +70,7 @@
                             <td class="font-center" ><?php echo $c_value['className'];?></td>
                             <td class="font-center" ><?php echo $c_value['courseName'];?></td>
                             <td class="font-center" style="width: 75px" >
-                                 <a href="./index.php?r=admin/scheduleDetil&&teacherId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                                 <a href="./index.php?r=admin/scheduleDetil&&classId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
                    <?php }?>
@@ -87,7 +87,7 @@
                     <tr>
                         <th class="font-center">班号</th>
                         <th class="font-center">班级名</th>
-                        <th class="font-center">课程</th>
+                        <th class="font-center">科目</th>
                         <th class="font-center">操作</th>
                     </tr>
                 </thead>
@@ -98,12 +98,17 @@
                             <td class="font-center" ><?php echo $c_value['className'];?></td>
                             <td class="font-center" ><?php echo $c_value['courseName'];?></td>
                             <td class="font-center" style="width: 75px" >
-                                 <a href="./index.php?r=admin/scheduleDetil&&teacherId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                                 <a href="./index.php?r=admin/scheduleDetil&&classId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
                    <?php }?>
                 </tbody>
             </table>
+            <div align=center>
+        <?php
+       $this->widget('CLinkPager', array('pages' => $class_pages));
+        ?>
+    </div>
         </form>
     <?php }else{?>
         <h3>老师列表</h3>
@@ -122,7 +127,7 @@
                         <tr>
                             <td class="font-center" ><?php echo $t_value['userID'];?></td>
                             <td class="font-center" ><?php echo $t_value['userName'];?></td>
-                            <td class="font-center" ><?php echo $t_value['department'];?></td>
+                            <td class="font-center" ><?php echo $t_value['department']; ?></td>
                             <td class="font-center" style="width: 75px" >
                                  <a href="./index.php?r=admin/scheduleDetil&&teacherId=<?php echo $t_value['userID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
@@ -130,6 +135,11 @@
                    <?php }?>
                 </tbody>
             </table>
+            <div align=center>
+        <?php
+       $this->widget('CLinkPager', array('pages' => $tea_pages));
+        ?>
+    </div>
         </form>
         
     <?php }?>

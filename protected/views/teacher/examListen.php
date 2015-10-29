@@ -1,7 +1,7 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/accounting.js"></script>
-<div id="ziji">
+<div id="ziji" style="height:480px; overflow:auto;">
     <div class="hero-unit">
                 <?php if($ansWork['answer'] == "")
                     {
@@ -16,20 +16,20 @@
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
+                    <div id ="answer" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
+                    <div id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
                 </td>
             </tr>
         </table>
     </div>
 配分:<?php echo $exam_exercise['score'];?>
    得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
-   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
+   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo '1';?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo '1';?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
 </div>
 <?php
     if(isset(Yii::app()->session['type'])){
@@ -112,6 +112,7 @@
    start();
    
   function nextWork(answerID,recordID,examID,exerciseID){
+      console.log("yy");
         var value1 = $("#input")[0].value;
          var totalscore = <?php echo $exam_exercise['score'];?>;
         if(value1>totalscore){
@@ -130,7 +131,7 @@
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
+          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
           data:user,
           dataType:"html",
           success:function(html){     

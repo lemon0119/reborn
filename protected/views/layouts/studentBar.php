@@ -37,7 +37,16 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     </li>
                                     <li><a id="myCourse" href="./index.php?r=student/myCourse"></a></li>
                                     <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
+                                    <li><a id="suLu" href="./index.php?r=student/suLu"></a></li>
+                                    <li><a id="schedule_manager"  href="./index.php?r=student/scheduleDetil"></a></li>
                                     <li><a id="blank_stu"></a></li>
+                                     <li>
+                                       <?php if(Tool::stuNotice() == 0){?>                                         
+                                       <a id="stuMail_off" href="./index.php?r=student/stuNotice"></a>
+                                       <?php }else {?>
+                                          <a id="stuMail_on" href="./index.php?r=student/stuNotice"></a>  
+                                       <?php }?>
+                                   </li> 
                                     <li >
                                         <div class="userUI">
                                             <a href="#" id="userUI"  data-toggle="dropdown">
@@ -47,12 +56,10 @@ if (isset(Yii::app()->session['userid_now'])) {
                                                 <li>
                                                     <a href="./index.php?r=student/set">设置</a></li>
                                                 <li>
-                                                    <a href="./index.php?r=student/headPic">头像</a></li>
                                                 <li><a href="./index.php?r=user/login&exit=1">退出</a> </li>
                                             </ul>   
                                         </div>
                                    </li>
-                                    
                                 </ul>
                                
                             </div>
@@ -70,3 +77,4 @@ if (isset(Yii::app()->session['userid_now'])) {
 <?php } else { ?>
     <script>    window.location.href = "./index.php?r=user/login"</script>
 <?php } ?>
+

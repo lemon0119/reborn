@@ -52,7 +52,7 @@ class LoginForm extends CFormModel
                     $this->_identity=new UserIdentity($this->username,$this->password);
                     $this->_identity->setUserType($this->usertype);
                     if(!$this->_identity->authenticate()){
-                        $this->addError('password','Incorrect username or password.');     //添加错误消息
+                        $this->addError('password','非法的用户名或密码.');     //添加错误消息
                     }
 		}
 	}
@@ -63,12 +63,12 @@ class LoginForm extends CFormModel
 	 */
 	public function login()
 	{
-		if($this->_identity===null)
-		{
-           $this->_identity=new UserIdentity($this->username,$this->password);
-           $this->_identity->setUserType($this->usertype);      //设置用户种类
-           $this->_identity->authenticate();
-		}
+            if($this->_identity===null)
+            {
+                $this->_identity=new UserIdentity($this->username,$this->password);
+                $this->_identity->setUserType($this->usertype);      //设置用户种类
+                $this->_identity->authenticate();
+            }
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
 		{
 			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days

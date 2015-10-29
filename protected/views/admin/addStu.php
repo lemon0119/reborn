@@ -34,7 +34,7 @@
             <div class="control-group">
                 <label class="control-label" for="input03">班级名称</label>
                 <div class="controls">
-                    <select name="classID" style="width: 285px">
+                    <select name="classID" style="width: 285px;color: #000">
                         <option value="0" >以后再选</option>
                         <?php 
                             $classes = TbClass::model()->findall();
@@ -123,18 +123,19 @@ foreach ($classAll as $key => $value) {
     $("#form-addStu").submit(function(){
     var userID = $("#input01")[0].value;
             if (userID === ""){
-    window.wxc.xcConfirm('学生学号不能为空', window.wxc.xcConfirm.typeEnum.warning);
+    window.wxc.xcConfirm('学生学号不能为空', window.wxc.xcConfirm.typeEnum.info);
             return false;
     }
     if (getUserID().indexOf(userID) >= 0){
-    window.wxc.xcConfirm('学生学号已存在！', window.wxc.xcConfirm.typeEnum.warning);
+    window.wxc.xcConfirm('学生学号已存在！', window.wxc.xcConfirm.typeEnum.info);
             return false;
     }
     var userName = $("#input02")[0].value;
             if (userName === ""){
-    window.wxc.xcConfirm('学生姓名不能为空', window.wxc.xcConfirm.typeEnum.warning);
+    window.wxc.xcConfirm('学生姓名不能为空', window.wxc.xcConfirm.typeEnum.info);
             return false;
     }
+     
 //    var pass1 = $("#input04")[0].value;
 //            if (pass1 === ""){
 //    alert('密码不能为空');
@@ -159,7 +160,7 @@ foreach ($classAll as $key => $value) {
             }
         }
         if(i===1){
-            window.wxc.xcConfirm("请选择学生性别！", window.wxc.xcConfirm.typeEnum.warning);
+            window.wxc.xcConfirm("请选择学生性别！", window.wxc.xcConfirm.typeEnum.info);
             return false;
         }
     }
@@ -167,11 +168,23 @@ foreach ($classAll as $key => $value) {
     
     var phone_number = $("#input09")[0].value;
             if (phone_number.length !== 11 && phone_number !== ""){
-    window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
+    window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.info);
             return false;
     }
+    
+    var mail_address = $("#input10")[0].value;
+        var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;  
+        if(mail_address==""){
+            return true;
+        }else if (!pattern.test(mail_address)) {  
+            window.wxc.xcConfirm('请输入正确的邮箱地址', window.wxc.xcConfirm.typeEnum.info);
+            return false;
+        }
 
     });
+    
+        
+    
     //学号受限
     function chkIt(){
     var usernameVal = document.getElementById("input01").value;  
