@@ -13,19 +13,25 @@
 </div>
 <div class="span9" style="margin-top: 25px;width: 1080px;">
     <center><h2>查看公告</h2></center>
+    <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　批量操作：
+    <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
 <!-- 公告列表-->
 <table class="table table-bordered table-striped"  style="background: #DDD">
     <thead>
-        <tr>
+        <tr> 
+            
+            <th class="font-center">选择</th>
             <th class="font-center" style="width:200px">日期</th>
             <th class="font-center">标题</th>
             <th class="font-center" style="width:200px">操作</th>
         </tr>
     </thead>
     <tbody>
+        <form id="deleForm" method="post" action="./index.php?r=admin/deletenotice " > 
         <?php 
                foreach ($noticeRecord as $notice){?>
         <tr>
+            <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $notice['id']; ?>" /> </td>
             <td>
                  <?php echo $notice['noticetime'];?>
             </td>
@@ -38,6 +44,7 @@
             </td>
         </tr>
                <?php }?>
+        </form>
     </tbody>
 </table>
 <div align=right>
@@ -48,6 +55,10 @@
 </div>
 <script>
 $(document).ready(function(){
+       <?php if(isset($_POST['checkbox'])){ ?>
+           window.location.href="./index.php?r=admin/noticeLst";
+      <?php }?> 
+    
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
 
@@ -78,6 +89,36 @@ $(document).ready(function(){
         });
     });
 });
+    function check_all(obj, cName)
+    {
+        var checkboxs = document.getElementsByName(cName);
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].checked = obj.checked;
+        }
+    }
+    function deleCheck() {
+    var checkboxs = document.getElementsByName('checkbox[]');
+    var flag = 0;
+        for (var i = 0; i < checkboxs.length; i++) {
+           if(checkboxs[i].checked){
+                flag=1;
+                break;
+           }
+        } 
+        if(flag===0){
+           window.wxc.xcConfirm('未选中任何公告', window.wxc.xcConfirm.typeEnum.info);
+        }else{
+             var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							$('#deleForm').submit();
+						}
+					};
+					window.wxc.xcConfirm("删除，您确定这样吗？", "custom", option);
+        }
+       
+    }
 function dele(noticeId)
     {
         var option = {
