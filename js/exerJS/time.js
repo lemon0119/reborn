@@ -53,10 +53,12 @@ function getSeconds(){
 }
 function changWordPS(){
     var length = getWordLength();
+    var timeAll = ss / 60 + mm + hh * 60;
     if(isExam==1){
         var timeAll =ti- (ss / 60 + mm + hh * 60);
-    }else{
-        var timeAll = ss / 60 + mm + hh * 60;
+    }
+    if(isNaN(timeAll)){
+        timeAll=0;
     }
     var wps = Math.round(length / timeAll);
     if(timeAll !== 0 && document.getElementById("wordps")!== null)
