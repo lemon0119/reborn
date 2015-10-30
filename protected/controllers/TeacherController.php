@@ -127,9 +127,11 @@ class TeacherController extends CController {
             $time = $_POST[$timeGetKey];
             if(!!$score){
                 $one->score = $score;
-                $one->time = $time;
-                $one->update();
             }
+            if(!!$time){
+                $one->time = $time;
+            }
+            $one->update();
         }
         echo '保存成功';
     }

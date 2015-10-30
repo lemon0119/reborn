@@ -79,7 +79,7 @@
     $(document).ready(function(){
         
          alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
-         if(<?php echo $exerOne['time']?>!=0){
+       if(<?php echo $exerOne['time']?>!=0){
         <?php if($isExam){?>
             reloadTime2(<?php echo $exerOne['time'];?>,isExam);
             var isover = setInterval(function(){
