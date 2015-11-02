@@ -11,9 +11,6 @@
     <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo CSS_URL; ?>font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo CSS_URL; ?>style.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="<?php echo CSS_URL; ?>reset.css">
-    <link rel="stylesheet" href="<?php echo CSS_URL; ?>supersized.css">
-    <link rel="stylesheet" href="<?php echo CSS_URL; ?>style_login.css">
 </head>
 <!-- END HEAD -->
 
