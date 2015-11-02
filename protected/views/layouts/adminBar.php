@@ -79,9 +79,15 @@ if (isset(Yii::app()->session['userid_now'])) {
                 </div>
                 <div class="row">
                     <?php echo $content; ?>
+                    
                 </div>
+                
             </div>
+            <div  class="copyright">
+		2015 &copy;南京兜秘网络科技有限公司.
+	</div>
         </body>
+        
     </html>
 <?php } else { ?>
     <script>    window.location.href = "./index.php?r=user/login"</script>

@@ -107,6 +107,9 @@ if (isset(Yii::app()->session['userid_now'])) {
                     <?php echo $content; ?>
                 </div>
             </div>
+             <div  class="copyright">
+		2015 &copy;南京兜秘网络科技有限公司.
+	</div>
         </body>
     </html>
 <?php } else { ?>

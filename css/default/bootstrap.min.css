@@ -5049,3 +5049,11 @@ table tr td{
 .cursor_default{
     cursor:default;
 }
+.copyright{
+    text-align: center;
+  width: 250px;
+  margin: 0 auto; 
+  padding: 10px 10px 0 10px;
+  color: #000;
+  font-size: 11px;
+}
