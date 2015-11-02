@@ -8465,3 +8465,15 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=teacher/scheduleDetil
 in E:\php_workstation\reborn\protected\controllers\TeacherController.php (3800)
 in E:\php_workstation\reborn\index.php (32)
+2015/11/02 11:23:48 [error] [php] mkdir(): No such file or directory (E:\php_workstation\reborn\protected\controllers\AdminController.php:1924)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 E:\php_workstation\framework\web\CController.php(286): AdminController->runAction()
+#2 E:\php_workstation\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#3 E:\php_workstation\framework\web\CWebApplication.php(284): AdminController->run()
+#4 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 E:\php_workstation\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/addListen
+in E:\php_workstation\reborn\protected\controllers\AdminController.php (1924)
+in E:\php_workstation\reborn\index.php (32)
