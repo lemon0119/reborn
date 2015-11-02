@@ -13,7 +13,7 @@
     <tbody>
         <tr>
             <td>
-               <?php echo $noticeRecord['content'];?>
+               <?php  echo $noticeRecord['content'];?>
             </td>       
         </tr>       
     </tbody>
