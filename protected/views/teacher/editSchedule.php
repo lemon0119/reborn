@@ -16,7 +16,7 @@
         </head>
         <body>
             
-<div class="span9" style="width: 450px;">
+<div class="span9" style="width: 450px; height: 280px">
     <div class="control-group" id="div1">
             <h3 >科目信息</h3>
             <div class="controls">               
@@ -28,7 +28,7 @@
                 <span>2.&nbsp;</span><input disabled="disabled" type="text"  name="in2" style="width:280px; height:30px;" id="input2" maxlength="15" value="<?php if(isset($courseInfo[1])){echo $courseInfo[1];} ?>">                
             </div>             
         </div>
-        <div class="control-group" <?php if(isset($courseInfo[2])){   echo '';}else{  echo 'style="display: none"';}?>  id="div3">           
+        <div class="control-group"  id="div3">           
             <div class="controls">               
                 <span>3.&nbsp;</span><input disabled="disabled" type="text" name="in3" style="width:280px; height:30px;"  id="input3" maxlength="15" value="<?php if(isset($courseInfo[2])){echo $courseInfo[2];}?>">                
             </div>             
