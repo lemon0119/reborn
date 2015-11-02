@@ -8454,3 +8454,14 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=api/changeNotice&&id=65
 HTTP_REFERER=https://localhost/reborn/index.php?r=admin/noticeContent&&id=65&&action=edit
 ---
+2015/11/02 10:52:38 [error] [php] Undefined variable: sqlcurrentClass (E:\php_workstation\reborn\protected\controllers\TeacherController.php:3800)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(286): TeacherController->runAction()
+#1 E:\php_workstation\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 E:\php_workstation\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 E:\php_workstation\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/scheduleDetil
+in E:\php_workstation\reborn\protected\controllers\TeacherController.php (3800)
+in E:\php_workstation\reborn\index.php (32)
