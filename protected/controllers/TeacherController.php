@@ -96,7 +96,7 @@ class TeacherController extends CController {
             $scoreGetKey = "listen" . $one['exerciseID'] . 'Score';
             $timeGetKey = "listen" . $one['exerciseID'] . 'Time';
             $score = $_POST[$scoreGetKey];
-            $time = $_POST[$timeGetKey] * 60;
+            $time = $_POST[$timeGetKey];
             if(!!$score){
                 $one->score = $score;
             }
@@ -110,7 +110,7 @@ class TeacherController extends CController {
             $scoreGetKey = "look" . $one['exerciseID'] . 'Score';
             $timeGetKey = "look" . $one['exerciseID'] . 'Time';
             $score = $_POST[$scoreGetKey];
-            $time = $_POST[$timeGetKey] * 60;
+            $time = $_POST[$timeGetKey];
             if(!!$score){
                 $one->score = $score;
             }
@@ -124,12 +124,14 @@ class TeacherController extends CController {
             $scoreGetKey = "key" . $one['exerciseID'] . 'Score';
             $timeGetKey = "key" . $one['exerciseID'] . 'Time';
             $score = $_POST[$scoreGetKey];
-            $time = $_POST[$timeGetKey] * 60;
+            $time = $_POST[$timeGetKey];
             if(!!$score){
                 $one->score = $score;
-                $one->time = $time;
-                $one->update();
             }
+            if(!!$time){
+                $one->time = $time;
+            }
+            $one->update();
         }
         echo '保存成功';
     }

@@ -16,7 +16,7 @@
         </head>
         <body>
             
-<div class="span9" style="width: 450px;">
+<div class="span9" style="width: 450px;height: 280px">
     <?php if(isset($_GET['teacherID'])){ ?>
         <form id="form-editSchedule" method="POST" action="./index.php?r=admin/editSchedule&&sequence=<?php echo $_GET['sequence'];?>&day=<?php echo $_GET['day'];?>&teacherID=<?php echo Yii::app()->session['teacherId'];?>">
     <?php }else if(isset($_GET['classID'])){ ?>

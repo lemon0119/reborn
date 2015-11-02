@@ -42,15 +42,15 @@
                         <td class="font-center" style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
                         <td class="font-center"><?php echo $allwork['courseID'];
                             ?></td>
-                         <td class="font-center"><?php  if(Tool::clength($allwork['title'])<=5)
+                         <td title="<?php echo $allwork['title'];?>" class="font-center"><?php  if(Tool::clength($allwork['title'])<=5)
                                         echo $allwork['title'];
                                     else
                                         echo Tool::csubstr($allwork['title'], 0, 5)."...";?></td>
                         
-                        <td class="font-center"><?php  if(Tool::clength($allwork['content'])<=10)
+                        <td title="<?php echo $allwork['content'];?>" class="font-center"><?php  if(Tool::clength($allwork['content'])<=8)
                                         echo $allwork['content'];
                                     else
-                                        echo Tool::csubstr($allwork['content'], 0,10)."...";
+                                        echo Tool::csubstr($allwork['content'], 0,8)."...";
                                         ?></td>
                         <td class="font-center">
                             <?php  if($allwork['createPerson']=="0")

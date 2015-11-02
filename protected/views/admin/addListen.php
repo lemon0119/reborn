@@ -90,19 +90,22 @@ $("#myForm").submit(function(){
     $("#upload").show();
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.confirm);
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.info);
+        $("#upload").hide();
         return false;
     }
     var uploadFile = $("#input02")[0].value;
     if(uploadFile === "")
     {
-        window.wxc.xcConfirm('上传文件不能为空', window.wxc.xcConfirm.typeEnum.confirm);
+        window.wxc.xcConfirm('上传文件不能为空', window.wxc.xcConfirm.typeEnum.info);
+        $("#upload").hide();
     return false;
     }
     
     var A = $("#input03")[0].value;
         if(A === ""){
-        window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.confirm);
+        window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.info);
+        $("#upload").hide();
         return false;
     }
     

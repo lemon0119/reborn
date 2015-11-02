@@ -380,7 +380,6 @@ class StudentController extends CController {
         $isExam = false;
         $wID=Yii::app()->session['workID'];
         $isOver='0';
-        $isOver='0';
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){

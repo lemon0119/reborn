@@ -857,8 +857,6 @@ input[type="file"],input[type="image"],input[type="submit"],input[type="reset"],
     width:auto
 }
 select,input[type="file"] {
-    border-color: #000 !important;
-    color: #000 !important;
     height:30px;
     *margin-top:4px;
     line-height:30px
@@ -5019,6 +5017,30 @@ table tr td{
 .table_schedule:hover{
     font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
+}
+#postnotice{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/btn_release.png");
+}
+#postnotice:hover{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_release.png");
+}
+#returner{
+    padding: 10px 37px;
+    background-image: url("../../img/UI_adm/btn_ret.png");
+}
+#returner:hover{
+    padding: 10px 37px;
+    background-image: url("../../img/UI_adm/on_btn_ret.png");
+}
+#change{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_save.png");
+}
+#change:hover{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_save.png");
 }
 
 .cursor_pointer{
