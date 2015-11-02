@@ -21,7 +21,7 @@ if (isset(Yii::app()->session['userid_now'])) {
              <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         </head>
         <body>
-            <div class="container">
+            <div  class="container">
                 <div class="navbar">
                     <div class="navbar-inner">
                         <div class="container">
@@ -76,16 +76,17 @@ if (isset(Yii::app()->session['userid_now'])) {
                             </div>
                         </div>
                     </div>
+                  
                 </div>
                 <div class="row">
                     <?php echo $content; ?>
                     
                 </div>
-                
-            </div>
-            <div  class="copyright">
+                  <div style="float: bottom"  class="copyright">
 		2015 &copy;南京兜秘网络科技有限公司.
 	</div>
+            </div>
+           
         </body>
         
     </html>
