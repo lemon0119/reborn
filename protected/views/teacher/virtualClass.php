@@ -209,7 +209,7 @@ $(document).ready(function(){
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
 
-    $("#postnotice").click(function() {
+    $("#postnoticeTea").click(function() {
         var text = $("#bulletin-textarea").val();
         $.ajax({
             type: "POST",
