@@ -41,17 +41,17 @@
             <tr>
                 <td class="font-center">选择题</td>
                 <td class="font-center" id="cNum"><?php echo (isset($examExer['choice'])) ? count($examExer['choice']):0;?></td>
-                <td class="font-center"><input id="cScore" name= "choiceScore" type="text" class="input-small input_test input_score"/>&nbsp;分</td>
+                <td class="font-center"><input id="cScore" name= "choiceScore" type="text" class="input-small input_test input_score" value="<?php echo $choiceScore;?>"/>&nbsp;分</td>
             </tr>
             <tr>
                 <td class="font-center">填空题</td>
                 <td class="font-center" id="fNum"><?php echo (isset($examExer['filling'])) ? count($examExer['filling']):0;?></td>
-                <td class="font-center"><input id="fScore" name= "fillScore" type="text" class="input-small input_test input_score"/>&nbsp;分</td>
+                <td class="font-center"><input id="fScore" name= "fillScore" type="text" class="input-small input_test input_score" value="<?php echo $fillingScore;?>"/>&nbsp;分</td>
             </tr>
             <tr>
                 <td class="font-center">简答题</td>
                 <td class="font-center" id="qNum"><?php echo (isset($examExer['question'])) ? count($examExer['question']):0;?></td>
-                <td class="font-center"><input id="qScore" name= "questScore" type="text" class="input-small input_test input_score"/>&nbsp;分</td>
+                <td class="font-center"><input id="qScore" name= "questScore" type="text" class="input-small input_test input_score" value="<?php echo $questScore;?>"/>&nbsp;分</td>
             </tr>
         </tbody>
     </table>
@@ -70,8 +70,8 @@
             ?>
             <tr>
                 <td class="font-center">键位练习：<?php echo$key['title'];?></td>
-                <td class="font-center"><input name= "key<?php echo$key['exerciseID'];?>Score" type="text" class="input-small input_test input_score types"/>&nbsp;分</td>
-                <td class="font-center"><input name= "key<?php echo$key['exerciseID'];?>Time" type="text" class="input-small input_test"/>&nbsp;分钟</td>
+                <td class="font-center"><input name= "key<?php echo$key['exerciseID'];?>Score" type="text" class="input-small input_test input_score types" value="<?php echo $key['score']?>"/>&nbsp;分</td>
+                <td class="font-center"><input name= "key<?php echo$key['exerciseID'];?>Time" type="text" class="input-small input_test" value="<?php echo $key['time']?>"/>&nbsp;分钟</td>
             </tr>
             <?php endforeach;}?>
             <?php 
@@ -80,8 +80,8 @@
             ?>
             <tr>
                 <td class="font-center">看打练习：<?php echo$look['title'];?></td>
-                <td class="font-center"><input name= "look<?php echo$look['exerciseID'];?>Score" type="text" class="input-small input_test input_score types"/>&nbsp;分</td>
-                <td class="font-center"><input name= "look<?php echo$look['exerciseID'];?>Time" type="text" class="input-small input_test"/>&nbsp;分钟</td>
+                <td class="font-center"><input name= "look<?php echo$look['exerciseID'];?>Score" type="text" class="input-small input_test input_score types" value="<?php echo $look['score']?>"/>&nbsp;分</td>
+                <td class="font-center"><input name= "look<?php echo$look['exerciseID'];?>Time" type="text" class="input-small input_test" value="<?php echo $look['time']?>"/>&nbsp;分钟</td>
             </tr>
             <?php endforeach;}?>
             <?php 
@@ -91,8 +91,8 @@
             ?>
             <tr>
                 <td class="font-center">听打练习：<?php echo$listen['title'];?></td>
-                <td class="font-center"><input name= "listen<?php echo$listen['exerciseID'];?>Score" type="text" class="input-small input_test input_score types"/>&nbsp;分</td>
-                <td class="font-center"><input name= "listen<?php echo$listen['exerciseID'];?>Time" type="text" class="input-small input_test"/>&nbsp;分钟</td>
+                <td class="font-center"><input name= "listen<?php echo$listen['exerciseID'];?>Score" type="text" class="input-small input_test input_score types" value="<?php echo $listen['score']?>"/>&nbsp;分</td>
+                <td class="font-center"><input name= "listen<?php echo$listen['exerciseID'];?>Time" type="text" class="input-small input_test" value="<?php echo $listen['time']?>"/>&nbsp;分钟</td>
             </tr>
             <?php endforeach; //endfor;
             }?>

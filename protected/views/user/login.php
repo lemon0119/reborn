@@ -58,7 +58,7 @@
                 <a href="./index.php?r=user/forgetpassword" class="" id="forget-password" style="position: relative;top: 30px;left: 95px;">忘记密码?</a>
             </p>
             <div class="connect">
-                <p style="margin-right: 500px;margin-top:20px;">2015 &copy;北京亚伟速录科技有限公司.</p>
+                <p style="margin-right: 500px;margin-top:20px;">2015 &copy;南京兜秘网络科技有限公司.</p>
             </div>
         </div>
         <?php $this->endWidget(); ?>
@@ -75,12 +75,6 @@
             {
                 $(".connect p").eq(0).animate({"left": "0%"}, 600);
                 $(".connect p").eq(1).animate({"left": "0%"}, 400);
-            }
-            function is_hide() {
-                $(".alert").animate({"top": "-40%"}, 300)
-            }
-            function is_show() {
-                $(".alert").show().animate({"top": "45%"}, 300)
             }
         </script>
 </body>

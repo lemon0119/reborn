@@ -4640,6 +4640,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     margin-top: 100px;
     margin-left: 300px;
     color: #fff;
+    height: 500px;
     width:700px
 
 }
@@ -4798,12 +4799,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
 
 }
-#postnotice{
+#postnoticeTea{
     padding: 10px 190px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_announcement.png");
 }
-#postnotice:hover{
+#postnoticeTea:hover{
     padding: 10px 190px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/on_btn_announcement.png");
@@ -5048,4 +5049,12 @@ table tr td{
 }
 .cursor_default{
     cursor:default;
+}
+.copyright{
+    text-align: center;
+  width: 250px;
+  margin: 0 auto; 
+  padding: 10px 10px 0 10px;
+  color: #000;
+  font-size: 11px;
 }

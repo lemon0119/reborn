@@ -23,6 +23,8 @@
                 </td>
             </tr>
         </table>
+        <input id="text" type="hidden" value="<?php echo ($exer['content']);?>"/>
+        <input id="text-answer" type="hidden" value="<?php echo ($answer);?>"/>
     </div>
 </div>
 <?php
@@ -54,7 +56,9 @@
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($answer);?>');        
+        var text = $('#text').val();
+        var answer = $('#text-answer').val();
+        var lcs = new LCS(text, answer);        
         if(lcs == null)
             return;
         lcs.doLCS();
@@ -63,6 +67,9 @@
         var modTem = lcs.getSubString(1);
         var modAns = lcs.getSubString(2);
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
+        console.log(lcs.getSubString(3).length);
+        console.log(lcs.getStrOrg(1).length);
+        console.log(correct);
         displayTemp('templet', tem, modTem);
         displayTemp('answer', ans, modAns);
     }

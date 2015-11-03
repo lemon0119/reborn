@@ -28,5 +28,10 @@ require 'workAnsSideBar.php';
     </div>
 </div>
 </div>
+<script>
+$(document).ready(function(){
+    $("li#li-key-<?php echo $exer['exerciseID'];?>").attr('class','active');
+});
+</script>
     
 

@@ -92,7 +92,7 @@
     $(document).ready(function(){
         if(<?php echo $res;?>==1){
             var txt=  "此试卷已经被创建！";
-	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
             document.getElementById("title").value="";
         }
     });

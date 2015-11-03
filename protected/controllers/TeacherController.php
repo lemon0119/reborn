@@ -58,10 +58,24 @@ class TeacherController extends CController {
         }
         $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
         $examExer = ExamExercise::model()->getExamExerAll($examID);
+        //获取分数和时间
+        $choiceAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'choice']);
+        $fillingAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'filling']);
+        $questAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'question']);
+        $listenAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'listen']);
+        
+        
+        $choiceScore=$choiceAll[0]['score'];
+        $fillingScore=$fillingAll[0]['score'];
+        $questScore=$questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
             'array_exam' => $array_suite,
             'examExer' => $examExer,
-            'examID' => $examID
+            'examID' => $examID,
+            'choiceScore'=>$choiceScore,
+            'fillingScore'=>$fillingScore,
+            'questScore'=>$questScore,
+            'listenAll'=>$listenAll,
         ));
     }
 
@@ -665,7 +679,6 @@ class TeacherController extends CController {
             ));
         }
     }
-
     public function actionCopyLook() {
         $insertresult = "no";
         $code = $_GET["code"];
@@ -675,6 +688,7 @@ class TeacherController extends CController {
             $oldLook = $thisLook->findAll("exerciseID = '$exerciseID'");
             $insertresult = LookType::model()->insertLook($oldLook[0]['title'], $oldLook[0]['content'], Yii::app()->session['userid_now']);
             Yii::app()->session['code'] = $_GET["code"];
+            error_log("1");
         }
 
         if (Yii::app()->session['lastUrl'] == "searchLook") {
@@ -699,6 +713,7 @@ class TeacherController extends CController {
             $result = LookType::model()->getLookLst($type, $value);
             $lookLst = $result['lookLst'];
             $pages = $result['pages'];
+            error_log("2");
             $this->render('searchLook', array(
                 'lookLst' => $lookLst,
                 'pages' => $pages,
@@ -712,6 +727,7 @@ class TeacherController extends CController {
             $lookLst = $result['lookLst'];
             $pages = $result['pages'];
             Yii::app()->session['lastUrl'] = "LookLst";
+            error_log("3");
             $this->render('LookLst', array(
                 'lookLst' => $lookLst,
                 'pages' => $pages,
@@ -3756,6 +3772,7 @@ class TeacherController extends CController {
              'studentID'=>$studentID,
              'classID'=>$classID,
              'workID'=>$workID,
+                 'type'=>$ty,
                 'lesson'=>$lesson,
                 'array_accomplished'=>$array_accomplished,
             'exam_exercise' => $suite_exercise,
@@ -3855,6 +3872,7 @@ class TeacherController extends CController {
              'classID'=>$classID,
              'score'=>$scorer,
              'workID'=>$workID,
+              'type'=>$ty,
             'exam_exercise' => $exam_exercise,
             'answer' => $answer['answer'],
             'correct' => $answer['ratio_correct']]);
