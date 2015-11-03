@@ -665,7 +665,6 @@ class TeacherController extends CController {
             ));
         }
     }
-
     public function actionCopyLook() {
         $insertresult = "no";
         $code = $_GET["code"];
@@ -675,6 +674,7 @@ class TeacherController extends CController {
             $oldLook = $thisLook->findAll("exerciseID = '$exerciseID'");
             $insertresult = LookType::model()->insertLook($oldLook[0]['title'], $oldLook[0]['content'], Yii::app()->session['userid_now']);
             Yii::app()->session['code'] = $_GET["code"];
+            error_log("1");
         }
 
         if (Yii::app()->session['lastUrl'] == "searchLook") {
@@ -699,6 +699,7 @@ class TeacherController extends CController {
             $result = LookType::model()->getLookLst($type, $value);
             $lookLst = $result['lookLst'];
             $pages = $result['pages'];
+            error_log("2");
             $this->render('searchLook', array(
                 'lookLst' => $lookLst,
                 'pages' => $pages,
@@ -712,6 +713,7 @@ class TeacherController extends CController {
             $lookLst = $result['lookLst'];
             $pages = $result['pages'];
             Yii::app()->session['lastUrl'] = "LookLst";
+            error_log("3");
             $this->render('LookLst', array(
                 'lookLst' => $lookLst,
                 'pages' => $pages,
