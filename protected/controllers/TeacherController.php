@@ -3369,11 +3369,15 @@ class TeacherController extends CController {
         $studentID = $_GET['studentID'];
         $accomplish = $_GET['accomplish'];
         $classID = $_GET['classID'];
+        $suiteID=$_GET['suiteID'];
         $nextStudentID = SuiteRecord::model()->getNextStudentID($workID, $studentID, $accomplish, $classID);
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
         if ($nextStudentID == -1) {
-            $this->renderStuWork($studentID, $workID, "choice", $accomplish);
+            $this->renderStuWork($studentID, $workID, "choice", $accomplish,$classwork,$suiteID,$workID);
         } else {
-            $this->renderStuWork($nextStudentID, $workID, "choice", $accomplish);
+            $this->renderStuWork($nextStudentID, $workID, "choice", $accomplish,$classwork,$suiteID,$workID);
         }
     }
 
@@ -3429,7 +3433,7 @@ class TeacherController extends CController {
          */
     }
 
-    public function renderStuWork($studentID, $workID, $type, $accomplish) {
+    public function renderStuWork($studentID, $workID, $type, $accomplish,$classwork,$suiteID,$workID) {
         $student = Student::model()->find("userID='$studentID'");
         $work = ClassLessonSuite::model()->find("workID='$workID'");
         $record = SuiteRecord::model()->find("workID=? and studentID=?", array($workID, $student['userID']));
@@ -3444,6 +3448,9 @@ class TeacherController extends CController {
             'record' => $record,
             'lesson' => $lesson,
             'work' => $work,
+            'exercise'=>$classwork,
+            'suiteID'=>$suiteID,
+            'workID'=>$workID,
             'accomplish' => $accomplish,
         ));
     }
@@ -3472,10 +3479,29 @@ class TeacherController extends CController {
 
     public function ActionCheckStuWork() {
         $workID = $_GET['workID'];
+        $classID = $_GET['classID'];
         $studentID = $_GET['studentID'];
         $accomplish = $_GET['accomplish'];
-        $type = $_GET['type'];
-
+        $ty = $_GET['type'];
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        $array_accomplished = Array();
+        $array_unaccomplished = Array();
+        foreach ($class_student as $stu) {
+            $userID = $stu['userID'];
+            $result = SuiteRecord::model()->find("workID=? and studentID=?", array($workID, $userID));
+            if ($result != NULL && $result['ratio_accomplish'] == 1) {
+                $score = $result['score'];
+                array_push($array_accomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName']
+                ));
+            } else {
+                array_push($array_unaccomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName']
+                ));
+            }
+        }
         $student = Student::model()->find("userID='$studentID'");
         $work = ClassLessonSuite::model()->find("workID='$workID'");
         $record = SuiteRecord::model()->find("workID=? and studentID=?", array($work['workID'], $student['userID']));
@@ -3485,15 +3511,22 @@ class TeacherController extends CController {
         $suiteID = $work['suiteID'];
         $class = TbClass::model()->find("classID='$classID'");
         $lesson = Lesson::model()->find("lessonID='$lessonID'");
-
+        Yii::app()->session['suiteID']=$suiteID;
+        foreach(Tool::$EXER_TYPE as $type){
+                $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
         $this->render('checkStuWork', array(
             'student' => $student,
             'class' => $class,
             'lesson' => $lesson,
             'record' => $record,
-            'type' => $type,
+            'type' => $ty,
             'work' => $work,
-            'accomplish' => $accomplish
+            'accomplish' => $accomplish,
+            'array_accomplished' => $array_accomplished,
+            'suiteID'=>$suiteID,
+            'exercise'=>$classwork,
+            'workID'=>$workID,
         ));
     }
 
@@ -3612,7 +3645,125 @@ class TeacherController extends CController {
             'isLast' => $isLast,
         ));
     }
-    
+    public function actionAnsKeyTypeWork(){
+        $ty=$_GET['type'];
+        $exerID = $_GET['exerID'];
+        Yii::app()->session['exerID']=$exerID;
+        $suiteID = Yii::app()->session['suiteID'];
+        $workID =$_GET['workID'];
+        $isExam=Yii::app()->session['isExam'];
+        $classwork = Array();
+        foreach(Tool::$EXER_TYPE as $type){
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
+        }
+        
+        Yii::app()->session['exerID'] = $exerID;
+        Yii::app()->session['exerType'] = 'key';
+        
+        
+        
+        $studentID = Yii::app()->session['userid_now'];
+        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
+            $studentID = Yii::app()->session['studentID'];
+            $workID = Yii::app()->session['workID'];
+        }
+        $recordID = suiteRecord::getRecord($workID, $studentID);
+        $suite_exercise = SuiteExercise::model()->find("exerciseID=? and exerciseID=? and type=?", array($_GET['exerID'], $suiteID, $ty));
+        $student = Student::model()->find("userID='$studentID'");
+        $classID = Yii::app()->session['classID'];
+        $class = TbClass::model()->find("classID='$classID'");
+        $array_accomplished = Array();
+        $array_unaccomplished = Array();
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        foreach ($class_student as $stu) {
+            $userID = $stu['userID'];
+            $result = SuiteRecord::model()->find("workID=? and studentID=?", array($workID, $userID));
+            if ($result != NULL && $result['ratio_accomplish'] == 1) {
+                $score = $result['score'];
+                array_push($array_accomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName'],
+                    'score' => $score
+                ));
+            } else {
+                array_push($array_unaccomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName'],
+                    'score' => 0
+                ));
+            }
+        }
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        $array_accomplished = Array();
+        $array_unaccomplished = Array();
+        foreach ($class_student as $stu) {
+            $userID = $stu['userID'];
+            $result = SuiteRecord::model()->find("workID=? and studentID=?", array($workID, $userID));
+            if ($result != NULL && $result['ratio_accomplish'] == 1) {
+                $score = $result['score'];
+                array_push($array_accomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName'],
+                    'score' => $score
+                ));
+            } else {
+                array_push($array_unaccomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName'],
+                    'score' => 0
+                ));
+            }
+        }
+        $work = ClassLessonSuite::model()->find("workID='$workID'");
+        $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?", array($recordID, $ty, $exerID));
+        $lessonID = $work['lessonID'];
+        $lesson = Lesson::model()->find("lessonID='$lessonID'");
+        switch ($ty) {
+            case "choice":
+                $render = "suiteChoice";
+                break;
+            case "filling":
+                $render = "suiteFilling";
+                break;
+            case "question":
+                $render = "suiteQuestion";
+                break;
+            case "key":
+                $res = KeyType::model()->findByPK($exerID);
+                $render = "suiteKey";
+                break;
+            case "look":
+                $res = LookType::model()->findByPK($exerID);
+                $render = "suiteLook";
+                break;
+            case "listen":
+                $res = ListenType::model()->findByPK($exerID);
+                $render = "suiteListen";
+                break;
+        }
+        
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $accomplish=$_GET['accomplish'];
+        return $this->render($render,
+            ['exercise' => $classwork,
+             'student'=>$student,
+             'suiteID'=>$suiteID,
+             'class'=>$class,
+             'work'=>$work ,
+             'accomplish' =>$accomplish ,
+             'ansWork'=>$ansWork,
+             'array_accomplished'=>$array_accomplished,
+             'exer' => $res,
+             'exerID'=>$exerID,
+             'studentID'=>$studentID,
+             'classID'=>$classID,
+             'workID'=>$workID,
+                'lesson'=>$lesson,
+                'array_accomplished'=>$array_accomplished,
+            'exam_exercise' => $suite_exercise,
+            'answer' => $answer['answer'],
+            'correct' => $answer['ratio_correct']]);
+    }
     public function actionAnsKeyType(){
         $ty=$_GET['type'];
         $exerID = $_GET['exerID'];
