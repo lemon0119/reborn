@@ -58,10 +58,24 @@ class TeacherController extends CController {
         }
         $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
         $examExer = ExamExercise::model()->getExamExerAll($examID);
+        //获取分数和时间
+        $choiceAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'choice']);
+        $fillingAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'filling']);
+        $questAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'question']);
+        $listenAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'listen']);
+        
+        
+        $choiceScore=$choiceAll[0]['score'];
+        $fillingScore=$fillingAll[0]['score'];
+        $questScore=$questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
             'array_exam' => $array_suite,
             'examExer' => $examExer,
-            'examID' => $examID
+            'examID' => $examID,
+            'choiceScore'=>$choiceScore,
+            'fillingScore'=>$fillingScore,
+            'questScore'=>$questScore,
+            'listenAll'=>$listenAll,
         ));
     }
 
