@@ -41,25 +41,25 @@
                             ?></td>
                             <td style="height: 62px" ><?php
                                 switch ($s) {
-                                    case 1: echo '<span style="font-weight: bolder">一</span>';
+                                    case 1: echo '<span>一</span>';
                                         break;
-                                    case 2: echo '<span style="font-weight: bolder">二</span>';
+                                    case 2: echo '<span>二</span>';
                                         break;
-                                    case 3: echo '<span style="font-weight: bolder">三</span>';
+                                    case 3: echo '<span>三</span>';
                                         break;
-                                    case 4: echo '<span style="font-weight: bolder">四</span>';
+                                    case 4: echo '<span>四</span>';
                                         break;
-                                    case 5: echo '<span style="font-weight: bolder">五</span>';
+                                    case 5: echo '<span>五</span>';
                                         break;
-                                    case 6: echo '<span style="font-weight: bolder">六</span>';
+                                    case 6: echo '<span>六</span>';
                                         break;
-                                    case 7: echo '<span style="font-weight: bolder">七</span>';
+                                    case 7: echo '<span>七</span>';
                                         break;
-                                    case 8: echo '<span style="font-weight: bolder">八</span>';
+                                    case 8: echo '<span>八</span>';
                                         break;
-                                    case 9: echo '<span style="font-weight: bolder">九</span>';
+                                    case 9: echo '<span>九</span>';
                                         break;
-                                    case 10: echo '<span style="font-weight: bolder">十</span>';
+                                    case 10: echo '<span>十</span>';
                                         break;
                                 }
                                 ?></td>

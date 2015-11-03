@@ -27,15 +27,15 @@
                 <tbody>        
                     <?php foreach($suiteWork as $work):?>
                     <tr>
-                        <td class="font-center" style="width: 50px"><?php echo $work['exerciseID'];?></td>
-                        <td class="font-center">
-                            <?php  if(Tool::clength($work['requirements'])<=10)
+                        <td title="<?php echo $work['exerciseID'];?>" class="font-center" style="width: 50px"><?php echo $work['exerciseID'];?></td>
+                        <td title="<?php echo $work['requirements'];?>" class="font-center">
+                            <?php  if(Tool::clength($work['requirements'])<=8)
                                         echo $work['requirements'];
                                     else
-                                        echo Tool::csubstr($work['requirements'], 0, 10)."...";
+                                        echo Tool::csubstr($work['requirements'], 0, 8)."...";
                                         ?>
                         </td>
-                        <td class="font-center">
+                        <td  class="font-center">
                             <?php  echo $work['createTime']?>
                         </td>           
                         <td class="font-center" style="width: 100px">            

@@ -1,9 +1,13 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/accounting.js"></script>
+<?php
+require 'workAnsSideBar.php';
+?>
+<div class="span9">
 <div id="ziji">
     <div class="hero-unit">
-        
+        <h2>看打练习</h2>
         <?php if($ansWork['answer'] == "")
                     {
                         echo "<font color=red>未作答</font>";
@@ -11,7 +15,7 @@
                     } ?>
         <table border = '0px' width="100%">            
             <tr>
-                <td width = '100px' align='center'><?php echo $work['title']?></td>
+                <td width = '50%' align='center'><?php echo $exer['title']?></td>
                 <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$ansWork['ratio_correct'] * 100);echo '%';?></span></td>
             </tr>
             <tr>
@@ -27,7 +31,12 @@
                 </td>
             </tr>
         </table>
-<?php
+    </div>
+    </div>
+        
+</div>
+    
+            <?php
     if(isset(Yii::app()->session['type'])){
         $type = Yii::app()->session['type'];
         echo "<script>var type = '$type';</script>"; 
@@ -56,7 +65,7 @@
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var lcs = new LCS('<?php echo ($work['content']);?>', '<?php echo ($ansWork['answer']);?>');
+        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($ansWork['answer']);?>');
         if(lcs == null)
             return;
         lcs.doLCS();
@@ -98,31 +107,9 @@
             createFont(id,'#ff0000',modTem.substr(i));
     }
     
-  $(document).ready(function(){
-    var isLast = <?php if($isLast !=NULL) echo $isLast; else echo 0;?>;
-    if(isLast == 1)
-    window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.info);
-    });
    start();  
    
-        function nextWork(answerID,recordID,suiteID,exerciseID){
-        var user = {
-            answerID:answerID,
-            recordID:recordID,
-            type:"look",
-            suiteID:suiteID,
-            exerciseID:exerciseID
-        };
-      $.ajax({
-          type:"POST",
-          url:"./index.php?r=teacher/ajaxChoice",
-          data:user,
-          dataType:"html",
-          success:function(html){
-              $("#ziji").html(html);
-          }
-      })
-    }
+        
 
 </script>
 

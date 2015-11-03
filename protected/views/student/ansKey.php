@@ -11,8 +11,9 @@ require 'ansSideBar.php';
 <div class="span9">
     <div class="hero-unit">
         <table border = '0px' width="100%">
+            <h2>键位练习</h2>
             <tr>
-                <td width = '100px' align='center'><?php echo $exer['title']?></td>
+                <td width = '50%' align='center'>题目：<?php echo $exer['title']?></td>
                 <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct * 100);echo '%';?></span></td>
             </tr>
             <tr>

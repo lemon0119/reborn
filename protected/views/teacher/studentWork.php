@@ -109,7 +109,7 @@
                             <font style="color: green">完成</font>
                         </td>  
                         <td >
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice"><img title="批阅" src="<?php echo IMG_URL;?>edit.png"/></a>
+                            <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice"><img title="批阅" src="<?php echo IMG_URL;?>edit.png"/></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -142,7 +142,7 @@
                             <font style="color: red">未完成</font>
                         </td>  
                         <td>
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice"><img title="查看" src="<?php echo IMG_URL;?>detail.png"/></a>
+                            <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice"><img title="查看" src="<?php echo IMG_URL;?>detail.png"/></a>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 
