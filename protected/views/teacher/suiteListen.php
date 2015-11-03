@@ -4,6 +4,7 @@
 
 <div id="ziji">
     <div class="hero-unit">
+        <h2>听打练习</h2>
                 <?php if($ansWork['answer'] == "")
                     {
                         echo "<font color=red>未作答</font>";
@@ -11,7 +12,7 @@
                     } ?>
         <table border = '0px' width="100%">
             <tr>
-                <td width = '100px' align='center'><?php echo $work['title']?></td>
+                <td width = '50%' align='center'><?php echo "<font>$m</font>";?>. <?php echo $work['title']?></td>
                 <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$ansWork['ratio_correct'] * 100);echo '%';?></span></td>
             </tr>
             <tr>
@@ -118,7 +119,7 @@
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxChoice",
+          url:"./index.php?r=teacher/ajaxChoice&&m=<?php $m++;echo $m;?>",
           data:user,
           dataType:"html",
           success:function(html){

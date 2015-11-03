@@ -1,36 +1,47 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div id="ziji" style="height:480px; overflow:auto;">
+<div id="ziji">
     <div class="hero-unit">
         <?php 
-                   if($ansWork['answer'] == "")
+        $n=1;
+            echo "<h2>简答题</h2>"; 
+            foreach ($works  as $k=>$work){ 
+                   if(isset($choiceAnsWork[$k])){
+                        $uAns = $choiceAnsWork[$k];     
+                     }else{
+                         $uAns = "";
+                     }     
+                     if($uAns == "")
                     {
                         echo "<font color=red>未作答</font>";
                         echo '</br>';
                     }
+                echo $n.". ";
                 echo $work['requirements'];
                 echo '<br/>';
                 echo '<div class=\'answer-tip-text1\'>作答结果：</div>';
-                echo '<div style="min-width: 99%" class=\'answer-question\'>'.$ansWork['answer'].'</div>';
+                echo '<div style="min-width: 99%" class=\'answer-question\'>'.$choiceAnsWork[$k].'</div>';
                 echo '<div class=\'answer-tip-text2\'>正确答案：</div>';
                 echo '<div style="min-width: 99%" class=\'answer-question\'>'.$work['answer'].'</div>';
                 echo '<br/>';
-        ?>
+                $n++;
+            }?>
     </div>
-   配分:<?php echo $exam_exercise['score'];?>
+    配分:<?php echo $exam_exercise['score'];?><br/>
    得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
-   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存/下一题</button>
+   <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存</button>
 </div>
 <script>
     $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
-       if(<?php echo $isLast?> == 1)
-        {
-            window.wxc.xcConfirm("已是最后一题", window.wxc.xcConfirm.typeEnum.info);
-            return ;
-        }
     });
-     function nextWork(answerID,recordID,examID,exerciseID){
+     function saveScore(scoreOld,answerID,recordID,examID,exerciseID){
          var value1 = $("#input")[0].value;
+         var re = /^[0-9]*[1-9][0-9]*$/ ; 
+         if(!re.test(value1)){
+             window.wxc.xcConfirm("分值只能为正整数！", window.wxc.xcConfirm.typeEnum.error);
+             $("#input")[0].value=scoreOld;
+             return false;
+        }
          var totalscore = <?php echo $exam_exercise['score'];?>;
         if(value1>totalscore){
             window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
@@ -57,4 +68,5 @@
       });
       }
     }
+
 </script>

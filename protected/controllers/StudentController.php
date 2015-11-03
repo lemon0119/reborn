@@ -56,7 +56,9 @@ class StudentController extends CController {
         return $this->render('ansDetail_1',['exercise' => $classwork,
             'exer' => $exer,
             'answer' => $answer['answer'],
-            'correct' => $answer['ratio_correct']]);
+            'correct' => $answer['ratio_correct'],
+            'type'=>$type,
+                ]);
     }
     
     public function actionAnsKeyType(){

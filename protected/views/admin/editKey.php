@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<?php $optArr = explode("$",$content);
+<?php $optArr = explode(":",$content);
       $count = round(count($optArr)/3);?>
 
     
