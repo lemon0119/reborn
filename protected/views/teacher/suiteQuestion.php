@@ -14,7 +14,7 @@
                 echo $work['requirements'];
                 echo '<br/>';
                 echo '<div class=\'answer-tip-text1\'>作答结果：</div>';
-                echo '<div class=\'answer-question\'>'.$ansWork['answer'].'</div>';
+                echo '<div class=\'answer-question\'>'.$choiceAnsWork[$k].'</div>';
                 echo '<div class=\'answer-tip-text2\'>正确答案：</div>';
                 echo '<div class=\'answer-question\'>'.$work['answer'].'</div>';
                 echo '<br/>';
