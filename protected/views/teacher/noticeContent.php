@@ -18,4 +18,7 @@
         </tr>       
     </tbody>
 </table>
+<div style="text-align: right;">
+        <a href="./index.php?r=teacher/teacherNotice" id="returner" ></a>
+</div>
 

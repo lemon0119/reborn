@@ -18,4 +18,6 @@
         </tr>       
     </tbody>
 </table>
-
+<div style="text-align: right;">
+        <a href="./index.php?r=student/stuNotice" id="returner" ></a>
+</div>
