@@ -44,7 +44,7 @@
     ?>
     
 <div class="span9">
-    <h2>键位练习列表</h2>
+    <h2>看打练习列表</h2>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped">
         <thead>
@@ -74,7 +74,7 @@
                                         ?></td>
                         <td class="font-center"><?php if($model['createPerson']=="0")
                                         echo "管理员";
-                                    else echo  $teachers[$model['createPerson']];
+                                    else  echo  $teachers[$model['createPerson']];
                             ?></td>
                         <td class="font-center"><?php echo $model['createTime'];?></td>
                         <td class="font-center" style="width: 100px">
@@ -85,6 +85,7 @@
                             <?php }else{ ?>
                             <a href="./index.php?r=teacher/copyLook&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img title="复制" src="<?php echo IMG_URL; ?>copy.png"></a>
                             <?php }?>
+                          
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -105,9 +106,17 @@
     $(document).ready(function(){
     var result = <?php  if(isset($result)) echo "'$result'"; else echo'1';?>;
     if(result === '1')
-    window.wxc.xcConfirm('复制选择题成功！', window.wxc.xcConfirm.typeEnum.success);
+    window.wxc.xcConfirm('复制成功！', window.wxc.xcConfirm.typeEnum.success,{
+        onOk:function(){
+            window.location.href = "./index.php?r=teacher/lookLst";
+        }
+    });
     else if(result === '0')
-    window.wxc.xcConfirm('复制选择题失败！', window.wxc.xcConfirm.typeEnum.error);
+    window.wxc.xcConfirm('复制失败！', window.wxc.xcConfirm.typeEnum.error,{
+        onOk:function(){
+            window.location.href = "./index.php?r=teacher/lookLst";
+        }
+    });
     result = "";
 }      
 );

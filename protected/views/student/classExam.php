@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 ?>
-<div class="span11">
+<div class="span11" style="min-height: 500px">
     <center><h3 style="color: white;">课 堂 考 试</h3></center>
     <table class="table table-bordered table-striped"  style="background: #DDD">
             <thead>
