@@ -12,6 +12,14 @@ function test()
 	     return false;
 	 } 
 }
+function long0(){
+    var temp = document.getElementById("input01").value;
+    var reg=/^[A-Za-z0-9]+$/;
+    if(!reg.test(temp)||temp.length<3||temp.length>15){
+        alert('密码必须为3-15位的数字和字母的组合');
+        document.getElementById("input01").value="";
+    }
+}
 function long(){
     var temp = document.getElementById("input02").value;
     var reg=/^[A-Za-z0-9]+$/;
@@ -45,19 +53,19 @@ function long2(){
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                <label class="control-label" for="input01">旧密码</label>
+                <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
                 <div class="controls">
-                        <input name="old" type="password" class="input-xlarge" id="input01" style="height: 30px;"/>
+                        <input name="old" type="password" onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input02">新密码</label>
+                <label class="control-label" for="input02">新密码<h style="color:red;">*</h></label>
                 <div class="controls">
                         <input name="new1" type="password" onblur="long()" class="input-xlarge" id="input02" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input03">确认密码</label>
+                <label class="control-label" for="input03">确认密码<h style="color:red;">*</h></label>
                 <div class="controls">
                         <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/>
                 </div>
-                <label class="control-label" for="input03">邮箱</label>
+                <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
                 <div class="controls">
                     <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
                 </div>
@@ -66,10 +74,10 @@ function long2(){
                 <input type="hidden" name="flag" id="flag" value="1" />
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
                 <input type="file" name="file"  id="file"/><br>   -->
-            </div>
-            <div>
+            
+            <div style="margin-top: 30px;">
                 <a id="stuBack" href="./index.php?r=student/index"></a>
-                <a id="DeterMine1"type="submit"></a> 
+                <a id="DeterMine1" href="#" name="submit" onclick="judge()"></a> 
             </div>
         </fieldset>
     </form>   
@@ -88,14 +96,13 @@ $(document).ready(function(){
     else if(result=='old error')
     window.wxc.xcConfirm('原密码错误！', window.wxc.xcConfirm.typeEnum.warning);
 }); 
-$("#myForm").submit(function(){
+function judge(){
     var old = $("#input01")[0].value;
     var new1 = $("#input02")[0].value;
     var defnew=$("#input03")[0].value;
     var email=$("#input04")[0].value;
     if(old!="" &&new1!=""&&old==new1){
         window.wxc.xcConfirm('新旧密码不能一样', window.wxc.xcConfirm.typeEnum.info);
-        $("#input01")[0].value="";
         $("#input02")[0].value="";
     	$("#input03")[0].value="";
         return false;
@@ -103,8 +110,7 @@ $("#myForm").submit(function(){
     if(new1===defnew){
     }else
     {
-        window.wxc.xcConfirm('不一致', window.wxc.xcConfirm.typeEnum.warning);
-        window.wxc.xcConfirm(new1+','+defnew, window.wxc.xcConfirm.typeEnum.info);
+        window.wxc.xcConfirm('新密码和确认密码不一致', window.wxc.xcConfirm.typeEnum.warning);
     	$("#input02")[0].value="";
     	$("#input03")[0].value="";
         return false;
@@ -117,6 +123,7 @@ $("#myForm").submit(function(){
         window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
-        
-});
+    $('#myForm').submit();
+    return false
+}
 </script>

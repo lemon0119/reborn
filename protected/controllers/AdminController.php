@@ -1798,9 +1798,12 @@ class AdminController extends CController {
             $i = 2;
             $answer = $_POST ['in1'];
             for (; $i <= 3 * 10; $i ++) {
-                if ($_POST ['in' . $i] != "")
-                    $answer = $answer . "$" . $_POST ['in' . $i];
-                else
+                if ($_POST ['in' . $i] != ""){
+                   if ($i % 3 == 0)
+                        $answer = $answer . "_" . $_POST['in' . $i];
+                    else
+                        $answer = $answer . ":" . $_POST['in' . $i];
+                }else
                     break;
             }
             $result = KeyType::model()->insertKey($_POST ['title'], $answer, 0);
@@ -1815,6 +1818,7 @@ class AdminController extends CController {
         $sql = "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result = $result->read();
+        $result['content'] = str_replace("_", ":", $result['content']);
         if (!isset($_GET ['action'])) {
             $this->render("editKey", array(
                 'exerciseID' => $exerciseID,
