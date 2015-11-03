@@ -57,10 +57,10 @@
                     </td>
                     <td class="font-center">
                         <?php if ($isOpen == false) { ?>
-                        <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo $exam['begintime'] ?>')" style="color: green" >开放</a>
+                        <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo $exam['begintime'] ?>')" style="color: green" >发布</a>
                             <font style="color:grey">关闭</font>
                         <?php } else { ?>
-                            <font style="color:grey">开放</font>
+                            <font style="color:grey">发布</font>
                             <a href="./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $exam['examID']; ?>&&duration=<?php echo $exam['duration'];?>&&beginTime=<?php echo $exam['begintime']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1; ?>" style="color: red">关闭</a>
                         <?php } ?>  
                     </td>   
