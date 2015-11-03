@@ -135,7 +135,7 @@
             <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
 
             <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
-            <a id="postnotice"></a>
+            <a id="postnoticeTea"></a>
             
 
             </div>

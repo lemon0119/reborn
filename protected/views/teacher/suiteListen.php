@@ -41,6 +41,9 @@ require 'workAnsSideBar.php';
     }
 ?>
 <script type="text/javascript">
+    $(document).ready(function(){
+        $("li#li-listen-<?php echo $exer['exerciseID'];?>").attr('class','active');
+    });
     function load(){
             var url = "./index.php?r=student/preExer&&type=classwork";
         $("#cont").load(url);
