@@ -3770,6 +3770,7 @@ class TeacherController extends CController {
              'studentID'=>$studentID,
              'classID'=>$classID,
              'workID'=>$workID,
+                 'type'=>$ty,
                 'lesson'=>$lesson,
                 'array_accomplished'=>$array_accomplished,
             'exam_exercise' => $suite_exercise,
@@ -3869,6 +3870,7 @@ class TeacherController extends CController {
              'classID'=>$classID,
              'score'=>$scorer,
              'workID'=>$workID,
+              'type'=>$ty,
             'exam_exercise' => $exam_exercise,
             'answer' => $answer['answer'],
             'correct' => $answer['ratio_correct']]);

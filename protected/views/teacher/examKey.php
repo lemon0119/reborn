@@ -34,6 +34,7 @@ require 'examAnsSideBar.php';
 
 <script>
      $(document).ready(function(){   
+         $("li#li-key-<?php echo $exer['exerciseID'];?>").attr('class','active');
       $("#score").html(<?php echo $score;?>);
        
     });

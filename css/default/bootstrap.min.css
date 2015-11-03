@@ -4798,12 +4798,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
 
 }
-#postnotice{
+#postnoticeTea{
     padding: 10px 190px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_announcement.png");
 }
-#postnotice:hover{
+#postnoticeTea:hover{
     padding: 10px 190px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/on_btn_announcement.png");
