@@ -64,10 +64,13 @@ class TeacherController extends CController {
         $questAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'question']);
         $listenAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'listen']);
         
-        
-        $choiceScore=$choiceAll[0]['score'];
-        $fillingScore=$fillingAll[0]['score'];
-        $questScore=$questAll[0]['score'];
+        $choiceScore=$fillingScore=$questScore=0;
+        if($choiceAll)
+            $choiceScore=$choiceAll[0]['score'];
+        if($fillingAll)
+            $fillingScore=$fillingAll[0]['score'];
+        if($questAll)
+            $questScore=$questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
             'array_exam' => $array_suite,
             'examExer' => $examExer,
@@ -803,7 +806,7 @@ class TeacherController extends CController {
         $answer = $_POST['in1'];
         for (; $i <= 3 * 10; $i++) {
             if ($_POST['in' . $i] != "")
-                $answer = $answer . "$" . $_POST['in' . $i];
+                $answer = $answer . ":" . $_POST['in' . $i];
             else
                 break;
         }

@@ -39,19 +39,31 @@
         </thead>
         <tbody>
             <tr>
+                <?php 
+                    if(isset($examExer['choice'])){               
+                ?>
                 <td class="font-center">选择题</td>
                 <td class="font-center" id="cNum"><?php echo (isset($examExer['choice'])) ? count($examExer['choice']):0;?></td>
                 <td class="font-center"><input id="cScore" name= "choiceScore" type="text" class="input-small input_test input_score" value="<?php echo $choiceScore;?>"/>&nbsp;分</td>
+                <?php }?>
             </tr>
             <tr>
+                <?php 
+                    if(isset($examExer['filling'])){               
+                ?>
                 <td class="font-center">填空题</td>
                 <td class="font-center" id="fNum"><?php echo (isset($examExer['filling'])) ? count($examExer['filling']):0;?></td>
                 <td class="font-center"><input id="fScore" name= "fillScore" type="text" class="input-small input_test input_score" value="<?php echo $fillingScore;?>"/>&nbsp;分</td>
+                <?php }?>
             </tr>
             <tr>
+                <?php 
+                    if(isset($examExer['question'])){               
+                ?>
                 <td class="font-center">简答题</td>
                 <td class="font-center" id="qNum"><?php echo (isset($examExer['question'])) ? count($examExer['question']):0;?></td>
                 <td class="font-center"><input id="qScore" name= "questScore" type="text" class="input-small input_test input_score" value="<?php echo $questScore;?>"/>&nbsp;分</td>
+                <?php }?>
             </tr>
         </tbody>
     </table>

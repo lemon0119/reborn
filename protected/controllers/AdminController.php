@@ -1843,7 +1843,7 @@ class AdminController extends CController {
         $answer = $_POST ['in1'];
         for (; $i <= 3 * 10; $i ++) {
             if ($_POST ['in' . $i] != "")
-                $answer = $answer . "$" . $_POST ['in' . $i];
+                $answer = $answer . ":" . $_POST ['in' . $i];
             else
                 break;
         }
