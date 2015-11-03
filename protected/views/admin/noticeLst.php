@@ -119,7 +119,7 @@ $(document).ready(function(){
 							$('#deleForm').submit();
 						}
 					};
-					window.wxc.xcConfirm("删除，您确定这样吗？", "custom", option);
+					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
         }
        
     }

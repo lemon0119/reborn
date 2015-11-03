@@ -19,7 +19,6 @@
                 }
                 else{
                 ?>
-        <div class="<?php if($uAns === $right ) echo 'answer-right'; else echo 'answer-wrong';?>"></div>
         <?php }?>
         <?php echo "<font>$n</font>"?>. <?php  echo $work['requirements'];
                 echo '<br/>';
@@ -29,7 +28,7 @@
                 foreach ($optArr as $aOpt) {?>
                     <input type="radio" disabled <?php if($mark === $uAns) echo 'checked';?> >&nbsp <?php echo $mark.'.'.$aOpt;?>
                     <?php if($mark === $right){?>
-                        <span class='answer-check'></span>
+                        <font color="green" font="12px">&nbsp;  &nbsp;正确答案</font>
                     <?php }?>
                     <br/>
                 <?php $mark++;
