@@ -26,7 +26,9 @@
             </tr>
         </thead>
                 <tbody>        
-                    <?php foreach($examWork as $work):
+                    <?php 
+                    $n=1;
+                    foreach($examWork as $work):
                         
                            foreach ($examExercise as $exam)
                           {
@@ -38,7 +40,7 @@
                         ?>
                        
                     <tr>
-                        <td class="font-center" style="width: 50px"><?php echo $work['exerciseID'];?></td>
+                        <td class="font-center" style="width: 50px"><?php echo $n++;?></td>
                         <td title="<?php echo $work['requirements'];?>" class="font-center">
                             <?php  if(Tool::clength($work['requirements'])<=8)
                                         echo $work['requirements'];
