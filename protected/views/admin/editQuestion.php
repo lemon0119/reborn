@@ -70,7 +70,7 @@
 <script>     
 $(document).ready(function(){
     <?php if(isset($result))
-            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.success);";?>
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;

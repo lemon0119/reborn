@@ -106,7 +106,7 @@ $(document).ready(function(){
     <?php 
         if(isset($result)){
             echo '$("#upload").hide();';
-            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.warning);";
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.success);";
         }
     ?>
 });

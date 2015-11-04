@@ -1,5 +1,5 @@
 
-<div class="span11">
+<div style="min-height: 600px" class="span11">
 <h2>公告列表</h2>
 <!-- 公告列表-->
 <table class="table table-bordered table-striped"  style="background: #DDD">
