@@ -1,12 +1,12 @@
 
-<div class="span11">
-<h2>公告列表</h2>
+<div class="span9"style="width:1090px;height: 500px">
+    <center><h2>公告列表</h2></center>
 <!-- 公告列表-->
-<table class="table table-bordered table-striped"  style="background: #DDD">
+<table class="table table-bordered table-striped">
     <thead>
-        <tr>
-            <th class="font-center">日期</th>
-            <th class="font-center">标题</th>  
+       <tr>
+            <th style="width: 30%;font-weight: normal;font-size: 15px">时间</th>
+            <th style="width: 70%;font-weight: normal;font-size: 15px">标题</th>  
         </tr>
     </thead>
     <tbody>
