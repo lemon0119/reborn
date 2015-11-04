@@ -45,10 +45,13 @@
 
 <div class="span9">
 <h2>填空题列表</h2>
+<input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
+    <a href="#" onclick="copyCheck()"><img title="批量复制" src="<?php echo IMG_URL; ?>copy.png"></a>
 <!-- 键位习题列表-->
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
+            <th class="font-center">选择</th>
             <th class="font-center">编号</th>
            
             <th class="font-center">内容</th>
@@ -57,9 +60,11 @@
             <th class="font-center">操作</th>
         </tr>
     </thead>
-            <tbody>        
+            <tbody>   
+                <form id="copyForm" method="post" action="./index.php?r=teacher/copyFill" > 
                 <?php foreach($fillLst as $model):?>
                 <tr>
+                    <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID'];?>" /> </td>
                     <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
                    
                     <td class="font-center"><?php  if(Tool::clength($model['requirements'])<=10)
@@ -83,6 +88,7 @@
                     </td>
                 </tr>            
                 <?php endforeach;?> 
+                </form>
             </tbody>
 </table>
 <!-- 学生列表结束 -->
@@ -105,6 +111,36 @@
     result = "";
 }      
 );
+function check_all(obj, cName)
+    {
+        var checkboxs = document.getElementsByName(cName);
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].checked = obj.checked;
+        }
+    }
+    function copyCheck() {
+        var checkboxs = document.getElementsByName('checkbox[]');
+        var flag = 0;
+            for (var i = 0; i < checkboxs.length; i++) {
+               if(checkboxs[i].checked){
+                    flag=1;
+                    break;
+               }
+            } 
+            if(flag===0){
+               window.wxc.xcConfirm('未选中任何题目', window.wxc.xcConfirm.typeEnum.info);
+            }else{
+                 var option = {
+                        title: "警告",
+                        btn: parseInt("0011",2),
+                        onOk: function(){
+                                $('#copyForm').submit();
+                        }
+                };
+                window.wxc.xcConfirm("您确定复制题目吗？", "custom", option);
+            }
+       
+    }
    function dele(exerciseID){
       
       var option = {

@@ -334,7 +334,7 @@ class StudentController extends CController {
         $isOver = $costTime < $totalTime ? 0 : 1;
         //end
          if($recordID==null){
-          return $this->render('listenExer',array( 'exercise'=>$classexam,'exercise2'=>$classexam2,'exerOne'=>$result,'cent' =>$cent,'isExam'=>$isExam,'examInfo'=>$examInfo,'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime ));
+          return $this->render('listenExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exercise2'=>$classexam2,'exerOne'=>$result,'cent' =>$cent,'isExam'=>$isExam,'examInfo'=>$examInfo,'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime ));
          }
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -359,6 +359,7 @@ class StudentController extends CController {
              'cent' =>$cent,
             'isExam'=>$isExam,
                 'examInfo'=>$examInfo,
+             'exerID' =>$exerID,
             'typeNow' => 'listen',
             'isOver' => $isOver, //edit by LC
             'costTime' => $costTime
@@ -459,6 +460,7 @@ class StudentController extends CController {
             'exercise'=>$classexam,
             'exercise2'=>$classexam2,
                 'exerOne'=>$result,
+             'exerID' =>$exerID,
             'cent'=>$cent,
             'isExam'=>$isExam,
                 'examInfo'=>$examInfo,
@@ -489,6 +491,7 @@ class StudentController extends CController {
             'cent'=>$cent,
             'isExam'=>$isExam,
             'examInfo'=>$examInfo,
+             'exerID' =>$exerID,
             'typeNow' => 'look',
             'isOver' => $isOver, //edit by LC
             'costTime' => $costTime
@@ -586,7 +589,7 @@ class StudentController extends CController {
         $isOver = $costTime < $totalTime ? 0 : 1;
         //end
          if($recordID==null){
-          return $this->render('keyExer',array( 'exercise'=>$classexam,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
+          return $this->render('keyExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
         }
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -604,12 +607,13 @@ class StudentController extends CController {
 
         return $this->render('keyExer',array( 
             'exercise'=>$classexam,
-                'exerOne'=>$result,
+            'exerOne'=>$result,
             'exercise2'=>$classexam2,
             'cent'=>$cent,
             'isExam'=>$isExam,
-                'examInfo'=>$examInfo, 
+            'examInfo'=>$examInfo, 
             'typeNow' => 'key',
+            'exerID' =>$exerID,
             'isOver' => $isOver, //edit by LC
             'costTime' => $costTime
         ));

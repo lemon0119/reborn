@@ -64,10 +64,13 @@ class TeacherController extends CController {
         $questAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'question']);
         $listenAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'listen']);
         
-        
-        $choiceScore=$choiceAll[0]['score'];
-        $fillingScore=$fillingAll[0]['score'];
-        $questScore=$questAll[0]['score'];
+        $choiceScore=$fillingScore=$questScore=0;
+        if($choiceAll)
+            $choiceScore=$choiceAll[0]['score'];
+        if($fillingAll)
+            $fillingScore=$fillingAll[0]['score'];
+        if($questAll)
+            $questScore=$questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
             'array_exam' => $array_suite,
             'examExer' => $examExer,
@@ -635,7 +638,7 @@ class TeacherController extends CController {
         $thisLook = new LookType();
         $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
 
-        if (Yii::app()->session['lastUrl'] == "LookLst") {
+        if (Yii::app()->session['lastUrl'] == "lookLst") {
             $result = LookType::model()->getLookLst("", "");
             $lookLst = $result['lookLst'];
             $pages = $result['pages'];
@@ -681,16 +684,26 @@ class TeacherController extends CController {
     }
     public function actionCopyLook() {
         $insertresult = "no";
-        $code = $_GET["code"];
-        if ($code != Yii::app()->session['code']) {
-            $exerciseID = $_GET["exerciseID"];
-            $thisLook = new LookType();
-            $oldLook = $thisLook->findAll("exerciseID = '$exerciseID'");
-            $insertresult = LookType::model()->insertLook($oldLook[0]['title'], $oldLook[0]['content'], Yii::app()->session['userid_now']);
-            Yii::app()->session['code'] = $_GET["code"];
-            error_log("1");
+        if(isset($_GET['exerciseID'])){
+            $code = $_GET["code"];
+            if ($code != Yii::app()->session['code']) {
+                $exerciseID = $_GET["exerciseID"];
+                $thisLook = new LookType();
+                $oldLook = $thisLook->findAll("exerciseID = '$exerciseID'");
+                $insertresult = LookType::model()->insertLook($oldLook[0]['title'], $oldLook[0]['content'], Yii::app()->session['userid_now']);
+                Yii::app()->session['code'] = $_GET["code"];
+                error_log("1");
+            }
         }
 
+        if (isset($_POST['checkbox'])) {
+            $exerciseIDlist = $_POST['checkbox'];
+            foreach ($exerciseIDlist as $v) {
+                $thisLook = new LookType ();
+                $oldLook = $thisLook->find("exerciseID = '$v'");
+                $insertresult = LookType::model()->insertLook($oldLook['title'], $oldLook['content'],  Yii::app()->session['userid_now']);
+            }
+        }
         if (Yii::app()->session['lastUrl'] == "searchLook") {
             $type = Yii::app()->session['searchLookType'];
             $value = Yii::app()->session['searchLookValue'];
@@ -803,7 +816,7 @@ class TeacherController extends CController {
         $answer = $_POST['in1'];
         for (; $i <= 3 * 10; $i++) {
             if ($_POST['in' . $i] != "")
-                $answer = $answer . "$" . $_POST['in' . $i];
+                $answer = $answer . ":" . $_POST['in' . $i];
             else
                 break;
         }
@@ -956,15 +969,26 @@ class TeacherController extends CController {
 
     public function actionCopyKey() {
         $insertresult = "no";
-        $code = $_GET["code"];
-        if ($code != Yii::app()->session['code']) {
-            $exerciseID = $_GET["exerciseID"];
-            $thisKey = new KeyType();
-            $oldKey = $thisKey->findAll("exerciseID = '$exerciseID'");
-            $insertresult = KeyType::model()->insertKey($oldKey[0]['title'], $oldKey[0]['content'], Yii::app()->session['userid_now']);
-            Yii::app()->session['code'] = $_GET["code"];
+        if(isset($_GET['exerciseID'])){
+            $code = $_GET["code"];
+            if(isset($_GET['exerciseID'])){
+                if ($code != Yii::app()->session['code']) {
+                    $exerciseID = $_GET["exerciseID"];
+                    $thisKey = new KeyType();
+                    $oldKey = $thisKey->findAll("exerciseID = '$exerciseID'");
+                    $insertresult = KeyType::model()->insertKey($oldKey[0]['title'], $oldKey[0]['content'], Yii::app()->session['userid_now']);
+                    Yii::app()->session['code'] = $_GET["code"];
+                }
+            }
         }
-
+        if (isset($_POST['checkbox'])) {
+            $exerciseIDlist = $_POST['checkbox'];
+            foreach ($exerciseIDlist as $v) {
+                $thisKey = new KeyType ();
+                $oldKey = $thisKey->find("exerciseID = '$v'");
+                $insertresult = KeyType::model()->insertKey($oldKey['title'], $oldKey['content'], Yii::app()->session['userid_now']);
+            }
+        }
         if (Yii::app()->session['lastUrl'] == "searchKey") {
             $type = Yii::app()->session['searchKeyType'];
             $value = Yii::app()->session['searchKeyValue'];
@@ -1296,32 +1320,60 @@ class TeacherController extends CController {
 
     public function actionCopyListen() {
         $insertresult = "no";
-        $code = $_GET["code"];
-        $typename = Yii::app()->session['role_now'];
-        $userid = Yii::app()->session['userid_now'];
-        $filePath = $typename . "/" . $userid . "/";
-        $dir = "resources/" . $filePath;
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777);
-        }
-
-        if ($code != Yii::app()->session['code']) {
-            $exerciseID = $_GET["exerciseID"];
-            $thisListen = new ListenType();
-            $oldListen = $thisListen->findAll("exerciseID = '$exerciseID'");
-            $sourcefilePath = "resources/" . $oldListen[0]['filePath'];
-            $fileName = $oldListen[0]['fileName'];
-
-            if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
-                //表示复制的文件已存在
-                $insertresult = '2';
-            } else {
-                $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
-                if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
-                    copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
-                $insertresult = ListenType::model()->insertListen($oldListen[0]['title'], $oldListen[0]['content'], $newName, $filePath, Yii::app()->session['userid_now']);
+        if(isset($_GET['exerciseID'])){
+            $code = $_GET["code"];
+            $typename = Yii::app()->session['role_now'];
+            $userid = Yii::app()->session['userid_now'];
+            $filePath = $typename . "/" . $userid . "/";
+            $dir = "resources/" . $filePath;
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777);
             }
-            Yii::app()->session['code'] = $_GET["code"];
+
+            if ($code != Yii::app()->session['code']) {
+                $exerciseID = $_GET["exerciseID"];
+                $thisListen = new ListenType();
+                $oldListen = $thisListen->findAll("exerciseID = '$exerciseID'");
+                $sourcefilePath = "resources/" . $oldListen[0]['filePath'];
+                $fileName = $oldListen[0]['fileName'];
+
+                if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
+                    //表示复制的文件已存在
+                    $insertresult = '2';
+                } else {
+                    $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
+                    if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
+                        copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
+                    $insertresult = ListenType::model()->insertListen($oldListen[0]['title'], $oldListen[0]['content'], $newName, $filePath, Yii::app()->session['userid_now']);
+                }
+                Yii::app()->session['code'] = $_GET["code"];
+            }
+        }
+        if (isset($_POST['checkbox'])) {
+            $exerciseIDlist = $_POST['checkbox'];
+            $typename = Yii::app()->session['role_now'];
+            $userid = Yii::app()->session['userid_now'];
+            $filePath = $typename . "/" . $userid . "/";
+            $dir = "resources/" . $filePath;
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777);
+            }
+            foreach ($exerciseIDlist as $v) {
+                $thisListen = new ListenType ();
+                $oldListen = $thisListen->find("exerciseID = '$v'");
+                $sourcefilePath = "resources/" . $oldListen['filePath'];
+                $fileName = $oldListen['fileName'];
+
+                if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
+                    //表示复制的文件已存在
+                    $insertresult = '2';
+                } else {
+                    $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
+                    if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
+                        copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
+                    $insertresult = ListenType::model()->insertListen($oldListen['title'], $oldListen['content'], $newName, $filePath, Yii::app()->session['userid_now']);
+                }
+            }
         }
 
 
@@ -1540,13 +1592,24 @@ class TeacherController extends CController {
 
     public function actionCopyFill() {
         $insertresult = "no";
-        $code = $_GET["code"];
-        if ($code != Yii::app()->session['code']) {
-            $exerciseID = $_GET["exerciseID"];
-            $thisFill = new Filling();
-            $oldFill = $thisFill->findAll("exerciseID = '$exerciseID'");
-            $insertresult = Filling::model()->insertFill($oldFill[0]['requirements'], $oldFill[0]['answer'], Yii::app()->session['userid_now']);
-            Yii::app()->session['code'] = $_GET["code"];
+        if(isset($_GET['exerciseID'])){
+            $code = $_GET["code"];
+            if ($code != Yii::app()->session['code']) {
+                $exerciseID = $_GET["exerciseID"];
+                $thisFill = new Filling();
+                $oldFill = $thisFill->findAll("exerciseID = '$exerciseID'");
+                $insertresult = Filling::model()->insertFill($oldFill[0]['requirements'], $oldFill[0]['answer'], Yii::app()->session['userid_now']);
+                Yii::app()->session['code'] = $_GET["code"];
+            }
+        }
+
+        if (isset($_POST['checkbox'])) {
+            $exerciseIDlist = $_POST['checkbox'];
+            foreach ($exerciseIDlist as $v) {
+                $thisFill = new Filling ();
+                $oldFill = $thisFill->find("exerciseID = '$v'");
+                $insertresult = Filling::model()->insertFill($oldFill['requirements'],$oldFill['answer'], Yii::app()->session['userid_now']);
+            }
         }
 
 
@@ -1871,13 +1934,23 @@ class TeacherController extends CController {
 
     public function actionCopyChoice() {
         $insertresult = "no";
-        $code = $_GET["code"];
-        if ($code != Yii::app()->session['code']) {
-            $exerciseID = $_GET["exerciseID"];
-            $thisChoice = new Choice();
-            $oldChoice = $thisChoice->findAll("exerciseID = '$exerciseID'");
-            $insertresult = Choice::model()->insertChoice($oldChoice[0]['requirements'], $oldChoice[0]['options'], $oldChoice[0]['answer'], Yii::app()->session['userid_now']);
-            Yii::app()->session['code'] = $_GET["code"];
+        if(isset($_GET['exerciseID'])){
+            $code = $_GET["code"];
+            if ($code != Yii::app()->session['code']) {
+                $exerciseID = $_GET["exerciseID"];
+                $thisChoice = new Choice();
+                $oldChoice = $thisChoice->findAll("exerciseID = '$exerciseID'");
+                $insertresult = Choice::model()->insertChoice($oldChoice[0]['requirements'], $oldChoice[0]['options'], $oldChoice[0]['answer'], Yii::app()->session['userid_now']);
+                Yii::app()->session['code'] = $_GET["code"];
+            }
+        }
+        if (isset($_POST['checkbox'])) {
+            $exerciseIDlist = $_POST['checkbox'];
+            foreach ($exerciseIDlist as $v) {
+                $thisChoice = new Choice ();
+                $oldChoice = $thisChoice->find("exerciseID = '$v'");
+                $insertresult = Choice::model()->insertChoice($oldChoice['requirements'], $oldChoice['options'], $oldChoice['answer'], Yii::app()->session['userid_now']);
+            }
         }
 
 
@@ -2123,13 +2196,24 @@ class TeacherController extends CController {
 
     public function actionCopyQuestion() {
         $insertresult = "no";
-        $code = $_GET["code"];
-        if ($code != Yii::app()->session['code']) {
-            $exerciseID = $_GET["exerciseID"];
-            $thisQuestion = new Question();
-            $oldQuestion = $thisQuestion->findAll("exerciseID = '$exerciseID'");
-            $insertresult = Question::model()->insertQue($oldQuestion[0]['requirements'], $oldQuestion[0]['answer'], Yii::app()->session['userid_now']);
-            Yii::app()->session['code'] = $_GET["code"];
+        if(isset($_GET['exerciseID'])){
+            $code = $_GET["code"];
+            if ($code != Yii::app()->session['code']) {
+                $exerciseID = $_GET["exerciseID"];
+                $thisQuestion = new Question();
+                $oldQuestion = $thisQuestion->findAll("exerciseID = '$exerciseID'");
+                $insertresult = Question::model()->insertQue($oldQuestion[0]['requirements'], $oldQuestion[0]['answer'], Yii::app()->session['userid_now']);
+                Yii::app()->session['code'] = $_GET["code"];
+            }
+        }
+
+        if (isset($_POST['checkbox'])) {
+            $exerciseIDlist = $_POST['checkbox'];
+            foreach ($exerciseIDlist as $v) {
+                $thisQuestion = new Question ();
+                $oldQuestion = $thisQuestion->find("exerciseID = '$v'");
+                $insertresult = Question::model()->insertQue($oldQuestion['requirements'], $oldQuestion['answer'], Yii::app()->session['userid_now']);
+            }
         }
 
 
