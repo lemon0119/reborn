@@ -36,15 +36,16 @@
 <?php $optArr = explode(":",$content);
       $count = round(count($optArr)/3);?>
     
-<div class="span9">   
+<div class="span9">        
+<?php if(!isset($action)) {?>
+<legend><h3>编辑键位练习题</h3></legend>
+<?php } else if($action == 'look') {?>
+<legend><h3>查看键位练习题</h3></legend>
+<?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editKeyInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
-        <?php if(!isset($action)) {?>
-            <legend><a href="./index.php?r=teacher/keyLst" style="color:black">键位练习</a>>>修改</legend>
-        <?php } else if($action == 'look') {?>
-            <legend><a href="./index.php?r=teacher/keyLst" style="color:black">键位练习>></a>查看</legend>
-        <?php }?>
+        
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">

@@ -30,7 +30,7 @@ echo "<script>var role='$role';</script>";
 
 <div class="right"style="background-color: #3b3b3b;border: 0px" >
     <div align="center" id="sw-teacher-camera"><a href="#" ><h4 style="color: white">教 师 视 频</h4></a></div>
-    <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:220px; clear:both;">
+    <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
         <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
