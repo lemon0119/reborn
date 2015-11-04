@@ -1,23 +1,25 @@
 <script src="<?php echo JS_URL; ?>/My97DatePicker"></script>
-<div class="span11">
-<h2>公告</h2>
+<div class="span9"style="height: 500px;width: 1090px;">
+<div >
+            <center><h2>查看公告</h2></center>
+    </div>
 <!-- 公告列表-->
-<table class="table table-bordered table-striped"  style="background: #DDD">
+<table style="width: 1180px;height: 236px;border:solid #DDD;">
     <thead>
-        <tr>
-           
-            <th class="font-center">内容</th>
-         
+        <tr style="background: #DDD;height: 36px;min-width: 100%;text-align: left">
+            
+                <th style="width: 35%;">标题:<?php echo $noticeRecord['noticetitle'];?></th>
+                <th style="font-weight:normal;width: 30%">发布时间:<?php echo $noticeRecord['noticetime'];?> </th>
         </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-               <?php echo $noticeRecord['content'];?>
+        <tr style="background: #fff;height: 200px;">
+            <td colspan="2">
+                
+                    <textarea style="background:transparent;border-style:none; width: 1077px;height: 190px" disabled="disable"><?php echo $noticeRecord['content'];?></textarea>
+                
+                
             </td>       
-        </tr>       
-    </tbody>
-</table>
+    </thead>
+</table><br/>
 <div style="text-align: right;">
         <a href="./index.php?r=student/stuNotice" id="returner" ></a>
 </div>
