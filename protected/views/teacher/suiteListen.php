@@ -66,7 +66,7 @@ require 'workAnsSideBar.php';
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($ansWork['answer']);?>');
+        var lcs = new LCS('<?php echo (str_replace("\r\n", "<br/>", $exer['content']) );?>', '<?php echo (str_replace("\r\n", "<br/>", $ansWork['answer']));?>');
         if(lcs == null)
             return;
         lcs.doLCS();

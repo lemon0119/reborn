@@ -5603,3 +5603,36 @@ REQUEST_URI=/reborn/index.php?r=teacher/ajaxChoice
 in D:\wamp\www\reborn\protected\views\teacher\suiteListen.php (15)
 in D:\wamp\www\reborn\protected\controllers\TeacherController.php (3609)
 in D:\wamp\www\reborn\index.php (32)
+2015/11/04 18:23:43 [error] [php] Undefined variable: work (E:\php_workstation\reborn\protected\controllers\TeacherController.php:3708)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(286): TeacherController->runAction()
+#1 E:\php_workstation\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 E:\php_workstation\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 E:\php_workstation\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxChoice
+in E:\php_workstation\reborn\protected\controllers\TeacherController.php (3708)
+in E:\php_workstation\reborn\index.php (32)
+2015/11/04 18:23:44 [error] [php] Undefined variable: work (E:\php_workstation\reborn\protected\controllers\TeacherController.php:3708)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(286): TeacherController->runAction()
+#1 E:\php_workstation\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 E:\php_workstation\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 E:\php_workstation\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxChoice
+in E:\php_workstation\reborn\protected\controllers\TeacherController.php (3708)
+in E:\php_workstation\reborn\index.php (32)
+2015/11/04 18:24:03 [error] [php] Undefined variable: work (E:\php_workstation\reborn\protected\controllers\TeacherController.php:3708)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(286): TeacherController->runAction()
+#1 E:\php_workstation\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#2 E:\php_workstation\framework\web\CWebApplication.php(284): TeacherController->run()
+#3 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 E:\php_workstation\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/ajaxChoice
+in E:\php_workstation\reborn\protected\controllers\TeacherController.php (3708)
+in E:\php_workstation\reborn\index.php (32)

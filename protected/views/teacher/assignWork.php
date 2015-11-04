@@ -20,7 +20,7 @@
                 </li>
            <?php }?>
              <li class="divider"></li>
-            <li class="nav-header">课程列表</li>
+            <li class="nav-header">课时列表</li>
         </ul>
     </div>
 <div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">

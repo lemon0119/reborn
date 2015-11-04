@@ -40,7 +40,7 @@ endforeach;
             <th class="font-center">编号</th>
             <th class="font-center">科目名</th>
             <th class="font-center">创建人</th>
-            <th class="font-center">课程数</th>
+            <th class="font-center">课时数</th>
             <th class="font-center">创建时间</th>
             <th class="font-center">操作</th>
         </tr>
