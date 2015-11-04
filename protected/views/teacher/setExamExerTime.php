@@ -125,6 +125,34 @@ function savetime(){
         .error(function(){alert('不好意思，保存出错了...');});
 }
 $(document).ready(function(){
+    allScore();
+    function allScore(){
+        var totalScore = 0;
+        var num = $('#cNum').html();
+        var sc = ($('#cScore').val() === '')?0:$('#cScore').val();
+        var intscore = (isNaN(parseInt(sc)))?0:parseInt(sc);
+        var intNum = (isNaN(parseInt(num)))?0:parseInt(num);
+        totalScore += intNum * intscore;
+
+        num = $('#fNum').html();
+        sc = ($('#fScore').val() === '')?0:$('#fScore').val();
+        intscore = (isNaN(parseInt(sc)))?0:parseInt(sc);
+        intNum = (isNaN(parseInt(num)))?0:parseInt(num);
+        totalScore += intNum * intscore;
+
+        num = $('#qNum').html();
+        sc = ($('#qScore').val() === '')?0:$('#qScore').val();
+        intscore = (isNaN(parseInt(sc)))?0:parseInt(sc);
+        intNum = (isNaN(parseInt(num)))?0:parseInt(num);
+        totalScore += intNum * intscore;
+
+        $('.types').each(function(){
+            sc = ($(this).val() === '')?0:$(this).val();
+            intscore = (isNaN(parseInt(sc)))?0:parseInt(sc);
+            totalScore += intscore;
+        })
+        $('#score').html(String(totalScore));
+    }
     $('.input_test').bind({
         blur:function(){
             var score = parseInt(this.value);
@@ -135,25 +163,7 @@ $(document).ready(function(){
     });
     $('.input_score').bind({
         blur:function(){
-            var totalScore = 0;
-            var num = $('#cNum').html();
-            var sc = ($('#cScore').val() === '')?0:$('#cScore').val();
-            var intscore = (isNaN(parseInt(sc)))?0:parseInt(sc);
-            totalScore += parseInt(num) * intscore;
-            num = $('#fNum').html();
-            sc = ($('#fScore').val() === '')?0:$('#fScore').val();
-            intscore = (isNaN(parseInt(sc)))?0:parseInt(sc);
-            totalScore += parseInt(num) * intscore;
-            num = $('#qNum').html();
-            sc = ($('#qScore').val() === '')?0:$('#qScore').val();
-            intscore = (isNaN(parseInt(sc)))?0:parseInt(sc);
-            totalScore += parseInt(num) * intscore;
-            $('.types').each(function(){
-                sc = ($(this).val() === '')?0:$(this).val();
-                intscore = (isNaN(parseInt(sc)))?0:parseInt(sc);
-                totalScore += intscore;
-            })
-            $('#score').html(String(totalScore));
+            allScore();
         }
     });
 });

@@ -28,14 +28,16 @@
             </tr>
         </thead>
                 <tbody>        
-                    <?php foreach($examWork as $work):
+                    <?php 
+                    $n=1;
+                    foreach($examWork as $work):
                             foreach ($examExercise as $exam)
                           {
                          if($exam['exerciseID'] == $work['exerciseID'])
                              $thisExam = $exam;
                            }?>                   
                     <tr>
-                        <td class="font-center" style="width:50px" ><?php echo $work['exerciseID'];?></td>
+                        <td class="font-center" style="width:50px" ><?php echo $n++;?></td>
                         <td title="<?php echo $work['title'];?>" class="font-center">
                             <?php  if(Tool::clength($work['title'])<=5)
                                         echo $work['title'];
