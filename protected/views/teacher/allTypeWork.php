@@ -22,7 +22,7 @@
         $code = mt_rand(0, 1000000);
     ?>                
                 
-<h3>自有习题</h3>
+<h3>题库</h3>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped">
         <thead>
