@@ -4826,8 +4826,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #DeterMine1{
-    position: relative;
-    left: 81px;
+    margin-left: 30px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_determine.png");
@@ -5287,4 +5286,15 @@ table tr td{
     position: relative;
     border:0px; 
     background: url(../../img/on_btn_bigret.png);
+}
+.setB {
+    border-radius: 5px;
+    background-color: #fff;
+    position:relative;
+    float: right;
+    right:30px;
+    padding: 40px;
+    height: 590px;
+    overflow: auto;
+    width:1090px;
 }

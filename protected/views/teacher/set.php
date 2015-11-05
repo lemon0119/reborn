@@ -37,43 +37,59 @@ function long2(){
     }
 }
 </script>
-<div class="span3">
-       <div class="well" style="padding: 8px 0;height: 565px;">
-           <li class="nav-header"><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人设置</h4></li>   
-           <li class="nav-header" id="one"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="cont1" href="./index.php?r=teacher/set">修改密码</a></li>    
-        </div>
-</div>
-<div class="span9">
-    <div class="span_set">
+<div class="setB" style="text-align: center;">
+    <br>
+    <br>
     <h3>设置密码</h3>
+    <br>
+    <br>
+    <div>
     <form id="myForm" method="post" action="./index.php?r=teacher/set"> 
-        <fieldset>
-            <legend>填写信息</legend>
-            <div class="control-group">
-                <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
-                <div class="controls">
-                        <input name="old" type="password"  onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/>
-                </div>
-                <label class="control-label" for="input02">新密码<h style="color:red;">*</h></label>
-                <div class="controls">
-                        <input name="new1" type="password"  onblur="long()" class="input-xlarge" id="input02" style="height: 30px;"/>
-                </div>
-                <label class="control-label" for="input03">确认密码<h style="color:red;">*</h></label>
-                <div class="controls">
-                        <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/>
-                </div>
-                <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
-                <div class="controls">
+        <table style="margin-left: auto;margin-right: auto; ">
+            <tr>
+                <td>
+                    <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
+                </td>
+                <td>
+                    <input name="old" type="password"  onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   <label class="control-label" for="input02">新密码<h style="color:red;">*</h></label> 
+                </td>
+                <td>
+                    <input name="new1" type="password"  onblur="long()" class="input-xlarge" id="input02" style="height: 30px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   <label class="control-label" for="input03">确认密码<h style="color:red;">*</h> </label>
+                </td>
+                <td>
+                    <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
+                </td>
+                <td>
                     <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
-                </div>
-                
-            </div>
-            <div style="margin-top: 30px;">
-                <a id="stuBack" href="./index.php?r=student/index"></a>
-                <a id="DeterMine1" href="#" name="submit" onclick="judge()"></a> 
-            </div>
-        </fieldset>
-    </form>   
+                </td>
+            </tr>
+            <tr style="height: 30px;"></tr>
+            <tr>
+                <td>
+
+                </td>
+                <td >
+                    <a id="stuBack" href="./index.php?r=teacher/index"></a>
+                    <a id="DeterMine1" href="#" name="submit" onclick="judge()"></a> 
+                </td>
+            </tr>
+        </table>
+    </form>  
     </div>
 </div>
 

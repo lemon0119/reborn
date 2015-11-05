@@ -1235,26 +1235,19 @@ class StudentController extends CController {
         }
         if (($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg"))
         {   
-            if($_FILES["file"]["size"] < 30000000)
+            if ($_FILES["file"]["error"] > 0)
             {
-                if ($_FILES["file"]["error"] > 0)
-                {
-                    $result = "Return Code: " . $_FILES["file"]["error"];
-                }
-              else
-                {
-                    $oldName = $_FILES["file"]["name"]; 
-                    $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
-                    move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
-                    $result = "上传成功！";
-
-                    $user->img_address="img/head/" .$newName;
-                    $picAddress="img/head/" .$newName;
-                    $user->update();
-                    
-                }
-            }else{
-                $reult = "文件限定大小为30M！";
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            }
+          else
+            {
+                $oldName = $_FILES["file"]["name"]; 
+                $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
+                $result = "上传成功！";
+                $user->img_address="img/head/" .$newName;
+                $picAddress="img/head/" .$newName;
+                $user->update();
             }
         }else {
             $result = "请上传正确的文件！";
@@ -1346,6 +1339,10 @@ class StudentController extends CController {
     }
     //公告内容
      public function ActionNoticeContent(){
+        $result=0;
+        if(isset($_GET['action'])&&$_GET['action']=='edit'){
+            $result=1;
+        }
        $id = $_GET['id'];
        $noticeRecord=Notice::model()->find("id= '$id'");
        $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
@@ -1374,5 +1371,20 @@ class StudentController extends CController {
             $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
         return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
     }
-    
+    //学生个人资料
+     public function actionStuInformation(){
+        $ID= Yii::app()->session['userid_now'];
+        $student = Student::model()->find("userID = '$ID'");
+        return $this->render('stuInformation',array(
+                'id' => $student ['userID'],
+                'name' => $student ['userName'],
+                'class' =>$student ['classID'],
+                'sex' => $student['sex'],
+                'age' => $student['age'],
+                'password' => $student['password'],
+                'mail_address' => $student['mail_address'],
+                'phone_number' => $student['phone_number']
+        ));
+
+    }
 }
