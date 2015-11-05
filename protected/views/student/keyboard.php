@@ -143,11 +143,14 @@
     var numKeyRight = 0;
     function startParse(){
         var content = document.getElementById("id_content").value;
-        var cont_array = content.split("$");
-        for(var i = 0; i < cont_array.length; i += 3){
-            wordArray.push(cont_array[i] + ":" + cont_array[i+1]);
-            wordNum.push(cont_array[i+2]);
-            totalNum += parseInt(cont_array[i+2]);
+        var cont_array = content.split(":");
+        for(var i = 0; i < cont_array.length; i += 2){
+            var left = cont_array[i];
+            var rAndNum = cont_array[i+1].split(":");
+            var right = rAndNum[0];
+            wordArray.push(left + ":" + right);
+            wordNum.push(rAndNum[0]);
+            totalNum += parseInt(rAndNum[0]);
         }
         nextWord = getNextWord();
         setWordView(nextWord);
