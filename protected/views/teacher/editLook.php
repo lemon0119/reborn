@@ -37,9 +37,9 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<legend><h3>编辑键位练习题</h3></legend>
+<legend><h3>编辑看打练习题</h3></legend>
 <?php } else if($action == 'look') {?>
-<legend><h3>查看键位练习题</h3></legend>
+<legend><h3>查看看打练习题</h3></legend>
 <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editLookInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
