@@ -1235,26 +1235,19 @@ class StudentController extends CController {
         }
         if (($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg"))
         {   
-            if($_FILES["file"]["size"] < 30000000)
+            if ($_FILES["file"]["error"] > 0)
             {
-                if ($_FILES["file"]["error"] > 0)
-                {
-                    $result = "Return Code: " . $_FILES["file"]["error"];
-                }
-              else
-                {
-                    $oldName = $_FILES["file"]["name"]; 
-                    $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
-                    move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
-                    $result = "上传成功！";
-
-                    $user->img_address="img/head/" .$newName;
-                    $picAddress="img/head/" .$newName;
-                    $user->update();
-                    
-                }
-            }else{
-                $reult = "文件限定大小为30M！";
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            }
+          else
+            {
+                $oldName = $_FILES["file"]["name"]; 
+                $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
+                $result = "上传成功！";
+                $user->img_address="img/head/" .$newName;
+                $picAddress="img/head/" .$newName;
+                $user->update();
             }
         }else {
             $result = "请上传正确的文件！";
