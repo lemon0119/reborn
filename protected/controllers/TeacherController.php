@@ -356,18 +356,14 @@ class TeacherController extends CController {
             return;
         }
         if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
-            if ($_FILES["file"]["size"] < 200000000) {
-                if ($_FILES["file"]["error"] > 0) {
-                    $result = "Return Code: " . $_FILES["file"]["error"];
-                } else {
-                    $oldName = $_FILES["file"]["name"];
-                    $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
-                    move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
-                    Resourse::model()->insertRela($newName, $oldName);
-                    $result = "上传成功!";
-                }
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
-                $reult = "视频文件限定大小为200M！";
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRela($newName, $oldName);
+                $result = "上传成功!";
             }
         } else {
             $result = "请上传正确类型的文件！";
