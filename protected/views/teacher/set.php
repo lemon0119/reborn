@@ -69,7 +69,7 @@ function long2(){
                 
             </div>
             <div style="margin-top: 30px;">
-                <a id="stuBack" href="./index.php?r=student/index"></a>
+                <a id="stuBack" href="./index.php?r=teacher/index"></a>
                 <a id="DeterMine1" href="#" name="submit" onclick="judge()"></a> 
             </div>
         </fieldset>
