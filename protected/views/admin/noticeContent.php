@@ -19,9 +19,9 @@
         <tr style="background: #fff;height: 200px;">
             <td colspan="4">
                 <?php if($result==0){?>
-                    <textarea style="background:transparent;border-style:none; width: 1077px;height: 190px" disabled="disable"><?php echo $noticeRecord['content'];?></textarea>
+                <textarea style="background:transparent;border-style:none; width: 1077px;height: 190px" disabled="disable"><?php echo str_replace("<br/>", "\r", $noticeRecord['content']) ;?></textarea>
                 <?php }else{?>
-                    <textarea id="notice-textarea" style="background:transparent;border-style:none; width: 1077px;height: 190px"><?php echo $noticeRecord['content'];?></textarea>
+                    <textarea id="notice-textarea" style="background:transparent;border-style:none; width: 1077px;height: 190px"><?php echo str_replace("<br/>", "\r", $noticeRecord['content']) ;?></textarea>
                 <?php }?>
                 
             </td>       
