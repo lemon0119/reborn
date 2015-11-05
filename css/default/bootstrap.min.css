@@ -4822,7 +4822,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #DeterMine1{
-    margin-left: 50px;
+    margin-left: 30px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_determine.png");
@@ -5057,4 +5057,15 @@ table tr td{
   padding: 10px 10px 0 10px;
   color: #000;
   font-size: 11px;
+}
+.setB {
+    border-radius: 5px;
+    background-color: #fff;
+    position:relative;
+    float: right;
+    right:30px;
+    padding: 40px;
+    height: 590px;
+    overflow: auto;
+    width:1090px;
 }
