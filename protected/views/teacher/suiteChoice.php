@@ -3,6 +3,7 @@
 <div id="ziji">
 <div class="hero-unit" style="height: 480px;overflow:auto">
           <?php
+          echo '<h2>选择题</h2>';
            $n=1;
            foreach ($works  as $k=>$work){ 
                 $right = $work['answer'];
@@ -18,9 +19,8 @@
                 }
                 else{
                 ?>
-        <div class="<?php if($uAns === $right ) echo 'answer-right'; else echo 'answer-wrong';?>"></div>
         <?php }?>
-        <?php echo "<font color=black size=5px>$n</font>"?>.<?php  echo $work['requirements'];
+        <?php echo "<font>$n</font>"?>. <?php  echo $work['requirements'];
                 echo '<br/>';
                 $opt = $work['options'];
                 $optArr = explode("$$",$opt);
@@ -28,7 +28,7 @@
                 foreach ($optArr as $aOpt) {?>
                     <input type="radio" disabled <?php if($mark === $uAns) echo 'checked';?> >&nbsp <?php echo $mark.'.'.$aOpt;?>
                     <?php if($mark === $right){?>
-                        <span class='answer-check'></span>
+                        <font color="green" font="12px">&nbsp;  &nbsp;正确答案</font>
                     <?php }?>
                     <br/>
                 <?php $mark++;

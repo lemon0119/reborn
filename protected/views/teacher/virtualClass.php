@@ -128,14 +128,14 @@
     <div class="right"style="background-color: #3b3b3b;border: 0px" >
         
             <div align="center" id="sw-teacher-camera"><a href="#"><h4 style="color: white">教 师 视 频</h4></a></div>  
-            <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:220px; clear:both;">
+            <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
                 <iframe src="./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>" name="iframe_b" style="background-color:#5e5e5e; width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
             </div>
             <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
 
             <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
-            <a id="postnotice"></a>
+            <a id="postnoticeTea"></a>
             
 
             </div>
@@ -209,7 +209,7 @@ $(document).ready(function(){
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
 
-    $("#postnotice").click(function() {
+    $("#postnoticeTea").click(function() {
         var text = $("#bulletin-textarea").val();
         $.ajax({
             type: "POST",

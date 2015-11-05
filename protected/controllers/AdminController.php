@@ -1798,9 +1798,12 @@ class AdminController extends CController {
             $i = 2;
             $answer = $_POST ['in1'];
             for (; $i <= 3 * 10; $i ++) {
-                if ($_POST ['in' . $i] != "")
-                    $answer = $answer . "$" . $_POST ['in' . $i];
-                else
+                if ($_POST ['in' . $i] != ""){
+                   if ($i % 3 == 0)
+                        $answer = $answer . "_" . $_POST['in' . $i];
+                    else
+                        $answer = $answer . ":" . $_POST['in' . $i];
+                }else
                     break;
             }
             $result = KeyType::model()->insertKey($_POST ['title'], $answer, 0);
@@ -1815,6 +1818,7 @@ class AdminController extends CController {
         $sql = "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result = $result->read();
+        $result['content'] = str_replace("_", ":", $result['content']);
         if (!isset($_GET ['action'])) {
             $this->render("editKey", array(
                 'exerciseID' => $exerciseID,
@@ -1839,7 +1843,7 @@ class AdminController extends CController {
         $answer = $_POST ['in1'];
         for (; $i <= 3 * 10; $i ++) {
             if ($_POST ['in' . $i] != "")
-                $answer = $answer . "$" . $_POST ['in' . $i];
+                $answer = $answer . ":" . $_POST ['in' . $i];
             else
                 break;
         }
@@ -2966,18 +2970,14 @@ class AdminController extends CController {
             return;
         }
         if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint") {
-            if ($_FILES["file"]["size"] < 30000000) {
-                if ($_FILES["file"]["error"] > 0) {
-                    $result = "Return Code: " . $_FILES["file"]["error"];
-                } else {
-                    $newName = Tool::createID() . ".ppt";
-                    $oldName = $_FILES["file"]["name"];
-                    move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
-                    Resourse::model()->insertRela($newName, $oldName);
-                    $result = "上传成功！";
-                }
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
-                $reult = "PPT文件限定大小为30M！";
+                $newName = Tool::createID() . ".ppt";
+                $oldName = $_FILES["file"]["name"];
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRela($newName, $oldName);
+                $result = "上传成功！";
             }
         } else {
             $result = "请上传正确类型的文件！";
@@ -3058,18 +3058,14 @@ class AdminController extends CController {
             return;
         }
         if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
-            if ($_FILES["file"]["size"] < 200000000) {
-                if ($_FILES["file"]["error"] > 0) {
-                    $result = "Return Code: " . $_FILES["file"]["error"];
-                } else {
-                    $oldName = $_FILES["file"]["name"];
-                    $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
-                    move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
-                    Resourse::model()->insertRela($newName, $oldName);
-                    $result = "上传成功！";
-                }
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
-                $reult = "视频文件限定大小为200M！";
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRela($newName, $oldName);
+                $result = "上传成功！";
             }
         } else {
             $result = "请上传正确类型的文件！";

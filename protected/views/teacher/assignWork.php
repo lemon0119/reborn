@@ -20,7 +20,7 @@
                 </li>
            <?php }?>
              <li class="divider"></li>
-            <li class="nav-header">课程列表</li>
+            <li class="nav-header">课时列表</li>
         </ul>
     </div>
 <div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">
@@ -60,10 +60,10 @@
                     <td class="font-center" ><?php echo $suite['suiteName']; ?></td>
                     <td class="font-center" style="width: 100px">
                         <?php if ($isOpen == false) { ?>
-                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color:green">开放</a>
+                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color:green">发布</a>
                             <font style="color:grey">关闭</font>
                         <?php } else { ?>
-                            <font style="color:grey">开放</font>
+                            <font style="color:grey">发布</font>
                             <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1;  ?>" style="color:red">关闭</a>
                         <?php } ?>
                     </td>             

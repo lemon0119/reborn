@@ -93,8 +93,13 @@
 
 <script>
   function dele(exerciseID){
-      if(confirm("您确定删除吗？")){
-          window.location.href = "./index.php?r=admin/deleteFill&&exerciseID=" + exerciseID;
-      }
+      var option = {
+						title: "提示",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							 window.location.href = "./index.php?r=admin/deleteFill&&exerciseID=" + exerciseID;
+						} 
+					};
+					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
   }
 </script>

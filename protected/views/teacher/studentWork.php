@@ -99,7 +99,7 @@
                     <?php foreach($array_accomplished as $student):
                             ?>
                     <tr>
-                        <td class="font-orange" style="width: 50px">
+                        <td class="font-orange" style="width: 75px">
                             <?php echo $student['userName'];?>
                         </td>
                         <td style="width: 50px">
@@ -109,7 +109,7 @@
                             <font style="color: green">完成</font>
                         </td>  
                         <td >
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice"><img title="批阅" src="<?php echo IMG_URL;?>edit.png"/></a>
+                            <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice"><img title="批阅" src="<?php echo IMG_URL;?>edit.png"/></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -132,7 +132,7 @@
                     <?php foreach($array_unaccomplished as $student):
                             ?>
                     <tr>
-                        <td class="font-orange" style="width: 50px">
+                        <td class="font-orange" style="width: 75px">
                            <?php echo $student['userName'];?>
                         </td>
                         <td>
@@ -142,7 +142,7 @@
                             <font style="color: red">未完成</font>
                         </td>  
                         <td>
-                            <a href="./index.php?r=teacher/checkStuWork&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice"><img title="查看" src="<?php echo IMG_URL;?>detail.png"/></a>
+                            <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice"><img title="查看" src="<?php echo IMG_URL;?>detail.png"/></a>
                         </td> 
                     </tr>            
                     <?php endforeach;?> 

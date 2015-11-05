@@ -156,6 +156,7 @@ $("#myForm").submit(function(){
     var i ,j ,k, y = 3*divCount;
     var patrn = /^[ANIGDZWUEOXB]{1,12}$/;
     var numpatrn =/^[0-9]{1,2}$/;
+    
     for(i = 1 ; i <=y ; i++)
     {
         var input = $("#input" + i)[0].value;
@@ -172,11 +173,26 @@ $("#myForm").submit(function(){
             {
                 j = Math.floor(i/3)+1;
                 k = i%3;
-                window.wxc.xcConfirm('第' + j + '行第' + k + '空应输入0-12个A-Z的字母', window.wxc.xcConfirm.typeEnum.info);
+                window.wxc.xcConfirm('第' + j + '行第' + k + '空应输入0-12个速录键盘字母', window.wxc.xcConfirm.typeEnum.info);
                 return false;
             }
-        }           
-    }
+            var arrayinput = input.split("");
+            j = Math.floor(i/3)+1;
+            k = i%3;
+            console.log(arrayinput);
+            for(var v=0;v<arrayinput.length;v++){
+                for(var n=v+1;n<arrayinput.length;n++){
+                    if(arrayinput[v]==arrayinput[n]){
+                        window.wxc.xcConfirm('第' + j + '行第' + k + '空不应出现重复字符', window.wxc.xcConfirm.typeEnum.info);
+                        return false;
+                    }
+                }
+            }
+            
+        }
+        
+
+        }
     }
 );
     function addIn()

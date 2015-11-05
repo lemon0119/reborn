@@ -77,9 +77,10 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
-        
-         alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
-         if(<?php echo $exerOne['time']?>!=0){
+        <?php   if (!$isOver){?>
+        alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+        <?php }?>
+      if(<?php  if($isExam){echo $exerOne['time'];}else {echo 0;}?>!=0){ 
         <?php if($isExam){?>
             reloadTime2(<?php echo $exerOne['time'];?>,isExam);
             var isover = setInterval(function(){
@@ -89,7 +90,7 @@
                     alert("本题时间已到，不可答题！");
                     clearInterval(isover);
                     doSubmit(true,function(){
-                        window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['examsuiteID'];?>&&workID=<?php echo Yii::app()->session['examworkID']?>";
+                        window.location.href="index.php?r=student/examkeyType&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
                     });
                     
                 }
@@ -167,6 +168,8 @@
         var correct = getCorrect(answer , modtext);
         document.getElementById("id_correct").value = correct;
         var time = getSeconds();
+        console.log(time);
+          var time = getT();
         document.getElementById("id_cost").value = time;
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){

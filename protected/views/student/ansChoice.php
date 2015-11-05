@@ -8,13 +8,15 @@
 require 'ansSideBar.php';
 ?>
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;">
+<div class="span9" style="height:480px; overflow:auto; border:1px solid #000000;">
     <div class="hero-unit">
-        <?php $SNum = 0;
+        <?php 
+        echo '<h2>选择题</h2>';
+        $SNum = 0;
             foreach ($exercise['choice'] as $value){
                 $right = $value['answer'];
                 $uAns = $ansChoice[$value['exerciseID']];?>
-        <div class="<?php if($uAns === $right) echo 'answer-right'; else echo 'answer-wrong';?>"></div>
+        
         <?php   echo ($SNum+1).'. ';
                 echo $value['requirements'];
                 echo '<br/>';
@@ -22,9 +24,8 @@ require 'ansSideBar.php';
                 $optArr = explode("$$",$opt);
                 $mark = 'A';
                 foreach ($optArr as $aOpt) {?>
-                    <input type="radio" disabled <?php if($mark === $uAns) echo 'checked';?> >&nbsp <?php echo $mark.'.'.$aOpt;?>
-                    <?php if($mark === $right){?>
-                        <span class='answer-check' id="answer-check-<?php echo $SNum;?>"></span>
+                    <input type="radio" disabled <?php if($mark === $uAns) echo 'checked';?>>&nbsp <?php if($mark === $right) echo "<font color=green>$mark.$aOpt</font>"; else echo $mark.'.'.$aOpt;?>
+                    <?php if($mark === $right){?><font color="green" font="12px">&nbsp;  &nbsp;正确答案</font>
                     <?php }?>
                     <br/>
                 <?php $mark++;}?>

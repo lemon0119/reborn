@@ -1,3 +1,4 @@
+
 <script src="<?php echo JS_URL; ?>/My97DatePicker"></script>
 <div class="span9"
      style="height: 250px;width: 1080px;">
@@ -12,7 +13,7 @@
     </div>
 </div>
 <div class="span9" style="margin-top: 25px;width: 1080px;">
-    <center><h2>查看公告</h2></center>
+    <center><h2>公告列表</h2></center>
     <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　批量操作：
     <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
 <!-- 公告列表-->
@@ -79,8 +80,11 @@ $(document).ready(function(){
             data: {title:  text1 , content:  text2},
             success: function(){   
                
-            window.wxc.xcConfirm('公告发布成功！', window.wxc.xcConfirm.typeEnum.success);
-             window.location.reload();
+            window.wxc.xcConfirm('公告发布成功！', window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function(){
+                    window.location.reload();
+                }
+            });
             },
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
@@ -115,7 +119,7 @@ $(document).ready(function(){
 							$('#deleForm').submit();
 						}
 					};
-					window.wxc.xcConfirm("删除，您确定这样吗？", "custom", option);
+					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
         }
        
     }

@@ -5,8 +5,9 @@
 <div class="span9">
     <div class="hero-unit">
         <table border = '0px' width="100%">
+            <h2><?php if($type=='look') echo '看打练习';else echo '听打练习';?></h2>
             <tr>
-                <td width = '100px' align='center'><?php echo $exer['title']?></td>
+                <td width = '50%' align='center'>题目：<?php echo $exer['title']?></td>
                 <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct * 100);echo '%';?></span></td>
             </tr>
             <tr>
@@ -22,6 +23,8 @@
                 </td>
             </tr>
         </table>
+        <input id="text" type="hidden" value="<?php echo (str_replace("\n", "<br/>", $exer['content']) );?>"/>
+        <input id="text-answer" type="hidden" value="<?php echo (str_replace("\n", "<br/>", $answer));?>"/>
     </div>
 </div>
 <?php
@@ -53,7 +56,10 @@
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($answer);?>');        
+        var text =  $('#text').val(); 
+        var answer = $('#text-answer').val();
+        
+        var lcs = new LCS(text, answer);        
         if(lcs == null)
             return;
         lcs.doLCS();
@@ -62,6 +68,9 @@
         var modTem = lcs.getSubString(1);
         var modAns = lcs.getSubString(2);
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
+        console.log(lcs.getSubString(3).length);
+        console.log(lcs.getStrOrg(1).length);
+        console.log(correct);
         displayTemp('templet', tem, modTem);
         displayTemp('answer', ans, modAns);
     }

@@ -2,6 +2,7 @@
 <div id="ziji">
     <div class="hero-unit"style="height: 480px;overflow:auto">
         <?php 
+        echo '<h2>简答题</h2>';
          $n=1;
           foreach ($works  as $k=>$work){ 
                    if($ansWork['answer'] == "")
@@ -9,11 +10,11 @@
                         echo "<font color=red>未作答</font>";
                         echo '</br>';
                     }
-                echo "<font color=black size=5px>$n</font>.";
+                echo "<font>$n </font>.";
                 echo $work['requirements'];
                 echo '<br/>';
                 echo '<div class=\'answer-tip-text1\'>作答结果：</div>';
-                echo '<div class=\'answer-question\'>'.$ansWork['answer'].'</div>';
+                echo '<div class=\'answer-question\'>'.$choiceAnsWork[$k].'</div>';
                 echo '<div class=\'answer-tip-text2\'>正确答案：</div>';
                 echo '<div class=\'answer-question\'>'.$work['answer'].'</div>';
                 echo '<br/>';

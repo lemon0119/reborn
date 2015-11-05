@@ -50,11 +50,11 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     <li >
                                         <div class="userUI">
                                             <a href="#" id="userUI"  data-toggle="dropdown">
-                                                <?php echo Yii::app()->session['userName']; ?><b class="user_dropdown_logo"></b>
+                                                <?php echo Yii::app()->session['userName']; ?><?php echo Yii::app()->session['className']; ?><b class="user_dropdown_logo"></b>
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="./index.php?r=student/set">设置</a></li>
+                                                    <a href="./index.php?r=student/stuInformation">个人设置</a></li>
                                                 <li>
                                                 <li><a href="./index.php?r=user/login&exit=1">退出</a> </li>
                                             </ul>   
@@ -71,6 +71,9 @@ if (isset(Yii::app()->session['userid_now'])) {
                     <?php echo $content; ?>
                 </div>
             </div>
+             <div  class="copyright">
+		2015 &copy;南京兜秘网络科技有限公司.
+	</div>
         </body>
     </html>
 

@@ -11,6 +11,7 @@ require 'ansSideBar.php';
 <div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;">
         <div class="hero-unit">
             <?php 
+            echo '<h2>填空题</h2>';
                 $SNum = 0;
                 foreach ($exercise['filling'] as $value) {
                     echo ($SNum+1).'. ';

@@ -857,8 +857,6 @@ input[type="file"],input[type="image"],input[type="submit"],input[type="reset"],
     width:auto
 }
 select,input[type="file"] {
-    border-color: #000 !important;
-    color: #000 !important;
     height:30px;
     *margin-top:4px;
     line-height:30px
@@ -4642,6 +4640,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     margin-top: 100px;
     margin-left: 300px;
     color: #fff;
+    height: 500px;
     width:700px
 
 }
@@ -4800,12 +4799,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
 
 }
-#postnotice{
+#postnoticeTea{
     padding: 10px 190px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_announcement.png");
 }
-#postnotice:hover{
+#postnoticeTea:hover{
     padding: 10px 190px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/on_btn_announcement.png");
@@ -4823,7 +4822,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #DeterMine1{
-    margin-left: 50px;
+    margin-left: 30px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_determine.png");
@@ -5050,4 +5049,23 @@ table tr td{
 }
 .cursor_default{
     cursor:default;
+}
+.copyright{
+    text-align: center;
+  width: 250px;
+  margin: 0 auto; 
+  padding: 10px 10px 0 10px;
+  color: #000;
+  font-size: 11px;
+}
+.setB {
+    border-radius: 5px;
+    background-color: #fff;
+    position:relative;
+    float: right;
+    right:30px;
+    padding: 40px;
+    height: 590px;
+    overflow: auto;
+    width:1090px;
 }

@@ -31,7 +31,7 @@
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                <label class="control-label" style="position: relative;left: 288px;top: 25px" for="input02">课程数</label>
+                <label class="control-label" style="position: relative;left: 288px;top: 25px" for="input02">课时数</label>
                 <label class="control-label" for="input01">科目名</label>
                 <div class="controls">
                     <input name="courseName" type="text" class="input-xlarge" id="input01"/>
