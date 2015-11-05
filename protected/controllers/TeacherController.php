@@ -4048,9 +4048,11 @@ class TeacherController extends CController {
         $exerID=Yii::app()->session['exerID'];
         $res = KeyType::model()->findByPK($exerID);
         $this->renderPartial($render, array(
-            'examID'=>$examID,
-            'class'=>$class,
+            'type'=>$ty,
             'student'=>$student,
+            'examID'=>$examID,
+            'student'=>$student,
+            'class'=>$class,
             'workID' => $workID,
             'studentID' => $studentID,
             'accomplish' => $accomplish,
