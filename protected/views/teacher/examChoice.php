@@ -21,6 +21,7 @@
                 }
                 else{
                 ?>
+    <div class="<?php if($uAns === $right ){  $realScore=$realScore+$exam_exercise['score'];} else {}?>"></div>
         <?php }?>
                 
                 <?php echo "<font>$n</font>"?>.&nbsp<?php  echo $work['requirements'];
