@@ -73,12 +73,14 @@
        $this->widget('CLinkPager', array('pages' => $pages_stu));
         ?>
     </div>
+        <br/>
     <!-- 翻页标签结束 -->
-        <div class="form-actions">
-            <button class="btn btn-primary"  onclick="back()">确定</button>
-            <button class="btn" onclick="addStuClass()">添加学生</button>
-            <button class="btn" onclick="addTeaClass()">添加老师</button>
+    <div style="text-align: center">
+        <button style="padding: 18px 37px;" class="btn_ret_admin"  onclick="back()"></button>
+            <button class="btn_add_student_admin" onclick="addStuClass()"></button>
+            <button class="btn_add_teacher_admin" onclick="addTeaClass()"></button>
         </div>
+    <br/>
         <script>
         function back()
         {

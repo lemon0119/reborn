@@ -31,7 +31,7 @@
         </div>
         <div>
                                 <!--<input class="m-wrap placeholder-no-fix" type="password" placeholder="请输入您的密码" name="password" />-->
-            <?php echo $form->passwordField($login_model, 'password', array('class' => 'm-wrap placeholder-no-fix', 'placeholder' => "请输入您的密码")); ?>
+            <?php echo $form->passwordField($login_model, 'password', array('class' => 'm-wrap placeholder-no-fix','id'=>"pass", 'placeholder' => "请输入您的密码")); ?>
 <?php echo $form->error($login_model, 'password'); ?>
         </div>
         <div>
@@ -67,12 +67,12 @@
         <script src="<?php echo JS_URL; ?>supersized.3.2.7.min.js"></script>
         <script src="<?php echo JS_URL; ?>supersized-init.js"></script>
         <script>
-            jQuery(document).ready(function () {
-                App.init();
-                Login.init();
+            $(document).ready(function(){
+                  document.getElementById("pass").focus();
             });
             window.onload = function ()
             {
+                
                 $(".connect p").eq(0).animate({"left": "0%"}, 600);
                 $(".connect p").eq(1).animate({"left": "0%"}, 400);
             }
