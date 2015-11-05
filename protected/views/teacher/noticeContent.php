@@ -14,7 +14,7 @@
         <tr style="background: #fff;height: 200px;">
             <td colspan="2">
                 
-                    <textarea style="background:transparent;border-style:none; width: 1077px;height: 190px" disabled="disable"><?php echo $noticeRecord['content'];?></textarea>
+                    <textarea style="background:transparent;border-style:none; width: 1077px;height: 190px" disabled="disable"><?php echo str_replace("<br/>", "\r", $noticeRecord['content']) ;?></textarea>
                 
                 
             </td>       
