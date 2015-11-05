@@ -3,14 +3,14 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">                     
-            <li class="nav-header">班级列表</li>
+            <li class="nav-header"><i class="icon-knowlage"></i>班级列表</li>
 
             <?php foreach ($array_class as $class): ?>
                 <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>  
              
                 <li class="divider"></li>
-                <li class="nav-header">试卷标题</li>
+                <li class="nav-header"><i class="icon-knowlage"></i>试卷标题</li>
                 <li style="margin-top:10px">
                     <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value=""/>
                 </li>
@@ -65,13 +65,13 @@
                         <?php } ?>  
                     </td>   
 
-                    <td class="font-center" style="width: 180px">
+                    <td class="font-center" style="width: 210px">
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                         <?php if ($isOpen==false) {?>
-                            <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')">立即开始</a> 
+                            <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')"></a> 
                         <?php} ?>
-                            <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php echo IMG_URL; ?>edit.png">配置</a>
+                            <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php echo IMG_URL; ?>../UI_tea/icon_SETUP.png"></a>
                         <?php }?>
                         
                     </td>

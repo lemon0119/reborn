@@ -78,16 +78,18 @@ else
                     <input name="mail_address" type="text" class="input-xlarge" id="input07" value="<?php echo $mail_address ?>" />
                 </div>
             </div>
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">提交</button>
+            <div style="text-align: center">
+                <button type="submit"style="top:-2px;left: -45px" class="btn_save_admin"></button>
+                <a  style="right: 40px" class="btn_reset_password_admin" onclick="resetPass()"></a>
                 <?php if (Yii::app()->session['lastUrl'] == "stuDontHaveClass") { ?>
-                    <a href="./index.php?r=admin/stuDontHaveClass&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn">返回</a>
+                    <a style="right: 30px" href="./index.php?r=admin/stuDontHaveClass&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_ret_admin"></a>
 <?php } else if (isset($flag)) { ?>
-                    <a href="./index.php?r=admin/searchStu&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn">返回</a>
+                    <a style="right: 30px" href="./index.php?r=admin/searchStu&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_ret_admin"></a>
 <?php } else { ?>
-                    <a href="./index.php?r=admin/stuLst&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn">返回</a>
+                    <a style="right: 30px" href="./index.php?r=admin/stuLst&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_ret_admin"></a>
 <?php } ?>　　
-                <a  class="btn btn-primary" onclick="resetPass()">重置密码</a>
+                
+                
             </div>
         </fieldset>
     </form>

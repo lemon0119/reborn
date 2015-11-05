@@ -21,7 +21,7 @@
                     </td>
                     <td>
                         <a href="./index.php?r=admin/lookVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&vdir=<?php echo $vdir;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
-                        <a href="<?php echo "$vdir".iconv("gb2312","UTF-8",$file);?>" target="_blank"><img src="<?php echo IMG_URL; ?>edit.png">右键另存为</a>
+                        <a href="<?php echo "$vdir".iconv("gb2312","UTF-8",$file);?>" target="_blank"  download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>edit.png">下载</a>
                         <a href="./index.php?r=admin/deleteVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&vdir=<?php echo $vdir;?>" id="dele"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
                     </td>
                 </tr>

@@ -88,11 +88,11 @@
                 <input name="D" type="text" class="input-xlarge" id="input05" value="<?php echo $optArr[3]; ?>"/>
             </div>
         </div>
-    <div class="form-actions">
+    <div  style="text-align: center;">
         <?php if(!isset($action)) {?>
-            <button type="submit" class="btn btn-primary">修改</button> 
+            <button type="submit" style="left: 135px;top: 49px;" class="btn_save_admin"></button> 
         <?php }?>
-            <a href="./index.php?r=admin/returnFromAddChoice&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
+            <a style="left: 150px;top: 50px;" href="./index.php?r=admin/returnFromAddChoice&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
     </div>
     </fieldset>
 </form>   
