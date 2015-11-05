@@ -34,11 +34,13 @@ require 'examAnsSideBar.php';
         </table>
     </div>
 配分:<?php echo $exam_exercise['score'];?><br/>
-   得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
    <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
 </div>
         </div>
 
+<textarea id="text1" style="display: none"><?php echo ($exer['content']);?></textarea>
+<textarea id="text2" style="display: none"><?php echo ($ansWork['answer']);?></textarea>
 <?php
     if(isset(Yii::app()->session['type'])){
         $type = Yii::app()->session['type'];
@@ -73,7 +75,9 @@ require 'examAnsSideBar.php';
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($ansWork['answer']);?>');
+        var text1 = $('#text1').val();
+        var text2 = $('#text2').val();
+        var lcs = new LCS(text1, text2);
         if(lcs == null)
             return;
         lcs.doLCS();

@@ -811,10 +811,13 @@ class TeacherController extends CController {
         $i = 2;
         $answer = $_POST['in1'];
         for (; $i <= 3 * 10; $i++) {
-            if ($_POST['in' . $i] != "")
-                $answer = $answer . ":" . $_POST['in' . $i];
-            else
-                break;
+            if ($_POST['in' . $i] != "") {
+                    if ($i % 3 == 0)
+                        $answer = $answer . "_" . $_POST['in' . $i];
+                    else
+                        $answer = $answer . ":" . $_POST['in' . $i];
+                } else
+                    break;
         }
         $thisKey->title = $_POST['title'];
         $thisKey->content = $answer;
@@ -3670,7 +3673,9 @@ class TeacherController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
                 $classwork[$type] = Exam::model()->getExamExerByType($examID, $type);
         }
+        $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($record['recordID'], $ty));
         $this->render('checkStuExam', array(
+            'ansWork'=>$ansWork,
             'examID'=>$examID,
             'student' => $student,
             'class' => $class,
@@ -3758,12 +3763,13 @@ class TeacherController extends CController {
         Yii::app()->session['exerType'] = 'key';
         
         
-        
-        $studentID = Yii::app()->session['userid_now'];
-        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
-            $studentID = Yii::app()->session['studentID'];
-            $workID = Yii::app()->session['workID'];
-        }
+        $studentID=$_GET['studentID'];
+        $workID =$_GET['workID'];
+//        $studentID = Yii::app()->session['userid_now'];
+//        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
+//            $studentID = Yii::app()->session['studentID'];
+//            $workID = Yii::app()->session['workID'];
+//        }
         $recordID = suiteRecord::getRecord($workID, $studentID);
         $suite_exercise = SuiteExercise::model()->find("exerciseID=? and exerciseID=? and type=?", array($_GET['exerID'], $suiteID, $ty));
         $student = Student::model()->find("userID='$studentID'");
@@ -3878,12 +3884,13 @@ class TeacherController extends CController {
         Yii::app()->session['exerType'] = 'key';
         
         
-        
-        $studentID = Yii::app()->session['userid_now'];
-        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
-            $studentID = Yii::app()->session['studentID'];
-            $workID = Yii::app()->session['workID'];
-        }
+        $studentID=$_GET['studentID'];
+        $workID =$_GET['workID'];
+//        $studentID = Yii::app()->session['userid_now'];
+//        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
+//            $studentID = Yii::app()->session['studentID'];
+//            $workID = Yii::app()->session['workID'];
+//        }
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $exam_exercise = ExamExercise::model()->find("exerciseID=? and examID=? and type=?", array($_GET['exerID'], $examID, $ty));
         $student = Student::model()->find("userID='$studentID'");
@@ -3988,8 +3995,9 @@ class TeacherController extends CController {
                 break;
             }
         }
-        $exam_exercise = ExamExercise::model()->find("exerciseID=? and examID=? and type=?", array($work['exerciseID'], $examID, $ty));
-        $ansWork = AnswerRecord::model()->find("recordID=? and type=? and exerciseID=?", array($recordID, $ty, $work['exerciseID']));
+        echo 'dddd';
+        $exam_exercise = ExamExercise::model()->findAll("examID = ? and type = ?", array($examID, $ty));
+        $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($recordID, $ty));
         
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $ty));
         $choiceAnsWork = array();
@@ -4047,6 +4055,7 @@ class TeacherController extends CController {
         $work = ClassExam::model()->find("workID='$workID'");
         $exerID=Yii::app()->session['exerID'];
         $res = KeyType::model()->findByPK($exerID);
+        //print_r($exam_exercise);
         $this->renderPartial($render, array(
             'type'=>$ty,
             'student'=>$student,

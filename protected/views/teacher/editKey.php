@@ -33,7 +33,9 @@
     </div>
 </div>
 
-<?php $optArr = explode(":",$content);
+<?php 
+    $content=  str_replace("_", ":", $content);
+    $optArr = explode(":",$content);
       $count = round(count($optArr)/3);?>
     
 <div class="span9">        

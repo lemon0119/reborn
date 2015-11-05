@@ -3,6 +3,7 @@
     <div class="hero-unit">
         <?php 
         $n=1;
+        $m=0;
             echo "<h2>简答题</h2>"; 
             foreach ($works  as $k=>$work){ 
                    if(isset($choiceAnsWork[$k])){
@@ -24,11 +25,14 @@
                 echo '<div style="min-width: 99%" class=\'answer-question\'>'.$work['answer'].'</div>';
                 echo '<br/>';
                 $n++;
-            }?>
+                ?>配分:<br/>
+                得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork[$k]['score']?>" > 
+                <button onclick="saveScore(<?php echo $ansWork[$k]['score']?>,<?php if($ansWork[$k]['answerID'] != "") echo $ansWork[$k]['answerID'];else echo 1;?>,<?php if($ansWork[$k]['recordID'] != "") echo $ansWork[$k]['recordID'];else echo 1;?>,<?php echo $exam_exercise[$m]['examID'];?>,<?php echo $works[$m++]['exerciseID'];?>)" class="btn btn-primary">保存</button>
+            <?php echo "<br/>";}?>
     </div>
-    配分:<?php echo $exam_exercise['score'];?><br/>
-   得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
-   <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存</button>
+    
+       
+   
 </div>
 <script>
     $(document).ready(function(){   
@@ -46,6 +50,8 @@
         if(value1>totalscore){
             window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
         }else{
+            alert(exerciseID);
+            alert(examID);
         var user = {
             recordID:recordID,
             type:"question",
