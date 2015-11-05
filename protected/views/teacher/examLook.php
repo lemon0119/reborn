@@ -22,14 +22,14 @@ require 'examAnsSideBar.php';
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()"><?php echo ($ansWork['answer']);?></div>
+                    <div id ="answer"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
                     
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"><?php echo ($exer['content']);?></div>
+                    <div id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
                 </td>
             </tr>
         </table>
@@ -40,6 +40,8 @@ require 'examAnsSideBar.php';
    <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
 </div>
 </div>
+<textarea id="text1" style="display: none"><?php echo ($exer['content']);?></textarea>
+<textarea id="text2" style="display: none"><?php echo ($ansWork['answer']);?></textarea>
 <?php
     if(isset(Yii::app()->session['type'])){
         $type = Yii::app()->session['type'];
@@ -74,7 +76,9 @@ require 'examAnsSideBar.php';
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($ansWork['answer']);?>');
+        var text1 = $('#text1').val();
+        var text2 = $('#text2').val();
+        var lcs = new LCS(text1, text2);
         if(lcs == null)
             return;
         lcs.doLCS();
@@ -86,6 +90,7 @@ require 'examAnsSideBar.php';
         displayTemp('templet', tem, modTem);
         displayTemp('answer', ans, modAns);
     }
+    start();
     function displayTemp(id, temp, modTem){
         var flag = false;
         var j = 0;

@@ -39,6 +39,8 @@ require 'examAnsSideBar.php';
 </div>
         </div>
 
+<textarea id="text1" style="display: none"><?php echo ($exer['content']);?></textarea>
+<textarea id="text2" style="display: none"><?php echo ($ansWork['answer']);?></textarea>
 <?php
     if(isset(Yii::app()->session['type'])){
         $type = Yii::app()->session['type'];
@@ -73,7 +75,9 @@ require 'examAnsSideBar.php';
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var lcs = new LCS('<?php echo ($exer['content']);?>', '<?php echo ($ansWork['answer']);?>');
+        var text1 = $('#text1').val();
+        var text2 = $('#text2').val();
+        var lcs = new LCS(text1, text2);
         if(lcs == null)
             return;
         lcs.doLCS();
