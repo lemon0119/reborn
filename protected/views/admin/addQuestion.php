@@ -49,9 +49,10 @@
                 <textarea name="answer" style="width:450px; height:200px;"></textarea>
             </div>
         </div> 
-        <div class="form-actions">
-        <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=admin/returnFromAddQuestion" class="btn">返回</a>
-        </div>
+        <div  style="text-align: center;">
+                <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddQuestion" class="btn_cancel_admin"></a>
+                <button style="position: relative;right:105px" type="submit" class="btn_add_admin"></button>
+            </div>
         </fieldset>
     </form>         
 </div>

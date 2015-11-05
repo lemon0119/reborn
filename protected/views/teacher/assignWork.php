@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
         <ul class="nav nav-list">                     
-            <li class="nav-header">班级列表</li>
+            <li class="nav-header"><i class="icon-knowlage"></i>班级列表</li>
 
             <?php foreach ($array_class as $class): ?>
                 <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
@@ -13,14 +13,14 @@
             <li class="divider"></li>
             <?php if(Yii::app()->session['currentClass']&&Yii::app()->session['currentLesson']){?>
             
-                <li class="nav-header" >作业题目</li>
+                <li class="nav-header" ><i class="icon-knowlage"></i>作业题目</li>
                 <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
                 <li style="margin-top:10px">
                     <a href="#"onclick="chkIt()" id="bth_create"></a>
                 </li>
            <?php }?>
              <li class="divider"></li>
-            <li class="nav-header">课时列表</li>
+            <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
         </ul>
     </div>
 <div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">

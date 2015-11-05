@@ -67,7 +67,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                     </div>
                 </div>
                 
-                <div class="row">
+                <div class="row" style="min-height: 700px">
                     <?php echo $content; ?>
                 </div>
             </div>

@@ -7,7 +7,7 @@
     <div style="margin:0 auto;border:0px solid #000;width:800px;height:100px;text-align: center">
         <input id="notice-input" style="width: 60%;" oninput="this.style.color='red'" name="title" placeholder="标题...."><br/><br/>
         <textarea  id="notice-textarea" placeholder="内容...." style="width: 60%;height: 90px;"name="content"></textarea><br/>
-        
+        <br/>
         <a id="postnotice" style="text-align: right;margin-left: 360px"></a>
        
     </div>
@@ -17,7 +17,7 @@
     <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　批量操作：
     <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
 <!-- 公告列表-->
-<table class="table table-bordered table-striped"  style="background: #DDD">
+<table class="table table-bordered table-striped"  style="background: #aaa9a9">
     <thead>
         <tr> 
             
@@ -59,7 +59,8 @@ $(document).ready(function(){
        <?php if(isset($_POST['checkbox'])){ ?>
            window.location.href="./index.php?r=admin/noticeLst";
       <?php }?> 
-    
+          
+    document.getElementById("notice-input").focus();
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
 

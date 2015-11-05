@@ -65,16 +65,17 @@
             <fieldset>
             <legend>填写题目</legend>
             <div class="control-group">
-                <label class="control-label" for="input1">题目</label>
+                <label style="position: relative;left:55px;top: -32px;" class="control-label" for="input1">题目</label>
                 <div class="controls">
                     <textarea name="requirements" style="width:450px; height:50px;" id="input1"></textarea>
                 </div>
             </div>
+            <br/>
             <div class="control-group">
-                <label class="control-label" for="input2">答案</label>
+                <label style="position: relative;left:53px;top: -32px;" class="control-label" for="input2">答案</label>
                 <div class="controls">
                     <input name="in1" type="text" class="input-xlarge" id="input2" value="" />
-                    <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                    <a class="btn_insert_admin" onclick="addIn()"></a> <a class="btn_subtract_admin" onclick="deleteIn()"></a>
                 </div>
             </div>
             <div class="control-group">
@@ -97,9 +98,9 @@
                     <input name="in5" style="display:none" type="text" class="input-xlarge" id="input6" value="" />
                 </div>
             </div>
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">添加</button>
-                <a href="./index.php?r=admin/returnFromAddFill" class="btn">返回</a>
+            <div  style="text-align: center;">
+                <a style="position: relative;right:105px;top: -48px;" href="./index.php?r=admin/returnFromAddFill" class="btn_cancel_admin"></a>
+                <button style="position: relative;right:105px;top: -50px;" type="submit" class="btn_add_admin"></button>
             </div>
             </fieldset>
         </form>

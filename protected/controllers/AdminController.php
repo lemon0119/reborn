@@ -1337,12 +1337,15 @@ class AdminController extends CController {
 
     public function actionAddClass() {
         $result = 'no';
+         $sql = "SELECT * FROM `tb_class` ORDER BY `tb_class`.`classID` DESC ";
+        $aClass = Yii::app()->db->createCommand($sql)->query();
         if (isset($_POST ['className'])) {
             $className = $_POST ['className'];
             $classes = TbClass::model()->findAll("className = '$className'");
             if (count($classes) > 0) {
                 $result = 2;
             } else {
+                Yii::app()->session['insert_class']=$className;
                 $classID = TbClass::model()->insertClass($_POST ['className'], $_POST ['courseID']);
                 $lessons = Lesson::model()->findall('classID=? and courseID=?', array(0, $_POST ['courseID']));
                 foreach ($lessons as $lesson) {
@@ -1352,7 +1355,8 @@ class AdminController extends CController {
             }
         }
         $this->render('addClass', [
-            'result' => $result
+            'result' => $result,
+            'allClass' => $aClass
         ]);
     }
 
@@ -2781,7 +2785,7 @@ class AdminController extends CController {
         foreach ($courseLst_forNumber as $v){
             $number = 0;
             $courseID = $v['courseID'];
-            $lesson = Lesson::model()->findAll("courseID = '$courseID'");
+            $lesson = Lesson::model()->findAll("courseID = '$courseID' and classID = 0");
             if(empty($lesson)){
             }else{
                 foreach ($lesson as $value){
@@ -2840,6 +2844,8 @@ class AdminController extends CController {
 
     public function actionAddCourse() {
         $result = 'no';
+        $sql = "SELECT * FROM `course` ORDER BY `course`.`courseID` DESC ";
+        $aCourse = Yii::app()->db->createCommand($sql)->query();
         if (isset($_POST ['courseName'])) {
             $flag = 1;
             $courseNumber = $_POST['courseNumber'];
@@ -2857,6 +2863,7 @@ class AdminController extends CController {
                  $result = Course::model()->insertCourse($_POST ['courseName'], 0);
             }
             if ($result == 1) {
+                Yii::app()->session['insert_course'] = $_POST ['courseName'];
                 $sql = "SELECT MAX(courseID) AS id FROM course";
                 $max_id = Yii::app()->db->createCommand($sql)->query()->read();
                 $courseID = $max_id['id'];
@@ -2874,11 +2881,13 @@ class AdminController extends CController {
                 }
             }
             $this->render('addCourse', [
-                    'result' => $result
+                    'result' => $result,
+                    'allCourse' =>$aCourse
                 ]);
         } else {
             $this->render('addCourse', [
-                'result' => $result
+                'result' => $result,
+                'allCourse' =>$aCourse
             ]);
         }
     }
@@ -2931,7 +2940,10 @@ class AdminController extends CController {
         $courseName = $_GET ['courseName'];
         $createPerson = $_GET ['createPerson'];
         $result = 'no';
+        $sql = "SELECT * FROM `lesson` WHERE `courseID` = $courseID AND `classID` = 0 ORDER BY `lesson`.`number` DESC ";
+        $aLesson = Yii::app()->db->createCommand($sql)->query();
         if (isset($_POST['lessonName'])) {
+            Yii::app()->session['insert_lesson'] = $_POST['lessonName'];
             $result = Lesson::model()->insertLesson($_POST['lessonName'], $courseID, 0, 0);
             $classes = TbClass::model()->findall("currentCourse = '$courseID'");
             foreach ($classes as $class) {
@@ -2942,7 +2954,8 @@ class AdminController extends CController {
             'courseID' => $courseID,
             'courseName' => $courseName,
             'createPerson' => $createPerson,
-            'result' => $result
+            'result' => $result,
+            'allLesson' =>$aLesson
         ));
     }
 

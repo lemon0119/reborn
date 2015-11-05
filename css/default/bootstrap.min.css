@@ -3153,7 +3153,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
     *z-index:2;
     margin-bottom:20px;
     overflow:visible
-    
+
 }
 .navbar-inner {
     min-height:40px;
@@ -4599,7 +4599,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 
 .userUI{
-   position: relative;
+    position: relative;
     top: 1px;
     background-color: #fff;
     border-top-right-radius: 4px;
@@ -4659,6 +4659,8 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 10px 55px;
     margin-left: 10px;
     background: url(../../img/btn_add.png);
+    position: relative;
+    top:1px;
 }
 .btn_add:hover{
     padding: 10px 55px;
@@ -4686,7 +4688,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .span_icon{
     position: relative;
-   
+
 }
 
 .view-link{
@@ -4811,24 +4813,28 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #stuBack{
-    margin-left: 15px;
+    position: relative;
+    left: 70px;
     padding: 10px 37px;
     background-image: url("../../img/UI_stu/btn_cancel.png");
 }
 #stuBack:hover{
-    margin-left: 15px;
+    position: relative;
+    left: 70px;
     padding: 10px 37px;
     background-image: url("../../img/UI_stu/on_btn_cancel.png");
 
 }
 #DeterMine1{
-    margin-left: 50px;
+    position: relative;
+    left: 81px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_determine.png");
 }
 #DeterMine1:hover{
-     margin-left: 50px;
+    position: relative;
+    left: 81px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/on_btn_determine.png");
@@ -4890,7 +4896,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #blank_stu{
     position: relative;
     top: 1px;
-     background:-moz-linear-gradient(left,#606060,#fff);
+    background:-moz-linear-gradient(left,#606060,#fff);
     padding: 27px 47px;
 }
 #blank_admin{
@@ -4906,7 +4912,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 27px 47px;
 }
 #schedule{
-     position: relative;
+    position: relative;
     top: 1px;
     font-size:18px;
     color: #fff;
@@ -4961,7 +4967,7 @@ table tr td{
     float: bottom;
     border-bottom-left-radius: 5px;
     color: #fff;
-     margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 .startcourse-virtualclass:hover{
     background-color: #ffa668;
@@ -4973,7 +4979,7 @@ table tr td{
     float: bottom;
     border-bottom-left-radius: 5px;
     color: #fff;
-     margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 .startcourse-startclass{
     background-color: gray;
@@ -5020,6 +5026,7 @@ table tr td{
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
 }
 #postnotice{
+    cursor: pointer;
     padding: 10px 64px;
     background-image: url("../../img/UI_adm/btn_release.png");
 }
@@ -5052,9 +5059,232 @@ table tr td{
 }
 .copyright{
     text-align: center;
-  width: 250px;
-  margin: 0 auto; 
-  padding: 10px 10px 0 10px;
-  color: #000;
-  font-size: 11px;
+    width: 250px;
+    margin: 0 auto; 
+    padding: 10px 10px 0 10px;
+    color: #000;
+    font-size: 11px;
+}
+.btn_add_admin{
+    background-repeat: no-repeat;
+    padding: 18px 64px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_add1.png);
+}
+.btn_add_admin:hover{
+    background-repeat: no-repeat;
+    padding: 18px 64px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_add1.png);
+}
+.btn_cancel_admin{
+    background-repeat: no-repeat;
+    padding: 10px 37px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_cancel.png);
+}
+.btn_cancel_admin:hover{
+    background-repeat: no-repeat;
+    padding: 10px 37px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_cancel.png);
+}
+.btn_insert_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 21px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_insert.png);
+}
+.btn_insert_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 21px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_insert.png);
+}
+.btn_subtract_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 21px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_subtract.png);
+}
+.btn_subtract_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 21px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_subtract.png);
+}
+.btn_ret_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 37px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_ret.png);
+}
+.btn_ret_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 37px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_ret.png);
+}
+.btn_save_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 64px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_save.png);
+}
+.btn_save_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 64px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_save.png);
+}
+.btn_AD_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 37px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_AD.png);
+}
+.btn_AD_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 37px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_AD.png);
+}
+.btn_Batch_add_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_Batch_add.png);
+}
+.btn_Batch_add_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_Batch_add.png);
+}
+
+.btn_reset_password_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_reset_password.png);
+}
+.btn_reset_password_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_reset_password.png);
+}
+.btn_add_student_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_add_student.png);
+}
+.btn_add_student_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_add_student.png);
+}
+.btn_add_teacher_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_add_teacher.png);
+}
+.btn_add_teacher_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_add_teacher.png);
+}
+#beginnow{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 6px 12px;
+    position: relative;
+    top: 2px;
+    border:0px; 
+    background: url(../../img/UI_tea/icon_begin.png);
+}
+#beginnow:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 6px 40px;
+    position: relative;
+    top: 2px;
+    border:0px; 
+    background: url(../../img/UI_tea/on_icon_begin.gif);
+}
+.btn_Add_class_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 64px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_Add_class.png);
+}
+.btn_Add_class_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 64px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_Add_class.png);
+}
+.btn_bigret{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 112px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/btn_bigret.png);
+}
+.btn_bigret:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 112px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/on_btn_bigret.png);
 }
