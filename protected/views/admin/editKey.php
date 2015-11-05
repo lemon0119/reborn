@@ -48,7 +48,7 @@
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
-                <textarea name="title" style="width:450px; height:20px;" id="input"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $title; ?></textarea>
+                <textarea name="title" style="width:500px; height:20px;" id="input"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $title; ?></textarea>
             </div>
         </div>
            <div class="control-group" id="div1">
@@ -58,7 +58,7 @@
                 <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>0) echo $optArr[1];?>">
                 <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2"  <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>0) echo $optArr[2];?>">
                 <?php if(!isset($action)) {?> 
-                <a class=" btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white" ></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                 <a  class="btn_insert_admin " onclick="addIn()"></a> <a class="btn_subtract_admin" onclick="deleteIn()"></a>
                 <?php }?>
             </div>             
         </div>
@@ -126,11 +126,11 @@
                 <input type="text" name="in30" style="width:40px; height:15px;" id="input15" maxlength="2"value="<?php if ($count>9) echo $optArr[29];?>">              
             </div>   
     </div>
-        <div class="form-actions">
+        <div  style="text-align: center;">
             <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">修改</button>
+                <button type="submit" style="left: 135px;top: 49px;" class="btn_save_admin"></button>
             <?php }?>
-            <a href="./index.php?r=admin/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
+            <a style="left: 150px;top: 50px;" href="./index.php?r=admin/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
         </div>
         </fieldset>
     </form>   

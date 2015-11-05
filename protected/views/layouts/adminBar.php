@@ -51,9 +51,8 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=admin/listenLst">听打练习</a></li>
                                         </ul>
                                     </li>
-                                   
+                                   <li><a id="notice_manager" href="./index.php?r=admin/noticeLst"></a></li>
                                      <li><a id="schedule_manager"  href="./index.php?r=admin/schedule"></a></li>
-                                      <li><a id="notice_manager" href="./index.php?r=admin/noticeLst"></a></li>
                                       <li><a id="blank_admin"></a></li>
                                     <li >
                                         <div class="userUI">
@@ -77,7 +76,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                     </div>
                   
                 </div>
-                <div class="row">
+                <div class="row" style="min-height: 700px">
                     <?php echo $content; ?>
                     
                 </div>

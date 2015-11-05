@@ -85,8 +85,7 @@
              <div class="controls">
                  <input name="in1" type="text" class="input-xlarge" id="input2" value="<?php echo $optArr[0];?>" />
                  <?php if(!isset($action)) {?>
-                    <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> 
-                    <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                 <a  class="btn_insert_admin " onclick="addIn()"></a> <a class="btn_subtract_admin" onclick="deleteIn()"></a>
                  <?php }?>
              </div>
          </div>
@@ -110,11 +109,11 @@
                  <input name="in5" style="<?php if ($len<5) echo "display:none";?>" type="text" class="input-xlarge" id="input6" value="<?php if ($len>4) echo $optArr[4];?>" />
              </div>
          </div>
-         <div class="form-actions">
+          <div  style="text-align: center;">
             <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">修改</button>
+              <button type="submit" style="left: 135px;top: 49px;" class="btn_save_admin"></button>
              <?php }?>
-             <a href="./index.php?r=admin/returnFromAddFill&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
+             <a style="left: 150px;top: 50px;" href="./index.php?r=admin/returnFromAddFill&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
          </div>
          </fieldset>
 </form>
