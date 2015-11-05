@@ -4110,6 +4110,10 @@ class TeacherController extends CController {
     }
 
     public function ActionNoticeContent() {
+         $result=0;
+        if(isset($_GET['action'])&&$_GET['action']=='edit'){
+            $result=1;
+        }
         $id = $_GET['id'];
         $noticeRecord = Notice::model()->find("id= '$id'");
         $this->render('noticeContent', array('noticeRecord' => $noticeRecord));

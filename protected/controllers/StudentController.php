@@ -1339,6 +1339,10 @@ class StudentController extends CController {
     }
     //公告内容
      public function ActionNoticeContent(){
+        $result=0;
+        if(isset($_GET['action'])&&$_GET['action']=='edit'){
+            $result=1;
+        }
        $id = $_GET['id'];
        $noticeRecord=Notice::model()->find("id= '$id'");
        $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
@@ -1367,5 +1371,20 @@ class StudentController extends CController {
             $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
         return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
     }
-    
+    //学生个人资料
+     public function actionStuInformation(){
+        $ID= Yii::app()->session['userid_now'];
+        $student = Student::model()->find("userID = '$ID'");
+        return $this->render('stuInformation',array(
+                'id' => $student ['userID'],
+                'name' => $student ['userName'],
+                'class' =>$student ['classID'],
+                'sex' => $student['sex'],
+                'age' => $student['age'],
+                'password' => $student['password'],
+                'mail_address' => $student['mail_address'],
+                'phone_number' => $student['phone_number']
+        ));
+
+    }
 }
