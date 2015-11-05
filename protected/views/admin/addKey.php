@@ -50,7 +50,7 @@
         <div class="control-group">
             <label class="control-label" for="input">题目</label>
             <div class="controls">
-                <textarea name="title" style="width:450px; height:20px;" id="input"></textarea>
+                <textarea name="title" style="width:500px; height:20px;" id="input"></textarea>
             </div>
         </div>
             <div class="control-group" id="div1">
@@ -59,7 +59,7 @@
                 <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12"><span> ：</span>                
                 <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12">
                 <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2">
-                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                <a class="btn_insert_admin" onclick="addIn()"></a> <a class="btn_subtract_admin" onclick="deleteIn()"></a>
             </div>             
         </div>
         <div class="control-group" id="div2">           
@@ -126,11 +126,11 @@
                 <input type="text" name="in30" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
-        <div class="form-actions">
-            <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">添加</button>
+         <div  style="text-align: center;">
+             <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_cancel_admin"></a>
+             <?php if(!isset($action)) {?> 
+                <button style="position: relative;right:105px" type="submit" class="btn_add_admin"></button>
             <?php }?>
-            <a href="./index.php?r=admin/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
         </div>
         </fieldset>
     </form>   

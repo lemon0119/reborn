@@ -17,14 +17,15 @@
                 </li>
             </form>
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage"></i>操作</li>
-            <li class="active"  ><a <?php
+            <li>&nbsp;</li>
+            <a <?php
                 if (isset($_GET['teacherId'])) {
                     echo 'href="./index.php?r=admin/schedule"';
                 } else {
                     echo 'href="./index.php?r=admin/schedule&&type=class"';
                 }
-                ?>><i class="icon-list-alt"></i> 返回上级</a></li>
+                ?> ><button  class="btn_bigret"></button></a>
+            <li>&nbsp;</li>
         </ul>
     </div>
 </div>
