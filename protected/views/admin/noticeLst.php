@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="span9" style="margin-top: 25px;width: 1080px;">
-    <center><h2>查看公告</h2></center>
+    <center><h2>公告列表</h2></center>
     <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　批量操作：
     <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
 <!-- 公告列表-->

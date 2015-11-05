@@ -69,7 +69,7 @@
 <script>     
 $(document).ready(function(){
     <?php if(isset($result))
-            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.success);";?>
                     var v=<?php echo Tool::clength($content);?>;
     $("#wordCount").text(v);
 });

@@ -23,8 +23,8 @@
                 </td>
             </tr>
         </table>
-        <input id="text" type="hidden" value="<?php echo ($exer['content']);?>"/>
-        <input id="text-answer" type="hidden" value="<?php echo ($answer);?>"/>
+        <input id="text" type="hidden" value="<?php echo (str_replace("\n", "<br/>", $exer['content']) );?>"/>
+        <input id="text-answer" type="hidden" value="<?php echo (str_replace("\n", "<br/>", $answer));?>"/>
     </div>
 </div>
 <?php
@@ -56,8 +56,9 @@
         divleft.scrollTop = divright.scrollTop;
     }
     function start(){
-        var text = $('#text').val();
+        var text =  $('#text').val(); 
         var answer = $('#text-answer').val();
+        
         var lcs = new LCS(text, answer);        
         if(lcs == null)
             return;

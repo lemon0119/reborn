@@ -54,7 +54,7 @@ and open the template in the editor.
                 video;
             var minus = 60;
             var windowHeight = 440;
-            var windowWidth = 435;
+            var windowWidth = 440;
             var windowAspectRatio = windowWidth / windowHeight;
             var videoAspectRatio = 16 / 9;
             var blockAspectRatio;
