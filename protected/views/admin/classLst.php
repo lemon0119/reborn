@@ -87,7 +87,7 @@
     function deleteClass(id){
       
         var option = {
-						title: "自定义",
+						title: "警告",
 						btn: parseInt("0011",2),
 						onOk: function(){
 							window.location.href="./index.php?r=admin/classLst&&flag=deleteClass&&ClassID="+id;
