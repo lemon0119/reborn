@@ -23,12 +23,14 @@
                     $i = 1;
                     echo '<div class=\'answer-tip-text1\'>作答结果：</div>';
                     echo '<div>';
+                    if($uAns != ""){
                     while($i < count($ansArr)+1){
                         echo '('.$i.') ';
                         echo '<div class=\'answer-filling\'>'.$ansArr[$i-1].'</div>';
                         if(!($i%3))
                             echo '<br/>';
                         $i++;
+                    }
                     }
                     echo '</div>';
                     echo '<div class=\'answer-tip-text2\'>正确答案：</div>';
@@ -47,7 +49,9 @@
                     echo '<br/>';
                     $n++;?>
                     配分:<span class="limit"><?php echo $exam_exercise[$m++]['score'];?></span><br/>
-                    得分:<input class="value" type="text" id="input" style="width: 50px" value ="<?php echo $ansWork[$k]['score']?>" >      
+                    得分:<?php if($uAns == "")?> 
+                    <input class="value" type="text" id="input" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score'];else echo "0";?>"> 
+                     
             <?php echo "<br/>";}?>
         </div>
         <button onclick="saveScore()" class="btn btn-primary">保存</button>

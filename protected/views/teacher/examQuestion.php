@@ -20,15 +20,17 @@
                 echo $work['requirements'];
                 echo '<br/>';
                 echo '<div class=\'answer-tip-text1\'>作答结果：</div>';
-                echo '<div style="min-width: 99%" class=\'answer-question\'>'.$choiceAnsWork[$k].'</div>';
+                if($uAns != ""){
+                echo '<div style="min-width: 99%" class=\'answer-question\'>'.$choiceAnsWork[$k].'</div>';}
                 echo '<div class=\'answer-tip-text2\'>正确答案：</div>';
                 echo '<div style="min-width: 99%" class=\'answer-question\'>'.$work['answer'].'</div>';
                 echo '<br/>';
+                   
                 $n++;
                 ?>配分:<span class="limit"><?php echo $exam_exercise[$m++]['score'];?></span><br/>
-                得分:<input class="value" type="text" id="input" style="width: 50px" value ="<?php echo $ansWork[$k]['score']?>"> 
+                得分:<input class="value" type="text" id="input" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score']; else echo '0'?>"> 
                 
-            <?php echo "<br/>";}?>
+                    <?php echo "<br/>";}?>
                 <button onclick="saveScore()" class="btn btn-primary">保存</button>
     </div>
 
