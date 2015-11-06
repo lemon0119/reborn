@@ -120,7 +120,7 @@
             </div>
             <div id="dianbo-videos-container" style="display:none">  
             </div>
-            <div id="ppt-container" >
+            <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
                 <img id="ppt-img" src="" style="height: 100%;"/>
             </div>
     </div>
