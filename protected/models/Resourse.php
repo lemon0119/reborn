@@ -35,14 +35,7 @@ class Resourse extends CActiveRecord
             $resource->type="ppt";
             return $resource->insert();
         }
-        /**
-         * @author Wang fei <1018484601@qq.com>
-         * @param $newName 该资源的新的随机的名称
-         *         $oldName 该资源的原名称
-         * @return 返回插入是否成功
-         * 针对视频导入 改type = video 属性 
-         */
-         public function insertRelaVideo($newName,$oldName)
+        public function insertRelaVideo($newName,$oldName)
         {
             $resource             = new Resourse();
             $resource->resourseID = $newName;
@@ -50,21 +43,7 @@ class Resourse extends CActiveRecord
             $resource->type="video";
             return $resource->insert();
         }
-         /**
-         * @author Wang fei <1018484601@qq.com>
-         * @param $newName 该资源的新的随机的名称
-         *         $oldName 该资源的原名称
-         * @return 返回插入是否成功
-         * 针对音频导入 改type = radio 属性 
-         */
-         public function insertRelaRadio($newName,$oldName)
-        {
-            $resource             = new Resourse();
-            $resource->resourseID = $newName;
-            $resource->name       = $oldName;
-            $resource->type="radio";
-            return $resource->insert();
-        }
+
         /**
          * @author Wang fei <1018484601@qq.com>
          * @param $name  该资源存在本地的名称

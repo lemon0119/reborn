@@ -120,10 +120,11 @@
 function savetime(){
     //$('#timeForm').submit();
     $.post($('#timeForm').attr('action'),$('#timeForm').serialize(),function(data){
-            alert(data);
+            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
         })
         .error(function(){window.wxc.xcConfirm('不好意思，保存出错了...', window.wxc.xcConfirm.typeEnum.info);});
 }
+
 $(document).ready(function(){
     allScore();
     function allScore(){
