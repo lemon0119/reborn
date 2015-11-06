@@ -4114,6 +4114,7 @@ public function ActionAjaxExam2() {
             $arr=explode(",",$_POST['score']);
             $m=0;
             foreach ($array_exercise  as $k=>$work){ 
+                if($arr[$m]!=" ")
                 AnswerRecord::model()->changeScore($ansWork[$k]['answerID'],$arr[$m++]);
             }
         }
