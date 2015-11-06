@@ -25,7 +25,7 @@
                     </div>
             </div>
             <div  style="text-align: center;">
-            <a style="position: relative;right:105px;top: 27px;" href="./index.php?r=admin/classLst" class="btn_cancel_admin"></a>
+            <a style="position: relative;right:105px;top: 27px;" href="./index.php?r=admin/classLst" class="btn_ret_admin"></a>
              <button style="position: relative;right:105px;top: 25px;" type="submit" class="btn_add_admin"></button>
             </div>
         </fieldset>
