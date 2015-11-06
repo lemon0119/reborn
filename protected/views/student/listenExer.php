@@ -70,8 +70,8 @@
     $(document).ready(function(){
         <?php   if (!$isOver){?>
         alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
-        if(<?php if($isExam){echo $exerOne['time'];}else {echo 0;} ?>!=0){
         <?php }?>
+        if(<?php if($isExam){echo $exerOne['time'];}else {echo 0;} ?>!=0){
         <?php if($isExam){?>
             reloadTime2(<?php echo $exerOne['time'];?>,isExam);
             var isover = setInterval(function(){
