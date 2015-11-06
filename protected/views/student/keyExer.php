@@ -147,7 +147,7 @@
       
         var option = {
 						title: "提交试卷",
-						btn: parseInt("0011",2),
+						btn: parseInt("0011",4),
 						onOk: function(){
 							 doSubmit(true);
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
