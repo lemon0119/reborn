@@ -13,7 +13,7 @@
             <div class="control-group">
                <label class="control-label" for="input02"><span class="must-fill" >*</span>姓名</label>
                 <div class="controls">
-                   <input name="userName" type="text" class="input-xlarge" id="input02" value="" />
+                   <input name="userName" type="text" class="input-xlarge" id="input02" value="" onblur="chkName()" /><span id="usertips_name" style="margin-left: 5px;"></span>
                 </div>
             </div>
              <div class="control-group">
@@ -28,7 +28,7 @@
             <div class="control-group">
                 <label class="control-label" for="input07">年龄</label>
                 <div class="controls">
-                    <input name="age" type="text" class="input-xlarge" id="input07" value="" />
+                    <input name="age" type="text" class="input-xlarge" id="input07" value="" onblur="chkAge()" /><span id="usertips_age" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
@@ -193,7 +193,7 @@ foreach ($classAll as $key => $value) {
     usertipsSpan.style.color = "red";  
     usertipsSpan.style.marginLeft="25px";
     if (!usernameVal.match( /^[A-Za-z0-9]+$/)) {  
-        usertipsSpan.innerHTML="必须由数字、英文字母线组成";  
+        usertipsSpan.innerHTML="必须由数字、英文、数字、下划线组成";  
         document.getElementById("input01").value="";
         return false;  
     } else {  
@@ -203,6 +203,46 @@ foreach ($classAll as $key => $value) {
     if(usernameVal.length > 20){ //一个汉字算一个字符  
         usertipsSpan.innerHTML="大于20个字符！";  
         document.getElementById("input01").value="";
+    }  
+}
+//姓名受限
+ function chkName(){
+    var usernameVal = document.getElementById("input02").value;  
+  
+    usertipsSpan = document.getElementById("usertips_name");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!usernameVal.match( /^[A-Za-z_\u4e00-\u9fa5]+$/)) {  
+        usertipsSpan.innerHTML="必须由字符或英文组成";  
+        document.getElementById("input02").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+      
+    if(usernameVal.length > 20){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="大于20个字符！";  
+        document.getElementById("input02").value="";
+    }  
+}
+//年龄受限
+ function chkAge(){
+    var usernameVal = document.getElementById("input07").value;  
+  
+    usertipsSpan = document.getElementById("usertips_age");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!usernameVal.match( /^[0-9]+$/)) {  
+        usertipsSpan.innerHTML="必须由数字组成";  
+        document.getElementById("input07").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+      
+    if(usernameVal.length > 2){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="太老了吧亲";  
+        document.getElementById("input07").value="";
     }  
 }
 </script>

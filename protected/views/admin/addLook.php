@@ -53,7 +53,7 @@
             </div>
         </div> 
          <div  style="text-align: center;">
-            <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddLook&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_cancel_admin"></a>
+            <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddLook&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
              <?php if(!isset($action)) {?> 
                 <button style="position: relative;right:105px" type="submit" class="btn_add_admin"></button>
             <?php }?>

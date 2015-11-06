@@ -4,7 +4,7 @@
           <?php
           $totalScore=0;
           $realScore=0;
-          $n=1;
+          $n=1;$m=0;
           echo "<h2>选择题</h2>"; 
          foreach ($works  as $k=>$work){         
                 $right = $work['answer'];
@@ -21,7 +21,7 @@
                 }
                 else{
                 ?>
-    <div class="<?php if($uAns === $right ){  $realScore=$realScore+$exam_exercise['score'];} else {}?>"></div>
+    <div class="<?php if($uAns === $right ){  $realScore=$realScore+$exam_exercise[$m]['score'];} else {}?>"></div>
         <?php }?>
                 
                 <?php echo "<font>$n</font>"?>.&nbsp<?php  echo $work['requirements'];
@@ -35,9 +35,9 @@
                         <font color="green" font="12px">&nbsp;  &nbsp;正确答案</font>
                     <?php }?>
                     <br/>
-         <?php $mark++;} $totalScore=$totalScore+$exam_exercise['score'];
+         <?php $mark++;} $totalScore=$totalScore+$exam_exercise[$m]['score'];
                      $n++;
-                    }?>
+                    $m++;}?>
 </div>
    配分:<?php echo $totalScore;?><br/>
    得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $realScore?>" disabled="disabled"> 
