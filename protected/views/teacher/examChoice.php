@@ -40,10 +40,13 @@
                      $n++;
                     $m++;}?>
 </div>
-   配分:<?php echo $totalScore;?><br/>
+   <?php if($works){?>
+       配分:<?php echo $totalScore;?><br/>
    得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $realScore?>" disabled="disabled"> 
+       <?php }?>
+   
    <?php if(count($works)>0){?>
-        <button onclick="saveScore(<?php if(isset($ansWork)) echo $ansWork[$f]['answerID'];else echo 1;?>)" class="btn btn-primary">保存</button>
+        <button onclick="saveScore(<?php if(isset($ansWork)) echo $ansWork[0]['answerID'];else echo 1;?>)" class="btn btn-primary">保存</button>
    <?php }?>
 </div>
 <script>

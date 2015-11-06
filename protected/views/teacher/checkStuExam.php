@@ -28,8 +28,8 @@ require 'examAnsSideBar.php';
               $("#work").append(html);
           },
             error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了。。', window.wxc.xcConfirm.typeEnum.error);
-                console.log(xhr.responseText, "Failed");
+                //window.wxc.xcConfirm('出错la。。', window.wxc.xcConfirm.typeEnum.error);
+                //console.log(xhr.responseText, "Failed");
             }
       })
     });   
