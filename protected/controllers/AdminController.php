@@ -2903,8 +2903,8 @@ class AdminController extends CController {
             $allLesson = Lesson::model()->findAll("courseID = '$courseID'");
             $count=1;
             foreach ($allLesson as $v){
-                $ln = $v["lessonName"];
-                $sql = "UPDATE `lesson` SET `number`= '$count' WHERE lessonName = '$ln'";
+                $ln = $v["lessonID"];
+                $sql = "UPDATE `lesson` SET `number`= '$count' WHERE lessonID = '$ln'";
                 Yii::app()->db->createCommand($sql)->query();
                 $count++;
             }

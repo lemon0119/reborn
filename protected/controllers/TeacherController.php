@@ -811,10 +811,13 @@ class TeacherController extends CController {
         $i = 2;
         $answer = $_POST['in1'];
         for (; $i <= 3 * 10; $i++) {
-            if ($_POST['in' . $i] != "")
-                $answer = $answer . ":" . $_POST['in' . $i];
-            else
-                break;
+            if ($_POST['in' . $i] != "") {
+                    if ($i % 3 == 0)
+                        $answer = $answer . "_" . $_POST['in' . $i];
+                    else
+                        $answer = $answer . ":" . $_POST['in' . $i];
+                } else
+                    break;
         }
         $thisKey->title = $_POST['title'];
         $thisKey->content = $answer;
@@ -3670,7 +3673,9 @@ class TeacherController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
                 $classwork[$type] = Exam::model()->getExamExerByType($examID, $type);
         }
+        $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($record['recordID'], $ty));
         $this->render('checkStuExam', array(
+            'ansWork'=>$ansWork,
             'examID'=>$examID,
             'student' => $student,
             'class' => $class,
@@ -3758,12 +3763,13 @@ class TeacherController extends CController {
         Yii::app()->session['exerType'] = 'key';
         
         
-        
-        $studentID = Yii::app()->session['userid_now'];
-        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
-            $studentID = Yii::app()->session['studentID'];
-            $workID = Yii::app()->session['workID'];
-        }
+        $studentID=$_GET['studentID'];
+        $workID =$_GET['workID'];
+//        $studentID = Yii::app()->session['userid_now'];
+//        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
+//            $studentID = Yii::app()->session['studentID'];
+//            $workID = Yii::app()->session['workID'];
+//        }
         $recordID = suiteRecord::getRecord($workID, $studentID);
         $suite_exercise = SuiteExercise::model()->find("exerciseID=? and exerciseID=? and type=?", array($_GET['exerID'], $suiteID, $ty));
         $student = Student::model()->find("userID='$studentID'");
@@ -3878,12 +3884,13 @@ class TeacherController extends CController {
         Yii::app()->session['exerType'] = 'key';
         
         
-        
-        $studentID = Yii::app()->session['userid_now'];
-        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
-            $studentID = Yii::app()->session['studentID'];
-            $workID = Yii::app()->session['workID'];
-        }
+        $studentID=$_GET['studentID'];
+        $workID =$_GET['workID'];
+//        $studentID = Yii::app()->session['userid_now'];
+//        if(isset(Yii::app()->session['studentID'])&&isset(Yii::app()->session['workID'])){
+//            $studentID = Yii::app()->session['studentID'];
+//            $workID = Yii::app()->session['workID'];
+//        }
         $recordID = ExamRecord::getRecord($workID, $studentID);
         $exam_exercise = ExamExercise::model()->find("exerciseID=? and examID=? and type=?", array($_GET['exerID'], $examID, $ty));
         $student = Student::model()->find("userID='$studentID'");
@@ -3960,7 +3967,8 @@ class TeacherController extends CController {
             'answer' => $answer['answer'],
             'correct' => $answer['ratio_correct']]);
     }
-    public function ActionAjaxExam() {
+    //
+public function ActionAjaxExam2() {
         $classID = $_GET['classID'];
         if (isset($_POST['workID'])) {
             $workID = $_POST['workID'];
@@ -4047,6 +4055,129 @@ class TeacherController extends CController {
         $work = ClassExam::model()->find("workID='$workID'");
         $exerID=Yii::app()->session['exerID'];
         $res = KeyType::model()->findByPK($exerID);
+        $this->renderPartial($render, array(
+            'type'=>$ty,
+            'student'=>$student,
+            'examID'=>$examID,
+            'student'=>$student,
+            'class'=>$class,
+            'workID' => $workID,
+            'studentID' => $studentID,
+            'accomplish' => $accomplish,
+            'works' => $array_exercise,
+            'work' => $work,
+            'exer'=>$res,
+            'ansWork'=>$ansWork,
+            'choiceAnsWork' => $choiceAnsWork,
+            'exam_exercise' => $exam_exercise,
+            'isLast' => $isLast,
+            'score' => $score,
+            'exerID'=>$exerID,
+            'classID' => $classID,
+            'exercise'=>$classwork,
+            'array_accomplished'=>$array_accomplished,
+        ));
+    }
+
+    public function ActionAjaxExam() {
+        $classID = $_GET['classID'];
+        if (isset($_POST['workID'])) {
+            $workID = $_POST['workID'];
+            $studentID = $_POST['studentID'];
+            $accomplish = $_POST['accomplish'];
+        }
+        $ty = $_POST['type'];
+        if(isset($_POST['recordID']))
+            $recordID = $_POST['recordID'];
+        $examID = $_POST['examID'];
+        if(isset($_POST['exerciseID']))
+            $exerciseID = $_POST['exerciseID'];
+        $recordID = ExamRecord::getRecord($workID, $studentID);
+        $exam_exercise = ExamExercise::model()->findAll("examID = ? and type = ?", array($examID, $ty));
+        $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($recordID, $ty));
+        $results = Exam::model()->getExamExerByType($examID, $ty);
+        $isLast = 1;
+        $array_exercise = array();
+        foreach ($results as $result) {
+            array_push($array_exercise, $result);
+        }  
+        /*
+        foreach ($array_exercise as $result) {
+            $work = $result;
+            if ($result['exerciseID'] > $exerciseID) {
+                $isLast = 0;
+                $work = $result;
+                break;
+            }
+        }*/
+        if (isset($_POST['score'])) {
+            $arr=explode(",",$_POST['score']);
+            $m=0;
+            foreach ($array_exercise  as $k=>$work){ 
+                if($arr[$m]!=" ")
+                AnswerRecord::model()->changeScore($ansWork[$k]['answerID'],$arr[$m++]);
+            }
+        }
+        
+        
+        
+        $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $ty));
+        $choiceAnsWork = array();
+        foreach ($SQLchoiceAnsWork as $v) {
+            $answer = $v['answer'];
+            array_push($choiceAnsWork, $answer);
+        }
+        $student = Student::model()->find("userID='$studentID'");
+         $class = TbClass::model()->find("classID='$classID'");
+         $array_accomplished = Array();
+        $array_unaccomplished = Array();
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        foreach ($class_student as $stu) {
+            $userID = $stu['userID'];
+            $result = ExamRecord::model()->find("workID=? and studentID=?", array($workID, $userID));
+            if ($result != NULL && $result['ratio_accomplish'] == 1) {
+                $score = $result['score'];
+                array_push($array_accomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName'],
+                    'score' => $score
+                ));
+            } else {
+                array_push($array_unaccomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName'],
+                    'score' => 0
+                ));
+            }
+        }
+        switch ($ty) {
+            case "choice":
+                $render = "examChoice";
+                break;
+            case "filling":
+                $render = "examFilling";
+                break;
+            case "question":
+                $render = "examQuestion";
+                break;
+            case "key":
+                $render = "examKey";
+                break;
+            case "look":
+                $render = "examLook";
+                break;
+            case "listen":
+                $render = "examListen";
+                break;
+        }
+        $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
+        foreach(Tool::$EXER_TYPE as $type){
+                $classwork[$type] = Exam::model()->getExamExerByType($examID, $type);
+        }
+        $work = ClassExam::model()->find("workID='$workID'");
+        $exerID=Yii::app()->session['exerID'];
+        $res = KeyType::model()->findByPK($exerID);
+        $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($recordID, $ty));
         $this->renderPartial($render, array(
             'type'=>$ty,
             'student'=>$student,

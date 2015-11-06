@@ -55,9 +55,14 @@
     for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;} 
     }  
     function dele(stuID){
-        if(confirm("这将会移动该老师至回收站，您确定这样吗？")){
-            window.location.href = "./index.php?r=admin/deleteTea&&id="+stuID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
-        }
+        var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							window.location.href = "./index.php?r=admin/deleteTea&&id="+stuID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
+						}
+					};
+					window.wxc.xcConfirm("这将会移动该老师至回收站，您确定这样吗？", "custom", option);
     } 
      
     function deleCheck(){
