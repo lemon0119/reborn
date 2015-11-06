@@ -1936,6 +1936,7 @@ class AdminController extends CController {
         if (isset($_POST ['title'])) {
             $title = $_POST ['title'];
             $content = $_POST ['content'];
+            
             if ($_FILES ['file'] ['type'] != "audio/mpeg" &&
                 $_FILES ['file'] ['type'] != "audio/wav"  &&
                 $_FILES ['file'] ['type'] != "audio/x-wav"    ) {
@@ -1943,12 +1944,23 @@ class AdminController extends CController {
             } else if ($_FILES ['file'] ['error'] > 0) {
                 $result = '文件上传失败';
             } else {
-                $oldName = $_FILES["file"]["name"];
-                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
-                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
-                Resourse::model()->insertRela($newName, $oldName);
-                $result = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $newName, $filePath, 0);
-                $result = '1';
+                $flag = 1;
+                $sqlListen = Resourse::model()->findAll("type = 'radio'");
+                foreach ($sqlListen as $v){
+                    if($v['name'] == $_FILES["file"]["name"]){
+                       $result = '该文件已存在，如需重复使用请改名重新上传！';
+                       $flag = 0;
+                    }
+                }
+                if($flag == 1){
+                     $oldName = $_FILES["file"]["name"];
+                    $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                    move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                    Resourse::model()->insertRelaRadio($newName, $oldName);
+                    $result = ListenType::model()->insertListen($_POST ['title'], $_POST ['content'], $newName, $filePath, 0);
+                    $result = '1';
+                }
+               
             }
         }
         $this->render('addListen', array(
@@ -2974,13 +2986,20 @@ class AdminController extends CController {
             'pdir' => $pdir
         ));
     }
-
+    
     public function actionAddPpt() {
         $dir = $_GET['pdir'];
         $result = "上传失败!";
         if (!isset($_FILES["file"])) {
             echo "请选择文件！";
             return;
+        }
+        $sqlPpt = Resourse::model()->findAll("type = 'ppt'");
+        foreach ($sqlPpt as $v){
+            if($v['name'] == $_FILES["file"]["name"]){
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
         }
         if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint") {
             if ($_FILES["file"]["error"] > 0) {
@@ -3045,6 +3064,7 @@ class AdminController extends CController {
         $courseName = $_GET ['courseName'];
         $createPerson = $_GET ['createPerson'];
         $vdir = $_GET ['vdir'];
+        Yii::app()->session['vdir'] = $vdir;
         Yii::app()->session['courseID'] = $courseID;
         Yii::app()->session['courseName'] = $courseName;
         Yii::app()->session['createPerson'] = $createPerson;
@@ -3070,6 +3090,13 @@ class AdminController extends CController {
             echo "请选择文件！";
             return;
         }
+        $sqlVideo = Resourse::model()->findAll("type = 'video'");
+        foreach ($sqlVideo as $v){
+            if($v['name'] == $_FILES["file"]["name"]){
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }
         if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
@@ -3077,7 +3104,7 @@ class AdminController extends CController {
                 $oldName = $_FILES["file"]["name"];
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
-                Resourse::model()->insertRela($newName, $oldName);
+                Resourse::model()->insertRelaVideo($newName, $oldName);
                 $result = "上传成功！";
             }
         } else {
@@ -3087,14 +3114,24 @@ class AdminController extends CController {
     }
 
     public function actionDeleteVideo() {
+        $courseID =Yii::app()->session['courseID'] ;
+        $courseName=Yii::app()->session['courseName'];
+        $createPerson =Yii::app()->session['createPerson'];
         $fileName = $_GET['video'];
         $dir = $_GET['vdir'];
         $file = $dir . $fileName;
+        $result = "删除成功！";
         Resourse::model()->delName($fileName);
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
             unlink(iconv('utf-8', 'gb2312', $file));
-        $result = "删除成功！";
-        echo $result;
+        
+        return $this->render('videoLst', [
+                    'result' => $result,
+                    'courseID'=>$courseID,
+                     'courseName'=>$courseName,
+                     'vdir' => $dir,
+                     'createPerson'=>$createPerson
+        ]);
     }
 
     public function actionLookVideo() {

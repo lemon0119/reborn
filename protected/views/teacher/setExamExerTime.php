@@ -158,7 +158,7 @@ $(document).ready(function(){
         blur:function(){
             var score = parseInt(this.value);
             if (this.value !== String(score) && this.value !== ""){
-                alert('输入内容必须是整数！');
+					window.wxc.xcConfirm('输入内容必须是整数！', window.wxc.xcConfirm.typeEnum.info);
             }
         }
     });

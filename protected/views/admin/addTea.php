@@ -13,7 +13,7 @@
             <div class="control-group">
                 <label class="control-label" for="input02"><span class="must-fill" >*</span>姓名</label>
                 <div class="controls">
-                    <input name="userName" type="text" class="input-xlarge" id="input02" value="" /><span id="usertips_name" style="margin-left: 5px;"></span>
+                    <input name="userName" type="text" class="input-xlarge" id="input02" value="" onblur="chkName()" /><span id="usertips_name" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
@@ -28,7 +28,7 @@
             <div class="control-group">
                 <label class="control-label" for="input07">年龄</label>
                 <div class="controls">
-                    <input name="age" type="text" class="input-xlarge" id="input07" value="" /><span id="usertips_age" style="margin-left: 5px;"></span>
+                    <input name="age" type="text" class="input-xlarge" id="input07" value="" onblur="chkAge()" /><span id="usertips_age" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
