@@ -122,9 +122,9 @@ require 'examAnsSideBar.php';
     } 
     function saveScore(scoreOld,answerID,recordID,examID,exerciseID){
          var value1 = $("#input")[0].value;
-         var re = /^[0-9]*[1-9][0-9]*$/ ; 
+         var re =/^([1-9]\d*|[0]{1,1})$/ ; 
          if(!re.test(value1)){
-             window.wxc.xcConfirm("分值只能为正整数！", window.wxc.xcConfirm.typeEnum.error);
+             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
              $("#input")[0].value=scoreOld;
              return false;
         }
