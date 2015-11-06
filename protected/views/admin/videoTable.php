@@ -33,16 +33,16 @@
             </tbody>
 </table>
 <script>  
-    $(document).ready(function(){
-        $('#dele').bind('click', function(e){
-            e.preventDefault();
-        });
-        $("#dele").click(function(){
-            $.get($(this).attr("href"),function(data,status){
-                $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
-                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
-            });  
-            return false;     
-        });
-    });
+//   $(document).ready(function(){
+//        $('#dele').bind('click', function(e){
+//            e.preventDefault();
+//       });
+//       $("#dele").click(function(){
+//            $.get($(this).attr("href"),function(data,status){
+//                $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
+//               window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
+//           });  
+//           return false;     
+//       });
+//   });
 </script>

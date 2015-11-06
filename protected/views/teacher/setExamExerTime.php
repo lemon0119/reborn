@@ -122,7 +122,7 @@ function savetime(){
     $.post($('#timeForm').attr('action'),$('#timeForm').serialize(),function(data){
             alert(data);
         })
-        .error(function(){alert('不好意思，保存出错了...');});
+        .error(function(){window.wxc.xcConfirm('不好意思，保存出错了...', window.wxc.xcConfirm.typeEnum.info);});
 }
 $(document).ready(function(){
     allScore();
@@ -157,7 +157,7 @@ $(document).ready(function(){
         blur:function(){
             var score = parseInt(this.value);
             if (this.value !== String(score) && this.value !== ""){
-                alert('输入内容必须是整数！');
+					window.wxc.xcConfirm('输入内容必须是整数！', window.wxc.xcConfirm.typeEnum.info);
             }
         }
     });

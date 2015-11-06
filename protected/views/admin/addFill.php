@@ -99,8 +99,8 @@
                 </div>
             </div>
             <div  style="text-align: center;">
-                <a style="position: relative;right:105px;top: -48px;" href="./index.php?r=admin/returnFromAddFill" class="btn_ret_admin"></a>
-                <button style="position: relative;right:105px;top: -50px;" type="submit" class="btn_add_admin"></button>
+                <a style="position: relative;right:105px;top: 8px;" href="./index.php?r=admin/returnFromAddFill" class="btn_ret_admin"></a>
+                <button style="position: relative;right:105px;top: 6px;" type="submit" class="btn_add_admin"></button>
             </div>
             </fieldset>
         </form>
