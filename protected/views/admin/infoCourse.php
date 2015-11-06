@@ -84,19 +84,19 @@ echo $courseName; ?></h3>
 <script>
     $(document).ready(function () {
         var deleteReslut = <?php echo "'$deleteResult'";?>;
-        if(deleteReslut == '2'||deleteReslut == '1'){
-            window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success,{
-                onOk:function(){
-		 window.location.href = "./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID']; ?>&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
-						}
-            });
-        }else if(deleteReslut =='0'){
+        if(deleteReslut =='0'){
             window.wxc.xcConfirm("删除失败！", window.wxc.xcConfirm.typeEnum.error,{
                 onOk:function(){
 		 window.location.href = "./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID']; ?>&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
 						}
             
             });
+        }else if(deleteReslut !='no'){
+            window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success,{
+                    onOk:function(){
+                     window.location.href = "./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID']; ?>&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
+                                                    }
+                });
         }
         
     });

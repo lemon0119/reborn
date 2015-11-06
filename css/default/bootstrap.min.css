@@ -4826,14 +4826,15 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #DeterMine1{
-    margin-left: 30px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_determine.png");
+    position: relative;
+    left:82px;
 }
 #DeterMine1:hover{
     position: relative;
-    left: 81px;
+    left: 82px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/on_btn_determine.png");
