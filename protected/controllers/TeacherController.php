@@ -1533,7 +1533,7 @@ class TeacherController extends CController {
             $answer = $_POST['in1'];
             for (; $i <= 5; $i++) {
                 if ($_POST['in' . $i] != "")
-                    $answer = $answer . "$" . $_POST['in' . $i];
+                    $answer = $answer . "$$" . $_POST['in' . $i];
                 else
                     break;
             }
