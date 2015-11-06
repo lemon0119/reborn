@@ -28,7 +28,8 @@
                    
                 $n++;
                 ?>配分:<span class="limit"><?php echo $exam_exercise[$m++]['score'];?></span><br/>
-                得分:<input class="value" type="text" id="input" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score']; else echo '0'?>"> 
+                得分:
+                     <input class="value" type="text" id="input" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score'];else echo " ";?>"> 
                 
                     <?php echo "<br/>";}?>
                 <button onclick="saveScore()" class="btn btn-primary">保存</button>
