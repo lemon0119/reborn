@@ -67,16 +67,16 @@
     </tbody>
 </table>
 <script>  
-    $(document).ready(function(){
-        $('#dele').bind('click', function(e){
-            e.preventDefault();
-        });
-        $("#dele").click(function(){
-            $.get($(this).attr("href"),function(data,status){
-                $("#video-table").load("./index.php?r=teacher/videoTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
-                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
-            });  
-            return false;     
-        });
-    });
+//    $(document).ready(function(){
+//        $('#dele').bind('click', function(e){
+//            e.preventDefault();
+//        });
+//        $("#dele").click(function(){
+//            $.get($(this).attr("href"),function(data,status){
+//                $("#video-table").load("./index.php?r=teacher/videoTable&&classID=<?php //echo $classID;?>&&progress=<?php //echo $progress;?>&&on=<?php //echo $on;?>");
+//                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
+//            });  
+//            return false;     
+//        });
+//    });
 </script>
