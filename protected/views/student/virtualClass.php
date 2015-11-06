@@ -41,7 +41,7 @@ echo "<script>var role='$role';</script>";
        
     </div>
     <!-- local/remote videos container --> 
-    <div id="ppt-container" align="center" style="width: 100% ; height: 549px;  margin-top:0px;display:none;overflow-x: hidden">
+    <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 275px; top: 20px;display:none;">
             <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3"/> 
         </div>
