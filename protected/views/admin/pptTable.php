@@ -26,7 +26,7 @@
                                                                             $path       = substr($fileName,0,$len-4);
                                                                             echo $path;?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"
                                onclick=""></a>
-                        <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>"><img title="右键另存为下载" src="<?php echo IMG_URL; ?>icon_download.png"></a>
+                        <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>" ><img title="下载" src="<?php echo IMG_URL; ?>icon_download.png"></a>
                         <a href="./index.php?r=admin/deletePpt&&pdir=<?php echo $pdir;?>&&ppt=<?php echo iconv("gb2312","UTF-8",$file);?>" id="dele"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>
