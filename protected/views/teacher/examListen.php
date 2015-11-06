@@ -89,6 +89,7 @@ require 'examAnsSideBar.php';
         displayTemp('templet', tem, modTem);
         displayTemp('answer', ans, modAns);
     }
+    start();
     function displayTemp(id, temp, modTem){
         var flag = false;
         var j = 0;
@@ -114,21 +115,16 @@ require 'examAnsSideBar.php';
                 createFont(id,'#ff0000',temp.substring(j, i));
         }
         if(i < temp.length)
-            createFont(id,'#ff0000',temp.substr(i));var re = /^[0-9]*[1-9][0-9]*$/ ; 
-         if(!re.test(value1)){
-             window.wxc.xcConfirm("分值只能为正整数！", window.wxc.xcConfirm.typeEnum.error);
-             $("#input")[0].value=scoreOld;
-             return false;
-        }
+            createFont(id,'#ff0000',temp.substr(i));
         if(i < modTem.length)
             createFont(id,'#ff0000',modTem.substr(i));
     }  
-   start();
+   
    function saveScore(scoreOld,answerID,recordID,examID,exerciseID){
          var value1 = $("#input")[0].value;
-         var re = /^[0-9]*[1-9][0-9]*$/ ; 
+         var re = /^([1-9]\d*|[0]{1,1})$/ ; 
          if(!re.test(value1)){
-             window.wxc.xcConfirm("分值只能为正整数！", window.wxc.xcConfirm.typeEnum.error);
+             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
              $("#input")[0].value=scoreOld;
              return false;
         }

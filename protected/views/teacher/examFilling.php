@@ -54,7 +54,11 @@
                      
             <?php echo "<br/>";}?>
         </div>
+    <?php if(count($works)>0){?>
         <button onclick="saveScore()" class="btn btn-primary">保存</button>
+   <?php }?>
+        
+    
 </div>
 <script>
        $(document).ready(function(){   
@@ -67,6 +71,11 @@
             var input = $(".value:eq("+i+")").val();
             console.log('input',parseInt(input));
             console.log('limit',parseInt(limit));
+            var re = /^([1-9]\d*|[0]{1,1})$/; 
+            if(!re.test(parseInt(input))){
+                window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
+                $(".value:eq("+i+")").val('');
+            }
             if(parseInt(input) > parseInt(limit)){
                 window.wxc.xcConfirm("配分超过上限！", window.wxc.xcConfirm.typeEnum.error);
                 $(".value:eq("+i+")").val('');
