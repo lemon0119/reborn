@@ -35,7 +35,15 @@ class Resourse extends CActiveRecord
             $resource->type="ppt";
             return $resource->insert();
         }
-        
+        public function insertRelaVideo($newName,$oldName)
+        {
+            $resource             = new Resourse();
+            $resource->resourseID = $newName;
+            $resource->name       = $oldName;
+            $resource->type="video";
+            return $resource->insert();
+        }
+
         /**
          * @author Wang fei <1018484601@qq.com>
          * @param $name  该资源存在本地的名称

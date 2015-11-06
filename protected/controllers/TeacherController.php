@@ -385,7 +385,13 @@ class TeacherController extends CController {
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
             unlink(iconv('utf-8', 'gb2312', $file));
         $result = "删除成功！";
-        echo $result;
+        return $this->render('videoLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result
+        ]);
+
     }
 
     public function actionLookVideo() {
