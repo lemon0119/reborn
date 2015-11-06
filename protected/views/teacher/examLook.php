@@ -145,7 +145,7 @@ require 'examAnsSideBar.php';
             };
           $.ajax({
               type:"POST",
-              url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
+              url:"./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID?>",
               data:user,
               dataType:"html",
               success:function(html){  
