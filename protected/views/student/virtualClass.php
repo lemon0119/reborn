@@ -45,7 +45,7 @@ echo "<script>var role='$role';</script>";
         <div id ="full-screen" style="position: relative; left: 275px; top: 20px;display:none;">
             <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3"/> 
         </div>
-        <div id="ppt-asd"align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
+        <div id="ppt-asd">
         <img id="ppt-img"  onmouseover="fun1();" onmouseout="fun2();" src=""  style="height: 100%;"/>  
         </div>
     </div>
