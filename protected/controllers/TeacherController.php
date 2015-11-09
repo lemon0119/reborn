@@ -240,28 +240,23 @@ class TeacherController extends CController {
             echo "请选择文件！";
             return;
         }
+        $sqlPpt = Resourse::model()->findAll("type = 'ppt'");
+        foreach ($sqlPpt as $v){
+            if($v['name'] == $_FILES["file"]["name"]){
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }
         if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint") {
             if ($_FILES["file"]["size"] < 30000000) {
                 if ($_FILES["file"]["error"] > 0) {
                     $result = "Return Code: " . $_FILES["file"]["error"];
                 } else {
-                    $allName = Resourse::model()->findAll("type=?", array("ppt"));
-                    foreach ($allName as $all) {
-                        if ($all['name'] == $_FILES["file"]["name"]) {
-                            $flag = 1;
-                            break;
-                        }
-                    }
-
-                    if ($flag == 1) {
-                        $result = " PPT已经存在！";
-                    } else {
-                        $newName = Tool::createID() . ".ppt";
-                        $oldName = $_FILES["file"]["name"];
-                        move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
-                        Resourse::model()->insertRela($newName, $oldName);
-                        $result = "上传成功！";
-                    }
+                    $newName = Tool::createID() . ".ppt";
+                    $oldName = $_FILES["file"]["name"];
+                    move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                    Resourse::model()->insertRela($newName, $oldName);
+                    $result = "上传成功！";
                 }
             } else {
                 $reult = "PPT文件限定大小为30M！";
@@ -351,18 +346,27 @@ class TeacherController extends CController {
         $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
         $dir = "resources/" . $videoFilePath;
         $result = "上传失败!";
+        $flag = 0;
         if (!isset($_FILES["file"])) {
             echo "请选择文件！";
             return;
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'video'");
+        foreach ($sqlVideo as $v){
+            if($v['name'] == $_FILES["file"]["name"]){
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
         }
         if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
+                
                 $oldName = $_FILES["file"]["name"];
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
-                Resourse::model()->insertRela($newName, $oldName);
+                Resourse::model()->insertRelaVideo($newName, $oldName);
                 $result = "上传成功!";
             }
         } else {
@@ -385,7 +389,13 @@ class TeacherController extends CController {
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
             unlink(iconv('utf-8', 'gb2312', $file));
         $result = "删除成功！";
-        echo $result;
+        return $this->render('videoLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result'=>$result,
+        ]);
+
     }
 
     public function actionLookVideo() {
