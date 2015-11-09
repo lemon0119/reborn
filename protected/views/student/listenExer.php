@@ -49,7 +49,9 @@
             ?>
             <div align="left">
                 <br/>
-                <audio src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
+                <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; top:150px;'></div>
+                <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; top:150px;'></div>
+                <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath;?>"   preload = "auto"  onplay="start()"  controls=""></audio>
             </div>
             <br/>
             <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
@@ -99,5 +101,9 @@
     function getWordLength(){
         var input = getContent(document.getElementById("typeOCX"));
         return input.length;
+    }
+    
+    function start(){
+       document.getElementById('audio_hiden').style.display="block";
     }
 </script>
