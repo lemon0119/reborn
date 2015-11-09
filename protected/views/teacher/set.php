@@ -16,7 +16,7 @@ function long0(){
     var temp = document.getElementById("input01").value;
     var reg=/^[A-Za-z0-9]+$/;
     if(!reg.test(temp)||temp.length<3||temp.length>15){
-        alert('密码必须为3-15位的数字和字母的组合');
+         window.wxc.xcConfirm('密码必须为3-15位的数字和字母的组合', window.wxc.xcConfirm.typeEnum.info);
         document.getElementById("input01").value="";
     }
 }
@@ -24,7 +24,7 @@ function long(){
     var temp = document.getElementById("input02").value;
     var reg=/^[A-Za-z0-9]+$/;
     if(!reg.test(temp)||temp.length<3||temp.length>15){
-        alert('密码必须为3-15位的数字和字母的组合');
+         window.wxc.xcConfirm('密码必须为3-15位的数字和字母的组合', window.wxc.xcConfirm.typeEnum.info);
         document.getElementById("input02").value="";
     }
 }
@@ -32,7 +32,7 @@ function long2(){
     var temp = document.getElementById("input03").value;
     var reg=/^[A-Za-z0-9]+$/;
     if(!reg.test(temp)||temp.length<3||temp.length>15){
-        alert('密码必须为3-15位的数字和字母的组合');
+         window.wxc.xcConfirm('密码必须为3-15位的数字和字母的组合', window.wxc.xcConfirm.typeEnum.info);
         document.getElementById("input03").value="";
     }
 }
