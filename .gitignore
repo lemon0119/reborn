@@ -36,6 +36,7 @@ $RECYCLE.BIN/
 .Trashes
 
 # Directories potentially created on remote AFP share
+.log
 .AppleDB
 .AppleDesktop
 Network Trash Folder
