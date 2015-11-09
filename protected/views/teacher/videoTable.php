@@ -54,9 +54,9 @@
             </td>
             <td>自己</td>
             <td>
-                <a href="./index.php?r=teacher/lookVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
-                <a href="<?php echo "$vdir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>edit.png">下载</a>
-                <a href="./index.php?r=teacher/deleteVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="dele"><img src="<?php echo IMG_URL; ?>delete.png">删除</a>
+                <a href="./index.php?r=teacher/lookVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
+                <a href="<?php echo "$vdir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>edit.png" title="下载"></a>
+                <a href="./index.php?r=teacher/deleteVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="dele"><img src="<?php echo IMG_URL; ?>delete.png" title="删除"></a>
             </td>
         </tr>
         <?php     
@@ -67,16 +67,16 @@
     </tbody>
 </table>
 <script>  
-    $(document).ready(function(){
-        $('#dele').bind('click', function(e){
-            e.preventDefault();
-        });
-        $("#dele").click(function(){
-            $.get($(this).attr("href"),function(data,status){
-                $("#video-table").load("./index.php?r=teacher/videoTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
-                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
-            });  
-            return false;     
-        });
-    });
+//    $(document).ready(function(){
+//        $('#dele').bind('click', function(e){
+//            e.preventDefault();
+//        });
+//        $("#dele").click(function(){
+//            $.get($(this).attr("href"),function(data,status){
+//                $("#video-table").load("./index.php?r=teacher/videoTable&&classID=<?php //echo $classID;?>&&progress=<?php //echo $progress;?>&&on=<?php //echo $on;?>");
+//                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
+//            });  
+//            return false;     
+//        });
+//    });
 </script>
