@@ -1102,7 +1102,7 @@ class StudentController extends CController {
             }
             $n++;
         }     
-        return $this->render('classexam',['score'=>$score,'classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish]);
+        return $this->render('classexam',['score'=>$score,'classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish,'classID'=>$classID]);
     }
 
 

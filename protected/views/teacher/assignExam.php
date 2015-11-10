@@ -130,7 +130,20 @@ function begin_now(examID,d,time,isOpen)
             d=prompt("时长不能为0！！！",d);
         }
         if(confirm("你确定要立即开始？")){
-            window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
+            $.ajax({
+                type: "POST",
+                url: "index.php?r=api/putNotice2&&class=<?php echo Yii::app()->session['currentClass']?>",
+                data: {title:  "考试" , content:  "考试时间已经到了，可以开始考试了"},
+                success: function(){   
+                    window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
+                
+                },
+                error: function(xhr, type, exception){
+                    window.wxc.xcConfirm('出错了a...', window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr.responseText, "Failed");
+                }
+            });
+            
         }
 }
    
