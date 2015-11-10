@@ -109,7 +109,7 @@
             <div id="scroll-page" style="display:inline;">
                 <button id="page-up" class="btn btn-primary">上页</button>
                 <input id="yeshu" style="width:50px;" value="1">
-                /<input id="all-yeshu" style="width:50px;" readOnly="true">
+                <input id="all-yeshu" style="width:50px;" readOnly="true">
                 <button id="page-go" class="btn btn-primary">跳转</button>
                 <button id="page-down" class="btn btn-primary">下页</button>
                 <button id="full-screen-button" class="btn btn-primary">全屏</button>
@@ -120,7 +120,7 @@
             </div>
             <div id="dianbo-videos-container" style="display:none">  
             </div>
-            <div id="ppt-container" >
+            <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
                 <img id="ppt-img" src="" style="height: 100%;"/>
             </div>
     </div>
