@@ -11,7 +11,7 @@ class LoginForm extends CFormModel
 	public $username;      //用户名
 	public $password;	   //密码
 	public $rememberMe;		//记住密码
-    public $usertype;       //用户种类
+        public $usertype;       //用户种类
 	private $_identity;     //身份
 
 	/**
@@ -63,12 +63,12 @@ class LoginForm extends CFormModel
 	 */
 	public function login()
 	{
-		if($this->_identity===null)
-		{
-           $this->_identity=new UserIdentity($this->username,$this->password);
-           $this->_identity->setUserType($this->usertype);      //设置用户种类
-           $this->_identity->authenticate();
-		}
+            if($this->_identity===null)
+            {
+                $this->_identity=new UserIdentity($this->username,$this->password);
+                $this->_identity->setUserType($this->usertype);      //设置用户种类
+                $this->_identity->authenticate();
+            }
 		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
 		{
 			$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days

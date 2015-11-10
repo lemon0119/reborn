@@ -5,12 +5,10 @@
             return ;
         doSubmit(false);
     }
-    function submitSuite(simple){
-        var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-        if(!simple){
-            if(!confirm("提交以后，不能重新进行答题，你确定提交吗？"))
-                return ;
-        }
+     function submitSuite2(simple){
+       var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
+       setTimeout("window.wxc.xcConfirm('提交以后，不能重新进行答题，你确定提交吗？', window.wxc.xcConfirm.typeEnum.info);",100);
+       
         doSubmit(true);
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
             if(isExam)
@@ -18,6 +16,26 @@
             else
                 window.location.href="index.php?r=student/classwork";
         });
+        
+					//window.wxc.xcConfirm("提交以后，不能重新进行答题，你确定提交吗？", "custom", option);
+       
+    }
+    function submitSuite(simple){
+       var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
+       var option = {
+            title: "提交试卷",
+            btn: parseInt("0011",2),
+            onOk: function(){
+                     doSubmit(true);
+                    $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
+                        if(isExam)
+                            window.location.href="index.php?r=student/classExam";
+                        else
+                            window.location.href="index.php?r=student/classwork";
+                    });
+            } 
+        };
+        window.wxc.xcConfirm("提交以后，不能重新进行答题，你确定提交吗？", "custom", option);
     }
     function doSubmit(simple,doFunction){
         var obj =  document.getElementById("typeOCX");
@@ -30,7 +48,7 @@
         lcs.doLCS();
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
         document.getElementById("id_correct").value = correct;
-        var time = getSeconds();
+        var time = getT();
         document.getElementById("id_cost").value = time;
         //console.log("answer = "+theString);
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){

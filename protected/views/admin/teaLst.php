@@ -9,7 +9,7 @@
         <tr>
             <th class="font-center">选择</th>
             <th class="font-center">工号</th>
-            <th class="font-center">用户名</th>
+            <th class="font-center">姓名</th>
             <th class="font-center">所属部门</th>
             <th class="font-center">操作</th>
         </tr>
@@ -44,15 +44,25 @@
 <!-- 右侧内容展示结束-->
 </div>
 <script>
+     $(document).ready(function(){
+       <?php if(isset($_POST['checkbox'])){ ?>
+           window.location.href="./index.php?r=admin/teaLst";
+      <?php }?> 
+    });
     function check_all(obj,cName)
 {    
     var checkboxs =document.getElementsByName(cName); 
     for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;} 
     }  
     function dele(stuID){
-        if(confirm("这将会移动该老师至回收站，您确定这样吗？")){
-            window.location.href = "./index.php?r=admin/deleteTea&&id="+stuID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
-        }
+        var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							window.location.href = "./index.php?r=admin/deleteTea&&id="+stuID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
+						}
+					};
+					window.wxc.xcConfirm("这将会移动该老师至回收站，您确定这样吗？", "custom", option);
     } 
      
     function deleCheck(){

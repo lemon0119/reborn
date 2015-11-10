@@ -6,7 +6,7 @@
             <li>
                     <select name="type" >
                             <option value="exerciseID" selected="selected">编号</option>
-                            <option value="courseID" >课程号</option>
+                            <option value="courseID" >科目号</option>
                             <option value="createPerson">创建人</option>
                             <option value="requirements">内容</option>
                     </select>
@@ -72,8 +72,9 @@
                 <input name="D" type="text" class="input-xlarge" id="input05" value="" />
             </div>
         </div>
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=admin/returnFromAddChoice" class="btn">返回</a>
+    <div  style="text-align: center;">
+        <a style="position: relative;right:105px;top: 27px;" href="./index.php?r=admin/returnFromAddChoice" class="btn_ret_admin"></a>
+        <button style="position: relative;right:105px;top: 25px;" type="submit" class="btn_add_admin"></button> 
     </div>
     </fieldset>
 </form>   

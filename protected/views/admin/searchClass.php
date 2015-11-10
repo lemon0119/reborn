@@ -30,7 +30,7 @@
                 <th class="font-center">班级名</th>
                 <th class="font-center">老师</th>
                 <th class="font-center">人数</th>
-                <th class="font-center">课程</th>
+                <th class="font-center">科目</th>
                 <th class="font-center">操作</th>
             </tr>
         </thead>

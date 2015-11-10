@@ -53,10 +53,10 @@ and open the template in the editor.
                 length = videos.length,
                 video;
             var minus = 60;
-            var windowHeight = 640;
-            var windowWidth = 360;
+            var windowHeight = 440;
+            var windowWidth = 440;
             var windowAspectRatio = windowWidth / windowHeight;
-            var videoAspectRatio = 4 / 3;
+            var videoAspectRatio = 16 / 9;
             var blockAspectRatio;
             var tempVideoWidth = 0;
             var maxVideoWidth = 0;
@@ -81,5 +81,5 @@ and open the template in the editor.
         window.onresize = scaleVideos;
         </script>
     </head>
-    <body style="margin:0"></body>
+    <body style="margin:0;"></body>
 </html>

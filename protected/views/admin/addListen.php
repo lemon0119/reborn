@@ -6,7 +6,7 @@
                     <li>
                                 <select name="type" >
                                         <option value="exerciseID" selected="selected">编号</option>
-                                        <option value="courseID" >课程号</option>
+                                        <option value="courseID" >科目号</option>
                                         <option value="title" >题目名</option>
                                         <option value="createPerson" >创建人</option>
                                         <option value="content">内容</option>
@@ -62,11 +62,11 @@
                 <textarea name="content" style="width:450px; height:200px;" id="input03"><?php echo $content;?></textarea>
             </div>
         </div> 
-        <div class="form-actions">
+        <div  style="text-align: center;">
+            <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
             <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">添加</button>
+                <button style="position: relative;right:105px" type="submit" class="btn_add_admin"></button>
             <?php }?>
-            <a href="./index.php?r=admin/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
         </div>
         </fieldset>
     </form>   
@@ -90,19 +90,22 @@ $("#myForm").submit(function(){
     $("#upload").show();
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
-        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.confirm);
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.info);
+        $("#upload").hide();
         return false;
     }
     var uploadFile = $("#input02")[0].value;
     if(uploadFile === "")
     {
-        window.wxc.xcConfirm('上传文件不能为空', window.wxc.xcConfirm.typeEnum.confirm);
+        window.wxc.xcConfirm('上传文件不能为空', window.wxc.xcConfirm.typeEnum.info);
+        $("#upload").hide();
     return false;
     }
     
     var A = $("#input03")[0].value;
         if(A === ""){
-        window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.confirm);
+        window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.info);
+        $("#upload").hide();
         return false;
     }
     

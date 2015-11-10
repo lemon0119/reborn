@@ -6,7 +6,7 @@
                         <li>
                                 <select name="type" >
                                         <option value="exerciseID" selected="selected">编号</option>
-                                        <option value="courseID" >课程号</option>
+                                        <option value="courseID" >科目号</option>
                                         <option value="createPerson" >创建人</option>
                                         <option value="title">题目名</option>
                                         <option value="content">内容</option>
@@ -50,7 +50,7 @@
     <thead>
         <tr>
             <th>编号</th>
-            <th>课程号</th>
+            <th>科目号</th>
             <th>题目</th>
             <th>内容</th>
             <th>创建人</th>
@@ -93,12 +93,12 @@
                             ?></td>
                         <td><?php echo $model['createTime'];?></td>
                         <td>
-                            <a href="./index.php?r=teacher/editLook&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <a href="./index.php?r=teacher/editLook&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look" title="查看"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                           <?php if($model['createPerson'] == Yii::app()->session['userid_now']){?>
-                            <a href="./index.php?r=teacher/editLook&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
-                            <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>
+                            <a href="./index.php?r=teacher/editLook&&exerciseID=<?php echo $model['exerciseID'];?>" title="编辑"><img src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)" title="删除"><img src="<?php echo IMG_URL; ?>delete.png"></a>
                             <?php }else{ ?>
-                            <a href="./index.php?r=teacher/copyLook&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img src="<?php echo IMG_URL; ?>copy.png"></a>
+                            <a href="./index.php?r=teacher/copyLook&&code=<?php echo $code;?>&&exerciseID=<?php echo $model['exerciseID'];?>" title="复制"><img src="<?php echo IMG_URL; ?>copy.png"></a>
                             <?php }?>
                         </td>
                     </tr>            

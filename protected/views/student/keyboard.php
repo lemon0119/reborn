@@ -143,16 +143,20 @@
     var numKeyRight = 0;
     function startParse(){
         var content = document.getElementById("id_content").value;
-        var cont_array = content.split("$");
-        for(var i = 0; i < cont_array.length; i += 3){
-            wordArray.push(cont_array[i] + ":" + cont_array[i+1]);
-            wordNum.push(cont_array[i+2]);
-            totalNum += parseInt(cont_array[i+2]);
+        var cont_array = content.split(":");
+        for(var i = 0; i < cont_array.length; i += 2){
+            var left = cont_array[i];
+            var rAndNum = cont_array[i+1].split("_");
+            var right = rAndNum[0];
+            wordArray.push(left + ":" + right);
+            wordNum.push(rAndNum[1]);
+            totalNum += parseInt(rAndNum[1]);
         }
         nextWord = getNextWord();
         setWordView(nextWord);
     }
     function setWordView(word){
+        word=word.replace("_",":");
         var a = word.split(":");
         document.getElementById("left-key").innerHTML = a[0];
         document.getElementById("right-key").innerHTML = a[1];
@@ -160,7 +164,7 @@
         $('#keyMode').fadeIn(50);
     }
     function changTemplet(pszStenoString){
-        if(pszStenoString == nextWord){
+        if(isSameWord(pszStenoString,nextWord)){
             nextWord = "";
             nextWord = getNextWord();
             setWordView(nextWord);
@@ -170,6 +174,28 @@
             setWordView(nextWord);
             ++numKeyDown;
         }
+    }
+    function isSameWord(word1, word2){
+        var wb = word2.split(':');
+        var wa = word1.split(':');
+        var left1 = wa[0];
+        var left2 = wb[0];
+        var right1 = wa[1];
+        var right2 = wb[1];
+        var ls1 = left1.split('').sort();
+        var ls2 = left2.split('').sort();
+        var leftsame = isSameArray(ls1 , ls2);
+        var rs1 = right1.split('').sort();
+        var rs2 = right2.split('').sort();
+        var rightsame = isSameArray(rs1 , rs2);
+        return  leftsame && rightsame;
+    }
+    function isSameArray(a1,a2){
+        for(var i = 0; i < a1.length && i < a2.length; ++i){
+            if(a1[i] != a2[i])
+                return false;
+        }
+        return true;
     }
     function getCorrect(pattern , answer){
         return numKeyRight / numKeyDown;

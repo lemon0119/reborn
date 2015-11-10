@@ -6,7 +6,7 @@
                         <li>
                                 <select name="type" >
                                         <option value="exerciseID" selected="selected">编号</option>
-                                        <option value="courseID" >课程号</option>
+                                        <option value="courseID" >科目号</option>
                                         <option value="createPerson" >创建人</option>
                                         <option value="requirements">内容</option>
                                 </select>
@@ -95,7 +95,7 @@
 
   function dele(exerciseID){
       var option = {
-						title: "警告",
+						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
 							window.location.href = "./index.php?r=admin/deleteChoice&&exerciseID=" + exerciseID;

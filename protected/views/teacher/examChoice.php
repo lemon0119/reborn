@@ -4,10 +4,17 @@
           <?php
           $totalScore=0;
           $realScore=0;
-          $n=1;
+          $n=1;$m=0;
+          $f;
+          echo "<h2>选择题</h2>"; 
          foreach ($works  as $k=>$work){         
                 $right = $work['answer'];
-                $uAns = $choiceAnsWork[$k];              
+                $f=$k;
+                if(isset($choiceAnsWork[$k])){
+                   $uAns = $choiceAnsWork[$k];     
+                }else{
+                    $uAns = "";
+                }     
                 if($uAns == "")
                 {
                     echo "<font color=red>未作答</font>";
@@ -15,55 +22,56 @@
                 }
                 else{
                 ?>
-    <div class="<?php if($uAns === $right ){   echo 'answer-right-choice'; $realScore=$realScore+$exam_exercise['score'];} else {echo 'answer-wrong-choice';}?>"></div>
+    <div class="<?php if($uAns === $right ){  $realScore=$realScore+$exam_exercise[$m]['score'];} else {}?>"></div>
         <?php }?>
-                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo "<font color=green size=5px>$n</font>"?>.<?php  echo $work['requirements'];
+                
+                <?php echo "<font>$n</font>"?>.&nbsp<?php  echo $work['requirements'];
                 echo '<br/>';
                 $opt = $work['options'];
                 $optArr = explode("$$",$opt);
                 $mark = 'A';
                 foreach ($optArr as $aOpt) {?>
-                 <input style="margin-left: 60px;" type="radio" disabled <?php  if($mark === $uAns) echo 'checked';?> >&nbsp <?php echo $mark.'.'.$aOpt;?>
+                 <input type="radio" disabled <?php  if($mark === $uAns) echo 'checked';?> >&nbsp <?php echo $mark.'.'.$aOpt;?>
                     <?php if($mark === $right){?>
-                        <span class='answer-check'></span>
+                        <font color="green" font="12px">&nbsp;  &nbsp;正确答案</font>
                     <?php }?>
                     <br/>
-         <?php $mark++;} $totalScore=$totalScore+$exam_exercise['score'];
+         <?php $mark++;} $totalScore=$totalScore+$exam_exercise[$m]['score'];
                      $n++;
-                    }?>
+                    $m++;}?>
 </div>
-   配分总分:<?php echo $totalScore;?><br/>
-   实际得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $realScore?>" > 
-   <button onclick="nextWork(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $work['exerciseID'];?>)" class="btn btn-primary">保存</button>
+   <?php if($works){?>
+       配分:<?php echo $totalScore;?><br/>
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $realScore?>" disabled="disabled"> 
+       <?php }?>
+   
+   <?php if(count($works)>0){?>
+        <button onclick="saveScore(<?php if(isset($ansWork)) echo $ansWork[0]['answerID'];else echo 1;?>)" class="btn btn-primary">保存</button>
+   <?php }?>
 </div>
 <script>
    $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
-       if(<?php echo $isLast?> == 1)
-        {
-                window.location.href="./index.php?r=teacher/CheckStuExam&&workID=<?php echo $workID;?>&&type=filling&&studentID=<?php echo $studentID;?>&&accomplish=<?php echo $accomplish;?>";
-        }
+       
     });
      
-    function nextWork(answerID,recordID,examID,exerciseID){
+    function saveScore(answerID){
         var value1 = $("#input")[0].value;
         if(value1><?php echo $totalScore;?>){
             window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
         }else{
             var user = {
-            recordID:recordID,
             type:"choice",
             workID:"<?php echo $workID;?>",
             studentID:"<?php echo $studentID;?>",
             accomplish:"<?php echo $accomplish;?>",
-            examID:examID,
-            exerciseID:exerciseID,
+            examID:<?php echo $examID;?>,
             score:value1,
             answerID:answerID
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam",
+          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
           data:user,
           dataType:"html",
           success:function(html){     

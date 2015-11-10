@@ -2,7 +2,9 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><i class="icon-align-left"></i> 课业列表</a></li>
+            <li>&nbsp;</li>
+            <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><button  class="btn_bigret"></button></a>
+            <li>&nbsp;</li>
         </ul>
     </div>
 </div>
@@ -26,14 +28,17 @@
 </div>
 <script>
     $(document).ready(function(){
+        <?php if(isset($result)){ if($result=='删除成功！'){ ?>
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+        <?php  } }?>
+        
     $("#upload").hide();
 });
-
     $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
 
     var options = {  
         success: function(info){
-            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.info);
             $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
             $("#upload").hide();
         },

@@ -22,13 +22,13 @@
         $code = mt_rand(0, 1000000);
     ?>                
                 
-<h3>自有习题</h3>
+<h3>题库</h3>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th class="font-center">编号</th>
-                <th class="font-center">课程</th>
+                <th class="font-center">科目</th>
                 <th class="font-center">题目</th>
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
@@ -42,16 +42,16 @@
                         <td class="font-center" style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
                         <td class="font-center"><?php echo $allwork['courseID'];
                             ?></td>
-                        <td class="font-center"> <?php  if(tool::clength($allwork['title'])<=7)
+                        <td title="<?php echo $allwork['title'];?>" class="font-center"> <?php  if(tool::clength($allwork['title'])<=5)
                                         echo $allwork['title'];
                                     else
-                                        echo tool::csubstr($allwork['title'], 0, 7)."...";
+                                        echo tool::csubstr($allwork['title'], 0, 5)."...";
                                         ?>
                         </td>
-                        <td class="font-center"> <?php  if(tool::clength($allwork['content'])<=10)
+                        <td title="<?php echo $allwork['content'];?>" class="font-center"> <?php  if(tool::clength($allwork['content'])<=8)
                                         echo $allwork['content'];
                                     else
-                                        echo tool::csubstr($allwork['content'], 0, 10)."...";
+                                        echo tool::csubstr($allwork['content'], 0, 8)."...";
                                         ?>
                         </td>
                         <td class="font-center">

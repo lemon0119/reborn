@@ -32,9 +32,26 @@ class Resourse extends CActiveRecord
             $resource             = new Resourse();
             $resource->resourseID = $newName;
             $resource->name       = $oldName;
+            $resource->type="ppt";
             return $resource->insert();
         }
-        
+        public function insertRelaVideo($newName,$oldName)
+        {
+            $resource             = new Resourse();
+            $resource->resourseID = $newName;
+            $resource->name       = $oldName;
+            $resource->type="video";
+            return $resource->insert();
+        }
+        public function insertRelaRadio($newName,$oldName)
+        {
+            $resource             = new Resourse();
+            $resource->resourseID = $newName;
+            $resource->name       = $oldName;
+            $resource->type="radio";
+            return $resource->insert();
+        }
+
         /**
          * @author Wang fei <1018484601@qq.com>
          * @param $name  该资源存在本地的名称
@@ -73,7 +90,6 @@ class Resourse extends CActiveRecord
             $thisRes->name        = $oldName;
             return $thisRes->update();
         }
-        
         /**
 	 * @return string the associated database table name
 	 */

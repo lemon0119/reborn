@@ -2,11 +2,13 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><i class="icon-align-left"></i> 课业列表</a></li>
+            <li>&nbsp;</li>
+            <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><button  class="btn_bigret"></button></a>
+            <li>&nbsp;</li>
         </ul>
     </div>
 </div>
-<div class="span9">
+<div class="span9" style="position: relative;left:20px">
     <h2 style="display:inline-block;">PPT列表</h2>
     <span>(支持PPT格式)</span>
     <div id ="ppt-table"></div>
@@ -31,7 +33,7 @@
     <?php if(isset($result)){?>
     var result = <?php echo "'$result'";?>;
     if(result !== '0')
-    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
+    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
     <?php }?>
 });
 
@@ -39,7 +41,7 @@
 
     var options = {  
         success: function(info){
-            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.confirm);
+            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.success);
             $("#ppt-table").load("./index.php?r=admin/pptTable&&pdir=<?php echo $pdir;?>");
             $("#upload").hide();
         },

@@ -6,7 +6,7 @@
             <li>
                 <select name="type" >
                     <option value="exerciseID" selected="selected">编号</option>
-                    <option value="courseID" >课程号</option>
+                    <option value="courseID" >科目号</option>
                     <option value="createPerson" >创建人</option>
                     <option value="title">题目名</option>
                     <option value="content">内容</option>
@@ -37,18 +37,13 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<h3>编辑看打练习题</h3>
+<legend><h3>编辑看打练习题</h3></legend>
 <?php } else if($action == 'look') {?>
-<h3>查看看打练习题</h3>
+<legend><h3>查看看打练习题</h3></legend>
 <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=admin/editLookInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
-        <?php if(!isset($action)) {?>
-            <legend>填写题目</legend>
-        <?php } else if($action == 'look') {?>
-            <legend>查看题目</legend>
-        <?php }?>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
@@ -59,13 +54,14 @@
             <label class="control-label" for="input02">内容</label>
             <div class="controls">               
                 <textarea name="content" style="width:450px; height:200px;"><?php echo $content; ?></textarea>
+                <br>字数：<span id="wordCount">0</span> 字
             </div>
         </div> 
-        <div class="form-actions">
+        <div  style="text-align: center;">
             <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">修改</button>
+                <button type="submit" style="left: 135px;top: 49px;" class="btn_save_admin"></button>
             <?php }?>
-            <a href="./index.php?r=admin/returnFromAddLook&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
+            <a style="left: 150px;top: 50px;" href="./index.php?r=admin/returnFromAddLook&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
         </div>
         </fieldset>
     </form>   
@@ -73,7 +69,9 @@
 <script>     
 $(document).ready(function(){
     <?php if(isset($result))
-            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.success);";?>
+                    var v=<?php echo Tool::clength($content);?>;
+    $("#wordCount").text(v);
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;

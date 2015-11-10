@@ -10,8 +10,8 @@
     <thead>
         <tr>
             <th class="font-center">选择</th>
-            <th class="font-center">学号</th>
-            <th class="font-center">用户名</th>
+            <th class="font-center">工号</th>
+            <th class="font-center">姓名</th>
             <th class="font-center">操作</th>
         </tr>
     </thead>
@@ -31,12 +31,22 @@
                 <?php endforeach;?> 
             </tbody>
 </table>
+    <div align=center>
+        <?php
+       $this->widget('CLinkPager', array('pages' => $pages));
+        ?>
+    </div>
 </form>
 <!-- 学生列表结束 -->
 <!-- 右侧内容展示结束-->
 </div>
 
 <script>
+    $(document).ready(function(){
+       <?php if(isset($_POST['checkbox'])){ ?>
+           window.location.href="./index.php?r=admin/recycleTea";
+      <?php }?> 
+    });
 function check_all(obj,cName)
 {    
     var checkboxs = document.getElementsByName(cName); 

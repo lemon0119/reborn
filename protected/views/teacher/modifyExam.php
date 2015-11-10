@@ -55,7 +55,14 @@ function test()
             <ul class="nav nav-list" style="margin-left: -80px;">
                 <center>
                     <table>
-                        <tr><td>试卷名称:<?php echo $exam['examName']?></td></tr>
+                        <tr><td>
+                                试卷名称:
+                                <?php  if(Tool::clength($exam['examName'])<=7)
+                                        $a=$exam['examName'];
+                                    else
+                                        $a=Tool::csubstr($exam['examName'], 0, 7)."...";?>
+                                <a href="#" title="<?php echo $exam['examName']?>" style="text-decoration:none;"><?php echo $a?></a>
+                            </td></tr>
                         <!--
                         <tr><td>开始时间: 
                                 <div class="inline layinput"><input  style="width:180px;color:white;" class="search-query span2" placeholder="选择开始时间" name="startTime" id="startTime" value="<?php echo $exam['begintime'] ?> " onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" ></div>       
@@ -76,7 +83,7 @@ function test()
 
     </form>-->
 
-    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass']; ?>"  class="btn">返回</a>
+    <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass']; ?>"  class="btn btn-primary">返回</a>
 </div>
 
 <div class="span9">
@@ -87,39 +94,62 @@ function test()
     <div >
 
 
-        <script>
-            var currentPage1;
-            function refresh()
-            {
-                $('#iframe1').attr("src", "./index.php?r=teacher/ToOwnExam&&type=<?php echo $type; ?>&&examID=<?php echo $exam['examID']; ?>&&page=" + currentPage1);
-            }
+<script>
+    var currentPage1;
+    function refresh()
+    {
+        $('#iframe1').attr("src", "./index.php?r=teacher/ToOwnExam&&type=<?php echo $type; ?>&&examID=<?php echo $exam['examID']; ?>&&page=" + currentPage1);
+    }
 
-            function setCurrentPage1(page)
-            {
-                currentPage1 = page;
-            }
-            $('#basic_example_1').click(function () {
-                $('#basic_example_1').datetimepicker();
-            });
-            $("#updateForm").submit(function(){
-                var startTime= document.getElementById("startTime").value;
-                var endTime= document.getElementById("endTime").value;
-                
-                var newstr = startTime.replace(/-/g,'/'); 
-                var date =  new Date(newstr); 
-                startTime = date.getTime().toString().substr(0, 10);
-                
-                var newstr = endTime.replace(/-/g,'/'); 
-                var date =  new Date(newstr); 
-                endTime = date.getTime().toString().substr(0, 10);
-                
-               if(endTime<startTime){
-                   window.wxc.xcConfirm('开始时间>结束时间', window.wxc.xcConfirm.typeEnum.info);
-                   document.getElementById("startTime").value="<?php echo $exam['begintime'] ?>";
-                   document.getElementById("endTime").value="<?php echo $exam['endtime'] ?>";
-                   return false;
-               }
+    function setCurrentPage1(page)
+    {
+        currentPage1 = page;
+    }
+    $('#basic_example_1').click(function () {
+        $('#basic_example_1').datetimepicker();
+    });
+    $("#updateForm").submit(function(){
+        var startTime= document.getElementById("startTime").value;
+        var endTime= document.getElementById("endTime").value;
 
-            });
-        </script>
+        var newstr = startTime.replace(/-/g,'/'); 
+        var date =  new Date(newstr); 
+        startTime = date.getTime().toString().substr(0, 10);
+
+        var newstr = endTime.replace(/-/g,'/'); 
+        var date =  new Date(newstr); 
+        endTime = date.getTime().toString().substr(0, 10);
+
+       if(endTime<startTime){
+           window.wxc.xcConfirm('开始时间>结束时间', window.wxc.xcConfirm.typeEnum.info);
+           document.getElementById("startTime").value="<?php echo $exam['begintime'] ?>";
+           document.getElementById("endTime").value="<?php echo $exam['endtime'] ?>";
+           return false;
+       }
+
+    });
+            //学号受限
+function chkIt(){
+    var usernameVal = document.getElementById("input01").value;  
+  
+    usertipsSpan = document.getElementById("usertips");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!usernameVal.match( /^[A-Za-z0-9]+$/)) {  
+        usertipsSpan.innerHTML="必须由数字、英文字母线组成";  
+        document.getElementById("input01").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+      
+    if(usernameVal.length > 20){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="大于20个字符！";  
+        document.getElementById("input01").value="";
+    }  
+}
+function showFull(){
+    
+    }
+</script>
 

@@ -12,11 +12,37 @@ echo "<script>var role='$role';</script>";
 <!--自定义css begin-->
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
-
 <div class="left">
+    <div class="vp1" style="width: 100%;">
+        <br/>
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号:</td>
+                    <td>&nbsp;&nbsp;<?php echo $userID;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;学生姓名:</td>
+                    <td>&nbsp;&nbsp;<?php echo $userName;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;班级:</td>
+                    <td>&nbsp;&nbsp;<?php $sqlClass = TbClass::model()->find("classID = $class");
+                    echo $sqlClass['className'];
+                    ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;当前课程:</td>
+                    <td>&nbsp;&nbsp;<?php foreach ($lessons as $less) {
+                               if($less['lessonID'] === $currentLesn){
+                                   echo $less['lessonName'];
+                                };
+                           }?>
+                    </td>           
+                </tr>
+       
+    </div>
     <!-- local/remote videos container --> 
-    <div id="ppt-container" align="center" style="width: 100% ; height: 549px;  margin-top:0px;display:none;overflow-x: hidden">
-        <div id ="full-screen" style="position: relative; left: 275px; top: 20px;display:none;">
+    <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
+        <div id ="full-screen" style="position: relative; left: 200px; top: 40px;display:none;">
             <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3"/> 
         </div>
         <div id="ppt-asd">
@@ -28,22 +54,21 @@ echo "<script>var role='$role';</script>";
 </div>
 
 
-<div class="right">
-    <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>
-    <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:220px; clear:both;">
-        <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
+<div class="right"style="background-color: #3b3b3b;border: 0px" >
+    <div align="center" id="sw-teacher-camera"><a href="#" ><h4 style="color: white">教 师 视 频</h4></a></div>
+    <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
+        <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
-        <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
-        <div id="bulletin" class="bulletin" style="display:none">
-                <textarea disabled id="bulletin-textarea" style="color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+        <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
+        <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
+            <textarea disabled id="bulletin-textarea" style=" background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
         </div>
-        <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
-        <div id="chat-box">
-            <div id="chatroom" class="chatroom"></div>
-            <div class="sendfoot">
-                <input type='text' id='messageInput' style="width:53%;margin-top:0px;margin-bottom:0px;color:gray" oninput="this.style.color='black'">
-                
-                <a id="send-msg" ></a>
+        <div align="center" id="sw-chat" ><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
+        <div id="chat-box" style="border: 0px">
+            <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
+            <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
+                <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
+                <a id="send-msg"></a>
             </div>
         </div>
 </div>
@@ -88,6 +113,10 @@ echo "<script>var role='$role';</script>";
 $(document).ready(function(){
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
+    //每5秒，发送一次时间
+    setInterval(function() {    
+        checkOnLine();
+    }, 8000);
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -169,6 +198,21 @@ function pollChatRoom() {
     });
 }
 
+function checkOnLine(){
+        $.ajax({
+             type: "GET",
+             dataType: "json",
+             url: "index.php?r=api/updateStuOnLine&&classID=<?php echo $classID;?>&&userid=<?php echo Yii::app()->session['userid_now']?>",
+             data: {},
+             success: function(){ console.log("set time");},
+                error: function(xhr, type, exception){
+                    console.log(xhr, "Failed");
+                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    
+                }
+         });
+        return false;
+　　　}
 function pollBulletin() {
     $.ajax({
         type: "GET",

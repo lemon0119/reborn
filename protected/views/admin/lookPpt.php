@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID'];?>&&courseName=<?php echo Yii::app()->session['courseName'];?>&&createPerson=<?php echo Yii::app()->session['createPerson'];?>"><i class="icon-align-left"></i> 课业列表</a></li>
+            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID'];?>&&courseName=<?php echo Yii::app()->session['courseName'];?>&&createPerson=<?php echo Yii::app()->session['createPerson'];?>"><i class="icon-align-left"></i> 课时列表</a></li>
         </ul>
     </div>
 </div>

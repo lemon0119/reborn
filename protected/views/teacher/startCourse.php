@@ -8,9 +8,9 @@
 ?>
 
 <div class="span3">
-    <div class="well" style="padding: 8px 0;">
+    <div class="well-bottomnoradius" style="padding: 8px 0;">
                 <ul class="nav nav-list">
-                <li class="nav-header">当前课程</li>
+                <li class="nav-header"><i class="icon-knowlage"></i>当前科目</li>
                 <?php  if($lessonsName!=null){?>
                 <li id="li-<?php echo $progress;?>">
                     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>">
@@ -20,26 +20,33 @@
                 </li>
                 <?php }?>
                 <li class="divider"></li>
-                <li class="nav-header">其余课程</li>
+                <li class="nav-header"><i class="icon-knowlage"></i>其余科目</li>
+                </ul>
+    </div>
+    <div class="well-bottomnoradius" style="padding: 8px 0;height:230px;overflow:auto;top: -20px;border-top-left-radius:0px; ">
+                <ul class="nav nav-list">
+                
                 <?php foreach($lessonsName as $key => $value):
                     if($key!=$progress){
                     ?>
-                    <li id="li-<?php echo $key; ?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $key; ?>"><i class="icon-list-alt"></i> <?php echo $value; ?></a></li>
+                    <li  id="li-<?php echo $key; ?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $key; ?>"><i class="icon-list-alt"></i> <?php echo $value; ?></a></li>
                     <?php
                 }
             endforeach;
             ?>
+                    
         </ul>
     </div>
     
-    <div class="well" style="padding: 8px 0;">
+    <div class="well-topnoradius" style="padding: 8px 0;top: -40px;">
+        
                 <ul class="nav nav-list">
                 <li class="nav-header"></li>
-                <li class="nav-header">学生列表</li>
+                <li class="nav-header"><i class="icon-knowlage"></i>学生列表</li>
                 <div class="scroll" style="padding: 8px 0;height:100px;overflow:auto;margin-left: 20px;">
                 <?php foreach($stu as $student){
                     ?>
-                    <li><?php echo $student['userName']?></li>
+                    <li><i class="icon-headphones"></i><?php echo $student['userName']?></li>
                 <?php
                 }
                 
@@ -63,7 +70,7 @@
         </p>
         <div style="height:200px; width: 780px">
             <?php if ($on == $progress) { ?>
-            <a href="#" onclick="beginVirClass()"class="startcourse-virtualclass">虚拟课堂</a> 
+            <a href="#" onclick="getBackTime()"class="startcourse-virtualclass">虚拟课堂</a> 
             <?php } else { ?>
                 <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass">开始本课</a> 
                <?php } ?>
@@ -141,14 +148,43 @@
 </div>
 <script>
     $(document).ready(function(){
+        //每5秒，刷新一次
+        //setTimeout(function() {
+        //    getBackTime();
+        //}, 1000);
         $("#li-<?php echo $on;?>").attr("class","active");
     });
-    function beginVirClass(){
-        if(<?php echo $result;?>=='1'){
+    function beginVirClass(){     //点击开始虚拟课堂时触发
+        getBackTime();
+        
+        if($("#txt").val()=='1'){
             alert("此班级正在上课！")
         }else{
             window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";
         }
     }
+    function getBackTime() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        //url: "index.php?r=api/GetBackTime&&classID=<?php echo $classID;?>",
+        url: "index.php?r=api/GetClassState&&classID=<?php echo $classID;?>",
+        success: function(data) {
+            console.log("qq",data);
+            var now=<?php echo time()?>;    //这个时间是页面进入的时候，生成的。
+            //虽然点击的时候，才会执行这个js代码，但是，php是加载的时候就已经生成了
+            //也就是说，等到用户点击，这个时间now的值，是加载页面的时间。
+            if(!data){
+                window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";//$("#txt").val('0');
+            } else{
+                alert("此班级正在上课！");//$("#txt").val('1');
+            }
+        },
+        error: function(xhr, type, exception){
+            console.log('get backtime erroe', type);
+            console.log(xhr, "Failed");
+        }
+    });
+}
 </script>
 

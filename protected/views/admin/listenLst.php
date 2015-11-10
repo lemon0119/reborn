@@ -6,7 +6,7 @@
                         <li>
                                 <select name="type" >
                                         <option value="exerciseID" selected="selected">编号</option>
-                                        <option value="courseID" >课程号</option>
+                                        <option value="courseID" >科目号</option>
                                         <option value="title" >题目名</option>
                                         <option value="createPerson" >创建人</option>
                                         <option value="content">内容</option>
@@ -98,8 +98,13 @@
     </div>
 <script>
   function dele(exerciseID){
-      if(confirm("您确定删除吗？")){
-          window.location.href = "./index.php?r=admin/deleteListen&&exerciseID=" + exerciseID;
-      }
+      var option = {
+						title: "提示",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							window.location.href = "./index.php?r=admin/deleteListen&&exerciseID=" + exerciseID;
+						} 
+					};
+					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
   }
 </script>

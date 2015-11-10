@@ -6,7 +6,7 @@
             <li>
                 <select name="type" >
                     <option value="exerciseID" selected="selected">编号</option>
-                    <option value="courseID" >课程号</option>
+                    <option value="courseID" >科目号</option>
                     <option value="createPerson" >创建人</option>                                            
                     <option value="requirements">内容</option>
                 </select>
@@ -63,17 +63,12 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<h3>修改填空题</h3>
+<legend><h3>修改填空题</h3></legend>
 <?php } else if($action == 'look') {?>
-<h3>查看填空题</h3>
+<legend><h3>查看填空题</h3></legend>
 <?php }?>
 <form id="myForm" class="form-horizontal" method="post" action="./index.php?r=teacher/editFillInfo&&exerciseID=<?php echo $exerciseID;?>"> 
         <fieldset>
-        <?php if(!isset($action)) {?>
-            <legend>填写题目</legend>
-        <?php } else if($action == 'look') {?>
-            <legend>查看题目</legend>
-        <?php }?>
          <div class="control-group">
              <label class="control-label" for="input1">题目</label>
              <div class="controls">
@@ -92,22 +87,22 @@
          </div>
          <div class="control-group">
              <div class="controls">
-                 <input name="in2" style="<?php if ($len<2) echo "display:none";?>" type="text" class="input-xlarge" id="input3" value="<?php if ($len>1) echo $optArr[1];?>" />
+                 <input name="in2" style="<?php if ($len<2) echo "display:none";?>" type="text" class="input-xlarge" id="input3" value="<?php if ($len>1) echo $optArr[1];?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
              </div>
          </div>
          <div class="control-group">
              <div class="controls">
-                 <input name="in3" style="<?php if ($len<3) echo "display:none";?>" type="text" class="input-xlarge" id="input4" value="<?php if ($len>2) echo $optArr[2];?>" />
+                 <input name="in3" style="<?php if ($len<3) echo "display:none";?>" type="text" class="input-xlarge" id="input4" value="<?php if ($len>2) echo $optArr[2];?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
              </div>
          </div>
          <div class="control-group">
              <div class="controls">
-                 <input name="in4" style="<?php if ($len<4) echo "display:none";?>" type="text" class="input-xlarge" id="input5" value="<?php if ($len>3) echo $optArr[3];?>" />
+                 <input name="in4" style="<?php if ($len<4) echo "display:none";?>" type="text" class="input-xlarge" id="input5" value="<?php if ($len>3) echo $optArr[3];?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
              </div>
          </div>
          <div class="control-group">
              <div class="controls">
-                 <input name="in5" style="<?php if ($len<5) echo "display:none";?>" type="text" class="input-xlarge" id="input6" value="<?php if ($len>4) echo $optArr[4];?>" />
+                 <input name="in5" style="<?php if ($len<5) echo "display:none";?>" type="text" class="input-xlarge" id="input6" value="<?php if ($len>4) echo $optArr[4];?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
              </div>
          </div>
          <div class="form-actions">

@@ -3,21 +3,21 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">                     
-            <li class="nav-header">班级列表</li>
+            <li class="nav-header"><i class="icon-knowlage"></i>班级列表</li>
 
             <?php foreach ($array_class as $class): ?>
                 <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>  
-            <form id="myForm" action="./index.php?r=teacher/AddExam" method="post" >  
+             
                 <li class="divider"></li>
-                <li class="nav-header">试卷标题</li>
+                <li class="nav-header"><i class="icon-knowlage"></i>试卷标题</li>
                 <li style="margin-top:10px">
-                    <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value="" />
+                    <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value=""/>
                 </li>
                 <li style="margin-top:10px">
-                <button type="submit" class="btn btn-primary">创建试卷</button>
+                    <a href="#"onclick="chkIt()" id="bth_create"></a>
                 </li>
-            </form>
+             
         </ul>
     </div>
 
@@ -57,21 +57,21 @@
                     </td>
                     <td class="font-center">
                         <?php if ($isOpen == false) { ?>
-                        <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo $exam['begintime'] ?>')" style="color: green" >开放</a>
+                        <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo $exam['begintime'] ?>')" style="color: green" >发布</a>
                             <font style="color:grey">关闭</font>
                         <?php } else { ?>
-                            <font style="color:grey">开放</font>
+                            <font style="color:grey">发布</font>
                             <a href="./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $exam['examID']; ?>&&duration=<?php echo $exam['duration'];?>&&beginTime=<?php echo $exam['begintime']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1; ?>" style="color: red">关闭</a>
                         <?php } ?>  
                     </td>   
 
-                    <td class="font-center" style="width: 180px">
+                    <td class="font-center" style="width: 210px">
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                         <?php if ($isOpen==false) {?>
-                            <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')">立即开始</a> 
+                            <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')"></a> 
                         <?php} ?>
-                            <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php echo IMG_URL; ?>edit.png">配置</a>
+                            <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php echo IMG_URL; ?>../UI_tea/icon_SETUP.png"></a>
                         <?php }?>
                         
                     </td>
@@ -89,6 +89,13 @@
 
 
 <script>
+    $(document).ready(function(){
+        if(<?php echo $res;?>==1){
+            var txt=  "此试卷已经被创建！";
+	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
+            document.getElementById("title").value="";
+        }
+    });
     function dele(examID, currentPage)
     {
         var option = {
@@ -101,14 +108,7 @@
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
     }
 
-    $("#myForm").submit(function(){
-        var title = $("#title")[0].value;
-        if (title == "")
-        {
-            window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
-            return false;
-        }
-    });
+   
 function openExam(examID,duration,begintime)
 {
      var duration=prompt("时长",duration);//将输入的内容赋给变量 name ，
@@ -125,14 +125,27 @@ function openExam(examID,duration,begintime)
 }
 function begin_now(examID,d,time,isOpen)
 {
-        var begin=time;
+    var begin=time;
         if(d==0){
             d=prompt("时长不能为0！！！",d);
         }
         if(confirm("你确定要立即开始？")){
             window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
         }
+}
    
+
+function chkIt(){
+    var usernameVal = document.getElementById("title").value;  
+    if(usernameVal==""){
+        window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
+            return false;
+    }
+    if(usernameVal.length > 30){ //一个汉字算一个字符  
+        window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.warning);
+        document.getElementById("title").value="";
+    }
+    window.location.href="./index.php?r=teacher/AddExam&&title="+usernameVal;
 }
 </script>
 

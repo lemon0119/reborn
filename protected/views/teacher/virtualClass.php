@@ -1,31 +1,10 @@
 <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
 <script>
-    /*
-　　　function checkLeave(){
-       $.ajax({
-            type: "GET",
-            url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID;?>",
-            data: {},
-            /*
-            success: function(){ 
-
-               window.wxc.xcConfirm('更新成功！', window.wxc.xcConfirm.typeEnum.success);
-                },
-            error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了呀...', window.wxc.xcConfirm.typeEnum.error);
-                console.log(xhr, "Failed");
-                console.log(type, "Failed");
-                console.log(exception, "Failed");
-            }
-            
-        });
-　　　}
-   */
+　　　
    </script>
   
 <!--直播begin-->
-<body onbeforeunload="checkLeave()"> 
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
     <?php
    
@@ -78,8 +57,8 @@
                     ?>
                 </select>
                 <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button>
-                <button id="share-Cam" class="btn btn-primary" style="margin-left: 200px">直播视频</button>
-                <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
+                <h style="margin-left: 330px;">在线<textarea id="ff" disabled="disabled"style="width:10px;height: 15px;background:transparent;border-style:none;"><?php echo $count?></textarea>人</h>
+                 
             </div>
         
             <div style="display:block;"></div>
@@ -122,6 +101,9 @@
                     ?>
                 </select>
                 <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
+                <button id="share-Cam" class="btn btn-primary" style="margin-left: 200px">直播视频</button>
+                <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
+                
             </div>
         
             <div id="scroll-page" style="display:inline;">
@@ -138,35 +120,35 @@
             </div>
             <div id="dianbo-videos-container" style="display:none">  
             </div>
-            <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
+            <div id="ppt-container" >
                 <img id="ppt-img" src="" style="height: 100%;"/>
             </div>
     </div>
 
-    <div class="right">
-        <div>
-            <div align="center" id="sw-teacher-camera"><a href="#"><h4>教 师 视 频</h4></a></div>  
-            <div id="teacher-camera" style="border:1px solid #ccc; margin-left:auto;margin-right:auto;width:80%; height:220px; clear:both;">
-                <iframe src="./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>" name="iframe_b" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
+    <div class="right"style="background-color: #3b3b3b;border: 0px" >
+        
+            <div align="center" id="sw-teacher-camera"><a href="#"><h4 style="color: white">教 师 视 频</h4></a></div>  
+            <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
+                <iframe src="./index.php?r=webrtc/teaCam&&classID=<?php echo $classID;?>" name="iframe_b" style="background-color:#5e5e5e; width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
             </div>
-            <div align="center" id="sw-bulletin"><a href="#"><h4>通 知 公 告</h4></a></div>
-            <div id="bulletin" class="bulletin" style="display:none">
+            <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
+            <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
 
-            <textarea id="bulletin-textarea" style="color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
-            <button id="postnotice" name="发布公告" class="btn btn-primary" style="margin-left: 100px; margin-top: 5px;">发布公告</button>
+            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
+            <a id="postnoticeTea"></a>
+            
 
             </div>
-            <div align="center" id="sw-chat"><a href="#"><h4>课 堂 问 答</h4></a></div>
-            <div id="chat-box">
-                <div id="chatroom" class="chatroom"></div>
-            <div class="sendfoot">
-                <input type='text' id='messageInput' style="width:55%;margin-top:0px;margin-bottom:0px;color:gray" oninput="this.style.color='black'">
+            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
+            <div id="chat-box" style="border: 0px">
+                <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
+            <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
+                <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
                 <a id="send-msg" ></a>
             </div>
             </div>
-        </div>
+        
     </div>
-</body>
 <script>
 //全屏
     $('#full-screen-button').on('click', function(){
@@ -204,10 +186,7 @@
 <script>
     //chat and bulletin
 $(document).ready(function(){
-    //$(window).bind('beforeunload',function(){
-    //    return '您确定离开此页面吗？';
-    //});
-    
+    /*
    $("div.container div.navbar div.navbar-inner div.container div.nav-collapse ul.nav li.dropdown ul.dropdown-menu li").find("a").click(function() {
             var url=$(this).attr("href");
             if(url.indexOf("index.php")>0){
@@ -226,12 +205,11 @@ $(document).ready(function(){
                 });
                 return false;
             }
-    });
-        
+    });*/
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
 
-    $("#postnotice").click(function() {
+    $("#postnoticeTea").click(function() {
         var text = $("#bulletin-textarea").val();
         $.ajax({
             type: "POST",
@@ -244,6 +222,16 @@ $(document).ready(function(){
             }
         });
     });
+    //每5秒，发送一次时间
+    setInterval(function() {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
+        checkLeave();
+    }, 5000);
+        
+    // ------------------------------------------------------ on line
+    setInterval(function() {
+        getBackTime();
+        //freshOnline();
+    }, 4000)
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -298,7 +286,37 @@ $(document).ready(function(){
         });
     });
 });
-
+function checkLeave(){
+        $.ajax({
+             type: "POST",
+             url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID;?>",
+             data: {},
+             success: function(){ console.log("set time");},
+                error: function(xhr, type, exception){
+                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr, "Failed");
+                }
+         });
+        return false;
+　　　}
+function getBackTime() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "index.php?r=api/GetStuOnLine&&classID=<?php echo $classID;?>",
+        success: function(data) {
+            console.log("qq",data);
+            var now=<?php echo time()?>;    //这个时间是页面进入的时候，生成的。
+            //虽然点击的时候，才会执行这个js代码，但是，php是加载的时候就已经生成了
+            //也就是说，等到用户点击，这个时间now的值，是加载页面的时间。
+            $("#ff").val(data);
+        },
+        error: function(xhr, type, exception){
+            console.log('get backtime erroe', type);
+            console.log(xhr, "Failed");
+        }
+    });
+}
 function pollChatRoom() {
     $.ajax({
         type: "GET",

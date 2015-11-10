@@ -12,6 +12,7 @@ require 'ansSideBar.php';
     <div class="hero-unit">
         <input name ="qType" type="hidden" value="question"/>
         <?php 
+        echo '<h2>简答题</h2>';
             $SNum = 0;
             foreach ($exercise['question'] as $value) {
                 echo ($SNum+1).'. ';

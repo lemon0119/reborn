@@ -6,7 +6,7 @@
             <li>
                     <select name="type" >
                             <option value="exerciseID" selected="selected">编号</option>
-                            <option value="courseID" >课程号</option>
+                            <option value="courseID" >科目号</option>
                             <option value="createPerson">创建人</option>
                             <option value="requirements">内容</option>
                     </select>
@@ -39,17 +39,12 @@
 
 <div class="span9">
     <?php if(!isset($action)) {?>
-        <h3>编辑选择题</h3>
+        <legend><h3>编辑选择题</h3></legend>
     <?php } else if($action == 'look') {?>
-        <h3>查看选择题</h3>
+       <legend> <h3>查看选择题</h3></legend>
     <?php }?>
     <form id="myForm" class="form-horizontal" method="post" action="./index.php?r=teacher/editChoiceInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
-    <?php if(!isset($action)) {?>
-        <legend>编辑题目</legend>
-    <?php } else if($action == 'look') {?>
-        <legend>查看题目</legend>
-    <?php }?>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">

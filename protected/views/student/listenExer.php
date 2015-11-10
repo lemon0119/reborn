@@ -16,9 +16,9 @@
     $type = 'listen'; 
     if($isExam){
         $seconds = $exerOne['time'];
-        $hh = floor(($seconds) / 3600);
-        $mm = floor(($seconds) % 3600 / 60);
-        $ss = floor(($seconds) % 60);
+        $hh = floor(($seconds*60) / 3600);
+        $mm = floor(($seconds*60) % 3600 / 60);
+        $ss = floor(($seconds*60) % 60);
         $strTime = "";
         $strTime .= $hh < 10 ? "0".$hh : $hh;
         $strTime .= ":";
@@ -35,10 +35,12 @@
                 <tr>
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
-                        <td width = '250px'>总时间：<?php echo $strTime?></td>  
-                    <?php }?>
-                    <td width = '250px'>计时：<span id="time">00:00:00</span></td>
+                        <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime?></span><input id="timej" type="hidden"/></td>
+                        <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                    <?php }else{?>
+                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                     <?php }?>
                 </tr>
             </table>
             <?php 
@@ -47,7 +49,9 @@
             ?>
             <div align="left">
                 <br/>
-                <audio src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
+                <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; top:150px;'></div>
+                <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; top:150px;'></div>
+                <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath;?>"   preload = "auto"  onplay="start()"  controls=""></audio>
             </div>
             <br/>
             <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
@@ -66,21 +70,27 @@
 <script>
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     $(document).ready(function(){
-        if(isExam){
-            alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+        <?php   if (!$isOver){?>
+        alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+        <?php }?>
+        if(<?php if($isExam){echo $exerOne['time'];}else {echo 0;} ?>!=0){
+        <?php if($isExam){?>
+            reloadTime2(<?php echo $exerOne['time'];?>,isExam);
             var isover = setInterval(function(){
                 var time = getSeconds();
-                //console.log(time + "time");
-                var seconds = <?php if($isExam) echo $exerOne['time']; else echo '0';?>;
-                //console.log(seconds + "seconds");
-                if(time >= seconds &&second!=0){
+
+                var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;
+               
+        if(time==0){
+                    alert("本题时间已到，不可答题！");
                     clearInterval(isover);
-                    doSubmit(true,function(){
-                        window.location.href="index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['examsuiteID'];?>&&workID=<?php echo Yii::app()->session['examworkID']?>";
+                   doSubmit(true,function(){
+                      window.location.href="index.php?r=student/examlistenType&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
                     });
                 }
             },1000);
-        }
+      <?php }?>
+}
     });
     
     $(document).ready(function(){
@@ -91,5 +101,9 @@
     function getWordLength(){
         var input = getContent(document.getElementById("typeOCX"));
         return input.length;
+    }
+    
+    function start(){
+       document.getElementById('audio_hiden').style.display="block";
     }
 </script>

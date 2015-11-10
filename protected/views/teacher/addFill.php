@@ -6,7 +6,7 @@
             <li>
                 <select name="type" >
                     <option value="exerciseID" selected="selected">编号</option>
-                    <option value="courseID" >课程号</option>
+                    <option value="courseID" >科目号</option>
                     <option value="createPerson">创建人</option>
                     <option value="requirements">内容</option>
                 </select>
@@ -74,7 +74,7 @@
                 <label class="control-label" for="input2">答案</label>
                 <div class="controls">
                     <input name="in1" type="text" class="input-xlarge" id="input2" value="" />
-                    <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                    <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
                 </div>
             </div>
             <div class="control-group">

@@ -6,7 +6,7 @@
             <li>
                 <select name="type" >
                     <option value="exerciseID" selected="selected">编号</option>
-                    <option value="courseID" >课程号</option>
+                    <option value="courseID" >科目号</option>
                     <option value="createPerson" >创建人</option>
                     <option value="title">题目名</option>
                     <option value="content">内容</option>
@@ -37,19 +37,14 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<h3 style="display:inline-block;">编辑听打练习题</h3>
-<span>(支持mp3及wav格式)</span>
+<legend><h3 style="display:inline-block;">编辑听打练习题</h3>
+<span>(支持mp3及wav格式)</span></legend>
 <?php } else if($action == 'look') {?>
-<h3>查看听打练习题</h3>
+<legend><h3>查看听打练习题</h3></legend>
 <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editListenInfo&&oldfilename=<?php echo $filename;?>&&exerciseID=<?php echo $exerciseID;?>" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
-        <?php if(!isset($action)) {?>
-            <legend>填写题目</legend>
-        <?php } else if($action == 'look') {?>
-            <legend>查看题目</legend>
-        <?php }?>
         <?php $listenpath = "resources/".$filepath.$filename;?>
             
        <div class="control-group">
@@ -86,6 +81,7 @@
             <label class="control-label" for="input03">听打答案</label>
             <div class="controls">               
                 <textarea name="content" style="width:450px; height:200px;" id="input03" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $content; ?></textarea>
+                <br>字数：<span id="wordCount">0</span> 字
             </div>
         </div> 
             
@@ -101,9 +97,11 @@
 </div>
 <script>     
 $(document).ready(function(){
+    var v=<?php echo Tool::clength($content);?>;
+    $("#wordCount").text(v);
     $("#upload").hide();
     <?php if(isset($result))
-            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
+            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>
 });
 
 

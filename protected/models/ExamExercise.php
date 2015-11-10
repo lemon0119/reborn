@@ -118,8 +118,7 @@ class ExamExercise extends CActiveRecord
         }
         return $examExer;
     }
-        
- //宋杰 2015-7-31 根据题目类型从相应题库中获取题目       
+//宋杰 2015-7-31 根据题目类型从相应题库中获取题目       
     public function getExamExerByType( $suiteID, $type)
     {
         switch ($type){

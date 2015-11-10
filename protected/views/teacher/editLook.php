@@ -6,7 +6,7 @@
             <li>
                 <select name="type" >
                     <option value="exerciseID" selected="selected">编号</option>
-                    <option value="courseID" >课程号</option>
+                    <option value="courseID" >科目号</option>
                     <option value="createPerson" >创建人</option>
                     <option value="title">题目名</option>
                     <option value="content">内容</option>
@@ -37,18 +37,13 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<h3>编辑键位练习题</h3>
+<legend><h3>编辑看打练习题</h3></legend>
 <?php } else if($action == 'look') {?>
-<h3>查看键位练习题</h3>
+<legend><h3>查看看打练习题</h3></legend>
 <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editLookInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
-        <?php if(!isset($action)) {?>
-            <legend>填写题目</legend>
-        <?php } else if($action == 'look') {?>
-            <legend>查看题目</legend>
-        <?php }?>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
@@ -59,6 +54,7 @@
             <label class="control-label" for="input02">看打答案</label>
             <div class="controls">               
                 <textarea name="content" style="width:450px; height:200px;"<?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?> ><?php echo $content; ?></textarea>
+                <br>字数：<span id="wordCount">0</span> 字
             </div>
         </div> 
         <div class="form-actions">
@@ -74,6 +70,8 @@
 $(document).ready(function(){
     <?php if(isset($result))
             echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>
+    var v=<?php echo Tool::clength($content);?>;
+    $("#wordCount").text(v);
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;

@@ -209,6 +209,15 @@ a:hover,a:focus {
 .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container {
     width:1200px
 }
+.vp1 {
+    border-radius: 5px;
+    background-color: #fff;
+    position:relative;
+    float: right;
+    height: 55px;
+    overflow: auto;
+    width:770px
+}
 .span12 {
     width:1070px
 }
@@ -225,8 +234,9 @@ a:hover,a:focus {
     float: right;
     right:30px;
     padding: 40px;
+    height: 590px;
+    overflow: auto;
     width:770px
-    
 }
 .span8 {
     width:620px
@@ -1493,11 +1503,6 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
     width:604px;
     margin-left:0
 }
-.table td.span9,.table th.span9 {
-    float:none;
-    width:684px;
-    margin-left:0
-}
 .table td.span10,.table th.span10 {
     float:none;
     width:764px;
@@ -1511,6 +1516,11 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
 .table td.span12,.table th.span12 {
     float:none;
     width:924px;
+    margin-left:0
+}
+.table td.pi1,.table th.pi1 {
+    float:none;
+    width:684px;
     margin-left:0
 }
 .table tbody tr.success>td {
@@ -2190,6 +2200,33 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
     border-radius:4px;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+    -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,0.05)
+}
+.well-bottomnoradius{
+    position: relative;
+    min-height:20px;
+    padding:19px;
+    margin-bottom:20px;
+    background-color:#393939;
+    border:1px solid #393939;
+    border-top-left-radius:4px; 
+    border-top-right-radius: 4px;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+    -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,0.05)
+}
+.well-topnoradius{
+    position: relative;
+    top:-20px;
+    min-height:20px;
+    padding:19px;
+    margin-bottom:20px;
+    background-color:#393939;
+    border:1px solid #393939;
+    border-bottom-left-radius:4px; 
+    border-bottom-right-radius: 4px;
     -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
     -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
     box-shadow:inset 0 1px 1px rgba(0,0,0,0.05)
@@ -3125,7 +3162,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
     *z-index:2;
     margin-bottom:20px;
     overflow:visible
-    
+
 }
 .navbar-inner {
     min-height:40px;
@@ -4487,7 +4524,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .hero-unit-choice {
     overflow: auto;
     height: 500px;
-    width: 800px;
+    width: 750px;
     margin-bottom:30px;
     font-size:18px;
     font-weight:200;
@@ -4571,7 +4608,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 
 .userUI{
-   position: relative;
+    position: relative;
     top: 1px;
     background-color: #fff;
     border-top-right-radius: 4px;
@@ -4612,6 +4649,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     margin-top: 100px;
     margin-left: 300px;
     color: #fff;
+    height: 500px;
     width:700px
 
 }
@@ -4630,6 +4668,8 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 10px 55px;
     margin-left: 10px;
     background: url(../../img/btn_add.png);
+    position: relative;
+    top:1px;
 }
 .btn_add:hover{
     padding: 10px 55px;
@@ -4657,7 +4697,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .span_icon{
     position: relative;
-   
+
 }
 
 .view-link{
@@ -4749,6 +4789,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     top:1px;
     background-image: url("../../img/bell_off.jpg");
 }
+#stuMail_on:hover{
+    padding: 27px 35px;
+    position: relative;
+    top:1px;
+    background-image: url("../../img/on_bell.jpg");
+}
 #stuMail_on{
     padding: 27px 35px;
     position: relative;
@@ -4760,8 +4806,47 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_stu/encyclopedia.png");
 }
 #suLu:hover{
-    padding: 28px 60px;
+    padding: 14x 60px;
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
+
+}
+#postnoticeTea{
+    padding: 10px 190px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/btn_announcement.png");
+}
+#postnoticeTea:hover{
+    padding: 10px 190px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/on_btn_announcement.png");
+
+}
+#stuBack{
+    position: relative;
+    left: 70px;
+    padding: 10px 37px;
+    background-image: url("../../img/UI_stu/btn_cancel.png");
+}
+#stuBack:hover{
+    position: relative;
+    left: 70px;
+    padding: 10px 37px;
+    background-image: url("../../img/UI_stu/on_btn_cancel.png");
+
+}
+#DeterMine1{
+    padding: 10px 100px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/btn_determine.png");
+    position: relative;
+    left:82px;
+}
+#DeterMine1:hover{
+    position: relative;
+    left: 82px;
+    padding: 10px 100px;
+    background-repeat: no-repeat;
+    background-image: url("../../img/UI_stu/on_btn_determine.png");
 
 }
 #myCourse{
@@ -4786,15 +4871,33 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #send-msg{
+    margin-top: 1px;
     background-repeat: no-repeat;
-    padding: 10px 55px;
-    background:url("../../img/UI_stu/send.png");
+    padding: 10px 40px;
+    background:url("../../img/UI_stu/btn_message.png");
 }
 
 #send-msg:hover{
     background-repeat: no-repeat;
-    padding: 10px 55px;
-    background: url("../../img/UI_stu/sendHover.png");
+    padding: 10px 40px;
+    background: url("../../img/UI_stu/on_btn_message.png");
+}
+#bth_create{
+    position: relative;
+    width: 225px;
+    top: 1px;
+    padding: 18px 0px;
+    margin-left: 0px;
+    background-repeat: no-repeat;
+    background: url("../../img/UI_tea/bth_create.png");
+}
+#bth_create:hover{
+    position: relative;
+    top: 1px;
+    padding: 18px 0px;
+    margin-left: 0px;
+    background-repeat: no-repeat;
+    background: url("../../img/UI_tea/on_bth_create.png");
 }
 #tb tbody tr td,#tb tbody tr th{
     border-style:none;
@@ -4802,24 +4905,23 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #blank_stu{
     position: relative;
     top: 1px;
-     background:-moz-linear-gradient(left,#505050,#fff);
-    
-    padding: 27px 107px;
+    background:-moz-linear-gradient(left,#606060,#fff);
+    padding: 27px 47px;
 }
 #blank_admin{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#505050,#fff);
-    padding: 27px 82px;
+    background:-moz-linear-gradient(left,#606060,#fff);
+    padding: 27px 22px;
 }
 #blank_teacher{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#505050,#fff);
-    padding: 27px 107px;
+    background:-moz-linear-gradient(left,#606060,#fff);
+    padding: 27px 47px;
 }
 #schedule{
-     position: relative;
+    position: relative;
     top: 1px;
     font-size:18px;
     color: #fff;
@@ -4874,7 +4976,7 @@ table tr td{
     float: bottom;
     border-bottom-left-radius: 5px;
     color: #fff;
-     margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 .startcourse-virtualclass:hover{
     background-color: #ffa668;
@@ -4886,7 +4988,7 @@ table tr td{
     float: bottom;
     border-bottom-left-radius: 5px;
     color: #fff;
-     margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 .startcourse-startclass{
     background-color: gray;
@@ -4924,4 +5026,285 @@ table tr td{
     width: 80px;
     border:1px solid #fff;
     color:#aaa9a9;
+}
+.table_schedule{
+}
+
+.table_schedule:hover{
+    font-weight: bolder !important;
+    box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
+}
+#postnotice{
+    cursor: pointer;
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/btn_release.png");
+}
+#postnotice:hover{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_release.png");
+}
+#returner{
+    padding: 10px 37px;
+    background-image: url("../../img/UI_adm/btn_ret.png");
+}
+#returner:hover{
+    padding: 10px 37px;
+    background-image: url("../../img/UI_adm/on_btn_ret.png");
+}
+#change{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_save.png");
+}
+#change:hover{
+    padding: 10px 64px;
+    background-image: url("../../img/UI_adm/on_btn_save.png");
+}
+
+.cursor_pointer{
+    cursor: pointer;
+}
+.cursor_default{
+    cursor:default;
+}
+.copyright{
+    text-align: center;
+    width: 250px;
+    margin: 0 auto; 
+    padding: 10px 10px 0 10px;
+    color: #000;
+    font-size: 11px;
+}
+.btn_add_admin{
+    background-repeat: no-repeat;
+    padding: 18px 64px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_add1.png);
+}
+.btn_add_admin:hover{
+    background-repeat: no-repeat;
+    padding: 18px 64px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_add1.png);
+}
+.btn_cancel_admin{
+    background-repeat: no-repeat;
+    padding: 10px 37px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_cancel.png);
+}
+.btn_cancel_admin:hover{
+    background-repeat: no-repeat;
+    padding: 10px 37px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_cancel.png);
+}
+.btn_insert_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 21px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_insert.png);
+}
+.btn_insert_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 21px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_insert.png);
+}
+.btn_subtract_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 21px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_subtract.png);
+}
+.btn_subtract_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 21px;
+    margin-left: 10px;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_subtract.png);
+}
+.btn_ret_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 37px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_ret.png);
+}
+.btn_ret_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 37px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_ret.png);
+}
+.btn_save_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 64px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_save.png);
+}
+.btn_save_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 64px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_save.png);
+}
+.btn_AD_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 37px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_AD.png);
+}
+.btn_AD_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 37px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_AD.png);
+}
+.btn_Batch_add_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_Batch_add.png);
+}
+.btn_Batch_add_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_Batch_add.png);
+}
+
+.btn_reset_password_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_reset_password.png);
+}
+.btn_reset_password_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_reset_password.png);
+}
+.btn_add_student_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_add_student.png);
+}
+.btn_add_student_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_add_student.png);
+}
+.btn_add_teacher_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_add_teacher.png);
+}
+.btn_add_teacher_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 55px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_add_teacher.png);
+}
+#beginnow{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 6px 12px;
+    position: relative;
+    top: 2px;
+    border:0px; 
+    background: url(../../img/UI_tea/icon_begin.png);
+}
+#beginnow:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 6px 40px;
+    position: relative;
+    top: 2px;
+    border:0px; 
+    background: url(../../img/UI_tea/on_icon_begin.gif);
+}
+.btn_Add_class_admin{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 64px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/btn_Add_class.png);
+}
+.btn_Add_class_admin:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 10px 64px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/UI_adm/on_btn_Add_class.png);
+}
+.btn_bigret{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 112px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/btn_bigret.png);
+}
+.btn_bigret:hover{
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding: 18px 112px;
+    position: relative;
+    border:0px; 
+    background: url(../../img/on_btn_bigret.png);
+}
+.setB {
+    border-radius: 5px;
+    background-color: #fff;
+    position:relative;
+    float: right;
+    right:30px;
+    padding: 40px;
+    height: 590px;
+    overflow: auto;
+    width:1090px;
 }

@@ -6,7 +6,7 @@
                 <li>
                     <select name="type" >
                         <option value="courseID" selected="selected">编号</option>
-                        <option value="courseName">课程名</option>
+                        <option value="courseName">科目名</option>
                         <option value="createPerson">创建人</option>
                     </select>
                 </li>
@@ -19,7 +19,7 @@
                 </li>
             </form>
             <li class="divider"></li>
-            <li ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left"></i> 课程列表</a></li>
+            <li ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left"></i> 科目列表</a></li>
         </ul>
     </div>
 </div>
@@ -34,12 +34,12 @@ endforeach;
 ?>
 <?php if($courseLst->count()!=0){?>
     <h2>查询结果</h2>
-<!-- 课程列表-->
+<!-- 科目列表-->
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th class="font-center">编号</th>
-            <th class="font-center">课程名</th>
+            <th class="font-center">科目名</th>
             <th class="font-center">创建人</th>
             <th class="font-center">创建时间</th>
             <th class="font-center">操作</th>

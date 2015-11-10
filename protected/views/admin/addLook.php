@@ -6,7 +6,7 @@
             <li>
                 <select name="type" >
                     <option value="exerciseID" selected="selected">编号</option>
-                    <option value="courseID" >课程号</option>
+                    <option value="courseID" >科目号</option>
                     <option value="createPerson" >创建人</option>
                     <option value="title">题目名</option>
                     <option value="content">内容</option>
@@ -52,11 +52,11 @@
                 <textarea name="content" style="width:450px; height:200px;"></textarea>
             </div>
         </div> 
-        <div class="form-actions">
-            <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">添加</button>
+         <div  style="text-align: center;">
+            <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddLook&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
+             <?php if(!isset($action)) {?> 
+                <button style="position: relative;right:105px" type="submit" class="btn_add_admin"></button>
             <?php }?>
-            <a href="./index.php?r=admin/returnFromAddLook&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
         </div>
         </fieldset>
     </form>   

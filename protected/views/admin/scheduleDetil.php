@@ -17,25 +17,27 @@
                 </li>
             </form>
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage"></i>操作</li>
-            <li class="active"  ><a <?php
+            <li>&nbsp;</li>
+            <a <?php
                 if (isset($_GET['teacherId'])) {
                     echo 'href="./index.php?r=admin/schedule"';
                 } else {
                     echo 'href="./index.php?r=admin/schedule&&type=class"';
                 }
-                ?>><i class="icon-list-alt"></i> 返回上级</a></li>
+                ?> ><button  class="btn_bigret"></button></a>
+            <li>&nbsp;</li>
         </ul>
     </div>
 </div>
 <div class="span9">
         <?php if (isset($_GET['teacherId'])) { ?>
-        <h3><font style="color: #f46500"><?php echo $teacher['userName']; ?></font>&nbsp;&nbsp;老师的课程安排</h3>
+        <h3><font style="color: #f46500"><?php echo $teacher['userName']; ?></font>&nbsp;&nbsp;老师的科目安排</h3>
         <br/>
             <?php } else { ?>
-            <h3><font style="color: #f46500"><?php echo $class['className']; ?></font>&nbsp;&nbsp;的课程安排</h3>
+            <h3><font style="color: #f46500"><?php echo $class['className']; ?></font>&nbsp;&nbsp;的科目安排</h3>
             <br/>
 <?php } ?>
+            <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（鼠标悬浮显示详细信息）</p>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -50,40 +52,48 @@
                     </tr>
                 </thead>
                 <tbody>
-                        <?php for ($s = 1; $s < 7; $s++) { ?>
+                        <?php for ($s = 1; $s < 11; $s++) { ?>
                         <tr >
                             <?php
                             switch ($s) {
-                                case 1: echo '<td  rowspan="2">';
+                                case 1: echo '<td  rowspan="4">';
                                     break;
-                                case 3:echo '<td rowspan="2">';
+                                case 5:echo '<td rowspan="4">';
                                     break;
-                                case 5:echo '<td rowspan="2">';
+                                case 9:echo '<td rowspan="4">';
                                     break;
                             }
                             ?><?php
                             switch ($s) {
                                 case 1: echo '<span style="font-weight: bolder">上午</span>';
                                     break;
-                                case 3:echo '<span style="font-weight: bolder">下午</span>';
+                                case 5:echo '<span style="font-weight: bolder">下午</span>';
                                     break;
-                                case 5:echo '<span style="font-weight: bolder">晚上</span>';
+                                case 9:echo '<span style="font-weight: bolder">晚上</span>';
                                     break;
                             }
                             ?></td>
                             <td style="height: 62px" ><?php
                                 switch ($s) {
-                                    case 1: echo '<span style="font-weight: bolder">一</span>';
+                                    case 1: echo '<span>一</span>';
                                         break;
-                                    case 2: echo '<span style="font-weight: bolder">二</span>';
+                                    case 2: echo '<span>二</span>';
                                         break;
-                                    case 3: echo '<span style="font-weight: bolder">三</span>';
+                                    case 3: echo '<span >三</span>';
                                         break;
-                                    case 4: echo '<span style="font-weight: bolder">四</span>';
+                                    case 4: echo '<span>四</span>';
                                         break;
-                                    case 5: echo '<span style="font-weight: bolder">五</span>';
+                                    case 5: echo '<span>五</span>';
                                         break;
-                                    case 6: echo '<span style="font-weight: bolder">六</span>';
+                                    case 6: echo '<span>六</span>';
+                                        break;
+                                    case 7: echo '<span>七</span>';
+                                        break;
+                                    case 8: echo '<span >八</span>';
+                                        break;
+                                    case 9: echo '<span>九</span>';
+                                        break;
+                                    case 10: echo '<span>十</span>';
                                         break;
                                 }
                                 ?></td>
@@ -93,40 +103,40 @@
                                     foreach ($result as $v) {
                                         if (($v['sequence'] == $s) && ($v['day'] == $d)) {
                                             ?>
-                                        <td <?php if (isset($_GET['teacherId'])) {
+                            <td style="cursor:pointer" title="<?php
+                                        $array_v = explode("&&", $v['courseInfo']);
+                                        foreach ($array_v as $value) {
+                                            echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
+                                        }
+                                        ?>" class="table_schedule" <?php if (isset($_GET['teacherId'])) {
                                        echo 'onclick="change('.$s .','.$d.');"';
                                    }else{
                                        echo 'onclick="changeClass('.$s.','.$d.');"';
                                    }
                                             ?> >
-                                            <a title="<?php
-                                        $array_v = explode("&&", $v['courseInfo']);
-                                        foreach ($array_v as $value) {
-                                            echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
-                                        }
-                                        ?>" href="#" ><?php
+                                            <span   ><?php
                                         $array_v1 = explode("&&", $v['courseInfo']);
                                         foreach ($array_v1 as $value) {
-                                            if (strlen($value) > 4) {
+                                            if (Tool::clength($value, 'utf-8')>5) {
                                                 echo Tool::csubstr($value, 0, 4, 'UTF-8') . "...<br/>";
                                             } else {
                                                 echo $value . "<br/>";
                                             }
                                         }
-                                        ?></a></td>
+                                        ?></span></td>
                 <?php
                 $flag = 0;
             }
         }
         if ($flag == 1) {
             ?>
-                                    <td <?php if (isset($_GET['teacherId'])) {
+                                    <td style="cursor:pointer" title="-" class="table_schedule" <?php if (isset($_GET['teacherId'])) {
                                        echo 'onclick="change('.$s .','.$d.');"';
                                    } else {
                                        echo 'onclick="changeClass('.$s.','.$d.');"';
                                    }
                                             ?> >
-                                        <a title="-" href="#" >-</a></td>
+                                        <span style="color: #aaa9a9"   >-</span></td>
         <?php
         }
     }
@@ -135,7 +145,6 @@
 <?php } ?>
                 </tbody>
             </table>
-            <a href="./index.php?r=admin/schedule" class="btn">返回</a>
 </div>
 <script>
     function change(s, d) {

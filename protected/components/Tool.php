@@ -286,4 +286,19 @@ public static function teacherNotice(){
             return FALSE;
         }
     }
+    
+    //分页工具，$sql为SQL  返回值list为查询内容，$pages为分页结果
+    
+    public static function pager($sql,$pagesize){
+        $criteria=new CDbCriteria();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages= new CPagination($result->rowCount);
+        $pages->pageSize=$pagesize; 
+        $pages->applyLimit($criteria); 
+        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $list=$result->query();
+        return ['list'=>$list,'pages'=>$pages,];
+    }
 }

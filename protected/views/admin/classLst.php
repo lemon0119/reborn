@@ -29,7 +29,7 @@
                 <th class="font-center">班级名</th>
                 <th class="font-center">老师</th>
                 <th class="font-center">人数</th>
-                <th class="font-center">课程</th>
+                <th class="font-center">科目</th>
                 <th class="font-center">操作</th>
             </tr>
         </thead>
@@ -87,7 +87,7 @@
     function deleteClass(id){
       
         var option = {
-						title: "自定义",
+						title: "警告",
 						btn: parseInt("0011",2),
 						onOk: function(){
 							window.location.href="./index.php?r=admin/classLst&&flag=deleteClass&&ClassID="+id;

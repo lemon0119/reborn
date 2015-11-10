@@ -30,7 +30,10 @@ class StudentController extends CController {
         $student    =   Student::model()->findByPK($userID);
         $userName   =   $student->userName;
         $classID    =   $student->classID;
-        return $this->render('virtualClass',['userName'=>$userName,'classID'=>$classID]);
+        $lessons = Lesson::model()->findAll("classID = '$classID'");
+        $currentLesn = TbClass::model()->findlessonByClassID($classID);
+        $student = Student::model()->find("userID = '$userID'");
+        return $this->render('virtualClass',[ 'userID' => $student ['userID'],'lessons'=>$lessons,'currentLesn'=>$currentLesn,'userName'=>$userName,'classID'=>$classID,'class' =>$student ['classID']]);
     }
     
     public function actionAnslookType(){
@@ -56,7 +59,9 @@ class StudentController extends CController {
         return $this->render('ansDetail_1',['exercise' => $classwork,
             'exer' => $exer,
             'answer' => $answer['answer'],
-            'correct' => $answer['ratio_correct']]);
+            'correct' => $answer['ratio_correct'],
+            'type'=>$type,
+                ]);
     }
     
     public function actionAnsKeyType(){
@@ -217,7 +222,7 @@ class StudentController extends CController {
                 echo '保存答案失败，请重新提交!';
         }
     }
-    //我的课程
+    //我的科目
     public function actionMyCourse(){
         $isExam=false;
         Yii::app()->session['isExam']=$isExam;
@@ -332,7 +337,7 @@ class StudentController extends CController {
         $isOver = $costTime < $totalTime ? 0 : 1;
         //end
          if($recordID==null){
-          return $this->render('listenExer',array( 'exercise'=>$classexam,'exercise2'=>$classexam2,'exerOne'=>$result,'cent' =>$cent,'isExam'=>$isExam,'examInfo'=>$examInfo,'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime ));
+          return $this->render('listenExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exercise2'=>$classexam2,'exerOne'=>$result,'cent' =>$cent,'isExam'=>$isExam,'examInfo'=>$examInfo,'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime ));
          }
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -357,6 +362,7 @@ class StudentController extends CController {
              'cent' =>$cent,
             'isExam'=>$isExam,
                 'examInfo'=>$examInfo,
+             'exerID' =>$exerID,
             'typeNow' => 'listen',
             'isOver' => $isOver, //edit by LC
             'costTime' => $costTime
@@ -377,7 +383,6 @@ class StudentController extends CController {
         $result = LookType::model()->findByPK($exerID);
         $isExam = false;
         $wID=Yii::app()->session['workID'];
-        $isOver='0';
         $isOver='0';
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
         $finishRecord=Array();
@@ -458,6 +463,7 @@ class StudentController extends CController {
             'exercise'=>$classexam,
             'exercise2'=>$classexam2,
                 'exerOne'=>$result,
+             'exerID' =>$exerID,
             'cent'=>$cent,
             'isExam'=>$isExam,
                 'examInfo'=>$examInfo,
@@ -488,6 +494,7 @@ class StudentController extends CController {
             'cent'=>$cent,
             'isExam'=>$isExam,
             'examInfo'=>$examInfo,
+             'exerID' =>$exerID,
             'typeNow' => 'look',
             'isOver' => $isOver, //edit by LC
             'costTime' => $costTime
@@ -585,7 +592,7 @@ class StudentController extends CController {
         $isOver = $costTime < $totalTime ? 0 : 1;
         //end
          if($recordID==null){
-          return $this->render('keyExer',array( 'exercise'=>$classexam,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
+          return $this->render('keyExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
         }
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -603,12 +610,13 @@ class StudentController extends CController {
 
         return $this->render('keyExer',array( 
             'exercise'=>$classexam,
-                'exerOne'=>$result,
+            'exerOne'=>$result,
             'exercise2'=>$classexam2,
             'cent'=>$cent,
             'isExam'=>$isExam,
-                'examInfo'=>$examInfo, 
+            'examInfo'=>$examInfo, 
             'typeNow' => 'key',
+            'exerID' =>$exerID,
             'isOver' => $isOver, //edit by LC
             'costTime' => $costTime
         ));
@@ -1210,7 +1218,7 @@ class StudentController extends CController {
     }
     public function actionHeadPic(){
         $picAddress="";
-        $result="";
+        $result=0;
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
         $picAddress=$user['img_address'];
@@ -1218,6 +1226,7 @@ class StudentController extends CController {
     }
     public function actionAddHeadPic(){
         $result ="上传失败!";
+        $flag=0;
         $picAddress="";
         $userid_now = Yii::app()->session['userid_now'];
         $user = Student::model()->find('userID=?', array($userid_now));
@@ -1229,25 +1238,19 @@ class StudentController extends CController {
         }
         if (($_FILES ["file"] ["type"] == "image/gif")|| ($_FILES["file"]["type"] == "image/png") || ($_FILES ["file"] ["type"] == "image/jpeg") || ($_FILES ["file"] ["type"] == "image/pjpeg"))
         {   
-            if($_FILES["file"]["size"] < 30000000)
+            if ($_FILES["file"]["error"] > 0)
             {
-                if ($_FILES["file"]["error"] > 0)
-                {
-                    $result = "Return Code: " . $_FILES["file"]["error"];
-                }
-              else
-                {
-                    $oldName = $_FILES["file"]["name"]; 
-                    $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
-                    move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
-                    $result = "上传成功！";
-                    
-                    $user->img_address="img/head/" .$newName;
-                    $picAddress="img/head/" .$newName;
-                    $user->update();
-                }
-            }else{
-                $reult = "文件限定大小为30M！";
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            }
+          else
+            {
+                $oldName = $_FILES["file"]["name"]; 
+                $newName = Tool::createID().".".pathinfo($oldName,PATHINFO_EXTENSION);
+                move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "img/head/" . $newName );
+                $result = "上传成功！";
+                $user->img_address="img/head/" .$newName;
+                $picAddress="img/head/" .$newName;
+                $user->update();
             }
         }else {
             $result = "请上传正确的文件！";
@@ -1337,8 +1340,54 @@ class StudentController extends CController {
         $noticeS->update();
        $this->render('stuNotice',  array('noticeRecord'=>$noticeRecord,'pages'=>$pages));
     }
+    //公告内容
+     public function ActionNoticeContent(){
+        $result=0;
+        if(isset($_GET['action'])&&$_GET['action']=='edit'){
+            $result=1;
+        }
+       $id = $_GET['id'];
+       $noticeRecord=Notice::model()->find("id= '$id'");
+       $this->render('noticeContent',  array('noticeRecord'=>$noticeRecord));
+     }
+     //速录百科
     public function actionSuLu(){
         return $this->render('suLu');
+
+    }
+    
+     public function actionScheduleDetil() {
+             //查询任课班级科目
+             $userID= Yii::app()->session['userid_now'];
+             $sqlStudent = Student::model()->find("userID = '$userID'");
+             $currentClass = $sqlStudent['classID'];
+             Yii::app()->session['ScheduleCurrentClass'] = $currentClass;
+             $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
+              return $this->render('scheduleDetil', [ 'result' => $classResult]);
+    }
+    
+     public function actionEditSchedule() {
+        $sequence = $_GET['sequence'];
+        $day = $_GET['day'];
+             $currentClass = Yii::app()->session['ScheduleCurrentClass'];
+             $sql = "SELECT * FROM schedule_class WHERE classID = '$currentClass' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+        return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
+    }
+    //学生个人资料
+     public function actionStuInformation(){
+        $ID= Yii::app()->session['userid_now'];
+        $student = Student::model()->find("userID = '$ID'");
+        return $this->render('stuInformation',array(
+                'id' => $student ['userID'],
+                'name' => $student ['userName'],
+                'class' =>$student ['classID'],
+                'sex' => $student['sex'],
+                'age' => $student['age'],
+                'password' => $student['password'],
+                'mail_address' => $student['mail_address'],
+                'phone_number' => $student['phone_number']
+        ));
 
     }
 }

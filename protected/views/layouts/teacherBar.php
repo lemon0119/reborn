@@ -52,9 +52,9 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=teacher/fillLst">填空</a></li>
                                             <li><a href="./index.php?r=teacher/questionLst">简答</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="./index.php?r=teacher/listenLst">听打练习</a></li>
-                                            <li><a href="./index.php?r=teacher/lookLst">看打练习</a></li>
                                             <li><a href="./index.php?r=teacher/keyLst">键位练习</a></li>
+                                            <li><a href="./index.php?r=teacher/lookLst">看打练习</a></li>
+                                            <li><a href="./index.php?r=teacher/listenLst">听打练习</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
@@ -71,7 +71,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
                                     </li>
-
+                                    <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil"></a></li>
                                     <li><a id="blank_teacher"></a></li>
                                      <li>
                                        <?php if(Tool::teacherNotice() == 0){?>
@@ -103,10 +103,13 @@ if (isset(Yii::app()->session['userid_now'])) {
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="min-height: 700px">
                     <?php echo $content; ?>
                 </div>
             </div>
+             <div  class="copyright">
+		2015 &copy;南京兜秘网络科技有限公司.
+	</div>
         </body>
     </html>
 <?php } else { ?>
