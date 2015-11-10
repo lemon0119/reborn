@@ -93,13 +93,33 @@ class UserController extends Controller
     }
     public function actionLogin(){
         $login_model=new LoginForm;
+        //返回错误内容
+        $result = 'no';
+        //标记:是否进入账号密码判断逻辑
+        $flag = 0;
         if(isset($_POST['LoginForm'])){
-            $this->setuser($login_model);
+            $userID = $_POST['LoginForm']['username'];
+            if($_POST['LoginForm']['usertype']=='teacher'){
+                $teacher = Teacher::model()->find("userID = '$userID'");
+                if($teacher['is_delete']==1){
+                    $flag = 1;
+                }
+            }else if($_POST['LoginForm']['usertype']=='student'){
+                $student = Student::model()->find("userID = '$userID'");
+                if($student['is_delete']==1){
+                    $flag = 1;
+                }
+            }
+            if($flag == 0){
+                $this->setuser($login_model);
+            }if($flag == 1){
+                $result = '此账号已被冻结，请与管理员联系！';
+            }
         }
         if(isset($_GET['exit'])) {
             $this->clearTrace();
         }
-        $this->renderPartial('login',array('login_model'=>$login_model));
+        $this->renderPartial('login',array('login_model'=>$login_model,'result'=>$result));
     }
     public function actionHideMenu(){
         //记住菜单栏状态
