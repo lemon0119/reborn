@@ -20,6 +20,7 @@
 </div>
 <script>
 $(document).ready(function(){
+    document.getElementById("password").focus();
     //侧边菜单选中变色
     $("#li-recycleStu").attr("class","active");
 });
