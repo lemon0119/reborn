@@ -16,7 +16,7 @@ function long0(){
     var temp = document.getElementById("input01").value;
     var reg=/^[A-Za-z0-9]+$/;
     if(!reg.test(temp)||temp.length<3||temp.length>15){
-        alert('密码必须为3-15位的数字和字母的组合');
+        window.wxc.xcConfirm('密码必须为3-15位的数字和字母的组合', window.wxc.xcConfirm.typeEnum.info);
         document.getElementById("input01").value="";
     }
 }
@@ -24,7 +24,7 @@ function long(){
     var temp = document.getElementById("input02").value;
     var reg=/^[A-Za-z0-9]+$/;
     if(!reg.test(temp)||temp.length<3||temp.length>15){
-        alert('密码必须为3-15位的数字和字母的组合');
+        window.wxc.xcConfirm('密码必须为3-15位的数字和字母的组合', window.wxc.xcConfirm.typeEnum.info);
         document.getElementById("input02").value="";
     }
 }
@@ -117,17 +117,17 @@ function judge(){
     if(new1===defnew){
     }else
     {
-        window.wxc.xcConfirm('新密码和确认密码不一致', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('新密码和确认密码不一致', window.wxc.xcConfirm.typeEnum.info);
     	$("#input02")[0].value="";
     	$("#input03")[0].value="";
         return false;
     }
     if(new1 === "" ||old === ""||defnew === "" ){
-        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     if(email === "" ){
-        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     $('#myForm').submit();

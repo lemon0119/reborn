@@ -116,7 +116,9 @@ function openExam(examID,duration,begintime)
          alert("时长不能为0！！！");
          duration=prompt("时长",duration);
      }
-     var beginTime=prompt("开始时间",begintime);     
+     if(duration){
+        var beginTime=prompt("开始时间",begintime);     
+    }
     //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
    if(beginTime)//如果返回的有内容
     {
