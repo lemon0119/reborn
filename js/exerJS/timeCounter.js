@@ -38,3 +38,26 @@ function tCounter(currTime, endTime, time_id, endDo){
         }
     }, 1000);
 };
+function tCounter2(currTime, endTime, time_id, endDo){
+    var seconds = endTime - currTime;
+    if(seconds == 0){
+        endDo();
+        return;
+    }
+    printTime(seconds, time_id);
+    var timer = setInterval(function() {
+        seconds = seconds - 1;
+        if(seconds == 0){
+            endDo();
+            clearInterval(timer);
+        }else{
+            if(seconds % 100 === 0){
+                $.get("index.php?r=api/getTime",function(data,status){
+                    //console.log("Data: " + data + "\nStatus: " + status);
+                    seconds = endTime - parseInt(data);
+                });
+            }
+            printTime(seconds, time_id);
+        }
+    }, 1000);
+};

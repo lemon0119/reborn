@@ -109,7 +109,7 @@
             <div id="scroll-page" style="display:inline;">
                 <button id="page-up" class="btn btn-primary">上页</button>
                 <input id="yeshu" style="width:50px;" value="1">
-                /<input id="all-yeshu" style="width:50px;" readOnly="true">
+                <input id="all-yeshu" style="width:50px;" readOnly="true">
                 <button id="page-go" class="btn btn-primary">跳转</button>
                 <button id="page-down" class="btn btn-primary">下页</button>
                 <button id="full-screen-button" class="btn btn-primary">全屏</button>

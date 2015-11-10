@@ -33,6 +33,7 @@
                             </td>
                             <td>
                                 <font id = "sideTime-<?php echo $n;?>">计时结束</font>
+                                <font id = "sideTime2-<?php echo $n;?>" style="display: none;">计时结束</font>
                             </td>
                              <td>
                                     <?php if ($ratio_accomplish[$n] ==1){
@@ -70,9 +71,28 @@
         },5000); 
         var curtime = <?php echo time();?>;   
         function endTimer(endID){}
-        <?php $n=0;foreach ($classexams as $exam){?>
+        <?php $n=0;$classexam=Array();foreach ($classexams as $exam){array_push($classexam, $exam);?>
              tCounter(curtime,<?php echo strtotime($exam['begintime']);?>,"sideTime-<?php echo $n;?>", endTimer);
         <?php $n++;}?>
+            
+        //提前10min 提醒
+        function arriveTimer(endID){
+            $.ajax({
+                type: "POST",
+                url: "index.php?r=api/putNotice2&&class=<?php echo $classID;?>",
+                data: {title:  "考试提醒！" , content:  "考试时间还有10分钟就到了"},
+                success: function(){  
+                    
+                },
+                error: function(xhr, type, exception){
+                    console.log(xhr.responseText, "Failed");
+                }
+            });
+        }
+        <?php $m=0;foreach ($classexam as $exam){?>
+            var ti=<?php echo strtotime($exam['begintime']);?>;
+             tCounter2(curtime,<?php echo strtotime($exam['begintime'])-10*60?>,"sideTime2-<?php echo $m;?>", arriveTimer);
+        <?php $m++;}?>
     });
     
        
