@@ -59,12 +59,12 @@
                             <?php  echo $thisExam['score']?>
                         </td>
                         <td class="font-center">
-                            <?php  echo $thisExam['time']/60?>
+                            <?php  echo $thisExam['time']?>
                         </td>
                         <td class="font-center" style="width: 100px">            
                             <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID'] ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>                          
                             <!--<a href="#"  onclick="configScore('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>,<?php  echo $thisExam['score']?>)"><img src="<?php echo IMG_URL; ?>delete.png">配分</a>-->
-                            <!--<a href="#"  onclick="configTime('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>,<?php  echo $thisExam['time']/60?>)"><img src="<?php echo IMG_URL; ?>delete.png">配置时间</a>-->
+                            <!--<a href="#"  onclick="configTime('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>,<?php  echo $thisExam['time']?>)"><img src="<?php echo IMG_URL; ?>delete.png">配置时间</a>-->
                         </td>
                     </tr>            
                     <?php endforeach;?> 
