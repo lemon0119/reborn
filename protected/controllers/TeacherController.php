@@ -2935,10 +2935,13 @@ class TeacherController extends CController {
           public function ActionDeleteExam()
      {$res=0;
          $examID = $_GET['examID'];
+         $classID = $_GET['classID'];
+         $workID = ClassExam::model()->find("classID = '$classID' and examID = '$examID'")['workID'];
          $teacherID = Yii::app()->session['userid_now'];
          Exam::model()->deleteAll("examID='$examID'");
          ExamExercise::model()->deleteAll("examID='$examID'");
          ClassExam::model()->deleteAll("examID='$examID'");
+         ExamRecord::model()->deleteALL("workID='$workID'");
          $currentClass = Yii::app()->session['currentClass'];
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
              $array_class = array();
