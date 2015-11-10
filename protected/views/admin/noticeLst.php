@@ -68,11 +68,11 @@ $(document).ready(function(){
         var text1 = $("#notice-input").val();
         var text2 = $("#notice-textarea").val();
         if(text1==""||text2==""){
-           window.wxc.xcConfirm("标题或内容不能为空", window.wxc.xcConfirm.typeEnum.warning);
+           window.wxc.xcConfirm("标题或内容不能为空", window.wxc.xcConfirm.typeEnum.info);
             return false;
         }
          if(text1.length > 40){ 
-          window.wxc.xcConfirm("标题过长！！！", window.wxc.xcConfirm.typeEnum.warning);
+          window.wxc.xcConfirm("标题过长！！！", window.wxc.xcConfirm.typeEnum.info);
         document.getElementById("title").value="";
         }
         $.ajax({

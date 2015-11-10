@@ -6,7 +6,7 @@
             <li class="nav-header"><i class="icon-knowlage"></i>班级列表</li>
 
             <?php foreach ($array_class as $class): ?>
-                <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
+            <li <?php  if(Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>  
              
                 <li class="divider"></li>
@@ -67,7 +67,7 @@
 
                     <td class="font-center" style="width: 210px">
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
-                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
+                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass'];?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                         <?php if ($isOpen==false) {?>
                             <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')"></a> 
                         <?php} ?>
@@ -96,13 +96,13 @@
             document.getElementById("title").value="";
         }
     });
-    function dele(examID, currentPage)
+    function dele(examID, currentPage,classID)
     {
         var option = {
 						title: "警告",
 						btn: parseInt("0011",2),
 						onOk: function(){
-							 window.location.href = "./index.php?r=teacher/deleteExam&&examID=" + examID + "&&page=" + currentPage;
+							 window.location.href = "./index.php?r=teacher/deleteExam&&examID=" + examID +"&&classID="+ classID + "&&page=" + currentPage;
 						}
 					}
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
