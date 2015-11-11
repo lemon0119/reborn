@@ -17,13 +17,13 @@
             <tr>
                 <th>编号</th>
                 <th>班级</th>     
-                <th>科目</th>   
+                <th>课时</th>   
                 <th>作业</th>
                 <th>操作</th>
             </tr>
         </thead>
                 <tbody>        
-                    <?php $id =1;
+                    <?php $id =1; 
                       foreach($array_suiteLessonClass as $suiteLesson):
                         foreach($array_class as $class)
                             if($class['classID'] == $suiteLesson['classID']){
@@ -58,7 +58,7 @@
                         </td>           
                         <td>            
                              <?php
-                             echo $thisSuite['suiteName']?>                    
+                             echo $thisSuite['suiteName'];?>                    
                         </td>
                         <td>     
                             <?php if($workID==$suiteLesson['workID']){?>
@@ -66,7 +66,7 @@
                             <?php }else{?>
                                 <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>"  style="color:gray">查看</a> 
                             <?php }?>
-                            <!--<a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $thisSuite['suiteID']?>"><img title="查看习题" src="<?php echo IMG_URL;?>detail.png"/></a>   -->                   
+                            <!--<a href="./index.php?r=teacher/seeWork&&suiteID=<?php //echo $thisSuite['suiteID']?>"><img title="查看习题" src="<?php //echo IMG_URL;?>detail.png"/></a>   -->                   
                            
 
                         </td>
