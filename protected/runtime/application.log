@@ -5658,3 +5658,626 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=teacher/scheduleDetil
 HTTP_REFERER=https://localhost/reborn/index.php?r=teacher/set
 ---
+2015/11/10 14:58:49 [error] [php] Creating default object from empty value (D:\wamp\www\reborn\protected\models\Resourse.php:89)
+Stack trace:
+#0 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#2 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 D:\wamp\www\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/editListenInfo&&oldfilename=6801971563.wav&&exerciseID=37
+in D:\wamp\www\reborn\protected\models\Resourse.php (89)
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (1295)
+in D:\wamp\www\reborn\index.php (32)
+2015/11/10 16:29:59 [error] [php] Trying to get property of non-object (D:\wamp\www\reborn\protected\components\Tool.php:262)
+Stack trace:
+#0 D:\wamp\www\framework\web\CBaseController.php(95): TeacherController->renderInternal()
+#1 D:\wamp\www\framework\web\CController.php(784): TeacherController->renderFile()
+#2 D:\wamp\www\reborn\protected\controllers\TeacherController.php(2402): TeacherController->render()
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAssignWork()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\wamp\www\framework\web\CController.php(286): TeacherController->runAction()
+#6 D:\wamp\www\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): TeacherController->run()
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/assignWork
+in D:\wamp\www\reborn\protected\components\Tool.php (262)
+in D:\wamp\www\reborn\protected\views\layouts\teacherBar.php (77)
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (2402)
+2015/11/10 17:19:15 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:15 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:16 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:16 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:16 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (23)
+2015/11/10 17:19:16 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(23): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionOverSuite()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('overSuite')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/overSui...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/overSuite&&isExam=1
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:18 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:18 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:18 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:18 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:19 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:19 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:20 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:20 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:21 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:21 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:21 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:21 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/10 17:19:22 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'.
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (54)
+in D:\wamp\www\reborn\protected\models\ExamRecord.php (25)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (200)
+2015/11/10 17:19:22 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined. The SQL statement executed was: SELECT * FROM `exam_record` `t` WHERE workID=? and studentID=? LIMIT 1. Bound with :0=NULL, :1='30001'' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\models\ExamRecord.php(54): CActiveRecord->find('workID=? and st...', Array)
+#4 D:\wamp\www\reborn\protected\models\ExamRecord.php(25): ExamRecord::getRecord(NULL, '30001')
+#5 D:\wamp\www\reborn\protected\controllers\StudentController.php(200): ExamRecord::saveExamRecord(NULL)
+#6 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionSaveChoice()
+#7 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#9 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('saveChoice')
+#11 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/saveCho...')
+#12 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#13 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#14 {main}
+REQUEST_URI=/reborn/index.php?r=student/saveChoice
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/examchoice&&cent=0,0,0,0,0,0
+---
+2015/11/11 09:43:31 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=001&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=001&&name=%E7%9B%96%E4%BC%A6&&class=0&&flag=search
+---
+2015/11/11 09:47:25 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=30001&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=30001&&name=%E5%BC%A0%E6%98%8E%E9%9B%A8&&class=2&&flag=search
+---
+2015/11/11 09:48:31 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=30001&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=30001&&name=%E5%BC%A0%E6%98%8E%E9%9B%A8&&class=2&&flag=search
+---
+2015/11/11 09:48:53 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=30001&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStuInfo&&id=30001&&flag=search
+---
+2015/11/11 09:49:48 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=001&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=001&&name=%E7%9B%96%E4%BC%A6&&class=0&&flag=search
+---
+2015/11/11 09:51:01 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10002&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=10002&&name=%E6%9D%8E%E6%80%9D%E9%9C%96&&class=2&&flag=search
+---
+2015/11/11 09:51:54 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10002&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=10002&&name=%E6%9D%8E%E6%80%9D%E9%9C%96&&class=2&&flag=search
+---
+2015/11/11 09:53:43 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10003&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=10003&&name=%E8%B0%A2%E4%B8%9C%E5%AE%B6&&class=1&&flag=search
+---
+2015/11/11 09:53:59 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10003&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=10003&&name=%E8%B0%A2%E4%B8%9C%E5%AE%B6&&class=1&&flag=search
+---
+2015/11/11 09:56:06 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10003&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStuInfo&&id=10003&&flag=search
+---
+2015/11/11 09:56:58 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10003&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=10003&&name=%E8%B0%A2%E4%B8%9C%E5%AE%B6&&class=1&&flag=search
+---
+2015/11/11 09:59:06 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10002&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStuInfo&&id=10002&&flag=search
+---
+2015/11/11 10:02:59 [error] [system.db.CDbCommand] CDbCommand::fetch() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LIMIT 1' at line 1. The SQL statement executed was: SELECT * FROM `tb_class` `t` WHERE classID =  LIMIT 1.
+in D:\wamp\www\reborn\protected\views\student\stuInformation.php (33)
+in D:\wamp\www\reborn\protected\controllers\StudentController.php (1390)
+in D:\wamp\www\reborn\index.php (32)
+2015/11/11 10:02:59 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LIMIT 1' at line 1. The SQL statement executed was: SELECT * FROM `tb_class` `t` WHERE classID =  LIMIT 1' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(415): CDbCommand->queryInternal('fetch', Array, Array)
+#1 D:\wamp\www\framework\db\ar\CActiveRecord.php(1351): CDbCommand->queryRow()
+#2 D:\wamp\www\framework\db\ar\CActiveRecord.php(1456): CActiveRecord->query(Object(CDbCriteria))
+#3 D:\wamp\www\reborn\protected\views\student\stuInformation.php(33): CActiveRecord->find('classID = ')
+#4 D:\wamp\www\framework\web\CBaseController.php(126): require('D:\\wamp\\www\\reb...')
+#5 D:\wamp\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\\wamp\\www\\reb...', Array, true)
+#6 D:\wamp\www\framework\web\CController.php(869): CBaseController->renderFile('D:\\wamp\\www\\reb...', Array, true)
+#7 D:\wamp\www\framework\web\CController.php(782): CController->renderPartial('stuInformation', Array, true)
+#8 D:\wamp\www\reborn\protected\controllers\StudentController.php(1390): CController->render('stuInformation', Array)
+#9 D:\wamp\www\framework\web\actions\CInlineAction.php(49): StudentController->actionStuInformation()
+#10 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#11 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#12 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('stuInformation')
+#14 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('student/stuInfo...')
+#15 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#16 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#17 {main}
+REQUEST_URI=/reborn/index.php?r=student/stuInformation
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=student/index
+---
+2015/11/11 10:04:12 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=001&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=001&&name=%E7%9B%96%E4%BC%A6&&class=0&&flag=search
+---
+2015/11/11 10:12:35 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=001&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=001&&name=%E7%9B%96%E4%BC%A6&&class=0&&flag=search
+---
+2015/11/11 10:12:58 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=001&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=001&&name=%E7%9B%96%E4%BC%A6&&class=0&&flag=search
+---
+2015/11/11 10:16:59 [error] [system.db.CDbCommand] CDbCommand::() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1. The SQL statement executed was: select * from suite where createPerson =.
+in D:\wamp\www\reborn\protected\models\Suite.php (140)
+in D:\wamp\www\reborn\protected\controllers\TeacherController.php (2362)
+in D:\wamp\www\reborn\index.php (32)
+2015/11/11 10:16:59 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand 无法执行 SQL 语句: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1. The SQL statement executed was: select * from suite where createPerson =' in D:\wamp\www\framework\db\CDbCommand.php:543
+Stack trace:
+#0 D:\wamp\www\framework\db\CDbCommand.php(377): CDbCommand->queryInternal('', 0, Array)
+#1 D:\wamp\www\reborn\protected\models\Suite.php(140): CDbCommand->query()
+#2 D:\wamp\www\reborn\protected\controllers\TeacherController.php(2362): Suite->getAllSuiteByPage(10, NULL)
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): TeacherController->ActionAssignWork()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('assignWork')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/assignW...')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/assignWork
+---
+2015/11/11 10:18:49 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10002&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=10002&&name=%E6%9D%8E%E6%80%9D%E9%9C%96&&class=2&&flag=search
+---
+2015/11/11 10:19:46 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=011&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStuInfo&&id=011&&flag=search
+---
+2015/11/11 10:23:03 [error] [exception.CException] exception 'CException' with message '属性 "Student.name" 未被定义.' in D:\wamp\www\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\wamp\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('name')
+#1 D:\wamp\www\framework\base\CModel.php(596): CActiveRecord->__get('name')
+#2 D:\wamp\www\reborn\protected\controllers\AdminController.php(708): CModel->offsetGet('name')
+#3 D:\wamp\www\framework\web\actions\CInlineAction.php(49): AdminController->actionResetPass()
+#4 D:\wamp\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#5 D:\wamp\www\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#6 D:\wamp\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\framework\web\CWebApplication.php(284): CController->run('resetPass')
+#8 D:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('admin/resetPass')
+#9 D:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#10 D:\wamp\www\reborn\index.php(32): CApplication->run()
+#11 {main}
+REQUEST_URI=/reborn/index.php?r=admin/resetPass&&id=10005&&flag=search
+HTTP_REFERER=https://172.18.5.247/reborn/index.php?r=admin/editStu&&id=10005&&name=%E8%B4%BE%E7%94%B3%E8%BF%AA&&class=1&&flag=search
+---
