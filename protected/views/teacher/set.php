@@ -14,44 +14,59 @@ function test()
 }
 function long0(){
     var temp = document.getElementById("input01").value;
+    usertipsSpan = document.getElementById("usertips");  
+    usertipsSpan.style.color = "red";  
     var reg=/^[A-Za-z0-9]+$/;
     if(!reg.test(temp)||temp.length<3||temp.length>15){
-         window.wxc.xcConfirm('密码必须为3-15位的数字和字母的组合', window.wxc.xcConfirm.typeEnum.info);
+        usertipsSpan.innerHTML='密码必须为3-15位的数字和字母的组合';
         document.getElementById("input01").value="";
+    }else {  
+        usertipsSpan.innerHTML='';  
     }
 }
 function long(){
     var temp = document.getElementById("input02").value;
+    usertipsSpan = document.getElementById("usertips2");  
+    usertipsSpan.style.color = "red";  
     var reg=/^[A-Za-z0-9]+$/;
     if(!reg.test(temp)||temp.length<3||temp.length>15){
-         window.wxc.xcConfirm('密码必须为3-15位的数字和字母的组合', window.wxc.xcConfirm.typeEnum.info);
+        usertipsSpan.innerHTML='密码必须为3-15位的数字和字母的组合';
         document.getElementById("input02").value="";
+    }else {  
+        usertipsSpan.innerHTML='';  
     }
 }
 function long2(){
     var temp = document.getElementById("input03").value;
+    usertipsSpan = document.getElementById("usertips3");  
+    usertipsSpan.style.color = "red";  
     var reg=/^[A-Za-z0-9]+$/;
     if(!reg.test(temp)||temp.length<3||temp.length>15){
-         window.wxc.xcConfirm('密码必须为3-15位的数字和字母的组合', window.wxc.xcConfirm.typeEnum.info);
+        usertipsSpan.innerHTML='密码必须为3-15位的数字和字母的组合';
         document.getElementById("input03").value="";
+    }else {  
+        usertipsSpan.innerHTML='';  
     }
 }
 </script>
-<div class="setB" style="text-align: center;">
+<div class="setB" style="">
     <br>
     <br>
-    <h3>设置密码</h3>
+    <h3 style="margin-left: 450px;">设置密码</h3>
     <br>
     <br>
     <div>
     <form id="myForm" method="post" action="./index.php?r=teacher/set"> 
-        <table style="margin-left: auto;margin-right: auto; ">
+        <table style="margin-left: 300px;">
             <tr>
                 <td>
                     <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
                 </td>
                 <td>
                     <input name="old" type="password"  onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/>
+                </td>
+                <td>
+                    <span id="usertips" style="margin-left: 15px;"></span> 
                 </td>
             </tr>
             <tr>
@@ -61,6 +76,9 @@ function long2(){
                 <td>
                     <input name="new1" type="password"  onblur="long()" class="input-xlarge" id="input02" style="height: 30px;"/>
                 </td>
+                <td>
+                    <span id="usertips2" style="margin-left: 15px;"></span> 
+                </td>
             </tr>
             <tr>
                 <td>
@@ -68,6 +86,9 @@ function long2(){
                 </td>
                 <td>
                     <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/>
+                </td>
+                <td>
+                    <span id="usertips3" style="margin-left: 15px;"></span> 
                 </td>
             </tr>
             <tr>

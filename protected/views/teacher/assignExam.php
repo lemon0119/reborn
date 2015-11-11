@@ -131,6 +131,7 @@ function begin_now(examID,d,time,isOpen)
         if(d==0){
             d=prompt("时长不能为0！！！",d);
         }
+        if(d){
         if(confirm("你确定要立即开始？")){
             $.ajax({
                 type: "POST",
@@ -145,7 +146,7 @@ function begin_now(examID,d,time,isOpen)
                     console.log(xhr.responseText, "Failed");
                 }
             });
-            
+            }
         }
 }
    
