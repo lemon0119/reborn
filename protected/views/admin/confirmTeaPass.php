@@ -6,7 +6,7 @@
         <fieldset>
             <legend>请输入您的管理员密码</legend>
             <div class="control-group">
-                    <label class="control-label" for="password">密码</label>
+                <label  class="control-label" for="password">密码</label>
                     <div class="controls">
                         <input name="password" type="password" class="input-xlarge" id="password" value="" />
                     </div>
@@ -20,6 +20,7 @@
 </div>
 <script>
 $(document).ready(function(){
+      document.getElementById("password").focus();
     //侧边菜单选中变色
     $("#li-recycleStu").attr("class","active");
 });

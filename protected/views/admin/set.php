@@ -49,26 +49,27 @@ function long2(){
     }
 }
 </script>
-<div class="span9">
-    <div class="span_set">
+<div class="setB" style="text-align: center;">
+    <br>
     <h3>设置密码</h3>
+    <div >
     <form id="myForm"  method="post" action="./index.php?r=admin/set"> 
         <fieldset>
             <legend>填写信息</legend>
             <div class="control-group">
-                <label class="control-label" for="input01">旧密码<span style="font-size:20px;color:#ff0000">*</span></label>
+                <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
                 <div class="controls">
                         <input name="old" type="password" onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/><span id="usertips" style="margin-left: 15px;"></span> 
                 </div>
-                <label class="control-label" for="input02">新密码<span style="font-size:20px;color:#ff0000">*</span></label>
+                <label class="control-label" for="input02">新密码<h style="color:red;">*</h></label>
                 <div class="controls">
                         <input name="new1" type="password" onblur="long()" class="input-xlarge" id="input02" style="height: 30px;"/><span id="usertips2" style="margin-left: 15px;"></span> 
                 </div>
-                <label class="control-label" for="input03">确认密码<span style="font-size:20px;color:#ff0000">*</span></label>
+                <label class="control-label" for="input03">确认密码<h style="color:red;">*</h></label>
                 <div class="controls">
                         <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/><span id="usertips3" style="margin-left: 15px;"></span> 
                 </div>
-                <label class="control-label" for="input03">邮箱<span style="font-size:20px;color:#ff0000">*</span></label>
+                <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
                 <div class="controls">
                     <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
                 </div>
