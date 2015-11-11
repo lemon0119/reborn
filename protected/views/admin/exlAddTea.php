@@ -9,9 +9,7 @@
 				<label class="control-label" for="input01">请选择Excel文件
 				</label>
 				<div class="controls">
-					<input type="hidden" name="flag" id="flag" value="1" /> <input
-						type="hidden" name="MAX_FILE_SIZE" value="3000000" /> <input
-						type="file" name="file" id="file" />
+				<input type="file" name="file" id="file" />
 				</div>
 			</div>
                          <h3>异常添加列表</h3>
