@@ -702,20 +702,6 @@ class AdminController extends CController {
         $userAll = Student::model()->findAll();
         $sqlUserID = $_GET['id'];
         $sqlStudentInfo = Student::model()->find("userID = '$sqlUserID'");
-        if (isset($_GET ['flag'])) {
-            $this->render('editStu', array(
-                'userID' => $_GET ['id'],
-                'userName' => $sqlStudentInfo['userName'],
-                'classID' => $sqlStudentInfo['classID'],
-                'classAll' => $classAll,
-                'userAll' => $userAll,
-                'sex' => $sqlStudentInfo['sex'],
-                'age' => $sqlStudentInfo['age'],
-                'phone_number' => $sqlStudentInfo['phone_number'],
-                'mail_address' => $sqlStudentInfo['mail_address'],
-                'flag' => 'search'
-            ));
-        }
 
         $userID = $_GET ['id'];
         $thisStu = new Student ();
