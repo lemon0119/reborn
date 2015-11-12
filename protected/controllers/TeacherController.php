@@ -2848,7 +2848,6 @@ class TeacherController extends CController {
             $render = "modifyTypework";
         else
             $render = "modifywork";
-
         $this->render($render, array(
             'suite' => $suite,
             'currentClass' => $class,
@@ -2898,9 +2897,10 @@ class TeacherController extends CController {
          $teacherID = Yii::app()->session['userid_now'];
          
          $workID=ClassLessonSuite::model()->find('suiteID=?',array($suiteID))['workID'];
+         if($workID){
          $recordID=SuiteRecord::model()->find('workID=? and studentID=?',array($workID,$teacherID))['recordID'];
          SuiteRecord::model()->deleteAll("recordID='$recordID'");
-         
+         }
          Suite::model()->deleteAll("suiteID='$suiteID'");
          SuiteExercise::model()->deleteAll("suiteID='$suiteID'");
          ClassLessonSuite::model()->deleteAll("suiteID='$suiteID'");
