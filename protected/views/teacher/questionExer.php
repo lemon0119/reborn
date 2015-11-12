@@ -17,7 +17,7 @@ $SNum = 0;
                     echo ($SNum+1).'. ';
                     echo $value['requirements'];
                     echo '<br/>';
-                    echo '<textarea style="width:600px; height:200px;" name = "quest'.$value["exerciseID"].'"></textarea>';
+                    echo '<textarea disabled="disabled" style="width:600px; height:200px;" name = "quest'.$value["exerciseID"].'"></textarea>';
                     echo '<br/>';
                     $SNum++;
                 }

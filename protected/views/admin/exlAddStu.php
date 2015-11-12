@@ -9,7 +9,6 @@
                 <label class="control-label" for="input01">请选择Excel文件
                 </label>
                 <div class="controls">
-                    <input type="hidden" name="MAX_FILE_SIZE" value="5000000" /> 
                     <input type="file" name="file" id="file" />
                 </div>
             </div>
