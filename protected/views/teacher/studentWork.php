@@ -15,13 +15,17 @@
     <table class="table table-bordered table-striped" >
         <thead>
             <tr>
-                <th>编号</th>
-                <th>班级</th>     
-                <th>课时</th>   
-                <th>作业</th>
-                <th>操作</th>
+                <th style="width:50px">编号</th>
+                <th style="width:70px">班级</th>     
+                <th style="width:100px">课时</th>   
+                <th style="width:120px">作业</th>
+                <th style="width:50px">操作</th>
             </tr>
         </thead>
+    </table>
+    <div style="position: relative;top: -20px; overflow-y:auto; height:180px;">
+    <table class="table table-bordered table-striped" >
+        
                 <tbody>        
                     <?php $id =1; 
                       foreach($array_suiteLessonClass as $suiteLesson):
@@ -40,27 +44,28 @@
                                 $thisSuite = $suite;
                                 break;
 
-                            }                     
+                            }  
+                            if(isset($thisClass)&&isset($thisLesson)&&isset($thisSuite)&&$thisClass&&$thisLesson&&$thisSuite){
                             ?>
                     <tr>
-                        <td style="width: 100px">
+                        <td style="width: 50px">
                             <?php echo $id++;?>
                         </td>
-                        <td>
+                        <td style="width:70px">
                             <?php            
                             echo $thisClass['className'];?>
                            
                         </td>
-                        <td style="color: #f">
+                        <td style="width:100px">
                             <?php                
                             echo $thisLesson['lessonName'] ;?>
                             
                         </td>           
-                        <td>            
+                        <td style="width:120px">            
                              <?php
                              echo $thisSuite['suiteName'];?>                    
                         </td>
-                        <td>     
+                        <td style="width:39px">     
                             <?php if($workID==$suiteLesson['workID']){?>
                                 <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>   
                             <?php }else{?>
@@ -71,49 +76,32 @@
 
                         </td>
                     </tr>            
-                    <?php endforeach;?> 
+                            <?php } endforeach;?> 
                 </tbody>
     </table>
-    <!-- 学生列表结束 -->
-    <div align=center id="yiyou">
-    <?php   
-        $this->widget('CLinkPager',array('pages'=>$pages));
-    ?>
     </div>
+    <!-- 学生列表结束 -->
+<!--    <div align=center id="yiyou">
+    <?php   
+        //$this->widget('CLinkPager',array('pages'=>$pages));
+    ?>
+    </div>-->
 
 
 <h3>学生列表</h3>
-<div style="overflow-y:auto; height:300px;">
+<div>
 <table width="50%" style="float:left;" >
 <tr>
 <td><table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>姓名</th>
-                <th>学号</th>
-                <th>完成情况</th>   
-                <th>批阅</th>
+                <th style="width:50px">姓名</th>
+                <th style="width:50px">学号</th>
+                <th style="width:50px">完成情况</th>   
+                <th style="width:30px">批阅</th>
             </tr>
         </thead>
-                <tbody>        
-                    <?php foreach($array_accomplished as $student):
-                            ?>
-                    <tr>
-                        <td class="font-orange" style="width: 75px">
-                            <?php echo $student['userName'];?>
-                        </td>
-                        <td style="width: 50px">
-                            <?php  echo $student['userID'];?>       
-                        </td>
-                        <td >
-                            <font style="color: green">完成</font>
-                        </td>  
-                        <td >
-                            <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice"><img title="批阅" src="<?php echo IMG_URL;?>edit.png"/></a>
-                        </td>
-                    </tr>            
-                    <?php endforeach;?> 
-                </tbody>
+              
     </table></td>
 </tr>
 </table>
@@ -122,26 +110,60 @@
     <td><table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>姓名</th>
-                <th>学号</th>
-                <th>完成情况</th>   
-                <th>查看</th>
+                <th style="width:50px">姓名</th>
+                <th style="width:50px">学号</th>
+                <th style="width:50px">完成情况</th>   
+                <th style="width:34px">查看</th>
             </tr>
         </thead>
+               
+    </table></td>
+</tr>
+</table>
+    </div>
+<div style="position: relative;top: -22px;overflow-y:auto; height:210px;">
+<table width="51%" style="float:left;" >
+<tr>
+<td><table class="table table-bordered table-striped">
+                <tbody>        
+                    <?php foreach($array_accomplished as $student):
+                            ?>
+                    <tr>
+                        <td class="font-orange" style="width: 50px">
+                            <?php echo $student['userName'];?>
+                        </td>
+                        <td style="width: 50px">
+                            <?php  echo $student['userID'];?>       
+                        </td>
+                        <td style="width: 50px" >
+                            <font style="color: green;">完成</font>
+                        </td>  
+                        <td style="width:30px" >
+                            <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice"><img title="批阅" src="<?php echo IMG_URL;?>edit.png"/></a>
+                        </td>
+                    </tr>            
+                    <?php endforeach;?> 
+                </tbody>
+    </table></td>
+</tr>
+</table>
+<table width="49%" >
+<tr>
+    <td><table style="position:relative;left: 2px"  class="table table-bordered table-striped">
                 <tbody>        
                     <?php foreach($array_unaccomplished as $student):
                             ?>
                     <tr>
-                        <td class="font-orange" style="width: 75px">
+                        <td class="font-orange" style="width: 50px">
                            <?php echo $student['userName'];?>
                         </td>
-                        <td>
+                        <td style="width: 50px">
                             <?php  echo $student['userID'];?>          
                         </td>
-                        <td>
-                            <font style="color: red">未完成</font>
+                        <td style="width:50px">
+                            <font style="color: red;">未完成</font>
                         </td>  
-                        <td>
+                        <td style="width: 20px">
                             <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=0&&type=choice"><img title="查看" src="<?php echo IMG_URL;?>detail.png"/></a>
                         </td> 
                     </tr>            
