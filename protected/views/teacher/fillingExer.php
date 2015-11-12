@@ -22,7 +22,7 @@ $SNum = 0;
                     $i = 1;
                     while($i < count($ansArr)+1){
                         echo '('.$i.') ';
-                        echo '<input type="text" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
+                        echo '<input type="text" disabled="disabled" name="'.$i.'filling'.$value["exerciseID"].'"></input><br/>';
                         $i++;
                     }
                     echo '<br/>';
