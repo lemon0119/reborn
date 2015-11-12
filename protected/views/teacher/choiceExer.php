@@ -20,7 +20,7 @@
                 $optArr = explode("$$",$opt);
                 $mark = 'A';
                 foreach ($optArr as $aOpt) {
-                    echo '<input type="radio" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
+                    echo '<input type="radio" disabled="disabled" value="'.$mark.'" name="choice'.$value["exerciseID"].'">&nbsp'.$mark.'.'.$aOpt.'</input><br/>';
                     $mark++;
                 }
                 echo '<br/>';

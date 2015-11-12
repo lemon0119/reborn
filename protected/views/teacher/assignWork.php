@@ -117,6 +117,7 @@
     if(usernameVal.length > 30){ //一个汉字算一个字符  
         window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.warning);
         document.getElementById("title").value="";
+        return false;
     }
     window.location.href="./index.php?r=teacher/AddSuite&&title="+usernameVal;
 }
