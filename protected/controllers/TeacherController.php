@@ -3793,6 +3793,9 @@ class TeacherController extends CController {
         $suite_exercise = SuiteExercise::model()->find("exerciseID=? and exerciseID=? and type=?", array($_GET['exerID'], $suiteID, $ty));
         $student = Student::model()->find("userID='$studentID'");
         $classID = Yii::app()->session['classID'];
+        if(!isset($classID)){
+            $classID=  Student::model()->findClassByStudentID($studentID);
+        }
         $class = TbClass::model()->find("classID='$classID'");
         $array_accomplished = Array();
         $array_unaccomplished = Array();
