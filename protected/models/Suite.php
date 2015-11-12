@@ -414,7 +414,7 @@ class Suite extends CActiveRecord
 		));
 	}
         
-        public function insertSuite($classID,$lessonID,$title,$createPerson){
+        public function insertSuite($classID,$lessonID,$title,$createPerson){/*
         $sql        =   "select max(suiteID) as id from suite";
         $max_id     =   Yii::app()->db->createCommand($sql)->query();
         $temp       =   $max_id->read();
@@ -426,14 +426,17 @@ class Suite extends CActiveRecord
         {
             $new_id =   $temp['id'] + 1;
         }
+         * 
+         */
         $newSuite    =   new Suite();
-        $newSuite->suiteID    =   $new_id;
+        //$newSuite->suiteID    =   $new_id;
         $newSuite->suiteType =   "exercise";
         $newSuite->createPerson  =   $createPerson;
         $newSuite->createTime    =   date('y-m-d H:i:s',time());
         $newSuite->suiteName = $title;
         $newSuite->insert();
-        return $new_id;
+        $i=Suite::model()->find()['suiteID'];
+        return $i;
         }
 
         /**
