@@ -49,14 +49,13 @@ function long2(){
     }
 }
 </script>
-<div class="setB" style="text-align: center;">
+<div class="setB" >
     <br>
-    <h3>设置密码</h3>
-    <div >
-    <form id="myForm"  method="post" action="./index.php?r=admin/set"> 
-        <fieldset>
-            <legend>填写信息</legend>
-            <div class="control-group">
+    <h3 style="margin-left: 450px;">设置密码</h3>
+    <div style="margin-left: 360px;"  >
+    <form  id="myForm"  method="post" action="./index.php?r=admin/set"> 
+        <fieldset >
+            <div  class="control-group">
                 <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
                 <div class="controls">
                         <input name="old" type="password" onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/><span id="usertips" style="margin-left: 15px;"></span> 

@@ -1,3 +1,6 @@
+<?php 
+header('Cache-control: private, must-revalidate');
+?>
 <?php require 'classLstSideBar.php';?>
 <div class="span9">
 <?php $courses=Course::model()->findall(); ?>
