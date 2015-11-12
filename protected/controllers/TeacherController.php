@@ -4275,7 +4275,9 @@ class TeacherController extends CController {
             }
             $currentClass = Yii::app()->session['currentClass'];
             $sqlcurrentClass = TbClass::model()->find("classID = '$currentClass'");
-
+             if(!isset($sqlcurrentClass)){
+                 $sqlcurrentClass = "none";
+             }
             if (!empty($array_course)) {
                 if (isset($_GET['courseID'])) {
                     Yii::app()->session['currentCourse'] = $_GET['courseID'];
@@ -4309,6 +4311,11 @@ class TeacherController extends CController {
                 'pages' => $pages,
             ));
         } else if (isset($_GET['lessonName'])) {
+            $currentClass = Yii::app()->session['currentClass'];
+             $sqlcurrentClass = TbClass::model()->find("classID = '$currentClass'");
+             if(!isset($sqlcurrentClass)){
+                 $sqlcurrentClass = "none";
+             }
             $lessonName = $_GET['lessonName'];
             $newName = $_GET['newName'];
             $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
@@ -4331,10 +4338,15 @@ class TeacherController extends CController {
                 'pages' => $pages,
             ));
         } else {
+            $currentClass = Yii::app()->session['currentClass'];
+             $sqlcurrentClass = TbClass::model()->find("classID = '$currentClass'");
+             if(!isset($sqlcurrentClass)){
+                 $sqlcurrentClass = "none";
+             }
             //查询老师课程表
             $teaResult = ScheduleTeacher::model()->findAll("userID='$teacherID'");
             return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult, 'array_class' => $array_class,
-                        'array_course' => $array_course, 'sqlcurrentClass' => "none"]);
+                        'array_course' => $array_course, 'sqlcurrentClass' => $sqlcurrentClass]);
         }
     }
 
