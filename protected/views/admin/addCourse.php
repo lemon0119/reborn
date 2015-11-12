@@ -1,3 +1,6 @@
+<?php 
+header('Cache-control: private, must-revalidate');
+?> 
 <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
         <ul class="nav nav-list">

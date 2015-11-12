@@ -46,7 +46,6 @@ class SuiteRecord extends CActiveRecord
         //if($result == NULL) echo $sql."<br/>";
         return $result;
     }
-    
     public static function saveSuiteRecord (&$recordID) {
         if(Yii::app()->session['isExam'])
             $workID = Yii::app()->session['examworkID'];

@@ -2896,6 +2896,11 @@ class TeacherController extends CController {
      {$res=0;
          $suiteID = $_GET['suiteID'];
          $teacherID = Yii::app()->session['userid_now'];
+         
+         $workID=ClassLessonSuite::model()->find('suiteID=?',array($suiteID))['workID'];
+         $recordID=SuiteRecord::model()->find('workID=? and studentID=?',array($workID,$teacherID))['recordID'];
+         SuiteRecord::model()->deleteAll("recordID='$recordID'");
+         
          Suite::model()->deleteAll("suiteID='$suiteID'");
          SuiteExercise::model()->deleteAll("suiteID='$suiteID'");
          ClassLessonSuite::model()->deleteAll("suiteID='$suiteID'");
@@ -2907,7 +2912,7 @@ class TeacherController extends CController {
          $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
-   
+            
          if(!empty($teacher_class))
          {        
            foreach ($teacher_class as $class)
@@ -2916,7 +2921,7 @@ class TeacherController extends CController {
                  $result = TbClass::model()->findAll("classID ='$id'");               
                  array_push($array_class, $result[0]);
              }     
-             
+
              $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
          }
          $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson']));
@@ -2927,8 +2932,8 @@ class TeacherController extends CController {
              'array_allsuite' => $array_allsuite,
              'pages' => $pages,
              'res'=>$res
-                 
-         ));   
+
+         )); 
      }
      
      
@@ -2938,6 +2943,7 @@ class TeacherController extends CController {
          $classID = $_GET['classID'];
          $workID = ClassExam::model()->find("classID = '$classID' and examID = '$examID'")['workID'];
          $teacherID = Yii::app()->session['userid_now'];
+         
          Exam::model()->deleteAll("examID='$examID'");
          ExamExercise::model()->deleteAll("examID='$examID'");
          ClassExam::model()->deleteAll("examID='$examID'");
@@ -4348,7 +4354,7 @@ public function ActionAjaxExam2() {
             //查询老师课程表
             $teaResult = ScheduleTeacher::model()->findAll("userID='$teacherID'");
             return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult, 'array_class' => $array_class,
-                        'array_course' => $array_course, 'sqlcurrentClass' => $sqlcurrentClass]);
+                        'array_course' => $array_course, 'sqlcurrentClass' => "none"]);
         }
     }
 

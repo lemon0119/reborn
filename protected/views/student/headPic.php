@@ -30,7 +30,7 @@ $(document).ready(function(){
     <?php if(isset($result)){?>
     var result = <?php echo "'$result'";?>;
     if(result !== '0')
-    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.confirm);
+    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
     <?php }?>
         
     
