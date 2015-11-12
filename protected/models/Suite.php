@@ -435,8 +435,11 @@ class Suite extends CActiveRecord
         $newSuite->createTime    =   date('y-m-d H:i:s',time());
         $newSuite->suiteName = $title;
         $newSuite->insert();
-        $i=Suite::model()->find()['suiteID'];
-        return $i;
+        $sql        =   "select max(suiteID) as id from suite";
+        $max_id     =   Yii::app()->db->createCommand($sql)->query();
+        $temp       =   $max_id->read();
+        $new_id =   $temp['id'];
+        return $new_id;
         }
 
         /**
