@@ -705,7 +705,7 @@ class AdminController extends CController {
         if (isset($_GET ['flag'])) {
             $this->render('editStu', array(
                 'userID' => $_GET ['id'],
-                'userName' => $sqlStudentInfo['name'],
+                'userName' => $sqlStudentInfo['userName'],
                 'classID' => $sqlStudentInfo['classID'],
                 'classAll' => $classAll,
                 'userAll' => $userAll,
