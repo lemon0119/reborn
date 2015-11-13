@@ -20,7 +20,7 @@ require 'examAnsSideBar.php';
             </tr>
             <tr>
                 <td colspan='3'>
-                    <div class='answer-tip-text1'>学生答案：</div>
+                    <div class='answer-tip-text1'>作答结果：</div>
                     <div ><?php echo $ansWork['answer'];?></div>
                 </td>
             </tr>

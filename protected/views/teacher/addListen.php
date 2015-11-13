@@ -91,7 +91,7 @@ $(document).ready(function(){
         
 });
 $("#myForm").submit(function(){
-    $("#upload").show();
+    
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
         window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
@@ -109,7 +109,7 @@ $("#myForm").submit(function(){
         window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
-    
+    $("#upload").show();
     
 
 
