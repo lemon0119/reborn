@@ -62,7 +62,7 @@
                             </div>
                         </div>								-->
             <div style="text-align: center">
-                 <a  style="right: 77px" href="./index.php?r=admin/teaLst" class="btn_ret_admin"></a> <a style="right: 63px" href="./index.php?r=admin/exlAddTea" class="btn_Batch_add_admin"></a><button style="right:50px;top: -1px;" type="submit" class="btn_AD_admin"></button>
+                <a  style="right: 77px" href="./index.php?r=admin/teaLst" class="btn_ret_admin"></a> <a style="right: 63px" href="./index.php?r=admin/exlAddTea" class="btn_Batch_add_admin"></a><button id="sub" style="right:50px;top: -1px;" type="submit" class="btn_AD_admin"></button>
 
             </div>
         </fieldset>
@@ -71,8 +71,7 @@
 <script>
     $(document).ready(function () {
         $("#li-addTea").attr("class", "active");
-    });
-    $(document).ready(function () {
+        document.getElementById("sub").focus();
         var result = <?php echo "'$result'"; ?>;
         if (result === '1')
             window.wxc.xcConfirm('添加老师成功！', window.wxc.xcConfirm.typeEnum.success);
