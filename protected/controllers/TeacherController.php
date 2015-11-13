@@ -2942,7 +2942,7 @@ class TeacherController extends CController {
          foreach ($result as $class)
              array_push ($array_class, $class);
          
-         $result = Exam::model()->getAllExamByPage(5);
+         $result = Exam::model()->getAllExamByPage(10);
          $array_allexam = $result['examLst'];
          $pages = $result['pages'];
          $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'],1));
