@@ -35,8 +35,9 @@
                     <a href="./index.php?r=teacher/lookPpt&&ppt=<?php  $fileName   = iconv("gb2312","UTF-8",$file);
                                                                         $len    = strlen($fileName);
                                                                         $path   = substr($fileName,0,$len-4);
-                                                                        echo $path;?>&&pdir=<?php echo $dir;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
-                    <a href="<?php echo "$dir".iconv("gb2312","UTF-8",$file);?>" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>edit.png">下载</a>
+                                                                        echo $path;?>&&pdir=<?php echo $dir;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
+                    <a href="<?php echo "$dir".iconv("gb2312","UTF-8",$file);?>" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>
+
                 </td>
             </tr>
             <?php     
@@ -60,9 +61,10 @@
                     <a href="./index.php?r=teacher/lookPpt&&ppt=<?php  $fileName   = iconv("gb2312","UTF-8",$file);
                                                                         $len    = strlen($fileName);
                                                                         $path   = substr($fileName,0,$len-4);
-                                                                        echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img src="<?php echo IMG_URL; ?>detail.png">查看</a>
-                    <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>edit.png">下载</a>
-                    <a href="#" onclick="dele('<?php echo iconv("gb2312","UTF-8",$file);?>','<?php echo $classID;?>','<?php echo $progress;?>','<?php echo $on;?>')"><img title="删除" src="<?php echo IMG_URL; ?>delete.png">删除</a>
+
+                                                                        echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
+                    <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img title="下载" src="<?php echo IMG_URL; ?>icon_download.png"></a>
+                    <a href="#" onclick="dele('<?php echo iconv("gb2312","UTF-8",$file);?>','<?php echo $classID;?>','<?php echo $progress;?>','<?php echo $on;?>')"><img title="删除"  src="<?php echo IMG_URL; ?>delete.png"></a>
 
                 </td>
             </tr>

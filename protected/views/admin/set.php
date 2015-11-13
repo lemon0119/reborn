@@ -49,14 +49,13 @@ function long2(){
     }
 }
 </script>
-<div class="setB" style="text-align: center;">
+<div class="setB" >
     <br>
-    <h3>设置密码</h3>
-    <div >
-    <form id="myForm"  method="post" action="./index.php?r=admin/set"> 
-        <fieldset>
-            <legend>填写信息</legend>
-            <div class="control-group">
+    <h3 style="margin-left: 450px;">设置密码</h3>
+    <div style="margin-left: 360px;"  >
+    <form  id="myForm"  method="post" action="./index.php?r=admin/set"> 
+        <fieldset >
+            <div  class="control-group">
                 <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
                 <div class="controls">
                         <input name="old" type="password" onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/><span id="usertips" style="margin-left: 15px;"></span> 
@@ -119,11 +118,11 @@ $("#myForm").submit(function(){
         //return false;
     }
     if(new1 === "" ||old === ""||defnew === "" ){
-        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.error);
+        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     if(email === "" ){
-        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.error);
+        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
         
@@ -142,17 +141,17 @@ function judge(){
     if(new1===defnew){
     }else
     {
-        window.wxc.xcConfirm('新密码和确认密码不一致', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('新密码和确认密码不一致', window.wxc.xcConfirm.typeEnum.info);
     	$("#input02")[0].value="";
     	$("#input03")[0].value="";
         return false;
     }
     if(new1 === "" ||old === ""||defnew === "" ){
-        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     if(email === "" ){
-        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.warning);
+       window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     $('#myForm').submit();

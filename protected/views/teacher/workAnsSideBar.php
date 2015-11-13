@@ -59,5 +59,5 @@
       
     </div>
     
-    <a class="btn btn-primary" href="./index.php?r=teacher/stuExam">返回</a>
+    <a class="btn btn-primary" href="./index.php?r=teacher/stuWork">返回</a>
 </div>

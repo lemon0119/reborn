@@ -351,6 +351,7 @@ class Exam extends CActiveRecord
     }
     
        public function insertExam($title,$createPerson){
+           /*
         $sql        =   "select max(examID) as id from exam";
         $max_id     =   Yii::app()->db->createCommand($sql)->query();
         $temp       =   $max_id->read();
@@ -362,8 +363,10 @@ class Exam extends CActiveRecord
         {
             $new_id =   $temp['id'] + 1;
         }
+            * 
+            */
         $newSuite    =   new Exam();
-        $newSuite->examID    =   $new_id;
+        //$newSuite->examID    =   $new_id;
         $newSuite->createPerson  =   $createPerson;
         $newSuite->createTime    =   date('y-m-d H:i:s',time());
         $newSuite->begintime    =   date('y-m-d H:i:s',time());
@@ -371,6 +374,10 @@ class Exam extends CActiveRecord
         $newSuite->duration  = 0;
         $newSuite->examName = $title;
         $newSuite->insert();
+        $sql        =   "select max(examID) as id from exam";
+        $max_id     =   Yii::app()->db->createCommand($sql)->query();
+        $temp       =   $max_id->read();
+        $new_id =   $temp['id'];
         return $new_id;
         }
         

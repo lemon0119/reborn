@@ -135,7 +135,7 @@ public function findWorkID($classID,$lessonID,$suiteID){
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria   =   new CDbCriteria();
         $pages     =   new CPagination($result->rowCount);
-        $pages->pageSize    =   5; 
+        $pages->pageSize    =   1000; 
         $pages->applyLimit($criteria);
         $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
         $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 

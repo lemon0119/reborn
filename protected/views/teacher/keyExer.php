@@ -17,7 +17,7 @@
         </div>
         <br/><br/>
         <div style="width: 750px; height: 350px;">
-            <?php require  Yii::app()->basePath."\\views\\student\\keyboard.php";?>
+           
         </div>
         
     </div>

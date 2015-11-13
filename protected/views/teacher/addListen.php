@@ -36,7 +36,7 @@
 
 <div class="span9">        
 <h3 style="display:inline-block;">添加听打练习题</h3>
-<span>(支持mp3及wav格式)</span>
+<span>(支持mp3及wav格式,最大1G)</span>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/AddListen" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
            <legend>填写题目</legend>
@@ -77,7 +77,11 @@ $(document).ready(function(){
     
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-    window.wxc.xcConfirm('添加听打练习成功！', window.wxc.xcConfirm.typeEnum.success);
+    window.wxc.xcConfirm('添加听打练习成功！', window.wxc.xcConfirm.typeEnum.success,{
+        onOk:function(){
+             window.location.href="./index.php?r=teacher/addListen";
+        }
+    });
     else if(result === '0')
     window.wxc.xcConfirm('添加听打练习失败！', window.wxc.xcConfirm.typeEnum.error);
     else if(result != 'no')
