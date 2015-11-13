@@ -32,7 +32,7 @@
 </div>
 <div class="span9" style="position: relative; left: 20px">
     <h2 style="display:inline-block;">PPT列表</h2>
-    <span>(支持PPT格式)</span>
+    <span>(支持PPT格式,最大100M)</span>
     <div id ="ppt-table"></div>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/addPpt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 
     <div class="control-group">
@@ -40,7 +40,7 @@
        <div class="controls">
        <input type="file" name="file" id="input02"> 
        <div id="upload" style="display:inline;" hidden="true">
-       <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+       (ppt最大100M)<img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
             正在上传，请稍等...
        </div>
        <button type="submit" class="btn btn-primary">上传</button>

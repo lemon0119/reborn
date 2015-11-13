@@ -32,7 +32,7 @@
 </div>
 <div class="span9" style="position: relative; left: 20px">
     <h2 style="display:inline-block;">视频列表</h2>
-    <span>(支持mp4及flv格式)</span>
+    <span>(支持mp4及flv格式,最大2G)</span>
     <div id ="video-table"></div>
     <form class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addVideo&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" enctype="multipart/form-data"> 
     <div class="control-group">

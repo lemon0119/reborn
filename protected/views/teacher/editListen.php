@@ -38,7 +38,7 @@
 <div class="span9">        
 <?php if(!isset($action)) {?>
 <legend><h3 style="display:inline-block;">编辑听打练习题</h3>
-<span>(支持mp3及wav格式)</span></legend>
+<span>(支持mp3及wav格式,最大1G)</span></legend>
 <?php } else if($action == 'look') {?>
 <legend><h3>查看听打练习题</h3></legend>
 <?php }?>
