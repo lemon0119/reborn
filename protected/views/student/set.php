@@ -123,17 +123,17 @@ function judge(){
     if(new1===defnew){
     }else
     {
-        window.wxc.xcConfirm('新密码和确认密码不一致', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('新密码和确认密码不一致', window.wxc.xcConfirm.typeEnum.info);
     	$("#input02")[0].value="";
     	$("#input03")[0].value="";
         return false;
     }
     if(new1 === "" ||old === ""||defnew === "" ){
-        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     if(email === "" ){
-        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     $('#myForm').submit();
