@@ -24,6 +24,11 @@ require 'examAnsSideBar.php';
                     <div ><?php echo $ansWork['answer'];?></div>
                 </td>
             </tr>
+            <tr>
+                <td colspan='3'>
+                    <div class='answer-tip-text2'>正确答案：</div>
+                    <div><?php echo ($exer['content']);?></div>
+            </tr>
         </table>
 </div>
     配分:<?php echo $exam_exercise['score'];?><br/>
