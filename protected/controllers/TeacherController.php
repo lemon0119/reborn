@@ -2568,7 +2568,7 @@ class TeacherController extends CController {
             $maniResult = "题目已存在";
         else
             $maniResult = "";
-        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $exam = Exam::model()->find("examID = '$examID'");
         $result = $this->getLstByType($type);
         $workLst = $result['workLst'];
         $pages = $result['pages'];
@@ -2860,7 +2860,7 @@ class TeacherController extends CController {
      
       public function renderModifyExam($type,$examID)
      {
-        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $exam = Exam::model()->find("examID = '$examID'");
         $totalScore = ExamExercise::model()->getTotalScore($examID);
         if ($type == "key" || $type == "look" || $type == "listen")
             $render = "modifyTypeExam";
@@ -3354,7 +3354,7 @@ class TeacherController extends CController {
     public function ActionToOwnExam() {
         $type = $_GET['type'];
         $examID = $_GET['examID'];
-        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $exam = Exam::model()->find("examID = '$examID'");
         $result = Exam::model()->getExamExerByTypePage($examID, $type, 5);
         $examExercise = ExamExercise::model()->findAll("examID=? and type=?", array($examID, $type));
         $totalScore = ExamExercise::model()->getTotalScore($examID);
@@ -3373,7 +3373,7 @@ class TeacherController extends CController {
     public function ActionToOwnTypeExam() {
         $type = $_GET['type'];
         $examID = $_GET['examID'];
-        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $exam = Exam::model()->findAll("examID = '$examID'");
         $result = Exam::model()->getExamExerByTypePage($examID, $type, 5);
         $examExercise = ExamExercise::model()->findAll("examID=? and type=?", array($examID, $type));
         $totalScore = ExamExercise::model()->getTotalScore($examID);
@@ -3409,7 +3409,7 @@ class TeacherController extends CController {
     public function ActionToAllExam() {
         $type = $_GET['type'];
         $examID = $_GET['examID'];
-        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $exam = Exam::model()->find("examID = '$examID'");
         $result = $this->getLstByType($type);
         $workLst = $result['workLst'];
         $pages = $result['pages'];
@@ -3443,7 +3443,7 @@ class TeacherController extends CController {
     public function ActionToAllTypeExam() {
         $type = $_GET['type'];
         $examID = $_GET['examID'];
-        $exam = Exam::model()->findAll("examID = '$examID'")[0];
+        $exam = Exam::model()->find("examID = '$examID'");
         $result = $this->getLstByType($type);
         $workLst = $result['workLst'];
         $pages = $result['pages'];
