@@ -374,7 +374,7 @@ class Exam extends CActiveRecord
         $newSuite->duration  = 0;
         $newSuite->examName = $title;
         $newSuite->insert();
-        $sql        =   "select max(suiteID) as id from suite";
+        $sql        =   "select max(examID) as id from exam";
         $max_id     =   Yii::app()->db->createCommand($sql)->query();
         $temp       =   $max_id->read();
         $new_id =   $temp['id'];
