@@ -65,7 +65,7 @@ function deleCheck() {
            }
         } 
         if(flag===0){
-           window.wxc.xcConfirm('未选中任何学生', window.wxc.xcConfirm.typeEnum.info);
+           window.wxc.xcConfirm('未选中任何老师', window.wxc.xcConfirm.typeEnum.info);
         }else{
              var option = {
 						title: "警告",
@@ -76,7 +76,7 @@ function deleCheck() {
                                                     return false;
 						}
 					};
-					window.wxc.xcConfirm("这将会彻底删除该学生信息，您确定这样吗？", "custom", option);
+					window.wxc.xcConfirm("这将会彻底删除该老师信息，您确定这样吗？", "custom", option);
         }
        
     }
@@ -91,7 +91,7 @@ function ReCheck() {
            }
         } 
         if(flag===0){
-           window.wxc.xcConfirm('未选中任何学生', window.wxc.xcConfirm.typeEnum.info);
+           window.wxc.xcConfirm('未选中任何老师', window.wxc.xcConfirm.typeEnum.info);
         }else{
                                                     $('#myForm').attr('action',"./index.php?r=admin/revokeTea");
                                                     $('#myForm').submit();
