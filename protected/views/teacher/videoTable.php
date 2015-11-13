@@ -33,7 +33,7 @@
             <td>管理员</td>
             <td>
                 <a href="./index.php?r=teacher/lookVideo&&video=<?php echo iconv("gb2312","UTF-8",$file);?>&&vdir=<?php echo $dir;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" title="查看"><img src="<?php echo IMG_URL; ?>detail.png"></a>
-                <a href="<?php echo "$dir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>" title="下载"><img src="<?php echo IMG_URL; ?>edit.png"></a>
+                <a href="<?php echo "$dir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>" title="下载"><img src="<?php echo IMG_URL; ?>icon_download.png"></a>
             </td>
         </tr>
         <?php     

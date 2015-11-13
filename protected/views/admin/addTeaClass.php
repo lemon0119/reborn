@@ -16,7 +16,7 @@ $corr=$posts->read();
     <tr>
         <th>选择</th>
         <th>工号</th>
-        <th>用户名</th>
+        <th>姓名</th>
         <th>所属部门</th>
     </tr>
 </thead>

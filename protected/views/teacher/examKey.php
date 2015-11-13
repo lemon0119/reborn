@@ -21,7 +21,7 @@ require 'examAnsSideBar.php';
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>学生答案：</div>
-                    <div ><?php echo error_log($ansWork['answerID']."recordID:".$ansWork['recordID']."type:".$ansWork['type']); $ansWork['answer'];?></div>
+                    <div ><?php echo $ansWork['answer'];?></div>
                 </td>
             </tr>
         </table>
