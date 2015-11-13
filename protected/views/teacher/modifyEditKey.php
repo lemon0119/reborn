@@ -1,6 +1,8 @@
-<?php $optArr = explode("$",$content);
-      $count = round(count($optArr)/3);?>
-    
+
+<?php 
+    $content=  str_replace("_", ":", $content);
+    $optArr = explode(":",$content);
+      $count = round(count($optArr)/3);?>    
 <div class="span9">    
 <?php if(!isset($action)) {?>
         <h3>编辑键位练习题</h3>
