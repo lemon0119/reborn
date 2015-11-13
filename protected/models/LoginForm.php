@@ -11,7 +11,7 @@ class LoginForm extends CFormModel
 	public $username;      //用户名
 	public $password;	   //密码
 	public $rememberMe;		//记住密码
-    public $usertype;       //用户种类
+        public $usertype;       //用户种类
 	private $_identity;     //身份
 
 	/**

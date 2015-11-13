@@ -7,7 +7,7 @@
     <thead>
         <tr>
             <th class="font-center">学号</th>
-            <th class="font-center">用户名</th>
+            <th class="font-center">姓名</th>
             <th class="font-center">班级</th>
             <th class="font-center">操作</th>
         </tr>

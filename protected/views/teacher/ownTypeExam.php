@@ -28,26 +28,28 @@
             </tr>
         </thead>
                 <tbody>        
-                    <?php foreach($examWork as $work):
+                    <?php 
+                    $n=1;
+                    foreach($examWork as $work):
                             foreach ($examExercise as $exam)
                           {
                          if($exam['exerciseID'] == $work['exerciseID'])
                              $thisExam = $exam;
                            }?>                   
                     <tr>
-                        <td class="font-center" style="width:50px" ><?php echo $work['exerciseID'];?></td>
-                        <td class="font-center">
-                            <?php  if(Tool::clength($work['title'])<=7)
+                        <td class="font-center" style="width:50px" ><?php echo $n++;?></td>
+                        <td title="<?php echo $work['title'];?>" class="font-center">
+                            <?php  if(Tool::clength($work['title'])<=5)
                                         echo $work['title'];
                                     else
-                                        echo Tool::csubstr($work['title'], 0, 7)."...";
+                                        echo Tool::csubstr($work['title'], 0, 5)."...";
                                         ?>
                         </td>
-                        <td class="font-center">
-                            <?php  if(Tool::clength($work['content'])<=10)
+                        <td title="<?php echo $work['content'];?>" class="font-center">
+                            <?php  if(Tool::clength($work['content'])<=8)
                                         echo $work['content'];
                                     else
-                                        echo Tool::csubstr($work['content'], 0, 10)."...";
+                                        echo Tool::csubstr($work['content'], 0, 8)."...";
                                         ?>
                         </td>
                         <td class="font-center">

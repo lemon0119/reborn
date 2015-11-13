@@ -15,13 +15,12 @@ if (isset(Yii::app()->session['userid_now'])) {
             <script src="<?php echo JS_URL; ?>site.js"></script>
 <!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
                 <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
-		<script src="<?php echo XC_Confirm; ?>js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
 <!--            -->
              <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         </head>
         <body>
-            <div class="container">
+            <div  class="container">
                 <div class="navbar">
                     <div class="navbar-inner">
                         <div class="container">
@@ -52,9 +51,8 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=admin/listenLst">听打练习</a></li>
                                         </ul>
                                     </li>
-                                   
+                                   <li><a id="notice_manager" href="./index.php?r=admin/noticeLst"></a></li>
                                      <li><a id="schedule_manager"  href="./index.php?r=admin/schedule"></a></li>
-                                      <li><a id="notice_manager" href="./index.php?r=admin/noticeLst"></a></li>
                                       <li><a id="blank_admin"></a></li>
                                     <li >
                                         <div class="userUI">
@@ -76,12 +74,19 @@ if (isset(Yii::app()->session['userid_now'])) {
                             </div>
                         </div>
                     </div>
+                  
                 </div>
-                <div class="row">
+                <div class="row" style="min-height: 700px">
                     <?php echo $content; ?>
+                    
                 </div>
+                  <div style="float: bottom"  class="copyright">
+		2015 &copy;南京兜秘网络科技有限公司.
+	</div>
             </div>
+           
         </body>
+        
     </html>
 <?php } else { ?>
     <script>    window.location.href = "./index.php?r=user/login"</script>

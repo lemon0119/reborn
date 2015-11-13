@@ -38,9 +38,9 @@ function test()
                 </div>
                 
             </div>
-            <div>
-                <button type="submit" class="btn btn-primary">确认</button> 
-                <a href="./index.php?r=admin/index" class="btn">返回</a>
+             <div style="margin-top: 30px;">
+                <a id="stuBack" href="./index.php?r=admin/index"></a>
+                <a id="DeterMine1" href="#" name="submit" onclick="judge()"></a> 
             </div>
         </fieldset>
     </form>   
@@ -51,7 +51,11 @@ function test()
 $(document).ready(function(){
     var result = '<?php echo $result;?>';
     if(result === '1')
-    window.wxc.xcConfirm('密码修改成功！', window.wxc.xcConfirm.typeEnum.success);
+    window.wxc.xcConfirm('密码修改成功！', window.wxc.xcConfirm.typeEnum.success,{
+        onOk:function(){
+            window.location.href="./index.php?r=admin/index";
+        }
+    });
     else if(result === '0')
     window.wxc.xcConfirm('密码修改失败！', window.wxc.xcConfirm.typeEnum.error);
     else if(result==='old error')
@@ -87,4 +91,34 @@ $("#myForm").submit(function(){
     }
         
 });
+function judge(){
+    var old = $("#input01")[0].value;
+    var new1 = $("#input02")[0].value;
+    var defnew=$("#input03")[0].value;
+    var email=$("#input04")[0].value;
+    if(old!="" &&new1!=""&&old==new1){
+        window.wxc.xcConfirm('新旧密码不能一样', window.wxc.xcConfirm.typeEnum.info);
+        $("#input02")[0].value="";
+    	$("#input03")[0].value="";
+        return false;
+    }
+    if(new1===defnew){
+    }else
+    {
+        window.wxc.xcConfirm('新密码和确认密码不一致', window.wxc.xcConfirm.typeEnum.warning);
+    	$("#input02")[0].value="";
+    	$("#input03")[0].value="";
+        return false;
+    }
+    if(new1 === "" ||old === ""||defnew === "" ){
+        window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.warning);
+        return false;
+    }
+    if(email === "" ){
+        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.warning);
+        return false;
+    }
+    $('#myForm').submit();
+    return false
+}
 </script>

@@ -95,7 +95,7 @@
 
   function dele(exerciseID){
       var option = {
-						title: "警告",
+						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
 							window.location.href = "./index.php?r=admin/deleteChoice&&exerciseID=" + exerciseID;

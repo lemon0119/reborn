@@ -14,21 +14,20 @@
  * @property string $mail_address
  * @property string $phone_number
  */
-class Student extends CActiveRecord
-{
+class Student extends CActiveRecord {
 
     //会彻底删除该学生的所有记录，谨慎使用
     /**
      * 
      * @param type $userID 要删除的学生的ID
      */
-    public function delStuRes($userID){
+    public function delStuRes($userID) {
         AnswerRecord::model()->deleteAll('createPerson = ?', array($userID));
         ExamRecord::model()->deleteAll('studentID = ?', array($userID));
         SuiteRecord::model()->deleteAll('studentID = ?', array($userID));
     }
-    
-    public function insertStu($userID,$userName,$sex,$age,$pass,$mail_address,$phone_number,$classID){
+
+    public function insertStu($userID, $userName, $sex, $age, $pass, $mail_address, $phone_number, $classID) {
         $newStu = new Student();
         $newStu->userID = $userID;
         $newStu->userName = $userName;
@@ -39,36 +38,35 @@ class Student extends CActiveRecord
         $newStu->phone_number = $phone_number;
         $newStu->classID = $classID;
         $oldstu = Student::model()->findAll("userID = '$userID'");
-        if(count($oldstu) > 0)
+        if (count($oldstu) > 0)
             return 'no';
         else
             return $newStu->insert();
     }
-    
-        public function getStuLst($type,$value){
+
+    public function getStuLst($type, $value) {
         $order = " order by userID ASC";
-        if($type!=""&&$type!="is_delete")
+        if ($type != "" && $type != "is_delete")
             $condition = " WHERE $type = '$value' AND is_delete = 0";
-        else if($type=="is_delete")
-            $condition= " WHERE is_delete = 1";
+        else if ($type == "is_delete")
+            $condition = " WHERE is_delete = 1";
         else
-            $condition= " WHERE is_delete = 0";
+            $condition = " WHERE is_delete = 0";
         $select = "SELECT * FROM student";
-        $sql = $select.$condition.$order;
-        $criteria=new CDbCriteria();
+        $sql = $select . $condition . $order;
+        $criteria = new CDbCriteria();
         $result = Yii::app()->db->createCommand($sql)->query();
-        $pages=new CPagination($result->rowCount);
-        $pages->pageSize=10; 
-        $pages->applyLimit($criteria); 
-        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
-        $result->bindValue(':limit', $pages->pageSize); 
-        $stuLst=$result->query();
-        
-        return ['stuLst'=>$stuLst,'pages'=>$pages,];
+        $pages = new CPagination($result->rowCount);
+        $pages->pageSize = 10;
+        $pages->applyLimit($criteria);
+        $result = Yii::app()->db->createCommand($sql . " LIMIT :offset,:limit");
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize);
+        $result->bindValue(':limit', $pages->pageSize);
+        $stuLst = $result->query();
+        return ['stuLst' => $stuLst, 'pages' => $pages,];
     }
-    
-    public function findClassByStudentID ($studentID) {
+
+    public function findClassByStudentID($studentID) {
         $student = $this->find("userid = '$studentID'");
         return $student['classID'];
 //    }
@@ -108,13 +106,14 @@ class Student extends CActiveRecord
 //            }
 //        }
         //recordID, exerciseID, type
-        
-        
-        
-        
+
+
+
+
         return $result;
     }
-    public function getAnswerRecordSub(){
+
+    public function getAnswerRecordSub() {
         $type = Yii::app()->session['type'];
         $allClasswork = SuiteRecord::getClassworkAll($type);
         $result = array();
@@ -130,52 +129,53 @@ class Student extends CActiveRecord
         }
         return $result;
     }
-    protected function getAccomplish($suiteID){
+
+    protected function getAccomplish($suiteID) {
         /*
-        $exerNum = Suite::model()->getExerNum($suiteID);
-        $answerNum = AnswerRecord::model()->getAnswerNum($suiteID);
-        $exerSum = 0;
-        $answerSum = 0;
-        foreach (Tool::$EXER_TYPE as $type) {
-            $exerSum += $exerNum[$type];
-            $answerSum +=$answerNum[$type];
-        }
-        return $answerSum / $exerSum;
-    
+          $exerNum = Suite::model()->getExerNum($suiteID);
+          $answerNum = AnswerRecord::model()->getAnswerNum($suiteID);
+          $exerSum = 0;
+          $answerSum = 0;
+          foreach (Tool::$EXER_TYPE as $type) {
+          $exerSum += $exerNum[$type];
+          $answerSum +=$answerNum[$type];
+          }
+          return $answerSum / $exerSum;
+
          * 
          */
         //改用直接查询数据库。。。
         $userID = Yii::app()->session['userid_now'];
-        $record =  SuiteRecord::model()->find('suiteID=? and studentID=?', array($suiteID,$userID));
+        $record = SuiteRecord::model()->find('suiteID=? and studentID=?', array($suiteID, $userID));
         return $record == NULL ? 0 : $record->ratio_accomplish;
     }
-    protected function getCorrect($suiteID){
+
+    protected function getCorrect($suiteID) {
         /*
-        $answerCorrect = AnswerRecord::model()->getAnswerCorrect($suiteID);
-        $ratioSum = 0;
-        //print_r($answerCorrect);
-        foreach (Tool::$EXER_TYPE as $type) {
-            if(isset($answerCorrect[$type])){
-                foreach ($answerCorrect[$type] as $ratio){
-                    $ratioSum += $ratio;
-                }
-            }
-        }
-        $exerNum = Suite::model()->getExerNum($suiteID);
-        $exerSum = 0;
-        foreach (Tool::$EXER_TYPE as $type) {
-            $exerSum += $exerNum[$type];
-        }
-        return $ratioSum / $exerSum;
+          $answerCorrect = AnswerRecord::model()->getAnswerCorrect($suiteID);
+          $ratioSum = 0;
+          //print_r($answerCorrect);
+          foreach (Tool::$EXER_TYPE as $type) {
+          if(isset($answerCorrect[$type])){
+          foreach ($answerCorrect[$type] as $ratio){
+          $ratioSum += $ratio;
+          }
+          }
+          }
+          $exerNum = Suite::model()->getExerNum($suiteID);
+          $exerSum = 0;
+          foreach (Tool::$EXER_TYPE as $type) {
+          $exerSum += $exerNum[$type];
+          }
+          return $ratioSum / $exerSum;
          * 
          * 同样，直接改成查询数据库
          */
         $userID = Yii::app()->session['userid_now'];
-        $record =  SuiteRecord::model()->find('suiteID=? and studentID=?', array($suiteID,$userID));
+        $record = SuiteRecord::model()->find('suiteID=? and studentID=?', array($suiteID, $userID));
         return $record == NULL ? 0 : $record->ratio_correct;
-        
-        
     }
+
 //    public function getAnswerRecordByType($type){
 //        //返回页面progress需要的某题型所有信息,根据题型。type = listen 、look、key、knlg
 //        $allClasswork = SuiteRecord::getClassworkAll();
@@ -206,99 +206,92 @@ class Student extends CActiveRecord
 //        //$result['exer'] = get
 //        return $result;
 //    }
-    
-    
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'student';
-	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('userID, userName, password, classID,mail_address', 'required'),
-			array('userID, userName, password, classID,mail_address', 'length', 'max'=>30),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('userID, userName, password, classID,mail_address', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'student';
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('userID, userName, password, classID,mail_address', 'required'),
+            array('userID, userName, password, classID,mail_address', 'length', 'max' => 30),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('userID, userName, password, classID,mail_address', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'userID' => 'User',
-			'userName' => 'User Name',
-			'password' => 'Password',
-                        'mail_address'=>'mail_address',
-			'classID' => 'Class',
-                       
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'userID' => 'User',
+            'userName' => 'User Name',
+            'password' => 'Password',
+            'mail_address' => 'mail_address',
+            'classID' => 'Class',
+        );
+    }
 
-		$criteria=new CDbCriteria;
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search() {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria->compare('userID',$this->userID,true);
-		$criteria->compare('userName',$this->userName,true);
-		$criteria->compare('password',$this->password,true);
-                $criteria->compare('mail_address',$this->mail_address,true);
-		$criteria->compare('classID',$this->classID,true);
-                $criteria->compare('sex',$this->sex,true);
-                $criteria->compare('age',$this->age,true);
-                $criteria->compare('mail_address',$this->mail_address,true);
-                $criteria->compare('phone_number',$this->phone_number,true);
+        $criteria = new CDbCriteria;
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        $criteria->compare('userID', $this->userID, true);
+        $criteria->compare('userName', $this->userName, true);
+        $criteria->compare('password', $this->password, true);
+        $criteria->compare('mail_address', $this->mail_address, true);
+        $criteria->compare('classID', $this->classID, true);
+        $criteria->compare('sex', $this->sex, true);
+        $criteria->compare('age', $this->age, true);
+        $criteria->compare('mail_address', $this->mail_address, true);
+        $criteria->compare('phone_number', $this->phone_number, true);
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Student the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Student the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
+
 }

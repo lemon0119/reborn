@@ -18,7 +18,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th class="font-center">学号</th>
+                        <th class="font-center">工号</th>
                         <th class="font-center">姓名</th>
                         <th class="font-center">异常原因</th>         
                         <th class="font-center">是否自动解决</th>               

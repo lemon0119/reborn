@@ -37,19 +37,14 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<h3 style="display:inline-block;">编辑听打练习题</h3>
-<span>(支持mp3及wav格式)</span>
+<legend><h3 style="display:inline-block;">编辑听打练习题</h3>
+<span>(支持mp3及wav格式)</legend></span></legend>
 <?php } else if($action == 'look') {?>
-<h3>查看听打练习题</h3>
+<legend><h3>查看听打练习题</h3></legend>
 <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=admin/editListenInfo&&oldfilename=<?php echo $filename;?>&&exerciseID=<?php echo $exerciseID;?>&&filepath=<?php echo $filepath;?>" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
-        <?php if(!isset($action)) {?>
-            <legend>填写题目</legend>
-        <?php } else if($action == 'look') {?>
-            <legend>查看题目</legend>
-        <?php }?>
         <?php $listenpath = "resources/".$filepath.$filename;?>
             
        <div class="control-group">
@@ -87,14 +82,15 @@
             <label class="control-label" for="input03">内容</label>
             <div class="controls">               
                 <textarea name="content" style="width:450px; height:200px;" id="input03"><?php echo $content; ?></textarea>
+                <br>字数：<span id="wordCount">0</span> 字
             </div>
         </div> 
             
-        <div class="form-actions">
+        <div  style="text-align: center;">
             <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">修改</button>
+                <button type="submit" style="left: 135px;top: 49px;" class="btn_save_admin"></button>
             <?php }?>
-            <a href="./index.php?r=admin/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
+            <a style="left: 150px;top: 50px;" href="./index.php?r=admin/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
         </div>
             
         </fieldset>
@@ -102,11 +98,13 @@
 </div>
 <script>     
 $(document).ready(function(){
+    var v=<?php echo Tool::clength($content);?>;
+    $("#wordCount").text(v);
     $("#upload").hide();
     <?php 
         if(isset($result)){
             echo '$("#upload").hide();';
-            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.warning);";
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.success);";
         }
     ?>
 });

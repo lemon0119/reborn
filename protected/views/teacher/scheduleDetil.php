@@ -4,13 +4,13 @@
         <ul class="nav nav-list">       
             <li class="nav-header"><i class="icon-knowlage"></i>操作</li>
             <li <?php if(isset($_GET['classID'])||isset($_GET['courseID'])){}else{echo "class='active'";}?>  ><a href="./index.php?r=teacher/scheduleDetil"><i class="icon-list-alt"></i> 您的课表</a></li>
-            <li class="nav-header">任课班级</li>
+            <li class="nav-header"><i class="icon-knowlage"></i>任课班级</li>
             <?php foreach ($array_class as $class): ?>
             <li <?php if(isset($_GET['classID'])){ if (Yii::app()->session['currentClass'] == $class['classID']&&(isset($_GET['classID']))) echo "class='active'";} ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>
 
             <li class="divider"></li>
-            <li class="nav-header">任课科目</li>
+            <li class="nav-header"><i class="icon-knowlage"></i>任课科目</li>
 
             <?php foreach ($array_course as $course): ?>
             <li <?php if(isset($_GET['courseID'])){if(Yii::app()->session['currentCourse'] == $course['courseID']) echo "class='active'"; }?>  ><a href="./index.php?r=teacher/scheduleDetil&&courseID=<?php echo $course['courseID']; ?>"><i class="icon-list"></i><?php echo $course['courseName']; ?></a></li>
@@ -139,25 +139,25 @@ echo $courseName; ?></h3>
                             ?></td>
                             <td style="height: 62px" ><?php
                                 switch ($s) {
-                                    case 1: echo '<span style="font-weight: bolder">一</span>';
+                                    case 1: echo '<span >一</span>';
                                         break;
-                                    case 2: echo '<span style="font-weight: bolder">二</span>';
+                                    case 2: echo '<span >二</span>';
                                         break;
-                                    case 3: echo '<span style="font-weight: bolder">三</span>';
+                                    case 3: echo '<span >三</span>';
                                         break;
-                                    case 4: echo '<span style="font-weight: bolder">四</span>';
+                                    case 4: echo '<span >四</span>';
                                         break;
-                                    case 5: echo '<span style="font-weight: bolder">五</span>';
+                                    case 5: echo '<span >五</span>';
                                         break;
-                                    case 6: echo '<span style="font-weight: bolder">六</span>';
+                                    case 6: echo '<span>六</span>';
                                         break;
-                                    case 7: echo '<span style="font-weight: bolder">七</span>';
+                                    case 7: echo '<span >七</span>';
                                         break;
-                                    case 8: echo '<span style="font-weight: bolder">八</span>';
+                                    case 8: echo '<span >八</span>';
                                         break;
-                                    case 9: echo '<span style="font-weight: bolder">九</span>';
+                                    case 9: echo '<span>九</span>';
                                         break;
-                                    case 10: echo '<span style="font-weight: bolder">十</span>';
+                                    case 10: echo '<span>十</span>';
                                         break;
                                 }
                                 ?></td>

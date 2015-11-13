@@ -50,42 +50,42 @@
         <div class="control-group">
             <label class="control-label" for="input">题目</label>
             <div class="controls">
-                <textarea name="title" style="width:450px; height:20px;" id="input"></textarea>
+                <textarea name="title" style="width:500px; height:20px;" id="input"></textarea>
             </div>
         </div>
             <div class="control-group" id="div1">
             <label class="control-label" >键位码</label>
             <div class="controls">               
-                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12">                
+                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12"><span> ：</span>                
                 <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12">
                 <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2">
-                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                <a class="btn_insert_admin" onclick="addIn()"></a> <a class="btn_subtract_admin" onclick="deleteIn()"></a>
             </div>             
         </div>
         <div class="control-group" id="div2">           
             <div class="controls">               
-                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12">                
+                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12"><span> ：</span>                
                 <input type="text"  name="in5" style="width:150px; height:15px;" id="input5"  maxlength="12">
                 <input type="text"  name="in6" style="width:40px; height:15px;" id="input6" maxlength="2">              
             </div>             
         </div>
         <div class="control-group" id="div3">           
             <div class="controls">               
-                <input type="text" name="in7" style="width:150px; height:15px;" id="input7" maxlength="12">                
+                <input type="text" name="in7" style="width:150px; height:15px;" id="input7" maxlength="12"><span> ：</span>                
                 <input type="text" name="in8" style="width:150px; height:15px;" id="input8" maxlength="12">
                 <input type="text" name="in9" style="width:40px; height:15px;" id="input9"  maxlength="2">              
             </div>             
         </div>
         <div class="control-group" id="div4">           
             <div class="controls">               
-                <input type="text" name="in10" style="width:150px; height:15px;" id="input10" maxlength="12">                
+                <input type="text" name="in10" style="width:150px; height:15px;" id="input10" maxlength="12"><span> ：</span>                
                 <input type="text" name="in11" style="width:150px; height:15px;" id="input11"maxlength="12">
                 <input type="text" name="in12" style="width:40px; height:15px;"id="input12" maxlength="2">              
             </div>             
         </div>
         <div class="control-group" id="div5">           
             <div class="controls">               
-                <input type="text" name="in13" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in13" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                
                 <input type="text" name="in14" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in15" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
@@ -93,44 +93,44 @@
     
     <div class="control-group" style="display: none"  id="div6">           
             <div class="controls">               
-                <input type="text" name="in16" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in16" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                
                 <input type="text" name="in17" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in18" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
                 <div class="control-group" style="display: none"  id="div7">           
             <div class="controls">               
-                <input type="text" name="in19" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in19" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                
                 <input type="text" name="in20" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in21" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
     <div class="control-group" style="display: none"  id="div8">           
             <div class="controls">               
-                <input type="text" name="in22" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in22" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                
                 <input type="text" name="in23" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in24" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
     <div class="control-group"  style="display: none" id="div9">           
             <div class="controls">               
-                <input type="text" name="in25" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in25" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                
                 <input type="text" name="in26" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in27" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
             <div class="control-group"  style="display: none" id="div10">           
             <div class="controls">               
-                <input type="text" name="in28" style="width:150px; height:15px;" id="input13" maxlength="12">                
+                <input type="text" name="in28" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                
                 <input type="text" name="in29" style="width:150px; height:15px;" id="input14" maxlength="12">
                 <input type="text" name="in30" style="width:40px; height:15px;" id="input15" maxlength="2">              
             </div>             
     </div>
-        <div class="form-actions">
-            <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">添加</button>
+         <div  style="text-align: center;">
+             <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_cancel_admin"></a>
+             <?php if(!isset($action)) {?> 
+                <button style="position: relative;right:105px" type="submit" class="btn_add_admin"></button>
             <?php }?>
-            <a href="./index.php?r=admin/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
         </div>
         </fieldset>
     </form>   
@@ -156,6 +156,7 @@ $("#myForm").submit(function(){
     var i ,j ,k, y = 3*divCount;
     var patrn = /^[ANIGDZWUEOXB]{1,12}$/;
     var numpatrn =/^[0-9]{1,2}$/;
+    
     for(i = 1 ; i <=y ; i++)
     {
         var input = $("#input" + i)[0].value;
@@ -172,11 +173,26 @@ $("#myForm").submit(function(){
             {
                 j = Math.floor(i/3)+1;
                 k = i%3;
-                window.wxc.xcConfirm('第' + j + '行第' + k + '空应输入0-12个A-Z的字母', window.wxc.xcConfirm.typeEnum.info);
+                window.wxc.xcConfirm('第' + j + '行第' + k + '空应输入0-12个速录键盘字母', window.wxc.xcConfirm.typeEnum.info);
                 return false;
             }
-        }           
-    }
+            var arrayinput = input.split("");
+            j = Math.floor(i/3)+1;
+            k = i%3;
+            console.log(arrayinput);
+            for(var v=0;v<arrayinput.length;v++){
+                for(var n=v+1;n<arrayinput.length;n++){
+                    if(arrayinput[v]==arrayinput[n]){
+                        window.wxc.xcConfirm('第' + j + '行第' + k + '空不应出现重复字符', window.wxc.xcConfirm.typeEnum.info);
+                        return false;
+                    }
+                }
+            }
+            
+        }
+        
+
+        }
     }
 );
     function addIn()

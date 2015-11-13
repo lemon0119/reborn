@@ -30,7 +30,7 @@ echo "<script>var role='$role';</script>";
 
 <div class="right"style="background-color: #3b3b3b;border: 0px" >
     <div align="center" id="sw-teacher-camera"><a href="#" ><h4 style="color: white">教 师 视 频</h4></a></div>
-    <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:220px; clear:both;">
+    <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
         <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
@@ -87,6 +87,10 @@ echo "<script>var role='$role';</script>";
 $(document).ready(function(){
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
+    //每5秒，发送一次时间
+    setInterval(function() {    
+        checkOnLine();
+    }, 8000);
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -168,6 +172,21 @@ function pollChatRoom() {
     });
 }
 
+function checkOnLine(){
+        $.ajax({
+             type: "GET",
+             dataType: "json",
+             url: "index.php?r=api/updateStuOnLine&&classID=<?php echo $classID;?>&&userid=<?php echo Yii::app()->session['userid_now']?>",
+             data: {},
+             success: function(){ console.log("set time");},
+                error: function(xhr, type, exception){
+                    console.log(xhr, "Failed");
+                    window.wxc.xcConfirm('出错了aa...', window.wxc.xcConfirm.typeEnum.error);
+                    
+                }
+         });
+        return false;
+　　　}
 function pollBulletin() {
     $.ajax({
         type: "GET",

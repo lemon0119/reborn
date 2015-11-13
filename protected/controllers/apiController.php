@@ -53,6 +53,15 @@ class apiController extends Controller {
         $command = $connection->createCommand($sql);
         echo $command->execute();
     }
+    public function actionUpdateStuOnLine(){
+        $classID = $_GET['classID'];
+        $backtime = date('y-m-d H:i:s',time());
+        $connection = Yii::app()->db;
+        $userID=(string) Yii::app()->request->getParam('userid');
+        $sql = "UPDATE student SET backTime='$backtime' WHERE userID='$userID'";
+        $command = $connection->createCommand($sql);
+        echo $command->execute();
+    }
 
     public function actionGetLatestBulletin() {
         $classID = $_GET['classID'];
@@ -73,6 +82,22 @@ class apiController extends Controller {
         $time = $dataReader->readAll();
         $time[0]['backTime']=strtotime($time[0]['backTime']);
         $this->renderJSON($time);
+    }
+    public function actionGetStuOnLine(){
+        $classID = $_GET['classID'];
+        $connection = Yii::app()->db;
+        $userID=array(Yii::app()->session['userid_now']);
+        $sql = "SELECT backTime FROM student";
+        $command = $connection->createCommand($sql);
+        $dataReader = $command->query();
+        $time = $dataReader->readAll();
+        $n=0;$b=0;
+        foreach ($time as $t) {
+            if(time()-strtotime($time[$b++]['backTime']) < 10){
+                $n++;
+            }
+        }
+        $this->renderJSON($n);
     }
     public function actionGetClassState(){
         $classID = $_GET['classID'];
@@ -98,10 +123,11 @@ class apiController extends Controller {
     public function actionPutNotice() {
         $title = (string) Yii::app()->request->getParam('title');
         $content = (string) Yii::app()->request->getParam('content');
+        $new_content = str_replace("\n", "<br/>", $content);
         //改为使用服务器时间
         $publishtime = date('y-m-d H:i:s',time());
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO notice (noticetime,noticetitle,content) values ( '$publishtime','$title','$content')";
+        $sql = "INSERT INTO notice (noticetime,noticetitle,content) values ( '$publishtime','$title','$new_content')";
         $command = $connection->createCommand($sql);
         $command->execute();
         
@@ -115,6 +141,24 @@ class apiController extends Controller {
         $command = $connection->createCommand($sql);
         $command->execute();
 
+    }
+    public function actionChangeNotice(){
+        $id=$_GET['id'];
+        $content = (string) Yii::app()->request->getParam('content');
+        $connection = Yii::app()->db;
+        $sql = "UPDATE notice SET content='$content' WHERE id='$id'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        
+        $connection = Yii::app()->db;
+        $sql = "UPDATE student SET noticestate='1'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        
+        $connection = Yii::app()->db;
+        $sql = "UPDATE teacher SET noticestate='1'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
     }
 
     public function actionGetTime(){

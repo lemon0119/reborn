@@ -58,11 +58,11 @@
                 <textarea name="answer" style="width:450px; height:200px;" id="input02"><?php echo $answer; ?></textarea>
             </div>
         </div>
-        <div class="form-actions">
+        <div  style="text-align: center;">
             <?php if(!isset($action)) {?> 
-                <button type="submit" class="btn btn-primary">修改</button>
+                <button type="submit" style="left: 135px;top: 49px;" class="btn_save_admin"></button>
             <?php }?>
-            <a href="./index.php?r=admin/returnFromAddQuestion&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
+            <a style="left: 150px;top: 50px;" href="./index.php?r=admin/returnFromAddQuestion&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
         </div>
         </fieldset>
     </form>   
@@ -70,7 +70,7 @@
 <script>     
 $(document).ready(function(){
     <?php if(isset($result))
-            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.confirm);";?>
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.success);";?>
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;

@@ -34,7 +34,7 @@
             <div class="control-group">
                 <label class="control-label" for="input03">班级名称</label>
                 <div class="controls">
-                    <select name="classID" style="width: 285px">
+                    <select name="classID" style="width: 285px;color: #000">
                         <option value="0" >以后再选</option>
                         <?php 
                             $classes = TbClass::model()->findall();
@@ -71,8 +71,8 @@
                     <input name="password2" type="password" class="input-xlarge" id="input05" value="" />
                 </div>
             </div>						-->
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=admin/exlAddStu" class="btn">批量添加</a> <a href="./index.php?r=admin/stuLst" class="btn">返回</a>
+            <div style="text-align: center">
+                <a  style="right: 77px" href="./index.php?r=admin/stuLst" class="btn_ret_admin"></a> <a style="right: 63px" href="./index.php?r=admin/exlAddStu" class="btn_Batch_add_admin"></a> <button style="right:50px;top: -1px;" type="submit" class="btn_AD_admin"></button>
 
             </div>
         </fieldset>

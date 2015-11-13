@@ -66,7 +66,7 @@ $(document).ready(function(){
 }    
 function formSubmit2(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
-      alert(result);
+      //alert(result);
       location.reload(); 
   });
   

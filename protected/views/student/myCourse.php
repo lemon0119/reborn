@@ -10,9 +10,9 @@
 <div class="span3">
        <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
-                <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">章 节 列 表</li>
+                <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">课 时 列 表</li>
                 <?php foreach ($lessons as $less) {?>
-                        <li id="<?php echo $less['lessonID']?>" <?php if($less['lessonID'] <= $currentLesn) {
+                        <li id="<?php echo $less['lessonID']?>" <?php 
                             if($less['lessonID'] == $currentLesn) echo 'class=\'active\'';?>>
                             <?php if($less['lessonID'] == $currentLesn){?>
                                 <a href="./index.php?r=student/myCourse&&lessonID=<?php echo $less['lessonID']?>">
@@ -25,7 +25,7 @@
                             <?php }?>
                         </li>
                           <?php }?>
-                <?php }?>
+                
                 </ul>
         </div>
 </div>

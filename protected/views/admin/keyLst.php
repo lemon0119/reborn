@@ -61,7 +61,7 @@
                         <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
                       
                         <td class="font-center"><?php echo $model['title']?></td>
-                        <td class="font-center"><?php  if(Tool::clength($model['content'])<=15)
+                        <td title="<?php  echo  str_replace("$",":",$model['content']);?>" class="font-center"><?php  if(Tool::clength($model['content'])<=15)
                                    echo  str_replace("$",":",$model['content']);
                                else
                                    echo str_replace("$",":",Tool::csubstr($model['content'], 0, 15)."...");
@@ -93,9 +93,14 @@
     </div>
 <script>
   function dele(exerciseID){
-      if(confirm("您确定删除吗？")){
-          window.location.href = "./index.php?r=admin/deleteKey&&exerciseID=" + exerciseID;
-      }
+       var option = {
+						title: "提示",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							 window.location.href = "./index.php?r=admin/deleteKey&&exerciseID=" + exerciseID;
+						} 
+					};
+					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
   }
 </script>
 
