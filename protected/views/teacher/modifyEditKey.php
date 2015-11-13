@@ -1,6 +1,8 @@
-<?php $optArr = explode("$",$content);
-      $count = round(count($optArr)/3);?>
-    
+
+<?php 
+    $content=  str_replace("_", ":", $content);
+    $optArr = explode(":",$content);
+      $count = round(count($optArr)/3);?>    
 <div class="span9">    
 <?php if(!isset($action)) {?>
         <h3>编辑键位练习题</h3>
@@ -26,7 +28,7 @@
                 <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12" value="<?php if ($count>0) echo $optArr[0];?>">                
                 <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12" value="<?php if ($count>0)echo $optArr[1];?>">
                 <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2" value="<?php if ($count>0)echo $optArr[2];?>">
-                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
+                <a class="btn_insert_admin" onclick="addIn()"></a> <a class="btn_subtract_admin" onclick="deleteIn()"></a>
             </div>             
         </div>
             <div class="control-group" id="div2" style="<?php if ($count<2) echo "display:none";?>">           

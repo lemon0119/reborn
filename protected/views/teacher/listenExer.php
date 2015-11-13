@@ -23,11 +23,7 @@ require 'suiteSideBar.php';
                 <audio src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
             </div>
             <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
-            <object id="typeOCX" type="application/x-itst-activex" 
-                    clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                    width ='750' height='350' 
-                    event_OnStenoPress="onStenoPress">
-            </object>
+            
             <br/>
         </div>
 </div>

@@ -36,7 +36,7 @@
 
 <div class="span9">        
 <h3 style="display:inline-block;">添加听打练习题</h3>
-<span>(支持mp3及wav格式)</span>
+<span>(支持mp3及wav格式,最大1G)</span>
     <form class="form-horizontal" method="post" action="./index.php?r=admin/AddListen" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
            <legend>填写题目</legend>
@@ -63,7 +63,7 @@
             </div>
         </div> 
         <div  style="text-align: center;">
-            <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_cancel_admin"></a>
+            <a style="position: relative;right:105px;top:2px;" href="./index.php?r=admin/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn_ret_admin"></a>
             <?php if(!isset($action)) {?> 
                 <button style="position: relative;right:105px" type="submit" class="btn_add_admin"></button>
             <?php }?>

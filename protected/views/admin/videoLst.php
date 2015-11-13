@@ -2,13 +2,15 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><i class="icon-align-left"></i> 课时列表</a></li>
+            <li>&nbsp;</li>
+            <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><button  class="btn_bigret"></button></a>
+            <li>&nbsp;</li>
         </ul>
     </div>
 </div>
 <div class="span9" style="position: relative; left: 20px">
     <h2  style="display:inline-block;">视频列表</h2>
-    <span>(支持mp4及flv格式)</span>
+    <span>(支持mp4及flv格式,最大2G)</span>
     <div id ="video-table"></div>
     <form class="form-horizontal" method="post" action="./index.php?r=admin/addVideo&&vdir=<?php echo $vdir;?>" id="myForm" enctype="multipart/form-data"> 
     <div class="control-group">
@@ -26,14 +28,17 @@
 </div>
 <script>
     $(document).ready(function(){
+        <?php if(isset($result)){ if($result=='删除成功！'){ ?>
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+        <?php  } }?>
+        
     $("#upload").hide();
 });
-
     $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
 
     var options = {  
         success: function(info){
-            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.info);
             $("#video-table").load("./index.php?r=admin/videoTable&&vdir=<?php echo $vdir;?>");
             $("#upload").hide();
         },

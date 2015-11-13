@@ -78,7 +78,7 @@
     
     $(document).ready(function(){
         <?php   if (!$isOver){?>
-        alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+           window.wxc.xcConfirm("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！", window.wxc.xcConfirm.typeEnum.info);
         <?php }?>
       if(<?php  if($isExam){echo $exerOne['time'];}else {echo 0;}?>!=0){ 
         <?php if($isExam){?>
@@ -86,8 +86,8 @@
             var isover = setInterval(function(){
                 var time = getSeconds();
                 var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;
-                if(seconds==0){}
-                else if(time >= seconds&&seconds!=0){
+               if(time==0){
+                    window.wxc.xcConfirm("本题时间已到，不可答题！", window.wxc.xcConfirm.typeEnum.error);
                     clearInterval(isover);
                     doSubmit(true,function(){
                         window.location.href="index.php?r=student/examkeyType&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
@@ -147,7 +147,7 @@
       
         var option = {
 						title: "提交试卷",
-						btn: parseInt("0011",2),
+						btn: parseInt("0011",4),
 						onOk: function(){
 							 doSubmit(true);
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){

@@ -108,7 +108,15 @@
     
     function onStenoPressKey(pszStenoString ,device){
         if(totalNum == 0){
-            window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function(){
+                    totalNum = 0;
+                },
+                onClose:function(){
+                    totalNum = 0;
+                }
+            });
+            totalNum = -1;
             return ;
         }
         var charSet = pszStenoString.split("");

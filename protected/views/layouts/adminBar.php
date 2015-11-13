@@ -41,11 +41,12 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     <li class="dropdown">
                                         <a href="#" id="topic_manager" data-toggle="dropdown"></a>
                                         <ul class="dropdown-menu">
-                                            <li class="nav-header">基础知识</li>
+                                            <li class="nav-header" style="color:#AAA9A9;">基础知识</li>
                                             <li><a href="./index.php?r=admin/choiceLst">选择</a></li>
                                             <li><a href="./index.php?r=admin/fillLst">填空</a></li>
                                             <li><a href="./index.php?r=admin/questionLst">简答</a></li>
                                             <li class="divider"></li>
+                                            <li class="nav-header" style="color:#AAA9A9;">打字练习</li>
                                             <li><a href="./index.php?r=admin/keyLst">键位练习</a></li>
                                             <li><a href="./index.php?r=admin/lookLst">看打练习</a></li>
                                             <li><a href="./index.php?r=admin/listenLst">听打练习</a></li>
@@ -81,7 +82,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                     
                 </div>
                   <div style="float: bottom"  class="copyright">
-		2015 &copy;南京兜秘网络科技有限公司.
+                      2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="#"  class="copyright">法律声明</a><a href="#"  class="copyright">联系我们</a><a href="#"  class="copyright">获得帮助</a>
 	</div>
             </div>
            

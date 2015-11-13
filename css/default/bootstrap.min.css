@@ -209,6 +209,15 @@ a:hover,a:focus {
 .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container {
     width:1200px
 }
+.vp1 {
+    border-radius: 5px;
+    background-color: #fff;
+    position:relative;
+    float: right;
+    height: 55px;
+    overflow: auto;
+    width:770px
+}
 .span12 {
     width:1070px
 }
@@ -1494,11 +1503,6 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
     width:604px;
     margin-left:0
 }
-.table td.span9,.table th.span9 {
-    float:none;
-    width:684px;
-    margin-left:0
-}
 .table td.span10,.table th.span10 {
     float:none;
     width:764px;
@@ -1512,6 +1516,11 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
 .table td.span12,.table th.span12 {
     float:none;
     width:924px;
+    margin-left:0
+}
+.table td.pi1,.table th.pi1 {
+    float:none;
+    width:684px;
     margin-left:0
 }
 .table tbody tr.success>td {
@@ -4826,14 +4835,15 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #DeterMine1{
-    margin-left: 30px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/btn_determine.png");
+    position: relative;
+    left:82px;
 }
 #DeterMine1:hover{
     position: relative;
-    left: 81px;
+    left: 82px;
     padding: 10px 100px;
     background-repeat: no-repeat;
     background-image: url("../../img/UI_stu/on_btn_determine.png");
@@ -5057,11 +5067,12 @@ table tr td{
     cursor:default;
 }
 .copyright{
+    font-family: 微软雅黑,宋体;
     text-align: center;
-    width: 250px;
+    width: 500px;
     margin: 0 auto; 
     padding: 10px 10px 0 10px;
-    color: #000;
+    color: #383838;
     font-size: 11px;
 }
 .btn_add_admin{

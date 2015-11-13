@@ -1,3 +1,6 @@
+<?php 
+header('Cache-control: private, must-revalidate');
+?> 
 <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
         <ul class="nav nav-list">
@@ -48,7 +51,7 @@ echo 'class="active"';Yii::app()->session['insert_course']="";}?> ><a><i class="
 
             </div>
             <div  style="text-align: center;">
-                <a style="position: relative;right:80px;top: 27px" href="./index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_cancel_admin"></a>
+                <a style="position: relative;right:80px;top: 27px" href="./index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_ret_admin"></a>
                 <button style="position: relative;right:80px;top: 25px" type="submit" class="btn_add_admin"></button> 
             </div>
         </fieldset>

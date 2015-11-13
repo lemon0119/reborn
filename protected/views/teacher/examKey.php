@@ -21,13 +21,13 @@ require 'examAnsSideBar.php';
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>学生答案：</div>
-                    <div ><?php echo error_log($ansWork['answerID']."recordID:".$ansWork['recordID']."type:".$ansWork['type']); $ansWork['answer'];?></div>
+                    <div ><?php echo $ansWork['answer'];?></div>
                 </td>
             </tr>
         </table>
 </div>
     配分:<?php echo $exam_exercise['score'];?><br/>
-   得分:<input teyp="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
    <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
 </div>
 </div>
@@ -40,9 +40,9 @@ require 'examAnsSideBar.php';
     });
     function saveScore(scoreOld,answerID,recordID,examID,exerciseID){
          var value1 = $("#input")[0].value;
-         var re = /^[0-9]*[1-9][0-9]*$/ ; 
+         var re = /^([1-9]\d*|[0]{1,1})$/ ; 
          if(!re.test(value1)){
-             window.wxc.xcConfirm("分值只能为正整数！", window.wxc.xcConfirm.typeEnum.error);
+             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
              $("#input")[0].value=scoreOld;
              return false;
         }
@@ -63,7 +63,7 @@ require 'examAnsSideBar.php';
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
+          url:"./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID?>",
           data:user,
           dataType:"html",
           success:function(html){  

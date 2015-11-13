@@ -6,7 +6,7 @@
             <li class="nav-header"><i class="icon-knowlage"></i>班级列表</li>
 
             <?php foreach ($array_class as $class): ?>
-                <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
+            <li <?php  if(Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>  
              
                 <li class="divider"></li>
@@ -67,7 +67,7 @@
 
                     <td class="font-center" style="width: 210px">
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
-                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
+                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass'];?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                         <?php if ($isOpen==false) {?>
                             <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration']?>,'<?php echo date("Y-m-d H:i:s",time());  ?>')"></a> 
                         <?php} ?>
@@ -96,13 +96,13 @@
             document.getElementById("title").value="";
         }
     });
-    function dele(examID, currentPage)
+    function dele(examID, currentPage,classID)
     {
         var option = {
 						title: "警告",
 						btn: parseInt("0011",2),
 						onOk: function(){
-							 window.location.href = "./index.php?r=teacher/deleteExam&&examID=" + examID + "&&page=" + currentPage;
+							 window.location.href = "./index.php?r=teacher/deleteExam&&examID=" + examID +"&&classID="+ classID + "&&page=" + currentPage;
 						}
 					}
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
@@ -116,7 +116,9 @@ function openExam(examID,duration,begintime)
          alert("时长不能为0！！！");
          duration=prompt("时长",duration);
      }
-     var beginTime=prompt("开始时间",begintime);     
+     if(duration){
+        var beginTime=prompt("开始时间",begintime);     
+    }
     //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
    if(beginTime)//如果返回的有内容
     {
@@ -129,8 +131,22 @@ function begin_now(examID,d,time,isOpen)
         if(d==0){
             d=prompt("时长不能为0！！！",d);
         }
+        if(d){
         if(confirm("你确定要立即开始？")){
-            window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
+            $.ajax({
+                type: "POST",
+                url: "index.php?r=api/putNotice2&&class=<?php echo Yii::app()->session['currentClass']?>",
+                data: {title:  "考试" , content:  "考试时间已经到了，可以开始考试了"},
+                success: function(){   
+                    window.location.href="./index.php?r=teacher/ChangeExamClass&&examID="+examID+"&&duration="+d+"&&beginTime="+begin+"&&isOpen=0&&page="+<?php echo $pages->currentPage + 1; ?>;
+                
+                },
+                error: function(xhr, type, exception){
+                    window.wxc.xcConfirm('出错了a...', window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr.responseText, "Failed");
+                }
+            });
+            }
         }
 }
    
@@ -144,6 +160,7 @@ function chkIt(){
     if(usernameVal.length > 30){ //一个汉字算一个字符  
         window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.warning);
         document.getElementById("title").value="";
+        return false;
     }
     window.location.href="./index.php?r=teacher/AddExam&&title="+usernameVal;
 }

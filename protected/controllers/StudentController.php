@@ -30,7 +30,10 @@ class StudentController extends CController {
         $student    =   Student::model()->findByPK($userID);
         $userName   =   $student->userName;
         $classID    =   $student->classID;
-        return $this->render('virtualClass',['userName'=>$userName,'classID'=>$classID]);
+        $lessons = Lesson::model()->findAll("classID = '$classID'");
+        $currentLesn = TbClass::model()->findlessonByClassID($classID);
+        $student = Student::model()->find("userID = '$userID'");
+        return $this->render('virtualClass',[ 'userID' => $student ['userID'],'lessons'=>$lessons,'currentLesn'=>$currentLesn,'userName'=>$userName,'classID'=>$classID,'class' =>$student ['classID']]);
     }
     
     public function actionAnslookType(){
@@ -1099,7 +1102,7 @@ class StudentController extends CController {
             }
             $n++;
         }     
-        return $this->render('classexam',['score'=>$score,'classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish]);
+        return $this->render('classexam',['score'=>$score,'classexams'=>$classexam,'ratio_accomplish'=>$ratio_accomplish,'classID'=>$classID]);
     }
 
 

@@ -87,22 +87,22 @@
          </div>
          <div class="control-group">
              <div class="controls">
-                 <input name="in2" style="<?php if ($len<2) echo "display:none";?>" type="text" class="input-xlarge" id="input3" value="<?php if ($len>1) echo $optArr[1];?>" />
+                 <input name="in2" style="<?php if ($len<2) echo "display:none";?>" type="text" class="input-xlarge" id="input3" value="<?php if ($len>1) echo $optArr[1];?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
              </div>
          </div>
          <div class="control-group">
              <div class="controls">
-                 <input name="in3" style="<?php if ($len<3) echo "display:none";?>" type="text" class="input-xlarge" id="input4" value="<?php if ($len>2) echo $optArr[2];?>" />
+                 <input name="in3" style="<?php if ($len<3) echo "display:none";?>" type="text" class="input-xlarge" id="input4" value="<?php if ($len>2) echo $optArr[2];?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
              </div>
          </div>
          <div class="control-group">
              <div class="controls">
-                 <input name="in4" style="<?php if ($len<4) echo "display:none";?>" type="text" class="input-xlarge" id="input5" value="<?php if ($len>3) echo $optArr[3];?>" />
+                 <input name="in4" style="<?php if ($len<4) echo "display:none";?>" type="text" class="input-xlarge" id="input5" value="<?php if ($len>3) echo $optArr[3];?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
              </div>
          </div>
          <div class="control-group">
              <div class="controls">
-                 <input name="in5" style="<?php if ($len<5) echo "display:none";?>" type="text" class="input-xlarge" id="input6" value="<?php if ($len>4) echo $optArr[4];?>" />
+                 <input name="in5" style="<?php if ($len<5) echo "display:none";?>" type="text" class="input-xlarge" id="input6" value="<?php if ($len>4) echo $optArr[4];?>" <?php if(isset($action)) {?> readOnly="true"<?php }?>/>
              </div>
          </div>
          <div class="form-actions">

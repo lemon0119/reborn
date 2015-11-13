@@ -12,11 +12,37 @@ echo "<script>var role='$role';</script>";
 <!--自定义css begin-->
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
-
 <div class="left">
+    <div class="vp1" style="width: 100%;">
+        <br/>
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号:</td>
+                    <td>&nbsp;&nbsp;<?php echo $userID;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;学生姓名:</td>
+                    <td>&nbsp;&nbsp;<?php echo $userName;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;班级:</td>
+                    <td>&nbsp;&nbsp;<?php $sqlClass = TbClass::model()->find("classID = $class");
+                    echo $sqlClass['className'];
+                    ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;当前课程:</td>
+                    <td>&nbsp;&nbsp;<?php foreach ($lessons as $less) {
+                               if($less['lessonID'] === $currentLesn){
+                                   echo $less['lessonName'];
+                                };
+                           }?>
+                    </td>           
+                </tr>
+       
+    </div>
     <!-- local/remote videos container --> 
-    <div id="ppt-container" align="center" style="width: 100% ; height: 549px;  margin-top:0px;display:none;overflow-x: hidden">
-        <div id ="full-screen" style="position: relative; left: 275px; top: 20px;display:none;">
+    <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
+        <div id ="full-screen" style="position: relative; left: 200px; top: 40px;display:none;">
             <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3"/> 
         </div>
         <div id="ppt-asd">
@@ -181,7 +207,7 @@ function checkOnLine(){
              success: function(){ console.log("set time");},
                 error: function(xhr, type, exception){
                     console.log(xhr, "Failed");
-                    window.wxc.xcConfirm('出错了aa...', window.wxc.xcConfirm.typeEnum.error);
+                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
                     
                 }
          });

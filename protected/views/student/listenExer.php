@@ -49,7 +49,9 @@
             ?>
             <div align="left">
                 <br/>
-                <audio src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
+                <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; top:150px;'></div>
+                <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; top:150px;'></div>
+                <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath;?>"   preload = "auto"  onplay="start()"  controls=""></audio>
             </div>
             <br/>
             <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
@@ -70,8 +72,8 @@
     $(document).ready(function(){
         <?php   if (!$isOver){?>
         alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
-        if(<?php if($isExam){echo $exerOne['time'];}else {echo 0;} ?>!=0){
         <?php }?>
+        if(<?php if($isExam){echo $exerOne['time'];}else {echo 0;} ?>!=0){
         <?php if($isExam){?>
             reloadTime2(<?php echo $exerOne['time'];?>,isExam);
             var isover = setInterval(function(){
@@ -99,5 +101,9 @@
     function getWordLength(){
         var input = getContent(document.getElementById("typeOCX"));
         return input.length;
+    }
+    
+    function start(){
+       document.getElementById('audio_hiden').style.display="block";
     }
 </script>

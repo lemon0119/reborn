@@ -2,13 +2,15 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><i class="icon-align-left"></i> 课时列表</a></li>
+            <li>&nbsp;</li>
+            <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><button  class="btn_bigret"></button></a>
+            <li>&nbsp;</li>
         </ul>
     </div>
 </div>
 <div class="span9" style="position: relative;left:20px">
     <h2 style="display:inline-block;">PPT列表</h2>
-    <span>(支持PPT格式)</span>
+    <span>(支持PPT格式,最大100M)</span>
     <div id ="ppt-table"></div>
     <form class="form-horizontal" method="post" action="./index.php?r=admin/addPpt&&pdir=<?php echo $pdir;?>" id="myForm" enctype="multipart/form-data"> 
     <div class="control-group">

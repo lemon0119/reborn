@@ -30,7 +30,7 @@ echo $courseName; ?></h3>
                 <th>创建时间</th>
                 <th>ppt</th>
                 <th>视频</th>
-                <th>操作</th>
+<!--                <th>操作</th>-->
             </tr>
         </thead>
         <tbody>        
@@ -66,7 +66,8 @@ echo $courseName; ?></h3>
                         $num = ($num > 2) ? ($num - 2) : 0;
                         echo $num;
                             ?></a></td>
-                    <td style="width: 35px"> <a onclick="deleteLesson( '<?php echo $model['lessonName']; ?>');"  href="#" ><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a></td>
+<!--                    以下删除功能暂时废弃   -->
+<!--                    <td  style="width: 35px"> <a  onclick="deleteLesson( '<?php // echo $model['lessonName']; ?>');"  href="#" ><img title="删除" src="<?php //echo IMG_URL; ?>delete.png"></a></td>-->
                 </tr>   
             <?php endforeach; ?> 
         </tbody>
@@ -84,19 +85,19 @@ echo $courseName; ?></h3>
 <script>
     $(document).ready(function () {
         var deleteReslut = <?php echo "'$deleteResult'";?>;
-        if(deleteReslut == '2'||deleteReslut == '1'){
-            window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success,{
-                onOk:function(){
-		 window.location.href = "./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID']; ?>&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
-						}
-            });
-        }else if(deleteReslut =='0'){
+        if(deleteReslut =='0'){
             window.wxc.xcConfirm("删除失败！", window.wxc.xcConfirm.typeEnum.error,{
                 onOk:function(){
 		 window.location.href = "./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID']; ?>&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
 						}
             
             });
+        }else if(deleteReslut !='no'){
+            window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success,{
+                    onOk:function(){
+                     window.location.href = "./index.php?r=admin/infoCourse&&courseID=<?php echo Yii::app()->session['courseID']; ?>&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
+                                                    }
+                });
         }
         
     });

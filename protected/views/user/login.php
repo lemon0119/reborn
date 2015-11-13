@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>reset.css">
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>supersized.css">
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>style_login.css">
+    <!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
+                <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
+		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+<!--            -->
 </head>
 
 <body oncontextmenu="return false">
@@ -25,7 +29,7 @@
             $cookie = Yii::app()->request->getCookies();
             if (!empty($cookie['usernamecookie']->value))
                 $login_model->username = $cookie['usernamecookie']->value;
-            echo $form->textField($login_model, 'username', array('class' => 'm-wrap placeholder-no-fix', 'placeholder' => "请输入您的用户名"));
+            echo $form->textField($login_model, 'username', array('class' => 'm-wrap placeholder-no-fix','id'=>"userID", 'placeholder' => "请输入您的用户名"));
             ?>
 <?php echo $form->error($login_model, 'username'); ?>
         </div>
@@ -58,7 +62,7 @@
                 <a href="./index.php?r=user/forgetpassword" class="" id="forget-password" style="position: relative;top: 30px;left: 95px;">忘记密码?</a>
             </p>
             <div class="connect">
-                <p style="margin-right: 500px;margin-top:20px;">2015 &copy;南京兜秘网络科技有限公司.</p>
+                <p style="margin-right: 500px;margin-top:20px;">2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;</p>
             </div>
         </div>
         <?php $this->endWidget(); ?>
@@ -69,6 +73,11 @@
         <script>
             $(document).ready(function(){
                   document.getElementById("pass").focus();
+                  var result = '<?php echo $result; ?>';
+                  if(result!='no'){
+                        window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.error);
+                  }
+                
             });
             window.onload = function ()
             {

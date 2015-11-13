@@ -1,14 +1,15 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <div id="ziji">
-<div class="hero-unit-choice">
+<div class="hero-unit">
           <?php
           $totalScore=0;
           $realScore=0;
-          $n=1;
+          $n=1;$m=0;
+          $f;
           echo "<h2>选择题</h2>"; 
          foreach ($works  as $k=>$work){         
                 $right = $work['answer'];
-                
+                $f=$k;
                 if(isset($choiceAnsWork[$k])){
                    $uAns = $choiceAnsWork[$k];     
                 }else{
@@ -21,6 +22,7 @@
                 }
                 else{
                 ?>
+    <div class="<?php if($uAns === $right ){  $realScore=$realScore+$exam_exercise[$m]['score'];} else {}?>"></div>
         <?php }?>
                 
                 <?php echo "<font>$n</font>"?>.&nbsp<?php  echo $work['requirements'];
@@ -34,12 +36,18 @@
                         <font color="green" font="12px">&nbsp;  &nbsp;正确答案</font>
                     <?php }?>
                     <br/>
-         <?php $mark++;} $totalScore=$totalScore+$exam_exercise['score'];
+         <?php $mark++;} $totalScore=$totalScore+$exam_exercise[$m]['score'];
                      $n++;
-                    }?>
-</div>
-   配分:<?php echo $totalScore;?><br/>
+                    $m++;}?>
+
+   <?php if($works){?>
+       配分:<?php echo $totalScore;?><br/>
    得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $realScore?>" disabled="disabled"> 
+       <?php }?>
+   </div>
+   <?php if(count($works)>0){?>
+        <button onclick="saveScore(<?php if(isset($ansWork)) echo $ansWork[0]['answerID'];else echo 1;?>)" class="btn btn-primary">保存</button>
+   <?php }?>
 </div>
 <script>
    $(document).ready(function(){   
@@ -47,32 +55,28 @@
        
     });
      
-    function saveScore(answerID,recordID,examID,exerciseID){
+    function saveScore(answerID){
+        
         var value1 = $("#input")[0].value;
-        if(value1><?php echo $totalScore;?>){
-            window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
-        }else{
             var user = {
-            recordID:recordID,
             type:"choice",
             workID:"<?php echo $workID;?>",
             studentID:"<?php echo $studentID;?>",
             accomplish:"<?php echo $accomplish;?>",
-            examID:examID,
-            exerciseID:exerciseID,
+            examID:<?php echo $examID;?>,
             score:value1,
             answerID:answerID
-        };
-      $.ajax({
-          type:"POST",
-          url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
-          data:user,
-          dataType:"html",
-          success:function(html){     
-              $("#ziji").html(html);           
-          }
-      });
-        }
+            };
+            $.ajax({
+                type:"POST",
+                url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
+                data:user,
+                dataType:"html",
+                success:function(html){     
+                    location.reload();
+                }
+            });
+        
         
     }
 </script>

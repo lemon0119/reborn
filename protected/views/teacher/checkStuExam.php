@@ -26,7 +26,11 @@ require 'examAnsSideBar.php';
           dataType:"html",
           success:function(html){
               $("#work").append(html);
-          }
+          },
+            error: function(xhr, type, exception){
+                //window.wxc.xcConfirm('出错la。。', window.wxc.xcConfirm.typeEnum.error);
+                //console.log(xhr.responseText, "Failed");
+            }
       })
     });   
 </script>

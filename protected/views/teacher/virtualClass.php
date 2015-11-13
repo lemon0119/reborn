@@ -28,7 +28,7 @@
     <div class="left">
             <div style="display:inline;">
                 <button id="teacher-dianbo" class="btn btn-primary">点播视频</button>
-                <select id="teacher-choose-file" style="width:150px">
+                <select id="teacher-choose-file" style="width:150px;margin-top: 10px;">
                     <?php
                     	$mydir = dir($adminVdir); 
                         while($file = $mydir->read())
@@ -64,7 +64,7 @@
             <div style="display:block;"></div>
             <div style="display:inline;">
                 <button id="play-ppt" class="btn btn-primary">放映PPT</button>
-                <select id="choose-ppt" style="width:150px">
+                <select id="choose-ppt" style="width:150px;margin-top: 10px;">
                     <?php
                     	$mydir = dir($adminPdir); 
                         while($file = $mydir->read())
@@ -109,7 +109,7 @@
             <div id="scroll-page" style="display:inline;">
                 <button id="page-up" class="btn btn-primary">上页</button>
                 <input id="yeshu" style="width:50px;" value="1">
-                /<input id="all-yeshu" style="width:50px;" readOnly="true">
+                <input id="all-yeshu" style="width:50px;" readOnly="true">
                 <button id="page-go" class="btn btn-primary">跳转</button>
                 <button id="page-down" class="btn btn-primary">下页</button>
                 <button id="full-screen-button" class="btn btn-primary">全屏</button>
@@ -144,7 +144,7 @@
                 <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
                 <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
-                <a id="send-msg" ></a>
+                <a id="send-msg"></a>
             </div>
             </div>
         

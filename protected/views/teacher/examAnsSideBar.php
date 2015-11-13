@@ -38,7 +38,7 @@
             <li class="nav-header">键位练习</li>
             <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                    <a href="./index.php?r=teacher/ansKeyType&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=key&&exerID=<?php echo $keyType['exerciseID'];?>">
+                                    <a href="./index.php?r=teacher/ansKeyType&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=key&&exerID=<?php echo $keyType['exerciseID'];?>">
                                         <i class="icon-th"></i>
                                         <?php echo $keyType['title']?>
                                     </a>
@@ -47,7 +47,7 @@
             <li class="nav-header">看打练习</li>
             <?php foreach ($exercise['look'] as $lookType) :?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
-                                    <a href="./index.php?r=teacher/ansKeyType&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=look&&exerID=<?php echo $lookType['exerciseID'];?>">
+                                    <a href="./index.php?r=teacher/ansKeyType&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=look&&exerID=<?php echo $lookType['exerciseID'];?>">
                                         <i class="icon-eye-open"></i>
                                         <?php echo $lookType['title']?>
                                     </a>
@@ -56,7 +56,7 @@
             <li class="nav-header">听打练习</li>   
             <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                                <a href="./index.php?r=teacher/ansKeyType&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=listen&&exerID=<?php echo $listenType['exerciseID'];?>">
+                                <a href="./index.php?r=teacher/ansKeyType&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=listen&&exerID=<?php echo $listenType['exerciseID'];?>">
                                     <i class="icon-headphones"></i>
                                     <?php echo $listenType['title']?>
                                 </a>

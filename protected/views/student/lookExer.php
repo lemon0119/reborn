@@ -2,7 +2,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/time.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <?php
-if ($isExam == false) {
+  if($isExam == false) {
     require 'suiteSideBar.php';
 } else {
     require 'examSideBar.php';
@@ -73,7 +73,9 @@ if ($isExam) {
 ?>;
         var v =<?php echo Tool::clength($exerOne['content']); ?>;
         $("#wordCount").text(v);
+        <?php   if (!$isOver){?>
         alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+        <?php }?>
         if (<?php
 if ($isExam) {
     echo $exerOne['time'];
