@@ -139,12 +139,14 @@
             
 
             </div>
-            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
-            <div id="chat-box" style="border: 0px">
-                <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
+            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a> <button onclick=checkforbid()>查看禁言</button></div>            
+            <div id="chat-box" style="border: 0px">   
+                <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%">
+                 </div>
+                
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
                 <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
-                <a id="send-msg" ></a>
+                <a  id="send-msg"></a>
             </div>
             </div>
         
@@ -179,12 +181,12 @@
                 pageDown();
             }
         }
-    } 　　   
-    document.onkeydown      = keyDown;
+    }　　   
+    document.onkeydown = keyDown;
 </script>
 
 <script>
-    //chat and bulletin
+    //chat and bulletin   
 $(document).ready(function(){
     /*
    $("div.container div.navbar div.navbar-inner div.container div.nav-collapse ul.nav li.dropdown ul.dropdown-menu li").find("a").click(function() {
@@ -208,8 +210,7 @@ $(document).ready(function(){
     });*/
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
-
-    $("#postnoticeTea").click(function() {
+        $("#postnoticeTea").click(function() {
         var text = $("#bulletin-textarea").val();
         $.ajax({
             type: "POST",
@@ -222,6 +223,24 @@ $(document).ready(function(){
             }
         });
     });
+    
+        $("#send-msg").click(function() {
+        var messageField = $('#messageInput');
+        var msg = messageField.val();
+        messageField.val('');
+        var current_date = new Date();
+        var current_time = current_date.toLocaleTimeString();
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
+            data: { 
+                username: '"' + current_username + '"',
+                chat: '"' + msg + '"',
+                time: '"' + current_time + '"',}         
+        });
+    });
+    
+    
     //每5秒，发送一次时间
     setInterval(function() {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
         checkLeave();
@@ -259,7 +278,7 @@ $(document).ready(function(){
         var current_time = current_date.toLocaleTimeString();
         $.ajax({
             type: "POST",
-            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
+            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",         
             data: {
                 username: '"' + current_username + '"',
                 chat: '"' + msg + '"',
@@ -268,24 +287,8 @@ $(document).ready(function(){
         });
            }
         }
-    $("#send-msg").click(function() {
-        var messageField = $('#messageInput');
-        var msg = messageField.val();
-        messageField.val('');
-
-        var current_date = new Date();
-        var current_time = current_date.toLocaleTimeString();
-        $.ajax({
-            type: "POST",
-            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
-            data: {
-                username: '"' + current_username + '"',
-                chat: '"' + msg + '"',
-                time: '"' + current_time + '"',
-            }
-        });
-    });
 });
+
 function checkLeave(){
         $.ajax({
              type: "POST",
@@ -330,12 +333,37 @@ function pollChatRoom() {
                 if(entry['identity']=='teacher')
                      html += "<font color=\"red\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
                 else
-                     html += entry['username']+ "：" + entry['chat'] + "<br>";
+                {
+                     html += "<a onclick=shitup('" + entry['userid'] + "') href=\"#\">"+ entry['username'] + "</a>" + "：" + entry['chat'] + "<br>";
+                 }
             }); 
-            $("#chatroom").append(html);
+            $("#chatroom").append(html);                   
             //$("#chatroom").scrollTop($("#chatroom").height);
         }
     });
+}
+
+function shitup (userid){  
+					var txt=  "确定要禁言吗";
+					var option = {
+						title: "禁言",
+						btn: parseInt("0011",2),
+						onOk: function(){
+						   $.ajax({
+        type: "GET",
+        url: "index.php?r=teacher/shitup&&userid=" + userid,
+        success: function() {
+            				var txt=  "成功！";
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+        },
+        error:function(){
+                                        var txt=  "失败！";
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+        }
+        });
+						} 
+					};
+					window.wxc.xcConfirm(txt, "custom", option);
 }
 
 function pollBulletin() {
@@ -584,6 +612,10 @@ function clearVideo(){
     $("#dianbo-videos-container").empty();
     $("#dianbo-videos-container").hide();
 };
+
+function checkforbid(){
+    window.open("./index.php?r=teacher/checkforbid&&classID=<?php echo $classID;?>", 'newwindow', 'height=450,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    }
 
 function WebSocketConnect(absl_path){
     console.log("sunpy [WebSocketConnect]");

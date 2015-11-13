@@ -1390,4 +1390,9 @@ class StudentController extends CController {
         ));
 
     }
+    
+    
+        public function actionPutChat() {
+ 
+    }
 }

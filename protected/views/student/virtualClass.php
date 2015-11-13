@@ -170,9 +170,15 @@ $(document).ready(function(){
             data: {
                 username: '"' + current_username + '"',
                 chat: '"' + msg + '"',
-                time: '"' + current_time + '"',
-              
-            }
+                time: '"' + current_time + '"',            
+            },
+            success: function(result) {           
+                                        if(result == "1")
+                                        {
+            				var txt=  "你被禁言了！";
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+                                        } 
+        },               
         });
     });
 });
