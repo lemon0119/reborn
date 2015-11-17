@@ -2896,7 +2896,7 @@ class TeacherController extends CController {
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();        
          $array_class = array();
-         $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
+         $result = Suite::model()->getAllSuiteByPage(10,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
             
@@ -3111,10 +3111,9 @@ class TeacherController extends CController {
         }else{
             $result = ClassLessonSuite::model()->getSuiteClassByTeacherID($teacherID, $selectClassID);
         }
+        $suiteResult=  Suite::model()->findAll('createPerson=?',array($teacherID));
         
-
         $array_suiteLessonClass1 = $result['suiteLst'];
-
         $pages = $result['pages'];
 
 
@@ -3131,7 +3130,7 @@ class TeacherController extends CController {
         $workID = -1;
         $classID = -1;
         if ($array_suiteLessonClass != NULL) {
-            $workID = $array_suiteLessonClass[0]['workID'];
+            $workID = ClassLessonSuite::model()->find('suiteID=?',array($suiteResult[0]['suiteID']))['workID'];
             $classID = $array_suiteLessonClass[0]['classID'];
         }
         if (isset($_GET['workID'])) {
