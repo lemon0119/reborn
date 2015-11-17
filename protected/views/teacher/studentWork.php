@@ -27,7 +27,7 @@
     <table class="table table-bordered table-striped" >
         
                 <tbody>        
-                    <?php $id =1; 
+                    <?php $id =1; $n=0;
                       foreach($array_suiteLessonClass as $suiteLesson):
                         foreach($array_class as $class)
                             if($class['classID'] == $suiteLesson['classID']){
@@ -45,7 +45,7 @@
                                 break;
 
                             }  
-                            if(isset($thisClass)&&isset($thisLesson)&&isset($thisSuite)&&$thisClass&&$thisLesson&&$thisSuite){
+                            if(isset($thisClass)&&isset($thisLesson)&&isset($thisSuite)&&$thisClass&&$thisLesson&&$thisSuite){$n++;
                             ?>
                     <tr>
                         <td style="width: 50px">
@@ -126,7 +126,7 @@
 <tr>
 <td><table class="table table-bordered table-striped">
                 <tbody>        
-                    <?php foreach($array_accomplished as $student):
+                    <?php if($n!=0){foreach($array_accomplished as $student):
                             ?>
                     <tr>
                         <td class="font-orange" style="width: 50px">
@@ -142,7 +142,7 @@
                             <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice">批阅</a>
                         </td>
                     </tr>            
-                    <?php endforeach;?> 
+                    <?php endforeach;}?> 
                 </tbody>
     </table></td>
 </tr>
@@ -151,7 +151,7 @@
 <tr>
     <td><table style="position:relative;left: 2px"  class="table table-bordered table-striped">
                 <tbody>        
-                    <?php foreach($array_unaccomplished as $student):
+                    <?php if($n!=0){foreach($array_unaccomplished as $student):
                             ?>
                     <tr>
                         <td class="font-orange" style="width: 50px">
@@ -167,7 +167,7 @@
                             <font style="color: gray">查看</font>
                         </td> 
                     </tr>            
-                    <?php endforeach;?> 
+                    <?php endforeach;}?> 
                 </tbody>
     </table></td>
 </tr>

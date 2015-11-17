@@ -3130,8 +3130,9 @@ class TeacherController extends CController {
         $workID = -1;
         $classID = -1;
         if ($array_suiteLessonClass != NULL) {
+            if($suiteResult){
             $workID = ClassLessonSuite::model()->find('suiteID=?',array($suiteResult[0]['suiteID']))['workID'];
-            $classID = $array_suiteLessonClass[0]['classID'];
+        $classID = $array_suiteLessonClass[0]['classID'];}
         }
         if (isset($_GET['workID'])) {
             $workID = $_GET['workID'];
@@ -3141,7 +3142,7 @@ class TeacherController extends CController {
         $array_accomplished = array();
         $array_unaccomplished = array();
         $class_student = Student::model()->findAll("classID = '$classID'");
-
+        if($workID){
         foreach ($class_student as $student) {
             $userID = $student['userID'];
             $result = SuiteRecord::model()->find("workID=? and studentID=?", array($workID, $userID));
@@ -3150,6 +3151,7 @@ class TeacherController extends CController {
                 array_push($array_accomplished, $student);
             else
                 array_push($array_unaccomplished, $student);
+        }
         }
         $this->render('studentWork', array(
             'array_class' => $array_class,
