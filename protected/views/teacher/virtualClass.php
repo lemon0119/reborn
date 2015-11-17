@@ -615,6 +615,7 @@ function clearVideo(){
 };
 
 function checkforbid(){
+    
     window.open("./index.php?r=teacher/checkforbid&&classID=<?php echo $classID;?>", 'newwindow', 'height=450,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
     }
 
