@@ -4368,5 +4368,44 @@ class TeacherController extends CController {
         }
         return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
     }
+    
+    public function Actionshitup(){
+        $userid = $_GET['userid'];
+        $student = new Student();
+        $student = Student::model()->find("userID ='$userid'");
+        $student->forbidspeak = '1';
+        $student->update(); 
+    }
+    
+public function Actioncheckforbid(){
+    $classID = $_GET['classID'];
+    $result = Student::model()->getForbidStuByClass($classID);
+    $stuLst = $result ['stuLst'];
+    $pages = $result ['pages'];
+    $this->renderPartial('forbidStuLst', array(
+            'stuLst' => $stuLst,
+            'pages' => $pages,
+            'classID' => $classID
+            ));
+}
+
+public function ActionrecoverForbidStu(){
+                $Stulist = $_POST['checkbox'];
+                foreach ($Stulist as $v) {
+                $thisStu = new Student ();
+                $thisStu = $thisStu->find("userID = '$v'");
+                $thisStu->forbidspeak = '0';
+                $thisStu->update();
+            }
+                $classID = $_GET['classID'];
+                $result = Student::model()->getForbidStuByClass($classID);
+                $stuLst = $result ['stuLst'];
+                $pages = $result ['pages'];
+                $this->renderPartial('forbidStuLst', array(
+                 'stuLst' => $stuLst,
+                 'pages' => $pages,
+                    'classID' => $classID
+                 ));
+}
 
 }

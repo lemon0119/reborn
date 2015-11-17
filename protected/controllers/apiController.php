@@ -34,15 +34,22 @@ class apiController extends Controller {
     public function actionPutChat() {
         $classID = $_GET['classID'];
         $identity = (String)Yii::app()->session['role_now'];
-        echo $identity;
+        $userid = Yii::app()->session['userid_now'];
+        if($identity == "student")
+        {       
+            $student = Student::model()->find("userID='$userid'");             
+            echo $student->forbidspeak;   
+            if($student->forbidspeak == "1")
+                return;
+        }
         $username = (string) Yii::app()->request->getParam('username');
         $chat = (string) Yii::app()->request->getParam('chat');
         //改为使用服务器时间
         $publishtime = date('y-m-d H:i:s',time());
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO chat_lesson_1 (username, chat, time, classID,identity) values ($username, $chat, '$publishtime', '$classID','$identity')";
+        $sql = "INSERT INTO chat_lesson_1 (username, chat, time, classID,identity,userid) values ($username, $chat, '$publishtime', '$classID','$identity','$userid')";
         $command = $connection->createCommand($sql);
-        $command->execute();
+        $command->execute();    
     }
     
     public function actionUpdateVirClass(){
