@@ -3,7 +3,6 @@
 <script type="text/javascript">
 function test()
 {
-    alert('y');
          var startTime = document.getElementById("startTime");
 	 var endTime = document.getElementById("endTime");
          SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
