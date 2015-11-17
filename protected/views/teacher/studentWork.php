@@ -63,7 +63,7 @@
                         </td>           
                         <td style="width:120px">            
                              <?php
-                             echo $thisSuite['suiteName'];?>                    
+                             echo $thisSuite['suiteName'];?>                 
                         </td>
                         <td style="width:39px">     
                             <?php if($workID==$suiteLesson['workID']){?>
