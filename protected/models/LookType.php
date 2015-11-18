@@ -109,7 +109,7 @@ class LookType extends CActiveRecord
         
         
      public function getLookLst($type,$value){
-        $order  =   " order by exerciseID ASC";
+        $order  =   " order by exerciseID DESC";
         if($type!="")
             if($type == "content")
             {

@@ -46,7 +46,7 @@ class Choice extends CActiveRecord
     }
     
     public function getChoiceLst($type,$value){
-        $order  =   " order by exerciseID ASC";
+        $order  =   " order by exerciseID DESC";
         if($type!="")
             if($type == "requirements")
             {

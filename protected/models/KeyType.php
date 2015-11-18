@@ -105,7 +105,7 @@ class KeyType extends CActiveRecord
 	}
         
     public function getKeyLst($type,$value){
-        $order  =   " order by exerciseID ASC";
+        $order  =   " order by exerciseID DESC";
         if($type!="")
             $condition = " WHERE $type = '$value'";
         else

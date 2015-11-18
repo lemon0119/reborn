@@ -65,7 +65,7 @@
                              <?php
                              echo $thisSuite['suiteName'];?>                 
                         </td>
-                        <td style="width:39px">     
+                        <td style="width:50px">     
                             <?php if($workID==$suiteLesson['workID']){?>
                                 <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>   
                             <?php }else{?>
@@ -163,7 +163,7 @@
                         <td style="width:50px">
                             <font style="color: red;">未完成</font>
                         </td>  
-                        <td style="width: 20px">
+                        <td style="width: 25px">
                             <font style="color: gray">查看</font>
                         </td> 
                     </tr>            
