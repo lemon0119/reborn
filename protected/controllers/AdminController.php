@@ -2250,9 +2250,18 @@ class AdminController extends CController {
     }
 
     public function actionDeleteFill() {
+        if(isset($_GET['exerciseID'])){
         $exerciseID = $_GET ["exerciseID"];
         $thisFill = new Filling ();
         $deleteResult = $thisFill->deleteAll("exerciseID = '$exerciseID'");
+        }
+        if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $thisFill = new Filling ();
+                $thisFill->deleteAll("exerciseID = '$v'");
+            }
+        }     
         if (Yii::app()->session ['lastUrl'] == "searchFill") {
             $type = Yii::app()->session ['searchFillType'];
             $value = Yii::app()->session ['searchFillValue'];
@@ -2279,7 +2288,6 @@ class AdminController extends CController {
                 'fillLst' => $fillLst,
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
-                'deleteResult' => $deleteResult,
                 'searchKey' => $searchKey
             ));
         } else {
@@ -2291,7 +2299,6 @@ class AdminController extends CController {
                 'fillLst' => $fillLst,
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
-                'deleteResult' => $deleteResult
             ));
         }
     }
@@ -2493,12 +2500,32 @@ class AdminController extends CController {
 
     // 2015 8-7 宋杰 删除选择题
     public function actionDeleteChoice() {
+        if(isset($_GET ['exerciseID'])) {
         $exerciseID = $_GET ["exerciseID"];
         $thisChoice = new Choice ();
         $deleteResult = $thisChoice->deleteAll("exerciseID = '$exerciseID'");
+        }
+        if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $thisChoice = new Choice ();
+                $thisChoice->deleteAll("exerciseID = '$v'");
+            }
+        }
         if (Yii::app()->session ['lastUrl'] == "searchChoice") {
             $type = Yii::app()->session ['searchChoiceType'];
             $value = Yii::app()->session ['searchChoiceValue'];
+                        if ($type == 'createPerson') {
+                if ($value == "管理员")
+                    $value = 0;
+                else {
+                    $tea = Teacher::model()->find("userName = '$value'");
+                    if ($tea ['userID'] != "")
+                        $value = $tea ['userID'];
+                    else
+                        $value = - 1;
+                }
+            }
             if ($type == "requirements") {
                 $searchKey = $value;
             } else {
@@ -2506,12 +2533,11 @@ class AdminController extends CController {
             }
             $result = Choice::model()->getChoiceLst($type, $value);
             $choiceLst = $result ['choiceLst'];
-            $pages = $result ['pages'];
+            $pages = $result ['pages'];          
             $this->render('searchChoice', array(
                 'choiceLst' => $choiceLst,
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
-                'deleteResult' => $deleteResult,
                 'searchKey' => $searchKey
                     )
             );
@@ -2524,7 +2550,6 @@ class AdminController extends CController {
                 'choiceLst' => $choiceLst,
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
-                'deleteResult' => $deleteResult
             ));
         }
     }
