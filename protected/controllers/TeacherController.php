@@ -2880,6 +2880,7 @@ class TeacherController extends CController {
      
      public function ActionDeleteSuite()
      {$res=0;
+        if(isset($_GET['suiteID'])){
          $suiteID = $_GET['suiteID'];
          $teacherID = Yii::app()->session['userid_now'];
          
@@ -2921,11 +2922,58 @@ class TeacherController extends CController {
              'res'=>$res
 
          )); 
+        }
+        if (isset($_POST['checkbox'])) {
+            $suiteIDlist = $_POST['checkbox'];
+            $teacherID = Yii::app()->session['userid_now'];
+            foreach ($suiteIDlist as $suiteID) {
+                $workID=ClassLessonSuite::model()->find('suiteID=?',array($suiteID))['workID'];
+                if($workID){
+                    $recordID=SuiteRecord::model()->find('workID=? and studentID=?',array($workID,$teacherID))['recordID'];
+                    SuiteRecord::model()->deleteAll("recordID='$recordID'");
+                }
+                Suite::model()->deleteAll("suiteID='$suiteID'");
+                SuiteExercise::model()->deleteAll("suiteID='$suiteID'");
+                ClassLessonSuite::model()->deleteAll("suiteID='$suiteID'");
+            }
+            $currentClass = Yii::app()->session['currentClass'];
+            $currentLesson=Yii::app()->session['currentLesson'];
+            $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+            $array_lesson = array();        
+            $array_class = array();
+            $result = Suite::model()->getAllSuiteByPage(10,$teacherID);
+            $array_allsuite = $result['suiteLst'];
+            $pages = $result['pages'];
+
+            if(!empty($teacher_class))
+            {        
+              foreach ($teacher_class as $class)
+                {
+                    $id = $class['classID'];
+                    $result = TbClass::model()->findAll("classID ='$id'");               
+                    array_push($array_class, $result[0]);
+                }     
+
+                $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
+            }
+            $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson']));
+            $this->render('assignWork',array(
+                'array_class' => $array_class,
+                'array_lesson' => $array_lesson,
+                'array_suite'  => $array_suite,
+                'array_allsuite' => $array_allsuite,
+                'pages' => $pages,
+                'res'=>$res
+
+            ));
+        }
      }
      
      
           public function ActionDeleteExam()
-     {$res=0;
+     {   $res=0;
+        if(isset($_GET['examID'])){
+              
          $examID = $_GET['examID'];
          $classID = $_GET['classID'];
          $workID = ClassExam::model()->find("classID = '$classID' and examID = '$examID'")['workID'];
@@ -2954,6 +3002,40 @@ class TeacherController extends CController {
              'pages' => $pages,
              'res'=>$res
              ));
+        }
+        //
+        if (isset($_POST['checkbox'])) {
+            $classID=Yii::app()->session['currentClass'];
+            $examIDlist = $_POST['checkbox'];
+            $teacherID = Yii::app()->session['userid_now'];
+            foreach ($examIDlist as $v) {
+                $workID = ClassExam::model()->find("classID = '$classID' and examID = '$v'")['workID'];
+                Exam::model()->deleteAll("examID='$v'");
+                ExamExercise::model()->deleteAll("examID='$v'");
+                ClassExam::model()->deleteAll("examID='$v'");
+                ExamRecord::model()->deleteALL("workID='$workID'");
+            }
+            $currentClass = Yii::app()->session['currentClass'];
+            $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+            $array_class = array();
+            $result = TbClass::model()->getClassByTeacherID($teacherID);   
+            foreach ($result as $class)
+                array_push ($array_class, $class);
+         
+            $result = Exam::model()->getAllExamByPage(10);
+            $array_allexam = $result['examLst'];
+            $pages = $result['pages'];
+            $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'],1));
+           
+             $this->render('assignExam' , array(
+             'array_class' => $array_class,
+             'array_exam'  => $array_suite,
+             'array_allexam' => $array_allexam,
+             'pages' => $pages,
+             'res'=>$res
+             ));
+        }
+        
      }
      
      
