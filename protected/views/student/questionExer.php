@@ -99,7 +99,7 @@ function submitSuite(){
 function formSubmit(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
      var option = {
-						title: "警告",
+						title: "提示",
 						btn: parseInt("001",2),
 						onOk: function(){
 							location.reload(); 
@@ -111,7 +111,7 @@ function formSubmit(){
 function formSubmit2(){
   $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
        var option = {
-						title: "警告",
+						title: "提示",
 						btn: parseInt("001",2),
 						onOk: function(){
 							location.reload(); 

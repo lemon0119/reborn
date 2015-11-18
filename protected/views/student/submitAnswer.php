@@ -1,9 +1,16 @@
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script>
     function formSubmit(){
-        if(!confirm("是否确认保存答案！！"))
-            return ;
-        doSubmit(false);
+                        var txt=  "是否确认保存答案！！";
+					var option = {
+						title: "保存答案",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							doSubmit(false);
+						} 
+					};
+					window.wxc.xcConfirm(txt, "custom", option);
+        
     }
      function submitSuite2(simple){
        var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
