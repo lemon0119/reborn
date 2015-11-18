@@ -89,27 +89,27 @@ class TeacherController extends CController {
         $fillScore = (isset($_POST['fillScore'])) ? $_POST['fillScore'] : 0;
         $questScore = (isset($_POST['questScore'])) ? $_POST['questScore'] : 0;
         if (!!$choiceScore) {
-            $choiceAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'choice']);
+            $choiceAll = ExamExercise::model()->findAll("examID = ? and type = ?  and exerciseID in ( select exerciseID from choice)", [$examID, 'choice']);
             foreach ($choiceAll as $choice) {
                 $choice->score = $choiceScore;
                 $choice->update();
             }
         }
         if (!!$fillScore) {
-            $fillingAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'filling']);
+            $fillingAll = ExamExercise::model()->findAll("examID = ? and type = ? and exerciseID in ( select exerciseID from filling)", [$examID, 'filling']);
             foreach ($fillingAll as $exer) {
                 $exer->score = $fillScore;
                 $exer->update();
             }
         }
         if (!!$questScore) {
-            $questAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'question']);
+            $questAll = ExamExercise::model()->findAll("examID = ? and type = ?  and exerciseID in ( select exerciseID from question)", [$examID, 'question']);
             foreach ($questAll as $exer) {
                 $exer->score = $questScore;
                 $exer->update();
             }
         }
-        $listenAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'listen']);
+        $listenAll = ExamExercise::model()->findAll("examID = ? and type = ? and exerciseID in ( select exerciseID from listen_type)", [$examID, 'listen']);
         foreach ($listenAll as $one) {
             $scoreGetKey = "listen" . $one['exerciseID'] . 'Score';
             $timeGetKey = "listen" . $one['exerciseID'] . 'Time';
@@ -123,7 +123,7 @@ class TeacherController extends CController {
             }
             $one->update();
         }
-        $lookAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'look']);
+        $lookAll = ExamExercise::model()->findAll("examID = ? and type = ? and exerciseID in ( select exerciseID from look_type)", [$examID, 'look']);
         foreach ($lookAll as $one) {
             $scoreGetKey = "look" . $one['exerciseID'] . 'Score';
             $timeGetKey = "look" . $one['exerciseID'] . 'Time';
@@ -137,7 +137,7 @@ class TeacherController extends CController {
             }
             $one->update();
         }
-        $keyAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'key']);
+        $keyAll = ExamExercise::model()->findAll("examID = ? and type = ? and exerciseID in ( select exerciseID from key_type)", [$examID, 'key']);
         foreach ($keyAll as $one) {
             $scoreGetKey = "key" . $one['exerciseID'] . 'Score';
             $timeGetKey = "key" . $one['exerciseID'] . 'Time';
@@ -4258,6 +4258,10 @@ class TeacherController extends CController {
 
     public function actionScheduleDetil() {
         $teacherID = Yii::app()->session['userid_now'];
+        if(isset($_GET["progress"])){
+             Yii::app()->session['progress'] = $_GET["progress"];
+             Yii::app()->session['on'] = $_GET["on"];
+        }
         $sqlTeacher = Teacher::model()->find("userID = '$teacherID'");
         $array_course = array();
         $array_class = array();

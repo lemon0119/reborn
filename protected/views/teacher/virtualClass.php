@@ -155,23 +155,26 @@
 <script>
 //全屏
     $('#full-screen-button').on('click', function(){
-    var docelem         = document.getElementById('ppt-container');
-    if (docelem.requestFullscreen) {
-        docelem.requestFullscreen();
-    }else if (docelem.webkitRequestFullscreen) {
-        docelem.webkitRequestFullscreen();
-    } else if(docelem.mozRequestFullScreen) {
-        docelem.mozRequestFullScreen();
-    } else if(docelem.msRequestFullscreen) {
-        docelem.msRequestFullscreen();
-    } 
-    window.wxc.xcConfirm("按方向键左右进行跳转，按Esc退出！", window.wxc.xcConfirm.typeEnum.info);
+        window.wxc.xcConfirm("按方向键左右进行跳转，按Esc退出！", window.wxc.xcConfirm.typeEnum.warning,{
+            onOk: function(){
+                var docelem         = document.getElementById('ppt-container');
+                if (docelem.requestFullscreen) {
+                    docelem.requestFullscreen();
+                }else if (docelem.webkitRequestFullscreen) {
+                    docelem.webkitRequestFullscreen();
+                } else if(docelem.mozRequestFullScreen) {
+                    docelem.mozRequestFullScreen();
+                } else if(docelem.msRequestFullscreen) {
+                    docelem.msRequestFullscreen();
+                } 
+            }
+        });
     });
     
     function keyDown(e) {   
   　　  var keycode = e.which;   　　 　　   
 //        var realkey = String.fromCharCode(e.which);   　　 　　    
-//        alert("按键码: " + keycode + " 字符: " + realkey);
+        console.log("按键码: " + " 字符: ");
         if(cur_ppt!=-1)
         {
             if(keycode == 37)
