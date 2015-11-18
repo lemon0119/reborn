@@ -33,8 +33,8 @@
         <div class="well-topnoradius" style="padding: 8px 0;height:315px;overflow:auto;top: -20px;border-top-left-radius:0px; " >
             <ul class="nav nav-list">
             <?php foreach ($allClass as $class): ?>
-                        <li <?php if(Yii::app()->session['insert_class']==$class['className']){
-    echo 'class="active"';Yii::app()->session['insert_class']="";}?> ><a><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
+                        <li style="pointer-events: none;" ><a <?php if(Yii::app()->session['insert_class']==$class['className']){
+                        echo 'style="color:#f46500"';Yii::app()->session['insert_class']="";}else{echo 'style="color: #aaa9a9"';}?>><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
                 <?php endforeach; ?>   
             </ul>
         </div>
