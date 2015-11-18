@@ -2896,7 +2896,7 @@ class TeacherController extends CController {
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();        
          $array_class = array();
-         $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
+         $result = Suite::model()->getAllSuiteByPage(10,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
             
@@ -3111,10 +3111,9 @@ class TeacherController extends CController {
         }else{
             $result = ClassLessonSuite::model()->getSuiteClassByTeacherID($teacherID, $selectClassID);
         }
+        $suiteResult=  Suite::model()->findAll('createPerson=?',array($teacherID));
         
-
         $array_suiteLessonClass1 = $result['suiteLst'];
-
         $pages = $result['pages'];
 
 
@@ -3131,8 +3130,9 @@ class TeacherController extends CController {
         $workID = -1;
         $classID = -1;
         if ($array_suiteLessonClass != NULL) {
-            $workID = $array_suiteLessonClass[0]['workID'];
-            $classID = $array_suiteLessonClass[0]['classID'];
+            if($suiteResult){
+            $workID = ClassLessonSuite::model()->find('suiteID=?',array($suiteResult[0]['suiteID']))['workID'];
+        $classID = $array_suiteLessonClass[0]['classID'];}
         }
         if (isset($_GET['workID'])) {
             $workID = $_GET['workID'];
@@ -3142,7 +3142,7 @@ class TeacherController extends CController {
         $array_accomplished = array();
         $array_unaccomplished = array();
         $class_student = Student::model()->findAll("classID = '$classID'");
-
+        if($workID){
         foreach ($class_student as $student) {
             $userID = $student['userID'];
             $result = SuiteRecord::model()->find("workID=? and studentID=?", array($workID, $userID));
@@ -3151,6 +3151,7 @@ class TeacherController extends CController {
                 array_push($array_accomplished, $student);
             else
                 array_push($array_unaccomplished, $student);
+        }
         }
         $this->render('studentWork', array(
             'array_class' => $array_class,
@@ -4369,5 +4370,44 @@ class TeacherController extends CController {
         }
         return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
     }
+    
+    public function Actionshitup(){
+        $userid = $_GET['userid'];
+        $student = new Student();
+        $student = Student::model()->find("userID ='$userid'");
+        $student->forbidspeak = '1';
+        $student->update(); 
+    }
+    
+public function Actioncheckforbid(){
+    $classID = $_GET['classID'];
+    $result = Student::model()->getForbidStuByClass($classID);
+    $stuLst = $result ['stuLst'];
+    $pages = $result ['pages'];
+    $this->renderPartial('forbidStuLst', array(
+            'stuLst' => $stuLst,
+            'pages' => $pages,
+            'classID' => $classID
+            ));
+}
+
+public function ActionrecoverForbidStu(){
+                $Stulist = $_POST['checkbox'];
+                foreach ($Stulist as $v) {
+                $thisStu = new Student ();
+                $thisStu = $thisStu->find("userID = '$v'");
+                $thisStu->forbidspeak = '0';
+                $thisStu->update();
+            }
+                $classID = $_GET['classID'];
+                $result = Student::model()->getForbidStuByClass($classID);
+                $stuLst = $result ['stuLst'];
+                $pages = $result ['pages'];
+                $this->renderPartial('forbidStuLst', array(
+                 'stuLst' => $stuLst,
+                 'pages' => $pages,
+                    'classID' => $classID
+                 ));
+}
 
 }
