@@ -63,7 +63,6 @@
 <script>
     $(document).ready(function(){
        <?php if(isset($_POST['flag'])){ ?>
-            window.opener.location.reload();
             window.close();
         <?php  }?>
     });      

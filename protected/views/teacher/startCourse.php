@@ -1,16 +1,21 @@
 <?php 
     $lessonsName=Array();
     $lessons=Lesson::model()->findall("classID='$classID'");
-    if($lessons!=null)
+    if($lessons!=null){
         foreach ($lessons as $key => $value) {
             $lessonsName[$value['number']]=$value['lessonName'];
+            $courseID=$value['courseID'];
         }
+     }
+     $courseName=  Course::model()->find('courseID=?',array($courseID))['courseName'];
 ?>
 
 <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header"><i class="icon-knowlage"></i>当前科目</li>
+                <li style="margin-left:20px;"><?php echo $courseName;?></li>
+                <li class="nav-header"><i class="icon-knowlage"></i>当前课时</li>
                 <?php  if($lessonsName!=null){?>
                 <li id="li-<?php echo $progress;?>">
                     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>">
@@ -20,7 +25,7 @@
                 </li>
                 <?php }?>
                 <li class="divider"></li>
-                <li class="nav-header"><i class="icon-knowlage"></i>其余科目</li>
+                <li class="nav-header"><i class="icon-knowlage"></i>其余课时</li>
                 </ul>
     </div>
     <div class="well-bottomnoradius" style="padding: 8px 0;height:230px;overflow:auto;top: -20px;border-top-left-radius:0px; ">

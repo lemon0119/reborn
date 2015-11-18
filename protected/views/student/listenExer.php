@@ -71,7 +71,11 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     $(document).ready(function(){
         <?php   if (!$isOver){?>
-        alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+                					var option = {
+						title: "提示",
+						btn: parseInt("0011",4),
+					};
+					window.wxc.xcConfirm("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！", "custom", option);
         <?php }?>
         if(<?php if($isExam){echo $exerOne['time'];}else {echo 0;} ?>!=0){
         <?php if($isExam){?>

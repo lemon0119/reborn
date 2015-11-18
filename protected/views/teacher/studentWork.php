@@ -122,7 +122,7 @@
 </table>
     </div>
 <div style="position: relative;top: -22px;overflow-y:auto; height:210px;">
-<table width="51%" style="float:left;" >
+<table width="50%" style="float:left;" >
 <tr>
 <td><table class="table table-bordered table-striped">
                 <tbody>        
@@ -147,20 +147,20 @@
     </table></td>
 </tr>
 </table>
-<table width="49%" >
+<table width="50%" >
 <tr>
     <td><table style="position:relative;left: 2px"  class="table table-bordered table-striped">
                 <tbody>        
                     <?php if($n!=0){foreach($array_unaccomplished as $student):
                             ?>
                     <tr>
-                        <td class="font-orange" style="width: 50px">
+                        <td class="font-orange" style="width: 26%">
                            <?php echo $student['userName'];?>
                         </td>
-                        <td style="width: 50px">
+                        <td style="width: 26.5%">
                             <?php  echo $student['userID'];?>          
                         </td>
-                        <td style="width:50px">
+                        <td style="width:26.7%">
                             <font style="color: red;">未完成</font>
                         </td>  
                         <td style="width: 25px">
