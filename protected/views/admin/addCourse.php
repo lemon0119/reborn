@@ -28,8 +28,8 @@ header('Cache-control: private, must-revalidate');
             <div class="well-topnoradius" style="padding: 8px 0;height:430px;overflow:auto;top: -20px;border-top-left-radius:0px; ">
                 <ul class="nav nav-list">
              <?php foreach ($allCourse as $course): ?>
-                    <li <?php if(Yii::app()->session['insert_course']==$course['courseName']){
-echo 'class="active"';Yii::app()->session['insert_course']="";}?> ><a><i class="icon-list"></i><?php echo $course['courseName']; ?></a></li>
+                    <li style="pointer-events: none;" ><a <?php if(Yii::app()->session['insert_course']==$course['courseName']){
+echo 'style="color:#f46500"';Yii::app()->session['insert_course']="";}else{echo 'style="color: #aaa9a9"';}?>><i class="icon-list"></i><?php echo $course['courseName']; ?></a></li>
             <?php endforeach; ?>   
         </ul>
     </div>
