@@ -47,6 +47,8 @@
 <?php if($fillLst->count()!=0){?>
     <h2>查询结果</h2>
 <!-- 键位习题列表-->
+   <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
+    <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -59,8 +61,10 @@
         </tr>
     </thead>
             <tbody>        
+                <form id="deleForm" method="post" action="./index.php?r=admin/deleteFill" > 
                 <?php foreach($fillLst as $model):?>
                 <tr>
+                     <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID']; ?>" /> </td>
                     <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
                     <td class="font-center"><?php echo $model['courseID'];?></td>
                     <td class="font-center"><?php  if($searchKey == 'no' || strpos($model['requirements'],$searchKey)===false)
@@ -93,6 +97,7 @@
                     </td>
                 </tr>            
                 <?php endforeach;?> 
+                 </form>
             </tbody>
 </table>
 <!-- 学生列表结束 -->
@@ -109,9 +114,43 @@
 </div>
 
 <script>
+           function check_all(obj, cName)
+    {
+        var checkboxs = document.getElementsByName(cName);
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].checked = obj.checked;
+        }
+    }
+    
   function dele(exerciseID){
       if(confirm("您确定删除吗？")){
           window.location.href = "./index.php?r=admin/deleteFill&&exerciseID=" + exerciseID;
       }
   }
+    function deleCheck() {
+    var checkboxs = document.getElementsByName('checkbox[]');
+    var flag = 0;
+        for (var i = 0; i < checkboxs.length; i++) {
+           if(checkboxs[i].checked){
+                flag=1;
+                break;
+           }
+        } 
+        if(flag===0){
+           window.wxc.xcConfirm('未选中任何题目', window.wxc.xcConfirm.typeEnum.info);
+        }else{
+             var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							$('#deleForm').submit();
+						}
+					};
+					window.wxc.xcConfirm("确定删除选中的题目吗？", "custom", option);
+        }
+       
+    }
+    $(document).ready(function () {
+        $("#li-stuLst").attr("class", "active");
+    });
 </script>

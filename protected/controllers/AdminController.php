@@ -1564,9 +1564,21 @@ class AdminController extends CController {
     }
 
     public function actionDeleteLook() {
+        if(isset($_GET['exerciseID'])){
         $exerciseID = $_GET ['exerciseID'];
         $thisLook = new LookType ();
         $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
+        }
+        
+        if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $thisLook = new LookType();
+                $thisLook->deleteAll("exerciseID = '$v'");
+            }
+        } 
+        
+        
         if (Yii::app()->session ['lastUrl'] == "lookLst") {
             $result = LookType::model()->getLookLst("", "");
             $lookLst = $result ['lookLst'];
@@ -1576,7 +1588,6 @@ class AdminController extends CController {
                 'lookLst' => $lookLst,
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
-                'deleteResult' => $deleteResult
             ));
         } else {
             $type = Yii::app()->session ['searchType'];
@@ -1605,7 +1616,6 @@ class AdminController extends CController {
                 'lookLst' => $lookLst,
                 'pages' => $pages,
                 'teacher' => TbClass::model()->teaInClass(),
-                'deleteResult' => $deleteResult,
                 'searchKey' => $searchKey
                     )
             );
@@ -1740,10 +1750,20 @@ class AdminController extends CController {
     }
 
     public function actionDeleteKey() {
+        if(isset($_GET['exerciseID'])){
         $exerciseID = $_GET ['exerciseID'];
         $thisKey = new KeyType ();
         $deleteResult = $thisKey->deleteAll("exerciseID = '$exerciseID'");
-
+        }
+        if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $thisKey = new KeyType();
+                $thisKey->deleteAll("exerciseID = '$v'");
+            }
+        }  
+        
+        
         if (Yii::app()->session ['lastUrl'] == "keyLst") {
             $result = KeyType::model()->getKeyLst("", "");
             $keyLst = $result ['keyLst'];
@@ -1752,8 +1772,7 @@ class AdminController extends CController {
             $this->render('keyLst', array(
                 'keyLst' => $keyLst,
                 'pages' => $pages,
-                'teacher' => Teacher::model()->findall(),
-                'deleteResult' => $deleteResult
+                'teacher' => Teacher::model()->findall(),            
             ));
         } else {
             $type = Yii::app()->session ['searchType'];
@@ -1777,7 +1796,6 @@ class AdminController extends CController {
                 'keyLst' => $keyLst,
                 'pages' => $pages,
                 'teacher' => TbClass::model()->teaInClass(),
-                'deleteResult' => $deleteResult
             ));
         }
     }
@@ -2000,6 +2018,7 @@ class AdminController extends CController {
     }
 
     public function actionDeleteListen() {
+        if(isset($_GET['exerciseID'])){
         $exerciseID = $_GET ['exerciseID'];
         $thisListen = new ListenType ();
         $deleteListen = $thisListen->findAll("exerciseID = '$exerciseID'");
@@ -2015,6 +2034,29 @@ class AdminController extends CController {
                 unlink($path);
             Resourse::model()->delName($fileName);
         }
+        }
+        
+       if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $thisListen = new ListenType();
+                  $deleteListen = $thisListen->findAll("exerciseID = '$v'");
+        $deleteResult = $thisListen->deleteAll("exerciseID = '$v'");
+        $filePath = $deleteListen [0] ['filePath'];
+        $fileName = $deleteListen [0] ['fileName'];
+        if ($deleteResult == '1') {
+            $typename = Yii::app()->session ['role_now'];
+            $userid = Yii::app()->session ['userid_now'];
+            // 怎么用EXER_LISTEN_URL
+            $path = 'resources/' . $filePath . iconv("UTF-8", "gb2312", $fileName);
+            if (file_exists($path))
+                unlink($path);
+            Resourse::model()->delName($fileName);
+            }
+        } 
+       }
+        
+        
         if (Yii::app()->session ['lastUrl'] == "listenLst") {
             $result = ListenType::model()->getListenLst("", "");
             $listenLst = $result ['listenLst'];
@@ -2657,9 +2699,22 @@ class AdminController extends CController {
     }
 
     public function actionDeleteQuestion() {
+        if(isset($_GET['exerciseID'])){
         $exerciseID = $_GET ['exerciseID'];
         $thisQue = new Question ();
         $deleteResult = $thisQue->deleteAll("exerciseID = '$exerciseID'");
+        }
+        
+         if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $thisQuestion = new Question();
+                $thisQuestion->deleteAll("exerciseID = '$v'");
+            }
+        }     
+        
+        
+        
         if (Yii::app()->session ['lastUrl'] == "questionLst") {
             $result = Question::model()->getQuestionLst("", "");
             $questionLst = $result ['questionLst'];
@@ -2668,7 +2723,6 @@ class AdminController extends CController {
                 'questionLst' => $questionLst,
                 'pages' => $pages,
                 'teacher' => TbClass::model()->teaInClass(),
-                'deleteResult' => $deleteResult
             ));
         } else {
             $type = Yii::app()->session ['searchType'];
@@ -2698,7 +2752,6 @@ class AdminController extends CController {
                 'questionLst' => $questionLst,
                 'pages' => $pages,
                 'teacher' => TbClass::model()->teaInClass(),
-                'deleteResult' => $deleteResult,
                 'searchKey' => $searchKey
             ));
         }
