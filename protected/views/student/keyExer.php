@@ -135,7 +135,7 @@
     */
    function formSubmit(){
 					var option = {
-						title: "警告",
+						title: "提示",
 						btn: parseInt("0011",4),
 						onOk: function(){
                                                    doSubmit(false);

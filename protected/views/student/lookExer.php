@@ -74,7 +74,11 @@ if ($isExam) {
         var v =<?php echo Tool::clength($exerOne['content']); ?>;
         $("#wordCount").text(v);
         <?php   if (!$isOver){?>
-        alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+                        					var option = {
+						title: "提示",
+						btn: parseInt("0011",4),
+					};
+					window.wxc.xcConfirm("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！", "custom", option);
         <?php }?>
         if (<?php
 if ($isExam) {
@@ -94,7 +98,11 @@ if ($isExam) {
     ?>;
 
                     if (time == 0) {
-                        alert("本题时间已到，不可答题！");
+                        var option = {
+						title: "提示",
+						btn: parseInt("0011",4),
+					};
+					window.wxc.xcConfirm("本题时间已到，不可答题！", "custom", option);           
                         clearInterval(isover);
                         doSubmit(true, function () {
                             window.location.href = "index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['examsuiteID']; ?>&&workID=<?php echo Yii::app()->session['examworkID'] ?>";
@@ -255,8 +263,5 @@ if ($isExam) {
             }
 
         }
-
-
-
     }
 </script>
