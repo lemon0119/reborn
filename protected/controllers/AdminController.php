@@ -2809,7 +2809,9 @@ class AdminController extends CController {
         } else {
             Yii::app()->session ['lastPage'] = 1;
         }
-        $result = '';
+        
+        if(isset($_GET['courseID'])){
+                    $result = '';
         $courseID = $_GET['courseID'];
             $classes = TbClass::model()->findall("currentCourse = $courseID");
             if (count($classes) > 0) {
@@ -2819,6 +2821,30 @@ class AdminController extends CController {
                 $rows = Lesson::model()->deleteAll('courseID=?', array($courseID));
                 $result = 1;
             }
+        }
+        
+         if (isset($_POST['checkbox'])) {
+             $result = 1;
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                            $classes = TbClass::model()->findall("currentCourse = '$v'");
+            if (count($classes) > 0) {
+                $result = 0;
+            } else {
+                $rows = Course::model()->deleteAll('courseID=?', array($v));
+                $rows = Lesson::model()->deleteAll('courseID=?', array($v));              
+            }
+            }
+        }
+        
+        
+        
+
+            
+            
+            
+            
+            
          $result_forNumber = Course::model()->getCourseLst("", "");
         $courseLst_forNumber = $result_forNumber ['courseLst'];
         $array_maxNumber = array();
