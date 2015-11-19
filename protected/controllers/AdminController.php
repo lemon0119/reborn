@@ -2836,16 +2836,36 @@ class AdminController extends CController {
             }
             }
         }
-        
-        
-        
-
-            
-            
-            
-            
-            
-         $result_forNumber = Course::model()->getCourseLst("", "");
+        if (Yii::app()->session ['lastUrl'] == "searchCourse") {           
+            $type = Yii::app()->session ['searchType'];
+            $value = Yii::app()->session ['searchValue'];
+                        if ($type == 'createPerson') {
+                if ($value == "管理员")
+                    $value = 0;
+                else {
+                    $tea = Teacher::model()->find("userName = '$value'");
+                    if ($tea ['userID'] != "")
+                        $value = $tea ['userID'];
+                    else
+                        $value = - 1;
+                }
+            }
+            if ($type == "requirements") {
+                $searchKey = $value;
+            } else {
+                $searchKey = "no";
+            }
+            $result1 = Course::model()->getCourseLst($type, $value);        
+        $courseLst = $result1 ['courseLst'];
+        $pages = $result1 ['pages'];
+        $this->render('searchCourse', array(
+            'courseLst' => $courseLst,
+            'pages' => $pages,
+            'teacher' => Teacher::model()->findall(),
+            'result' => $result,
+            ));
+        } else {             
+        $result_forNumber = Course::model()->getCourseLst("", "");
         $courseLst_forNumber = $result_forNumber ['courseLst'];
         $array_maxNumber = array();
         foreach ($courseLst_forNumber as $v){
@@ -2863,7 +2883,6 @@ class AdminController extends CController {
         $courses = Course::model()->getCourseLst("", "");
         $courseLst = $courses ['courseLst'];
         $pages = $courses ['pages'];
-
         $this->render('courseLst', array(
             'courseLst' => $courseLst,
             'courseNumber' =>$array_maxNumber,
@@ -2871,6 +2890,7 @@ class AdminController extends CController {
             'teacher' => Teacher::model()->findall(),
             'result' => $result
         ));
+    }
     }
 
     public function actionCourseLst() {
@@ -2940,7 +2960,8 @@ class AdminController extends CController {
         $this->render('searchCourse', array(
             'courseLst' => $courseLst,
             'pages' => $pages,
-            'teacher' => Teacher::model()->findall()
+            'teacher' => Teacher::model()->findall(),
+            'result' => 2,
         ));
     }
 

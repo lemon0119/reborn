@@ -51,6 +51,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th class="font-center">选择</th>
                 <th class="font-center">编号</th>
               
                 <th class="font-center">题目名</th>

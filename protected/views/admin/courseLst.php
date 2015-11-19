@@ -39,6 +39,7 @@ endforeach;
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
+            <th class="font-center">选择</th>
             <th class="font-center">编号</th>
             <th class="font-center">科目名</th>
             <th class="font-center">创建人</th>
@@ -61,10 +62,7 @@ endforeach;
                     <td class="font-center"><?php echo $courseNumber[$k];?></td>
                     <td class="font-center"><?php echo $model['createTime'];?></td>
                     <td class="font-center" style="width: 100px">  
-                        <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $model['courseID'];?>&&courseName=<?php echo $model['courseName'];?>&&createPerson=<?php if($model['createPerson']=="0")
-                                                                                                                                                                                    echo "管理员";
-                                                                                                                                                                                    else echo $teachers[$model['createPerson']];
-                                                                                                                                                                            ?>"><img title="编辑课程" src="<?php echo IMG_URL; ?>edit.png"></a>
+                        <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $model['courseID'];?>&&courseName=<?php echo $model['courseName'];?>&&createPerson=<?php if($model['createPerson']=="0")                                                                                                                                                                  ?>"><img title="编辑课程" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#"  onclick="deleteCourse(<?php echo $model['courseID'];?>,'<?php echo $model['courseName'];?>')" ><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>            
