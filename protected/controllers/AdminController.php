@@ -684,11 +684,23 @@ class AdminController extends CController {
     }
 
     public function actionDeleteStuDontHaveClass() {
+        if(isset($_GET['id'])){
         $userID = $_GET ['id'];
         $thisStu = new Student ();
         $thisStu = $thisStu->find("userID = '$userID'");
         $thisStu->is_delete = '1';
+        $thisStu->update();       
+        }
+        
+         if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+        $thisStu = new Student ();
+        $thisStu = $thisStu->find("userID = '$v'");
+        $thisStu->is_delete = '1';
         $thisStu->update();
+            }
+        }
         Yii::app()->session ['lastUrl'] = "stuDontHaveClass";
         $result = Student::model()->getStuLst("classID", 0);
         $this->render("stuDontHaveClass", [
@@ -1235,6 +1247,105 @@ class AdminController extends CController {
             'teacher' => TbClass::model()->teaInClass(),
             'teacherOfClass' => TbClass::model()->teaByClass()
         ));
+    }
+    
+    public function ActionDeleteClass(){
+        if (isset($_GET ['page'])) {
+            Yii::app()->session ['lastPage'] = $_GET ['page'];
+        } else {
+            Yii::app()->session ['lastPage'] = 1;
+        }
+        
+        if(isset($_GET['ClassID'])){  
+                $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
+                //SQL删除关联学生
+                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+                //SQL删除关联老师
+                $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
+                Yii::app()->db->createCommand($sql)->query();
+                Yii::app()->db->createCommand($sql_teacher)->query();
+                Yii::app()->db->createCommand($sql_student)->query();  
+        }
+        
+         if (isset($_POST['checkbox'])) {
+            $result = 1;
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $sql = "DELETE FROM tb_class WHERE classID ='" . $v . "'";
+                //SQL删除关联学生
+                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $v . "'";
+                //SQL删除关联老师
+                $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $v . "'";
+                Yii::app()->db->createCommand($sql)->query();
+                Yii::app()->db->createCommand($sql_teacher)->query();
+                Yii::app()->db->createCommand($sql_student)->query();  
+            }
+        }
+        if (Yii::app()->session ['lastUrl'] == "searchClass") {           
+            $type = Yii::app()->session ['searchType'];
+            $value = Yii::app()->session ['searchValue'];
+                   $ex_sq = "";
+        if (isset($type)) {
+            if ($type == "classID" || $type == "className") {
+                $ex_sq = " WHERE " . $type . " = '" . $value . "'";
+            } else if ($type == "courseName") {
+                $course = Course::model()->find("courseName = ?", array($value));
+                $ex_sq = " WHERE currentCourse = '" . $course->courseID . "'";
+            } else if ($type == "teaName") {
+                $sql = "SELECT * FROM teacher WHERE userName ='" . $value . "'";
+                $an = Yii::app()->db->createCommand($sql)->query();
+                $temp = $an->read();
+                if (!empty($temp))
+                    $teaID = $temp ['userID'];
+                else
+                    $teaID = - 1;
+                $sql = "SELECT * FROM teacher_class WHERE teacherID ='" . $teaID . "'";
+                $an = Yii::app()->db->createCommand($sql)->query();
+                $temp = $an->read();
+                if (!empty($temp)) {
+                    $ex_sq = " WHERE ";
+                    $id = $temp ['classID'];
+                    $ex_sq = $ex_sq . "classID = '$id'";
+                    $temp = $an->read();
+                    while (!empty($temp)) {
+                        $id = $temp ['classID'];
+                        $ex_sq = $ex_sq . " OR classID = '$id'";
+                        $temp = $an->read();
+                    }
+                } else {
+                    $ex_sq = " WHERE classID = 0";
+                }
+            } else {
+                $ex_sq = "";
+            }
+        }
+        $sql = "SELECT * FROM tb_class " . $ex_sq;
+        $criteria = new CDbCriteria ();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages = new CPagination($result->rowCount);
+        $pages->pageSize = 10;
+        $pages->applyLimit($criteria);
+        $result = Yii::app()->db->createCommand($sql . " LIMIT :offset,:limit");
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize);
+        $result->bindValue(':limit', $pages->pageSize);
+        $posts = $result->query();
+        $this->render('searchClass', array(
+            'posts' => $posts,
+            'pages' => $pages,
+            'nums' => TbClass::model()->numInClass(),
+            'teacher' => TbClass::model()->teaInClass(),
+            'teacherOfClass' => TbClass::model()->teaByClass()
+        ));
+        } else {             
+               $result = TbClass::model()->getClassLst();
+            $this->render('classLst', array(
+            'posts' => $result ['classLst'],
+            'pages' => $result ['pages'],
+            'nums' => TbClass::model()->numInClass(),
+            'teacher' => TbClass::model()->teaInClass(),
+            'teacherOfClass' => TbClass::model()->teaByClass()
+        ));
+    }
     }
 
     public function actionStuDontHaveClass() {
