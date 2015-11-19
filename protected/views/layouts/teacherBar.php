@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
 <?php
-if (isset(Yii::app()->session['userid_now'])) {
+if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=='teacher' ) {
     ?>
 
     <?php
@@ -73,7 +73,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
                                     </li>
-                                    <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil"></a></li>
+                                    <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $key; ?>&&progress=<?php echo $classProgress[$key]; ?>&&on=<?php echo $classProgress[$key]; ?>"></a></li>
                                     <li><a id="blank_teacher"></a></li>
                                      <li>
                                        <?php if(Tool::teacherNotice() == 0){?>

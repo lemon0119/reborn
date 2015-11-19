@@ -63,7 +63,7 @@ echo $courseName; ?></h3>
                                     echo "管理员";
                          ?></td>
                     <td><?php echo $model['createTime']; ?></td>
-                    <td><a href="./index.php?r=admin/pptLst&&pdir=<?php echo $pdir; ?>&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><img src="<?php echo IMG_URL; ?>ppt.png"><?php
+                    <td><a href="./index.php?r=teacher/pptLst&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&progress=<?php echo Yii::app()->session['progress']; ?>&&on=<?php echo Yii::app()->session['on']; ?>&&url=schedule"><img src="<?php echo IMG_URL; ?>ppt.png"><?php
                             $num = 0;
                             $mydir = dir($pdir);
                             while ($file = $mydir->read()) {
@@ -74,7 +74,7 @@ echo $courseName; ?></h3>
                             $mydir->close();
                             echo $num;
                             ?></a></td>
-                    <td><a href="./index.php?r=admin/videoLst&&vdir=<?php echo $vdir; ?>&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><img src="<?php echo IMG_URL; ?>video.png"><?php
+                    <td><a href="./index.php?r=teacher/videoLst&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&progress=<?php echo Yii::app()->session['progress']; ?>&&on=<?php echo Yii::app()->session['on']; ?>&&url=schedule"><img src="<?php echo IMG_URL; ?>video.png"><?php
                         $num = sizeof(scandir($vdir));
                         $num = ($num > 2) ? ($num - 2) : 0;
                         echo $num;

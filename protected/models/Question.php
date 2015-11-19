@@ -36,7 +36,7 @@ class Question extends CActiveRecord
     }
     
     public function getQuestionLst($type,$value){
-        $order = " order by exerciseID ASC";
+        $order = " order by exerciseID DESC";
         if($type!="")
             if($type == "requirements")
             {

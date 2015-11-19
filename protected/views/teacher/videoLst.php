@@ -28,7 +28,11 @@
             endforeach;?>
         </ul>
     </div>
+    <?php if(isset($_GET['url'])){ ?>
+         <a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
+    <?php }else{ ?>
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
+    <?php }?>
 </div>
 <div class="span9" style="position: relative; left: 20px">
     <h2 style="display:inline-block;">视频列表</h2>
