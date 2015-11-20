@@ -199,7 +199,7 @@ class Tool {
       
         $count = 0;
             foreach ($arry_success as $data) {
-                    Teacher::model()->insertTea($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department']);
+                    Teacher::model()->insertTea($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'],$data['school']);
                     $count++;   
         }
         return $count;

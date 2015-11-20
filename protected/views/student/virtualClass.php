@@ -40,6 +40,7 @@ echo "<script>var role='$role';</script>";
                 </tr>
        
     </div>
+    
     <!-- local/remote videos container --> 
     <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 200px; top: 40px;display:none;">
@@ -61,17 +62,22 @@ echo "<script>var role='$role';</script>";
     </div>
         <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
         <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
-            <textarea disabled id="bulletin-textarea" style=" background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+            <textarea disabled id="bulletin-textarea" style=" background-color:#5e5e5e;color:#FFFF00;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
         </div>
         <div align="center" id="sw-chat" ><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
         <div id="chat-box" style="border: 0px">
             <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
-                <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
+                <input onfocus="setPress()"onblur="delPress()" type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
                 <a id="send-msg"></a>
             </div>
+           
         </div>
+         <div align="center" >
+        <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
+    </div>
 </div>
+  
 <script>
     //显示全屏图像
     var onImg = false;
@@ -106,31 +112,15 @@ echo "<script>var role='$role';</script>";
             docelem.msRequestFullscreen();
         } 
     }
-</script>
-
-<script>
-    //chat and bulletin
-$(document).ready(function(){
-    var current_date = new Date();
-    var current_time = current_date.toLocaleTimeString();
-    //每5秒，发送一次时间
-    setInterval(function() {    
-        checkOnLine();
-    }, 8000);
-    // ------------------------------------------------------ poll latest bulletin
-    /*第一次读取最新通知*/
-    setTimeout(function() {
-        pollBulletin();
-    }, 200);
-    /*30轮询读取函数*/
-    setInterval(function() {
-        pollBulletin();
-    }, 10000);
-    // ------------------------------------------------------ poll chat
-    setInterval(function() {
-        pollChatRoom();
-    }, 1000);
-
+    
+    function delPress(){
+         document.onkeydown=function(event){
+         e = event ? event :(window.event ? window.event : null);
+         e.returnValue=false;
+         }
+    }
+    
+    function setPress(){
     // ------------------------------------------------------ send chat
     //綁定enter
     document.onkeydown=function(event){
@@ -161,7 +151,8 @@ $(document).ready(function(){
                 });
            }
         }
-    $("#send-msg").click(function() {
+        
+        $("#send-msg").click(function() {
         var messageField = $('#messageInput');
         var msg = messageField.val();
         messageField.val('');
@@ -187,6 +178,35 @@ $(document).ready(function(){
         },               
         });
     });
+        
+        }
+</script>
+
+<script>
+    //chat and bulletin
+$(document).ready(function(){
+    var current_date = new Date();
+    var current_time = current_date.toLocaleTimeString();
+    //每5秒，发送一次时间
+    setInterval(function() {    
+        checkOnLine();
+    }, 8000);
+    // ------------------------------------------------------ poll latest bulletin
+    /*第一次读取最新通知*/
+    setTimeout(function() {
+        pollBulletin();
+    }, 200);
+    /*30轮询读取函数*/
+    setInterval(function() {
+        pollBulletin();
+    }, 10000);
+    // ------------------------------------------------------ poll chat
+    setInterval(function() {
+        pollChatRoom();
+    }, 1000);
+
+
+    
 });
 
 function pollChatRoom() {
@@ -200,9 +220,9 @@ function pollChatRoom() {
             var obj = eval(data);
             $.each(obj, function(entryIndex, entry) {
                if(entry['identity']=='teacher')
-                     html += "<font color=\"red\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
+                     html += "<font color=\"#00FF00\">"+entry['username']+ "</font>" + "<font color=\"#fff\">" +"：" + entry['chat'] + "</font><br>";
                 else
-                     html += entry['username']+ "：" + entry['chat'] + "<br>";
+                     html += "<font color=\"#f46500\">"+entry['username']+ "</font>"+ "：" + entry['chat'] + "<br>";
             });
             $("#chatroom").append(html);
             //$("#chatroom").scrollTop($("#chatroom").height);
