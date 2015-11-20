@@ -40,9 +40,7 @@ echo "<script>var role='$role';</script>";
                 </tr>
        
     </div>
-    <div >
-        <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
-    </div>
+    
     <!-- local/remote videos container --> 
     <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 200px; top: 40px;display:none;">
@@ -73,8 +71,13 @@ echo "<script>var role='$role';</script>";
                 <input onfocus="setPress()"onblur="delPress()" type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
                 <a id="send-msg"></a>
             </div>
+           
         </div>
+         <div align="center" >
+        <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
+    </div>
 </div>
+  
 <script>
     //显示全屏图像
     var onImg = false;
