@@ -55,10 +55,15 @@
         }
     }
     
-    function dele(stuID){
-        if(confirm("这将会移动该学生至回收站，您确定这样吗？")){
-            window.location.href = "./index.php?r=admin/deleteStuDontHaveClass&&id="+stuID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
-        }
+    function dele(stuID){      
+                var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							 window.location.href="./index.php?r=admin/deleteStuDontHaveClass&&id="+stuID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
+						}
+					};
+					window.wxc.xcConfirm("这将会移动该学生至回收站，您确定这样吗？", "custom", option);
     } 
     $(document).ready(function(){
         $("#stuLst").attr("class","active");
@@ -84,7 +89,6 @@
 						}
 					};
 					window.wxc.xcConfirm("确定删除选中的科目吗？", "custom", option);
-        }
-       
+        }   
     }
 </script>

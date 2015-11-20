@@ -1550,6 +1550,54 @@ class AdminController extends CController {
             'result' => $act_result
                 ), false, true);
     }
+    
+    //批量删除班级里的学生
+    public function actionDeleteStuInClass(){
+        $classID = $_GET['classID'];
+        Yii::app()->session ['lastUrl'] = "infoClass";
+        $act_result="";
+        if (isset($_POST['checkbox'])) {
+            $userIDlist = $_POST['checkbox'];
+            foreach ($userIDlist as $v) {
+                $sql = "UPDATE student SET classID= '0' WHERE userID= '" . $v . "'";
+                Yii::app()->db->createCommand($sql)->query();
+                $act_result = "删除成功！";
+            }
+        }
+        
+         $sql = "SELECT * FROM tb_class WHERE classID = '$classID'";
+        $an = Yii::app()->db->createCommand($sql)->query();
+        $class = $an->read();
+        $className = $class ['className'];
+        $curCourse = $class ['currentCourse'];
+        $curLesson = $class ['currentLesson'];
+
+        $sql = "SELECT * FROM student WHERE classID = '$classID' AND is_delete = 0";
+        $array_stuLst = Tool::pager($sql,4);
+        $stus = $array_stuLst['list'];
+        $nums = $stus->rowCount;
+        $pages_stu = $array_stuLst['pages'];
+        
+        $sql = "SELECT * FROM teacher_class WHERE classID =$classID";
+        $teacherOfClass = Yii::app()->db->createCommand($sql)->query();
+
+        $this->render('infoCLass', array(
+            'pages_stu' =>$pages_stu,
+            'classID' => $classID,
+            'className' => $className,
+            'curCourse' => $curCourse,
+            'curLesson' => $curLesson,
+            'teacher' => TbClass::model()->teaInClass(),
+            'teacherOfClass' => $teacherOfClass,
+            'nums' => $nums, // 学生人数
+            'stus' => $stus, // 学生
+            'result' => $act_result
+                ), false, true);
+        
+        
+    }
+       
+        
 
     public function actionAddStuClass() {
         $sql = "SELECT * FROM student WHERE classID = '0' AND is_delete = 0";
