@@ -2377,8 +2377,12 @@ class TeacherController extends CController {
                 if (isset($_GET['lessonID']))
                     Yii::app()->session['currentLesson'] = $_GET['lessonID'];
                 else
-                    Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
-                $currentLesson = Yii::app()->session['currentLesson'];
+                    if(isset ($_GET['on'])){
+                        $number = $_GET['on'];
+                         Yii::app()->session['currentLesson'] = Lesson::model()->find("classID='$currentClass' and number='$number'")['lessonID'];
+                    }else{
+                        Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
+                    }
             }
         }
         if (isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])) {

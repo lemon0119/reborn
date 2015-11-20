@@ -101,7 +101,8 @@
                     ?>
                 </select>
                 <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
-                <button id="share-Cam" class="btn btn-primary" style="margin-left: 200px">直播视频</button>
+                <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $_GET['classID'];?>&&on=<?php echo $_GET['on'];?>"  class="btn" style="margin-left: 140px">布置作业</a>
+                <button id="share-Cam" class="btn btn-primary" >直播视频</button>
                 <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
                 
             </div>
@@ -134,12 +135,12 @@
             <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
 
-            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
+            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:#FFFF00;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
             <a id="postnoticeTea"></a>
             
 
             </div>
-            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a> <button onclick=checkforbid()>查看禁言</button></div>            
+            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a> <button onclick="checkforbid()">查看禁言</button></div>            
             <div id="chat-box" style="border: 0px">   
                 <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%">
                  </div>
@@ -335,7 +336,7 @@ function pollChatRoom() {
             var obj = eval(data);
             $.each(obj, function(entryIndex, entry) {
                 if(entry['identity']=='teacher')
-                     html += "<font color=\"red\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
+                     html += "<font color=\"#00FF00\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
                 else
                 {
                      html += "<a onclick=shitup('" + entry['userid'] + "') href=\"#\">"+ entry['username'] + "</a>" + "：" + entry['chat'] + "<br>";

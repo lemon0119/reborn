@@ -61,7 +61,7 @@ echo "<script>var role='$role';</script>";
     </div>
         <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
         <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
-            <textarea disabled id="bulletin-textarea" style=" background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+            <textarea disabled id="bulletin-textarea" style=" background-color:#5e5e5e;color:#FFFF00;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
         </div>
         <div align="center" id="sw-chat" ><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
         <div id="chat-box" style="border: 0px">
@@ -200,7 +200,7 @@ function pollChatRoom() {
             var obj = eval(data);
             $.each(obj, function(entryIndex, entry) {
                if(entry['identity']=='teacher')
-                     html += "<font color=\"red\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
+                     html += "<font color=\"#00FF00\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
                 else
                      html += entry['username']+ "：" + entry['chat'] + "<br>";
             });
