@@ -73,7 +73,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
                                     </li>
-                                    <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $key; ?>&&progress=<?php echo $classProgress[$key]; ?>&&on=<?php echo $classProgress[$key]; ?>"></a></li>
+                        <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil"></a></li>
                                     <li><a id="blank_teacher"></a></li>
                                      <li>
                                        <?php if(Tool::teacherNotice() == 0){?>
