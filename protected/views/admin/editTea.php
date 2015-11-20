@@ -39,9 +39,15 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input03">所属部门</label>
+                <label class="control-label" for="input03">部门</label>
                 <div class="controls">
                     <input name="department" type="text" class="input-xlarge" id="input03" value="<?php echo $department ?>" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input8">院校</label>
+                <div class="controls">
+                    <input name="school" type="text" class="input-xlarge" id="input08" value="<?php echo $school?>" />
                 </div>
             </div>
             <div class="control-group">

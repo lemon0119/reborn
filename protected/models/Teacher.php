@@ -10,7 +10,7 @@
  */
 class Teacher extends CActiveRecord
 {
-    public function insertTea($userID,$userName,$sex,$age,$pass,$phone_number,$mail_address,$department){
+    public function insertTea($userID,$userName,$sex,$age,$pass,$phone_number,$mail_address,$department,$school){
         $newTea = new Teacher();
         $newTea->userID = $userID;
         $newTea->userName = $userName;
@@ -20,6 +20,7 @@ class Teacher extends CActiveRecord
         $newTea->mail_address = $mail_address;
         $newTea->phone_number = $phone_number;
         $newTea->department = $department;
+        $newTea->school = $school;
         $oldTea = Teacher::model()->findAll("userID = '$userID'");
         if(count($oldTea) > 0)
             return 'no';

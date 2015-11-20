@@ -516,14 +516,27 @@ class AdminController extends CController {
                                 break;
                             }
                             if (isset($v [6])) {
-                                if ($v [6] != "所属部门") {
-                                    $result = "表格G列名应为“所属部门”！";
+                                if ($v [6] != "部门") {
+                                    $result = "表格G列名应为“部门”！";
                                     $flag = 1;
                                     $this->render('exlAddTea', ['result' => $result]);
                                     break;
                                 }
                             } else {
                                 $result = "表格缺少G列“所属部门”";
+                                $flag = 1;
+                                $this->render('exlAddTea', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [7])) {
+                                if ($v [7] != "院校") {
+                                    $result = "表格H列名应为“院校”！";
+                                    $flag = 1;
+                                    $this->render('exlAddTea', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少H列“院校”";
                                 $flag = 1;
                                 $this->render('exlAddTea', ['result' => $result]);
                                 break;
@@ -538,6 +551,7 @@ class AdminController extends CController {
                             $data ['mail_address'] = $v[4];
                             $data ['phone_number'] = $v[5];
                             $data ['department'] = $v[6];
+                            $data ['school'] = $v[7];
 
                             if ($data ['uid'] === "" || ctype_space($data ['uid'])) {
                                 $result = "工号不能为空";
@@ -892,40 +906,43 @@ class AdminController extends CController {
 
     public function actionInfoTea() {
         $ID = $_GET ['id'];
-        $student = Teacher::model()->find("userID = '$ID'");
+        $teacher = Teacher::model()->find("userID = '$ID'");
         if (Yii::app()->session ['lastUrl'] == "infoClass") {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
-                'name' => $student ['userName'],
-                'department' => $student ['department'],
-                'sex' => $student['sex'],
-                'age' => $student['age'],
-                'password' => $student['password'],
-                'mail_address' => $student['mail_address'],
-                'phone_number' => $student['phone_number']
+                'name' => $teacher ['userName'],
+                'department' => $teacher ['department'],
+                'school' => $teacher ['school'],
+                'sex' => $teacher['sex'],
+                'age' => $teacher['age'],
+                'password' => $teacher['password'],
+                'mail_address' => $teacher['mail_address'],
+                'phone_number' => $teacher['phone_number']
             ));
         } else if (isset($_GET ['flag'])) {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
-                'name' => $student ['userName'],
-                'department' => $student ['department'],
-                'sex' => $student['sex'],
-                'age' => $student['age'],
-                'password' => $student['password'],
-                'mail_address' => $student['mail_address'],
-                'phone_number' => $student['phone_number'],
+                'name' => $teacher ['userName'],
+                'department' => $teacher ['department'],
+                'school' => $teacher ['school'],
+                'sex' => $teacher['sex'],
+                'age' => $teacher['age'],
+                'password' => $teacher['password'],
+                'mail_address' => $teacher['mail_address'],
+                'phone_number' => $teacher['phone_number'],
                 'flag' => $_GET ['flag']
             ));
         } else {
             $this->render('infoTea', array(
                 'id' => $_GET ['id'],
                 'name' => $_GET ['name'],
-                'department' => $student['department'],
-                'sex' => $student['sex'],
-                'age' => $student['age'],
-                'password' => $student['password'],
-                'mail_address' => $student['mail_address'],
-                'phone_number' => $student['phone_number']
+                'department' => $teacher['department'],
+                'school' => $teacher ['school'],
+                'sex' => $teacher['sex'],
+                'age' => $teacher['age'],
+                'password' => $teacher['password'],
+                'mail_address' => $teacher['mail_address'],
+                'phone_number' => $teacher['phone_number']
             ));
         }
     }
@@ -933,7 +950,7 @@ class AdminController extends CController {
     public function actionAddTea() {
         $result = 'no';
         if (isset($_POST ['userID']) && isset($_POST['sex'])) {
-            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'], $_POST ['sex'], $_POST ['age'], '000', $_POST ['phone_number'], $_POST ['mail_address'], $_POST['department']);
+            $result = Teacher::model()->insertTea($_POST ['userID'], $_POST ['userName'], $_POST ['sex'], $_POST ['age'], '000', $_POST ['phone_number'], $_POST ['mail_address'], $_POST['department'],$_POST['school']);
         }
         $userAll = Teacher::model()->findAll();
         $this->render('addTea', [
@@ -995,6 +1012,7 @@ class AdminController extends CController {
         $thisTea->mail_address = $_POST ['mail_address'];
         $thisTea->phone_number = $_POST ['phone_number'];
         $thisTea->department = $_POST['department'];
+        $thisTea->school = $_POST['school'];
         $thisTea->update();
         $userAll = Teacher::model()->findAll();
         $sqlUserID = $thisTea->userID;
@@ -1004,6 +1022,7 @@ class AdminController extends CController {
                 'userID' => $thisTea->userID,
                 'userName' => $thisTea->userName,
                 'department' => $thisTea->department,
+                'school' => $sqlTeaInof['school'],
                 'userAll' => $userAll,
                 'sex' => $sqlTeaInof['sex'],
                 'age' => $sqlTeaInof['age'],
@@ -1017,6 +1036,7 @@ class AdminController extends CController {
                 'userID' => $thisTea->userID,
                 'userName' => $thisTea->userName,
                 'department' => $thisTea->department,
+                'school' => $sqlTeaInof['school'],
                 'userAll' => $userAll,
                 'sex' => $sqlTeaInof['sex'],
                 'age' => $sqlTeaInof['age'],
@@ -1036,6 +1056,7 @@ class AdminController extends CController {
                 'userID' => $_GET ['id'],
                 'userName' => $_GET ['name'],
                 'department' => $sqlTeaInof['department'],
+                'school' => $sqlTeaInof['school'],
                 'userAll' => $userAll,
                 'sex' => $sqlTeaInof['sex'],
                 'age' => $sqlTeaInof['age'],
@@ -1048,6 +1069,7 @@ class AdminController extends CController {
                 'userID' => $_GET ['id'],
                 'userName' => $_GET ['name'],
                 'department' => $sqlTeaInof['department'],
+                'school' => $sqlTeaInof['school'],
                 'userAll' => $userAll,
                 'sex' => $sqlTeaInof['sex'],
                 'age' => $sqlTeaInof['age'],
