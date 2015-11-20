@@ -23,9 +23,12 @@
     <?php if($posts->count()!=0){?>
     <h2>班级列表</h2>
     <!-- 班级列表-->
+    <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
+    <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th class="font-center">选择</th>
                 <th class="font-center">班号</th>
                 <th class="font-center">班级名</th>
                 <th class="font-center">老师</th>
@@ -34,9 +37,11 @@
                 <th class="font-center">操作</th>
             </tr>
         </thead>
-                <tbody>        
+                <tbody>      
+                    <form id="deleForm" method="post" action="./index.php?r=admin/deleteClass">
                     <?php foreach($posts as $model):?>
                     <tr>
+                        <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['classID']; ?>" /> </td>
                         <td class="font-center" style="width: 75px"><?php echo $model['classID'];?></td>
                         <td class="font-center"><?php echo $model['className'];?></td>
                         <td class="font-center"><?php 
@@ -60,10 +65,12 @@
                             ?></td>
                         <td class="font-center"><?php $couID = $model['currentCourse']; echo $courseName[$couID];?></td>
                         <td class="font-center" style="width: 100px">  
-                            <a href="./index.php?r=admin/infoClass&&classID=<?php echo $model['classID']; ?>"><img title="管理" src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <a href="./index.php?r=admin/infoClass&&classID=<?php echo $model['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href="#"  <?php if(isset($model['classID'])){?>onclick="deleteClass(<?php echo $model['classID']; ?>)" <?php }?>><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
+                    </form>
                 </tbody>
     </table>
     <!-- 班级列表结束 -->
@@ -81,3 +88,54 @@
     <h2>查询结果为空！</h2>
     <?php }?>
     </div>
+<script>
+    $(document).ready(function(){
+        $("#classLst").attr("class","active");
+        
+    });
+    
+        function check_all(obj, cName)
+    {
+        var checkboxs = document.getElementsByName(cName);
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].checked = obj.checked;
+        }
+    }
+    
+    function deleteClass(id){
+      
+        var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							window.location.href="./index.php?r=admin/deleteClass&&ClassID="+id;
+						}
+					}
+					window.wxc.xcConfirm("确定要删除班级："+id+"？这样做将无法恢复！", "custom", option);
+    }
+    
+   function deleCheck() {
+    var checkboxs = document.getElementsByName('checkbox[]');
+    var flag = 0;
+        for (var i = 0; i < checkboxs.length; i++) {
+           if(checkboxs[i].checked){
+                flag=1;
+                break;
+           }
+        } 
+        if(flag===0){
+           window.wxc.xcConfirm('未选中任何题目', window.wxc.xcConfirm.typeEnum.info);
+        }else{
+             var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							$('#deleForm').submit();
+						}
+					};
+					window.wxc.xcConfirm("确定删除选中的科目吗？", "custom", option);
+        }
+       
+    }
+    
+</script>
