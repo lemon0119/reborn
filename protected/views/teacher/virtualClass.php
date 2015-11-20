@@ -135,7 +135,7 @@
             <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
 
-            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:#FFFF00;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
+            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:yellow;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
             <a id="postnoticeTea"></a>
             
 
@@ -146,7 +146,7 @@
                  </div>
                 
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
-                <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
+                <input onfocus="setPress()"onblur="delPress()" type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
                 <a  id="send-msg"></a>
 
             </div>
@@ -188,6 +188,36 @@
         }
     }　　   
     document.onkeydown = keyDown;
+    
+    function delPress(){
+         document.onkeydown=function(event){
+         e = event ? event :(window.event ? window.event : null);
+         e.returnValue=false;
+         }
+    }
+    function setPress(){
+     //綁定enter
+     document.onkeydown=function(event){
+         e = event ? event :(window.event ? window.event : null);
+         if(e.keyCode==13){
+           var messageField = $('#messageInput');
+           var msg = messageField.val();
+            messageField.val('');
+
+        var current_date = new Date();
+        var current_time = current_date.toLocaleTimeString();
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",         
+            data: {
+                username: '"' + current_username + '"',
+                chat: '"' + msg + '"',
+                time: '"' + current_time + '"'
+            }
+        });
+           }
+        }
+        }
 </script>
 
 <script>
@@ -271,27 +301,7 @@ $(document).ready(function(){
     }, 1000);
 
     // ------------------------------------------------------ send chat
-    //綁定enter
-     document.onkeydown=function(event){
-         e = event ? event :(window.event ? window.event : null);
-         if(e.keyCode==13){
-           var messageField = $('#messageInput');
-           var msg = messageField.val();
-            messageField.val('');
-
-        var current_date = new Date();
-        var current_time = current_date.toLocaleTimeString();
-        $.ajax({
-            type: "POST",
-            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",         
-            data: {
-                username: '"' + current_username + '"',
-                chat: '"' + msg + '"',
-                time: '"' + current_time + '"'
-            }
-        });
-           }
-        }
+   
 });
 
 function checkLeave(){
@@ -336,7 +346,7 @@ function pollChatRoom() {
             var obj = eval(data);
             $.each(obj, function(entryIndex, entry) {
                 if(entry['identity']=='teacher')
-                     html += "<font color=\"#00FF00\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
+                     html += "<font color=\"#00FF00\">"+entry['username']+ "</font>：" + "<font color=\"#fff\">"+entry['chat'] + "</font><br>";
                 else
                 {
                      html += "<a onclick=shitup('" + entry['userid'] + "') href=\"#\">"+ entry['username'] + "</a>" + "：" + entry['chat'] + "<br>";
