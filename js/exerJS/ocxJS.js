@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+
 function getContent(yaweiOCX) {
     var str;
     try {

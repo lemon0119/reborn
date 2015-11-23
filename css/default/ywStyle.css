@@ -10,10 +10,10 @@ and open the template in the editor.
 
 .key{
     background-color:#007cc3;
-    height:60px;
-    line-height:60px;
-    width:35px;
-    font-size:15px;
+    height:100px;
+    line-height:100px;
+    width:60px;
+    font-size:25px;
     border-width:thin;
     vertical-align:middle;
     background-position: center;
@@ -26,10 +26,10 @@ and open the template in the editor.
 }
 .key_right{
     background-color: #33FF00;
-    height:60px;
-    line-height:60px;
-    width:35px;
-    font-size:15px;
+    height:100px;
+    line-height:100px;
+    width:60px;
+    font-size:25px;
     border-width:thin;
     vertical-align:middle;
     background-position: center;
@@ -69,10 +69,9 @@ and open the template in the editor.
     height: 500px;
 }
 .questionBlock{
-    text-align: left;
     max-height: 300px;
     overflow-y: auto;
-    width: 750px;
+    width: 600px;
     font-size: 25px; 
     font-family:monospace; 
     border:1px solid #808080;

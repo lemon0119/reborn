@@ -7,7 +7,7 @@
  */
 ?>
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
-<link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo CSS_URL; ?>ywStyle_v.css" rel="stylesheet" type="text/css" />
 <table border="0">
     <tr>
       <td><div id="l_a" class = "key"><div>A</div></div></td>
@@ -51,6 +51,12 @@
     </tr>
 </table>
 <script>
+    $(document).ready(function(){
+      document.getElementById("typeOCX").SetTextSize(8);
+      document.getElementById("typeOCX").HideToolBar();
+      document.getElementById("typeOCX").HideSecondToolBar();
+   });
+    
     function keySet(keyID,isRight){
         var obj = document.getElementById(keyID);
         if(isRight)
@@ -73,6 +79,11 @@
         clearInterval(intervalid); 
     }
     
+    function onChange(){
+        document.getElementById("typeOCX").UpdateView();
+        var input = getContent(document.getElementById("typeOCX"));
+        document.getElementById("typeOCX").Locate(input.length);
+    }
     
     function onStenoPressKey(pszStenoString ,device){
         var charSet = pszStenoString.split("");
@@ -96,5 +107,6 @@
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
         width ='370' height='200'
+        event_OnChange="onChange"
         event_OnStenoPress="onStenoPressKey">
 </object>
