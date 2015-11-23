@@ -101,7 +101,8 @@
                     ?>
                 </select>
                 <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
-                <button id="share-Cam" class="btn btn-primary" style="margin-left: 200px">直播视频</button>
+                <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $_GET['classID'];?>&&on=<?php echo $_GET['on'];?>"  class="btn" style="margin-left: 140px">布置作业</a>
+                <button id="share-Cam" class="btn btn-primary" >直播视频</button>
                 <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
                 
             </div>
@@ -134,17 +135,20 @@
             <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
             <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
 
-            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:red;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
+            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:yellow;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
             <a id="postnoticeTea"></a>
             
 
             </div>
-            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
-            <div id="chat-box" style="border: 0px">
-                <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
+            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a> <button onclick="checkforbid()">查看禁言</button></div>            
+            <div id="chat-box" style="border: 0px">   
+                <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%">
+                 </div>
+                
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
-                <input type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
-                <a id="send-msg"></a>
+                <input onfocus="setPress()"onblur="delPress()" type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
+                <a  id="send-msg"></a>
+
             </div>
             </div>
         
@@ -152,23 +156,26 @@
 <script>
 //全屏
     $('#full-screen-button').on('click', function(){
-    var docelem         = document.getElementById('ppt-container');
-    if (docelem.requestFullscreen) {
-        docelem.requestFullscreen();
-    }else if (docelem.webkitRequestFullscreen) {
-        docelem.webkitRequestFullscreen();
-    } else if(docelem.mozRequestFullScreen) {
-        docelem.mozRequestFullScreen();
-    } else if(docelem.msRequestFullscreen) {
-        docelem.msRequestFullscreen();
-    } 
-    window.wxc.xcConfirm("按方向键左右进行跳转，按Esc退出！", window.wxc.xcConfirm.typeEnum.info);
+        window.wxc.xcConfirm("按方向键左右进行跳转，按Esc退出！", window.wxc.xcConfirm.typeEnum.warning,{
+            onOk: function(){
+                var docelem         = document.getElementById('ppt-container');
+                if (docelem.requestFullscreen) {
+                    docelem.requestFullscreen();
+                }else if (docelem.webkitRequestFullscreen) {
+                    docelem.webkitRequestFullscreen();
+                } else if(docelem.mozRequestFullScreen) {
+                    docelem.mozRequestFullScreen();
+                } else if(docelem.msRequestFullscreen) {
+                    docelem.msRequestFullscreen();
+                } 
+            }
+        });
     });
     
     function keyDown(e) {   
   　　  var keycode = e.which;   　　 　　   
 //        var realkey = String.fromCharCode(e.which);   　　 　　    
-//        alert("按键码: " + keycode + " 字符: " + realkey);
+        console.log("按键码: " + " 字符: ");
         if(cur_ppt!=-1)
         {
             if(keycode == 37)
@@ -179,12 +186,42 @@
                 pageDown();
             }
         }
-    } 　　   
-    document.onkeydown      = keyDown;
+    }　　   
+    document.onkeydown = keyDown;
+    
+    function delPress(){
+         document.onkeydown=function(event){
+         e = event ? event :(window.event ? window.event : null);
+         e.returnValue=false;
+         }
+    }
+    function setPress(){
+     //綁定enter
+     document.onkeydown=function(event){
+         e = event ? event :(window.event ? window.event : null);
+         if(e.keyCode==13){
+           var messageField = $('#messageInput');
+           var msg = messageField.val();
+            messageField.val('');
+
+        var current_date = new Date();
+        var current_time = current_date.toLocaleTimeString();
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",         
+            data: {
+                username: '"' + current_username + '"',
+                chat: '"' + msg + '"',
+                time: '"' + current_time + '"'
+            }
+        });
+           }
+        }
+        }
 </script>
 
 <script>
-    //chat and bulletin
+    //chat and bulletin   
 $(document).ready(function(){
     /*
    $("div.container div.navbar div.navbar-inner div.container div.nav-collapse ul.nav li.dropdown ul.dropdown-menu li").find("a").click(function() {
@@ -208,8 +245,7 @@ $(document).ready(function(){
     });*/
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
-
-    $("#postnoticeTea").click(function() {
+        $("#postnoticeTea").click(function() {
         var text = $("#bulletin-textarea").val();
         $.ajax({
             type: "POST",
@@ -222,6 +258,24 @@ $(document).ready(function(){
             }
         });
     });
+    
+        $("#send-msg").click(function() {
+        var messageField = $('#messageInput');
+        var msg = messageField.val();
+        messageField.val('');
+        var current_date = new Date();
+        var current_time = current_date.toLocaleTimeString();
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
+            data: { 
+                username: '"' + current_username + '"',
+                chat: '"' + msg + '"',
+                time: '"' + current_time + '"',}         
+        });
+    });
+    
+    
     //每5秒，发送一次时间
     setInterval(function() {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
         checkLeave();
@@ -247,45 +301,9 @@ $(document).ready(function(){
     }, 1000);
 
     // ------------------------------------------------------ send chat
-    //綁定enter
-     document.onkeydown=function(event){
-         e = event ? event :(window.event ? window.event : null);
-         if(e.keyCode==13){
-           var messageField = $('#messageInput');
-           var msg = messageField.val();
-            messageField.val('');
-
-        var current_date = new Date();
-        var current_time = current_date.toLocaleTimeString();
-        $.ajax({
-            type: "POST",
-            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
-            data: {
-                username: '"' + current_username + '"',
-                chat: '"' + msg + '"',
-                time: '"' + current_time + '"'
-            }
-        });
-           }
-        }
-    $("#send-msg").click(function() {
-        var messageField = $('#messageInput');
-        var msg = messageField.val();
-        messageField.val('');
-
-        var current_date = new Date();
-        var current_time = current_date.toLocaleTimeString();
-        $.ajax({
-            type: "POST",
-            url: "index.php?r=api/putChat&&classID=<?php echo $classID;?>",
-            data: {
-                username: '"' + current_username + '"',
-                chat: '"' + msg + '"',
-                time: '"' + current_time + '"',
-            }
-        });
-    });
+   
 });
+
 function checkLeave(){
         $.ajax({
              type: "POST",
@@ -328,14 +346,39 @@ function pollChatRoom() {
             var obj = eval(data);
             $.each(obj, function(entryIndex, entry) {
                 if(entry['identity']=='teacher')
-                     html += "<font color=\"red\">"+entry['username']+ "：" + entry['chat'] + "</font><br>";
+                     html += "<font color=\"#00FF00\">"+entry['username']+ "</font>：" + "<font color=\"#fff\">"+entry['chat'] + "</font><br>";
                 else
-                     html += entry['username']+ "：" + entry['chat'] + "<br>";
+                {
+                     html += "<a onclick=shitup('" + entry['userid'] + "') href=\"#\">"+ entry['username'] + "</a>" + "：" + entry['chat'] + "<br>";
+                 }
             }); 
-            $("#chatroom").append(html);
+            $("#chatroom").append(html);                   
             //$("#chatroom").scrollTop($("#chatroom").height);
         }
     });
+}
+
+function shitup (userid){  
+					var txt=  "确定要禁言吗";
+					var option = {
+						title: "禁言",
+						btn: parseInt("0011",2),
+						onOk: function(){
+						   $.ajax({
+        type: "GET",
+        url: "index.php?r=teacher/shitup&&userid=" + userid,
+        success: function() {
+            				var txt=  "成功！";
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+        },
+        error:function(){
+                                        var txt=  "失败！";
+					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+        }
+        });
+						} 
+					};
+					window.wxc.xcConfirm(txt, "custom", option);
 }
 
 function pollBulletin() {
@@ -584,6 +627,11 @@ function clearVideo(){
     $("#dianbo-videos-container").empty();
     $("#dianbo-videos-container").hide();
 };
+
+function checkforbid(){
+    
+    window.open("./index.php?r=teacher/checkforbid&&classID=<?php echo $classID;?>", 'newwindow', 'height=450,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    }
 
 function WebSocketConnect(absl_path){
     console.log("sunpy [WebSocketConnect]");

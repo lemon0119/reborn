@@ -1,16 +1,21 @@
 <?php 
     $lessonsName=Array();
     $lessons=Lesson::model()->findall("classID='$classID'");
-    if($lessons!=null)
+    if($lessons!=null){
         foreach ($lessons as $key => $value) {
             $lessonsName[$value['number']]=$value['lessonName'];
+            $courseID=$value['courseID'];
         }
+     }
+     $courseName=  Course::model()->find('courseID=?',array($courseID))['courseName'];
 ?>
 
 <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header"><i class="icon-knowlage"></i>当前科目</li>
+                <li style="margin-left:20px;"><?php echo $courseName;?></li>
+                <li class="nav-header"><i class="icon-knowlage"></i>当前课时</li>
                 <?php  if($lessonsName!=null){?>
                 <li id="li-<?php echo $progress;?>">
                     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>">
@@ -20,7 +25,7 @@
                 </li>
                 <?php }?>
                 <li class="divider"></li>
-                <li class="nav-header"><i class="icon-knowlage"></i>其余科目</li>
+                <li class="nav-header"><i class="icon-knowlage"></i>其余课时</li>
                 </ul>
     </div>
     <div class="well-bottomnoradius" style="padding: 8px 0;height:230px;overflow:auto;top: -20px;border-top-left-radius:0px; ">
@@ -48,10 +53,9 @@
                     ?>
                     <li><i class="icon-headphones"></i><?php echo $student['userName']?></li>
                 <?php
-                }
-                
+                }              
             ?>
-                    </div>
+                </div>
         </ul>
     </div>
 </div>
@@ -94,16 +98,45 @@
         $pdir = "resources/" . $pptFilePath;
         if (!is_dir($pdir)) {//true表示可以创建多级目录
             mkdir($pdir, 0777, true);
+        }       
+        $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        $txtdir = "resources/" . $txtFilePath;
+        if (!is_dir($txtdir)) {//true表示可以创建多级目录
+            mkdir($txtdir, 0777, true);
+        }
+        
+        $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        $picdir = "resources/" . $picFilePath;
+        if (!is_dir($picdir)) {//true表示可以创建多级目录
+            mkdir($picdir, 0777, true);
+        }
+        
+        $voFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        $vodir = "resources/" . $voFilePath;
+        if (!is_dir($vodir)) {//true表示可以创建多级目录
+            mkdir($vodir, 0777, true);
         }
 
         $courseID = TbClass::model()->findCourseIDByClassID($classID);
         $adminPdir = "resources/admin/001/$courseID/$on/ppt/";
         $adminVdir = "resources/admin/001/$courseID/$on/video/";
+        $adminPICdir = "resources/admin/001/$courseID/$on/picture/";
+        $adminTXTdir = "resources/admin/001/$courseID/$on/txt/";
+        $adminVOdir = "resources/admin/001/$courseID/$on/voice/";
         if (!is_dir($adminPdir)) {//true表示可以创建多级目录
             mkdir($adminPdir, 0777, true);
         }
         if (!is_dir($adminVdir)) {//true表示可以创建多级目录
             mkdir($adminVdir, 0777, true);
+        }
+        if (!is_dir($adminPICdir)) {//true表示可以创建多级目录
+            mkdir($adminPICdir, 0777, true);
+        }
+        if (!is_dir($adminTXTdir)) {//true表示可以创建多级目录
+            mkdir($adminTXTdir, 0777, true);
+        }
+        if (!is_dir($adminVOdir)) {//true表示可以创建多级目录
+            mkdir($adminVOdir, 0777, true);
         }
         ?>
         <div class="table-bordered summary">
@@ -117,7 +150,7 @@
         echo $num1 + $num2;
         ?></span > <font style="color:#000">视频</font></a>
                 </li>
-                <li class="last">
+                <li >
                     <a href="./index.php?r=teacher/pptLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>" id="ppt">
                         <span class="count"><?php
                             $num    = 0;                                                    
@@ -140,7 +173,79 @@
                             } 
                             $mydir->close(); 
                             echo    $num;
-                            ?></span> <font style="color:#000">PPT</font></a>
+                            ?></span> <font style="color:#000">PPT</font></a></li>
+                <li><a  id="ppt" href="./index.php?r=teacher/txtLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
+                                   $txtnum    = 0;                                                    
+                            $mytxtdir = dir($txtdir); 
+                            while($file = $mytxtdir->read())
+                            { 
+                                if((!is_dir("$txtdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $txtnum = $txtnum + 1;
+                                } 
+                            } 
+                            $mytxtdir->close();
+                            $mytxtdir = dir($adminTXTdir); 
+                            while($file = $mytxtdir->read())
+                            { 
+                                if((!is_dir("$txtdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $txtnum = $txtnum + 1;
+                                } 
+                            } 
+                            $mytxtdir->close(); 
+                            echo    $txtnum;
+        ?></span ><font style="color:#000">文本</font></a></li>
+                
+                
+                
+                
+                <li>  <a  id="ppt" href="./index.php?r=teacher/voiceLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
+                         $vonum    = 0;                                                    
+                            $myvodir = dir($vodir); 
+                            while($file = $myvodir->read())
+                            { 
+                                if((!is_dir("$vodir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $vonum = $vonum + 1;
+                                } 
+                            } 
+                            $myvodir->close();
+                            $myvodir = dir($adminVOdir); 
+                            while($file = $myvodir->read())
+                            { 
+                                if((!is_dir("$vodir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $vonum = $vonum + 1;
+                                } 
+                            } 
+                            $myvodir->close(); 
+                            echo    $vonum;
+        ?></span > <font style="color:#000">音频</font></a></li>              
+                <li> <a class="last"   id="ppt" href="./index.php?r=teacher/pictureLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
+                                 $picnum    = 0;                                                    
+                            $mypicdir = dir($picdir); 
+                            while($file = $mypicdir->read())
+                            { 
+                                if((!is_dir("$picdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $picnum = $picnum + 1;
+                                } 
+                            } 
+                            $mypicdir->close();
+                            $mypicdir = dir($adminPICdir); 
+                            while($file = $mypicdir->read())
+                            { 
+                                if((!is_dir("$picdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $picnum = $picnum + 1;
+                                } 
+                            } 
+                            $mypicdir->close(); 
+                            echo    $picnum;
+        ?></span><font style="color:#000">图片</font></a></li>       
+                
+                
             </ul>
         </div>
     </div>

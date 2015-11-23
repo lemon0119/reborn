@@ -43,6 +43,36 @@ class Resourse extends CActiveRecord
             $resource->type="video";
             return $resource->insert();
         }
+         public function insertRelaTxt($newName,$oldName)
+        {
+            $resource             = new Resourse();
+            $resource->resourseID = $newName;
+            $resource->name       = $oldName;
+            $resource->type="txt";
+            return $resource->insert();
+        }
+        
+             
+        public function insertRelaPicture($newName,$oldName)
+        {
+            $resource             = new Resourse();
+            $resource->resourseID = $newName;
+            $resource->name       = $oldName;
+            $resource->type="picture";
+            return $resource->insert();
+        }
+        
+        public function insertRelaVoice($newName,$oldName)
+        {
+            $resource             = new Resourse();
+            $resource->resourseID = $newName;
+            $resource->name       = $oldName;
+            $resource->type="voice";
+            return $resource->insert();
+        }
+        
+        
+        
         public function insertRelaRadio($newName,$oldName)
         {
             $resource             = new Resourse();

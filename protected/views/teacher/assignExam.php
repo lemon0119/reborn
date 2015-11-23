@@ -25,10 +25,13 @@
 
 <div class="span9">
     <h2>现有试卷列表</h2>
+    <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
+    <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th class="font-center">选择</th>
                 <th class="font-center">标题</th> 
                 <th class="font-center">开始时间</th>
                 <th class="font-center">时长</th>    
@@ -36,7 +39,8 @@
                 <th class="font-center">操作</th> 
             </tr>
         </thead>
-        <tbody>        
+        <tbody>     
+            <form id="deleForm" method="post" action="./index.php?r=teacher/deleteExam" > 
             <?php
             foreach ($array_allexam as $exam):
                 $isOpen = false;
@@ -47,6 +51,7 @@
                     }
                 ?>                    
                 <tr>
+                    <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /> </td>
                     <td class="font-center" style="width: 100px"><?php echo $exam['examName']; ?></td>                        
 
                     <td class="font-center">
@@ -77,6 +82,7 @@
                     </td>
                 </tr>            
             <?php endforeach; ?> 
+                </form>
         </tbody>
         
     </table>
@@ -96,16 +102,45 @@
             document.getElementById("title").value="";
         }
     });
+    function check_all(obj, cName)
+    {
+        var checkboxs = document.getElementsByName(cName);
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].checked = obj.checked;
+        }
+    }
+    function deleCheck() {
+        var checkboxs = document.getElementsByName('checkbox[]');
+        var flag = 0;
+        for (var i = 0; i < checkboxs.length; i++) {
+           if(checkboxs[i].checked){
+                flag=1;
+                break;
+           }
+        } 
+        if(flag===0){
+           window.wxc.xcConfirm('未选中任何试卷', window.wxc.xcConfirm.typeEnum.info);
+        }else{
+             var option = {
+                    title: "警告",
+                    btn: parseInt("0011",2),
+                    onOk: function(){
+                            $('#deleForm').submit();
+                    }
+            };
+            window.wxc.xcConfirm("这将会删除此试卷，您确定这样吗？", "custom", option);
+        }
+    }
     function dele(examID, currentPage,classID)
     {
         var option = {
-						title: "警告",
-						btn: parseInt("0011",2),
-						onOk: function(){
-							 window.location.href = "./index.php?r=teacher/deleteExam&&examID=" + examID +"&&classID="+ classID + "&&page=" + currentPage;
-						}
-					}
-					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
+                title: "警告",
+                btn: parseInt("0011",2),
+                onOk: function(){
+                         window.location.href = "./index.php?r=teacher/deleteExam&&examID=" + examID +"&&classID="+ classID + "&&page=" + currentPage;
+                }
+        }
+        window.wxc.xcConfirm("您确定删除吗？", "custom", option);
     }
 
    

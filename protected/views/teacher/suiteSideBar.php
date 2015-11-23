@@ -48,4 +48,5 @@
                         <?php endforeach;?>
                 </ul>
         </div>
+    <a href="./index.php?r=teacher/assignWork"  class="btn btn-primary">返回</a>
 </div>

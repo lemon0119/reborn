@@ -89,27 +89,27 @@ class TeacherController extends CController {
         $fillScore = (isset($_POST['fillScore'])) ? $_POST['fillScore'] : 0;
         $questScore = (isset($_POST['questScore'])) ? $_POST['questScore'] : 0;
         if (!!$choiceScore) {
-            $choiceAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'choice']);
+            $choiceAll = ExamExercise::model()->findAll("examID = ? and type = ?  and exerciseID in ( select exerciseID from choice)", [$examID, 'choice']);
             foreach ($choiceAll as $choice) {
                 $choice->score = $choiceScore;
                 $choice->update();
             }
         }
         if (!!$fillScore) {
-            $fillingAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'filling']);
+            $fillingAll = ExamExercise::model()->findAll("examID = ? and type = ? and exerciseID in ( select exerciseID from filling)", [$examID, 'filling']);
             foreach ($fillingAll as $exer) {
                 $exer->score = $fillScore;
                 $exer->update();
             }
         }
         if (!!$questScore) {
-            $questAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'question']);
+            $questAll = ExamExercise::model()->findAll("examID = ? and type = ?  and exerciseID in ( select exerciseID from question)", [$examID, 'question']);
             foreach ($questAll as $exer) {
                 $exer->score = $questScore;
                 $exer->update();
             }
         }
-        $listenAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'listen']);
+        $listenAll = ExamExercise::model()->findAll("examID = ? and type = ? and exerciseID in ( select exerciseID from listen_type)", [$examID, 'listen']);
         foreach ($listenAll as $one) {
             $scoreGetKey = "listen" . $one['exerciseID'] . 'Score';
             $timeGetKey = "listen" . $one['exerciseID'] . 'Time';
@@ -123,7 +123,7 @@ class TeacherController extends CController {
             }
             $one->update();
         }
-        $lookAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'look']);
+        $lookAll = ExamExercise::model()->findAll("examID = ? and type = ? and exerciseID in ( select exerciseID from look_type)", [$examID, 'look']);
         foreach ($lookAll as $one) {
             $scoreGetKey = "look" . $one['exerciseID'] . 'Score';
             $timeGetKey = "look" . $one['exerciseID'] . 'Time';
@@ -137,7 +137,7 @@ class TeacherController extends CController {
             }
             $one->update();
         }
-        $keyAll = ExamExercise::model()->findAll("examID = ? and type = ?", [$examID, 'key']);
+        $keyAll = ExamExercise::model()->findAll("examID = ? and type = ? and exerciseID in ( select exerciseID from key_type)", [$examID, 'key']);
         foreach ($keyAll as $one) {
             $scoreGetKey = "key" . $one['exerciseID'] . 'Score';
             $timeGetKey = "key" . $one['exerciseID'] . 'Time';
@@ -326,12 +326,78 @@ class TeacherController extends CController {
                     'on' => $on
         ]);
     }
+    
+        public function actionVoiceLst() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->render('voiceLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+        public function actionPictureLst() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->render('pictureLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+        public function actionTxtLst() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->render('txtLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
 
     public function actionVideoTable() {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
         return $this->renderPartial('videoTable', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+        public function actionVoiceTable() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('voiceTable', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+      public function actionPictureTable() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('pictureTable', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+            public function actionTxtTable() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('txtTable', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on
@@ -349,7 +415,7 @@ class TeacherController extends CController {
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
-            echo "请选择文件！";
+            echo "请选择文件！"; 
             return;
         }
         $sqlVideo = Resourse::model()->findAll("type = 'video'");
@@ -358,7 +424,7 @@ class TeacherController extends CController {
                 echo "该文件已存在，如需重复使用请改名重新上传！";
                 return;
             }
-        }
+        }                               
         if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
@@ -375,6 +441,123 @@ class TeacherController extends CController {
         }
         echo $result;
     }
+    
+    public function actionAddTxt(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        $dir = "resources/" . $txtFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            echo "请选择文件！"; 
+            return;
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'txt'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "text/plain") {
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaTxt($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+    }
+    
+        public function actionAddVoice(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        $dir = "resources/" . $voiceFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            echo "请选择文件！"; 
+            return;
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'voice'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "audio/wav" || $_FILES["file"]["type"] == "audio/mpeg" ) {
+     
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaVoice($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {
+          
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+    }
+    
+    
+    public function actionAddPicture(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        $dir = "resources/" . $picFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            echo "请选择文件！"; 
+            return;
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'picture'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "image/pjpeg" ||$_FILES["file"]["type"] == "image/jpeg"|| $_FILES["file"]["type"] == "image/png" || $_FILES["file"]["type"] == "image/x-png"|| $_FILES["file"]["type"] == "image/bmp" || $_FILES["file"]["type"] == "image/gif" ) {
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaPicture($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {       
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+    }
+    
+    
+    
 
     public function actionDeleteVideo() {
         $typename = Yii::app()->session['role_now'];
@@ -397,6 +580,75 @@ class TeacherController extends CController {
                     'result' => $result,
         ]);
     }
+    
+     public function actionDeleteTxt() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $fileName = $_GET['txt'];
+        Resourse::model()->delName($fileName);
+        $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        $dir = "resources/" . $videoFilePath;
+        $file = $dir . $fileName;
+        if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            unlink(iconv('utf-8', 'gb2312', $file));
+        $result = "删除成功！";
+        return $this->render('txtLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
+    }
+    
+         public function actionDeleteVoice() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $fileName = $_GET['voice'];
+        Resourse::model()->delName($fileName);
+        $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        $dir = "resources/" . $voiceFilePath;
+        $file = $dir . $fileName;
+        if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            unlink(iconv('utf-8', 'gb2312', $file));
+        $result = "删除成功！";
+        return $this->render('voiceLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
+    }
+    
+    
+        public function actionDeletePicture() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $fileName = $_GET['picture'];
+        Resourse::model()->delName($fileName);
+        $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        $dir = "resources/" . $picFilePath;
+        $file = $dir . $fileName;
+        if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            unlink(iconv('utf-8', 'gb2312', $file));
+        $result = "删除成功！";
+        return $this->render('pictureLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
+    }
+    
+    
 
     public function actionLookVideo() {
         $typename = Yii::app()->session['role_now'];
@@ -419,6 +671,79 @@ class TeacherController extends CController {
                     'file' => $file,
         ]);
     }
+    
+        public function actionLookTxt() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $file = $_GET['txt'];
+        if (isset($_GET['vdir'])) {
+            $file = $_GET['vdir'] . $file;
+        } else {
+            $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+            $file = "resources/" . $txtFilePath . $file;
+        }
+
+        return $this->render('looktxt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+        ]);
+    }
+    
+    
+     public function actionLookVoice() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $file = $_GET['voice'];
+        if (isset($_GET['vdir'])) {
+            $file = $_GET['vdir'] . $file;
+        } else {
+            $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+            $file = "resources/" . $voiceFilePath . $file;
+        }
+
+        return $this->render('lookvoice', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+        ]);
+    }
+    
+    
+    
+         public function actionLookPicture() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $file = $_GET['picture'];
+        if (isset($_GET['vdir'])) {
+            $file = $_GET['vdir'] . $file;
+        } else {
+            $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+            $file = "resources/" . $picFilePath . $file;
+        }
+
+        return $this->render('lookpicture', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+        ]);
+    }
+    
+    
+    
+    
 
     public function actionlookExer() {
         return $this->render('lookExer');
@@ -2365,7 +2690,6 @@ class TeacherController extends CController {
                 Yii::app()->session['currentClass'] = $_GET['classID'];
             else
                 Yii::app()->session['currentClass'] = $teacher_class[0]['classID'];
-
             foreach ($teacher_class as $class) {
                 $id = $class['classID'];
                 $result = TbClass::model()->find("classID ='$id'");
@@ -2377,8 +2701,16 @@ class TeacherController extends CController {
                 if (isset($_GET['lessonID']))
                     Yii::app()->session['currentLesson'] = $_GET['lessonID'];
                 else
-                    Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
-                $currentLesson = Yii::app()->session['currentLesson'];
+                    if(isset($_GET['progress'])){
+                        $number = $_GET['progress'];
+                        $currentLesson = Lesson::model()->find("classID='$currentClass' and number='$number'");
+                        Yii::app()->session['currentLesson'] = $currentLesson['lessonID'];
+                    }else if(isset ($_GET['on'])){
+                        $number = $_GET['on'];
+                         Yii::app()->session['currentLesson'] = Lesson::model()->find("classID='$currentClass' and number='$number'")['lessonID'];
+                    }else{
+                        Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
+                    }
             }
         }
         if (isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])) {
@@ -2880,6 +3212,7 @@ class TeacherController extends CController {
      
      public function ActionDeleteSuite()
      {$res=0;
+        if(isset($_GET['suiteID'])){
          $suiteID = $_GET['suiteID'];
          $teacherID = Yii::app()->session['userid_now'];
          
@@ -2896,7 +3229,7 @@ class TeacherController extends CController {
          $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
          $array_lesson = array();        
          $array_class = array();
-         $result = Suite::model()->getAllSuiteByPage(5,$teacherID);
+         $result = Suite::model()->getAllSuiteByPage(10,$teacherID);
          $array_allsuite = $result['suiteLst'];
          $pages = $result['pages'];
             
@@ -2921,11 +3254,58 @@ class TeacherController extends CController {
              'res'=>$res
 
          )); 
+        }
+        if (isset($_POST['checkbox'])) {
+            $suiteIDlist = $_POST['checkbox'];
+            $teacherID = Yii::app()->session['userid_now'];
+            foreach ($suiteIDlist as $suiteID) {
+                $workID=ClassLessonSuite::model()->find('suiteID=?',array($suiteID))['workID'];
+                if($workID){
+                    $recordID=SuiteRecord::model()->find('workID=? and studentID=?',array($workID,$teacherID))['recordID'];
+                    SuiteRecord::model()->deleteAll("recordID='$recordID'");
+                }
+                Suite::model()->deleteAll("suiteID='$suiteID'");
+                SuiteExercise::model()->deleteAll("suiteID='$suiteID'");
+                ClassLessonSuite::model()->deleteAll("suiteID='$suiteID'");
+            }
+            $currentClass = Yii::app()->session['currentClass'];
+            $currentLesson=Yii::app()->session['currentLesson'];
+            $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+            $array_lesson = array();        
+            $array_class = array();
+            $result = Suite::model()->getAllSuiteByPage(10,$teacherID);
+            $array_allsuite = $result['suiteLst'];
+            $pages = $result['pages'];
+
+            if(!empty($teacher_class))
+            {        
+              foreach ($teacher_class as $class)
+                {
+                    $id = $class['classID'];
+                    $result = TbClass::model()->findAll("classID ='$id'");               
+                    array_push($array_class, $result[0]);
+                }     
+
+                $array_lesson = Lesson::model()->findAll("classID = '$currentClass'"); 
+            }
+            $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'],Yii::app()->session['currentLesson']));
+            $this->render('assignWork',array(
+                'array_class' => $array_class,
+                'array_lesson' => $array_lesson,
+                'array_suite'  => $array_suite,
+                'array_allsuite' => $array_allsuite,
+                'pages' => $pages,
+                'res'=>$res
+
+            ));
+        }
      }
      
      
           public function ActionDeleteExam()
-     {$res=0;
+     {   $res=0;
+        if(isset($_GET['examID'])){
+              
          $examID = $_GET['examID'];
          $classID = $_GET['classID'];
          $workID = ClassExam::model()->find("classID = '$classID' and examID = '$examID'")['workID'];
@@ -2954,6 +3334,40 @@ class TeacherController extends CController {
              'pages' => $pages,
              'res'=>$res
              ));
+        }
+        //
+        if (isset($_POST['checkbox'])) {
+            $classID=Yii::app()->session['currentClass'];
+            $examIDlist = $_POST['checkbox'];
+            $teacherID = Yii::app()->session['userid_now'];
+            foreach ($examIDlist as $v) {
+                $workID = ClassExam::model()->find("classID = '$classID' and examID = '$v'")['workID'];
+                Exam::model()->deleteAll("examID='$v'");
+                ExamExercise::model()->deleteAll("examID='$v'");
+                ClassExam::model()->deleteAll("examID='$v'");
+                ExamRecord::model()->deleteALL("workID='$workID'");
+            }
+            $currentClass = Yii::app()->session['currentClass'];
+            $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+            $array_class = array();
+            $result = TbClass::model()->getClassByTeacherID($teacherID);   
+            foreach ($result as $class)
+                array_push ($array_class, $class);
+         
+            $result = Exam::model()->getAllExamByPage(10);
+            $array_allexam = $result['examLst'];
+            $pages = $result['pages'];
+            $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'],1));
+           
+             $this->render('assignExam' , array(
+             'array_class' => $array_class,
+             'array_exam'  => $array_suite,
+             'array_allexam' => $array_allexam,
+             'pages' => $pages,
+             'res'=>$res
+             ));
+        }
+        
      }
      
      
@@ -3111,10 +3525,9 @@ class TeacherController extends CController {
         }else{
             $result = ClassLessonSuite::model()->getSuiteClassByTeacherID($teacherID, $selectClassID);
         }
+        $suiteResult=  Suite::model()->findAll('createPerson=?',array($teacherID));
         
-
         $array_suiteLessonClass1 = $result['suiteLst'];
-
         $pages = $result['pages'];
 
 
@@ -3131,8 +3544,9 @@ class TeacherController extends CController {
         $workID = -1;
         $classID = -1;
         if ($array_suiteLessonClass != NULL) {
-            $workID = $array_suiteLessonClass[0]['workID'];
-            $classID = $array_suiteLessonClass[0]['classID'];
+            if($suiteResult){
+            $workID = ClassLessonSuite::model()->find('suiteID=?',array($suiteResult[0]['suiteID']))['workID'];
+        $classID = $array_suiteLessonClass[0]['classID'];}
         }
         if (isset($_GET['workID'])) {
             $workID = $_GET['workID'];
@@ -3142,7 +3556,7 @@ class TeacherController extends CController {
         $array_accomplished = array();
         $array_unaccomplished = array();
         $class_student = Student::model()->findAll("classID = '$classID'");
-
+        if($workID){
         foreach ($class_student as $student) {
             $userID = $student['userID'];
             $result = SuiteRecord::model()->find("workID=? and studentID=?", array($workID, $userID));
@@ -3151,6 +3565,7 @@ class TeacherController extends CController {
                 array_push($array_accomplished, $student);
             else
                 array_push($array_unaccomplished, $student);
+        }
         }
         $this->render('studentWork', array(
             'array_class' => $array_class,
@@ -4257,6 +4672,10 @@ class TeacherController extends CController {
 
     public function actionScheduleDetil() {
         $teacherID = Yii::app()->session['userid_now'];
+        if(isset($_GET["progress"])){
+             Yii::app()->session['progress'] = $_GET["progress"];
+             Yii::app()->session['on'] = $_GET["on"];
+        }
         $sqlTeacher = Teacher::model()->find("userID = '$teacherID'");
         $array_course = array();
         $array_class = array();
@@ -4369,5 +4788,44 @@ class TeacherController extends CController {
         }
         return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
     }
+    
+    public function Actionshitup(){
+        $userid = $_GET['userid'];
+        $student = new Student();
+        $student = Student::model()->find("userID ='$userid'");
+        $student->forbidspeak = '1';
+        $student->update(); 
+    }
+    
+public function Actioncheckforbid(){
+    $classID = $_GET['classID'];
+    $result = Student::model()->getForbidStuByClass($classID);
+    $stuLst = $result ['stuLst'];
+    $pages = $result ['pages'];
+    $this->renderPartial('forbidStuLst', array(
+            'stuLst' => $stuLst,
+            'pages' => $pages,
+            'classID' => $classID
+            ));
+}
+
+public function ActionrecoverForbidStu(){
+                $Stulist = $_POST['checkbox'];
+                foreach ($Stulist as $v) {
+                $thisStu = new Student ();
+                $thisStu = $thisStu->find("userID = '$v'");
+                $thisStu->forbidspeak = '0';
+                $thisStu->update();
+            }
+                $classID = $_GET['classID'];
+                $result = Student::model()->getForbidStuByClass($classID);
+                $stuLst = $result ['stuLst'];
+                $pages = $result ['pages'];
+                $this->renderPartial('forbidStuLst', array(
+                 'stuLst' => $stuLst,
+                 'pages' => $pages,
+                    'classID' => $classID
+                 ));
+}
 
 }

@@ -4575,35 +4575,43 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 #startclass{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/start_class.png");
 }
 #startclass:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/on_start_class.png");
 }
 #topicmanager{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/topic_manager.png");
 }
 #topicmanager:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/on_topic_manager.png");
 }
 
 #homework{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/home_work.png");
 }
 #homework:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/on_home_work.png");
 }
 #exammanager{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/exam_manager.png");
 }
 #exammanager:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/on_exam_manager.png");
 }
 
@@ -4656,11 +4664,13 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .btn_serch{
     border: 0px;
     padding: 18px 55px;
+    background-repeat:no-repeat;
     background: url(../../img/btn_serch.png);
 }
 .btn_serch:hover{
     border: 0px;
     padding: 18px 55px;
+    background-repeat:no-repeat;
     background: url(../../img/on_btn_serch.png);
 }
 .btn_add{
@@ -4674,6 +4684,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .btn_add:hover{
     padding: 10px 55px;
     margin-left: 10px;
+    background-repeat:no-repeat;
     background: url(../../img/on_btn_add.png);
 }
 .icon-navsearch{
@@ -4708,50 +4719,62 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 #person_manager{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/person_manager.png");
 }
 #person_manager:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_person_manager.png");
 }
 #class_manager{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/class_manager.png");
 }
 #class_manager:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_class_manager.png");
 }
 #topic_manager{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/topic_manager.png");
 }
 #topic_manager:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_topic_manager.png");
 }
 #course_manager{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/course_manager.png");
 }
 #course_manager:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_course_manager.png");
 }
 #notice_manager{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/Notice.png");
 }
 #notice_manager:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_Notice.png");
 }
 #schedule_manager{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/schedule.png");
 }
 #schedule_manager:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_schedule.png");
 }
 .btn_bigserch{
@@ -4769,18 +4792,22 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 #onlineCourse{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/onlineCourse.png");
 }
 #onlineCourse:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/onlineCourseY.png");
 }
 #courseExam{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/courseExam.png");
 }
 #courseExam:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/courseExamY.png");
 }
 #stuMail_off{
@@ -4803,10 +4830,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 #suLu{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/encyclopedia.png");
 }
 #suLu:hover{
     padding: 14x 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/on_encyclopedia.png");
 
 }
@@ -4825,12 +4854,14 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     position: relative;
     left: 70px;
     padding: 10px 37px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/btn_cancel.png");
 }
 #stuBack:hover{
     position: relative;
     left: 70px;
     padding: 10px 37px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/on_btn_cancel.png");
 
 }
@@ -4851,22 +4882,26 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 #myCourse{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/myCourse.png");
 }
 #myCourse:hover{
     padding: 28px 60px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_stu/myCourseY.png");
 }
 
 #nameStu{
     font-weight: bolder;
     padding: 18px 21px;
+    background-repeat:no-repeat;
     background-image: url("../../img/user_ui.png");
 }
 #nameStu:hover{
     font-weight: bolder;
     color: #f46500;
     padding: 18px 21px;
+    background-repeat:no-repeat;
     background-image: url("../../img/user_ui.png");
 
 }
@@ -4979,7 +5014,7 @@ table tr td{
     margin: 0px 0px 0px 0px;
 }
 .startcourse-virtualclass:hover{
-    background-color: #ffa668;
+    background-color: #f46500;
     position: relative;
     padding: 50px 133px 50px 133px;
     font-size: 30px;
@@ -5037,26 +5072,32 @@ table tr td{
 #postnotice{
     cursor: pointer;
     padding: 10px 64px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/btn_release.png");
 }
 #postnotice:hover{
     padding: 10px 64px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_btn_release.png");
 }
 #returner{
     padding: 10px 37px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/btn_ret.png");
 }
 #returner:hover{
     padding: 10px 37px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_btn_ret.png");
 }
 #change{
     padding: 10px 64px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_btn_save.png");
 }
 #change:hover{
     padding: 10px 64px;
+    background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_btn_save.png");
 }
 

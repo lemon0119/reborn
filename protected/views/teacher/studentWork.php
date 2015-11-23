@@ -27,7 +27,7 @@
     <table class="table table-bordered table-striped" >
         
                 <tbody>        
-                    <?php $id =1; 
+                    <?php $id =1; $n=0;
                       foreach($array_suiteLessonClass as $suiteLesson):
                         foreach($array_class as $class)
                             if($class['classID'] == $suiteLesson['classID']){
@@ -45,7 +45,7 @@
                                 break;
 
                             }  
-                            if(isset($thisClass)&&isset($thisLesson)&&isset($thisSuite)&&$thisClass&&$thisLesson&&$thisSuite){
+                            if(isset($thisClass)&&isset($thisLesson)&&isset($thisSuite)&&$thisClass&&$thisLesson&&$thisSuite){$n++;
                             ?>
                     <tr>
                         <td style="width: 50px">
@@ -63,9 +63,9 @@
                         </td>           
                         <td style="width:120px">            
                              <?php
-                             echo $thisSuite['suiteName'];?>                    
+                             echo $thisSuite['suiteName'];?>                 
                         </td>
-                        <td style="width:39px">     
+                        <td style="width:50px">     
                             <?php if($workID==$suiteLesson['workID']){?>
                                 <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>   
                             <?php }else{?>
@@ -122,11 +122,11 @@
 </table>
     </div>
 <div style="position: relative;top: -22px;overflow-y:auto; height:210px;">
-<table width="51%" style="float:left;" >
+<table width="50%" style="float:left;" >
 <tr>
 <td><table class="table table-bordered table-striped">
                 <tbody>        
-                    <?php foreach($array_accomplished as $student):
+                    <?php if($n!=0){foreach($array_accomplished as $student):
                             ?>
                     <tr>
                         <td class="font-orange" style="width: 50px">
@@ -142,32 +142,32 @@
                             <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice">批阅</a>
                         </td>
                     </tr>            
-                    <?php endforeach;?> 
+                    <?php endforeach;}?> 
                 </tbody>
     </table></td>
 </tr>
 </table>
-<table width="49%" >
+<table width="50%" >
 <tr>
     <td><table style="position:relative;left: 2px"  class="table table-bordered table-striped">
                 <tbody>        
-                    <?php foreach($array_unaccomplished as $student):
+                    <?php if($n!=0){foreach($array_unaccomplished as $student):
                             ?>
                     <tr>
-                        <td class="font-orange" style="width: 50px">
+                        <td class="font-orange" style="width: 26%">
                            <?php echo $student['userName'];?>
                         </td>
-                        <td style="width: 50px">
+                        <td style="width: 26.5%">
                             <?php  echo $student['userID'];?>          
                         </td>
-                        <td style="width:50px">
+                        <td style="width:26.7%">
                             <font style="color: red;">未完成</font>
                         </td>  
-                        <td style="width: 20px">
+                        <td style="width: 25px">
                             <font style="color: gray">查看</font>
                         </td> 
                     </tr>            
-                    <?php endforeach;?> 
+                    <?php endforeach;}?> 
                 </tbody>
     </table></td>
 </tr>

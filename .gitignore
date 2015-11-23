@@ -69,3 +69,5 @@ resources/teacher/001/1/1/ppt/6441401527.ppt
 resources/teacher/1001/6721658409.mp3
 *.JPG
 *.mp3
+*.xml
+protected/runtime/application.log

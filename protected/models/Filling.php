@@ -37,7 +37,7 @@ class Filling extends CActiveRecord
     }
     
     public function getFillLst($type,$value){
-        $order = " order by exerciseID ASC";
+        $order = " order by exerciseID DESC";
         if($type!="")
             if($type == "requirements")
             {

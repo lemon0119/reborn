@@ -14,7 +14,7 @@
 class ListenType extends CActiveRecord
 {
         public function getListenLst($type,$value){
-        $order  =   " order by exerciseID ASC";
+        $order  =   " order by exerciseID DESC";
         if($type!="")
             if($type == "content")
             {

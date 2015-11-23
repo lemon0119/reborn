@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
 <?php
-if (isset(Yii::app()->session['userid_now'])) {
+if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=='teacher' ) {
     ?>
 
     <?php
@@ -62,7 +62,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="homework"></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/assignWork">布置作业</a></li>
+                                            <li><a href="./index.php?r=teacher/assignWork&&progress=<?php echo $classProgress[$key]; ?>">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
                                         </ul>
                                     </li>

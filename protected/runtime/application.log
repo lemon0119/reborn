@@ -5726,3 +5726,58 @@ REQUEST_URI=/reborn/index.php?r=teacher/StuWork&&selectClassID=5
 in E:\php_workstation\reborn\protected\views\teacher\studentWork.php (61)
 in E:\php_workstation\reborn\protected\controllers\TeacherController.php (3165)
 in E:\php_workstation\reborn\index.php (32)
+2015/11/18 14:01:32 [error] [php] Undefined variable: deleteResult (C:\wamp\www\reborn\protected\controllers\AdminController.php:2537)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/deleteChoice
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (2537)
+in C:\wamp\www\reborn\index.php (32)
+2015/11/18 14:01:58 [error] [php] Undefined variable: deleteResult (C:\wamp\www\reborn\protected\controllers\AdminController.php:2536)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/deleteChoice
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (2536)
+in C:\wamp\www\reborn\index.php (32)
+2015/11/18 15:05:48 [error] [php] Undefined variable: deleteResult (C:\wamp\www\reborn\protected\controllers\AdminController.php:2304)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/deleteFill&&exerciseID=12
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (2304)
+in C:\wamp\www\reborn\index.php (32)
+2015/11/18 15:06:13 [error] [php] Undefined index: exerciseID (C:\wamp\www\reborn\protected\controllers\AdminController.php:2254)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/deleteFill
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (2254)
+in C:\wamp\www\reborn\index.php (32)
+2015/11/18 15:18:28 [error] [php] Undefined index: exerciseID (C:\wamp\www\reborn\protected\controllers\AdminController.php:2254)
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(286): AdminController->runAction()
+#1 C:\wamp\www\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#2 C:\wamp\www\framework\web\CWebApplication.php(284): AdminController->run()
+#3 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#4 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#5 C:\wamp\www\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=admin/deleteFill
+in C:\wamp\www\reborn\protected\controllers\AdminController.php (2254)
+in C:\wamp\www\reborn\index.php (32)

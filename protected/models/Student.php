@@ -65,6 +65,24 @@ class Student extends CActiveRecord {
         $stuLst = $result->query();
         return ['stuLst' => $stuLst, 'pages' => $pages,];
     }
+    
+    public function getForbidStuByClass($classID){
+        $order = " order by userID ASC";
+        $condition = " WHERE forbidspeak=1 and classID=".$classID;
+        $select = "SELECT * FROM student";
+        $sql = $select . $condition . $order;
+        $criteria = new CDbCriteria();
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $pages = new CPagination($result->rowCount);
+        $pages->pageSize = 5;
+        $pages->applyLimit($criteria);
+        $result = Yii::app()->db->createCommand($sql . " LIMIT :offset,:limit");
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize);
+        $result->bindValue(':limit', $pages->pageSize);
+        $stuLst = $result->query();
+        return ['stuLst' => $stuLst, 'pages' => $pages,];
+        
+    }
 
     public function findClassByStudentID($studentID) {
         $student = $this->find("userid = '$studentID'");
