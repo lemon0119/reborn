@@ -10,10 +10,10 @@ and open the template in the editor.
 
 .key{
     background-color:#007cc3;
-    height:100px;
-    line-height:100px;
-    width:60px;
-    font-size:25px;
+    height:60px;
+    line-height:60px;
+    width:35px;
+    font-size:15px;
     border-width:thin;
     vertical-align:middle;
     background-position: center;
@@ -26,10 +26,10 @@ and open the template in the editor.
 }
 .key_right{
     background-color: #33FF00;
-    height:100px;
-    line-height:100px;
-    width:60px;
-    font-size:25px;
+    height:60px;
+    line-height:60px;
+    width:35px;
+    font-size:15px;
     border-width:thin;
     vertical-align:middle;
     background-position: center;
