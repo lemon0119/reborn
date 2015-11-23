@@ -326,12 +326,78 @@ class TeacherController extends CController {
                     'on' => $on
         ]);
     }
+    
+        public function actionVoiceLst() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->render('voiceLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+        public function actionPictureLst() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->render('pictureLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+        public function actionTxtLst() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->render('txtLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
 
     public function actionVideoTable() {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
         return $this->renderPartial('videoTable', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+        public function actionVoiceTable() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('voiceTable', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+      public function actionPictureTable() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('pictureTable', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    
+            public function actionTxtTable() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('txtTable', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on
@@ -349,7 +415,7 @@ class TeacherController extends CController {
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
-            echo "请选择文件！";
+            echo "请选择文件！"; 
             return;
         }
         $sqlVideo = Resourse::model()->findAll("type = 'video'");
@@ -358,7 +424,7 @@ class TeacherController extends CController {
                 echo "该文件已存在，如需重复使用请改名重新上传！";
                 return;
             }
-        }
+        }                               
         if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
@@ -375,6 +441,123 @@ class TeacherController extends CController {
         }
         echo $result;
     }
+    
+    public function actionAddTxt(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        $dir = "resources/" . $txtFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            echo "请选择文件！"; 
+            return;
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'txt'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "text/plain") {
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaTxt($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+    }
+    
+        public function actionAddVoice(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        $dir = "resources/" . $voiceFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            echo "请选择文件！"; 
+            return;
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'voice'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "audio/wav" || $_FILES["file"]["type"] == "audio/mpeg" ) {
+     
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaVoice($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {
+          
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+    }
+    
+    
+    public function actionAddPicture(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        $dir = "resources/" . $picFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            echo "请选择文件！"; 
+            return;
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'picture'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "image/pjpeg" ||$_FILES["file"]["type"] == "image/jpeg"|| $_FILES["file"]["type"] == "image/png" || $_FILES["file"]["type"] == "image/x-png"|| $_FILES["file"]["type"] == "image/bmp" || $_FILES["file"]["type"] == "image/gif" ) {
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaPicture($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {       
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+    }
+    
+    
+    
 
     public function actionDeleteVideo() {
         $typename = Yii::app()->session['role_now'];
@@ -397,6 +580,75 @@ class TeacherController extends CController {
                     'result' => $result,
         ]);
     }
+    
+     public function actionDeleteTxt() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $fileName = $_GET['txt'];
+        Resourse::model()->delName($fileName);
+        $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        $dir = "resources/" . $videoFilePath;
+        $file = $dir . $fileName;
+        if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            unlink(iconv('utf-8', 'gb2312', $file));
+        $result = "删除成功！";
+        return $this->render('txtLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
+    }
+    
+         public function actionDeleteVoice() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $fileName = $_GET['voice'];
+        Resourse::model()->delName($fileName);
+        $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        $dir = "resources/" . $voiceFilePath;
+        $file = $dir . $fileName;
+        if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            unlink(iconv('utf-8', 'gb2312', $file));
+        $result = "删除成功！";
+        return $this->render('voiceLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
+    }
+    
+    
+        public function actionDeletePicture() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $fileName = $_GET['picture'];
+        Resourse::model()->delName($fileName);
+        $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        $dir = "resources/" . $picFilePath;
+        $file = $dir . $fileName;
+        if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            unlink(iconv('utf-8', 'gb2312', $file));
+        $result = "删除成功！";
+        return $this->render('pictureLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
+    }
+    
+    
 
     public function actionLookVideo() {
         $typename = Yii::app()->session['role_now'];
@@ -419,6 +671,79 @@ class TeacherController extends CController {
                     'file' => $file,
         ]);
     }
+    
+        public function actionLookTxt() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $file = $_GET['txt'];
+        if (isset($_GET['vdir'])) {
+            $file = $_GET['vdir'] . $file;
+        } else {
+            $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+            $file = "resources/" . $txtFilePath . $file;
+        }
+
+        return $this->render('looktxt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+        ]);
+    }
+    
+    
+     public function actionLookVoice() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $file = $_GET['voice'];
+        if (isset($_GET['vdir'])) {
+            $file = $_GET['vdir'] . $file;
+        } else {
+            $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+            $file = "resources/" . $voiceFilePath . $file;
+        }
+
+        return $this->render('lookvoice', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+        ]);
+    }
+    
+    
+    
+         public function actionLookPicture() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $file = $_GET['picture'];
+        if (isset($_GET['vdir'])) {
+            $file = $_GET['vdir'] . $file;
+        } else {
+            $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+            $file = "resources/" . $picFilePath . $file;
+        }
+
+        return $this->render('lookpicture', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+        ]);
+    }
+    
+    
+    
+    
 
     public function actionlookExer() {
         return $this->render('lookExer');
