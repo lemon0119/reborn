@@ -2365,7 +2365,6 @@ class TeacherController extends CController {
                 Yii::app()->session['currentClass'] = $_GET['classID'];
             else
                 Yii::app()->session['currentClass'] = $teacher_class[0]['classID'];
-
             foreach ($teacher_class as $class) {
                 $id = $class['classID'];
                 $result = TbClass::model()->find("classID ='$id'");
@@ -2377,7 +2376,11 @@ class TeacherController extends CController {
                 if (isset($_GET['lessonID']))
                     Yii::app()->session['currentLesson'] = $_GET['lessonID'];
                 else
-                    if(isset ($_GET['on'])){
+                    if(isset($_GET['progress'])){
+                        $number = $_GET['progress'];
+                        $currentLesson = Lesson::model()->find("classID='$currentClass' and number='$number'");
+                        Yii::app()->session['currentLesson'] = $currentLesson['lessonID'];
+                    }else if(isset ($_GET['on'])){
                         $number = $_GET['on'];
                          Yii::app()->session['currentLesson'] = Lesson::model()->find("classID='$currentClass' and number='$number'")['lessonID'];
                     }else{
