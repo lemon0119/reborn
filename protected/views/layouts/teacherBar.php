@@ -62,7 +62,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="homework"></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/assignWork">布置作业</a></li>
+                                            <li><a href="./index.php?r=teacher/assignWork&&progress=<?php echo $classProgress[$key]; ?>">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
                                         </ul>
                                     </li>
