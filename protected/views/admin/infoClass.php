@@ -59,8 +59,9 @@
             </tr>
         </thead>
                 <tbody>     
-                    <form id="deleForm" method="post" action="./index.php?r=admin/deleteStuInClass&&classID=<?php echo $model['classID'];?>">
+                    
                     <?php foreach($stus as $model):?>
+                    <form id="deleForm" method="post" action="./index.php?r=admin/deleteStuInClass&&classID=<?php echo $model['classID'];?>">
                     <tr>
                          <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['userID']; ?>" /> </td>
                         <td style="width: 120px"><?php echo $model['userID'];?></td>
