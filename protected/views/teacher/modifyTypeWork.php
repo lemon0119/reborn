@@ -15,13 +15,13 @@
         <ul class="nav nav-list">
             <center>
                 <table style="margin-left: -60px;">
-                    <tr><td><?php echo $currentClass['className']?></td></tr>
-                    <tr><td>&nbsp;&nbsp;&nbsp;<?php echo $currentLesson['lessonName']?></td></tr>
-                    <tr><td>&nbsp;  &nbsp;  &nbsp;   &nbsp;<?php  if(Tool::clength($suite['suiteName'])<=7)
+                    <tr><td><font class="fl" style="position: relative;right: 20px; color: #fff">课程:&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #f46500"><?php echo $currentClass['className']?></span></font></td></tr>
+                    <tr><td><font class="fl" style="color: #fff">课时:&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #f46500"><?php echo $currentLesson['lessonName']?></span></font></td></tr>
+                    <tr><td><font class="fl" style="position: relative;left: 20px;color: #fff">作业:&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #f46500"><?php  if(Tool::clength($suite['suiteName'])<=7)
                                         $a= $suite['suiteName'];
                                     else
                                         $a= Tool::csubstr($suite['suiteName'], 0, 7)."...";?>
-                            <a href="#" title="<?php echo $suite['suiteName']?>" style="text-decoration:none;"><?php echo $a?></a>
+                                <a  title="<?php echo $suite['suiteName']?>" style="text-decoration:none;"><?php echo $a?></a></span></font>
                         </td></tr>
                 </table>                
             </center>                   

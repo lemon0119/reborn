@@ -35,7 +35,12 @@ if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']==
                                             <li><a href="./index.php?r=student/classwork">课堂作业</a></li>
                                         </ul>
                                     </li>
-                                    <li><a id="myCourse" href="./index.php?r=student/myCourse"></a></li>
+                                    <li class="dropdown"><a id="myCourse" href="#"  data-toggle="dropdown" ></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="./index.php?r=student/myCourse">我的课程</a></li>
+                                            <li><a href="./index.php?r=student/freePractice">自由练习</a></li>
+                                        </ul>
+                                    </li>
                                     <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
                                     <li><a id="suLu" href="./index.php?r=student/suLu"></a></li>
                                     <li><a id="schedule_manager"  href="./index.php?r=student/scheduleDetil"></a></li>

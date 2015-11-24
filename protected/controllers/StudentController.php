@@ -228,7 +228,11 @@ class StudentController extends CController {
         Yii::app()->session['isExam']=$isExam;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
-        $lessons = Lesson::model()->findAll("classID = '$classID'");
+        if($classID!="0"){
+            $lessons = Lesson::model()->findAll("classID = '$classID'");
+        }else{
+            $lessons = array();
+        }
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:$currentLesn;
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
@@ -1392,7 +1396,14 @@ class StudentController extends CController {
     }
     
     
-        public function actionPutChat() {
- 
+        public function actionFreePractice() {
+             $studentID = Yii::app()->session['userid_now'];
+        $classID = Student::model()->findClassByStudentID($studentID);
+        if($classID!="0"){
+            $lessons = Lesson::model()->findAll("classID = '$classID'");
+        }else{
+            $lessons = array();
+        }
+        return $this->render('freePractice',['lessons'=>$lessons]);
     }
 }

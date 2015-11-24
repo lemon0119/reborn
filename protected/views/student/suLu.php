@@ -11,13 +11,13 @@
        <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">百科信息分类列表</li>
-                <li style="cursor: pointer" id="one"><a class="cont1">2011-国际速联大赛背景</a></li>
-                <li style="cursor: pointer"  id="two"><a class="cont2">WJ-采访唐可为老师的文章</a></li>
-                <li style="cursor: pointer" id="three"><a class="cont3">报奖答辩文字分解稿</a></li>
-                <li style="cursor: pointer" id="four"><a class="cont4">了解亚伟</a></li>
-                <li style="cursor: pointer" id="five"><a class="cont5">亚伟故事</a></li>
-                <li style="cursor: pointer" id="six"><a class="cont6">亚伟速说</a></li>
-                <li style="cursor: pointer" id="seven"><a class="cont7">杂谈</a></li>
+                <li style="cursor: pointer" id="one"><a class="cont1"><img class="act" src="<?php echo IMG_UIStu_URL?>listOfH.png">2011-国际速联大赛背景</a></li>
+                <li style="cursor: pointer"  id="two"><a class="cont2"><img class="act" src="<?php echo IMG_UIStu_URL?>listOfH.png">WJ-采访唐可为老师的文章</a></li>
+                <li style="cursor: pointer" id="three"><a class="cont3"><img class="act" src="<?php echo IMG_UIStu_URL?>listOfH.png">报奖答辩文字分解稿</a></li>
+                <li style="cursor: pointer" id="four"><a class="cont4"><img class="act" src="<?php echo IMG_UIStu_URL?>listOfH.png">了解亚伟</a></li>
+                <li style="cursor: pointer" id="five"><a class="cont5"><img class="act" src="<?php echo IMG_UIStu_URL?>listOfH.png">亚伟故事</a></li>
+                <li style="cursor: pointer" id="six"><a class="cont6"><img class="act" src="<?php echo IMG_UIStu_URL?>listOfH.png">亚伟速说</a></li>
+                <li style="cursor: pointer" id="seven"><a class="cont7"><img class="act" src="<?php echo IMG_UIStu_URL?>listOfH.png">杂谈</a></li>
         </div>
 </div>
 <div class="span9" style="text-indent: 2em;line-height:200%">
