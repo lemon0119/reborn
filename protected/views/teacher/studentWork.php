@@ -124,21 +124,21 @@
 <div style="position: relative;top: -22px;overflow-y:auto; height:210px;">
 <table width="50%" style="float:left;" >
 <tr>
-<td><table class="table table-bordered table-striped">
+    <td><table style="width: 97%" class="table table-bordered table-striped">
                 <tbody>        
                     <?php if($n!=0){foreach($array_accomplished as $student):
                             ?>
                     <tr>
-                        <td class="font-orange" style="width: 50px">
+                        <td class="font-orange" style="width: 52px">
                             <?php echo $student['userName'];?>
                         </td>
-                        <td style="width: 50px">
+                        <td style="width: 53px">
                             <?php  echo $student['userID'];?>       
                         </td>
-                        <td style="width: 50px" >
+                        <td style="width: 51px" >
                             <font style="color: green;">完成</font>
                         </td>  
-                        <td style="width:30px" >
+                        <td style="width:20px" >
                             <a href="./index.php?r=teacher/checkStuWork&&classID=<?php echo $suiteLesson['classID']?>&&workID=<?php echo $workID;?>&&studentID=<?php echo $student['userID']?>&&accomplish=1&&type=choice">批阅</a>
                         </td>
                     </tr>            
@@ -149,21 +149,21 @@
 </table>
 <table width="50%" >
 <tr>
-    <td><table style="position:relative;left: 2px"  class="table table-bordered table-striped">
+    <td><table style="position:relative;width: 98%;left: 8px"  class="table table-bordered table-striped">
                 <tbody>        
                     <?php if($n!=0){foreach($array_unaccomplished as $student):
                             ?>
                     <tr>
-                        <td class="font-orange" style="width: 26%">
+                        <td class="font-orange" style="width: 37px">
                            <?php echo $student['userName'];?>
                         </td>
-                        <td style="width: 26.5%">
+                        <td style="width: 25px">
                             <?php  echo $student['userID'];?>          
                         </td>
-                        <td style="width:26.7%">
+                        <td style="width:39px">
                             <font style="color: red;">未完成</font>
                         </td>  
-                        <td style="width: 25px">
+                        <td style="width: 16px">
                             <font style="color: gray">查看</font>
                         </td> 
                     </tr>            
