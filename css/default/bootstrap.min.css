@@ -4589,7 +4589,9 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_tea/topic_manager.png");
 }
 #topicmanager:hover{
-    padding: 28px 60px;
+    position: relative;
+    top: 1px;
+    padding: 27px 60px;
     background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/on_topic_manager.png");
 }

@@ -2684,6 +2684,8 @@ class TeacherController extends CController {
         $array_class = array();
         $result = Suite::model()->getAllSuiteByPage(10, $teacherID);
         $array_allsuite = $result['suiteLst'];
+        
+         
         $pages = $result['pages'];
         if (!empty($teacher_class)) {
             if (isset($_GET['classID']))
@@ -4827,5 +4829,11 @@ public function ActionrecoverForbidStu(){
                     'classID' => $classID
                  ));
 }
+
+public function ActionAssignFreePractice(){
+    $this->render('assignFreePractice');
+}
+
+
 
 }
