@@ -41,8 +41,7 @@
     var ppt_pages   = -1;
     var ppt_dir     = null;
     $(document).ready(function(){
-        $("#li-<?php echo $on;?>").attr("class","active");
-      
+        $("#li-<?php echo $on;?>").attr("class","active");    
         cur_ppt = 1;
         ppt_dir= "<?php echo $dir;?>";
         ppt_pages =<?php   if(is_dir(iconv("UTF-8","gb2312",$dir)))

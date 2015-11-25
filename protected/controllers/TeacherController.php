@@ -292,7 +292,6 @@ class TeacherController extends CController {
         $dir = "resources/" . $pptFilePath;
         
         $file = $dir . $fileName;
-        echo $file;
         $result = 0;               //不显示提示
         if (!isset(Yii::app()->session['ppt2del']) ||
                 Yii::app()->session['ppt2del'] != $fileName) {
@@ -320,7 +319,7 @@ class TeacherController extends CController {
         if (isset($_GET['pdir'])) {
             $dir = $_GET['pdir'] . $fileDir;
         } else {
-            if(isset($_GET['ispublic']))
+            if($_GET['ispublic'] == 1)
             $pptFilePath = "public/ppt/";
             else
             $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
