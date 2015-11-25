@@ -8,8 +8,7 @@
     $role = Yii::app()->session['role_now'];
     $userid = Yii::app()->session['userid_now'];             
     $pptFilePath =$role."/".$userid."/".$classID."/".$on."/txt/"; 
-    $pdir = "./resources/".$pptFilePath;
-    
+    $pdir = "./resources/".$pptFilePath;    
 ?>
 <script src="<?php echo JS_URL;?>jquery-form.js"></script>
 <div class="span3">
@@ -49,6 +48,10 @@
             <div id="number">0%</div>
        </div>
        <button type="submit" class="btn btn-primary">上传</button>
+       <span style="position: relative;left: 10px">
+       <input type="checkbox" name="checkbox"  value="" />
+       是否上传为公共资源
+       </span>
        </div>
     </div>
     </form>

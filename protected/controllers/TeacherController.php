@@ -233,8 +233,16 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+         if (isset($_POST['checkbox'])) {
+            $pptFilePath =  "public/ppt/";           
+        }else
+        {
         $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
+        }
         $dir = "resources/" . $pptFilePath;
+                            if (!is_dir($dir)) {
+                            mkdir($dir, 0777);
+                           }
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
@@ -275,9 +283,16 @@ class TeacherController extends CController {
         $progress = $_GET['progress'];
         $on = $_GET['on'];
         $fileName = $_GET['ppt'];
+        if($_GET['ispublic'] == 1)
+        {
+        $pptFilePath = "public/ppt/";
+        }else{
         $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
+        }
         $dir = "resources/" . $pptFilePath;
+        
         $file = $dir . $fileName;
+        echo $file;
         $result = 0;               //不显示提示
         if (!isset(Yii::app()->session['ppt2del']) ||
                 Yii::app()->session['ppt2del'] != $fileName) {
@@ -305,6 +320,9 @@ class TeacherController extends CController {
         if (isset($_GET['pdir'])) {
             $dir = $_GET['pdir'] . $fileDir;
         } else {
+            if(isset($_GET['ispublic']))
+            $pptFilePath = "public/ppt/";
+            else
             $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
             $dir = "resources/" . $pptFilePath . $fileDir;
         }
@@ -409,9 +427,17 @@ class TeacherController extends CController {
         $userid = Yii::app()->session['userid_now'];
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
-        $on = $_GET['on'];
-        $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
+        $on = $_GET['on'];      
+        if (isset($_POST['checkbox'])) {
+            $videoFilePath =  "public/video/";           
+        }else
+        {
+            $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
+        }
         $dir = "resources/" . $videoFilePath;
+                            if (!is_dir($dir)) {
+                            mkdir($dir, 0777);
+                           }
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
@@ -448,7 +474,12 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
-        $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        if (isset($_POST['checkbox'])) {
+            $txtFilePath =  "public/txt/";           
+        }else
+        {
+            $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        }
         $dir = "resources/" . $txtFilePath;
         $result = "上传失败!";
         $flag = 0;
@@ -485,7 +516,12 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
-        $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+                if (isset($_POST['checkbox'])) {
+            $voiceFilePath =  "public/voice/";           
+        }else
+        {
+            $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        }
         $dir = "resources/" . $voiceFilePath;
         $result = "上传失败!";
         $flag = 0;
@@ -525,7 +561,12 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
-        $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        if (isset($_POST['checkbox'])) {
+            $picFilePath =  "public/picture/";           
+        }else
+        {
+            $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        }
         $dir = "resources/" . $picFilePath;
         $result = "上传失败!";
         $flag = 0;
@@ -567,7 +608,12 @@ class TeacherController extends CController {
         $on = $_GET['on'];
         $fileName = $_GET['video'];
         Resourse::model()->delName($fileName);
-        $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
+        if($_GET['ispublic'] == 1)
+        {
+            $videoFilePath = "public/video/";
+        }else{
+            $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
+        }
         $dir = "resources/" . $videoFilePath;
         $file = $dir . $fileName;
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
@@ -588,9 +634,14 @@ class TeacherController extends CController {
         $progress = $_GET['progress'];
         $on = $_GET['on'];
         $fileName = $_GET['txt'];
-        Resourse::model()->delName($fileName);
-        $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
-        $dir = "resources/" . $videoFilePath;
+        Resourse::model()->delName($fileName);        
+        if($_GET['ispublic'] == 1)
+        {
+            $txtFilePath = "public/txt/";
+        }else{
+            $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        }
+        $dir = "resources/" . $txtFilePath;
         $file = $dir . $fileName;
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
             unlink(iconv('utf-8', 'gb2312', $file));
@@ -611,7 +662,13 @@ class TeacherController extends CController {
         $on = $_GET['on'];
         $fileName = $_GET['voice'];
         Resourse::model()->delName($fileName);
-        $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        
+        if($_GET['ispublic'] == 1)
+        {
+            $voiceFilePath = "public/voice/";
+        }else{
+            $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        }
         $dir = "resources/" . $voiceFilePath;
         $file = $dir . $fileName;
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
@@ -634,7 +691,13 @@ class TeacherController extends CController {
         $on = $_GET['on'];
         $fileName = $_GET['picture'];
         Resourse::model()->delName($fileName);
-        $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+       
+        if($_GET['ispublic'] == 1)
+        {
+            $picFilePath = "public/picture/";
+        }else{
+            $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        }
         $dir = "resources/" . $picFilePath;
         $file = $dir . $fileName;
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
@@ -660,7 +723,11 @@ class TeacherController extends CController {
         if (isset($_GET['vdir'])) {
             $file = $_GET['vdir'] . $file;
         } else {
+            if($_GET['ispublic']==1)
+                $videoFilePath = "public/video/";
+            else
             $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
+            
             $file = "resources/" . $videoFilePath . $file;
         }
 
@@ -682,7 +749,12 @@ class TeacherController extends CController {
         if (isset($_GET['vdir'])) {
             $file = $_GET['vdir'] . $file;
         } else {
+                    if($_GET['ispublic'] == 1)
+        {
+            $txtFilePath = "public/txt/";
+        }else{
             $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        }
             $file = "resources/" . $txtFilePath . $file;
         }
 
@@ -704,8 +776,13 @@ class TeacherController extends CController {
         $file = $_GET['voice'];
         if (isset($_GET['vdir'])) {
             $file = $_GET['vdir'] . $file;
-        } else {
+        } else {          
+        if($_GET['ispublic'] == 1)
+        {
+            $voiceFilePath = "public/voice/";
+        }else{
             $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        }
             $file = "resources/" . $voiceFilePath . $file;
         }
 
@@ -729,7 +806,12 @@ class TeacherController extends CController {
         if (isset($_GET['vdir'])) {
             $file = $_GET['vdir'] . $file;
         } else {
+          if($_GET['ispublic'] == 1)
+        {
+            $picFilePath = "public/picture/";
+        }else{
             $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        }
             $file = "resources/" . $picFilePath . $file;
         }
 

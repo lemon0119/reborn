@@ -29,7 +29,7 @@
         </ul>
     </div>
     <?php if(isset($_GET['url'])){ ?>
-         <a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
+    <a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
     <?php }else{ ?>
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
     <?php }?>
@@ -43,14 +43,16 @@
        <div class="control-group">
        <label class="control-label" for="input02">上传</label>
        <div class="controls">
-       <input type="file" name="file" id="input02"> 
-       
+       <input type="file" name="file" id="input02">       
        <div id="upload" style="display:inline;" hidden="true">
           <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>                      
           <div id="number">0%</div>              
-       </div>
-       
+       </div>      
        <button type="submit" class="btn btn-primary">上传</button>
+       <span style="position: relative;left: 10px">
+       <input type="checkbox" name="checkbox"  value="" />
+       是否上传为公共资源
+       </span>
        </div> 
     </div>
     </form>
