@@ -20,13 +20,17 @@
         </tbody>   
     </table> 
     <div class="well" style="padding: 8px 0;">
-    
-    <a href="./index.php?r=teacher/NextStuWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $work['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>&&suiteID=<?php echo $suiteID?>">下一人</a>
-   <div>
+        <a style="margin-right:10px" href="./index.php?r=teacher/NextStuWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $work['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>&&suiteID=<?php echo $suiteID?>" class="btn fr">下一人</a>
+        <br/>
+    <div>
     <ul class="nav nav-list">
-        <li  <?php if($type == "choice") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=choice&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-font"></i> 选择</a></li>
+        <?php if(count($exercise['choice'])!=0){?>
+        <li <?php if($type == "choice") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=choice&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-font"></i> 选择</a></li>
+        <?php } if(count($exercise['filling'])!=0){ ?>
         <li <?php if($type == "filling") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=filling&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-text-width"></i> 填空</a></li>
+        <?php } if(count($exercise['question'])!=0){ ?>
             <li <?php if($type == "question") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=question&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-align-left"></i> 简答</a></li>
+            <?php } if(count($exercise['key'])!=0){ ?>
             <li class="nav-header">键位练习</li>
             <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
@@ -36,6 +40,7 @@
                                     </a>
                             </li>
                         <?php endforeach;?>
+            <?php } if(count($exercise['look'])!=0){ ?>
             <li class="nav-header">看打练习</li>
             <?php foreach ($exercise['look'] as $lookType) :?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
@@ -45,6 +50,7 @@
                                     </a>
                             </li>
                         <?php endforeach;?>
+            <?php } if(count($exercise['listen'])!=0){ ?>                
             <li class="nav-header">听打练习</li>   
             <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
@@ -54,6 +60,7 @@
                                 </a>
                         </li>
                         <?php endforeach;?>
+            <?php } ?>
     </ul>
    </div>
       

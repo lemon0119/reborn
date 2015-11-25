@@ -310,6 +310,23 @@
                 
             </ul>
         </div>
+    <h1>自由练习</h1>
+    <div class="table-bordered summary">
+     <ul>
+                <li>
+                    <a  id="ppt" href="#"><span class="count">2
+                        </span > <font style="color:#000">键打练习</font></a>
+                </li>
+                <li>
+                    <a  id="ppt" href="#"><span class="count">2
+                        </span > <font style="color:#000">看打练习</font></a>
+                </li>
+                <li>
+                    <a  id="ppt" href="#"><span class="count">2
+                        </span > <font style="color:#000">听打练习</font></a>
+                </li>
+     </ul>
+        </div>
     </div>
     <?php }?>
 </div>
@@ -325,7 +342,7 @@
         getBackTime();
         
         if($("#txt").val()=='1'){
-            alert("此班级正在上课！")
+            alert("此班级正在上课！");
         }else{
             window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";
         }

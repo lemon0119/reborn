@@ -2766,6 +2766,8 @@ class TeacherController extends CController {
         $array_class = array();
         $result = Suite::model()->getAllSuiteByPage(10, $teacherID);
         $array_allsuite = $result['suiteLst'];
+        
+         
         $pages = $result['pages'];
         if (!empty($teacher_class)) {
             if (isset($_GET['classID']))
@@ -4910,19 +4912,25 @@ public function ActionrecoverForbidStu(){
                  ));
 }
 
+
 public function ActionGetProgress(){
     session_start();
 
-$i = ini_get('session.upload_progress.name');
-$key = ini_get("session.upload_progress.prefix") . $_GET[$i];
-if (!empty($_SESSION[$key])) {
-        
-	$current = $_SESSION[$key]["bytes_processed"];
-	$total = $_SESSION[$key]["content_length"];
-	echo $current < $total ? ceil($current / $total * 100) : 100;
-}else{
-	echo 100;
-} 
+    $i = ini_get('session.upload_progress.name');
+    $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
+     if (!empty($_SESSION[$key])) {
+                $current = $_SESSION[$key]["bytes_processed"];
+                $total = $_SESSION[$key]["content_length"];
+                echo $current < $total ? ceil($current / $total * 100) : 100;
+        }else{
+                echo 100;
+        } 
 }
+
+
+public function ActionAssignFreePractice(){
+        $this->render('assignFreePractice');
+}
+
 
 }
