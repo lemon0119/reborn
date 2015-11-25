@@ -4847,8 +4847,67 @@ public function ActionGetProgress(){
 
 
 public function ActionAssignFreePractice(){
-        $this->render('assignFreePractice');
+    $res = 0;
+    $ClassID = $_GET['classID'];
+    if(isset($_GET['progress'])){
+        $number = $_GET['progress'];
+        $LessonID = Lesson::model()->find("classID='$ClassID' and number = '$number'")['lessonID'];
+    }else if(!isset ($_GET['all'])){
+       $LessonID = $_GET['lessonID']; 
+    }
+        $teacherID = Yii::app()->session['userid_now'];
+        $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+        $array_lesson = array();
+        $array_class = array();
+        if(isset($_GET['all'])){
+             $result = FreeExercise::model()->getAllSuiteByPage(10, $teacherID,$ClassID);
+             $array_allpractice = $result['suiteLst'];
+        }else{
+             $result = FreeExercise::model()->getAllSuiteByPageWithLessonID(10, $teacherID,$LessonID,$ClassID);
+             $array_allpractice = $result['suiteLst'];
+        }
+       
+        
+        $pages = $result['pages'];
+        
+        if (!empty($teacher_class)) {
+            if (isset($_GET['classID']))
+                Yii::app()->session['currentClass'] = $_GET['classID'];
+            else
+                Yii::app()->session['currentClass'] = $teacher_class[0]['classID'];
+            foreach ($teacher_class as $class) {
+                $id = $class['classID'];
+                $result = TbClass::model()->find("classID ='$id'");
+                array_push($array_class, $result);
+            }
+            $currentClass = Yii::app()->session['currentClass'];
+            $array_lesson = Lesson::model()->findAll("classID = '$currentClass'");
+            if (!empty($array_lesson)) {
+                if (isset($_GET['lessonID']))
+                    Yii::app()->session['currentLesson'] = $_GET['lessonID'];
+                else
+                    if(isset($_GET['progress'])){
+                        $number = $_GET['progress'];
+                        $currentLesson = Lesson::model()->find("classID='$currentClass' and number='$number'");
+                        Yii::app()->session['currentLesson'] = $currentLesson['lessonID'];
+                    }else if(isset ($_GET['on'])){
+                        $number = $_GET['on'];
+                         Yii::app()->session['currentLesson'] = Lesson::model()->find("classID='$currentClass' and number='$number'")['lessonID'];
+                    }else{
+                        Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
+                    }
+            }
+        }
+
+        $this->render('assignFreePractice', array(
+            'array_class' => $array_class,
+            'array_lesson' => $array_lesson,
+            'array_allpractice' => $array_allpractice,
+            'pages' => $pages,
+            'res' => $res
+        ));
 }
+
 
 
 }

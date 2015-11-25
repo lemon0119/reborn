@@ -1,4 +1,4 @@
-<div class="span3">
+ <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
         <ul class="nav nav-list">                     
             <li class="nav-header"><i class="icon-knowlage"></i>班级列表</li>
@@ -13,7 +13,7 @@
             <li class="divider"></li>
             <?php if(Yii::app()->session['currentClass']&&Yii::app()->session['currentLesson']){?>
             
-                <li class="nav-header" ><i class="icon-knowlage"></i>作业题目</li>
+                <li class="nav-header" ><i class="icon-knowlage"></i>新建作业</li>
                 <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
                 <li style="margin-top:10px">
                     <a href="#"onclick="chkIt()" id="bth_create"></a>
@@ -118,7 +118,7 @@
     $(document).ready(function(){
         if(<?php echo $res;?>==1){
             var txt=  "此作业已经被创建！";
-	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
             document.getElementById("title").value="";
         }
     });
@@ -168,11 +168,11 @@
     function chkIt(){
     var usernameVal = document.getElementById("title").value;  
     if(usernameVal==""){
-        window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.info);
             return false;
     }
     if(usernameVal.length > 30){ //一个汉字算一个字符  
-        window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.info);
         document.getElementById("title").value="";
         return false;
     }

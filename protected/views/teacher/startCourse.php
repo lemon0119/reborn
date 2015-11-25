@@ -252,15 +252,15 @@
     <div class="table-bordered summary">
      <ul>
                 <li>
-                    <a  id="ppt" href="#"><span class="count">2
+                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>"><span class="count">2
                         </span > <font style="color:#000">键打练习</font></a>
                 </li>
                 <li>
-                    <a  id="ppt" href="#"><span class="count">2
+                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>"><span class="count">2
                         </span > <font style="color:#000">看打练习</font></a>
                 </li>
                 <li>
-                    <a  id="ppt" href="#"><span class="count">2
+                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>"><span class="count">2
                         </span > <font style="color:#000">听打练习</font></a>
                 </li>
      </ul>
