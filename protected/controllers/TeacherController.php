@@ -292,7 +292,6 @@ class TeacherController extends CController {
         $dir = "resources/" . $pptFilePath;
         
         $file = $dir . $fileName;
-        echo $file;
         $result = 0;               //不显示提示
         if (!isset(Yii::app()->session['ppt2del']) ||
                 Yii::app()->session['ppt2del'] != $fileName) {
