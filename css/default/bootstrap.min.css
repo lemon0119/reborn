@@ -4920,6 +4920,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background: url("../../img/UI_stu/on_btn_message.png");
 }
 #bth_create{
+    border: 0px;
     position: relative;
     width: 225px;
     top: 1px;
