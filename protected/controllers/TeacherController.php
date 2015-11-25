@@ -320,7 +320,7 @@ class TeacherController extends CController {
         if (isset($_GET['pdir'])) {
             $dir = $_GET['pdir'] . $fileDir;
         } else {
-            if(isset($_GET['ispublic']))
+            if($_GET['ispublic'] == 1)
             $pptFilePath = "public/ppt/";
             else
             $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
