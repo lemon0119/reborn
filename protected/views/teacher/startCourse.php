@@ -138,6 +138,28 @@
         if (!is_dir($adminVOdir)) {//true表示可以创建多级目录
             mkdir($adminVOdir, 0777, true);
         }
+        
+        $publicPdir = "resources/public/ppt/";
+        $publicVdir = "resources/public/video/";
+        $publicPicdir = "resources/public/picture/";
+        $publicTxtdir = "resources/public/txt/";
+        $publicVodir = "resources/public/voice/";
+                if (!is_dir($publicPdir)) {//true表示可以创建多级目录
+            mkdir($publicPdir, 0777, true);
+        }
+                if (!is_dir($publicVdir)) {//true表示可以创建多级目录
+            mkdir($publicVdir, 0777, true);
+        }
+                if (!is_dir($publicPicdir)) {//true表示可以创建多级目录
+            mkdir($publicPicdir, 0777, true);
+        }        if (!is_dir($publicTxtdir)) {//true表示可以创建多级目录
+            mkdir($publicTxtdir, 0777, true);
+        }
+                if (!is_dir($publicVodir)) {//true表示可以创建多级目录
+            mkdir($publicVodir, 0777, true);
+        }
+        
+        
         ?>
         <div class="table-bordered summary">
             <ul>
@@ -147,7 +169,11 @@
         $num1 = ($num1 > 2) ? ($num1 - 2) : 0;
         $num2 = sizeof(scandir($adminVdir));
         $num2 = ($num2 > 2) ? ($num2 - 2) : 0;
-        echo $num1 + $num2;
+        $num2 = sizeof(scandir($adminVdir));
+        $num2 = ($num2 > 2) ? ($num2 - 2) : 0;
+        $num3 = sizeof(scandir($publicVdir));
+        $num3 = ($num3 > 2) ? ($num3 - 2) : 0;
+        echo $num1 + $num2 + $num3;
         ?></span > <font style="color:#000">视频</font></a>
                 </li>
                 <li >
@@ -166,7 +192,16 @@
                             $mydir = dir($adminPdir); 
                             while($file = $mydir->read())
                             { 
-                                if((!is_dir("$pdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                if((!is_dir("$adminPdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $num = $num + 1;
+                                } 
+                            } 
+                            $mydir->close(); 
+                            $mydir = dir($publicPdir); 
+                            while($file = $mydir->read())
+                            { 
+                                if((!is_dir("$publicPdir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {   
                                     $num = $num + 1;
                                 } 
@@ -188,7 +223,16 @@
                             $mytxtdir = dir($adminTXTdir); 
                             while($file = $mytxtdir->read())
                             { 
-                                if((!is_dir("$txtdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                if((!is_dir("$adminTXTdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $txtnum = $txtnum + 1;
+                                } 
+                            } 
+                            $mytxtdir->close(); 
+                            $mytxtdir = dir($publicTxtdir); 
+                            while($file = $mytxtdir->read())
+                            { 
+                                if((!is_dir("$publicTxtdir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {   
                                     $txtnum = $txtnum + 1;
                                 } 
@@ -214,7 +258,16 @@
                             $myvodir = dir($adminVOdir); 
                             while($file = $myvodir->read())
                             { 
-                                if((!is_dir("$vodir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                if((!is_dir("$adminVOdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $vonum = $vonum + 1;
+                                } 
+                            } 
+                            $myvodir->close(); 
+                            $myvodir = dir($publicVodir); 
+                            while($file = $myvodir->read())
+                            { 
+                                if((!is_dir("$publicVodir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {   
                                     $vonum = $vonum + 1;
                                 } 
@@ -236,7 +289,16 @@
                             $mypicdir = dir($adminPICdir); 
                             while($file = $mypicdir->read())
                             { 
-                                if((!is_dir("$picdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                if((!is_dir("$adminPICdir/$file")) AND ($file!=".") AND ($file!="..")) 
+                                {   
+                                    $picnum = $picnum + 1;
+                                } 
+                            } 
+                            $mypicdir->close(); 
+                            $mypicdir = dir($publicPicdir); 
+                            while($file = $mypicdir->read())
+                            { 
+                                if((!is_dir("$publicPicdir/$file")) AND ($file!=".") AND ($file!="..")) 
                                 {   
                                     $picnum = $picnum + 1;
                                 } 
