@@ -4932,7 +4932,6 @@ public function ActionAssignFreePractice(){
     $ClassID = $_GET['classID'];
     if(isset($_GET['progress'])){
         $number = $_GET['progress'];
-        Yii::app()->session['progress']=$number;
         $LessonID = Lesson::model()->find("classID='$ClassID' and number = '$number'")['lessonID'];
     }else if(!isset ($_GET['all'])){
        $LessonID = $_GET['lessonID']; 
@@ -4990,7 +4989,7 @@ public function ActionAssignFreePractice(){
         ));
 }
 
-    public function ActionAddFreePractice(){
+ public function ActionAddFreePractice(){
         $res = 0;
         $title = $_POST['title'];
         $classID = $_GET['classID'];
@@ -5079,5 +5078,6 @@ public function ActionAssignFreePractice(){
            }
 
     }
+
 
 }
