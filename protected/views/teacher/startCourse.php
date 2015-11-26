@@ -48,7 +48,7 @@
                 <ul class="nav nav-list">
                 <li class="nav-header"></li>
                 <li class="nav-header"><i class="icon-knowlage"></i>学生列表</li>
-                <div class="scroll" style="padding: 8px 0;height:100px;overflow:auto;margin-left: 20px;">
+                <div class="scroll" style="padding: 8px 0;height:150px;overflow:auto;margin-left: 20px;">
                 <?php foreach($stu as $student){
                     ?>
                     <li><i class="icon-headphones"></i><?php echo $student['userName']?></li>
@@ -76,7 +76,7 @@
             <?php if ($on == $progress) { ?>
             <a href="#" onclick="getBackTime()"class="startcourse-virtualclass">虚拟课堂</a> 
             <?php } else { ?>
-                <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass">开始本课</a> 
+            <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass-begin">开始本课</a> 
                <?php } ?>
             <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $classID; ?>&&lessonID=<?php $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
                echo $less['lessonID'];
@@ -310,7 +310,7 @@
                 
             </ul>
         </div>
-    <h1>自由练习</h1>
+    <h1>课堂练习</h1>
     <div class="table-bordered summary">
      <ul>
                 <li>

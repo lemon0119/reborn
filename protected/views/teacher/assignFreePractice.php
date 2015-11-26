@@ -12,8 +12,14 @@
         <ul class="nav nav-list">    
             <li class="divider"></li>
             <?php if(Yii::app()->session['currentClass']&&Yii::app()->session['currentLesson']){?>
-            <form action="./index.php?r=teacher/addFreePractice" id="add" method="post">
-                <li class="nav-header" ><i class="icon-knowlage"></i>新建练习</li>
+            <li class="nav-header" ><i class="icon-knowlage"></i>新建练习</li>
+            <?php if(isset($_GET['progress'])){ ?>  
+            <form action="./index.php?r=teacher/addFreePractice&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['progress']; ?>" id="add" method="post">
+             <?php }else if(isset ($_GET['all'])){ ?>
+                <form action="./index.php?r=teacher/addFreePractice&&classID=<?php echo $_GET['classID']; ?>&&all=all" id="add" method="post">
+             <?php }else{ ?>
+                 <form action="./index.php?r=teacher/addFreePractice&&classID=<?php echo $_GET['classID']; ?>&&lessonID=<?php echo $_GET['lessonID']; ?>" id="add" method="post">
+             <?php  } ?>
                  <div class="selectoption">
                                 <select  name="type" >
                                     <option  value="key" selected="selected">键打练习</option>
@@ -26,13 +32,15 @@
                 <li style="margin-top:10px">
                     <button href="#" onclick="chkIt()" id="bth_create"></button>
                 </li>
-            
+                <li style="margin-top:10px">
+                    <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo  Yii::app()->session['progress'];?>&&on=<?php echo  Yii::app()->session['progress'];?>" id="bth_bigregray"></a>
+                </li>
            <?php }?>
              <li class="divider"></li>
              <li class="nav-header"><i class="icon-knowlage"></i>课时列表<a  <?php if(isset($_GET['all'])){echo "style='background-color: #f46500;color: white'";}?> href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&all=all" class="fr">查看全部</a></li>
         </ul>
     </div>
-<div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">
+<div class="well-topnoradius" style="padding: 8px 0;height:280px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">
             <?php foreach ($array_lesson as $lesson): ?>
          <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']&&!isset($_GET['all'])) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></li>
@@ -162,6 +170,8 @@
     }
         document.getElementById("add").submit();
 }
+
+
 </script>
 
 
