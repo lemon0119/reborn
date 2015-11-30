@@ -314,15 +314,15 @@
     <div class="table-bordered summary">
      <ul>
                 <li>
-                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>"><span class="count">2
+                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=key"><span class="count"><?php  if(isset($keywork)){echo count($keywork);}else{echo '0';}?>
                         </span > <font style="color:#000">键打练习</font></a>
                 </li>
                 <li>
-                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>"><span class="count">2
+                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=look"><span class="count"><?php  if(isset($look)){echo count($look);}else{echo '0';}?>
                         </span > <font style="color:#000">看打练习</font></a>
                 </li>
                 <li>
-                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>"><span class="count">2
+                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=listen"><span class="count"><?php  if(isset($listen)){echo count($listen);}else{echo '0';}?>
                         </span > <font style="color:#000">听打练习</font></a>
                 </li>
      </ul>
@@ -351,7 +351,7 @@
     $.ajax({
         type: "GET",
         dataType: "json",
-        //url: "index.php?r=api/GetBackTime&&classID=<?php echo $classID;?>",
+        //url: "index.php?r=api/GetBackTime&&classID=<?php //echo $classID;?>",
         url: "index.php?r=api/GetClassState&&classID=<?php echo $classID;?>",
         success: function(data) {
             console.log("qq",data);

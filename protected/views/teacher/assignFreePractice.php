@@ -22,9 +22,9 @@
              <?php  } ?>
                  <div class="selectoption">
                                 <select  name="type" >
-                                    <option  value="key" selected="selected">键打练习</option>
-                                        <option  value="look" >看打练习</option>
-                                        <option  value="listen" >听打练习</option>
+                                    <option  value="key" <?php if(isset($_GET['type'])){if($_GET['type']=='key'){ echo 'selected="selected"';} }?> >键打练习</option>
+                                    <option  value="look" <?php if(isset($_GET['type'])){if($_GET['type']=='look'){ echo 'selected="selected"';} } ?> >看打练习</option>
+                                        <option  value="listen" <?php if(isset($_GET['type'])){if($_GET['type']=='listen'){ echo 'selected="selected"';}} ?> >听打练习</option>
                                 </select>
                             </div>
                 <input name= "title" type="text" class="search-query span2" placeholder="题目" id="title" value="" />
@@ -78,18 +78,18 @@
                     <td class="font-center" style="width: 80px"><?php echo $suite['userName']; ?></td>
                     <td class="font-center" style="width: 80px">
                         <?php if ($suite['is_open'] == 0) { ?>
-                            <a href="./index.php?r=teacher/ChangeSuiteClass&&exerciseID=<?php echo $suite['exerciseID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color:green">发布</a>
+                        <a href="./index.php?r=teacher/assignFreePractice&&title=<?php echo $suite['title']; ?>&&classID=<?php echo $_GET['classID']; ?>&&<?php if(isset($_GET['progress'])){echo 'progress='.$_GET['progress'];}else if(isset($_GET['lessonID'])){echo 'lessonID='.$_GET['lessonID'];}else{echo 'all=all';}?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1; ?>" style="color:green">发布</a>
                             <font style="color:grey">关闭</font>
                         <?php } else { ?>
                             <font style="color:grey">发布</font>
-                            <a href="./index.php?r=teacher/ChangeSuiteClass&&exerciseID=<?php echo $suite['exerciseID']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1;  ?>" style="color:red">关闭</a>
-                        <?php } ?>
+                            <a href="./index.php?r=teacher/assignFreePractice&&title=<?php echo $suite['title']; ?>&&classID=<?php echo $_GET['classID']; ?>&&<?php if(isset($_GET['progress'])){echo 'progress='.$_GET['progress'];}else if(isset($_GET['lessonID'])){echo 'lessonID='.$_GET['lessonID'];}else{echo 'all=all';}?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color:red">关闭</a>
+                        <?php }  ?>
                     </td>             
                     <td class="font-center" style="width: 100px">
                         <a href="./index.php?r=teacher/seeWork&&exerciseID=<?php echo $suite['exerciseID']; ?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
 
                         <a href="./index.php?r=teacher/modifyWork&&exerciseID=<?php echo $suite['exerciseID']; ?>&&type=choice"><img title="修改作业内容" src="<?php echo IMG_URL; ?>edit.png"></a>
-                        <a href="#" onclick="dele(<?php echo $suite['exerciseID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
+                        <a href="#" onclick="dele('<?php echo $suite['title']; ?>')"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
 
                     </td>
                 </tr>            
@@ -112,6 +112,9 @@
             var txt=  "此作业已经被创建！";
 	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
             document.getElementById("title").value="";
+        }
+        if(<?php echo $deleteresult;?>!=0){
+             window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success);
         }
     });
     function check_all(obj, cName)
@@ -143,14 +146,15 @@
             window.wxc.xcConfirm("这将会删除此试卷，您确定这样吗？", "custom", option);
         }
     }
-    function dele(suiteID, currentPage)
+    function dele(title)
     {
       
         var option = {
 						title: "警告",
 						btn: parseInt("0011",2),
 						onOk: function(){
-							 window.location.href = "./index.php?r=teacher/deleteSuite&&suiteID=" + suiteID + "&&page=" + currentPage;
+                                                         window.location.href = "./index.php?r=teacher/assignFreePractice&&&&classID=<?php echo Yii::app()->session['currentClass'];?>&&<?php if(isset($_GET['all'])){
+                        echo 'all=all';}else{echo 'progress='.Yii::app()->session['progress'];}?>&&delete="+title;
 						}
 					}
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);

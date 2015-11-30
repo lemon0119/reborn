@@ -854,12 +854,29 @@ class TeacherController extends CController {
         $result = '1';
         $progress = $_GET['progress'];
         $on = $_GET['on'];
-
+        $lesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
+        $lessonID = $lesson['lessonID'];
+        $freePractice = FreeExercise::model()->findAll("classID = '$classID' and lessonID = '$lessonID'");
+        $keywork = array();
+        $look = array();
+        $listen = array();
+        foreach ($freePractice as $v){
+            if($v['type'] =='key'){
+               array_push($keywork, $v['type']); 
+            }else if($v['type'] =='look'){
+               array_push($look, $v['look']); 
+            }else if($v['type'] =='listen'){
+               array_push($listen, $v['listen']); 
+            }
+        }
         //get student
         $stu = Array();
         $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
         return $this->render('startCourse', [
                     'classID' => $classID,
+                    'keywork'=>$keywork,
+                    'look'=>$look,
+                    'listen'=>$listen,
                     'progress' => $progress,
                     'on' => $on,
                     'stu' => $stu,
@@ -4930,11 +4947,23 @@ public function ActionGetProgress(){
 public function ActionAssignFreePractice(){
     $res = 0;
     $ClassID = $_GET['classID'];
+    $deleteresult = 0;
     if(isset($_GET['progress'])){
         $number = $_GET['progress'];
+        Yii::app()->session['progress'] = $_GET['progress'];
         $LessonID = Lesson::model()->find("classID='$ClassID' and number = '$number'")['lessonID'];
     }else if(!isset ($_GET['all'])){
        $LessonID = $_GET['lessonID']; 
+    }
+    if(isset($_GET['isOpen'])){
+        $title = $_GET['title'];
+        $up_res = FreeExercise::model()->find("classID='$ClassID' and title = '$title'");
+        $up_res->is_open = $_GET['isOpen'];
+        $up_res->update();
+    }
+    if(isset($_GET['delete'])){
+        $title = $_GET['delete'];
+        $deleteresult = FreeExercise::model()->deleteAll("classID='$ClassID' and title = '$title'");
     }
         $teacherID = Yii::app()->session['userid_now'];
         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
@@ -4950,7 +4979,6 @@ public function ActionAssignFreePractice(){
        
         
         $pages = $result['pages'];
-        
         if (!empty($teacher_class)) {
             if (isset($_GET['classID']))
                 Yii::app()->session['currentClass'] = $_GET['classID'];
@@ -4981,6 +5009,7 @@ public function ActionAssignFreePractice(){
         }
 
         $this->render('assignFreePractice', array(
+            'deleteresult'=>$deleteresult,
             'array_class' => $array_class,
             'array_lesson' => $array_lesson,
             'array_allpractice' => $array_allpractice,
