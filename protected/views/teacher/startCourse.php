@@ -65,8 +65,9 @@
     
     <h1>
        <?php  
+       $nowOn = $_GET['on'];
          if($lessonsName!=null)
-            echo $lessonsName[$progress];?>
+            echo $lessonsName[$nowOn];?>
     </h1>
     <div class="hero-unit table-bordered" style="height:200px; width: 770px">
         <p class="font-startcourse">
@@ -312,11 +313,6 @@
         </div>
     <h1>课堂练习</h1>
     <div class="table-bordered summary">
-     <ul>
-                <li>
-                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=key"><span class="count"><?php  if(isset($keywork)){echo count($keywork);}else{echo '0';}?>
-                        </span > <font style="color:#000">键打练习</font></a>
-                </li>
                 <li>
                     <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=look"><span class="count"><?php  if(isset($look)){echo count($look);}else{echo '0';}?>
                         </span > <font style="color:#000">看打练习</font></a>

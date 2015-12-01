@@ -22,7 +22,6 @@
              <?php  } ?>
                  <div class="selectoption">
                                 <select  name="type" >
-                                    <option  value="key" <?php if(isset($_GET['type'])){if($_GET['type']=='key'){ echo 'selected="selected"';} }?> >键打练习</option>
                                     <option  value="look" <?php if(isset($_GET['type'])){if($_GET['type']=='look'){ echo 'selected="selected"';} } ?> >看打练习</option>
                                         <option  value="listen" <?php if(isset($_GET['type'])){if($_GET['type']=='listen'){ echo 'selected="selected"';}} ?> >听打练习</option>
                                 </select>

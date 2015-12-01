@@ -94,17 +94,25 @@ class apiController extends Controller {
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
         $userID=array(Yii::app()->session['userid_now']);
-        $sql = "SELECT backTime FROM student";
+        $sql = "SELECT userName,backTime FROM student";
         $command = $connection->createCommand($sql);
         $dataReader = $command->query();
         $time = $dataReader->readAll();
         $n=0;$b=0;
+        $onLineStudent = array();
         foreach ($time as $t) {
             if(time()-strtotime($time[$b++]['backTime']) < 10){
+                array_push($onLineStudent, $t['userName']);
                 $n++;
             }
         }
-        $this->renderJSON($n);
+        $sqlstudent = Student::model()->findAll("classID = '$classID'");
+        $student = array();
+        foreach ($sqlstudent as $v){
+            array_push($student, $v['userName']);
+        }
+        $downLineStudent = array_diff($student, $onLineStudent);
+        $this->renderJSON(array($onLineStudent,$downLineStudent,$n));
     }
     public function actionGetClassState(){
         $classID = $_GET['classID'];
