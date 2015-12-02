@@ -109,11 +109,20 @@ class apiController extends Controller {
         $sqlstudent = Student::model()->findAll("classID = '$classID'");
         $student = array();
         foreach ($sqlstudent as $v){
-            array_push($student, $v['userName']);
+            $flag = 0;
+            foreach ($onLineStudent as $vo){
+                if($v['userName']==$vo){
+                    $flag = 1;
+                }
+            }
+            if($flag==0){
+                array_push($student, $v['userName']);
+            }
         }
-        $downLineStudent = array_diff($student, $onLineStudent);
-        $this->renderJSON(array($onLineStudent,$downLineStudent,$n));
+       
+        $this->renderJSON(array($onLineStudent,$student,$n));
     }
+    
     public function actionGetClassState(){
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
