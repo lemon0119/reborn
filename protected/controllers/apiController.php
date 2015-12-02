@@ -224,4 +224,21 @@ class apiController extends Controller {
             echo 0;
         }
     }
+    
+    public function actionGetAverageSpeed(){
+        $time = $_POST['time'];
+        $content = $_POST['content'];
+        $data = AnalysisTool::getAverageSpeed($time, $content);
+        $this->renderJSON($data);
+    }
+    
+    public function actionGetMomentSpeed(){
+        $setTime = $_POST['setTime'];
+        $contentlength = $_POST['$contentlength'];
+        $data = AnalysisTool::getMomentSpeed($setTime, $contentlength);
+        $this->renderJSON($data);
+    }
+    
 }
+
+
