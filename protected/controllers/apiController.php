@@ -225,8 +225,9 @@ class apiController extends Controller {
         }
     }
     
+    //AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903  ------>{
     public function actionGetAverageSpeed(){
-        $time = $_POST['time'];
+        $time = $_POST['startTime'];
         $content = $_POST['content'];
         $data = AnalysisTool::getAverageSpeed($time, $content);
         $this->renderJSON($data);
@@ -234,11 +235,27 @@ class apiController extends Controller {
     
     public function actionGetMomentSpeed(){
         $setTime = $_POST['setTime'];
-        $contentlength = $_POST['$contentlength'];
+        $contentlength = $_POST['contentlength'];
         $data = AnalysisTool::getMomentSpeed($setTime, $contentlength);
         $this->renderJSON($data);
     }
     
+    public function actionGetBackDelete(){
+        $doneCount = $_POST['doneCount'];
+        $keyType = $_POST['keyType'];
+        $donecount = AnalysisTool::getBackDelete($doneCount, $keyType);
+        $this->renderJSON($donecount);
+    }
+    
+    public function actionGetRight_Wrong_AccuracyRate(){
+        $originalContent = $_POST['originalContent'];
+        $currentContent = $_POST['currentContent'];
+        $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
+        $this->renderJSON($data);
+    }
+  
+    
+    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
 }
 
 
