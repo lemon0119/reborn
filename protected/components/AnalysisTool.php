@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 class AnalysisTool{
+    //--------------------------------词语练习------------------------------------------
     //统计瞬时速度 
     //@param $setTime:设置瞬时速度统计的时间区间
     //@param $contentlength：区间内输入的字符长度，需要前端js计算
@@ -14,6 +15,7 @@ class AnalysisTool{
         $momentSpeed = ($contentlength/$setTime)*60;
         return number_format($momentSpeed, 1);
     }
+   
     
     //统计平均速度 
     //@param $startTime:设置平均速度统计的开始时间
@@ -76,6 +78,6 @@ class AnalysisTool{
        $data = array($rightCount,$wrongCount,$accuracyRate);
        return $data;
     }
-    
+    //--------------------------------词语练习------------------------------------------
     
 }
