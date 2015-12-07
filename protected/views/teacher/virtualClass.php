@@ -137,8 +137,11 @@
             </div>
             
     </div>
-  
-
+<div>
+  <button id="b1">test</button>
+    <a id="b2">123</a>
+    <a id="getMomentKeyType">123</a>
+</div>
     <div class="right"style="background-color: #3b3b3b;border: 0px" >
         
             <div align="center" id="sw-teacher-camera"><a href="#"><h4 style="color: white">教 师 视 频</h4></a></div>  

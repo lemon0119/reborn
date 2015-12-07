@@ -51,6 +51,13 @@
     </tr>
 </table>
 <script>
+    var G_content;
+    var G_startTime;
+    var G_momentKey;
+    var G_startFlag      = 0;
+    var G_countAllKey    = 0;
+    var G_countMomentKey = 0;
+    
     $(document).ready(function(){
       document.getElementById("typeOCX").SetTextSize(8);
       document.getElementById("typeOCX").HideToolBar();
@@ -83,9 +90,17 @@
         document.getElementById("typeOCX").UpdateView();
         var input = getContent(document.getElementById("typeOCX"));
         document.getElementById("typeOCX").Locate(input.length);
+        window.G_content = document.getElementById("typeOCX").GetContent();
     }
     
     function onStenoPressKey(pszStenoString ,device){
+         if(window.G_startFlag ===0){
+             var myDate = new Date();
+                    window.G_startTime = myDate.getTime();
+                    window.G_startFlag = 1; 
+                }
+                window.G_countMomentKey++;
+                window.G_countAllKey++;
         var charSet = pszStenoString.split("");
         var left = true;
         keyReSet();

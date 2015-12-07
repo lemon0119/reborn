@@ -1,43 +1,48 @@
 /* 
  * Js AnalysisTool
  * Create By pengjingcheng @qq 390928903   date 2015_12_3
+ * 
+ * 请在主view中设置全局变量 
+ * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000
+ * 
+ * 请在主view中声明全局变量  ！不设置任何值！ 
+ * @param G_startTime 
+ * @param G_countAllKey 
+ * @param G_countMomentKey
+ * @param G_startFlag 
+ * @param G_content 
+ * 
  */
 
 
-//初始化控件
+//统计逻辑
 $(document).ready(function(){
-    var typeOCX = document.getElementById("typeOCX");
-    //countKey  按键次数
-    var startTime;
-    var momentKey;
-    var startFlag      = 0;
-    var countAllKey    = 0;
-    var countMomentKey = 0;
+    
     var highstCountKey = 0;
-    if(typeOCX!==null){
-                typeOCX.OnChange(function(){
-                if(startFlag ===0){
-                    startTime = time();
-                }
-                countMomentKey++;
-                countAllKey++;
-            });
-    }
     //2s内统计统计瞬时击键 次/分钟
-    //@para|m id=getMomentKeyType 请将瞬时击键统计的控件id设置为getMomentKeyType
+    //@param id=getMomentKeyType 请将瞬时击键统计的控件id设置为getMomentKeyType
     //2s内统计统计最高击键 
     //@param id=getHighstCountKey 请将最高击键统计的控件id设置为getHighstCountKey
     //2s内统计统计平均击键 
     //@param id=getAverageKeyType 请将最高击键统计的控件id设置为getAverageKeyType
     //2s内统计统计总按键数 
     //@param id=getcountAllKey 请将最高击键统计的控件id设置为getcountAllKey
+    //2s内统计统计平均速度 
+    //@param id=getAverageSpeed 请将最高击键统计的控件id设置为getAverageSpeed
     
-    setInterval(function(){
-        var nowTime = time();
+    var timer = setInterval(function(){
+        var content = window.G_content;
+        var setEndTime = window.G_setEndTime;
+        var startTime = window.G_startTime;
+        var momentKey;
+        var countAllKey    = window.G_countAllKey;
+        var countMomentKey = window.G_countMomentKey;
+        var myDate = new Date();
+        var nowTime = myDate.getTime();
         $("#getcountAllKey").html(countAllKey);
         if(nowTime>startTime){
-            var averageKeyType = countAllKey/(nowTime-startTime)*60;
-            $("#getAverageKeyType").html(averageKeyType);
+            var averageKeyType = countAllKey/(nowTime-startTime)*60000;
+            $("#getAverageKeyType").html(parseInt(averageKeyType));
         }else{
             $("#getAverageKeyType").html(0);
         }
@@ -48,15 +53,22 @@ $(document).ready(function(){
                highstCountKey = countMomentKey/2*60;
                $("#getHighstCountKey").html(highstCountKey);
            }
+           window.G_countMomentKey=0;
         }else{
             $("#getMomentKeyType").html(0); 
         }
          countMomentKey=0;
+         
+         
+         if(((nowTime-startTime))>(setEndTime*1000)){
+              $("#getMomentKeyType").html(0);
+             clearInterval(timer);
+         }
     },2000);
     
     
 });
-
+//拿取键码值
 
     //统计平均速度 
     //@param $id：控件id
