@@ -123,28 +123,22 @@
         var left = true;
         storyKey(pszStenoString);
         keyReSet();
-        for(var i = 0; i < charSet.length; i++){
-            if(charSet[i] == ':'){
+            var left = true;
+            for(var i = 0; i < yaweiCode.length; i++){
+            if(yaweiCode[i] == ':'){
                 left = false;
                 continue;
             }
-            var c = charSet[i].toLowerCase();
+            var c = yaweiCode[i].toLowerCase();
             if(left){
-                if(checkChar(charSet[i],true))
-                    //打对择把该键显示设置true
                     keySet("l_"+ c, true);
-                else
-                    keySet("l_"+c , false);
             }else{
-                if(checkChar(charSet[i],false))
                     keySet("r_"+c , true);
-                else
-                    keySet("r_"+c , false);
             }
-        }
+            }      
         changTemplet(pszStenoString);
         var correct = getCorrect()*100;
-        document.getElementById("correctRate").innerHTML = correct.toFixed(2); 
+        document.getElementById("correctRate").innerHTML = correct.toFixed(2);       
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -167,6 +161,7 @@
         nextWord = getNextWord();
         setWordView(nextWord);
     }
+    
     function setWordView(word){
         document.getElementById("word").innerHTML = word;
         $('#keyMode').fadeOut(50);
@@ -174,30 +169,15 @@
     }
     function changTemplet(pszStenoString){
 
-        if(isSameWord(pszStenoString,yaweiCode)){
-        
+        if(isSameWord(pszStenoString,yaweiCode)){     
             nextWord = "";
             nextWord = getNextWord();
             setWordView(nextWord);
             ++numKeyDown;
             ++numKeyRight;
-        } else {     
-            setTimeout(function(){
-            keyReSet();
-            var left = true;
-            for(var i = 0; i < yaweiCode.length; i++){
-            if(yaweiCode[i] == ':'){
-                left = false;
-                continue;
-            }
-            var c = yaweiCode[i].toLowerCase();
-            if(left){
-                    keySet("l_"+ c, true);
-            }else{
-                    keySet("r_"+c , true);
-            }
-            }
-            }, 500);          
+        } else {               
+            nextWord = "";
+            nextWord = getNextWord();
             setWordView(nextWord);
             ++numKeyDown;
         }
@@ -229,7 +209,7 @@
         }
         return true;
     }
-    function getCorrect(pattern , answer){
+    function getCorrect(){
         return numKeyRight / numKeyDown;
     }
     function getNextWord(){

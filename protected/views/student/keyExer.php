@@ -33,14 +33,14 @@
                     <?php }else{?>
                     <td width = '250px'>计时：<span id="timej">00:00:00</span></td>
                     <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>
                      <?php }?>
                 </tr>
         </table>
         <br/>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
-                <td id="left-key" style="border-right: 1px solid #000; width: 300px;text-align:right;"></td>
-                <td id="right-key" style="border-left: 1px solid #000; width: 300px"></td>
+                <td id="word" style="border-right: 1px solid #000; width: 300px;text-align:right;"></td>              
             </tr>
         </table>
         <br/>
@@ -48,7 +48,14 @@
             <font id="id_right"style="color:#808080"> </font><font id="id_wrong" style="color:#ff0000"> </font><font id="id_new" style="color:#000000"> </font>
         </div>
         <div style="width: 750px; height: 350px;">
-            <?php require  Yii::app()->basePath."\\views\\student\\keyboard.php";?>
+            <?php         
+            if($exerOne['category'] == "correct")
+            require  Yii::app()->basePath."\\views\\student\\correct_keyboard.php";
+            else if($exerOne['category'] == "free" )
+                require  Yii::app()->basePath."\\views\\student\\keyboard.php";
+            else
+                require  Yii::app()->basePath."\\views\\student\\speed_keyboard.php";
+            ?>
         </div>
         <?php
             $host = Yii::app()->request->hostInfo;
@@ -65,6 +72,8 @@
     </div>
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host.$path.$page.$param;?>">
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
+        <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed'];?>">
+        <input id="id_exerciseTime" type="hidden" value="<?php echo $exerOne['exerciseTime'];?>">
         <input name="nm_answer" id="id_answer" type="hidden">
         <input name="nm_cost" id="id_cost" type="hidden">
         <input name="nm_correct" id="id_correct" type="hidden">
@@ -113,6 +122,10 @@
         var length = res === null ? 0 : res.length;
         return length;
     }
+    
+    
+    
+    
     /*
     function getCorrect(pattern , answer){
         var ap = pattern.split(' ');

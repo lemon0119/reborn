@@ -39,7 +39,7 @@
         $teacherID=$model['userID'];
         $teachers["$teacherID"]=$model['userName'];
         endforeach;
-        $code = mt_rand(0, 1000000);
+        $code = mt_rand(0, 1000000);    
     ?>
     
 <div class="span9">
@@ -51,10 +51,10 @@
         <thead>
             <tr>
                 <th class="font-center">选择</th>
-                <th class="font-center">编号</th>
-               
+                <th class="font-center">编号</th>              
                 <th class="font-center">题目</th>
-                <th class="font-center">键位码</th>
+                <th class="font-center">练习次数</th>
+                <th class="font-center">练习模式</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>
                 <th class="font-center">操作</th>
@@ -66,17 +66,29 @@
                     <tr>
                         <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID'];?>" /> </td>
                         <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
-                       
+                        
                         <td class="font-center"><?php  if(Tool::clength($model['title'])<=7)
                                         echo $model['title'];
                                     else
                                         echo Tool::csubstr($model['title'], 0, 7)."...";?></td>
-                        <td class="font-center"><?php  if(Tool::clength($model['content'])<=10)
-                                   echo  str_replace("$",":",$model['content']);
-                               else
-                                   echo str_replace("$",":",Tool::csubstr($model['content'], 0, 10)."...");
+                        <td class="font-center"><?php  
+                             $arr = explode("$$", $model['content']);
+                             $count = count($arr);
+                             echo $count;
                                         ?>
                                         </td>
+                        <td class="font-center"><?php  
+                            if($model['category'] == "free")
+                                echo "自由练习";
+                            else if($model['category'] == "correct")
+                                echo "准确率练习";
+                            else 
+                                echo "速度练习";
+                                        ?>
+                                        </td>                
+                                        
+                                        
+                                        
                         <td class="font-center"><?php if($model['createPerson']=="0")
                                         echo "管理员";
                                     else echo  $teachers[$model['createPerson']];
