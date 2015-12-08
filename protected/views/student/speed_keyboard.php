@@ -72,6 +72,13 @@
         }
     }
     
+    function display(){
+            nextWord = "";
+            nextWord = getNextWord();
+            setWordView(nextWord);
+            ++numKeyDown;
+    }
+    
     function storyKey(stenoString){
         var answer = document.getElementById("id_answer");
         var oldstr = answer.value;
@@ -107,16 +114,16 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
-        if(totalNum == currentNum){
+        if(totalcishu == currentNum){
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
-                    currentNum = totalNum;
+                    currentNum = totalcishu;
                 },
                 onClose:function(){
-                    currentNum = totalNum;
+                    currentNum = totalcishu;
                 }
             });
-            currentNum = totalNum;
+            currentNum = totalcishu;
             return ;
         }
         var charSet = pszStenoString.split("");
@@ -154,18 +161,22 @@
     var yaweiCode = "";
     var numKeyDown = 0;
     var numKeyRight = 0;
+    var time1;
     function startParse(){
         var content = document.getElementById("id_content").value;
+        var speed = document.getElementById("id_speed").value;
+        var exerciseTime = document.getElementById("id_exerciseTime").value;
         var cont_array = content.split("$$");
         for(var i = 0; i < cont_array.length; i += 1){
             var yaweiCode = cont_array[i].split(":0")[0];
             yaweiCodeArray.push(yaweiCode);   
             var word = cont_array[i].split(":0")[1];
             wordArray.push(word);
-            totalNum += 1;
+            totalNum += 1;           
         }
-        nextWord = getNextWord();
-        setWordView(nextWord);
+        totalcishu = speed*exerciseTime;
+        display();
+        time1 = setInterval("display()",1/(speed/60)*1000); 
     }
     function setWordView(word){
         document.getElementById("word").innerHTML = word;
@@ -173,33 +184,8 @@
         $('#keyMode').fadeIn(50);
     }
     function changTemplet(pszStenoString){
-
         if(isSameWord(pszStenoString,yaweiCode)){
-        
-            nextWord = "";
-            nextWord = getNextWord();
-            setWordView(nextWord);
-            ++numKeyDown;
             ++numKeyRight;
-        } else {     
-            setTimeout(function(){
-            keyReSet();
-            var left = true;
-            for(var i = 0; i < yaweiCode.length; i++){
-            if(yaweiCode[i] == ':'){
-                left = false;
-                continue;
-            }
-            var c = yaweiCode[i].toLowerCase();
-            if(left){
-                    keySet("l_"+ c, true);
-            }else{
-                    keySet("r_"+c , true);
-            }
-            }
-            }, 500);          
-            setWordView(nextWord);
-            ++numKeyDown;
         }
     }
     
@@ -233,23 +219,19 @@
         return numKeyRight / numKeyDown;
     }
     function getNextWord(){
-        currentNum++;
+        currentNum++;       
         if(totalNum == currentNum){
+            clearInterval(time1);
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
         }       
         if(nextWord != "")
             return nextWord;
         var result = wordArray[currentNum];
-        yaweiCode = yaweiCodeArray[currentNum];
-        
+        yaweiCode = yaweiCodeArray[currentNum];        
         return result;
     }
-    
-    function getYaweiCode(){
-        return yaweiCode[currentNum];
-    }
-    
+        
 </script>
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
