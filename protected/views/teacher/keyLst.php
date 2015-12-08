@@ -85,10 +85,7 @@
                             else 
                                 echo "速度练习";
                                         ?>
-                                        </td>                
-                                        
-                                        
-                                        
+                                        </td>                   
                         <td class="font-center"><?php if($model['createPerson']=="0")
                                         echo "管理员";
                                     else echo  $teachers[$model['createPerson']];
