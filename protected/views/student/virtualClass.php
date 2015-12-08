@@ -55,11 +55,16 @@ echo "<script>var role='$role';</script>";
 </div>
 <div>
     <span>平均速度：</span><a id="getAverageSpeed">0</a>
-    <span>瞬时速度：</span><a id="">0</a>
-    <span>回改字数：</span><a id="">0</a>
+    <span>最高速度：</span><a id="getHighstSpeed">0</a>
+    <span>瞬时速度：</span><a id="getMomentSpeed">0</a>
+    <span>回改字数：</span><a id="getBackDelete">0</a>
     <span>瞬时击键：</span><a id="getMomentKeyType">0</a>
     <span>最高击键：</span><a id="getHighstCountKey">0</a>
     <span>平均击键：</span><a id="getAverageKeyType">0</a>
+    <span>平均码长：</span><a id="getAverageKeyLength">0</a>
+    <span>瞬时码长：</span><a id="getMomentKeyLength">0</a>
+    <span>最高码长：</span><a id="getHighstMomentKeyLength">0</a>
+    <span>最低码长：</span><a id="getLowstKeyLength">0</a>
     <span>总按键数：</span><a id="getcountAllKey">0</a>
 </div>
 

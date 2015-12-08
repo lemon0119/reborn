@@ -51,7 +51,8 @@
     </tr>
 </table>
 <script>
-    var G_content;
+    var G_content="";
+    var G_keyContent="";
     var G_startTime;
     var G_momentKey;
     var G_startFlag      = 0;
@@ -90,10 +91,10 @@
         document.getElementById("typeOCX").UpdateView();
         var input = getContent(document.getElementById("typeOCX"));
         document.getElementById("typeOCX").Locate(input.length);
-        window.G_content = document.getElementById("typeOCX").GetContent();
     }
     
     function onStenoPressKey(pszStenoString ,device){
+        //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
          if(window.G_startFlag ===0){
              var myDate = new Date();
                     window.G_startTime = myDate.getTime();
@@ -101,6 +102,9 @@
                 }
                 window.G_countMomentKey++;
                 window.G_countAllKey++;
+                window.G_content = document.getElementById("typeOCX").GetContent();
+                window.G_keyContent = window.G_keyContent +"&"+pszStenoString;
+        //--------------------------------------------------
         var charSet = pszStenoString.split("");
         var left = true;
         keyReSet();
