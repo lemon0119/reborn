@@ -61,11 +61,7 @@ echo "<script>var role='$role';</script>";
     <span>瞬时击键：</span><a id="getMomentKeyType">0</a>
     <span>最高击键：</span><a id="getHighstCountKey">0</a>
     <span>平均击键：</span><a id="getAverageKeyType">0</a>
-    <span>平均码长：</span><a id="getAverageKeyLength">0</a>
-    <span>瞬时码长：</span><a id="getMomentKeyLength">0</a>
-    <span>最高码长：</span><a id="getHighstMomentKeyLength">0</a>
-    <span>最低码长：</span><a id="getLowstKeyLength">0</a>
-    <span>总按键数：</span><a id="getcountAllKey">0</a>
+    <span>总击键数：</span><a id="getcountAllKey">0</a>
 </div>
 
 <div class="right"style="background-color: #3b3b3b;border: 0px" >

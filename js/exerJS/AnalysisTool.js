@@ -20,8 +20,6 @@ var G_oldKeyContentLength = 0;
 $(document).ready(function(){
     var highstCountKey  = 0;
     var highstSpeed     = 0;
-    var highstKeySpeed  = 0;
-    var newKeyContent   = "";
     //2s内统计统计瞬时击键 次/分钟
     //@param id=getMomentKeyType 请将瞬时击键统计的控件id设置为getMomentKeyType
     //2s内统计统计最高击键 
@@ -39,14 +37,6 @@ $(document).ready(function(){
     //2s内统计回改字数
     //@param id=getBackDelete 请将最高平均速度统计的控件id设置为getBackDelete
     
-    //2s内统计瞬时码长
-    //@param id=getMomentKeyLength 请将最高平均速度统计的控件id设置为getMomentKeyLength 
-    //2s内统计最低码长
-    //@param id=getLowstKeyLength 请将最高平均速度统计的控件id设置为getLowstKeyLength   
-    //2s内统计平均码长
-    //@param id=getAverageKeyLength 请将最高平均速度统计的控件id设置为getAverageKeyLength   
-    //2s内统计最高瞬时码长
-    //@param id=getHighstMomentKeyLength 请将最高平均速度统计的控件id设置为getHighstMomentKeyLength
     var timer = setInterval(function(){
         var content        = window.G_content;
         var keyContent     = window.G_keyContent;
@@ -157,45 +147,6 @@ $(document).ready(function(){
             }
                 $("#getBackDelete").html(CountBackDelete); 
            }
-           
-           if(typeof(keyContent)!=="undefined"){
-           //统计平均码长 个/分钟
-            if((nowTime-startTime)>0){
-                newKeyContent = (keyContent.split("&").join('')).split(":").join('');
-                var averagekeyLength = parseInt((newKeyContent.length/(nowTime-startTime))*60000); 
-                 if(averagekeyLength ===0){
-                    averagekeyLength = 1;
-                }
-                $("#getAverageKeyLength").html(averagekeyLength);
-            }
-            //统计瞬时码长  个/分钟
-            if(newKeyContent.length>0){
-                console.log(newKeyContent);
-              var IntervalKeyContentLength = (newKeyContent.length - window.G_oldKeyContentLength);
-              if(IntervalKeyContentLength<0){
-                  IntervalKeyContentLength = 0;
-              }
-              window.G_oldKeyContentLength = newKeyContent.length;
-              var momentKeySpeed = (IntervalKeyContentLength/2)*60;
-              $("#getMomentKeyLength").html(momentKeySpeed);
-              //最高瞬时码长 个/分钟
-              if(momentSpeed>highstKeySpeed){
-                    highstKeySpeed = momentSpeed;
-                    $("#getHighstMomentKeyLength").html(momentKeySpeed);
-                }
-              //最低码长 个/分钟
-              var lowestKeyLength;
-              if(window.G_startFlag === 0){
-                  lowestKeyLength = momentSpeed;
-              }
-              if(momentSpeed<lowestKeyLength){
-                    lowestKeyLength = momentSpeed;
-                    $("#getLowstKeyLength").html(lowestKeyLength);
-                }
-            }
-          
-           }
-           
            
            //判断统计结束
          if(((nowTime-startTime))>(setEndTime*1000)){
