@@ -622,7 +622,8 @@ class StudentController extends CController {
             'typeNow' => 'key',
             'exerID' =>$exerID,
             'isOver' => $isOver, //edit by LC
-            'costTime' => $costTime
+            'costTime' => $costTime,
+            
         ));
     }
     
