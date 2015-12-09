@@ -53,7 +53,18 @@ echo "<script>var role='$role';</script>";
 
     <div id="dianbo-videos-container" style="display:none;">  </div>
 </div>
-
+<div>
+    <span>平均速度：</span><a id="getAverageSpeed">0</a>
+    <span>最高速度：</span><a id="getHighstSpeed">0</a>
+    <span>瞬时速度：</span><a id="getMomentSpeed">0</a>
+    <span>回改字数：</span><a id="getBackDelete">0</a>
+    <span>瞬时击键：</span><a id="getMomentKeyType">0</a>
+    <span>最高击键：</span><a id="getHighstCountKey">0</a>
+    <span>平均击键：</span><a id="getAverageKeyType">0</a>
+    <span>击键间隔：</span><a id="getIntervalTime">0</a>
+    <span>最高间隔：</span><a id="getHighIntervarlTime">0</a>
+    <span>总击键数：</span><a id="getcountAllKey">0</a>
+</div>
 
 <div class="right"style="background-color: #3b3b3b;border: 0px" >
     <div align="center" id="sw-teacher-camera"><a href="#" ><h4 style="color: white">教 师 视 频</h4></a></div>
@@ -80,6 +91,7 @@ echo "<script>var role='$role';</script>";
   
 <script>
     //显示全屏图像
+    
     var onImg = false;
     function fun1(){
         $('#ppt-asd').attr('style','margin-top: -35px');
@@ -402,4 +414,11 @@ $(document).ready(function(){
         addMessageHandleForWS();
     }
 });
+</script>
+<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
+<script>
+        
+       
+       
+    
 </script>

@@ -48,7 +48,7 @@
                 <ul class="nav nav-list">
                 <li class="nav-header"></li>
                 <li class="nav-header"><i class="icon-knowlage"></i>学生列表</li>
-                <div class="scroll" style="padding: 8px 0;height:100px;overflow:auto;margin-left: 20px;">
+                <div class="scroll" style="padding: 8px 0;height:150px;overflow:auto;margin-left: 20px;">
                 <?php foreach($stu as $student){
                     ?>
                     <li><i class="icon-headphones"></i><?php echo $student['userName']?></li>
@@ -65,8 +65,9 @@
     
     <h1>
        <?php  
+       $nowOn = $_GET['on'];
          if($lessonsName!=null)
-            echo $lessonsName[$progress];?>
+            echo $lessonsName[$nowOn];?>
     </h1>
     <div class="hero-unit table-bordered" style="height:200px; width: 770px">
         <p class="font-startcourse">
@@ -76,7 +77,7 @@
             <?php if ($on == $progress) { ?>
             <a href="#" onclick="getBackTime()"class="startcourse-virtualclass">虚拟课堂</a> 
             <?php } else { ?>
-                <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass">开始本课</a> 
+            <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass-begin">开始本课</a> 
                <?php } ?>
             <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $classID; ?>&&lessonID=<?php $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
                echo $less['lessonID'];
@@ -310,19 +311,14 @@
                 
             </ul>
         </div>
-    <h1>自由练习</h1>
+    <h1>课堂练习</h1>
     <div class="table-bordered summary">
-     <ul>
                 <li>
-                    <a  id="ppt" href="#"><span class="count">2
-                        </span > <font style="color:#000">键打练习</font></a>
-                </li>
-                <li>
-                    <a  id="ppt" href="#"><span class="count">2
+                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=look"><span class="count"><?php  if(isset($look)){echo count($look);}else{echo '0';}?>
                         </span > <font style="color:#000">看打练习</font></a>
                 </li>
                 <li>
-                    <a  id="ppt" href="#"><span class="count">2
+                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=listen"><span class="count"><?php  if(isset($listen)){echo count($listen);}else{echo '0';}?>
                         </span > <font style="color:#000">听打练习</font></a>
                 </li>
      </ul>
@@ -351,7 +347,7 @@
     $.ajax({
         type: "GET",
         dataType: "json",
-        //url: "index.php?r=api/GetBackTime&&classID=<?php echo $classID;?>",
+        //url: "index.php?r=api/GetBackTime&&classID=<?php //echo $classID;?>",
         url: "index.php?r=api/GetClassState&&classID=<?php echo $classID;?>",
         success: function(data) {
             console.log("qq",data);

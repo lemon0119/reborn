@@ -26,6 +26,17 @@
     ?>
 
     <div class="left">
+        <div class="right" style="position: relative;float: none;background-color: #3b3b3b;border: 0px;padding: 0px 0px;width: 103px">
+                <div   align="center" id="sw-bull"><a href="#"><h4 style="color: white">在 线 学 生</h4></a></div>
+            <div  class="online" style="border: 0px;width:100px;">
+
+                <div id="dd" disabled="disabled" style="overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:300px; padding:0;">
+                    <text id="dd1"   style="cursor: default;overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:greenyellow;width:100%;  padding:0;"></text>
+                    <text id="dd2"   style="cursor: default; overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:white;width:100%;  padding:0;"></text>
+                </div>
+            
+            </div>
+                </div>
             <div style="display:inline;">
                 <button id="teacher-dianbo" class="btn btn-primary">点播视频</button>
                 <select id="teacher-choose-file" style="width:150px;margin-top: 10px;">
@@ -57,8 +68,8 @@
                     ?>
                 </select>
                 <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button>
-                <h style="margin-left: 330px;">在线<textarea id="ff" disabled="disabled"style="width:10px;height: 15px;background:transparent;border-style:none;"><?php echo $count?></textarea>人</h>
-                 
+                
+                <h style="margin-left: 200px;">全班<textarea id="totle" disabled="disabled" style="width:20px;height: 15px;background:transparent;border-style:none;"><?php echo $totle?></textarea>人  在线<textarea id="ff" disabled="disabled" style="width:10px;height: 15px;background:transparent;border-style:none;"><?php echo $count?></textarea>人</h>
             </div>
         
             <div style="display:block;"></div>
@@ -124,8 +135,13 @@
             <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
                 <img id="ppt-img" src="" style="height: 100%;"/>
             </div>
+            
     </div>
-
+<div>
+  <button id="b1">test</button>
+    <a id="b2">123</a>
+    <a id="getMomentKeyType">123</a>
+</div>
     <div class="right"style="background-color: #3b3b3b;border: 0px" >
         
             <div align="center" id="sw-teacher-camera"><a href="#"><h4 style="color: white">教 师 视 频</h4></a></div>  
@@ -285,7 +301,7 @@ $(document).ready(function(){
     setInterval(function() {
         getBackTime();
         //freshOnline();
-    }, 4000)
+    }, 4000);
     // ------------------------------------------------------ poll latest bulletin
     /*第一次读取最新通知*/
     setTimeout(function() {
@@ -327,7 +343,12 @@ function getBackTime() {
             var now=<?php echo time()?>;    //这个时间是页面进入的时候，生成的。
             //虽然点击的时候，才会执行这个js代码，但是，php是加载的时候就已经生成了
             //也就是说，等到用户点击，这个时间now的值，是加载页面的时间。
-            $("#ff").val(data);
+            //var user = new Array(0,1,2,3,4);
+            $("#ff").val(data[2]);
+            var content = data[0].join("<br/>&nbsp;&nbsp;&nbsp;&nbsp;");
+            var content2 = data[1].join("<br/>&nbsp;&nbsp;&nbsp;&nbsp;");
+            $("#dd1").html("&nbsp;&nbsp;&nbsp;&nbsp;"+content);
+            $("#dd2").html("<br/>&nbsp;&nbsp;&nbsp;&nbsp;"+content2);
         },
         error: function(xhr, type, exception){
             console.log('get backtime erroe', type);
@@ -419,6 +440,7 @@ $(document).ready(function(){
     $("#sw-bulletin").click(function() {
         $("#bulletin").toggle(200);
     });
+        getBackTime();
 });
 </script>
 
