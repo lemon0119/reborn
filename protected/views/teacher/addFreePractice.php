@@ -36,16 +36,14 @@
 </div>
 
 <div class="span9">
-    <?php if($type=='key'){ ?>
-    <h1>添加键打练习</h1>
-        
-    <?php }else if($type=='look'){ ?>
+    <?php if($type=='look'){ ?>
     <h1>添加看打练习</h1>
     
         
     <?php }else if($type=='listen'){ ?>
      <h1>添加听打练习</h1>
         
+     
     <?php } ?> 
 </div>
 

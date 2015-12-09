@@ -26,18 +26,23 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
         $userID = array(Yii::app()->session['userid_now']);
-        $sql = "SELECT backTime FROM student";
-        $command = $connection->createCommand($sql);
+        $sql = "SELECT userName,backTime FROM student WHERE";
+        $where = " classID = '$classID'";
+        $command = $connection->createCommand($sql.$where);
         $dataReader = $command->query();
         $time = $dataReader->readAll();
         $n = 0;
         $b = 0;
+        $totle = 0;
+        $onLineStudent = array();
         foreach ($time as $t) {
             if (time() - strtotime($time[$b++]['backTime']) < 10) {
+                array_push($onLineStudent, $t['userName']);
                 $n++;
             }
+            $totle++;
         }
-        return $this->render('virtualClass', ['userName' => $username, 'classID' => $_GET['classID'], 'on' => $_GET['on'], 'count' => $n]);
+        return $this->render('virtualClass', ['userName' => $username, 'classID' => $_GET['classID'], 'on' => $_GET['on'], 'onLineStudent'=>$onLineStudent,'count' => $n,'totle'=>$totle]);
     }
 
 //add by LC 2015-10-13

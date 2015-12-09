@@ -94,18 +94,35 @@ class apiController extends Controller {
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
         $userID=array(Yii::app()->session['userid_now']);
-        $sql = "SELECT backTime FROM student";
+        $sql = "SELECT userName,backTime FROM student";
         $command = $connection->createCommand($sql);
         $dataReader = $command->query();
         $time = $dataReader->readAll();
         $n=0;$b=0;
+        $onLineStudent = array();
         foreach ($time as $t) {
             if(time()-strtotime($time[$b++]['backTime']) < 10){
+                array_push($onLineStudent, $t['userName']);
                 $n++;
             }
         }
-        $this->renderJSON($n);
+        $sqlstudent = Student::model()->findAll("classID = '$classID'");
+        $student = array();
+        foreach ($sqlstudent as $v){
+            $flag = 0;
+            foreach ($onLineStudent as $vo){
+                if($v['userName']==$vo){
+                    $flag = 1;
+                }
+            }
+            if($flag==0){
+                array_push($student, $v['userName']);
+            }
+        }
+       
+        $this->renderJSON(array($onLineStudent,$student,$n));
     }
+    
     public function actionGetClassState(){
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
@@ -207,4 +224,38 @@ class apiController extends Controller {
             echo 0;
         }
     }
+    
+    //AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903  ------>{
+    public function actionGetAverageSpeed(){
+        $time = $_POST['startTime'];
+        $content = $_POST['content'];
+        $data = AnalysisTool::getAverageSpeed($time, $content);
+        $this->renderJSON($data);
+    }
+    
+    public function actionGetMomentSpeed(){
+        $setTime = $_POST['setTime'];
+        $contentlength = $_POST['contentlength'];
+        $data = AnalysisTool::getMomentSpeed($setTime, $contentlength);
+        $this->renderJSON($data);
+    }
+    
+    public function actionGetBackDelete(){
+        $doneCount = $_POST['doneCount'];
+        $keyType = $_POST['keyType'];
+        $donecount = AnalysisTool::getBackDelete($doneCount, $keyType);
+        $this->renderJSON($donecount);
+    }
+    
+    public function actionGetRight_Wrong_AccuracyRate(){
+        $originalContent = $_POST['originalContent'];
+        $currentContent = $_POST['currentContent'];
+        $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
+        $this->renderJSON($data);
+    }
+  
+    
+    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
 }
+
+
