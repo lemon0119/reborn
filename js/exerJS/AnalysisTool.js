@@ -5,37 +5,40 @@
  * 请在主view中设置全局变量 
  * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000
  * 
- * 请在主view中声明全局变量  ！不设置任何值！ 
- * @param G_startTime 
- * @param G_countAllKey 
- * @param G_countMomentKey
- * @param G_startFlag 
- * @param G_content = "";
- * @param G_keyContent= "";
+ * 请在主view中声明全局变量   
+ * @param  var G_content="";
+ * @param  var G_keyContent="";
+ * @param  var G_startTime      = 0;
+ * @param  var G_startFlag      = 0;
+ * @param  var G_countAllKey    = 0;
+ * @param  var G_countMomentKey = 0;
+ * @param  var G_pressTime      = 0;
+ * @param  var G_highIntervarlTime  = 0;
+ * @param  var G_endAnalysis    = 0;
+ * 
  */
 
 var G_oldContentLength = 0;
-var G_oldKeyContentLength = 0;
 //统计逻辑
 $(document).ready(function(){
     var highstCountKey  = 0;
     var highstSpeed     = 0;
-    //2s内统计统计瞬时击键 次/分钟
+    //2s内统计统计瞬时击键 次/秒
     //@param id=getMomentKeyType 请将瞬时击键统计的控件id设置为getMomentKeyType
-    //2s内统计统计最高击键 
+    //2s内统计统计最高击键 次/秒
     //@param id=getHighstCountKey 请将最高击键统计的控件id设置为getHighstCountKey
-    //2s内统计统计平均击键 
+    //2s内统计统计平均击键 次/分钟
     //@param id=getAverageKeyType 请将最高击键统计的控件id设置为getAverageKeyType
-    //2s内统计统计总按键数 
+    //2s内统计统计总按键数 次
     //@param id=getcountAllKey 请将最高击键统计的控件id设置为getcountAllKey
-    //2s内统计统计平均速度 
+    //2s内统计统计平均速度 字/分钟
     //@param id=getAverageSpeed 请将平均速度统计的控件id设置为getAverageSpeed
-    //2s内统计统计平均速度 
+    //2s内统计最高平均速度 字/分钟
     //@param id=getHighstSpeed 请将最高平均速度统计的控件id设置为getHighstSpeed
-    //2s内统计瞬时速度 
+    //2s内统计瞬时速度     字/分钟
     //@param id=getMomentSpeed 请将最高平均速度统计的控件id设置为getMomentSpeed 
-    //2s内统计回改字数
-    //@param id=getBackDelete 请将最高平均速度统计的控件id设置为getBackDelete
+    //2s内统计回改字数     字
+    //@param id=getBackDelete 请将最高平均速度统计的控件id设置为getBackDelete  
     
     var timer = setInterval(function(){
         var content        = window.G_content;
@@ -48,8 +51,8 @@ $(document).ready(function(){
         var nowTime        = myDate.getTime();
         $("#getcountAllKey").html(countAllKey);
         if(nowTime>startTime){
-            var averageKeyType = parseInt(countAllKey/(nowTime-startTime)*60000);
-            if(averageKeyType === 0){
+            var averageKeyType = parseInt(countAllKey/(nowTime-startTime)*6000);
+            if((countAllKey/(nowTime-startTime)*1000)<1 && (countAllKey/(nowTime-startTime)*1000)>0 ){
                 averageKeyType = 1;
             }
             $("#getAverageKeyType").html(averageKeyType);
@@ -58,9 +61,9 @@ $(document).ready(function(){
         }
         
         if(countMomentKey>0){
-           $("#getMomentKeyType").html(countMomentKey/2*60); 
-           if((countMomentKey/2*60)>highstCountKey){
-               highstCountKey = countMomentKey/2*60;
+           $("#getMomentKeyType").html(countMomentKey/2); 
+           if((countMomentKey/2)>highstCountKey){
+               highstCountKey = countMomentKey/2;
                $("#getHighstCountKey").html(highstCountKey);
            }
            window.G_countMomentKey=0;
@@ -86,9 +89,9 @@ $(document).ready(function(){
               }
           }
         
-            //平均击键速度 次/秒
+            //平均速度 字/分钟
             if(content.length>0){
-                var averageSpeed = parseInt(content.length/(nowTime-startTime)*1000);
+                var averageSpeed = parseInt(content.length/(nowTime-startTime)*60000);
                 if(averageSpeed ===0){
                     averageSpeed = 1;
                 }
@@ -147,11 +150,14 @@ $(document).ready(function(){
             }
                 $("#getBackDelete").html(CountBackDelete); 
            }
+          
            
            //判断统计结束
          if(((nowTime-startTime))>(setEndTime*1000)){
+             window.G_endAnalysis = 1;
               $("#getMomentKeyType").html(0);
               $("#getHighstSpeed").html(0);
+              $("#getIntervalTime").html(0);
              clearInterval(timer);
          }
     },2000);
