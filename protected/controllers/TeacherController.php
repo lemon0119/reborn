@@ -294,8 +294,7 @@ class TeacherController extends CController {
         }else{
         $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
         }
-        $dir = "resources/" . $pptFilePath;
-        
+        $dir = "resources/" . $pptFilePath;       
         $file = $dir . $fileName;
         $result = 0;               //不显示提示
         if (!isset(Yii::app()->session['ppt2del']) ||
@@ -1205,19 +1204,22 @@ class TeacherController extends CController {
     public function actionAddKey() {
         $result = 'no';
         if (isset($_POST['title'])) {
-            $i = 2;
-            $answer = $_POST['in1'];
-            for (; $i <= 3 * 10; $i++) {
-                if ($_POST['in' . $i] != "") {
-                    if ($i % 3 == 0)
-                        $answer = $answer . "_" . $_POST['in' . $i];
-                    else
-                        $answer = $answer . ":" . $_POST['in' . $i];
-                } else
-                    break;
-            }
-            $result = KeyType::model()->insertKey($_POST['title'], $answer, Yii::app()->session['userid_now']);
+            $category = $_POST['category'];      
+            if($category == "speed")
+                $num = $_POST['speed']*$_POST['exerciseTime'];
+            else
+                $num = $_POST['in1'];
+            $res = TwoWordsLib::model()->getRandomRecord($num);
+            $answer = "";
+            foreach( $res as $record){
+                if($answer != "")
+                    $answer = $answer."$$".$record['yaweiCode'].$record['words'];
+                else 
+                    $answer = $record['yaweiCode'].$record['words'];
+            }         
+            $result = KeyType::model()->insertKey($_POST['title'], $answer, Yii::app()->session['userid_now'],$category,$_POST['speed'],$_POST['exerciseTime']);
         }
+        
         $this->render('addKey', ['result' => $result]);
     }
 
@@ -1226,19 +1228,26 @@ class TeacherController extends CController {
         $sql = "SELECT * FROM key_type WHERE exerciseID = '$exerciseID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $result = $result->read();
-        $result['content'] = str_replace("_", ":", $result['content']);
+
         if (!isset($_GET['action'])) {
             $this->render("editKey", array(
                 'exerciseID' => $exerciseID,
                 'title' => $result['title'],
-                'content' => $result['content']
+                'content' => $result['content'],
+                'category' => $result['category'],
+                'speed' => $result['speed'],
+                'exerciseTime' => $result['exerciseTime']
+            
             ));
         } else if ($_GET['action'] = 'look') {
             $this->render("editKey", array(
                 'exerciseID' => $exerciseID,
                 'title' => $result['title'],
                 'content' => $result['content'],
-                'action' => 'look'
+                'action' => 'look',
+                'category'=>$result['category'],
+                'speed' => $result['speed'],
+                'exerciseTime' => $result['exerciseTime']
             ));
         }
     }
@@ -1246,20 +1255,29 @@ class TeacherController extends CController {
     public function actionEditKeyInfo() {
         $exerciseID = $_GET['exerciseID'];
         $thisKey = new KeyType();
-        $thisKey = $thisKey->find("exerciseID = '$exerciseID'");
-        $i = 2;
-        $answer = $_POST['in1'];
-        for (; $i <= 3 * 10; $i++) {
-            if ($_POST['in' . $i] != "") {
-                if ($i % 3 == 0)
-                    $answer = $answer . "_" . $_POST['in' . $i];
-                else
-                    $answer = $answer . ":" . $_POST['in' . $i];
-            } else
-                break;
-        }
+        $thisKey = $thisKey->find("exerciseID = '$exerciseID'");   
+            if($_POST['category'] == "speed")
+            {
+                $num = $_POST['speed'] * $_POST['exerciseTime'];
+            }else{
+            $num = $_POST['in1'];
+            }
+            $res = TwoWordsLib::model()->getRandomRecord($num);
+            $answer = "";
+            foreach( $res as $record){
+                if($answer != "")
+                $answer = $answer."$$".$record['yaweiCode'].$record['words'];
+                else 
+                $answer = $record['yaweiCode'].$record['words'];
+            }
         $thisKey->title = $_POST['title'];
         $thisKey->content = $answer;
+        $thisKey->category = $_POST['category'];
+        if($_POST['category'] == "speed")
+        {
+            $thisKey->speed = $_POST['speed'];
+            $thisKey->exerciseTime = $_POST['exerciseTime'];           
+        }
         $thisKey->update();
 
         if (Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam") {
@@ -1268,6 +1286,9 @@ class TeacherController extends CController {
                 'exerciseID' => $exerciseID,
                 'title' => $thisKey->title,
                 'content' => $thisKey->content,
+                'category'=>$thisKey->category,
+                'speed' => $thisKey->speed,
+                'exerciseTime' => $thisKey->exerciseTime,
                 'result' => "修改习题成功"
             ));
         } else {
@@ -1275,6 +1296,9 @@ class TeacherController extends CController {
                 'exerciseID' => $thisKey->exerciseID,
                 'title' => $thisKey->title,
                 'content' => $thisKey->content,
+                'category'=>$thisKey->category,
+                'speed' => $thisKey->speed,
+                'exerciseTime' => $thisKey->exerciseTime,
                 'result' => "修改习题成功"
             ));
         }
@@ -1414,7 +1438,7 @@ class TeacherController extends CController {
                     $exerciseID = $_GET["exerciseID"];
                     $thisKey = new KeyType();
                     $oldKey = $thisKey->findAll("exerciseID = '$exerciseID'");
-                    $insertresult = KeyType::model()->insertKey($oldKey[0]['title'], $oldKey[0]['content'], Yii::app()->session['userid_now']);
+                    $insertresult = KeyType::model()->insertKey($oldKey[0]['title'], $oldKey[0]['content'], Yii::app()->session['userid_now'],$oldKey['category'],$oldKey['speed'],$oldKey['exerciseTime']);
                     Yii::app()->session['code'] = $_GET["code"];
                 }
             }
@@ -1424,9 +1448,12 @@ class TeacherController extends CController {
             foreach ($exerciseIDlist as $v) {
                 $thisKey = new KeyType ();
                 $oldKey = $thisKey->find("exerciseID = '$v'");
-                $insertresult = KeyType::model()->insertKey($oldKey['title'], $oldKey['content'], Yii::app()->session['userid_now']);
+                $insertresult = KeyType::model()->insertKey($oldKey['title'], $oldKey['content'], Yii::app()->session['userid_now'],$oldKey['category'],$oldKey['speed'],$oldKey['exerciseTime']);
             }
         }
+        
+        
+        
         if (Yii::app()->session['lastUrl'] == "searchKey") {
             $type = Yii::app()->session['searchKeyType'];
             $value = Yii::app()->session['searchKeyValue'];
