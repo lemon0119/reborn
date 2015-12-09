@@ -86,9 +86,9 @@ $(document).ready(function(){
               }
           }
         
-            //平均速度 字/分钟
+            //平均击键速度 次/秒
             if(content.length>0){
-                var averageSpeed = parseInt(content.length/(nowTime-startTime)*60000);
+                var averageSpeed = parseInt(content.length/(nowTime-startTime)*1000);
                 if(averageSpeed ===0){
                     averageSpeed = 1;
                 }
