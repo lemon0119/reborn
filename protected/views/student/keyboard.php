@@ -107,10 +107,42 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
+        
+        //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
+        var myDate = new Date();
+         window.G_pressTime = myDate.getTime();
+         if(window.G_startFlag ===0){
+                    window.G_startTime = myDate.getTime();
+                    window.G_startFlag = 1; 
+                    window.G_oldStartTime = window.G_pressTime;
+                }
+                window.G_countMomentKey++;
+                window.G_countAllKey++;
+                window.G_content = document.getElementById("typeOCX").GetContent();
+                window.G_keyContent = window.G_keyContent +"&"+pszStenoString;
+                
+                          //每击统计击键间隔时间 秒
+                          //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
+                          //每击统计最高击键间隔时间 秒
+                          //@param id=getHighIntervarlTime 请将最高平均速度统计的控件id设置为getHighIntervarlTime 
+          if(window.G_endAnalysis===0){
+                 var pressTime = window.G_pressTime;
+                 if(pressTime - window.G_oldStartTime >0){
+                     var IntervalTime = parseInt((pressTime - window.G_oldStartTime)/10)/100;
+                      $("#getIntervalTime").html(IntervalTime);
+                     window.G_oldStartTime = pressTime;
+                 }
+                 if(IntervalTime-window.G_highIntervarlTime>0){
+                     window.G_highIntervarlTime = IntervalTime;
+                     $("#getHighIntervarlTime").html(IntervalTime);
+                 }             
+          }   
+          
         if(HaveWindow == 1)
             return;
         if(totalNum == currentNum){
             HaveWindow = 1;
+            window.G_isOverFlag = 1;
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
                     currentNum = totalNum;
@@ -147,9 +179,10 @@
                     keySet("r_"+c , false);
             }
         }
-        changTemplet(pszStenoString);
+        changTemplet(pszStenoString);      
         var correct = getCorrect()*100;
         document.getElementById("correctRate").innerHTML = correct.toFixed(2); 
+        writeData();
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -160,6 +193,23 @@
     var numKeyDown = 0;
     var numKeyRight = 0;
     var HaveWindow = 0;
+    
+    function writeData(){
+        document.getElementById("id_correct").value = getCorrect();
+        document.getElementById("id_cost").value = getT();
+        document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
+        document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;
+        document.getElementById("id_BackDelete").value = document.getElementById("getBackDelete").innerHTML;
+        document.getElementById("id_HighstCountKey").value = document.getElementById("getHighstCountKey").innerHTML;
+        document.getElementById("id_AverageKeyType").value = document.getElementById("getAverageKeyType").innerHTML;
+        document.getElementById("id_HighIntervarlTime").value = document.getElementById("getHighIntervarlTime").innerHTML;
+        document.getElementById("id_countAllKey").value = document.getElementById("getcountAllKey").innerHTML;        
+    }
+    
+    
+    
+    
+    
     function startParse(){
         var content = document.getElementById("id_content").value;
         var cont_array = content.split("$$");
@@ -240,7 +290,8 @@
     }
     function getNextWord(){
         currentNum++;
-        if(totalNum == currentNum){          
+        if(totalNum == currentNum){     
+            window.G_isOverFlag = 1;
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);           
             return '';
         }       

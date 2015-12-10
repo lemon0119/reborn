@@ -148,7 +148,45 @@ class AnswerRecord extends CActiveRecord
         return $ratio;
     }
     
-    public static function saveAnswer($recordID, $answer, $seconds) {
+//    public static function saveAnswer($recordID, $answer, $seconds) {
+//        $userID = Yii::app()->session['userid_now'];
+//        $exerID = Yii::app()->session['exerID'];
+//        $type = Yii::app()->session['exerType'];
+//        $type = str_replace(["Exer"],"",$type);
+//        $ratio = self::getRatio($exerID, $type, $answer);
+//        $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerID);
+//        if( $oldAnswer == null) {
+//            $newAnswer = new AnswerRecord();
+//            $newAnswer -> answerID = Tool::createID();
+//            $newAnswer -> recordID = $recordID;
+//            $newAnswer -> exerciseID = $exerID;
+//            $newAnswer -> type = $type;
+//            $newAnswer -> answer = $answer;
+//            $newAnswer -> costTime = $seconds;
+//            $newAnswer -> ratio_correct = $ratio['correct'];
+//            $newAnswer -> ratio_accomplish = $ratio['accomplish'];
+//            $newAnswer -> createPerson = Yii::app()->session['userid_now'];
+//            $newAnswer -> createTime = date("Y-m-d  H:i:s");
+//            if(!($newAnswer->insert())) {
+//                echo Tool::jsLog('创建答案记录失败！');
+//                return false;
+//            } else 
+//                return true;
+//        }else {
+//            $oldAnswer -> answer = $answer;
+//            $oldAnswer -> costTime = $seconds;
+//            $oldAnswer -> ratio_correct = $ratio['correct'];
+//            $oldAnswer -> ratio_accomplish = $ratio['accomplish'];
+//            $oldAnswer -> createTime = date("Y-m-d  H:i:s");
+//            if(!($oldAnswer->upDate())) {
+//                echo Tool::jsLog('更新答案记录失败！');
+//                return false;
+//            } else
+//                return true;
+//        }
+//    }   
+    
+        public static function saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey) {
         $userID = Yii::app()->session['userid_now'];
         $exerID = Yii::app()->session['exerID'];
         $type = Yii::app()->session['exerType'];
@@ -167,6 +205,13 @@ class AnswerRecord extends CActiveRecord
             $newAnswer -> ratio_accomplish = $ratio['accomplish'];
             $newAnswer -> createPerson = Yii::app()->session['userid_now'];
             $newAnswer -> createTime = date("Y-m-d  H:i:s");
+            $newAnswer ->ratio_speed = $AverageSpeed;
+            $newAnswer ->ratio_maxSpeed = $HighstSpeed;
+            $newAnswer->ratio_backDelete = $BackDelete;
+            $newAnswer->ratio_maxKeyType = $HighstCountKey;
+            $newAnswer->ratio_averageKeyType = $AveragekeyType;
+            $newAnswer->ratio_maxInternalTime = $HighIntervarlTime;
+            $newAnswer->ratio_countAllKey = $countAllKey;  
             if(!($newAnswer->insert())) {
                 echo Tool::jsLog('创建答案记录失败！');
                 return false;
@@ -178,6 +223,13 @@ class AnswerRecord extends CActiveRecord
             $oldAnswer -> ratio_correct = $ratio['correct'];
             $oldAnswer -> ratio_accomplish = $ratio['accomplish'];
             $oldAnswer -> createTime = date("Y-m-d  H:i:s");
+            $oldAnswer ->ratio_speed = $AverageSpeed;
+            $oldAnswer ->ratio_maxSpeed = $HighstSpeed;
+            $oldAnswer->ratio_backDelete = $BackDelete;
+            $oldAnswer->ratio_maxKeyType = $HighstCountKey;
+            $oldAnswer->ratio_averageKeyType = $AveragekeyType;
+            $oldAnswer->ratio_maxInternalTime = $HighIntervarlTime;
+            $oldAnswer->ratio_countAllKey = $countAllKey;  
             if(!($oldAnswer->upDate())) {
                 echo Tool::jsLog('更新答案记录失败！');
                 return false;
@@ -185,6 +237,7 @@ class AnswerRecord extends CActiveRecord
                 return true;
         }
     }
+
     public static function saveKnlgAnswer($recordID, $answer, $type, $exerciseID) {
         $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerciseID);
         if( $oldAnswer == null) {
