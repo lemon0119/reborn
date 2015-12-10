@@ -107,13 +107,18 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
+        if(HaveWindow == 1)
+            return;
         if(totalNum == currentNum){
+            HaveWindow = 1;
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
                     currentNum = totalNum;
+                    HaveWindow = 0;
                 },
                 onClose:function(){
                     currentNum = totalNum;
+                    HaveWindow =0;
                 }
             });
             currentNum = totalNum;
@@ -154,6 +159,7 @@
     var yaweiCode = "";
     var numKeyDown = 0;
     var numKeyRight = 0;
+    var HaveWindow = 0;
     function startParse(){
         var content = document.getElementById("id_content").value;
         var cont_array = content.split("$$");
@@ -234,8 +240,8 @@
     }
     function getNextWord(){
         currentNum++;
-        if(totalNum == currentNum){
-            window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
+        if(totalNum == currentNum){          
+            window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);           
             return '';
         }       
         if(nextWord != "")

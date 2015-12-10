@@ -115,7 +115,8 @@ $("#myForm").submit(function(){
         return false;
     }
     var i;
-    var numpatrn =/^[0-9]{1,2}$/;                  
+    var numpatrn =/^[0-9]{1,2}$/;   
+    var numpatrn1 =/^[0-9]{1,3}$/; 
              if($("#testSelect").find("option:selected").val() == "speed"){
                 var input2 = $("#input2")[0].value;
                 var input3 = $("#input3")[0].value;
@@ -128,7 +129,21 @@ $("#myForm").submit(function(){
                {                 
                 window.wxc.xcConfirm('时间不能设置为0', window.wxc.xcConfirm.typeEnum.warning);
                 return false;
-                }   
+                }  
+                
+            if(!numpatrn1.exec(input2))
+            {                 
+                window.wxc.xcConfirm('速度应设为1-1000', window.wxc.xcConfirm.typeEnum.warning);
+                return false;
+            } 
+         
+            if(!numpatrn.exec(input3))
+            {                 
+                window.wxc.xcConfirm('时间应设为1-100', window.wxc.xcConfirm.typeEnum.warning);
+                return false;
+            } 
+                
+                
                 
             }else{
             var input = $("#input1")[0].value;

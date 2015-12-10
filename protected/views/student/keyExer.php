@@ -50,9 +50,12 @@
         <div style="width: 750px; height: 350px;">
             <?php         
             if($exerOne['category'] == "correct")
-            require  Yii::app()->basePath."\\views\\student\\correct_keyboard.php";
+                require  Yii::app()->basePath."\\views\\student\\correct_keyboard.php";
+            
             else if($exerOne['category'] == "free" )
+
                 require  Yii::app()->basePath."\\views\\student\\keyboard.php";
+            
             else
                 require  Yii::app()->basePath."\\views\\student\\speed_keyboard.php";
             ?>
