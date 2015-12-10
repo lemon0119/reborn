@@ -13,7 +13,7 @@ echo "<script>var role='$role';</script>";
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
 <div class="left">
-    <div class="vp1" id="info" style="width: 100%;">
+    <div class="vp1" style="width: 100%;">
         <br/>
                 <tr>
                     <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号:</span></td>
@@ -40,24 +40,7 @@ echo "<script>var role='$role';</script>";
                 </tr>
        
     </div>
-    <div class="vp1" id="analysis" style="display: none;width: 100%;">
-        <table style="margin: 0px auto;">
-            <tr>
-                <td><span style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td>
-                <td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td>
-                <td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td>
-                <td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字</span></td>
-                <td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒</span></td>
-            </tr>
-            <tr>
-                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td>
-                <td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td>
-                <td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td>
-                <td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次</span></td>
-                <td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒</span></td>
-            </tr>
-        </table>
-    </div>
+    
     <!-- local/remote videos container --> 
     <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 200px; top: 40px;display:none;">
@@ -76,7 +59,7 @@ echo "<script>var role='$role';</script>";
     <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
-        <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">虚 拟 键 盘</h4></a></div>
+    <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:20px;color: white">虚 拟 键 盘</a><button class="fr" id="sw-openAnalysis">统计</button></h4></div>
         <div id="bulletin" class="bulletin" style="border: 0px;width: 100%;margin-left: -1.1px">
              <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
         </div>
@@ -93,6 +76,24 @@ echo "<script>var role='$role';</script>";
        
     </div>
 </div>
+<div  class="analysisTool" id="analysis" style="display: none;left: 530px;top: 265px">
+        <table style="margin: 0px auto;">
+            <tr>
+                <td><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
+                 <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                
+            <tr>
+                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                <tr><td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr>
+        </table>
+    </div>
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <script>
     //显示全屏图像
@@ -299,6 +300,9 @@ $(document).ready(function(){
         document.getElementById("typeOCX").SetTextSize(8);
         document.getElementById("typeOCX").HideToolBar();
         document.getElementById("typeOCX").HideSecondToolBar();
+    });
+    $("#sw-openAnalysis").click(function() {
+        $("#analysis").toggle(200);
     });
 });
 </script>
