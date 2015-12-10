@@ -88,7 +88,7 @@ echo "<script>var role='$role';</script>";
         <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
     </div>
 </div>
-  
+<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <script>
     //显示全屏图像
     
@@ -414,11 +414,4 @@ $(document).ready(function(){
         addMessageHandleForWS();
     }
 });
-</script>
-<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
-<script>
-        
-       
-       
-    
 </script>
