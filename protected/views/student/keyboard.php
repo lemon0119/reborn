@@ -142,6 +142,7 @@
             return;
         if(totalNum == currentNum){
             HaveWindow = 1;
+            window.G_isOverFlag = 1;
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
                     currentNum = totalNum;
@@ -178,9 +179,10 @@
                     keySet("r_"+c , false);
             }
         }
-        changTemplet(pszStenoString);
+        changTemplet(pszStenoString);      
         var correct = getCorrect()*100;
         document.getElementById("correctRate").innerHTML = correct.toFixed(2); 
+        writeData();
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -191,6 +193,23 @@
     var numKeyDown = 0;
     var numKeyRight = 0;
     var HaveWindow = 0;
+    
+    function writeData(){
+        document.getElementById("id_correct").value = getCorrect();
+        document.getElementById("id_cost").value = getT();
+        document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
+        document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;
+        document.getElementById("id_BackDelete").value = document.getElementById("getBackDelete").innerHTML;
+        document.getElementById("id_HighstCountKey").value = document.getElementById("getHighstCountKey").innerHTML;
+        document.getElementById("id_AverageKeyType").value = document.getElementById("getAverageKeyType").innerHTML;
+        document.getElementById("id_HighIntervarlTime").value = document.getElementById("getHighIntervarlTime").innerHTML;
+        document.getElementById("id_countAllKey").value = document.getElementById("getcountAllKey").innerHTML;        
+    }
+    
+    
+    
+    
+    
     function startParse(){
         var content = document.getElementById("id_content").value;
         var cont_array = content.split("$$");
@@ -271,7 +290,8 @@
     }
     function getNextWord(){
         currentNum++;
-        if(totalNum == currentNum){          
+        if(totalNum == currentNum){     
+            window.G_isOverFlag = 1;
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);           
             return '';
         }       

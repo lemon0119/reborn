@@ -94,9 +94,16 @@
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
         <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed'];?>">
         <input id="id_exerciseTime" type="hidden" value="<?php echo $exerOne['exerciseTime'];?>">
-        <input name="nm_answer" id="id_answer" type="hidden">
-        <input name="nm_cost" id="id_cost" type="hidden">
         <input name="nm_correct" id="id_correct" type="hidden">
+        <input  name="nm_answer"id="id_answer" type="hidden">
+        <input  name="nm_cost" id="id_cost" type="hidden">
+        <input name="nm_AverageSpeed" id="id_AverageSpeed" type="hidden">
+        <input name="nm_HighstSpeed" id="id_HighstSpeed" type="hidden">
+        <input name="nm_BackDelete" id="id_BackDelete" type="hidden">
+        <input name="nm_HighstCountKey" id="id_HighstCountKey" type="hidden">
+        <input  name="nm_AverageKeyType" id="id_AverageKeyType" type="hidden">
+        <input name="nm_HighIntervarlTime" id="id_HighIntervarlTime" type="hidden">
+        <input name="nm_countAllKey"  id="id_countAllKey" type="hidden" value="0"> 
     </form>
 </div>
   <?php } else {?>
@@ -195,14 +202,12 @@
        
     }
     function doSubmit(simple,doFunction){
-    console.log('simple1'+simple);
         var answer = document.getElementById("id_answer").value;
         var modtext = document.getElementById("id_content").value;
         var correct = getCorrect(answer , modtext);
         document.getElementById("id_correct").value = correct;
         var time = getSeconds();
-        console.log(time);
-          var time = getT();
+        var time = getT();
         document.getElementById("id_cost").value = time;
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
@@ -227,6 +232,6 @@
                                                         clearTemplate();
 						} 
 					};
-					window.wxc.xcConfirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？", "custom", option);
+        window.wxc.xcConfirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？", "custom", option);
     }
 </script>
