@@ -107,6 +107,37 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
+        
+        //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
+        var myDate = new Date();
+         window.G_pressTime = myDate.getTime();
+         if(window.G_startFlag ===0){
+                    window.G_startTime = myDate.getTime();
+                    window.G_startFlag = 1; 
+                    window.G_oldStartTime = window.G_pressTime;
+                }
+                window.G_countMomentKey++;
+                window.G_countAllKey++;
+                window.G_content = document.getElementById("typeOCX").GetContent();
+                window.G_keyContent = window.G_keyContent +"&"+pszStenoString;
+                
+                          //每击统计击键间隔时间 秒
+                          //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
+                          //每击统计最高击键间隔时间 秒
+                          //@param id=getHighIntervarlTime 请将最高平均速度统计的控件id设置为getHighIntervarlTime 
+          if(window.G_endAnalysis===0){
+                 var pressTime = window.G_pressTime;
+                 if(pressTime - window.G_oldStartTime >0){
+                     var IntervalTime = parseInt((pressTime - window.G_oldStartTime)/10)/100;
+                      $("#getIntervalTime").html(IntervalTime);
+                     window.G_oldStartTime = pressTime;
+                 }
+                 if(IntervalTime-window.G_highIntervarlTime>0){
+                     window.G_highIntervarlTime = IntervalTime;
+                     $("#getHighIntervarlTime").html(IntervalTime);
+                 }             
+          }   
+          
         if(HaveWindow == 1)
             return;
         if(totalNum == currentNum){

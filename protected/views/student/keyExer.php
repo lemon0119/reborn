@@ -1,4 +1,5 @@
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <?php  if($isExam == false){ 
     require 'suiteSideBar.php';
 }else{ 
@@ -23,6 +24,22 @@
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
+        
+        
+<div>
+    <span>平均速度：</span><a id="getAverageSpeed">0</a>
+    <span>最高速度：</span><a id="getHighstSpeed">0</a>
+    <span>瞬时速度：</span><a id="getMomentSpeed">0</a>
+    <span>回改字数：</span><a id="getBackDelete">0</a>
+    <span>瞬时击键：</span><a id="getMomentKeyType">0</a>
+    <span>最高击键：</span><a id="getHighstCountKey">0</a>
+    <span>平均击键：</span><a id="getAverageKeyType">0</a>
+    <span>击键间隔：</span><a id="getIntervalTime">0</a>
+    <span>最高间隔：</span><a id="getHighIntervarlTime">0</a>
+    <span>总击键数：</span><a id="getcountAllKey">0</a>
+</div>
+        
+        
         <table border = '0px'>
                 <tr><h3><?php echo $exerOne['title']?></h3></tr>
                 <tr>
