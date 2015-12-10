@@ -5,7 +5,7 @@
  * 请在主view中设置全局变量 
  * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000
  * 
- * 请在主view中声明全局变量   
+ * 声明全局变量   
  * @param  var G_content="";
  * @param  var G_keyContent="";
  * @param  var G_startTime      = 0;
@@ -17,8 +17,17 @@
  * @param  var G_endAnalysis    = 0;
  * 
  */
-
-var G_oldContentLength = 0;
+    var G_content            ="";
+    var G_keyContent         ="";
+    var G_startTime          = 0;
+    var G_startFlag          = 0;
+    var G_countAllKey        = 0;
+    var G_countMomentKey     = 0;
+    var G_pressTime          = 0;
+    var G_oldStartTime       = 0;
+    var G_highIntervarlTime  = 0;
+    var G_endAnalysis        = 0;
+    var G_oldContentLength = 0;
 //统计逻辑
 $(document).ready(function(){
     var highstCountKey  = 0;
@@ -51,7 +60,7 @@ $(document).ready(function(){
         var nowTime        = myDate.getTime();
         $("#getcountAllKey").html(countAllKey);
         if(nowTime>startTime){
-            var averageKeyType = parseInt(countAllKey/(nowTime-startTime)*6000);
+            var averageKeyType = parseInt(countAllKey/(nowTime-startTime)*60000);
             if((countAllKey/(nowTime-startTime)*1000)<1 && (countAllKey/(nowTime-startTime)*1000)>0 ){
                 averageKeyType = 1;
             }
