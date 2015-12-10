@@ -1156,14 +1156,22 @@ class StudentController extends CController {
         if(isset($_POST['nm_answer'])) {
             $answer = $_POST['nm_answer'];
             $seconds = $_POST['nm_cost'];
+            $correct = $_POST['nm_correct'];
+            $AverageSpeed = $_POST['nm_AverageSpeed'];
+            $HighstSpeed = $_POST['nm_HighstSpeed'];
+            $BackDelete = $_POST['nm_BackDelete'];
+            $HighstCountKey = $_POST['nm_HighstCountKey'];
+            $AveragekeyType = $_POST['nm_AverageKeyType'];
+            $HighIntervarlTime = $_POST['nm_HighIntervarlTime'];            
+            $countAllKey = $_POST["nm_countAllKey"];      
             if(Yii::app()->session['isExam']){
                 if(!ExamRecord::saveExamRecord($recordID))
                     return false;
-            } else {
+            }else {
                 if(!SuiteRecord::saveSuiteRecord ($recordID))
                     return false;
             }
-            return AnswerRecord::saveAnswer($recordID, $answer, $seconds);
+            return AnswerRecord::saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey);
         }
     }
     public function saveParam() {

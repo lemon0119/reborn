@@ -1,4 +1,5 @@
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <?php  if($isExam == false){ 
     require 'suiteSideBar.php';
 }else{ 
@@ -23,6 +24,22 @@
 <div class="span9">
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
+        
+        
+<div>
+    <span>平均速度：</span><a id="getAverageSpeed">0</a>
+    <span>最高速度：</span><a id="getHighstSpeed">0</a>
+    <span>瞬时速度：</span><a id="getMomentSpeed">0</a>
+    <span>回改字数：</span><a id="getBackDelete">0</a>
+    <span>瞬时击键：</span><a id="getMomentKeyType">0</a>
+    <span>最高击键：</span><a id="getHighstCountKey">0</a>
+    <span>平均击键：</span><a id="getAverageKeyType">0</a>
+    <span>击键间隔：</span><a id="getIntervalTime">0</a>
+    <span>最高间隔：</span><a id="getHighIntervarlTime">0</a>
+    <span>总击键数：</span><a id="getcountAllKey">0</a>
+</div>
+        
+        
         <table border = '0px'>
                 <tr><h3><?php echo $exerOne['title']?></h3></tr>
                 <tr>
@@ -77,9 +94,16 @@
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
         <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed'];?>">
         <input id="id_exerciseTime" type="hidden" value="<?php echo $exerOne['exerciseTime'];?>">
-        <input name="nm_answer" id="id_answer" type="hidden">
-        <input name="nm_cost" id="id_cost" type="hidden">
         <input name="nm_correct" id="id_correct" type="hidden">
+        <input  name="nm_answer"id="id_answer" type="hidden">
+        <input  name="nm_cost" id="id_cost" type="hidden">
+        <input name="nm_AverageSpeed" id="id_AverageSpeed" type="hidden">
+        <input name="nm_HighstSpeed" id="id_HighstSpeed" type="hidden">
+        <input name="nm_BackDelete" id="id_BackDelete" type="hidden">
+        <input name="nm_HighstCountKey" id="id_HighstCountKey" type="hidden">
+        <input  name="nm_AverageKeyType" id="id_AverageKeyType" type="hidden">
+        <input name="nm_HighIntervarlTime" id="id_HighIntervarlTime" type="hidden">
+        <input name="nm_countAllKey"  id="id_countAllKey" type="hidden" value="0"> 
     </form>
 </div>
   <?php } else {?>
@@ -178,14 +202,12 @@
        
     }
     function doSubmit(simple,doFunction){
-    console.log('simple1'+simple);
         var answer = document.getElementById("id_answer").value;
         var modtext = document.getElementById("id_content").value;
         var correct = getCorrect(answer , modtext);
         document.getElementById("id_correct").value = correct;
         var time = getSeconds();
-        console.log(time);
-          var time = getT();
+        var time = getT();
         document.getElementById("id_cost").value = time;
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
@@ -210,6 +232,6 @@
                                                         clearTemplate();
 						} 
 					};
-					window.wxc.xcConfirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？", "custom", option);
+        window.wxc.xcConfirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？", "custom", option);
     }
 </script>

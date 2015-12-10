@@ -89,7 +89,7 @@
     function onStenoPressKey(pszStenoString ,device){
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         var myDate = new Date();
-                window.G_pressTime = myDate.getTime();
+         window.G_pressTime = myDate.getTime();
          if(window.G_startFlag ===0){
                     window.G_startTime = myDate.getTime();
                     window.G_startFlag = 1; 
@@ -114,8 +114,7 @@
                  if(IntervalTime-window.G_highIntervarlTime>0){
                      window.G_highIntervarlTime = IntervalTime;
                      $("#getHighIntervarlTime").html(IntervalTime);
-                 }
-              
+                 }             
           }                
            
         //--------------------------------------------------
