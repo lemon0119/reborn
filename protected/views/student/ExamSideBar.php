@@ -96,6 +96,5 @@ $currtime = $examInfo['endtime'];
             submitSuite2(true);
         }
         tCounter(curtime,beginTime+60*<?php echo $examInfo['duration']?>,"sideTime", endTimer);
-    }); 
-        
+    });       
 </script>

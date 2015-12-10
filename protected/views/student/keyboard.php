@@ -136,7 +136,7 @@
                      window.G_highIntervarlTime = IntervalTime;
                      $("#getHighIntervarlTime").html(IntervalTime);
                  }             
-          }   
+          }  
           
         if(HaveWindow == 1)
             return;
@@ -179,10 +179,9 @@
                     keySet("r_"+c , false);
             }
         }
-        changTemplet(pszStenoString);      
-        var correct = getCorrect()*100;
-        document.getElementById("correctRate").innerHTML = correct.toFixed(2); 
-        writeData();
+        changTemplet(pszStenoString);
+        writeData();   
+        doSubmit(false);
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
