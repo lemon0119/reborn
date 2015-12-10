@@ -23,23 +23,7 @@
 <?php if(!$isOver){?>
 <div class="span9">
     <div class="hero-unit"  align="center">
-        <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
-        
-        
-<div>
-    <span>平均速度：</span><a id="getAverageSpeed">0</a>
-    <span>最高速度：</span><a id="getHighstSpeed">0</a>
-    <span>瞬时速度：</span><a id="getMomentSpeed">0</a>
-    <span>回改字数：</span><a id="getBackDelete">0</a>
-    <span>瞬时击键：</span><a id="getMomentKeyType">0</a>
-    <span>最高击键：</span><a id="getHighstCountKey">0</a>
-    <span>平均击键：</span><a id="getAverageKeyType">0</a>
-    <span>击键间隔：</span><a id="getIntervalTime">0</a>
-    <span>最高间隔：</span><a id="getHighIntervarlTime">0</a>
-    <span>总击键数：</span><a id="getcountAllKey">0</a>
-</div>
-        
-        
+        <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>  
         <table border = '0px'>
                 <tr><h3><?php echo $exerOne['title']?></h3></tr>
                 <tr>
@@ -48,12 +32,12 @@
                         <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime?></span><input id="timej" type="hidden"/></td>
                         <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php }else{?>
-                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>
-                    <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
                     <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>
                      <?php }?>
                 </tr>
         </table>
+
         <br/>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
@@ -113,8 +97,7 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
-        <?php   if (!$isOver){?>
-           window.wxc.xcConfirm("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！", window.wxc.xcConfirm.typeEnum.info);
+        <?php   if (!$isOver){?>         
         <?php }?>
       if(<?php  if($isExam){echo $exerOne['time'];}else {echo 0;}?>!=0){ 
         <?php if($isExam){?>
@@ -212,7 +195,7 @@
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
             if(!simple){
-                window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
+               
             }else{
                 doFunction();
             }
@@ -231,7 +214,6 @@
                                                         clearWord();
                                                         clearTemplate();
 						} 
-					};
-        window.wxc.xcConfirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？", "custom", option);
+					};        
     }
 </script>

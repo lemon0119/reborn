@@ -186,7 +186,7 @@ class AnswerRecord extends CActiveRecord
 //        }
 //    }   
     
-        public static function saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey) {
+        public static function saveAnswer($recordID, $answer, $seconds,$correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$HighIntervarlTime=0,$countAllKey=0) {
         $userID = Yii::app()->session['userid_now'];
         $exerID = Yii::app()->session['exerID'];
         $type = Yii::app()->session['exerType'];

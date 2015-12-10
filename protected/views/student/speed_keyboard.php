@@ -186,9 +186,8 @@
             }
         }
         changTemplet(pszStenoString);
-        var correct = getCorrect()*100;
-        document.getElementById("correctRate").innerHTML = correct.toFixed(2); 
         writeData();
+        doSubmit();
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
