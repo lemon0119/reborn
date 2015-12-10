@@ -860,7 +860,7 @@ class TeacherController extends CController {
         $on = $_GET['on'];
         $lesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
         $lessonID = $lesson['lessonID'];
-        $freePractice = FreeExercise::model()->findAll("classID = '$classID' and lessonID = '$lessonID'");
+        $freePractice = ClassExercise::model()->findAll("classID = '$classID' and lessonID = '$lessonID'");
         $keywork = array();
         $look = array();
         $listen = array();
@@ -4989,23 +4989,23 @@ public function ActionAssignFreePractice(){
     }
     if(isset($_GET['isOpen'])){
         $title = $_GET['title'];
-        $up_res = FreeExercise::model()->find("classID='$ClassID' and title = '$title'");
+        $up_res = ClassExercise::model()->find("classID='$ClassID' and title = '$title'");
         $up_res->is_open = $_GET['isOpen'];
         $up_res->update();
     }
     if(isset($_GET['delete'])){
         $title = $_GET['delete'];
-        $deleteresult = FreeExercise::model()->deleteAll("classID='$ClassID' and title = '$title'");
+        $deleteresult = ClassExercise::model()->deleteAll("classID='$ClassID' and title = '$title'");
     }
         $teacherID = Yii::app()->session['userid_now'];
         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
         $array_lesson = array();
         $array_class = array();
         if(isset($_GET['all'])){
-             $result = FreeExercise::model()->getAllSuiteByPage(10, $teacherID,$ClassID);
+             $result = ClassExercise::model()->getAllSuiteByPage(10, $teacherID,$ClassID);
              $array_allpractice = $result['suiteLst'];
         }else{
-             $result = FreeExercise::model()->getAllSuiteByPageWithLessonID(10, $teacherID,$LessonID,$ClassID);
+             $result = ClassExercise::model()->getAllSuiteByPageWithLessonID(10, $teacherID,$LessonID,$ClassID);
              $array_allpractice = $result['suiteLst'];
         }
        
@@ -5056,7 +5056,7 @@ public function ActionAssignFreePractice(){
         $classID = $_GET['classID'];
         $type = $_POST['type'];
         $all='no';
-        $arrayPractice = FreeExercise::model()->findAll("classID = '$classID'");
+        $arrayPractice = ClassExercise::model()->findAll("classID = '$classID'");
         if(isset($_GET['all'])){
             $all='all';
         }
@@ -5076,10 +5076,10 @@ public function ActionAssignFreePractice(){
                 $array_lesson = array();
                 $array_class = array();
                 if(isset($_GET['all'])){
-                     $result = FreeExercise::model()->getAllSuiteByPage(10, $teacherID,$classID);
+                     $result = ClassExercise::model()->getAllSuiteByPage(10, $teacherID,$classID);
                      $array_allpractice = $result['suiteLst'];
                 }else{
-                     $result = FreeExercise::model()->getAllSuiteByPageWithLessonID(10, $teacherID,$LessonID,$classID);
+                     $result = ClassExercise::model()->getAllSuiteByPageWithLessonID(10, $teacherID,$LessonID,$classID);
                      $array_allpractice = $result['suiteLst'];
                 }
                 $pages = $result['pages'];

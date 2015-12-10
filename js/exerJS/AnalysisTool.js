@@ -4,7 +4,7 @@
  * 
  * 请在主view中设置全局变量 
  * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000
- * 
+ * @param  var G_isOverFlag= 0 ; view 中 设置window.G_isOverFlag = 1 统计控件将结束统计
  * 声明全局变量   
  * @param  var G_content="";
  * @param  var G_keyContent="";
@@ -17,6 +17,7 @@
  * @param  var G_endAnalysis    = 0;
  * 
  */
+    var G_isOverFlag         = 0;
     var G_content            ="";
     var G_keyContent         ="";
     var G_startTime          = 0;
@@ -162,7 +163,7 @@ $(document).ready(function(){
           
            
            //判断统计结束
-         if(((nowTime-startTime))>(setEndTime*1000)){
+         if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
              window.G_endAnalysis = 1;
               $("#getMomentKeyType").html(0);
               $("#getHighstSpeed").html(0);
