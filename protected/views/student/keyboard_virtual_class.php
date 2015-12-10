@@ -51,16 +51,6 @@
     </tr>
 </table>
 <script>
-    var G_content            ="";
-    var G_keyContent         ="";
-    var G_startTime          = 0;
-    var G_startFlag          = 0;
-    var G_countAllKey        = 0;
-    var G_countMomentKey     = 0;
-    var G_pressTime          = 0;
-    var G_oldStartTime       = 0;
-    var G_highIntervarlTime  = 0;
-    var G_endAnalysis        = 0;
     
     $(document).ready(function(){
       document.getElementById("typeOCX").SetTextSize(8);
@@ -98,7 +88,6 @@
     
     function onStenoPressKey(pszStenoString ,device){
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
-        
         var myDate = new Date();
                 window.G_pressTime = myDate.getTime();
          if(window.G_startFlag ===0){
