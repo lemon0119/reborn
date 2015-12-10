@@ -13,34 +13,51 @@ echo "<script>var role='$role';</script>";
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
 <div class="left">
-    <div class="vp1" style="width: 100%;">
+    <div class="vp1" id="info" style="width: 100%;">
         <br/>
                 <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号:</td>
-                    <td>&nbsp;&nbsp;<?php echo $userID;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号:</span></td>
+                    <td><span style="color: #f46500">&nbsp;&nbsp;<?php echo $userID;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 </tr>
                 <tr>
-                    <td>&nbsp;&nbsp;学生姓名:</td>
-                    <td>&nbsp;&nbsp;<?php echo $userName;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;学生姓名:</span></td>
+                    <td><span style="color: #f46500">&nbsp;&nbsp;<?php echo $userName;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 </tr>
                 <tr>
-                    <td>&nbsp;&nbsp;班级:</td>
-                    <td>&nbsp;&nbsp;<?php $sqlClass = TbClass::model()->find("classID = $class");
+                    <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;班级:</span></td>
+                    <td><span style="color: #f46500">&nbsp;&nbsp;<?php $sqlClass = TbClass::model()->find("classID = $class");
                     echo $sqlClass['className'];
-                    ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 </tr>
                 <tr>
-                    <td>&nbsp;&nbsp;当前课程:</td>
-                    <td>&nbsp;&nbsp;<?php foreach ($lessons as $less) {
+                    <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;当前课程:</span></td>
+                    <td><span style="color: #f46500">&nbsp;&nbsp;<?php foreach ($lessons as $less) {
                                if($less['lessonID'] === $currentLesn){
                                    echo $less['lessonName'];
                                 };
                            }?>
-                    </td>           
+                    </span></td>           
                 </tr>
        
     </div>
-    
+    <div class="vp1" id="analysis" style="display: none;width: 100%;">
+        <table style="margin: 0px auto;">
+            <tr>
+                <td><span style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td>
+                <td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td>
+                <td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td>
+                <td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字</span></td>
+                <td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒</span></td>
+            </tr>
+            <tr>
+                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td>
+                <td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td>
+                <td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td>
+                <td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次</span></td>
+                <td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒</span></td>
+            </tr>
+        </table>
+    </div>
     <!-- local/remote videos container --> 
     <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 200px; top: 40px;display:none;">
@@ -53,30 +70,18 @@ echo "<script>var role='$role';</script>";
 
     <div id="dianbo-videos-container" style="display:none;">  </div>
 </div>
-<div>
-    <span>平均速度：</span><a id="getAverageSpeed">0</a>
-    <span>最高速度：</span><a id="getHighstSpeed">0</a>
-    <span>瞬时速度：</span><a id="getMomentSpeed">0</a>
-    <span>回改字数：</span><a id="getBackDelete">0</a>
-    <span>瞬时击键：</span><a id="getMomentKeyType">0</a>
-    <span>最高击键：</span><a id="getHighstCountKey">0</a>
-    <span>平均击键：</span><a id="getAverageKeyType">0</a>
-    <span>击键间隔：</span><a id="getIntervalTime">0</a>
-    <span>最高间隔：</span><a id="getHighIntervarlTime">0</a>
-    <span>总击键数：</span><a id="getcountAllKey">0</a>
-</div>
 
-<div class="right"style="background-color: #3b3b3b;border: 0px" >
+<div class="right"style="max-height: 1200px;background-color: #3b3b3b;border: 0px" >
     <div align="center" id="sw-teacher-camera"><a href="#" ><h4 style="color: white">教 师 视 频</h4></a></div>
     <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
-        <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
-        <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
-            <textarea disabled id="bulletin-textarea" style=" background-color:#5e5e5e;color:#FFFF00;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+        <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">虚 拟 键 盘</h4></a></div>
+        <div id="bulletin" class="bulletin" style="border: 0px;width: 100%;margin-left: -1.1px">
+             <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
         </div>
         <div align="center" id="sw-chat" ><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
-        <div id="chat-box" style="border: 0px">
+        <div id="chat-box" style="display:none;border: 0px">
             <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
                 <input onfocus="setPress()"onblur="delPress()" type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
@@ -85,7 +90,7 @@ echo "<script>var role='$role';</script>";
            
         </div>
          <div align="center" >
-        <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
+       
     </div>
 </div>
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
@@ -291,6 +296,9 @@ $(document).ready(function(){
     });
     $("#sw-bulletin").click(function() {
         $("#bulletin").toggle(200);
+        document.getElementById("typeOCX").SetTextSize(8);
+        document.getElementById("typeOCX").HideToolBar();
+        document.getElementById("typeOCX").HideSecondToolBar();
     });
 });
 </script>
