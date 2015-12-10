@@ -5397,3 +5397,14 @@ table tr td{
     overflow: auto;
     width:1090px;
 }
+.analysisTool{
+    border-radius: 5px;
+    background-color: #fff;
+    position:relative;
+    float: right;
+    height: 230px;
+    width:150px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    position: relative;
+}
