@@ -195,7 +195,7 @@
     
     function writeData(){
         document.getElementById("id_correct").value = getCorrect();
-        document.getElementById("id_cost").value = getT();
+        document.getElementById("id_cost").value = getSeconds();
         document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
         document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;
         document.getElementById("id_BackDelete").value = document.getElementById("getBackDelete").innerHTML;
