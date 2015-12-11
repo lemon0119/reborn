@@ -79,19 +79,17 @@ echo "<script>var role='$role';</script>";
 <div  class="analysisTool" id="analysis" style="display: none;left: 530px;top: 265px">
         <table style="margin: 0px auto;">
             <tr>
-                <td><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
-                 <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
-                <tr><td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
-                <tr><td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
-                
+                <td><span class="fl"  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: gray"> 字/分</span> </td></tr>
+             <tr><td><span class="fl"  style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span class="fr" style="color: gray"> 字/分</span></td></tr>
+                 <tr><td><span class="fl"  style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span class="fr" style="color: gray"> 字/分</span></td></tr>
             <tr>
-                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td></tr>
-                <tr><td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td></tr>
-                <tr><td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td></tr>
-                <tr><td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
-                <tr><td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr><tr><td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr>
+                <td><span class="fl"  style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span class="fr" style="color: gray"> 次/分</span></td></tr>
+             <tr><td><span class="fl"  style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span class="fr" style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span class="fl"  style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span class="fr" style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span class="fl"  style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span class="fl"  style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span class="fl"  style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+            <tr><td><span class="fl"  style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
         </table>
     </div>
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
