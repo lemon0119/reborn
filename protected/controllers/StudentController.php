@@ -1156,6 +1156,7 @@ class StudentController extends CController {
         if(isset($_POST['nm_answer'])) {
             $answer = $_POST['nm_answer'];
             $seconds = $_POST['nm_cost'];
+            echo $seconds;
             $correct = $_POST['nm_correct'];
             $AverageSpeed = $_POST['nm_AverageSpeed'];
             $HighstSpeed = $_POST['nm_HighstSpeed'];

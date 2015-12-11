@@ -106,8 +106,7 @@
         return false;
     }
     
-    function onStenoPressKey(pszStenoString ,device){
-        
+    function onStenoPressKey(pszStenoString ,device){     
        var myDate = new Date();
          window.G_pressTime = myDate.getTime();
          if(window.G_startFlag ===0){
@@ -135,11 +134,7 @@
                      window.G_highIntervarlTime = IntervalTime;
                      $("#getHighIntervarlTime").html(IntervalTime);
                  }             
-          }   
-        
-        
-        
-        
+          }         
         if(HaveWindow == 1)
             return;
         if(totalNum == currentNum ){
@@ -272,7 +267,7 @@
     
       function writeData(){
         document.getElementById("id_correct").value = getCorrect();
-        document.getElementById("id_cost").value = getT();
+        document.getElementById("id_cost").value = getSeconds();
         document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
         document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;
         document.getElementById("id_BackDelete").value = document.getElementById("getBackDelete").innerHTML;
