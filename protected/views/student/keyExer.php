@@ -22,22 +22,24 @@
  ?>
 <?php if(!$isOver){?>
 <div class="span9">
+    
     <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>  
+        
         <table border = '0px'>
-                <tr><h3><?php echo $exerOne['title']?></h3></tr>
+                <tr><h3><?php echo $exerOne['title']?></h3>                
                 <tr>
+                    
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
                         <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime?></span><input id="timej" type="hidden"/></td>
                         <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php }else{?>
                     <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
-                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>
+                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>                    
                      <?php }?>
                 </tr>
         </table>
-
         <br/>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
@@ -87,9 +89,27 @@
         <input name="nm_HighstCountKey" id="id_HighstCountKey" type="hidden">
         <input  name="nm_AverageKeyType" id="id_AverageKeyType" type="hidden">
         <input name="nm_HighIntervarlTime" id="id_HighIntervarlTime" type="hidden">
-        <input name="nm_countAllKey"  id="id_countAllKey" type="hidden" value="0"> 
+        <input name="nm_countAllKey"  id="id_countAllKey" type="hidden" > 
     </form>
 </div>
+<div  class="analysisTool" id="analysis" style="left: 1050px;top: -516px; height: 670px; width: 230px;">
+        <table style="margin: 0px auto; font-size: 20px" cellpadding="20"  >
+            <tr>
+                <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
+                 <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                
+            <tr>
+                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                <tr><td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr>
+        </table>
+    </div>
   <?php } else {?>
  <h3 align="center">本题时间已经用完</h3>
 <?php }?>
@@ -185,13 +205,6 @@
        
     }
     function doSubmit(simple,doFunction){
-        var answer = document.getElementById("id_answer").value;
-        var modtext = document.getElementById("id_content").value;
-        var correct = getCorrect(answer , modtext);
-        document.getElementById("id_correct").value = correct;
-        var time = getSeconds();
-        var time = getT();
-        document.getElementById("id_cost").value = time;
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
             if(!simple){
