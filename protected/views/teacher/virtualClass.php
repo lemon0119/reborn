@@ -20,7 +20,9 @@ $pdir = "./resources/" . $pptFilePath;
 $courseID = TbClass::model()->findCourseIDByClassID($classID);
 $adminPptFilePath = "admin/001/$courseID/$on/ppt/";
 $adminPdir = "./resources/admin/001/$courseID/$on/ppt/";
+$adminPublicPdir = "./resources/public/ppt/";
 $adminVideoFilePath = "admin/001/$courseID/$on/video/";
+$adminPublicVdir = "./resources/public/video/";
 $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 ?>
 
@@ -75,6 +77,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
      <button id="share-Cam" class="btn btn-primary" >直播视频</button>
     <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
+    <button onclick="checkforbid()" class="btn">查看禁言</button>
+    
     <div id="showOnline"  class="online" style="display: none;border: 0px;width:100px;">
         <div id="dd" disabled="disabled" style="overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:300px; padding:0;">
             <text id="dd1"   style="cursor: default;overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:greenyellow;width:100%;  padding:0;"></text>
@@ -109,13 +113,28 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $mydir->close();
                 ?>
             </select>
-           
+            <button id="teacher-dianbo-public" class="btn btn-primary">点播视频</button>
+            <select id="teacher-choose-file-public" style="width:150px;margin-top: 10px;">
+                <?php
+                $mydir = dir($adminPublicVdir);
+                while ($file = $mydir->read()) {
+                    if ((!is_dir("$adminPublicVdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                        ?>
+                        <option value ="<?php echo $adminPublicVdir . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                        <?php
+                    }
+                }
+                $mydir->close();
+                ?>
+            </select>
 
         </div>
     </div>
-    <div id="show-ppt"  class="online" style="display: none;border: 0px;width:100px;">
-        <div style="display:inline;">
-            <button id="play-ppt" class="btn btn-primary">放映PPT</button>
+    <div id="show-ppt"  class="online" style="position: relative;left: 70px;display: none;border: 0px;width:100px;">
+            <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
+        <div style="display:inline;width:150px;">
+            <div  style="width:150px;position:relative;right: 200px ">
+                <br/>
             <select id="choose-ppt" style="width:150px;margin-top: 10px;">
 <?php
 $mydir = dir($adminPdir);
@@ -150,12 +169,35 @@ while ($file = $mydir->read()) {
                         $mydir->close();
                         ?>
             </select>
-            
+                 <button id="play-ppt" style="width: 150px;" class="btn btn-primary">放映PPT</button>
+            </div>
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
+            <select id="choose-ppt-public" style="width:150px;margin-top: 10px;">
+<?php
+$mydir = dir($adminPublicPdir);
+while ($file = $mydir->read()) {echo $adminPublicPdir."/".$file;
+    if ((is_dir("$adminPublicPdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+        ?>
+                        <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                        $dir = "$adminPublicPdir/$file";
+                        $num = sizeof(scandir($dir));
+                        $num = ($num > 2) ? ($num - 2) : 0;
+                        echo $num;
+                        ?>+-+admin"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?></option>   
+                        <?php
+                    }
+                }
+                $mydir->close();
+                ?>
+            </select>
+                <button id="play-ppt-public" style="width: 150px;" class="btn btn-primary">放映PPT</button>
+            </div>
         </div>
     </div> 
-
-
-    
+<div id="scroll-video" style="display:inline;">
+ <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button> 
+</div>
     <div id="scroll-page" style="display:inline;">
         <button id="page-up" class="btn btn-primary">上页</button>
         <input id="yeshu" style="width:50px;" value="1">
@@ -169,7 +211,7 @@ while ($file = $mydir->read()) {
     <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px;display:none">
         <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
     </div>
-    <div id="dianbo-videos-container" style="display:none">  <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button> 
+    <div id="dianbo-videos-container" style="display:none"> 
     </div>
     <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
         <img id="ppt-img" src="" style="height: 100%;"/>
@@ -190,7 +232,7 @@ while ($file = $mydir->read()) {
                 
     
                 </div>-->
-    <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a> <button onclick="checkforbid()">查看禁言</button></div>            
+    <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a> </div>            
     <div id="chat-box" style="border: 0px">   
         <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%">
         </div>
@@ -564,6 +606,7 @@ while ($file = $mydir->read()) {
 
 <script>
     $("#scroll-page").hide();
+    $("#scroll-video").hide();
     $(document).ready(function () {
         //打开连接
         openConnect();
@@ -590,6 +633,42 @@ while ($file = $mydir->read()) {
                 server_root_path = "<?php echo SITE_URL . 'resources/' . $pptFilePath; ?>";
             } else {
                 server_root_path = "<?php echo SITE_URL . 'resources/' . $adminPptFilePath; ?>";
+            }
+            var dirname = file_info[0];
+            ppt_dir = server_root_path + dirname;
+            ppt_pages = file_info[1];
+            $("#all-yeshu").val(ppt_pages);
+            goCurPage();
+            if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                var syn_msg;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                ws.send(syn_msg);
+            }, 4000);
+        });
+        $("#play-ppt-public").click(function () {
+            closeAllTitle();
+            if ($("#choose-ppt-public")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            window.scrollTo(0, 130);
+            document.getElementById("teacher-dianbo").disabled = true;
+            $("#teacher-dianbo").attr("class", "btn");
+            document.getElementById("close-ppt").disabled = false;
+            $("#close-ppt").attr("class", "btn btn-primary");
+            $("#ppt-container").show();
+            $("#scroll-page").show();
+            cur_ppt = 1;
+            var file_info = $("#choose-ppt-public option:selected").val().split("+-+");
+            var source = file_info[2];
+            var server_root_path;
+            if (source === "tea")
+            {
+                server_root_path = "<?php echo $adminPublicPdir; ?>";
+            } else {
+                server_root_path = "<?php echo $adminPublicPdir; ?>";
             }
             var dirname = file_info[0];
             ppt_dir = server_root_path + dirname;
@@ -662,10 +741,53 @@ while ($file = $mydir->read()) {
             window.scrollTo(0, 130);
             document.getElementById("play-ppt").disabled = true;
             $("#play-ppt").attr("class", "btn");
+            $("#scroll-video").show();
             document.getElementById("close-dianbo").disabled = false;
             $("#close-dianbo").attr("class", "btn btn-primary");
             var server_root_path = "<?php echo SITE_URL . 'resources/' ?>";
+            console.log(server_root_path);
             var filepath = $("#teacher-choose-file option:selected").val();
+            var absl_path = server_root_path + filepath;
+            var video_element;
+            var video_time_duration;
+
+            console.log("Choose file " + server_root_path + filepath);
+
+            var video = document.getElementById('video1');
+            if (video === null) {
+                var html = "";
+                html += '<video id="video1" width="100%" controls>';
+                html += '<source src="' + absl_path + '">';
+                html += '</video>';
+                $("#dianbo-videos-container").empty();
+                $("#dianbo-videos-container").append(html);
+            } else {
+                video.setAttribute("src", absl_path);
+            }
+            $("#dianbo-videos-container").show();
+            $("#videos-container").hide();
+            video_element = document.getElementById("video1");
+            video_element.onloadedmetadata = function () {
+                video_time_duration = video_element.duration;
+                console.log("sunpy: video duration " + video_time_duration);
+            };
+            WebSocketConnect(absl_path);
+        });
+        
+        $("#teacher-dianbo-public").click(function () {
+            closeAllTitle();
+            if ($("#teacher-choose-file-public")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            window.scrollTo(0, 130);
+            document.getElementById("play-ppt").disabled = true;
+            $("#play-ppt").attr("class", "btn");
+            $("#scroll-video").show();
+            document.getElementById("close-dianbo").disabled = false;
+            $("#close-dianbo").attr("class", "btn btn-primary");
+            var server_root_path = "<?php echo SITE_URL; ?>";
+            var filepath = $("#teacher-choose-file-public option:selected").val();
             var absl_path = server_root_path + filepath;
             var video_element;
             var video_time_duration;
@@ -694,6 +816,7 @@ while ($file = $mydir->read()) {
         });
 
         $("#close-dianbo").click(function () {
+            $("#scroll-video").hide();
             document.getElementById("play-ppt").disabled = false;
             $("#play-ppt").attr("class", "btn btn-primary");
             clearVideo();
