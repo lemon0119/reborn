@@ -12,7 +12,7 @@ echo "<script>var role='$role';</script>";
 <!--自定义css begin-->
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
-<div class="left">
+<div class="left" style="min-height: 793px">
     <div class="vp1" style="width: 100%;">
         <br/>
                 <tr>
@@ -76,7 +76,7 @@ echo "<script>var role='$role';</script>";
        
     </div>
 </div>
-<div  class="analysisTool" id="analysis" style="display: none;left: 530px;top: 265px">
+<div  class="analysisTool" id="analysis" style="display: none;left:120px;bottom: 473px">
         <table style="margin: 0px auto;">
             <tr>
                 <td><span class="fl"  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: gray"> 字/分</span> </td></tr>
@@ -292,6 +292,7 @@ $(document).ready(function(){
     });
     $("#sw-chat").click(function() {
         $("#chat-box").toggle(200);
+        $("#analysis").hide();
     });
     $("#sw-bulletin").click(function() {
         $("#bulletin").toggle(200);
@@ -301,6 +302,7 @@ $(document).ready(function(){
     });
     $("#sw-openAnalysis").click(function() {
         $("#analysis").toggle(200);
+        $("#chat-box").hide();
     });
 });
 </script>
