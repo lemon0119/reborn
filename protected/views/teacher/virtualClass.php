@@ -18,12 +18,15 @@ $pptFilePath = $role . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
 $pdir = "./resources/" . $pptFilePath;
 $picFilePath = $role . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
 $picdir = "./resources/" . $picFilePath;
+$txtFilePath = $role . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+$txtdir = "./resources/" . $txtFilePath;
 
 $courseID = TbClass::model()->findCourseIDByClassID($classID);
 $adminPptFilePath = "admin/001/$courseID/$on/ppt/";
 $adminPdir = "./resources/admin/001/$courseID/$on/ppt/";
 $adminPublicPdir = "./resources/public/ppt/";
 $adminPublicPicdir = "./resources/public/picture/";
+$adminPublicTxtdir = "./resources/public/txt/";
 $adminVideoFilePath = "admin/001/$courseID/$on/video/";
 $adminPublicVdir = "./resources/public/video/";
 $adminVdir = "./resources/admin/001/$courseID/$on/video/";
@@ -233,11 +236,53 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
         </div>
     
-      <div id="show-text"  style="display: none;border: 0px;width:100px;">
-            <div id="dd1" disabled="disabled" style="overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:300px; padding:0;">
-                <text id="dd11"   style="cursor: default;overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:greenyellow;width:100%;  padding:0;"></text>
-                <text id="dd21"   style="cursor: default; overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:white;width:100%;  padding:0;"></text>
+      <div id="show-text"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+           <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
+        <div style="display:inline;">
+            <div  style="width:150px;position:relative;right: 200px ">
+                <select id="choose-txt" style="width:150px;margin-top: 10px;">
+                            <?php
+                            $mydir = dir($txtdir);
+                            while ($file = $mydir->read()) {
+                                if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                    ?>
+                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$txtdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                            ?>
+                </select>
+                <button id="play-txt" style="width: 150px;" class="btn btn-primary">阅览文本</button>
             </div>
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
+                <select id="choose-txt-public" style="width:150px;margin-top: 10px;">
+                    <?php
+                    $mydir = dir($adminPublicTxtdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$adminPublicTxtdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+admin"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                            ?>
+                </select>
+                <button id="play-txt-public" style="width: 150px;" class="btn btn-primary">阅览文本</button>
+            </div>
+        </div>
         </div>
        <div id="show-video"   style="display: none;border: 0px;width:100px;">
             <div id="dd1" disabled="disabled" style="overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:300px; padding:0;">
@@ -271,6 +316,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
     <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
         <img id="ppt-img" src="" style="height: 100%;"/>
+    </div>
+    <div id="txt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
+        <textarea id="txt-textarea" style="background:transparent;border-style:none; width: 720px;height: 600px" disabled="disable">
+        </textarea>
     </div>
 
 </div>
@@ -371,6 +420,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 </script>
 
 <script>
+    var picOrppt = "";
     //chat and bulletin   
     $(document).ready(function () {
         /*
@@ -668,12 +718,15 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         openConnect();
 
         $("#play-ppt").click(function () {
+            window.picOrppt = "ppt";
             closeAllTitle();
             if ($("#choose-ppt")[0].selectedIndex == -1)
             {
                 return;
             }
             window.scrollTo(0, 130);
+            document.getElementById("teacher-dianbo-public").disabled = true;
+            $("#teacher-dianbo-public").attr("class", "btn");
             document.getElementById("teacher-dianbo").disabled = true;
             $("#teacher-dianbo").attr("class", "btn");
             document.getElementById("close-ppt").disabled = false;
@@ -704,12 +757,15 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             }, 4000);
         });
         $("#play-ppt-public").click(function () {
+            window.picOrppt = "ppt";
             closeAllTitle();
             if ($("#choose-ppt-public")[0].selectedIndex == -1)
             {
                 return;
             }
             window.scrollTo(0, 130);
+            document.getElementById("teacher-dianbo-public").disabled = true;
+            $("#teacher-dianbo-public").attr("class", "btn");
             document.getElementById("teacher-dianbo").disabled = true;
             $("#teacher-dianbo").attr("class", "btn");
             document.getElementById("close-ppt").disabled = false;
@@ -766,10 +822,13 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             this.disabled = true;
             $("#close-ppt").attr("class", "btn");
             document.getElementById("play-ppt").disabled = false;
+            document.getElementById("teacher-dianbo-public").disabled = false;
+            $("#teacher-dianbo-public").attr("class", "btn btn-primary");
             document.getElementById("teacher-dianbo").disabled = false;
             $("#teacher-dianbo").attr("class", "btn btn-primary");
             $("#ppt-container").hide();
             $("#scroll-page").hide();
+            $("#txt-container").hide();
         });
 
         $("#share-Cam").click(function () {
@@ -881,11 +940,16 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
         $("#play-pic").click(function () {
+            window.picOrppt = "pic";
             closeAllTitle();
             if ($("#choose-pic")[0].selectedIndex == -1)
             {
                 return;
             }
+            document.getElementById("teacher-dianbo-public").disabled = true;
+            $("#teacher-dianbo-public").attr("class", "btn");
+            document.getElementById("teacher-dianbo").disabled = true;
+            $("#teacher-dianbo").attr("class", "btn");
             window.scrollTo(0, 130);
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
@@ -899,22 +963,25 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             ppt_dir = server_root_path + dirname;
             ppt_pages = file_info[1];
             $("#all-yeshu").val(ppt_pages);
-            goPicCurPage();
+            goCurPage();
             if (timer_ppt !== null)
                 clearInterval(timer_ppt);
             timer_ppt = setInterval(function () {
                 var syn_msg;
-                syn_msg = "<?php echo $classID; ?>playpic" + $("#ppt-img")[0].src;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
                 ws.send(syn_msg);
             }, 4000);
         });
         
          $("#play-pic-public").click(function () {
+             window.picOrppt = "pic-public";
             closeAllTitle();
             if ($("#choose-pic-public")[0].selectedIndex == -1)
             {
                 return;
             }
+            document.getElementById("teacher-dianbo").disabled = true;
+            $("#teacher-dianbo").attr("class", "btn");
             window.scrollTo(0, 130);
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
@@ -928,12 +995,80 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             ppt_dir = server_root_path + dirname;
             ppt_pages = file_info[1];
             $("#all-yeshu").val(ppt_pages);
-            goPicCurPage();
+            goCurPage();
             if (timer_ppt !== null)
                 clearInterval(timer_ppt);
             timer_ppt = setInterval(function () {
                 var syn_msg;
-                syn_msg = "<?php echo $classID; ?>playpic" + $("#ppt-img")[0].src;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                ws.send(syn_msg);
+            }, 4000);
+        });
+        
+         $("#play-txt").click(function () {
+            window.picOrppt = "txt";
+            closeAllTitle();
+            if ($("#choose-txt")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            document.getElementById("teacher-dianbo-public").disabled = true;
+            $("#teacher-dianbo-public").attr("class", "btn");
+            document.getElementById("teacher-dianbo").disabled = true;
+            $("#teacher-dianbo").attr("class", "btn");
+            $("#ppt-container").hide();
+            window.scrollTo(0, 130);
+            document.getElementById("close-ppt").disabled = false;
+            $("#close-ppt").attr("class", "btn btn-primary");
+            $("#txt-container").show();
+            $("#scroll-page").show();
+            cur_ppt = 1;
+            var file_info = $("#choose-txt option:selected").val().split("+-+");
+            var source = file_info[2];
+            var server_root_path = "<?php echo SITE_URL . 'resources/' . $txtFilePath; ?>";
+            var dirname = file_info[0];
+            ppt_dir = server_root_path + dirname;
+            ppt_pages = file_info[1];
+            $("#all-yeshu").val(ppt_pages);
+            goCurPage();
+            if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                var syn_msg;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                ws.send(syn_msg);
+            }, 4000);
+        });
+        
+         $("#play-txt-public").click(function () {
+             window.picOrppt ==="txt-public";
+            closeAllTitle();
+            if ($("#choose-txt-public")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            document.getElementById("teacher-dianbo").disabled = true;
+            $("#teacher-dianbo").attr("class", "btn");
+            window.scrollTo(0, 130);
+            document.getElementById("close-ppt").disabled = false;
+            $("#close-ppt").attr("class", "btn btn-primary");
+            $("#ppt-container").hide();
+            $("#txt-container").show();
+            $("#scroll-page").show();
+            cur_ppt = 1;
+            var file_info = $("#choose-txt-public option:selected").val().split("+-+");
+            var source = file_info[2];
+            var server_root_path = "<?php echo $adminPublicTxtdir; ?>";
+            var dirname = file_info[0];
+            ppt_dir = server_root_path + dirname;
+            ppt_pages = file_info[1];
+            $("#all-yeshu").val(ppt_pages);
+            goCurPage();
+            if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                var syn_msg;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
                 ws.send(syn_msg);
             }, 4000);
         });
@@ -957,9 +1092,116 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         }
     function goCurPage() {
         $("#yeshu").val(cur_ppt);
-        $("#ppt-img").attr("src", ppt_dir + "/幻灯片" + cur_ppt + ".JPG");
-        var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-        ws.send(msg);
+        if(window.picOrppt ==="pic"){
+            var server_root_path = ppt_dir.split("picture")[0]+"picture/";
+            var array_fileName = new Array();
+            <?php
+                    $dir = dir($picdir);
+                    $count = 0;
+                    while ($file = $dir->read()) {
+                        if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
+                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
+                               <?php $count++; }
+                               
+                            }
+                            $dir->close();
+                            ?>
+             ppt_dir = server_root_path +array_fileName[cur_ppt-1];
+             $("#ppt-img").attr("src", ppt_dir);
+             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+             ws.send(msg);
+        }else if(window.picOrppt ==="pic-public"){
+            var server_root_path = "./resources/public/picture/";
+            var array_fileName = new Array();
+            <?php
+                    $dir = dir($adminPublicPicdir);
+                    $count = 0;
+                    while ($file = $dir->read()) {
+                        if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
+                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
+                               <?php $count++; }
+                               
+                            }
+                            $dir->close();
+                            ?>
+             ppt_dir = server_root_path +array_fileName[cur_ppt-1];
+             $("#ppt-img").attr("src", ppt_dir);
+             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+             ws.send(msg);
+        }else if(window.picOrppt ==="txt"){
+            var server_root_path = ppt_dir.split("txt")[0]+"txt/";
+            var array_fileName = new Array();
+            <?php
+                    $dir = dir($txtdir);
+                    $count = 0;
+                    while ($file = $dir->read()) {
+                        if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
+                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
+                               <?php $count++; }
+                               
+                            }
+                            $dir->close();
+                            ?>
+             ppt_dir = server_root_path + array_fileName[cur_ppt-1];
+             ppt_dir = ppt_dir.split("reborn/")[1];
+             $.ajax({
+               type:"POST",
+               dataType:"json",
+               url:"index.php?r=api/getTxtValue",
+               data:{url:ppt_dir},
+               success:function(data){
+                    $("#txt-textarea").val(data);
+                     var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                     ws.send(msg);
+               },
+               error:function(xhr, type, exception){
+                   console.log('getTxtValue error', type);
+                   console.log(xhr, "Failed");
+                   console.log(exception, "exception");
+               }
+           });
+            
+        }else if(window.picOrppt ==="txt-public"){
+             var server_root_path = "./resources/public/txt/";
+            var array_fileName = new Array();
+            <?php
+                    $dir = dir($adminPublicTxtdir);
+                    $count = 0;
+                    while ($file = $dir->read()) {
+                        if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
+                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
+                               <?php $count++; }
+                            }
+                            $dir->close();
+                            ?>
+             ppt_dir = server_root_path + array_fileName[cur_ppt-1];
+             ppt_dir = ppt_dir.split("./")[1];
+             $.ajax({
+               type:"POST",
+               dataType:"json",
+               url:"index.php?r=api/getTxtValue",
+               data:{url:ppt_dir},
+               success:function(data){
+                    $("#txt-textarea").val(data);
+                     var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                     ws.send(msg);
+               },
+               error:function(xhr, type, exception){
+                   console.log('getTxtValue error', type);
+                   console.log(xhr, "Failed");
+                   console.log(exception, "exception");
+               }
+           });
+        }else if(window.picOrppt ==="ppt"){
+            $("#ppt-img").attr("src", ppt_dir + "/幻灯片" + cur_ppt + ".JPG");
+            var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+             ws.send(msg);
+        }
+        
     }
     function pageUp() {
         if (cur_ppt <= 1) {
@@ -967,8 +1209,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             window.wxc.xcConfirm("已到第一页！", window.wxc.xcConfirm.typeEnum.info);
         } else {
             cur_ppt = cur_ppt - 1;
+            goCurPage();
         }
-        goCurPage();
     }
 
     function pageDown() {
@@ -977,8 +1219,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
         } else {
             cur_ppt = cur_ppt + 1;
+            goCurPage();
         }
-        goCurPage();
+        
     }
 
 
