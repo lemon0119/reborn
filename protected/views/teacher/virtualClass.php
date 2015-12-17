@@ -56,7 +56,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
      
     </div>
     <div id="title_classExercise" class="title_select" >
-        <div  align="center" id="sw-classExercise"><h4 >课 堂<br/>作 业 </h4></div>
+        <div  align="center" id="sw-classExercise"><h4 >课 堂<br/>练 习 </h4></div>
         
     </div>
 
@@ -336,11 +336,19 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             </div>
         </div>
         </div>
-    <div id="show-classExercise"  style="display: none;border: 0px;width:100px;">
-            <div id="dd1" disabled="disabled" style="overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:300px; padding:0;">
-                <text id="dd11"   style="cursor: default;overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:greenyellow;width:100%;  padding:0;"></text>
-                <text id="dd21"   style="cursor: default; overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:white;width:100%;  padding:0;"></text>
+    <div id="show-classExercise"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+             <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
+        <div style="display:inline;">
+                <div  style="width:150px;position:relative;right: 200px ">
+                    <select id="choose-classExercise" style="width:150px;margin-top: 10px;">
+                    </select>
+                    <button id="play-classExercise" style="width: 150px;" class="btn btn-primary">开放练习</button>
+                </div>
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >现 场<br/>出 题 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
+                <button id="play-voice-public" style="width: 150px;" class="btn btn-primary">开放练习</button>
             </div>
+        </div>
         </div>
     <div id="scroll-video" style="display:inline;">
         <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button> 
@@ -768,6 +776,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         openConnect();
 
         $("#play-ppt").click(function () {
+            $("#voice").attr("src", "");
             window.picOrppt = "ppt";
             closeAllTitle();
             if ($("#choose-ppt")[0].selectedIndex == -1)
@@ -809,6 +818,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             }, 4000);
         });
         $("#play-ppt-public").click(function () {
+        $("#voice").attr("src", "");
             window.picOrppt = "ppt";
             closeAllTitle();
             if ($("#choose-ppt-public")[0].selectedIndex == -1)
@@ -867,6 +877,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             pageDown();
         });
         $("#close-ppt").click(function () {
+            $("#voice").attr("src", "");
             cur_ppt = -1;
             ppt_pages = -1;
             if (timer_ppt !== null)
@@ -903,6 +914,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#teacher-dianbo").click(function () {
+            $("#voice").attr("src", "");
             closeAllTitle();
             if ($("#teacher-choose-file")[0].selectedIndex == -1)
             {
@@ -945,6 +957,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#teacher-dianbo-public").click(function () {
+        $("#voice").attr("src", "");
             closeAllTitle();
             if ($("#teacher-choose-file-public")[0].selectedIndex == -1)
             {
@@ -995,6 +1008,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
         $("#play-pic").click(function () {
+            $("#voice").attr("src", "");
             window.picOrppt = "pic";
             closeAllTitle();
             if ($("#choose-pic")[0].selectedIndex == -1)
@@ -1031,7 +1045,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
          $("#play-pic-public").click(function () {
-             $("#voice").pause;
+         $("#voice").attr("src", "");
              window.picOrppt = "pic-public";
             closeAllTitle();
             if ($("#choose-pic-public")[0].selectedIndex == -1)
@@ -1066,7 +1080,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
          $("#play-txt").click(function () {
-            $("#voice").pause;
+         $("#voice").attr("src", "");
             window.picOrppt = "txt";
             closeAllTitle();
             if ($("#choose-txt")[0].selectedIndex == -1)
@@ -1103,7 +1117,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
          $("#play-txt-public").click(function () {
-            $("#voice").pause;
+          $("#voice").attr("src", "");
              window.picOrppt="txt-public";
             closeAllTitle();
             if ($("#choose-txt-public")[0].selectedIndex == -1)
