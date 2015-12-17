@@ -15,7 +15,7 @@
                                  {
                                      if($suite['suiteID'] == $work['suiteID']) {                                                                       
                            ?>                      
-                         <li><a href="#" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>)"><i class="icon-list"></i><?php echo $suite['suiteName']; ?></a></li>                                                                                                                                               
+                         <li><a href="#" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-list"></i><?php echo $suite['suiteName']; ?></a></li>                                                                                                                                               
                              <?php        
                                      }
                                  }
@@ -34,7 +34,7 @@
                  <li><div ><a href="#" ><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                  
              <?php endforeach; ?> 
              </ul>
-         </div>        
+       </div>        
          <li ><div id="id_classExam"><a href="#"><i class="icon-list"></i>课堂考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
@@ -57,8 +57,26 @@
 </div>
 
 
-<div class="span9">
-    
+<div class="span9" style="">
+    <div id="div1" style="width:33%; height:auto;display:inline;float:left;" >
+        <ul id="ul1">
+        </ul>
+    </div>
+    <div id="div1" style="width:33%; height:auto;display:inline;float:left;">
+        <ul id="ul2">
+            <li>练习一</li>
+            <li>练习二</li>
+            <li>练习三</li>          
+        </ul>
+    </div>
+        <div id="div1" style="width:33%; height:auto;display:inline;float:left;">
+            <ul id="ul3">
+            <li>练习一</li>
+            <li>练习二</li>
+            <li>练习三</li>          
+        </ul>
+    </div>
+  
     
 </div>
 
@@ -92,22 +110,59 @@ function showClassWork(lessonID){
      $("#test" + lessonID).toggle(200);
 }
 
-function getSuiteExercise(suiteID){
+function getSuiteExercise(suiteID,workID){
         $.ajax({
              type: "POST",
              dataType:"json",
-             url: "index.php?r=teacher/getExercise",
-             data: {suiteID:suiteID},
+             url: "index.php?r=api/getExercise",
+             data: {suiteID:suiteID,
+                    workID:workID
+                },
              success: function(data){
-                   alert(data[0]['exerciseID']);
-    
+                   var ul = document.getElementById("ul1");          
+                   $('#ul1').children().filter('li').remove();
+                   $('#ul2').children().filter('li').remove();
+                   $('#ul3').children().filter('li').remove();
+                   for(var i=0;i<data.length;i++){                                         
+                      var str = "<a href='#' onclick='getStudentRanking("+data[i]['workID']+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
+                      var li = document.createElement("li");               
+                      li.innerHTML= str;
+                      ul.appendChild(li);
+                   }  
                  },     
                 error: function(xhr, type, exception){
                     window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
                     console.log(xhr, "Failed");
                 }
-         });
-    
+         });    
+}
+
+function getStudentRanking(workID,exerciseID,type){
+        $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=api/getStudentRanking",
+             data: {workID:workID,
+                    exerciseID:exerciseID,
+                    type:type,
+                },
+             success: function(data){
+                   var ul = document.getElementById("ul1");          
+                   $('#ul1').children().filter('li').remove();
+                   $('#ul2').children().filter('li').remove();
+                   $('#ul3').children().filter('li').remove();
+                   for(var i=0;i<data.length;i++){                                         
+                      var str = "<a href='#' onclick='getStudentRanking("+data[i]['workID']+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
+                      var li = document.createElement("li");               
+                      li.innerHTML= str;
+                      ul.appendChild(li);
+                   }  
+                 },     
+                error: function(xhr, type, exception){
+                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr, "Failed");
+                }
+         }); 
 }
 
 

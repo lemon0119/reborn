@@ -186,8 +186,8 @@ class AnswerRecord extends CActiveRecord
 //        }
 //    }   
     
-        public static function saveAnswer($recordID, $answer, $seconds,$correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$HighIntervarlTime=0,$countAllKey=0) {  
-            $userID = Yii::app()->session['userid_now'];
+        public static function saveAnswer($recordID, $answer, $seconds,$correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$HighIntervarlTime=0,$countAllKey=0 , $isExam) {  
+        $userID = Yii::app()->session['userid_now'];
         $exerID = Yii::app()->session['exerID'];
         $type = Yii::app()->session['exerType'];
         $type = str_replace(["Exer"],"",$type);
@@ -211,7 +211,8 @@ class AnswerRecord extends CActiveRecord
             $newAnswer->ratio_maxKeyType = $HighstCountKey;
             $newAnswer->ratio_averageKeyType = $AveragekeyType;
             $newAnswer->ratio_maxInternalTime = $HighIntervarlTime;
-            $newAnswer->ratio_countAllKey = $countAllKey;  
+            $newAnswer->ratio_countAllKey = $countAllKey;
+            $newAnswer->isExam = $isExam;
             if(!($newAnswer->insert())) {
                 echo Tool::jsLog('创建答案记录失败！');
                 return false;
@@ -230,6 +231,7 @@ class AnswerRecord extends CActiveRecord
             $oldAnswer->ratio_averageKeyType = $AveragekeyType;
             $oldAnswer->ratio_maxInternalTime = $HighIntervarlTime;
             $oldAnswer->ratio_countAllKey = $countAllKey;  
+            $newAnswer->isExam = $isExam;
             if(!($oldAnswer->upDate())) {
                 echo Tool::jsLog('更新答案记录失败！');
                 return false;
