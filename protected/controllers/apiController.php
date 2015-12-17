@@ -253,6 +253,9 @@ class apiController extends Controller {
         $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
         $this->renderJSON($data);
     }
+    
+    
+    
   
     public function actionGetTxtValue(){
         $file = $_POST['url'];
@@ -261,6 +264,50 @@ class apiController extends Controller {
         $this->renderJSON($data);
     }
     //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
+         public function ActiongetExercise(){
+            if(isset($_POST['suiteID'])){
+                $suiteID = $_POST['suiteID'];
+                $array_exercise = SuiteExercise::model()->findAll("suiteID='$suiteID'");
+                $array_result = array();
+                foreach ($array_exercise as $exercise)
+                {
+                    if($exercise['type'] == 'key')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = KeyType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['workID'] = $_POST['workID'];
+                        //用数字代替类型，后面js好弄
+                        $result['type'] = 1;
+                        array_push($array_result, $result);
+                    }else 
+                    if($exercise['type'] == 'listen')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = ListenType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['workID'] = $_POST['workID'];
+                        $result['type'] = 2;
+                        array_push($array_result, $result);
+                    }else
+                    if($exercise['type'] == 'look')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = LookType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['workID'] = $_POST['workID'];                       
+                        $result['type'] = 3;
+                        array_push($array_result,$result);
+                    }
+                }
+            }            
+            $this->renderJSON($array_result);          
+     }
+     
+     public function getStudentRanking(){
+         $workID = $_POST['workID'];
+         $exerciseID = $_POST['exerciseID'];
+         
+     }
+     
+     
 }
 
 
