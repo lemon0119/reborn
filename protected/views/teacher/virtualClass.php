@@ -285,10 +285,52 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
         </div>
        <div id="show-video"   style="display: none;border: 0px;width:100px;">
-            <div id="dd1" disabled="disabled" style="overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:300px; padding:0;">
-                <text id="dd11"   style="cursor: default;overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:greenyellow;width:100%;  padding:0;"></text>
-                <text id="dd21"   style="cursor: default; overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:white;width:100%;  padding:0;"></text>
+           <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
+        <div style="display:inline;">
+            <div  style="width:150px;position:relative;right: 200px ">
+                <select id="choose-video" style="width:150px;margin-top: 10px;">
+                            <?php
+                            $mydir = dir($txtdir);
+                            while ($file = $mydir->read()) {
+                                if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                    ?>
+                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$txtdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                            ?>
+                </select>
+                <button id="play-video" style="width: 150px;" class="btn btn-primary">播放音频</button>
             </div>
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
+                <select id="choose-video-public" style="width:150px;margin-top: 10px;">
+                    <?php
+                    $mydir = dir($adminPublicTxtdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$adminPublicTxtdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+admin"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                            ?>
+                </select>
+                <button id="play-video-public" style="width: 150px;" class="btn btn-primary">播放音频</button>
+            </div>
+        </div>
         </div>
     <div id="show-classExercise"  style="display: none;border: 0px;width:100px;">
             <div id="dd1" disabled="disabled" style="overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:300px; padding:0;">
@@ -300,11 +342,11 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button> 
     </div>
     <div id="scroll-page" style="display:inline;">
-        <button id="page-up" class="btn btn-primary">上页</button>
+        <button id="page-up" style="font-size: x-large" class="btn btn-primary">←</button>
         <input id="yeshu" style="width:50px;" value="1">
         <input id="all-yeshu" style="width:50px;" readOnly="true">
         <button id="page-go" class="btn btn-primary">跳转</button>
-        <button id="page-down" class="btn btn-primary">下页</button>
+        <button id="page-down" style="font-size: x-large;" class="btn btn-primary">→</button>
         <button id="full-screen-button" class="btn btn-primary">全屏</button>
         <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
     </div>
@@ -320,6 +362,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     <div id="txt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
         <textarea id="txt-textarea" style="background:transparent;border-style:none; width: 720px;height: 600px" disabled="disable">
         </textarea>
+    </div>
+    <div id="video-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
+        <audio id="video" width="100%" controls src="">
+        </audio>
     </div>
 
 </div>
@@ -1041,7 +1087,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
          $("#play-txt-public").click(function () {
-             window.picOrppt ==="txt-public";
+             window.picOrppt="txt-public";
             closeAllTitle();
             if ($("#choose-txt-public")[0].selectedIndex == -1)
             {

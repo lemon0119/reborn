@@ -338,7 +338,7 @@
         getBackTime();
         
         if($("#txt").val()=='1'){
-            alert("此班级正在上课！");
+            window.wxc.xcConfirm("此班级正在上课！", window.wxc.xcConfirm.typeEnum.error);
         }else{
             window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";
         }
@@ -357,7 +357,8 @@
             if(!data){
                 window.location.href="./index.php?r=teacher/virtualClass&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>";//$("#txt").val('0');
             } else{
-                alert("此班级正在上课！");//$("#txt").val('1');
+                window.wxc.xcConfirm("此班级正在上课！", window.wxc.xcConfirm.typeEnum.error);
+                //$("#txt").val('1');
             }
         },
         error: function(xhr, type, exception){

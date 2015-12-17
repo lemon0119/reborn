@@ -28,10 +28,10 @@
     <div id="dianbo-videos-container">
         <textarea style="background:transparent;border-style:none; width: 750px;height: 600px" disabled="disable">
         <?php
-$content = file_get_contents($file); //读取文件中的内容
-$content = mb_convert_encoding($content, 'utf-8', 'gbk');
-echo $content;
-?>
+        $content = file_get_contents($file); //读取文件中的内容
+        $content = mb_convert_encoding($content, 'utf-8', 'gbk');
+        echo $content;
+        ?>
         </textarea>
     </div>
 </div>
