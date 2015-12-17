@@ -253,6 +253,9 @@ class apiController extends Controller {
         $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
         $this->renderJSON($data);
     }
+    
+    
+    
   
     
     //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }

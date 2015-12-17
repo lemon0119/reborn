@@ -5050,6 +5050,38 @@ public function ActionAssignFreePractice(){
         ));
 }
 
+
+    public function ActionWatchData(){
+           $classID = $_GET['classID'];
+           $array_lesson = Lesson::model()->findAll("classID = '$classID'");
+            if (!empty($array_lesson)) {
+                if (isset($_GET['lessonID']))
+                    Yii::app()->session['currentLesson'] = $_GET['lessonID'];
+                else
+                        Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];                   
+            }
+            $array_work = ClassLessonSuite::model()->findAll("classID = '$classID'and open = 1");
+            $array_suite = Suite::model()->findAll();
+            $array_examList = ClassExam::model()->findAll("classID='$classID' and open = 1");
+            $array_exam = Exam::model()->findAll();
+            
+            
+            
+            
+            
+            
+            
+            
+            $this->render('dataAnalysis',array(
+                'array_lesson' => $array_lesson,
+                'array_work' => $array_work,
+                'array_suite' => $array_suite,
+                'classID' => $classID,
+                'array_examList' => $array_examList,
+                'array_exam' => $array_exam,
+           ));
+    }
+
  public function ActionAddFreePractice(){
         $res = 0;
         $title = $_POST['title'];
@@ -5139,6 +5171,37 @@ public function ActionAssignFreePractice(){
            }
 
     }
-
+    public function ActiongetExercise(){
+            if(isset($_POST['suiteID'])){
+                $suiteID = $_POST['suiteID'];
+                $array_exercise = SuiteExercise::model()->findAll("suiteID='$suiteID'");
+                $array_result = array();
+                foreach ($array_exercise as $exercise)
+                {
+                    if($exercise['type'] == 'key')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = KeyType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['suiteID'] = $exercise['suiteID'];
+                        array_push($array_result, $result);
+                    }else 
+                    if($exercise['type'] == 'listen')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = ListenType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['suiteID'] = $exercise['suiteID'];
+                        array_push($array_result, $result);
+                    }else
+                    if($exercise['type'] == 'look')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = LookType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['suiteID'] = $exercise['suiteID'];
+                        array_push($array_result, $result);
+                    }
+                }
+            }            
+            $this->renderJSON($array_result);          
+     }
 
 }
