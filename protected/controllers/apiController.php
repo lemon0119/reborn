@@ -257,7 +257,12 @@ class apiController extends Controller {
     
     
   
-    
+    public function actionGetTxtValue(){
+        $file = $_POST['url'];
+        $content = file_get_contents($file); //读取文件中的内容
+        $data = mb_convert_encoding($content, 'utf-8', 'gbk');
+        $this->renderJSON($data);
+    }
     //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
 }
 
