@@ -20,6 +20,9 @@ $picFilePath = $role . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
 $picdir = "./resources/" . $picFilePath;
 $txtFilePath = $role . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
 $txtdir = "./resources/" . $txtFilePath;
+$voiceFilePath = $role . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+$voicedir = "./resources/" . $voiceFilePath;
+
 
 $courseID = TbClass::model()->findCourseIDByClassID($classID);
 $adminPptFilePath = "admin/001/$courseID/$on/ppt/";
@@ -27,6 +30,7 @@ $adminPdir = "./resources/admin/001/$courseID/$on/ppt/";
 $adminPublicPdir = "./resources/public/ppt/";
 $adminPublicPicdir = "./resources/public/picture/";
 $adminPublicTxtdir = "./resources/public/txt/";
+$adminPublicVoicedir = "./resources/public/voice/";
 $adminVideoFilePath = "admin/001/$courseID/$on/video/";
 $adminPublicVdir = "./resources/public/video/";
 $adminVdir = "./resources/admin/001/$courseID/$on/video/";
@@ -284,18 +288,18 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             </div>
         </div>
         </div>
-       <div id="show-video"   style="display: none;border: 0px;width:100px;">
+       <div id="show-voice"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
            <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
-                <select id="choose-video" style="width:150px;margin-top: 10px;">
+                <select id="choose-voice" style="width:150px;margin-top: 10px;">
                             <?php
-                            $mydir = dir($txtdir);
+                            $mydir = dir($voicedir);
                             while ($file = $mydir->read()) {
-                                if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                if ((!is_dir("$voicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                                     ?>
                             <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$txtdir";
+                            $dir = "$voicedir";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
                             echo $num;
@@ -306,18 +310,18 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             $mydir->close();
                             ?>
                 </select>
-                <button id="play-video" style="width: 150px;" class="btn btn-primary">播放音频</button>
+                <button id="play-voice" style="width: 150px;" class="btn btn-primary">播放音频</button>
             </div>
             <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
             <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
-                <select id="choose-video-public" style="width:150px;margin-top: 10px;">
+                <select id="choose-voice-public" style="width:150px;margin-top: 10px;">
                     <?php
-                    $mydir = dir($adminPublicTxtdir);
+                    $mydir = dir($adminPublicVoicedir);
                     while ($file = $mydir->read()) {
-                        if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                        if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
                             <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$adminPublicTxtdir";
+                            $dir = "$adminPublicVoicedir";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
                             echo $num;
@@ -328,7 +332,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             $mydir->close();
                             ?>
                 </select>
-                <button id="play-video-public" style="width: 150px;" class="btn btn-primary">播放音频</button>
+                <button id="play-voice-public" style="width: 150px;" class="btn btn-primary">播放音频</button>
             </div>
         </div>
         </div>
@@ -363,8 +367,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         <textarea id="txt-textarea" style="background:transparent;border-style:none; width: 720px;height: 600px" disabled="disable">
         </textarea>
     </div>
-    <div id="video-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
-        <audio id="video" width="100%" controls src="">
+    <div id="voice-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
+        <audio id="voice" style="position: relative;top: 100px;width: 500px !important;" controls src="">
         </audio>
     </div>
 
@@ -725,7 +729,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#title_video").css({"color": "#f46500"});
             }
             closeTitleWithoutFlag(flag);
-            $("#show-video").toggle(200);
+            $("#show-voice").toggle(200);
         });
         $("#sw-classExercise").click(function () {
             if (flag === "classExercise") {
@@ -778,6 +782,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
+            $("#txt-container").hide();
+            $("#voice-container").hide();
             $("#scroll-page").show();
             cur_ppt = 1;
             var file_info = $("#choose-ppt option:selected").val().split("+-+");
@@ -817,6 +823,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
+            $("#txt-container").hide();
+            $("#voice-container").hide();
             $("#scroll-page").show();
             cur_ppt = 1;
             var file_info = $("#choose-ppt-public option:selected").val().split("+-+");
@@ -873,6 +881,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             document.getElementById("teacher-dianbo").disabled = false;
             $("#teacher-dianbo").attr("class", "btn btn-primary");
             $("#ppt-container").hide();
+            $("#voice-container").hide();
             $("#scroll-page").hide();
             $("#txt-container").hide();
         });
@@ -1000,6 +1009,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
+            $("#txt-container").hide();
+            $("#voice-container").hide();
             $("#scroll-page").show();
             cur_ppt = 1;
             var file_info = $("#choose-pic option:selected").val().split("+-+");
@@ -1020,6 +1031,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
          $("#play-pic-public").click(function () {
+             $("#voice").pause;
              window.picOrppt = "pic-public";
             closeAllTitle();
             if ($("#choose-pic-public")[0].selectedIndex == -1)
@@ -1032,6 +1044,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
+            $("#txt-container").hide();
+            $("#voice-container").hide();
             $("#scroll-page").show();
             cur_ppt = 1;
             var file_info = $("#choose-pic-public option:selected").val().split("+-+");
@@ -1052,6 +1066,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
          $("#play-txt").click(function () {
+            $("#voice").pause;
             window.picOrppt = "txt";
             closeAllTitle();
             if ($("#choose-txt")[0].selectedIndex == -1)
@@ -1067,6 +1082,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#txt-container").show();
+            $("#voice-container").hide();
             $("#scroll-page").show();
             cur_ppt = 1;
             var file_info = $("#choose-txt option:selected").val().split("+-+");
@@ -1087,6 +1103,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
          $("#play-txt-public").click(function () {
+            $("#voice").pause;
              window.picOrppt="txt-public";
             closeAllTitle();
             if ($("#choose-txt-public")[0].selectedIndex == -1)
@@ -1100,11 +1117,84 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").hide();
             $("#txt-container").show();
+            $("#voice-container").hide();
             $("#scroll-page").show();
             cur_ppt = 1;
             var file_info = $("#choose-txt-public option:selected").val().split("+-+");
             var source = file_info[2];
             var server_root_path = "<?php echo $adminPublicTxtdir; ?>";
+            var dirname = file_info[0];
+            ppt_dir = server_root_path + dirname;
+            ppt_pages = file_info[1];
+            $("#all-yeshu").val(ppt_pages);
+            goCurPage();
+            if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                var syn_msg;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                ws.send(syn_msg);
+            }, 4000);
+        });
+        
+        $("#play-voice").click(function () {
+            window.picOrppt = "voice";
+            closeAllTitle();
+            if ($("#choose-voice")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            document.getElementById("teacher-dianbo-public").disabled = true;
+            $("#teacher-dianbo-public").attr("class", "btn");
+            document.getElementById("teacher-dianbo").disabled = true;
+            $("#teacher-dianbo").attr("class", "btn");
+            $("#ppt-container").hide();
+            window.scrollTo(0, 130);
+            document.getElementById("close-ppt").disabled = false;
+            $("#close-ppt").attr("class", "btn btn-primary");
+            $("#voice-container").show();
+            $("#txt-container").hide();
+            $("#scroll-page").show();
+            cur_ppt = 1;
+            var file_info = $("#choose-voice option:selected").val().split("+-+");
+            var source = file_info[2];
+            var server_root_path = "<?php echo SITE_URL . 'resources/' . $voiceFilePath; ?>";
+            var dirname = file_info[0];
+            ppt_dir = server_root_path + dirname;
+            ppt_pages = file_info[1];
+            $("#all-yeshu").val(ppt_pages);
+            goCurPage();
+            if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                var syn_msg;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                ws.send(syn_msg);
+            }, 4000);
+        });
+        
+        $("#play-voice-public").click(function () {
+            window.picOrppt = "voice-public";
+            closeAllTitle();
+            if ($("#choose-voice-public")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            document.getElementById("teacher-dianbo-public").disabled = true;
+            $("#teacher-dianbo-public").attr("class", "btn");
+            document.getElementById("teacher-dianbo").disabled = true;
+            $("#teacher-dianbo").attr("class", "btn");
+            $("#ppt-container").hide();
+            window.scrollTo(0, 130);
+            document.getElementById("close-ppt").disabled = false;
+            $("#close-ppt").attr("class", "btn btn-primary");
+            $("#voice-container").show();
+            $("#txt-container").hide();
+            $("#scroll-page").show();
+            cur_ppt = 1;
+            var file_info = $("#choose-voice-public option:selected").val().split("+-+");
+            var source = file_info[2];
+            var server_root_path = "<?php echo SITE_URL . 'resources/' . $adminPublicVoicedir; ?>";
             var dirname = file_info[0];
             ppt_dir = server_root_path + dirname;
             ppt_pages = file_info[1];
@@ -1168,7 +1258,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                                  $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
                                  array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
                                <?php $count++; }
-                               
                             }
                             $dir->close();
                             ?>
@@ -1242,6 +1331,46 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                    console.log(exception, "exception");
                }
            });
+        }else if(window.picOrppt ==="voice"){
+        var server_root_path = ppt_dir.split("voice")[0]+"voice/";
+            var array_fileName = new Array();
+            <?php
+                    $dir = dir($voicedir);
+                    $count = 0;
+                    while ($file = $dir->read()) {
+                        if ((!is_dir("$voicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
+                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
+                               <?php $count++; }
+                               
+                            }
+                            $dir->close();
+                            ?>
+             ppt_dir = server_root_path +array_fileName[cur_ppt-1];
+             $("#voice").attr("src", ppt_dir);
+             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+             ws.send(msg);
+        
+        }else if(window.picOrppt ==="voice-public"){
+         var server_root_path = "./resources/public/voice/";
+            var array_fileName = new Array();
+            <?php
+                    $dir = dir($adminPublicVoicedir);
+                    $count = 0;
+                    while ($file = $dir->read()) {
+                        if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
+                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
+                               <?php $count++; }
+                               
+                            }
+                            $dir->close();
+                            ?>
+             ppt_dir = server_root_path +array_fileName[cur_ppt-1];
+             $("#voice").attr("src", ppt_dir);
+             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+             ws.send(msg);
+        
         }else if(window.picOrppt ==="ppt"){
             $("#ppt-img").attr("src", ppt_dir + "/幻灯片" + cur_ppt + ".JPG");
             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
@@ -1361,7 +1490,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         $("#title_text").css({"color": "#fff"});
         $("#show-ppt").hide();
         $("#title_ppt").css({"color": "#fff"});
-        $("#show-video").hide();
+        $("#show-voice").hide();
         $("#title_video").css({"color": "#fff"});
         $("#show-classExercise").hide();
         $("#title_classExercise").css({"color": "#fff"});
@@ -1377,7 +1506,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#title_text").css({"color": "#fff"});
                 $("#show-ppt").hide();
                 $("#title_ppt").css({"color": "#fff"});
-                $("#show-video").hide();
+                $("#show-voice").hide();
                 $("#title_video").css({"color": "#fff"});
                 $("#show-classExercise").hide();
                 $("#title_classExercise").css({"color": "#fff"});
@@ -1391,7 +1520,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#title_text").css({"color": "#fff"});
                 $("#show-ppt").hide();
                 $("#title_ppt").css({"color": "#fff"});
-                $("#show-video").hide();
+                $("#show-voice").hide();
                 $("#title_video").css({"color": "#fff"});
                 $("#show-classExercise").hide();
                 $("#title_classExercise").css({"color": "#fff"});
@@ -1405,7 +1534,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#title_picture").css({"color": "#fff"});
                 $("#show-ppt").hide();
                 $("#title_ppt").css({"color": "#fff"});
-                $("#show-video").hide();
+                $("#show-voice").hide();
                 $("#title_video").css({"color": "#fff"});
                 $("#show-classExercise").hide();
                 $("#title_classExercise").css({"color": "#fff"});
@@ -1419,7 +1548,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#title_picture").css({"color": "#fff"});
                 $("#show-text").hide();
                 $("#title_text").css({"color": "#fff"});
-                $("#show-video").hide();
+                $("#show-voice").hide();
                 $("#title_video").css({"color": "#fff"});
                 $("#show-classExercise").hide();
                 $("#title_classExercise").css({"color": "#fff"});
@@ -1449,7 +1578,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#title_text").css({"color": "#fff"});
                 $("#show-ppt").hide();
                 $("#title_ppt").css({"color": "#fff"});
-                $("#show-video").hide();
+                $("#show-voice").hide();
                 $("#title_video").css({"color": "#fff"});
                 $("#showOnline").hide();
                 $("#title_bull").css({"color": "#fff"});
@@ -1463,7 +1592,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#title_text").css({"color": "#fff"});
                 $("#show-ppt").hide();
                 $("#title_ppt").css({"color": "#fff"});
-                $("#show-video").hide();
+                $("#show-voice").hide();
                 $("#title_video").css({"color": "#fff"});
                 $("#show-classExercise").hide();
                 $("#title_classExercise").css({"color": "#fff"});
