@@ -130,10 +130,12 @@
                  if(pressTime - window.G_oldStartTime >0){
                      var IntervalTime = parseInt((pressTime - window.G_oldStartTime)/10)/100;
                       $("#getIntervalTime").html(IntervalTime);
+                      window.GA_IntervalTime  = IntervalTime;
                      window.G_oldStartTime = pressTime;
                  }
                  if(IntervalTime-window.G_highIntervarlTime>0){
                      window.G_highIntervarlTime = IntervalTime;
+                     window.GA_IntervalTime  = window.G_highIntervarlTime ;
                      $("#getHighIntervarlTime").html(IntervalTime);
                  }             
           }  

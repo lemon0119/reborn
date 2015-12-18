@@ -253,14 +253,48 @@ class apiController extends Controller {
         $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
         $this->renderJSON($data);
     }
-  
+    
+    public function actionAnalysisSaveToDatabase(){
+        $exerciseType = $_POST['exerciseType'];
+        $exerciseData = $_POST['exerciseData'];
+        $ratio_averageKeyType = $_POST['averageKeyType'];
+        $ratio_maxKeyType = $_POST['highstCountKey'];
+        $ratio_maxSpeed = $_POST['highstSpeed'];
+        $ratio_speed = $_POST['averageSpeed'];
+        $ratio_backDelete = $_POST['CountBackDelete'];
+        $ratio_internalTime = $_POST['IntervalTime'];
+        $ratio_maxInternalTime = $_POST['highIntervarlTime'];
+        $ratio_correct = $_POST['RightRadio'];
+        $ratio_countAllKey = $_POST['CountAllKey'];
+        $squence = $_POST['squence'];
+        if($exerciseType === "classExercise"){
+            $classExerciseID = $exerciseData[0];
+            $studentID = $exerciseData[1];
+            $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
+            if(!isset($sqlClassExerciseRecord)){
+                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+            }else{
+                print_r("123");
+                $sqlClassExerciseRecord->ratio_averageKeyType = $sqlClassExerciseRecord['ratio_averageKeyType']."&".$ratio_averageKeyType;
+                $sqlClassExerciseRecord->ratio_maxKeyType = $sqlClassExerciseRecord['ratio_maxKeyType']."&".$ratio_maxKeyType;
+                $sqlClassExerciseRecord->ratio_maxSpeed = $sqlClassExerciseRecord['ratio_maxSpeed']."&".$ratio_maxSpeed;
+                $sqlClassExerciseRecord->ratio_speed = $sqlClassExerciseRecord['ratio_speed']."&".$ratio_speed;
+                $sqlClassExerciseRecord->ratio_backDelete = $sqlClassExerciseRecord['ratio_backDelete']."&".$ratio_backDelete;
+                $sqlClassExerciseRecord->ratio_internalTime = $sqlClassExerciseRecord['ratio_internalTime']."&".$ratio_internalTime;
+                $sqlClassExerciseRecord->ratio_maxInternalTime = $sqlClassExerciseRecord['ratio_maxInternalTime']."&".$ratio_maxInternalTime;
+                $sqlClassExerciseRecord->ratio_correct = $sqlClassExerciseRecord['ratio_correct']."&".$ratio_correct;
+                $sqlClassExerciseRecord->update();
+            }
+        }
+    }
+    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
+    
     public function actionGetTxtValue(){
         $file = $_POST['url'];
         $content = file_get_contents($file); //读取文件中的内容
         $data = mb_convert_encoding($content, 'utf-8', 'gbk');
         $this->renderJSON($data);
     }
-    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
 }
 
 

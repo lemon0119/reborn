@@ -53,3 +53,15 @@
         </div>
     </div>
 <?php } ?>
+<script>
+    window.G_saveToDatabase = 1;
+    <?php $sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '2'");
+            $countSquence = count($sqlClassExerciseRecord);
+            $squence = $countSquence+1;
+            ?>
+    window.G_squence = <?php echo $squence;?>;
+    window.G_exerciseType = "classExercise";
+    var classExerciseID = 2;
+    var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
+    window.G_exerciseData = Array(classExerciseID,studentID);
+</script>

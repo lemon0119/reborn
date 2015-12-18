@@ -93,6 +93,7 @@ function reloadTime(){
 	mm = 0;
 	ss = 0;
 	strTime = '00:00:00';
+        window.GA_time = strTime;
 if(document.getElementById('timej')!==null)
 	document.getElementById('timej').innerHTML = strTime;
 	clearInterval(timer);

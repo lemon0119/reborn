@@ -7,20 +7,36 @@
  * @property integer $id
  * @property integer $classExerciseID
  * @property string $studentID
- * @property double $ratio_speed
- * @property double $ratio_correct
- * @property double $ratio_maxSpeed
- * @property double $ratio_momentSpeed
- * @property double $ratio_backDelete
- * @property double $ratio_momentKeyType
- * @property double $ratio_maxKeyType
- * @property double $ratio_averageKeyType
- * @property double $ratio_internalTime
- * @property double $ratio_maxInternalTime
- * @property double $ratio_countAllKey
+ * @property integer $squence
+ * @property string $ratio_speed
+ * @property string $ratio_correct
+ * @property string $ratio_maxSpeed
+ * @property string $ratio_backDelete
+ * @property string $ratio_maxKeyType
+ * @property string $ratio_averageKeyType
+ * @property string $ratio_maxInternalTime
+ * @property string $ratio_countAllKey
  */
 class ClassexerciseRecord extends CActiveRecord
 {
+    
+     public function insertClassexerciseRecord($classExerciseID,$studentID,$squence,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
+        $newClassexerciseRecord = new ClassexerciseRecord();
+        $newClassexerciseRecord->classExerciseID = $classExerciseID;
+        $newClassexerciseRecord->studentID = $studentID;
+        $newClassexerciseRecord->squence = $squence;
+        $newClassexerciseRecord->ratio_speed = $ratio_speed;
+        $newClassexerciseRecord->ratio_correct =$ratio_correct;
+        $newClassexerciseRecord->ratio_maxSpeed =$ratio_maxSpeed;
+        $newClassexerciseRecord->ratio_backDelete = $ratio_backDelete;
+        $newClassexerciseRecord->ratio_maxKeyType = $ratio_maxKeyType;
+        $newClassexerciseRecord->ratio_averageKeyType =$ratio_averageKeyType;
+        $newClassexerciseRecord->ratio_internalTime =$ratio_internalTime;
+        $newClassexerciseRecord->ratio_maxInternalTime= $ratio_maxInternalTime;
+        $newClassexerciseRecord->ratio_countAllKey = $ratio_countAllKey;
+        
+        return $newClassexerciseRecord->insert();
+    }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -37,13 +53,12 @@ class ClassexerciseRecord extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('classExerciseID, studentID, ratio_speed, ratio_correct, ratio_maxSpeed, ratio_momentSpeed, ratio_backDelete, ratio_momentKeyType, ratio_maxKeyType, ratio_averageKeyType, ratio_internalTime, ratio_maxInternalTime, ratio_countAllKey', 'required'),
-			array('classExerciseID', 'numerical', 'integerOnly'=>true),
-			array('ratio_speed, ratio_correct, ratio_maxSpeed, ratio_momentSpeed, ratio_backDelete, ratio_momentKeyType, ratio_maxKeyType, ratio_averageKeyType, ratio_internalTime, ratio_maxInternalTime, ratio_countAllKey', 'numerical'),
+			array('classExerciseID, studentID, squence, ratio_speed, ratio_correct, ratio_maxSpeed, ratio_backDelete, ratio_maxKeyType, ratio_averageKeyType, ratio_maxInternalTime, ratio_countAllKey', 'required'),
+			array('classExerciseID, squence', 'numerical', 'integerOnly'=>true),
 			array('studentID', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, classExerciseID, studentID, ratio_speed, ratio_correct, ratio_maxSpeed, ratio_momentSpeed, ratio_backDelete, ratio_momentKeyType, ratio_maxKeyType, ratio_averageKeyType, ratio_internalTime, ratio_maxInternalTime, ratio_countAllKey', 'safe', 'on'=>'search'),
+			array('id, classExerciseID, studentID, squence, ratio_speed, ratio_correct, ratio_maxSpeed, ratio_backDelete, ratio_maxKeyType, ratio_averageKeyType, ratio_maxInternalTime, ratio_countAllKey', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,15 +82,13 @@ class ClassexerciseRecord extends CActiveRecord
 			'id' => 'ID',
 			'classExerciseID' => 'Class Exercise',
 			'studentID' => 'Student',
+			'squence' => 'Squence',
 			'ratio_speed' => 'Ratio Speed',
 			'ratio_correct' => 'Ratio Correct',
 			'ratio_maxSpeed' => 'Ratio Max Speed',
-			'ratio_momentSpeed' => 'Ratio Moment Speed',
 			'ratio_backDelete' => 'Ratio Back Delete',
-			'ratio_momentKeyType' => 'Ratio Moment Key Type',
 			'ratio_maxKeyType' => 'Ratio Max Key Type',
 			'ratio_averageKeyType' => 'Ratio Average Key Type',
-			'ratio_internalTime' => 'Ratio Internal Time',
 			'ratio_maxInternalTime' => 'Ratio Max Internal Time',
 			'ratio_countAllKey' => 'Ratio Count All Key',
 		);
@@ -102,17 +115,15 @@ class ClassexerciseRecord extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('classExerciseID',$this->classExerciseID);
 		$criteria->compare('studentID',$this->studentID,true);
-		$criteria->compare('ratio_speed',$this->ratio_speed);
-		$criteria->compare('ratio_correct',$this->ratio_correct);
-		$criteria->compare('ratio_maxSpeed',$this->ratio_maxSpeed);
-		$criteria->compare('ratio_momentSpeed',$this->ratio_momentSpeed);
-		$criteria->compare('ratio_backDelete',$this->ratio_backDelete);
-		$criteria->compare('ratio_momentKeyType',$this->ratio_momentKeyType);
-		$criteria->compare('ratio_maxKeyType',$this->ratio_maxKeyType);
-		$criteria->compare('ratio_averageKeyType',$this->ratio_averageKeyType);
-		$criteria->compare('ratio_internalTime',$this->ratio_internalTime);
-		$criteria->compare('ratio_maxInternalTime',$this->ratio_maxInternalTime);
-		$criteria->compare('ratio_countAllKey',$this->ratio_countAllKey);
+		$criteria->compare('squence',$this->squence);
+		$criteria->compare('ratio_speed',$this->ratio_speed,true);
+		$criteria->compare('ratio_correct',$this->ratio_correct,true);
+		$criteria->compare('ratio_maxSpeed',$this->ratio_maxSpeed,true);
+		$criteria->compare('ratio_backDelete',$this->ratio_backDelete,true);
+		$criteria->compare('ratio_maxKeyType',$this->ratio_maxKeyType,true);
+		$criteria->compare('ratio_averageKeyType',$this->ratio_averageKeyType,true);
+		$criteria->compare('ratio_maxInternalTime',$this->ratio_maxInternalTime,true);
+		$criteria->compare('ratio_countAllKey',$this->ratio_countAllKey,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

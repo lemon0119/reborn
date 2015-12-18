@@ -5,6 +5,7 @@
  * 请在主view中设置全局变量 
  * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000
  * @param  var G_isOverFlag= 0 ; view 中 设置window.G_isOverFlag = 1 统计控件将结束统计
+ * @param  var G_isPause= 0 ; view 中 设置window.G_isPause = 1 统计控件将暂停统计
  * 声明全局变量   
  * @param  var G_content="";
  * @param  var G_keyContent="";
@@ -17,7 +18,10 @@
  * @param  var G_endAnalysis    = 0;
  * 
  */
+    var G_exerciseType       ="";
+    var G_saveToDatabase     = 0;
     var G_isOverFlag         = 0;
+    var G_isPause            = 0;
     var G_content            ="";
     var G_keyContent         ="";
     var G_startTime          = 0;
@@ -28,11 +32,26 @@
     var G_oldStartTime       = 0;
     var G_highIntervarlTime  = 0;
     var G_endAnalysis        = 0;
-    var G_oldContentLength = 0;
+    var G_oldContentLength   = 0;
+    var G_exerciseData       = new Array();
+    var G_squence            = 0;
+   //获取的统计内容之全局变量
+    var GA_averageKeyType     = 0;
+    var GA_highstCountKey     = 0;
+    var GA_highstSpeed        = 0;
+    var GA_averageSpeed       = 0;
+    var GA_CountBackDelete    = 0;
+    var GA_IntervalTime       = 0;
+    var GA_highIntervarlTime  = 0;
+    var GA_RightRadio         = 0;
+    var GA_CountAllKey        = 0;
+   
 //统计逻辑
 $(document).ready(function(){
     var highstCountKey  = 0;
     var highstSpeed     = 0;
+    var isAgain         = 0;
+    
     //2s内统计统计瞬时击键 次/秒
     //@param id=getMomentKeyType 请将瞬时击键统计的控件id设置为getMomentKeyType
     //2s内统计统计最高击键 次/秒
@@ -59,14 +78,17 @@ $(document).ready(function(){
         var countMomentKey = window.G_countMomentKey;
         var myDate         = new Date();
         var nowTime        = myDate.getTime();
+        window.GA_CountAllKey = countAllKey;
         $("#getcountAllKey").html(countAllKey);
         if(nowTime>startTime){
             var averageKeyType = parseInt(countAllKey/(nowTime-startTime)*60000);
             if((countAllKey/(nowTime-startTime)*1000)<1 && (countAllKey/(nowTime-startTime)*1000)>0 ){
                 averageKeyType = 1;
             }
+            window.GA_averageKeyType = averageKeyType;
             $("#getAverageKeyType").html(averageKeyType);
         }else{
+            window.GA_averageKeyType = 0;
             $("#getAverageKeyType").html(0);
         }
         
@@ -74,6 +96,7 @@ $(document).ready(function(){
            $("#getMomentKeyType").html(countMomentKey/2); 
            if((countMomentKey/2)>highstCountKey){
                highstCountKey = countMomentKey/2;
+               window.GA_highstCountKey = highstCountKey;
                $("#getHighstCountKey").html(highstCountKey);
            }
            window.G_countMomentKey=0;
@@ -95,7 +118,8 @@ $(document).ready(function(){
             //最高瞬时速度 字/分钟
             if(momentSpeed>highstSpeed){
                   highstSpeed = momentSpeed;
-                  $("#getHighstSpeed").html(momentSpeed);
+                  window.GA_highstSpeed = highstSpeed;
+                  $("#getHighstSpeed").html(highstSpeed);
               }
           }
         
@@ -105,6 +129,7 @@ $(document).ready(function(){
                 if(averageSpeed ===0){
                     averageSpeed = 1;
                 }
+                window.GA_averageSpeed = averageSpeed;
                 $("#getAverageSpeed").html(averageSpeed); 
            }
         }
@@ -158,13 +183,34 @@ $(document).ready(function(){
                     right=0;
                 }
             }
+                window.GA_CountBackDelete = CountBackDelete;
                 $("#getBackDelete").html(CountBackDelete); 
            }
-          
+         
+           if(window.G_saveToDatabase===1&&(window.G_startTime!==0)){
+               $.ajax({
+               type:"POST",
+               dataType:"json",
+               url:"index.php?r=api/analysisSaveToDatabase",
+               data:{exerciseType:window.G_exerciseType,exerciseData:window.G_exerciseData,squence:window.G_squence,
+                     averageKeyType:window.GA_averageKeyType,highstCountKey:window.GA_highstCountKey,highstSpeed:window.GA_highstSpeed,
+                     averageSpeed:window.GA_averageSpeed,CountBackDelete:window.GA_CountBackDelete,CountAllKey:window.GA_CountAllKey,
+                     IntervalTime:window.GA_IntervalTime,highIntervarlTime:window.GA_highIntervarlTime,RightRadio:window.GA_RightRadio   },
+               success:function(){
+               },
+               error:function(xhr, type, exception){
+                   console.log('GetAverageSpeed error', type);
+                   console.log(xhr, "Failed");
+                   console.log(exception, "exception");
+               }
+           });
+           
+           }
            
            //判断统计结束
          if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
              window.G_endAnalysis = 1;
+             window.G_isOverFlag=0;
               $("#getMomentKeyType").html(0);
               $("#getHighstSpeed").html(0);
               $("#getIntervalTime").html(0);
@@ -172,7 +218,11 @@ $(document).ready(function(){
          }
     },2000);
     
-    
+    if(isAgain===1){
+        var timerAgain = setInterval(function(){
+            
+        });
+    }
 });
 //拿取键码值
 
@@ -202,7 +252,7 @@ function AjaxGetAverageSpeed(id,startTime,content){
     //统计瞬时速度 
     //@param $id：控件id
     //@param $setTime:设置瞬时速度统计的时间区间
-    //@param $contentlength：区间内输入的字符长度，需要前端js计算，不再直接传入内容以减小服务器压力
+    //@param $contentlength：区间内输入的字符长度，需要前端js计算，
     //@return $data: 获取瞬时速度  字/分钟
 function AjaxGetMomentSpeed(id,setTime,contentlength){
     $.ajax({
