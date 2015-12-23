@@ -33,6 +33,7 @@
     <div class="span9">
         <h3 >自 由 练 习</h3>
         <br/>
+        <button id="pause">pause</button>
         <div class="fr" style="width:300px; position: relative;right: 10px">
             <table cellpadding="8" style="margin: 0px auto;">
                 <tr>
@@ -54,6 +55,15 @@
     </div>
 <?php } ?>
 <script>
+    $(document).ready(function () {
+            $("#pause").click(function(){
+            if(window.G_isPause ===0){
+                window.G_isPause = 1;
+            }
+        });
+    });
+    
+    //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
     <?php $sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '2'");
             $countSquence = count($sqlClassExerciseRecord);

@@ -277,6 +277,7 @@ class apiController extends Controller {
                  ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }
         }
+        $this->renderJSON("");
     }
     //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
     
