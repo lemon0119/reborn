@@ -274,16 +274,7 @@ class apiController extends Controller {
             if(!isset($sqlClassExerciseRecord)){
                  ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }else{
-                print_r("123");
-                $sqlClassExerciseRecord->ratio_averageKeyType = $sqlClassExerciseRecord['ratio_averageKeyType']."&".$ratio_averageKeyType;
-                $sqlClassExerciseRecord->ratio_maxKeyType = $sqlClassExerciseRecord['ratio_maxKeyType']."&".$ratio_maxKeyType;
-                $sqlClassExerciseRecord->ratio_maxSpeed = $sqlClassExerciseRecord['ratio_maxSpeed']."&".$ratio_maxSpeed;
-                $sqlClassExerciseRecord->ratio_speed = $sqlClassExerciseRecord['ratio_speed']."&".$ratio_speed;
-                $sqlClassExerciseRecord->ratio_backDelete = $sqlClassExerciseRecord['ratio_backDelete']."&".$ratio_backDelete;
-                $sqlClassExerciseRecord->ratio_internalTime = $sqlClassExerciseRecord['ratio_internalTime']."&".$ratio_internalTime;
-                $sqlClassExerciseRecord->ratio_maxInternalTime = $sqlClassExerciseRecord['ratio_maxInternalTime']."&".$ratio_maxInternalTime;
-                $sqlClassExerciseRecord->ratio_correct = $sqlClassExerciseRecord['ratio_correct']."&".$ratio_correct;
-                $sqlClassExerciseRecord->update();
+                 ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }
         }
     }

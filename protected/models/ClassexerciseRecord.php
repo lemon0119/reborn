@@ -37,6 +37,27 @@ class ClassexerciseRecord extends CActiveRecord
         
         return $newClassexerciseRecord->insert();
     }
+    public function updateClassexerciseRecord($classExerciseID,$studentID,$squence,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
+                $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
+                $sqlClassExerciseRecord->ratio_averageKeyType = $sqlClassExerciseRecord['ratio_averageKeyType']."&".$ratio_averageKeyType;
+                $sqlClassExerciseRecord->ratio_maxKeyType = $sqlClassExerciseRecord['ratio_maxKeyType']."&".$ratio_maxKeyType;
+                $sqlClassExerciseRecord->ratio_maxSpeed = $sqlClassExerciseRecord['ratio_maxSpeed']."&".$ratio_maxSpeed;
+                $sqlClassExerciseRecord->ratio_speed = $sqlClassExerciseRecord['ratio_speed']."&".$ratio_speed;
+                $sqlClassExerciseRecord->ratio_backDelete = $sqlClassExerciseRecord['ratio_backDelete']."&".$ratio_backDelete;
+                $sqlClassExerciseRecord->ratio_internalTime = $sqlClassExerciseRecord['ratio_internalTime']."&".$ratio_internalTime;
+                $sqlClassExerciseRecord->ratio_maxInternalTime = $sqlClassExerciseRecord['ratio_maxInternalTime']."&".$ratio_maxInternalTime;
+                $sqlClassExerciseRecord->ratio_correct = $sqlClassExerciseRecord['ratio_correct']."&".$ratio_correct;
+                $sqlClassExerciseRecord->update();
+                $sqlClassExerciseRecord->ratio_averageKeyType = "";
+                $sqlClassExerciseRecord->ratio_maxKeyType = "";
+                $sqlClassExerciseRecord->ratio_maxSpeed = "";
+                $sqlClassExerciseRecord->ratio_speed = "";
+                $sqlClassExerciseRecord->ratio_backDelete = "";
+                $sqlClassExerciseRecord->ratio_internalTime = "";
+                $sqlClassExerciseRecord->ratio_maxInternalTime = "";
+                $sqlClassExerciseRecord->ratio_correct = "";
+        return "";
+    }
 	/**
 	 * @return string the associated database table name
 	 */
