@@ -1168,11 +1168,13 @@ class StudentController extends CController {
             if(Yii::app()->session['isExam']){
                 if(!ExamRecord::saveExamRecord($recordID))
                     return false;
+                return AnswerRecord::saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey,1);
             }else {
                 if(!SuiteRecord::saveSuiteRecord ($recordID))
                     return false;
+                return AnswerRecord::saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey,0);
             }
-            return AnswerRecord::saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey);
+            
         }
     }
     public function saveParam() {

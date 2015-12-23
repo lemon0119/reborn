@@ -363,6 +363,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
     </div>
 
+<<<<<<< 2ec70cb0725a7c3515f86901a1132b562b8d9adb
     <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px;display:none">
         <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
     </div>
@@ -392,6 +393,16 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     
                 <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:yellow;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
                 <a id="postnoticeTea"></a>
+=======
+            <textarea id="bulletin-textarea" style="background-color:#5e5e5e;color:yellow;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"oninput="this.style.color='red'"></textarea>
+            <a id="postnoticeTea"></a>
+            
+            </div>
+            <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a> <button onclick="checkforbid()">查看禁言</button></div>            
+            <div id="chat-box" style="border: 0px">   
+                <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%">
+                 </div>
+>>>>>>> 666
                 
     
                 </div>-->
@@ -577,9 +588,20 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 console.log(xhr, "Failed");
             }
         });
+<<<<<<< 2ec70cb0725a7c3515f86901a1132b562b8d9adb
         return false;
     }
     function getBackTime() {
+=======
+    });
+    
+   $("#send-msg").click(function() {
+        var messageField = $('#messageInput');
+        var msg = messageField.val();
+        messageField.val('');
+        var current_date = new Date();
+        var current_time = current_date.toLocaleTimeString();
+>>>>>>> 666
         $.ajax({
             type: "GET",
             dataType: "json",
