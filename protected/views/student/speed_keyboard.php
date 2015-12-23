@@ -114,7 +114,7 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
-        
+        window.G_keyBoardBreakPause =0;
           var myDate = new Date();
          window.G_pressTime = myDate.getTime();
          if(window.G_startFlag ===0){

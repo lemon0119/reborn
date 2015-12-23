@@ -19,6 +19,7 @@
  * 
  */
     var G_exerciseType       ="";
+    var G_keyBoardBreakPause = 0;
     var G_saveToDatabase     = 0;
     var G_isOverFlag         = 0;
     var G_isPause            = 0;
@@ -82,6 +83,7 @@ $(document).ready(function(){
             //暂停开关
             if(window.G_isPause===1){
                 if(pauseOn===0){
+                    window.G_keyBoardBreakPause = 1;
                     pauseTime = nowTime;
                     pauseOn = 1;
                 }else{
@@ -90,6 +92,12 @@ $(document).ready(function(){
                     startTime = window.G_startTime;
                 }
                 window.G_isPause = 0;
+            }
+            if(window.G_keyBoardBreakPause===0&&pauseOn ===1){
+                    pauseOn = 0;
+                    window.G_startTime = (nowTime-pauseTime)+ window.G_startTime;
+                    startTime = window.G_startTime;
+                    window.G_isPause = 0;
             }
             if(pauseOn ===1){
                 startTime = (nowTime-pauseTime)+ startTime;

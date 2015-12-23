@@ -49,7 +49,7 @@
                 <td><span class="fl"  style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">&nbsp;&nbsp;0&nbsp;&nbsp;</span ><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
             </table>
         </div>
-        <div>
+        <div >
             <?php require Yii::app()->basePath . "\\views\\student\\keyboard_freePractice.php"; ?>
         </div>
     </div>
