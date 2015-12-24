@@ -864,12 +864,12 @@ class TeacherController extends CController {
         $look = array();
         $listen = array();
         foreach ($freePractice as $v){
-            if($v['type'] =='key'){
-               array_push($keywork, $v['type']); 
-            }else if($v['type'] =='look'){
-               array_push($look, $v['look']); 
-            }else if($v['type'] =='listen'){
-               array_push($listen, $v['listen']); 
+            if($v['type'] ==='speed'||$v['type'] ==='correct'||$v['type'] ==='free'){
+               array_push($keywork, $v); 
+            }else if($v['type'] ==='look'){
+               array_push($look, $v); 
+            }else if($v['type'] ==='listen'){
+               array_push($listen, $v); 
             }
         }
         //get student
@@ -5202,5 +5202,92 @@ public function ActionAssignFreePractice(){
             }            
             $this->renderJSON($array_result);          
      }
+     
+     
+     
+     public function actionClassExercise4Look(){
+         if (isset($_GET['page'])) {
+            Yii::app()->session['lastPage'] = $_GET['page'];
+        } else {
+            Yii::app()->session['lastPage'] = 1;
+        }
+        $result = ClassExercise::model()->getLookLst("type", "look");
+        $lookLst = $result['lookLst'];
+        $pages = $result['pages'];
+        $this->render('classExercise4Look', array(
+            'lookLst' => $lookLst,
+            'pages' => $pages,
+            'teacher' => Teacher::model()->findall()
+        ));
+     }
+     
+      public function actionClassExercise4Listen(){
+          if (isset($_GET['page'])) {
+            Yii::app()->session['lastPage'] = $_GET['page'];
+        } else {
+            Yii::app()->session['lastPage'] = 1;
+        }
+        $result = ClassExercise::model()->getListenLst("type", "listen");
+        $listenLst = $result['listenLst'];
+        $pages = $result['pages'];
+        $this->render('classExercise4Listen', array(
+            'listenLst' => $listenLst,
+            'pages' => $pages,
+            'teacher' => Teacher::model()->findall()
+        ));
+     }
+     public function actionClassExercise4Type(){
+         $this->render("classExercise4Type");
+     }
+     
+     public function actionAddLook4ClassExercise(){
+          $result = 'no';
+          $classID=$_GET['classID'];
+          $on=$_GET['on'];
+            if (isset($_POST['title'])) {
+                 $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
+                $result = ClassExercise::model()->insertClassExercise($classID,$sqlLesson['lessonID'],$_POST['title'],$_POST['content'],'look',Yii::app()->session['userid_now']);
+            }
+        $this->render('addLook4ClassExercise', ['result' => $result]);
+     }
+     
+     public function actionAddListen4ClassExercise(){
+         $result = 'no';
+         $classID=$_GET['classID'];
+         $on=$_GET['on'];
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $filePath = $typename . "/" . $userid . "/";
+        $dir = "resources/" . $filePath;
 
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777);
+        }
+        $title = "";
+        $content = "";
+        if (isset($_POST['title'])) {
+            $title = $_POST['title'];
+            $content = $_POST["content"];
+            if ($_FILES ['file'] ['type'] != "audio/mpeg" &&
+                    $_FILES ['file'] ['type'] != "audio/wav" &&
+                    $_FILES ['file'] ['type'] != "audio/x-wav") {
+                $result = '文件格式不正确，应为MP3或WAV格式';
+            } else if ($_FILES['file']['error'] > 0) {
+                $result = '文件上传失败';
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRela($newName, $oldName);
+                $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
+                $result = ClassExercise::model()->insertListen($classID,$sqlLesson['lessonID'],$_POST['title'], $_POST['content'], $newName, $filePath,"listen", Yii::app()->session['userid_now']);
+                $result = '1';
+            }
+        }
+        $this->render('addListen4ClassExercise', array(
+            'result' => $result,
+            'title' => $title,
+            'content' => $content
+        ));
+     }
 }

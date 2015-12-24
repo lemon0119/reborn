@@ -4676,6 +4676,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background: url(../../img/on_btn_serch.png);
 }
 .btn_add{
+    border: none;
     background-repeat: no-repeat;
     padding: 10px 55px;
     margin-left: 10px;

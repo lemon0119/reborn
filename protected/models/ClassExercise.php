@@ -110,6 +110,84 @@ class ClassExercise extends CActiveRecord
 		));
 	}
 
+        
+        public function insertClassExercise($classID,$lessonID,$title,$content,$type,$createPerson){
+        $newClassExercise    =   new ClassExercise();
+        $newClassExercise->classID    =   $classID;
+        $newClassExercise->lessonID    =   $lessonID;
+        $newClassExercise->title =   $title;
+        $newClassExercise->content       =   $content;
+        $newClassExercise->type       =   $type;
+        $newClassExercise->create_person  =   $createPerson;
+        $newClassExercise->create_time    =   date('y-m-d H:i:s',time());
+        return $newClassExercise->insert();
+    }
+    
+    public function insertListen($classID,$lessonID,$title,$content,$fileName,$filePath,$type,$createPerson){
+        $newClassExercise    =   new ClassExercise();
+        $newClassExercise->classID    =   $classID;
+        $newClassExercise->lessonID    =   $lessonID;
+        $newClassExercise->title =   $title;
+        $newClassExercise->content       =   $content;
+        $newClassExercise->file_name   = $fileName;
+        $newClassExercise->file_path = $filePath;
+        $newClassExercise->type       =   $type;
+        $newClassExercise->create_person  =   $createPerson;
+        $newClassExercise->create_time    =   date('y-m-d H:i:s',time());
+        return $newClassExercise->insert();
+    }
+    
+    public function getLookLst($type,$value){
+        $order  =   " order by exerciseID DESC";
+        if($type!="")
+            if($type == "content")
+            {
+                $condition = " WHERE $type like '%$value%'";
+            }  else {
+                $condition = " WHERE $type = '$value'";
+            }           
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM class_exercise";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $lookLst  =   $result->query();
+        
+        return ['lookLst'=>$lookLst,'pages'=>$pages,];
+    }
+    
+    public function getListenLst($type,$value){
+        $order  =   " order by exerciseID DESC";
+        if($type!="")
+            if($type == "content")
+            {
+                $condition = " WHERE $type like '%$value%'";
+            }else{
+                $condition = " WHERE $type = '$value'";
+            }          
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM class_exercise";
+        $sql        =   $select.$condition.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $listenLst  =   $result->query();
+        
+        return ['listenLst'=>$listenLst,'pages'=>$pages,];
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
