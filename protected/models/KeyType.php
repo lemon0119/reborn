@@ -148,7 +148,7 @@ class KeyType extends CActiveRecord
     }
     
     
-    public function insertKey($title,$content,$createPerson,$category,$speed,$exerciseTime){
+    public function insertKey($title,$content,$createPerson,$category,$speed,$repeatNum,$libstr){
         $sql        =   "select max(exerciseID) as id from key_type";
         $max_id     =   Yii::app()->db->createCommand($sql)->query();
         $temp       =   $max_id->read();
@@ -166,10 +166,11 @@ class KeyType extends CActiveRecord
         $newKey->content       =   $content;
         $newKey->createPerson  =   $createPerson;
         $newKey->category = $category;
+        $newKey->repeatNum = $repeatNum;
+        $newKey->chosen_lib = $libstr;
         if($category == "speed")
         {
             $newKey->speed = $speed;
-            $newKey->exerciseTime = $exerciseTime;
         }
         $newKey->createTime    =   date('y-m-d H:i:s',time());
         return $newKey->insert();

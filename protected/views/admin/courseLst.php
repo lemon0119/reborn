@@ -52,7 +52,7 @@ endforeach;
                 <form id="deleForm" method="post" action="./index.php?r=admin/deleteCourse">
                 <?php   foreach($courseLst as $k=>$model):?>
                 <tr>
-                     <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['courseID']; ?>" /> </td>
+                    <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['courseID']; ?>" /> </td>
                     <td class="font-center" style="width: 75px"><?php echo $model['courseID'];?></td>
                     <td class="font-center"><?php echo $model['courseName'];?></td>
                     <td class="font-center"><?php if($model['createPerson']=="0")

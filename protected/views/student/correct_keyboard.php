@@ -182,8 +182,10 @@
     var numKeyDown = 0;
     var numKeyRight = 0;
     var HaveWindow = 0;
+    var repeatNum = 0;
     function startParse(){
         var content = document.getElementById("id_content").value;
+        repeatNum = $("#repeatNum").html();
         var cont_array = content.split("$$");
         for(var i = 0; i < cont_array.length; i += 1){
             var yaweiCode = cont_array[i].split(":0")[0];
@@ -249,14 +251,18 @@
     function getNextWord(){
         currentNum++;
         if(totalNum == currentNum){
+          repeatNum--;
+            document.getElementById("repeatNum").innerHTML = repeatNum;
+            if(repeatNum == 0){
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
         }       
+        currentNum = 0;
+      }
         if(nextWord != "")
             return nextWord;
         var result = wordArray[currentNum];
-        yaweiCode = yaweiCodeArray[currentNum];
-        
+        yaweiCode = yaweiCodeArray[currentNum];      
         return result;
     }
     

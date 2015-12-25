@@ -36,7 +36,8 @@
                         <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php }else{?>
                     <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
-                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>                    
+                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>       
+                    <td width = '250px'>循环次数：<span id="repeatNum"><?php echo $exerOne['repeatNum']?></span></td>
                      <?php }?>
                 </tr>
         </table>

@@ -1204,22 +1204,32 @@ class TeacherController extends CController {
     public function actionAddKey() {
         $result = 'no';
         if (isset($_POST['title'])) {
-            $category = $_POST['category'];      
-            if($category == "speed")
-                $num = $_POST['speed']*$_POST['exerciseTime'];
-            else
-                $num = $_POST['in1'];
-            $res = TwoWordsLib::model()->getRandomRecord($num);
-            $answer = "";
-            foreach( $res as $record){
-                if($answer != "")
-                    $answer = $answer."$$".$record['yaweiCode'].$record['words'];
+            $libstr = $_POST['libstr']; 
+            $arr = explode("$$", $libstr);
+            $condition = "";
+            foreach($arr as $a){
+                if($condition == "")
+                    $condition = "'".$a."'";
+                else
+                    $condition =$condition.","."'".$a."'";               
+            }          
+            $condition =" where name in (".$condition.")";
+            $sql = "select * from two_words_lib";
+            $order = "";
+            if($arr[count($arr) - 1] == "lib"){                
+                $order = "order by rand() limit ".$_POST['in1'];
+            }
+            $sql = $sql.$condition.$order;
+            $res = Yii::app()->db->createCommand($sql)->query();
+            $content = "";
+            foreach ($res as $record){
+                 if($content != "")
+                    $content = $content."$$".$record['yaweiCode'].$record['words'];
                 else 
-                    $answer = $record['yaweiCode'].$record['words'];
-            }         
-            $result = KeyType::model()->insertKey($_POST['title'], $answer, Yii::app()->session['userid_now'],$category,$_POST['speed'],$_POST['exerciseTime']);
-        }
-        
+                    $content = $record['yaweiCode'].$record['words'];              
+            }     
+            $result = KeyType::model()->insertKey($_POST['title'], $content, Yii::app()->session['userid_now'],$_POST['category'],$_POST['speed'],$_POST['in3'],$libstr);
+        }       
         $this->render('addKey', ['result' => $result]);
     }
 
@@ -5202,6 +5212,18 @@ public function ActionAssignFreePractice(){
                 }
             }            
             $this->renderJSON($array_result);          
+     }
+     
+     public function ActionSelectWordLib(){
+         $sql = "select distinct name,list from two_words_lib";
+         $result = Yii::app()->db->createCommand($sql)->query();
+         $list = array();
+         foreach ($result as $res){
+             array_push($list, $res);            
+         }
+         $this->renderPartial('wordLibLst', array(
+            'list' => $list
+            ));
      }
 
 }

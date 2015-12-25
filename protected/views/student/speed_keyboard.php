@@ -147,7 +147,7 @@
         
         if(HaveWindow == 1)
             return;
-        if(totalcishu == currentNum){
+        if(totalcishu == currentNum && repeatNum == 0){
             HaveWindow = 1;
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
@@ -199,10 +199,12 @@
     var numKeyRight = 0;
     var time1;
     var HaveWindow = 0;
+    var repeatNum = 0;
     function startParse(){
         var content = document.getElementById("id_content").value;
         var speed = document.getElementById("id_speed").value;
         var exerciseTime = document.getElementById("id_exerciseTime").value;
+        repeatNum = $("#repeatNum").html();
         var cont_array = content.split("$$");
         for(var i = 0; i < cont_array.length; i += 1){
             var yaweiCode = cont_array[i].split(":0")[0];
@@ -270,9 +272,14 @@
     function getNextWord(){
         currentNum++;       
         if(totalNum == currentNum){
+            repeatNum--;
+            document.getElementById("repeatNum").innerHTML = repeatNum;
+            if(repeatNum == 0){
             clearInterval(time1);
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
+        }
+        currentNum = 0;
         }       
         if(nextWord != "")
             return nextWord;

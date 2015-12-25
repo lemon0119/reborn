@@ -299,8 +299,7 @@ class apiController extends Controller {
                 }
             }            
             $this->renderJSON($array_result);          
-     }
-     
+     }   
      public function getStudentRanking(){
          $workID = $_POST['workID'];
          $exerciseID = $_POST['exerciseID'];
