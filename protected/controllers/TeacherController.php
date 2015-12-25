@@ -5211,7 +5211,14 @@ public function ActionAssignFreePractice(){
         } else {
             Yii::app()->session['lastPage'] = 1;
         }
-        $result = ClassExercise::model()->getLookLst("type", "look");
+        if(isset($_GET['delete'])){
+            $exerciseID = $_GET['exerciseID'];
+            ClassExercise::model()->deleteExercise($exerciseID);
+        }
+        $classID = $_GET['classID'];
+        $number = $_GET['on'];
+        $sqlClassExercise = Lesson::model()->find("classID = '$classID' and number = '$number'");
+        $result = ClassExercise::model()->getLookLst("type", "look",$sqlClassExercise['lessonID']);
         $lookLst = $result['lookLst'];
         $pages = $result['pages'];
         $this->render('classExercise4Look', array(
@@ -5227,7 +5234,14 @@ public function ActionAssignFreePractice(){
         } else {
             Yii::app()->session['lastPage'] = 1;
         }
-        $result = ClassExercise::model()->getListenLst("type", "listen");
+        if(isset($_GET['delete'])){
+            $exerciseID = $_GET['exerciseID'];
+            ClassExercise::model()->deleteExercise($exerciseID);
+        }
+        $classID = $_GET['classID'];
+        $number = $_GET['on'];
+        $sqlClassExercise = Lesson::model()->find("classID = '$classID' and number = '$number'");
+        $result = ClassExercise::model()->getListenLst("type", "listen",$sqlClassExercise['lessonID']);
         $listenLst = $result['listenLst'];
         $pages = $result['pages'];
         $this->render('classExercise4Listen', array(
@@ -5290,4 +5304,69 @@ public function ActionAssignFreePractice(){
             'content' => $content
         ));
      }
+     
+     
+     public function actionEditLook4ClassExercise() {
+        $exerciseID = $_GET["exerciseID"];
+        if(isset($_POST['title'])){
+            $title= $_POST['title'];
+            $content= $_POST['content'];
+            ClassExercise::model()->updateLook($exerciseID, $title, $content); 
+        }
+        
+        $result = ClassExercise::model()->getExerciseByType($exerciseID, "look")->read();
+            $this->render("editLook4ClassExercise", array(
+                'exerciseID' => $exerciseID,
+                'title' => $result['title'],
+                'content' => $result['content']
+            ));
+    }
+    
+    public function actionEditListen4ClassExercise() {
+        $result  = "";
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $filePath = $typename . "/" . $userid . "/";
+        $dir = "resources/" . $filePath;
+        $exerciseID = $_GET['exerciseID'];
+        $thisListen = new ClassExercise ();
+        $thisListen = $thisListen->find("exerciseID = '$exerciseID' and type = 'listen'");
+        if(isset($_GET['oldfilename'])){
+            $filename = $_GET['oldfilename'];
+        
+        if ($_FILES['modifyfile']['tmp_name']) {
+            if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
+                    $_FILES ['modifyfile'] ['type'] != "audio/wav" &&
+                    $_FILES ['modifyfile'] ['type'] != "audio/x-wav") {
+                $result = '文件格式不正确，应为MP3或WAV格式';
+            } else if ($_FILES['modifyfile']['error'] > 0) {
+                $result = '文件上传失败';
+            } else {
+                $newName = Tool::createID() . "." . pathinfo($_FILES["modifyfile"]["name"], PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["modifyfile"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                if (file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
+                    unlink($dir . iconv("UTF-8", "gb2312", $filename));
+                Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
+                $thisListen->file_name = $newName;
+                $result = "上传成功";
+            }
+        }
+        if ($result==="" || $result == "上传成功") {
+            $thisListen->title = $_POST ['title'];
+            $thisListen->content = $_POST ['content'];
+            $thisListen->update();
+            $result = "修改成功!";
+        } else {
+            $result = "修改失败!";
+        }}
+            $this->render("editListen4ClassExercise", array(
+                'exerciseID' => $thisListen->exerciseID,
+                'filename' => $thisListen->file_name,
+                'filepath' => $thisListen->file_path,
+                'title' => $thisListen->title,
+                'content' => $thisListen->content,
+                'result' => $result
+            ));
+    }
+    
 }

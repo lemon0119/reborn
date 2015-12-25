@@ -137,7 +137,7 @@ class ClassExercise extends CActiveRecord
         return $newClassExercise->insert();
     }
     
-    public function getLookLst($type,$value){
+    public function getLookLst($type,$value,$lessonID){
         $order  =   " order by exerciseID DESC";
         if($type!="")
             if($type == "content")
@@ -149,7 +149,8 @@ class ClassExercise extends CActiveRecord
         else
             $condition= "";
         $select     =   "SELECT * FROM class_exercise";
-        $sql        =   $select.$condition.$order;
+        $condition2 = "AND lessonID = $lessonID";
+        $sql        =   $select.$condition.$condition2.$order;
         $criteria   =   new CDbCriteria();
         $result     =   Yii::app()->db->createCommand($sql)->query();
         $pages      =   new CPagination($result->rowCount);
@@ -163,7 +164,7 @@ class ClassExercise extends CActiveRecord
         return ['lookLst'=>$lookLst,'pages'=>$pages,];
     }
     
-    public function getListenLst($type,$value){
+    public function getListenLst($type,$value,$lessonID){
         $order  =   " order by exerciseID DESC";
         if($type!="")
             if($type == "content")
@@ -175,7 +176,8 @@ class ClassExercise extends CActiveRecord
         else
             $condition= "";
         $select     =   "SELECT * FROM class_exercise";
-        $sql        =   $select.$condition.$order;
+        $condition2 = "AND lessonID = $lessonID";
+        $sql        =   $select.$condition.$condition2.$order;
         $criteria   =   new CDbCriteria();
         $result     =   Yii::app()->db->createCommand($sql)->query();
         $pages      =   new CPagination($result->rowCount);
@@ -187,6 +189,27 @@ class ClassExercise extends CActiveRecord
         $listenLst  =   $result->query();
         
         return ['listenLst'=>$listenLst,'pages'=>$pages,];
+    }
+    
+    
+    public function getExerciseByType($exerciseID,$type){
+        $sql = "SELECT * FROM class_exercise WHERE exerciseID = '$exerciseID' and type = '$type'";
+        return Yii::app()->db->createCommand($sql)->query();
+    }
+    
+    public function updateLook($exerciseID,$title,$content){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+        $classExercise->title = $title;
+        $classExercise->content = $content;
+        $classExercise->update();
+    }
+    
+    public function deleteExercise($exerciseID){
+        $classExercise = new ClassExercise();
+        $FileName = $classExercise->find("exerciseID = '$exerciseID'")['file_name'];
+        Resourse::model()->delName($FileName);
+        $classExercise->deleteAll("exerciseID = '$exerciseID'");
     }
 	/**
 	 * Returns the static model of the specified AR class.
