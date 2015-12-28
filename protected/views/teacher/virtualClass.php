@@ -46,18 +46,18 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
     <div id="title_text" class="title_select" >
         <div   align="center" id="sw-text"><h4 style="line-height: 40px;">文 本 </h4></div>
-      
+
     </div>
     <div id="title_ppt" class="title_select" >
         <div   align="center" id="sw-ppt"><h4 style="line-height: 40px;">PPT </h4></div>
     </div>
     <div id="title_video" class="title_select" >
         <div   align="center" id="sw-video"><h4 style="line-height: 40px;">音 频 </h4></div>
-     
+
     </div>
     <div id="title_classExercise" class="title_select" >
         <div  align="center" id="sw-classExercise"><h4 >课 堂<br/>练 习 </h4></div>
-        
+
     </div>
 
     <div id="title_bull" class="title_select" style="width: 185px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;" >
@@ -190,17 +190,17 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             </div>
         </div>
     </div> 
-     <div id="show-picture"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
-             <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
+    <div id="show-picture"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+        <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
 
                 <select id="choose-pic" style="width:150px;margin-top: 10px;">
-                            <?php
-                            $mydir = dir($picdir);
-                            while ($file = $mydir->read()) {
-                                if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                    ?>
+                    <?php
+                    $mydir = dir($picdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
                             <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
                             $dir = "$picdir";
                             $num = sizeof(scandir($dir));
@@ -238,18 +238,18 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 <button id="play-pic-public" style="width: 150px;" class="btn btn-primary">放映图片</button>
             </div>
         </div>
-        </div>
-    
-      <div id="show-text"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
-           <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
+    </div>
+
+    <div id="show-text"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+        <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
                 <select id="choose-txt" style="width:150px;margin-top: 10px;">
-                            <?php
-                            $mydir = dir($txtdir);
-                            while ($file = $mydir->read()) {
-                                if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                    ?>
+                    <?php
+                    $mydir = dir($txtdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
                             <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
                             $dir = "$txtdir";
                             $num = sizeof(scandir($dir));
@@ -287,17 +287,17 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 <button id="play-txt-public" style="width: 150px;" class="btn btn-primary">阅览文本</button>
             </div>
         </div>
-        </div>
-       <div id="show-voice"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
-           <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
+    </div>
+    <div id="show-voice"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+        <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
                 <select id="choose-voice" style="width:150px;margin-top: 10px;">
-                            <?php
-                            $mydir = dir($voicedir);
-                            while ($file = $mydir->read()) {
-                                if ((!is_dir("$voicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                    ?>
+                    <?php
+                    $mydir = dir($voicedir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$voicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
                             <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
                             $dir = "$voicedir";
                             $num = sizeof(scandir($dir));
@@ -335,21 +335,18 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 <button id="play-voice-public" style="width: 150px;" class="btn btn-primary">播放音频</button>
             </div>
         </div>
+    </div>
+    <div id="show-classExercise"  style="position: relative;display: none;border: 0px;">
+        <div >
+            <div  class="title_split"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;"  align="center" ><h4 >备 课 资 源 </h4></div>
         </div>
-    <div id="show-classExercise"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
-             <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
-        <div style="display:inline;">
-                <div  style="width:150px;position:relative;right: 200px ">
-                    <select id="choose-classExercise" style="width:150px;margin-top: 10px;">
-                    </select>
-                    <button id="play-classExercise" style="width: 150px;" class="btn btn-primary">开放练习</button>
-                </div>
-            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >现 场<br/>出 题 </h4></div>
-            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
-                <button id="play-voice-public" style="width: 150px;" class="btn btn-primary">开放练习</button>
-            </div>
+         <div >
+             <button onclick="addNewClassExercise()"  style="font-size: 20px;position: relative;height: 40px;width:100%;" class="btn btn-primary">添加新练习</button>
         </div>
+        <div style="position: relative;top: 10px;height: 550px;overflow: auto">
+            <iframe id="iframe_class" style="border: 0px;height: 95%;width: 100%;" src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>"></iframe>
         </div>
+    </div>
     <div id="scroll-video" style="display:inline;">
         <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button> 
     </div>
@@ -828,7 +825,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             }, 4000);
         });
         $("#play-ppt-public").click(function () {
-        $("#voice").attr("src", "");
+            $("#voice").attr("src", "");
             window.picOrppt = "ppt";
             closeAllTitle();
             if ($("#choose-ppt-public")[0].selectedIndex == -1)
@@ -967,7 +964,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#teacher-dianbo-public").click(function () {
-        $("#voice").attr("src", "");
+            $("#voice").attr("src", "");
             closeAllTitle();
             if ($("#teacher-choose-file-public")[0].selectedIndex == -1)
             {
@@ -1016,7 +1013,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             this.disabled = true;
             $("#close-dianbo").attr("class", "btn");
         });
-        
+
         $("#play-pic").click(function () {
             $("#voice").attr("src", "");
             window.picOrppt = "pic";
@@ -1053,10 +1050,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 ws.send(syn_msg);
             }, 4000);
         });
-        
-         $("#play-pic-public").click(function () {
-         $("#voice").attr("src", "");
-             window.picOrppt = "pic-public";
+
+        $("#play-pic-public").click(function () {
+            $("#voice").attr("src", "");
+            window.picOrppt = "pic-public";
             closeAllTitle();
             if ($("#choose-pic-public")[0].selectedIndex == -1)
             {
@@ -1088,9 +1085,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 ws.send(syn_msg);
             }, 4000);
         });
-        
-         $("#play-txt").click(function () {
-         $("#voice").attr("src", "");
+
+        $("#play-txt").click(function () {
+            $("#voice").attr("src", "");
             window.picOrppt = "txt";
             closeAllTitle();
             if ($("#choose-txt")[0].selectedIndex == -1)
@@ -1125,10 +1122,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 ws.send(syn_msg);
             }, 4000);
         });
-        
-         $("#play-txt-public").click(function () {
-          $("#voice").attr("src", "");
-             window.picOrppt="txt-public";
+
+        $("#play-txt-public").click(function () {
+            $("#voice").attr("src", "");
+            window.picOrppt = "txt-public";
             closeAllTitle();
             if ($("#choose-txt-public")[0].selectedIndex == -1)
             {
@@ -1160,7 +1157,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 ws.send(syn_msg);
             }, 4000);
         });
-        
+
         $("#play-voice").click(function () {
             window.picOrppt = "voice";
             closeAllTitle();
@@ -1196,7 +1193,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 ws.send(syn_msg);
             }, 4000);
         });
-        
+
         $("#play-voice-public").click(function () {
             window.picOrppt = "voice-public";
             closeAllTitle();
@@ -1232,7 +1229,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 ws.send(syn_msg);
             }, 4000);
         });
-        
+
     });
 
     var play_fun = null;
@@ -1245,162 +1242,176 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     var ppt_pages = -1;
     var ppt_dir = null;
     function goPicCurPage() {
-            $("#yeshu").val(cur_ppt);
+        $("#yeshu").val(cur_ppt);
+        $("#ppt-img").attr("src", ppt_dir);
+        var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+        ws.send(msg);
+    }
+    function goCurPage() {
+        $("#yeshu").val(cur_ppt);
+        if (window.picOrppt === "pic") {
+            var server_root_path = ppt_dir.split("picture")[0] + "picture/";
+            var array_fileName = new Array();
+<?php
+$dir = dir($picdir);
+$count = 0;
+while ($file = $dir->read()) {
+    if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+        $fileName4Path = iconv("gb2312", "UTF-8", $file);
+        ?>
+                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
+        <?php
+        $count++;
+    }
+}
+$dir->close();
+?>
+            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
             $("#ppt-img").attr("src", ppt_dir);
             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
             ws.send(msg);
-        }
-    function goCurPage() {
-        $("#yeshu").val(cur_ppt);
-        if(window.picOrppt ==="pic"){
-            var server_root_path = ppt_dir.split("picture")[0]+"picture/";
-            var array_fileName = new Array();
-            <?php
-                    $dir = dir($picdir);
-                    $count = 0;
-                    while ($file = $dir->read()) {
-                        if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
-                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
-                               <?php $count++; }
-                               
-                            }
-                            $dir->close();
-                            ?>
-             ppt_dir = server_root_path +array_fileName[cur_ppt-1];
-             $("#ppt-img").attr("src", ppt_dir);
-             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-             ws.send(msg);
-        }else if(window.picOrppt ==="pic-public"){
+        } else if (window.picOrppt === "pic-public") {
             var server_root_path = "./resources/public/picture/";
             var array_fileName = new Array();
-            <?php
-                    $dir = dir($adminPublicPicdir);
-                    $count = 0;
-                    while ($file = $dir->read()) {
-                        if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
-                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
-                               <?php $count++; }
-                            }
-                            $dir->close();
-                            ?>
-             ppt_dir = server_root_path +array_fileName[cur_ppt-1];
-             $("#ppt-img").attr("src", ppt_dir);
-             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-             ws.send(msg);
-        }else if(window.picOrppt ==="txt"){
-            var server_root_path = ppt_dir.split("txt")[0]+"txt/";
+<?php
+$dir = dir($adminPublicPicdir);
+$count = 0;
+while ($file = $dir->read()) {
+    if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+        $fileName4Path = iconv("gb2312", "UTF-8", $file);
+        ?>
+                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
+        <?php
+        $count++;
+    }
+}
+$dir->close();
+?>
+            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
+            $("#ppt-img").attr("src", ppt_dir);
+            var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+            ws.send(msg);
+        } else if (window.picOrppt === "txt") {
+            var server_root_path = ppt_dir.split("txt")[0] + "txt/";
             var array_fileName = new Array();
-            <?php
-                    $dir = dir($txtdir);
-                    $count = 0;
-                    while ($file = $dir->read()) {
-                        if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
-                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
-                               <?php $count++; }
-                               
-                            }
-                            $dir->close();
-                            ?>
-             ppt_dir = server_root_path + array_fileName[cur_ppt-1];
-             ppt_dir = ppt_dir.split("reborn/")[1];
-             $.ajax({
-               type:"POST",
-               dataType:"json",
-               url:"index.php?r=api/getTxtValue",
-               data:{url:ppt_dir},
-               success:function(data){
+<?php
+$dir = dir($txtdir);
+$count = 0;
+while ($file = $dir->read()) {
+    if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+        $fileName4Path = iconv("gb2312", "UTF-8", $file);
+        ?>
+                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
+        <?php
+        $count++;
+    }
+}
+$dir->close();
+?>
+            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
+            ppt_dir = ppt_dir.split("reborn/")[1];
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "index.php?r=api/getTxtValue",
+                data: {url: ppt_dir},
+                success: function (data) {
                     $("#txt-textarea").val(data);
-                     var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                     ws.send(msg);
-               },
-               error:function(xhr, type, exception){
-                   console.log('getTxtValue error', type);
-                   console.log(xhr, "Failed");
-                   console.log(exception, "exception");
-               }
-           });
-            
-        }else if(window.picOrppt ==="txt-public"){
-             var server_root_path = "./resources/public/txt/";
+                    var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                    ws.send(msg);
+                },
+                error: function (xhr, type, exception) {
+                    console.log('getTxtValue error', type);
+                    console.log(xhr, "Failed");
+                    console.log(exception, "exception");
+                }
+            });
+
+        } else if (window.picOrppt === "txt-public") {
+            var server_root_path = "./resources/public/txt/";
             var array_fileName = new Array();
-            <?php
-                    $dir = dir($adminPublicTxtdir);
-                    $count = 0;
-                    while ($file = $dir->read()) {
-                        if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
-                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
-                               <?php $count++; }
-                            }
-                            $dir->close();
-                            ?>
-             ppt_dir = server_root_path + array_fileName[cur_ppt-1];
-             ppt_dir = ppt_dir.split("./")[1];
-             $.ajax({
-               type:"POST",
-               dataType:"json",
-               url:"index.php?r=api/getTxtValue",
-               data:{url:ppt_dir},
-               success:function(data){
+<?php
+$dir = dir($adminPublicTxtdir);
+$count = 0;
+while ($file = $dir->read()) {
+    if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+        $fileName4Path = iconv("gb2312", "UTF-8", $file);
+        ?>
+                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
+        <?php
+        $count++;
+    }
+}
+$dir->close();
+?>
+            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
+            ppt_dir = ppt_dir.split("./")[1];
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "index.php?r=api/getTxtValue",
+                data: {url: ppt_dir},
+                success: function (data) {
                     $("#txt-textarea").val(data);
-                     var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                     ws.send(msg);
-               },
-               error:function(xhr, type, exception){
-                   console.log('getTxtValue error', type);
-                   console.log(xhr, "Failed");
-                   console.log(exception, "exception");
-               }
-           });
-        }else if(window.picOrppt ==="voice"){
-        var server_root_path = ppt_dir.split("voice")[0]+"voice/";
+                    var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                    ws.send(msg);
+                },
+                error: function (xhr, type, exception) {
+                    console.log('getTxtValue error', type);
+                    console.log(xhr, "Failed");
+                    console.log(exception, "exception");
+                }
+            });
+        } else if (window.picOrppt === "voice") {
+            var server_root_path = ppt_dir.split("voice")[0] + "voice/";
             var array_fileName = new Array();
-            <?php
-                    $dir = dir($voicedir);
-                    $count = 0;
-                    while ($file = $dir->read()) {
-                        if ((!is_dir("$voicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
-                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
-                               <?php $count++; }
-                               
-                            }
-                            $dir->close();
-                            ?>
-             ppt_dir = server_root_path +array_fileName[cur_ppt-1];
-             $("#voice").attr("src", ppt_dir);
-             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-             ws.send(msg);
-        
-        }else if(window.picOrppt ==="voice-public"){
-         var server_root_path = "./resources/public/voice/";
+<?php
+$dir = dir($voicedir);
+$count = 0;
+while ($file = $dir->read()) {
+    if ((!is_dir("$voicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+        $fileName4Path = iconv("gb2312", "UTF-8", $file);
+        ?>
+                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
+        <?php
+        $count++;
+    }
+}
+$dir->close();
+?>
+            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
+            $("#voice").attr("src", ppt_dir);
+            var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+            ws.send(msg);
+
+        } else if (window.picOrppt === "voice-public") {
+            var server_root_path = "./resources/public/voice/";
             var array_fileName = new Array();
-            <?php
-                    $dir = dir($adminPublicVoicedir);
-                    $count = 0;
-                    while ($file = $dir->read()) {
-                        if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                 $fileName4Path = iconv("gb2312", "UTF-8", $file); ?>
-                                 array_fileName[<?php echo $count;?>]="<?php echo $fileName4Path;?>";
-                               <?php $count++; }
-                               
-                            }
-                            $dir->close();
-                            ?>
-             ppt_dir = server_root_path +array_fileName[cur_ppt-1];
-             $("#voice").attr("src", ppt_dir);
-             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-             ws.send(msg);
-        
-        }else if(window.picOrppt ==="ppt"){
+<?php
+$dir = dir($adminPublicVoicedir);
+$count = 0;
+while ($file = $dir->read()) {
+    if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+        $fileName4Path = iconv("gb2312", "UTF-8", $file);
+        ?>
+                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
+        <?php
+        $count++;
+    }
+}
+$dir->close();
+?>
+            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
+            $("#voice").attr("src", ppt_dir);
+            var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+            ws.send(msg);
+
+        } else if (window.picOrppt === "ppt") {
             $("#ppt-img").attr("src", ppt_dir + "/幻灯片" + cur_ppt + ".JPG");
             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-             ws.send(msg);
+            ws.send(msg);
         }
-        
+
     }
     function pageUp() {
         if (cur_ppt <= 1) {
@@ -1420,7 +1431,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             cur_ppt = cur_ppt + 1;
             goCurPage();
         }
-        
+
     }
 
 
@@ -1623,4 +1634,12 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 break;
         }
     }
+    function addNewClassExercise(){
+        window.open("./index.php?r=teacher/classExercise4Type&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['on'];?>&&on=<?php echo $_GET['on'];?>", 'newwindow','width='+(window.screen.availWidth-10)+',height='+(window.screen.availHeight-30)+ 'alwaysRaised=yes,top=0,left=0,toolbar=yes,z-look=yes,menubar=yes,scrollbars=yes,resizable=yes,location=no,status=no,' );
+    }
+    
+    function iframReload(){
+          document.getElementById('iframe_class').contentWindow.location.reload(true)
+    }
+
 </script>

@@ -42,6 +42,8 @@ class TeacherController extends CController {
             }
             $totle++;
         }
+        
+        
         return $this->render('virtualClass', ['userName' => $username, 'classID' => $_GET['classID'], 'on' => $_GET['on'], 'onLineStudent'=>$onLineStudent,'count' => $n,'totle'=>$totle]);
     }
 
@@ -5369,4 +5371,11 @@ public function ActionAssignFreePractice(){
             ));
     }
     
+    public function actionTableClassExercise4virtual(){
+        $number = $_GET['on'];
+        $classID = $_GET['classID'];
+        $lessonID = Lesson::model()->find("classID = '$classID' AND number = '$number'")['lessonID']; 
+        $classExerciseLst = ClassExercise::model()->findAll("classID = '$classID' AND lessonID = '$lessonID'");
+        $this->renderPartial("tableClassExercise4virtual",['classExerciseLst'=>$classExerciseLst]);
+    }
 }

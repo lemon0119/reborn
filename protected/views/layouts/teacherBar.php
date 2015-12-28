@@ -10,8 +10,8 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
         $classNameInfo[$value['classID']] = $value['className'];
         $classProgress[$value['classID']] = $value['currentLesson'];
     }
+    
     ?>
-
     <html lang="zh-cn"><!--<![endif]--> 
         <head>
             <meta charset="utf-8">
@@ -30,6 +30,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
         </head>
         <body>
             <div class="container">
+                <?php if(!isset($_GET['nobar'])){?>
                 <div class="navbar">
                     <div class="navbar-inner">
                         <div class="container">
@@ -110,10 +111,11 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                         </div>
                     </div>
                 </div>
+                <?php } ?>
                 <div class="row" style="min-height: 700px">
                     <?php echo $content; ?>
                 </div>
-            </div>
+            </div> 
              <div  class="copyright">
 		2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="#"  class="copyright">法律声明</a><a href="#"  class="copyright">联系我们</a><a href="#"  class="copyright">获得帮助</a>
 	</div>

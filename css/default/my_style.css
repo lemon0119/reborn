@@ -160,3 +160,20 @@ p {
     cursor: pointer;
     color: #f46500;
 }
+
+.title_split{
+    border: 3px solid ;
+    overflow-y: auto;
+    position: relative;
+    border-color: #fff;
+    background-color: #3b3b3b;
+    padding: 0px 0px;
+    height: 40px;
+    width: 735px;
+    cursor: pointer;
+    color: #fff;
+}
+.title_split:hover{
+    cursor: pointer;
+    color: #f46500;
+}
