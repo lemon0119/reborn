@@ -4676,6 +4676,7 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background: url(../../img/on_btn_serch.png);
 }
 .btn_add{
+    border: none;
     background-repeat: no-repeat;
     padding: 10px 55px;
     margin-left: 10px;
@@ -5115,6 +5116,15 @@ table tr td{
 .table_schedule:hover{
     font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
+}
+.table_pointer{
+    font-weight:100 !important;
+    box-shadow: #666 0px 0px 0px;background: #fff;behavior: url(/PIE.htc) !important; 
+}
+
+.table_pointer:hover{
+     font-weight: bolder !important;
+    box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important; 
 }
 #postnotice{
     cursor: pointer;

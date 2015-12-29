@@ -77,7 +77,7 @@
             <?php if ($on == $progress) { ?>
             <a href="#" onclick="getBackTime()"class="startcourse-virtualclass">虚拟课堂</a> 
             <?php } else { ?>
-            <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass-begin">开始本课</a> 
+            <a href="./index.php?r=teacher/changeProgress&&classID=<?php echo $classID; ?>&&progress=<?php echo $on; ?>&&on=<?php echo $on; ?>" class="startcourse-virtualclass-begin">开始本课</a> 
                <?php } ?>
             <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $classID; ?>&&lessonID=<?php $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
                echo $less['lessonID'];
@@ -314,11 +314,15 @@
     <h1>课堂练习</h1>
     <div class="table-bordered summary">
                 <li>
-                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=look"><span class="count"><?php  if(isset($look)){echo count($look);}else{echo '0';}?>
+                    <a  id="ppt" href="./index.php?r=teacher/classExercise4Type&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($type)){echo count($type);}else{echo '0';}?>
+                        </span > <font style="color:#000">键打练习</font></a>
+                </li>
+                <li>
+                    <a  id="ppt" href="./index.php?r=teacher/classExercise4Look&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($look)){echo count($look);}else{echo '0';}?>
                         </span > <font style="color:#000">看打练习</font></a>
                 </li>
                 <li>
-                    <a  id="ppt" href="./index.php?r=teacher/assignFreePractice&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&type=listen"><span class="count"><?php  if(isset($listen)){echo count($listen);}else{echo '0';}?>
+                    <a  id="ppt" href="./index.php?r=teacher/classExercise4Listen&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($listen)){echo count($listen);}else{echo '0';}?>
                         </span > <font style="color:#000">听打练习</font></a>
                 </li>
      </ul>
