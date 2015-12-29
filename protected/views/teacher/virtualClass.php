@@ -1533,6 +1533,19 @@ $dir->close();
         $("#title_bull").css({"color": "#fff"});
     }
     function closeTitleWithoutFlag(flag) {
+         $.ajax({
+               type:"POST",
+               url:"index.php?r=teacher/openClassExercise",
+               data:{exerciseID:"0"},
+               success:function(data){
+               },
+               error:function(xhr, type, exception){
+                   console.log('GetAverageSpeed error', type);
+                   console.log(xhr, "Failed");
+                   console.log(exception, "exception");
+                   
+               }
+        });
         switch (flag) {
             case "movie":
                 $("#show-picture").hide();
@@ -1639,7 +1652,13 @@ $dir->close();
     }
     
     function iframReload(){
-          document.getElementById('iframe_class').contentWindow.location.reload(true)
+          document.getElementById('iframe_class').contentWindow.location.reload(true);
     }
+    
+    function startClassExercise(exerciseID){
+        alert(exerciseID);
+        
+    }
+    
 
 </script>

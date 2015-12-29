@@ -5378,4 +5378,31 @@ public function ActionAssignFreePractice(){
         $classExerciseLst = ClassExercise::model()->findAll("classID = '$classID' AND lessonID = '$lessonID'");
         $this->renderPartial("tableClassExercise4virtual",['classExerciseLst'=>$classExerciseLst]);
     }
+    
+    public function actionOpenClassExercise4lot(){
+        $allClassExercise = $_POST['check'];
+        $arrayClassExercise = explode("&", $allClassExercise);
+        foreach ($arrayClassExercise as $exerciseID){
+            if($exerciseID!==""){
+                ClassExercise::model()->openExercise($exerciseID);
+            }
+        }
+        if($allClassExercise!==""){
+          $data = '开放成功！';  
+        }else{
+            $data = '未选中任何内容';  
+        }
+        echo $data;
+    }
+    
+    public function actionOpenClassExercise(){
+        $exerciseID = $_POST['exerciseID'];
+        ClassExercise::model()->openExerciseNow($exerciseID);
+        if($exerciseID!==""){
+          $data = 1;  
+        }else{
+            $data = 0;  
+        }
+        echo $data;
+    }
 }

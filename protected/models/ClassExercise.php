@@ -15,6 +15,7 @@
  * @property string $create_time
  * @property string $create_person
  * @property integer $is_open
+ * @property integer $now_open
  */
 class ClassExercise extends CActiveRecord
 {
@@ -34,13 +35,13 @@ class ClassExercise extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('classID, lessonID, title, content, type, file_path, file_name, create_time, create_person, is_open', 'required'),
-			array('classID, lessonID, is_open', 'numerical', 'integerOnly'=>true),
+			array('classID, lessonID, title, content, type, file_path, file_name, create_time, create_person, is_open, now_open', 'required'),
+			array('classID, lessonID, is_open, now_open', 'numerical', 'integerOnly'=>true),
 			array('title, file_path, file_name, create_person', 'length', 'max'=>30),
 			array('type', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('exerciseID, classID, lessonID, title, content, type, file_path, file_name, create_time, create_person, is_open', 'safe', 'on'=>'search'),
+			array('exerciseID, classID, lessonID, title, content, type, file_path, file_name, create_time, create_person, is_open, now_open', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,6 +73,7 @@ class ClassExercise extends CActiveRecord
 			'create_time' => 'Create Time',
 			'create_person' => 'Create Person',
 			'is_open' => 'Is Open',
+                        'now_open' => 'Now Open',
 		);
 	}
 
@@ -104,6 +106,7 @@ class ClassExercise extends CActiveRecord
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('create_person',$this->create_person,true);
 		$criteria->compare('is_open',$this->is_open);
+                $criteria->compare('now_open',$this->now_open);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -210,6 +213,28 @@ class ClassExercise extends CActiveRecord
         $FileName = $classExercise->find("exerciseID = '$exerciseID'")['file_name'];
         Resourse::model()->delName($FileName);
         $classExercise->deleteAll("exerciseID = '$exerciseID'");
+    }
+    
+    public function openExercise($exerciseID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+        $classExercise->is_open = 1;
+        $classExercise->update();
+    }
+    public function openExerciseNow($exerciseID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->findAll("now_open = 1");
+        if($classExercise!==""){
+            foreach ($classExercise as $v){
+                $v->now_open = 0;
+                $v->update();
+            }
+        }
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+        $classExercise->is_open = 1;
+        $classExercise->now_open = 1;
+        $classExercise->update();
     }
 	/**
 	 * Returns the static model of the specified AR class.

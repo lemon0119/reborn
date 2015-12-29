@@ -5126,6 +5126,11 @@ table tr td{
      font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important; 
 }
+
+.table_pointer:active{
+     font-weight: bolder !important;
+    box-shadow: #666 0px 0px 5px;background: #f2f2f2;behavior: url(/PIE.htc) !important; 
+}
 #postnotice{
     cursor: pointer;
     padding: 10px 64px;

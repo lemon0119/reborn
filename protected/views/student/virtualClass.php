@@ -38,7 +38,6 @@ echo "<script>var role='$role';</script>";
                            }?>
                     </span></td>           
                 </tr>
-       
     </div>
     
     <!-- local/remote videos container --> 
@@ -59,11 +58,11 @@ echo "<script>var role='$role';</script>";
     <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
-    <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:20px;color: white">虚 拟 键 盘</a><button class="fr" id="sw-openAnalysis">统计</button></h4></div>
+    <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:26px;color: white">虚 拟 键 盘</a><button class="fr btn" id="sw-openAnalysis">统计</button></h4></div>
         <div id="bulletin" class="bulletin" style="border: 0px;width: 100%;margin-left: -1.1px">
              <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
         </div>
-        <div align="center" id="sw-chat" ><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
+        <div align="center" id="sw-chat" ><h4 style="color: white"><a style="position: relative;left:26px;color: white"  href="#">课 堂 问 答</a></h4></div>
         <div id="chat-box" style="display:none;border: 0px">
             <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
@@ -196,6 +195,8 @@ echo "<script>var role='$role';</script>";
     });
         
         }
+        //开始课堂练习
+        
 </script>
 
 <script>
@@ -295,7 +296,14 @@ $(document).ready(function(){
         $("#analysis").hide();
     });
     $("#sw-bulletin").click(function() {
+        if(!$("#bulletin").is(":hidden")){ 
+            $("#sw-openAnalysis").attr("disabled","true");
+        }
+        if($("#bulletin").is(":hidden")){
+            $("#sw-openAnalysis").removeAttr("disabled");
+        }
         $("#bulletin").toggle(200);
+        $("#analysis").hide();
         document.getElementById("typeOCX").SetTextSize(8);
         document.getElementById("typeOCX").HideToolBar();
         document.getElementById("typeOCX").HideSecondToolBar();
@@ -305,6 +313,7 @@ $(document).ready(function(){
         $("#chat-box").hide();
     });
 });
+
 </script>
 
 <script>
@@ -314,7 +323,8 @@ $(document).ready(function(){
     var onCam     = -1;
     
     function clearVideo(){
-        last_path = -1
+        $("#startClassExercise").removeAttr("disabled");
+        last_path = -1;
         var video = document.getElementById('video1');
         if(video != null){
             video.pause();
@@ -325,6 +335,7 @@ $(document).ready(function(){
     }
 
     function changVideo(video_path){
+        $("#startClassExercise").attr("disabled","true");
         if (last_path !== video_path) {
             last_path = video_path;
             var video = document.getElementById('video1');
@@ -397,6 +408,7 @@ $(document).ready(function(){
             var ppt_src = msg.substr(msg.indexOf('playppt')+7);
             if(last_path==-1)
             {
+                $("#startClassExercise").attr("disabled","true");
                 $("#dianbo-videos-container").hide();
                 $("#ppt-container").show();
             }
@@ -407,6 +419,7 @@ $(document).ready(function(){
             }
         } else if(msg.indexOf('<?php echo $classID;?>closeppt') >= 0){
             last_path = -1;
+            $("#startClassExercise").removeAttr("disabled");
             $("#ppt-container").hide();
         } 
     }
