@@ -5379,6 +5379,10 @@ public function ActionAssignFreePractice(){
         $this->renderPartial("tableClassExercise4virtual",['classExerciseLst'=>$classExerciseLst]);
     }
     
+    public function actionTableClassExercise4Analysis(){
+        $this->renderPartial("tableClassExercise4Analysis");
+    }
+    
     public function actionOpenClassExercise4lot(){
         $allClassExercise = $_POST['check'];
         $arrayClassExercise = explode("&", $allClassExercise);

@@ -67,8 +67,8 @@
     <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
 </div>
 
-<div  class="analysisTool" id="analysis" style="left: 1050px;top: -236px; height: 670px; width: 220px;">
-        <table style="margin: 0px auto; font-size: 18px" cellpadding="20"  >
+<div  class="analysisTool" id="analysis" style="background-color: #fff;left: 1170px; height: 670px; width: 220px;">
+        <table style="margin: 0px auto;position:relative;top: -200px; font-size: 18px" cellpadding="20"  >
             <tr>
                 <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
                  <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>

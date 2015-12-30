@@ -196,7 +196,7 @@ class ClassExercise extends CActiveRecord
     
     
     public function getExerciseByType($exerciseID,$type){
-        $sql = "SELECT * FROM class_exercise WHERE exerciseID = '$exerciseID' and type = '$type'";
+        $sql = "SELECT * FROM class_exercise WHERE exerciseID = '$exerciseID' AND type = '$type'";
         return Yii::app()->db->createCommand($sql)->query();
     }
     
@@ -236,7 +236,19 @@ class ClassExercise extends CActiveRecord
         $classExercise->now_open = 1;
         $classExercise->update();
     }
-	/**
+    
+    public function isHasClassExerciseOpen($classID,$lessonID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("classID = '$classID' AND lessonID = '$lessonID' AND now_open = 1");
+        return $classExercise['type'];
+    }
+    
+    public function getNowOpenExercise(){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("now_open = 1");
+        return $classExercise;
+    }
+    /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

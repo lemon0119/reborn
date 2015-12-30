@@ -49,6 +49,11 @@ echo "<script>var role='$role';</script>";
         <img id="ppt-img"  onmouseover="fun1();" onmouseout="fun2();" src=""  style="height: 100%;"/>  
         </div>
     </div>
+     <div id="classExercise-container" align="center" style="width: 100% ; height:760px;  margin-top:0px;display:none;overflow-x: hidden">
+         <div style="position: relative;top: 10px;height: 730px;">
+            <iframe id="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
+        </div>
+    </div>
 
     <div id="dianbo-videos-container" style="display:none;">  </div>
 </div>
@@ -62,7 +67,7 @@ echo "<script>var role='$role';</script>";
         <div id="bulletin" class="bulletin" style="border: 0px;width: 100%;margin-left: -1.1px">
              <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
         </div>
-        <div align="center" id="sw-chat" ><h4 style="color: white"><a style="position: relative;left:26px;color: white"  href="#">课 堂 问 答</a></h4></div>
+    <div class="fl" align="center" id="sw-chat" ><h4 ><a style="position: relative;left:145px;color: white"  href="#">课 堂 问 答</a></h4></div>
         <div id="chat-box" style="display:none;border: 0px">
             <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
@@ -75,20 +80,20 @@ echo "<script>var role='$role';</script>";
        
     </div>
 </div>
-<div  class="analysisTool" id="analysis" style="display: none;left:120px;bottom: 473px">
+<div  class="analysisTool" id="analysis" style="display: none;left:1190px;bottom: 473px">
         <table style="margin: 0px auto;">
             <tr>
-                <td><span class="fl"  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: gray"> 字/分</span> </td></tr>
-             <tr><td><span class="fl"  style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span class="fr" style="color: gray"> 字/分</span></td></tr>
-                 <tr><td><span class="fl"  style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span class="fr" style="color: gray"> 字/分</span></td></tr>
+                <td><span class="fl"  style="color: #fff;font-weight: bolder">平均速度：</span><span style="color: greenyellow" id="getAverageSpeed">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: #fff"> 字/分</span> </td></tr>
+             <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时速度：</span><span style="color: greenyellow" id="getMomentSpeed">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>
+                 <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高速度：</span><span style="color: greenyellow" id="getHighstSpeed">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>
             <tr>
-                <td><span class="fl"  style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span class="fr" style="color: gray"> 次/分</span></td></tr>
-             <tr><td><span class="fl"  style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span class="fr" style="color: gray"> 次/秒</span></td></tr>
-                <tr><td><span class="fl"  style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span class="fr" style="color: gray"> 次/秒</span></td></tr>
-                <tr><td><span class="fl"  style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr><tr><td><span class="fl"  style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr><tr><td><span class="fl"  style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
-            <tr><td><span class="fl"  style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                <td><span class="fl"  style="color: #fff;font-weight: bolder">平均击键：</span><span style="color: greenyellow" id="getAverageKeyType">0</span ><span class="fr" style="color: #fff"> 次/分</span></td></tr>
+             <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时击键：</span><span style="color:greenyellow" id="getMomentKeyType">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>
+                <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高击键：</span><span style="color: greenyellow" id="getHighstCountKey">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>
+                <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">击键间隔：</span><span style="color: greenyellow" id="getIntervalTime">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高间隔：</span><span style="color: greenyellow" id="getHighIntervarlTime">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">总击键数：</span><span style="color: greenyellow" id="getcountAllKey">0</span ><span class="fr" style="color: #fff"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+            <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">回改字数：</span><span style="color: greenyellow" id="getBackDelete">0</span ><span class="fr" style="color: #fff"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
         </table>
     </div>
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
@@ -144,7 +149,6 @@ echo "<script>var role='$role';</script>";
            var messageField = $('#messageInput');
            var msg = messageField.val();
            messageField.val('');
-
            var current_date = new Date();
             var current_time = current_date.toLocaleTimeString();
           
@@ -200,6 +204,7 @@ echo "<script>var role='$role';</script>";
 </script>
 
 <script>
+    var isClassExercise = 0;
     //chat and bulletin
 $(document).ready(function(){
     var current_date = new Date();
@@ -221,10 +226,43 @@ $(document).ready(function(){
     setInterval(function() {
         pollChatRoom();
     }, 1000);
-
-
-    
+    // ------------------------------------------------------ start classExercise
+    var timer = setInterval(function() {
+        if(isClassExercise===0){
+            startClassExercise();
+        }else{
+            clearInterval(timer);
+        }
+    }, 2000);
 });
+
+function startClassExercise(){
+    $.ajax({
+        type:"GET",
+        url:"index.php?r=student/startClassExercise&&classID=<?php echo $classID;?>&&lessonID=<?php echo $currentLesn;?>",
+        success:function(data){
+            if(data===""){
+            }else{
+                $("#classExercise-container").toggle(200);
+                if(data==="look"){
+                    $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look");
+                }else if(data==="listen"){
+                     $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen");
+                }else if(data==='speed'||data==='correct'||data==='free'){
+                     $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key");
+                }
+                 if(!$("#bulletin").is(":hidden")){ 
+                $("#sw-openAnalysis").attr("disabled","true");
+                }
+                $("#bulletin").toggle(200);
+                $("#analysis").hide();
+                isClassExercise=1;
+            }
+        }
+    });
+}
+
+
 
 function pollChatRoom() {
     $.ajax({
@@ -323,7 +361,6 @@ $(document).ready(function(){
     var onCam     = -1;
     
     function clearVideo(){
-        $("#startClassExercise").removeAttr("disabled");
         last_path = -1;
         var video = document.getElementById('video1');
         if(video != null){
@@ -335,7 +372,6 @@ $(document).ready(function(){
     }
 
     function changVideo(video_path){
-        $("#startClassExercise").attr("disabled","true");
         if (last_path !== video_path) {
             last_path = video_path;
             var video = document.getElementById('video1');
@@ -408,7 +444,6 @@ $(document).ready(function(){
             var ppt_src = msg.substr(msg.indexOf('playppt')+7);
             if(last_path==-1)
             {
-                $("#startClassExercise").attr("disabled","true");
                 $("#dianbo-videos-container").hide();
                 $("#ppt-container").show();
             }
@@ -419,7 +454,6 @@ $(document).ready(function(){
             }
         } else if(msg.indexOf('<?php echo $classID;?>closeppt') >= 0){
             last_path = -1;
-            $("#startClassExercise").removeAttr("disabled");
             $("#ppt-container").hide();
         } 
     }
@@ -439,4 +473,22 @@ $(document).ready(function(){
         addMessageHandleForWS();
     }
 });
+
+function closeClassExercise(){
+    isClassExercise = 0;
+    $("#classExercise-container").toggle(200);
+    $("#iframe_classExercise").attr("src","");
+        
+     if($("#bulletin").is(":hidden")){
+            $("#sw-openAnalysis").removeAttr("disabled");
+        }
+                $("#analysis").hide();
+      var timer = setInterval(function() {
+        if(isClassExercise===0){
+            startClassExercise();
+        }else{
+            clearInterval(timer);
+        }
+    }, 2000);
+}
 </script>

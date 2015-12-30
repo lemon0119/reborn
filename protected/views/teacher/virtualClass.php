@@ -344,7 +344,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
              <button onclick="addNewClassExercise()"  style="font-size: 20px;position: relative;height: 40px;width:100%;" class="btn btn-primary">添加新练习</button>
         </div>
         <div style="position: relative;top: 10px;height: 550px;overflow: auto">
-            <iframe id="iframe_class" style="border: 0px;height: 95%;width: 100%;" src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>"></iframe>
+            <iframe id="iframe_class" style="border: 0px;height: 95%;width: 95%;"></iframe>
         </div>
     </div>
     <div id="scroll-video" style="display:inline;">
@@ -747,6 +747,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#show-voice").toggle(200);
         });
         $("#sw-classExercise").click(function () {
+            document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>";
             if (flag === "classExercise") {
                 flag = "";
                 $("#title_classExercise").css({"color": "#fff"});
@@ -779,6 +780,19 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     $("#scroll-page").hide();
     $("#scroll-video").hide();
     $(document).ready(function () {
+        $.ajax({
+               type:"POST",
+               url:"index.php?r=teacher/openClassExercise",
+               data:{exerciseID:"0"},
+               success:function(data){
+               },
+               error:function(xhr, type, exception){
+                   console.log('GetAverageSpeed error', type);
+                   console.log(xhr, "Failed");
+                   console.log(exception, "exception");
+                   
+               }
+        });
         //打开连接
         openConnect();
 
@@ -1656,8 +1670,7 @@ $dir->close();
     }
     
     function startClassExercise(exerciseID){
-        alert(exerciseID);
-        
+        document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4Analysis";
     }
     
 
