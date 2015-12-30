@@ -33,6 +33,7 @@
     <div class="span9">
         <h3 >自 由 练 习</h3>
         <br/>
+        <button id="pause">pause</button>
         <div class="fr" style="width:300px; position: relative;right: 10px">
             <table cellpadding="8" style="margin: 0px auto;">
                 <tr>
@@ -48,8 +49,29 @@
                 <td><span class="fl"  style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">&nbsp;&nbsp;0&nbsp;&nbsp;</span ><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
             </table>
         </div>
-        <div>
+        <div >
             <?php require Yii::app()->basePath . "\\views\\student\\keyboard_freePractice.php"; ?>
         </div>
     </div>
 <?php } ?>
+<script>
+    $(document).ready(function () {
+            $("#pause").click(function(){
+            if(window.G_isPause ===0){
+                window.G_isPause = 1;
+            }
+        });
+    });
+    
+    //获取学生信息转入统计JS 实时存入数据库
+    window.G_saveToDatabase = 1;
+    <?php $sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '2'");
+            $countSquence = count($sqlClassExerciseRecord);
+            $squence = $countSquence+1;
+            ?>
+    window.G_squence = <?php echo $squence;?>;
+    window.G_exerciseType = "classExercise";
+    var classExerciseID = 2;
+    var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
+    window.G_exerciseData = Array(classExerciseID,studentID);
+</script>

@@ -279,7 +279,7 @@ public static function teacherNotice(){
      * return true 正确; false 不正确
      */
     public static function checkID($ID){
-        $regex = '/^[A-Za-z0-9]+$/';
+        $regex = '/^[A-Za-z]+[A-Za-z0-9]+$/';
         if (preg_match($regex, $ID)) {
             return TRUE;
         }else{

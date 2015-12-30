@@ -107,6 +107,7 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){     
+        window.G_keyBoardBreakPause =0;
        var myDate = new Date();
          window.G_pressTime = myDate.getTime();
          if(window.G_startFlag ===0){
@@ -128,10 +129,12 @@
                  if(pressTime - window.G_oldStartTime >0){
                      var IntervalTime = parseInt((pressTime - window.G_oldStartTime)/10)/100;
                       $("#getIntervalTime").html(IntervalTime);
+                      window.GA_IntervalTime  = IntervalTime;
                      window.G_oldStartTime = pressTime;
                  }
                  if(IntervalTime-window.G_highIntervarlTime>0){
                      window.G_highIntervarlTime = IntervalTime;
+                     window.GA_IntervalTime  = window.G_highIntervarlTime ;
                      $("#getHighIntervarlTime").html(IntervalTime);
                  }             
           }         
@@ -246,6 +249,7 @@
         return true;
     }
     function getCorrect(){
+        window.GA_RightRadio =  numKeyRight / numKeyDown;
         return numKeyRight / numKeyDown;
     }
     function getNextWord(){

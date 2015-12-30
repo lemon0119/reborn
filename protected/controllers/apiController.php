@@ -254,6 +254,33 @@ class apiController extends Controller {
         $this->renderJSON($data);
     }
     
+    public function actionAnalysisSaveToDatabase(){
+        $exerciseType = $_POST['exerciseType'];
+        $exerciseData = $_POST['exerciseData'];
+        $ratio_averageKeyType = $_POST['averageKeyType'];
+        $ratio_maxKeyType = $_POST['highstCountKey'];
+        $ratio_maxSpeed = $_POST['highstSpeed'];
+        $ratio_speed = $_POST['averageSpeed'];
+        $ratio_backDelete = $_POST['CountBackDelete'];
+        $ratio_internalTime = $_POST['IntervalTime'];
+        $ratio_maxInternalTime = $_POST['highIntervarlTime'];
+        $ratio_correct = $_POST['RightRadio'];
+        $ratio_countAllKey = $_POST['CountAllKey'];
+        $squence = $_POST['squence'];
+        if($exerciseType === "classExercise"){
+            $classExerciseID = $exerciseData[0];
+            $studentID = $exerciseData[1];
+            $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
+            if(!isset($sqlClassExerciseRecord)){
+                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+            }else{
+                 ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+            }
+        }
+        $this->renderJSON("");
+    }
+    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
+    
     
     
   
@@ -263,7 +290,8 @@ class apiController extends Controller {
         $data = mb_convert_encoding($content, 'utf-8', 'gbk');
         $this->renderJSON($data);
     }
-    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
+    
+    
          public function ActiongetExercise(){
             if(isset($_POST['suiteID'])){
                 $suiteID = $_POST['suiteID'];

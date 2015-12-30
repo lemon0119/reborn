@@ -110,6 +110,107 @@ class ClassExercise extends CActiveRecord
 		));
 	}
 
+        
+        public function insertClassExercise($classID,$lessonID,$title,$content,$type,$createPerson){
+        $newClassExercise    =   new ClassExercise();
+        $newClassExercise->classID    =   $classID;
+        $newClassExercise->lessonID    =   $lessonID;
+        $newClassExercise->title =   $title;
+        $newClassExercise->content       =   $content;
+        $newClassExercise->type       =   $type;
+        $newClassExercise->create_person  =   $createPerson;
+        $newClassExercise->create_time    =   date('y-m-d H:i:s',time());
+        return $newClassExercise->insert();
+    }
+    
+    public function insertListen($classID,$lessonID,$title,$content,$fileName,$filePath,$type,$createPerson){
+        $newClassExercise    =   new ClassExercise();
+        $newClassExercise->classID    =   $classID;
+        $newClassExercise->lessonID    =   $lessonID;
+        $newClassExercise->title =   $title;
+        $newClassExercise->content       =   $content;
+        $newClassExercise->file_name   = $fileName;
+        $newClassExercise->file_path = $filePath;
+        $newClassExercise->type       =   $type;
+        $newClassExercise->create_person  =   $createPerson;
+        $newClassExercise->create_time    =   date('y-m-d H:i:s',time());
+        return $newClassExercise->insert();
+    }
+    
+    public function getLookLst($type,$value,$lessonID){
+        $order  =   " order by exerciseID DESC";
+        if($type!="")
+            if($type == "content")
+            {
+                $condition = " WHERE $type like '%$value%'";
+            }  else {
+                $condition = " WHERE $type = '$value'";
+            }           
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM class_exercise";
+        $condition2 = "AND lessonID = $lessonID";
+        $sql        =   $select.$condition.$condition2.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $lookLst  =   $result->query();
+        
+        return ['lookLst'=>$lookLst,'pages'=>$pages,];
+    }
+    
+    public function getListenLst($type,$value,$lessonID){
+        $order  =   " order by exerciseID DESC";
+        if($type!="")
+            if($type == "content")
+            {
+                $condition = " WHERE $type like '%$value%'";
+            }else{
+                $condition = " WHERE $type = '$value'";
+            }          
+        else
+            $condition= "";
+        $select     =   "SELECT * FROM class_exercise";
+        $condition2 = "AND lessonID = $lessonID";
+        $sql        =   $select.$condition.$condition2.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $listenLst  =   $result->query();
+        
+        return ['listenLst'=>$listenLst,'pages'=>$pages,];
+    }
+    
+    
+    public function getExerciseByType($exerciseID,$type){
+        $sql = "SELECT * FROM class_exercise WHERE exerciseID = '$exerciseID' and type = '$type'";
+        return Yii::app()->db->createCommand($sql)->query();
+    }
+    
+    public function updateLook($exerciseID,$title,$content){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+        $classExercise->title = $title;
+        $classExercise->content = $content;
+        $classExercise->update();
+    }
+    
+    public function deleteExercise($exerciseID){
+        $classExercise = new ClassExercise();
+        $FileName = $classExercise->find("exerciseID = '$exerciseID'")['file_name'];
+        Resourse::model()->delName($FileName);
+        $classExercise->deleteAll("exerciseID = '$exerciseID'");
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
