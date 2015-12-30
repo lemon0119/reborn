@@ -80,7 +80,6 @@
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host.$path.$page.$param;?>">
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
         <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed'];?>">
-        <input id="id_exerciseTime" type="hidden" value="<?php echo $exerOne['exerciseTime'];?>">
         <input name="nm_correct" id="id_correct" type="hidden">
         <input  name="nm_answer"id="id_answer" type="hidden">
         <input  name="nm_cost" id="id_cost" type="hidden">

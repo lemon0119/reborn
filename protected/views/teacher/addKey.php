@@ -222,9 +222,6 @@ function selectWordLib(){
     document.getElementById("libstr").value = libstr;
  }
 
-
-
-
 </script>
 
 

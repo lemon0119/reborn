@@ -1242,22 +1242,14 @@ class TeacherController extends CController {
         if (!isset($_GET['action'])) {
             $this->render("editKey", array(
                 'exerciseID' => $exerciseID,
-                'title' => $result['title'],
-                'content' => $result['content'],
-                'category' => $result['category'],
-                'speed' => $result['speed'],
-                'exerciseTime' => $result['exerciseTime']
+                'key' => $result,
             
             ));
         } else if ($_GET['action'] = 'look') {
             $this->render("editKey", array(
                 'exerciseID' => $exerciseID,
-                'title' => $result['title'],
-                'content' => $result['content'],
                 'action' => 'look',
-                'category'=>$result['category'],
-                'speed' => $result['speed'],
-                'exerciseTime' => $result['exerciseTime']
+                'key' => $result,
             ));
         }
     }
