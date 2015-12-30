@@ -817,7 +817,6 @@ class TeacherController extends CController {
         }
             $file = "resources/" . $picFilePath . $file;
         }
-
         return $this->render('lookpicture', [
                     'classID' => $classID,
                     'progress' => $progress,
