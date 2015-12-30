@@ -36,7 +36,8 @@
                         <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php }else{?>
                     <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
-                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>                    
+                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>       
+                    <td width = '250px'>循环次数：<span id="repeatNum"><?php echo $exerOne['repeatNum']?></span></td>
                      <?php }?>
                 </tr>
         </table>
@@ -79,7 +80,6 @@
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host.$path.$page.$param;?>">
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
         <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed'];?>">
-        <input id="id_exerciseTime" type="hidden" value="<?php echo $exerOne['exerciseTime'];?>">
         <input name="nm_correct" id="id_correct" type="hidden">
         <input  name="nm_answer"id="id_answer" type="hidden">
         <input  name="nm_cost" id="id_cost" type="hidden">
