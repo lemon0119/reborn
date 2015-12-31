@@ -46,6 +46,18 @@
 
 
 <script>
+$(document).ready(function()-{
+    //点击选择词库在新界面中之前选中的进行勾选，没写完-_-
+//        var libstr = window.opener.getLibs(); 
+//        var words = libstr.split("$$");
+//        var checkboxs = document.getElementByName("checkbox[]");
+//        for(var i=0;i<checkboxs.length;i++){
+//            for(var j=0;j<words.length;j++){
+//                if(checkboxs[i] == words[j])
+//                    checkboxs[i].checked = true;
+//            }
+//        }
+});
     function clickOK(){
     var checkboxs = document.getElementsByName('checkbox[]');
     var libs=new Array();
