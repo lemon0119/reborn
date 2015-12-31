@@ -149,19 +149,19 @@
         
         if(HaveWindow == 1)
             return;
-        if(totalcishu == currentNum){
+        if(totalNum == currentNum && repeatNum == 0){
             HaveWindow = 1;
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
-                    currentNum = totalcishu;
+                    currentNum = totalNum;
                     HaveWindow = 0;
                 },
                 onClose:function(){
-                    currentNum = totalcishu;
+                    currentNum = totalNum;
                     HaveWindow = 0;
                 }
             });
-            currentNum = totalcishu;
+            currentNum = totalNum;
             return ;
         }
         var charSet = pszStenoString.split("");
@@ -188,8 +188,7 @@
             }
         }
         changTemplet(pszStenoString);
-        writeData();
-        doSubmit();
+        document.getElementById("correctRate").innerHTML = (getCorrect()*100).toFixed(2);
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -201,10 +200,11 @@
     var numKeyRight = 0;
     var time1;
     var HaveWindow = 0;
+    var repeatNum = 0;
     function startParse(){
         var content = document.getElementById("id_content").value;
         var speed = document.getElementById("id_speed").value;
-        var exerciseTime = document.getElementById("id_exerciseTime").value;
+        repeatNum = $("#repeatNum").html();
         var cont_array = content.split("$$");
         for(var i = 0; i < cont_array.length; i += 1){
             var yaweiCode = cont_array[i].split(":0")[0];
@@ -213,15 +213,16 @@
             wordArray.push(word);
             totalNum += 1;           
         }
-        totalcishu = speed*exerciseTime;
         display();
         time1 = setInterval("display()",1/(speed/60)*1000); 
     }
+    
     function setWordView(word){
         document.getElementById("word").innerHTML = word;
         $('#keyMode').fadeOut(50);
         $('#keyMode').fadeIn(50);
-    }
+    }   
+    
     function changTemplet(pszStenoString){
         if(isSameWord(pszStenoString,yaweiCode)){
             ++numKeyRight;
@@ -230,14 +231,7 @@
     
   function writeData(){
         document.getElementById("id_correct").value = getCorrect();
-        document.getElementById("id_cost").value = getSeconds();
-        document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
-        document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;
-        document.getElementById("id_BackDelete").value = document.getElementById("getBackDelete").innerHTML;
-        document.getElementById("id_HighstCountKey").value = document.getElementById("getHighstCountKey").innerHTML;
-        document.getElementById("id_AverageKeyType").value = document.getElementById("getAverageKeyType").innerHTML;
-        document.getElementById("id_HighIntervarlTime").value = document.getElementById("getHighIntervarlTime").innerHTML;
-        document.getElementById("id_countAllKey").value = document.getElementById("getcountAllKey").innerHTML;        
+        document.getElementById("id_cost").value = getSeconds();     
     }
     
     function isSameWord(word1, word2){
@@ -259,6 +253,7 @@
        else
            return false;
     }
+    
     function isSameArray(a1,a2){
         for(var i = 0; i < a1.length && i < a2.length; ++i){
             if(a1[i] != a2[i])
@@ -266,16 +261,26 @@
         }
         return true;
     }
+    
     function getCorrect(pattern , answer){
         window.GA_RightRadio = numKeyRight / numKeyDown;
         return numKeyRight / numKeyDown;
     }
+    
     function getNextWord(){
         currentNum++;       
         if(totalNum == currentNum){
+            repeatNum--;
+            document.getElementById("repeatNum").innerHTML = repeatNum;
+            if(repeatNum == 0){
             clearInterval(time1);
+            window.G_isOverFlag = 1;
+            document.getElementById("id_cost").value = getSeconds();
+            doSubmit(false); 
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
+        }
+        currentNum = 0;
         }       
         if(nextWord != "")
             return nextWord;

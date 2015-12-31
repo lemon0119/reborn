@@ -276,7 +276,18 @@ class apiController extends Controller {
             }else{
                  ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }
-        }
+        }       
+        if($exerciseType === "answerRecord"){
+           if(Yii::app()->session['isExam']){
+                if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1);
+            }else {
+                if(!SuiteRecord::saveSuiteRecord ($recordID))
+                    return false;
+                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey,$squence,0);
+            }   
+        }    
         $this->renderJSON("");
     }
     //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
@@ -327,8 +338,7 @@ class apiController extends Controller {
                 }
             }            
             $this->renderJSON($array_result);          
-     }
-     
+     }   
      public function getStudentRanking(){
          $workID = $_POST['workID'];
          $exerciseID = $_POST['exerciseID'];

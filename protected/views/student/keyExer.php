@@ -21,6 +21,7 @@
     }//end
  ?>
 <?php if(!$isOver){?>
+
 <div class="span9">
     
     <div class="hero-unit"  align="center">
@@ -36,7 +37,8 @@
                         <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php }else{?>
                     <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
-                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>                    
+                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>       
+                    <td width = '250px'>循环次数：<span id="repeatNum"><?php echo $exerOne['repeatNum']?></span></td>
                      <?php }?>
                 </tr>
         </table>
@@ -79,17 +81,8 @@
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host.$path.$page.$param;?>">
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
         <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed'];?>">
-        <input id="id_exerciseTime" type="hidden" value="<?php echo $exerOne['exerciseTime'];?>">
-        <input name="nm_correct" id="id_correct" type="hidden">
         <input  name="nm_answer"id="id_answer" type="hidden">
         <input  name="nm_cost" id="id_cost" type="hidden">
-        <input name="nm_AverageSpeed" id="id_AverageSpeed" type="hidden">
-        <input name="nm_HighstSpeed" id="id_HighstSpeed" type="hidden">
-        <input name="nm_BackDelete" id="id_BackDelete" type="hidden">
-        <input name="nm_HighstCountKey" id="id_HighstCountKey" type="hidden">
-        <input  name="nm_AverageKeyType" id="id_AverageKeyType" type="hidden">
-        <input name="nm_HighIntervarlTime" id="id_HighIntervarlTime" type="hidden">
-        <input name="nm_countAllKey"  id="id_countAllKey" type="hidden" > 
     </form>
 </div>
 <div  class="analysisTool" id="analysis" style="left: 1050px;top: -516px; height: 670px; width: 230px;">
@@ -207,8 +200,7 @@
     function doSubmit(simple,doFunction){
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
-            if(!simple){
-               
+            if(!simple){               
             }else{
                 doFunction();
             }
@@ -228,5 +220,11 @@
                                                         clearTemplate();
 						} 
 					};        
-    }
+    }   
+    window.G_saveToDatabase = 1;
+    window.G_squence = 0;
+    window.G_exerciseType = "answerRecord";
+//    var answer = document.getElementById("id_answer").value;
+//    var cost = document.getElementById("id_cost").value;
+   window.G_exerciseData = Array("1");
 </script>
