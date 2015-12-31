@@ -243,6 +243,8 @@ function startClassExercise(){
         success:function(data){
             if(data===""){
             }else{
+                
+                $("#sw-bulletin").unbind("click");
                 $("#classExercise-container").toggle(200);
                 if(data==="look"){
                     $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look");
@@ -253,9 +255,9 @@ function startClassExercise(){
                 }
                  if(!$("#bulletin").is(":hidden")){ 
                 $("#sw-openAnalysis").attr("disabled","true");
+                 $("#bulletin").toggle(200);
                 }
-                $("#bulletin").toggle(200);
-                $("#analysis").hide();
+               $("#analysis").hide();
                 isClassExercise=1;
             }
         }
@@ -478,7 +480,19 @@ function closeClassExercise(){
     isClassExercise = 0;
     $("#classExercise-container").toggle(200);
     $("#iframe_classExercise").attr("src","");
-        
+     $("#sw-bulletin").click(function() {
+        if(!$("#bulletin").is(":hidden")){ 
+            $("#sw-openAnalysis").attr("disabled","true");
+        }
+        if($("#bulletin").is(":hidden")){
+            $("#sw-openAnalysis").removeAttr("disabled");
+        }
+        $("#bulletin").toggle(200);
+        $("#analysis").hide();
+        document.getElementById("typeOCX").SetTextSize(8);
+        document.getElementById("typeOCX").HideToolBar();
+        document.getElementById("typeOCX").HideSecondToolBar();
+    });    
      if($("#bulletin").is(":hidden")){
             $("#sw-openAnalysis").removeAttr("disabled");
         }

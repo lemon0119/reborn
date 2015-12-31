@@ -330,9 +330,10 @@ function AjaxGetRight_Wrong_AccuracyRate(id1,id2,id3,originalContent,currentCont
     $.ajax({
                type:"POST",
                dataType:"json",
-               url:"index.php?r=api/getWrongFont",
+               url:"index.php?r=api/getRight_Wrong_AccuracyRate",
                data:{originalContent:originalContent,currentContent:currentContent},
                success:function(data){
+                   window.GA_RightRadio = data[2];
                    $("#"+id1).html(data[0]);
                    $("#"+id2).html(data[1]);
                    $("#"+id3).html(data[2]);

@@ -60,19 +60,21 @@ class AnalysisTool{
        $allCount     = 0;
        $wrongCount   = 0;
        $rightCount   = 0;
-       $array_original = explode("", $originalContent);
-       $array_current = explode("", $currentContent);
+       $array_original =  str_split($originalContent);
+       $array_current = str_split($currentContent);
        unset($originalContent);
        unset($currentContent);
        foreach ($array_original as $k=>$v){
-           if($v!=$array_current[$k]){
-               $wrongCount++;
-           }else{
-              $rightCount++ ;
+           if(isset($array_current[$k])){
+               if($v!=$array_current[$k]){
+                    $wrongCount++;
+                }else{
+                   $rightCount++ ;
+                }
            }
            $allCount++;
        }
-       $accuracyRate = ($rightCount/$allCount)*100;
+       $accuracyRate = round(($rightCount/$allCount)*100);
        unset($array_original);
        unset($array_current);
        $data = array($rightCount,$wrongCount,$accuracyRate);
