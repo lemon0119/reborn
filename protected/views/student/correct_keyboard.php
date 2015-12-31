@@ -172,9 +172,8 @@
                     keySet("r_"+c , true);
             }
             }      
-        changTemplet(pszStenoString); 
-        writeData();
-        doSubmit();
+        changTemplet(pszStenoString);    
+        document.getElementById("correctRate").innerHTML = (getCorrect()*100).toFixed(2);
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -258,6 +257,9 @@
           repeatNum--;
             document.getElementById("repeatNum").innerHTML = repeatNum;
             if(repeatNum == 0){
+            window.G_isOverFlag = 1;     
+            document.getElementById("id_cost").value = getSeconds();
+            doSubmit(false); 
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
         }       
@@ -273,20 +275,7 @@
     function getYaweiCode(){
         return yaweiCode[currentNum];
     }
-    
-    
-      function writeData(){
-        document.getElementById("id_correct").value = getCorrect();
-        document.getElementById("id_cost").value = getSeconds();
-        document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
-        document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;
-        document.getElementById("id_BackDelete").value = document.getElementById("getBackDelete").innerHTML;
-        document.getElementById("id_HighstCountKey").value = document.getElementById("getHighstCountKey").innerHTML;
-        document.getElementById("id_AverageKeyType").value = document.getElementById("getAverageKeyType").innerHTML;
-        document.getElementById("id_HighIntervarlTime").value = document.getElementById("getHighIntervarlTime").innerHTML;
-        document.getElementById("id_countAllKey").value = document.getElementById("getcountAllKey").innerHTML;        
-    }
-    
+     
 </script>
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 

@@ -47,6 +47,7 @@ class ClassexerciseRecord extends CActiveRecord
                 $sqlClassExerciseRecord->ratio_internalTime = $sqlClassExerciseRecord['ratio_internalTime']."&".$ratio_internalTime;
                 $sqlClassExerciseRecord->ratio_maxInternalTime = $sqlClassExerciseRecord['ratio_maxInternalTime']."&".$ratio_maxInternalTime;
                 $sqlClassExerciseRecord->ratio_correct = $sqlClassExerciseRecord['ratio_correct']."&".$ratio_correct;
+                $sqlClassExerciseRecord->ratio_countAllKey = $sqlClassExerciseRecord['ratio_countAllKey']."&".$ratio_countAllKey;
                 $sqlClassExerciseRecord->update();
                 $sqlClassExerciseRecord->ratio_averageKeyType = "";
                 $sqlClassExerciseRecord->ratio_maxKeyType = "";
@@ -55,7 +56,8 @@ class ClassexerciseRecord extends CActiveRecord
                 $sqlClassExerciseRecord->ratio_backDelete = "";
                 $sqlClassExerciseRecord->ratio_internalTime = "";
                 $sqlClassExerciseRecord->ratio_maxInternalTime = "";
-                $sqlClassExerciseRecord->ratio_correct = "";
+                $sqlClassExerciseRecord->ratio_correct = ""; 
+                $sqlClassExerciseRecord->ratio_countAllKey = "";
         return "";
     }
 	/**

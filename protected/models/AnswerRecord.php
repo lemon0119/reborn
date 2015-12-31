@@ -186,12 +186,12 @@ class AnswerRecord extends CActiveRecord
 //        }
 //    }   
     
-        public static function saveAnswer($recordID, $answer, $seconds,$correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$HighIntervarlTime=0,$countAllKey=0 , $isExam) {  
+     public static function saveAnswer($recordID, $correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$ratio_internalTime=0,$HighIntervarlTime=0,$countAllKey=0 ,$squence, $isExam) {  
         $userID = Yii::app()->session['userid_now'];
         $exerID = Yii::app()->session['exerID'];
         $type = Yii::app()->session['exerType'];
         $type = str_replace(["Exer"],"",$type);
-        $ratio = self::getRatio($exerID, $type, $answer);
+//        $ratio = self::getRatio($exerID, $type, $answer);
         $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerID);
         if( $oldAnswer == null) {
             $newAnswer = new AnswerRecord();
@@ -199,10 +199,9 @@ class AnswerRecord extends CActiveRecord
             $newAnswer -> recordID = $recordID;
             $newAnswer -> exerciseID = $exerID;
             $newAnswer -> type = $type;
-            $newAnswer -> answer = $answer;
-            $newAnswer -> costTime = $seconds;
-            $newAnswer -> ratio_correct = $ratio['correct'];
-            $newAnswer -> ratio_accomplish = $ratio['accomplish'];
+            $newAnswer->squence= $squence;
+            $newAnswer -> ratio_correct = $correct;
+//          $newAnswer -> ratio_accomplish = $ratio['accomplish'];
             $newAnswer -> createPerson = Yii::app()->session['userid_now'];
             $newAnswer -> createTime = date("Y-m-d  H:i:s");
             $newAnswer ->ratio_speed = $AverageSpeed;
@@ -219,19 +218,17 @@ class AnswerRecord extends CActiveRecord
             } else 
                 return true;
         }else {
-            $oldAnswer -> answer = $answer;
-            $oldAnswer -> costTime = $seconds;
-            $oldAnswer -> ratio_correct = $ratio['correct'];
-            $oldAnswer -> ratio_accomplish = $ratio['accomplish'];
+            $oldAnswer -> ratio_correct = $oldAnswer['ratio_correct'].'&'.$correct;
+//          $oldAnswer -> ratio_accomplish = $ratio['accomplish'];
             $oldAnswer -> createTime = date("Y-m-d  H:i:s");
-            $oldAnswer ->ratio_speed = $AverageSpeed;
-            $oldAnswer ->ratio_maxSpeed = $HighstSpeed;
-            $oldAnswer->ratio_backDelete = $BackDelete;
-            $oldAnswer->ratio_maxKeyType = $HighstCountKey;
-            $oldAnswer->ratio_averageKeyType = $AveragekeyType;
-            $oldAnswer->ratio_maxInternalTime = $HighIntervarlTime;
-            $oldAnswer->ratio_countAllKey = $countAllKey;  
-            $newAnswer->isExam = $isExam;
+            $oldAnswer ->ratio_speed = $oldAnswer['ratio_speed'].'&'.$AverageSpeed;
+            $oldAnswer ->ratio_maxSpeed = $oldAnswer['ratio_maxSpeed'].'&'.$HighstSpeed;
+            $oldAnswer->ratio_backDelete = $oldAnswer['ratio_backDelete'].'&'.$BackDelete;
+            $oldAnswer->ratio_maxKeyType = $oldAnswer['ratio_maxKeyType'].'&'.$HighstCountKey;
+            $oldAnswer->ratio_averageKeyType = $oldAnswer['ratio_averageKeyType'].'&'.$AveragekeyType;
+            $oldAnswer->ratio_maxInternalTime = $oldAnswer['ratio_maxInternalTime'].'&'.$HighIntervarlTime;
+            $oldAnswer->ratio_countAllKey = $oldAnswer['ratio_countAllKey'].'&'.$countAllKey;
+            $oldAnswer->isExam = $isExam;
             if(!($oldAnswer->upDate())) {
                 echo Tool::jsLog('更新答案记录失败！');
                 return false;
@@ -239,6 +236,60 @@ class AnswerRecord extends CActiveRecord
                 return true;
         }
     }
+  
+//    public static function saveInstantAnswer($recordID,$squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey){
+//        $userID = Yii::app()->session['userid_now'];
+//        $exerID = Yii::app()->session['exerID'];
+//        $type = Yii::app()->session['exerType'];
+//        $type = str_replace(["Exer"],"",$type);
+//        $ratio = self::getRatio($exerID, $type, $answer);
+//        $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerID);
+//        if( $oldAnswer == null) {
+//            $newAnswer = new AnswerRecord();
+//            $newAnswer -> answerID = Tool::createID();
+//            $newAnswer -> recordID = $recordID;
+//            $newAnswer -> exerciseID = $exerID;
+//            $newAnswer -> type = $type;
+//            $newAnswer -> answer = $answer;
+//            $newAnswer -> costTime = $seconds;
+//            $newAnswer -> ratio_correct = $correct;
+//            $newAnswer -> ratio_accomplish = $ratio['accomplish'];
+//            $newAnswer -> createPerson = Yii::app()->session['userid_now'];
+//            $newAnswer -> createTime = date("Y-m-d  H:i:s");
+//            $newAnswer ->ratio_speed = $AverageSpeed;
+//            $newAnswer ->ratio_maxSpeed = $HighstSpeed;
+//            $newAnswer->ratio_backDelete = $BackDelete;
+//            $newAnswer->ratio_maxKeyType = $HighstCountKey;
+//            $newAnswer->ratio_averageKeyType = $AveragekeyType;
+//            $newAnswer->ratio_maxInternalTime = $HighIntervarlTime;
+//            $newAnswer->ratio_countAllKey = $countAllKey;
+//            $newAnswer->isExam = $isExam;
+//            if(!($newAnswer->insert())) {
+//                echo Tool::jsLog('创建答案记录失败！');
+//                return false;
+//            } else 
+//                return true;
+//        }else {
+//            $oldAnswer -> answer = $answer;
+//            $oldAnswer -> costTime = $seconds;
+//            $oldAnswer -> ratio_correct = $oldAnswer['ratio_correct'].'&'.$correct;
+//            $oldAnswer -> ratio_accomplish = $ratio['accomplish'];
+//            $oldAnswer -> createTime = date("Y-m-d  H:i:s");
+//            $oldAnswer ->ratio_speed = $oldAnswer['ratio_speed'].'&'.$AverageSpeed;
+//            $oldAnswer ->ratio_maxSpeed = $oldAnswer['ratio_maxSpeed'].'&'.$HighstSpeed;
+//            $oldAnswer->ratio_backDelete = $oldAnswer['ratio_backDelete'].'&'.$BackDelete;
+//            $oldAnswer->ratio_maxKeyType = $oldAnswer['ratio_maxKeyType'].'&'.$HighstCountKey;
+//            $oldAnswer->ratio_averageKeyType = $oldAnswer['ratio_averageKeyType'].'&'.$AveragekeyType;
+//            $oldAnswer->ratio_maxInternalTime = $oldAnswer['ratio_maxInternalTime'].'&'.$HighIntervarlTime;
+//            $oldAnswer->ratio_countAllKey = $oldAnswer['ratio_countAllKey'].'&'.$countAllKey;
+//            $newAnswer->isExam = $isExam;
+//            if(!($oldAnswer->upDate())) {
+//                echo Tool::jsLog('更新答案记录失败！');
+//                return false;
+//            } else
+//                return true;
+//        }
+//    }
 
     public static function saveKnlgAnswer($recordID, $answer, $type, $exerciseID) {
         $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerciseID);
@@ -373,6 +424,32 @@ class AnswerRecord extends CActiveRecord
            }
            return $score;
         }
+        
+        public function deleteRecord($recordID, $exerciseID, $type,$createPerson){
+            $condition = " where recordID=".$recordID." and exerciseID=".$exerciseID." and type='".$type."' and createPerson=".$createPerson;
+            $sql = "delete from answer_record";
+            $sql = $sql.$condition;
+            Yii::app()->db->createCommand($sql)->query();   
+        }
+        
+        
+        public function updateAnswer($recordID, $answer, $seconds){
+        $userID = Yii::app()->session['userid_now'];
+        $exerID = Yii::app()->session['exerID'];
+        $type = Yii::app()->session['exerType'];
+        $type = str_replace(["Exer"],"",$type);
+        $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerID);
+        echo $answer;
+        $oldAnswer->answer = $answer;
+        $oldAnswer->costTime = $seconds;
+        $oldAnswer->ratio_accomplish = 1;
+        if(!($oldAnswer->upDate())) {
+                echo Tool::jsLog('更新答案记录失败！');
+                return false;
+            } else
+                return true;
+        }
+        
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -384,4 +461,11 @@ class AnswerRecord extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        
+        
+        
+        
+        
+        
 }
