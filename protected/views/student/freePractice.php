@@ -74,4 +74,5 @@
     var classExerciseID = 2;
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
     window.G_exerciseData = Array(classExerciseID,studentID);
+    
 </script>

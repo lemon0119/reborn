@@ -544,13 +544,21 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
+           $exerciseID = $result['exerciseID'];           
+//         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
+           //加上后连带不想关的练习答案也删除了？？？？？？
+ //         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
+            //这里有问题，重新答题时旧的答案没有清除           
+           //      AnswerRecord::model()->deleteRecord($record['recordID'], $result['exerciseID'], 'key', $studentID);
+        
         return $this->render('keyExer',array( 
             'exercise'=>$classwork,
             'exercise2'=>$classwork2,
-                'exerOne'=>$result,
+            'exerOne'=>$result,
             'isExam' => $isExam,
-                'cent' => $cent,
-            'workId' =>$wID,'isOver'=>$isOver
+            'cent' => $cent,
+            'workId' =>$wID,
+            'isOver'=>$isOver
         ));
     }
     
@@ -1154,27 +1162,20 @@ class StudentController extends CController {
     public function saveAnswer(){
         //查看是否有answer，即是否是用户提交了答案。
         if(isset($_POST['nm_answer'])) {
-            $answer = $_POST['nm_answer'];
-            $seconds = $_POST['nm_cost'];
-            echo $seconds;
-            $correct = $_POST['nm_correct'];
-            $AverageSpeed = $_POST['nm_AverageSpeed'];
-            $HighstSpeed = $_POST['nm_HighstSpeed'];
-            $BackDelete = $_POST['nm_BackDelete'];
-            $HighstCountKey = $_POST['nm_HighstCountKey'];
-            $AveragekeyType = $_POST['nm_AverageKeyType'];
-            $HighIntervarlTime = $_POST['nm_HighIntervarlTime'];            
-            $countAllKey = $_POST["nm_countAllKey"];      
-            if(Yii::app()->session['isExam']){
-                if(!ExamRecord::saveExamRecord($recordID))
-                    return false;
-                return AnswerRecord::saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey,1);
-            }else {
-                if(!SuiteRecord::saveSuiteRecord ($recordID))
-                    return false;
-                return AnswerRecord::saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey,0);
-            }
             
+            $answer = $_POST['nm_answer'];
+            $seconds = $_POST['nm_cost']; 
+            if(Yii::app()->session['isExam']){
+                $workID = Yii::app()->session['examworkID'];
+                $createPerson = Yii::app()->session['userid_now'];
+                $oldID = ExamRecord::model()->getRecord($workID, $createPerson);
+                return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
+            }else {
+        $workID = Yii::app()->session['workID'];
+        $createPerson = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::model()->getRecord($workID, $createPerson);
+        return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
+            }          
         }
     }
     public function saveParam() {
