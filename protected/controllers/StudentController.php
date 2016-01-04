@@ -1433,9 +1433,11 @@ class StudentController extends CController {
         $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
     }
     public function actionIframe4Listen(){
-        
+        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
     }
     public function actionIframe4Key(){
-        
+        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
     }
 }
