@@ -152,8 +152,24 @@ class ClassexerciseRecord extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function getSingleRecord($studentID,$exerciseID){
+            $classexerciseRecord = new ClassexerciseRecord();
+            $sql = "SELECT MAX(squence) FROM classexercise_record WHERE studentID = '$studentID' AND classExerciseID = $exerciseID";
+            $connection = Yii::app()->db;
+            $command = $connection->createCommand($sql);
+            $squenceSQL = $command->query();
+            $squence = "";
+            foreach ($squenceSQL as $v){
+                if($v['MAX(squence)']!=""){
+                     $squence = $v['MAX(squence)'];
+                }
+            }
+            $classexerciseRecord = $this->find("studentID = '$studentID' AND classExerciseID = $exerciseID AND squence = '$squence'");
+            return $classexerciseRecord;
+        }
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

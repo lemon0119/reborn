@@ -230,11 +230,11 @@ class ClassExercise extends CActiveRecord
                 $v->update();
             }
         }
-        $classExercise = new ClassExercise();
-        $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
-        $classExercise->is_open = 1;
-        $classExercise->now_open = 1;
-        $classExercise->update();
+            $classExercise = new ClassExercise();
+            $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+            $classExercise->is_open = 1;
+            $classExercise->now_open = 1;
+            $classExercise->update();
     }
     
     public function isHasClassExerciseOpen($classID,$lessonID){

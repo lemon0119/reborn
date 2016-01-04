@@ -343,7 +343,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
          <div >
              <button onclick="addNewClassExercise()"  style="font-size: 20px;position: relative;height: 40px;width:100%;" class="btn btn-primary">添加新练习</button>
         </div>
-        <div style="position: relative;top: 10px;height: 550px;overflow: auto">
+        <div style="position: relative;text-align: center;top: 10px;height: 550px;overflow: auto">
             <iframe id="iframe_class" style="border: 0px;height: 95%;width: 95%;"></iframe>
         </div>
     </div>
@@ -1670,7 +1670,8 @@ $dir->close();
     }
     
     function startClassExercise(exerciseID){
-        document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4Analysis";
+        var classID = <?php echo $_GET['classID'];?>;
+        document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4Analysis&&exerciseID="+exerciseID+"&&classID="+classID;
     }
     
 

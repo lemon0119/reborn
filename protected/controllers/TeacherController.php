@@ -9,6 +9,17 @@
 //crt by LC 2015-4-21
 
 class TeacherController extends CController {
+     protected function renderJSON($data) {
+        header('Content-type: application/json');
+        echo CJSON::encode($data);
+
+        foreach (Yii::app()->log->routes as $route) {
+            if ($route instanceof CWebLogRoute) {
+                $route->enabled = false; // disable any weblogroutes
+            }
+        }
+        Yii::app()->end();
+    }
 
     public $layout = '//layouts/teacherBar';
 
@@ -5424,4 +5435,30 @@ public function ActionAssignFreePractice(){
         }
         echo $data;
     }
+    
+    
+     public function actionGetVirtualClassAnalysis(){
+         $arrayData = Array();
+         $data = Array();
+         $exerciseID = $_POST['exerciseID'];
+         $classID = $_POST['classID'];
+         $sqlStudent = Student::model()->findStudentByClass($classID);
+         foreach ($sqlStudent as $v){
+            $studentID = $v['userID'];
+            $studentName = $v['userName'];
+            $recourd = ClassexerciseRecord::model()->getSingleRecord($studentID,$exerciseID);
+            $ratio_speed = explode("&", $recourd['ratio_speed']);
+            $ratio_maxSpeed = explode("&", $recourd['ratio_maxSpeed']);
+            $ratio_correct = explode("&", $recourd['ratio_correct']);
+            $end = count($ratio_speed)-1;
+            $speed = $ratio_speed[$end];
+            $maxSpeed = $ratio_maxSpeed[$end];
+            $correct = $ratio_correct[$end];
+            $time = count($ratio_speed)*2-2;
+            $allFont = round(($time/60)*$speed);
+            $arrayData = ["studentID"=>$studentID,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allFont"=>$allFont];
+            array_push($data, $arrayData);
+         }
+         $this->renderJSON($data);
+     }
 }

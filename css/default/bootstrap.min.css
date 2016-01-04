@@ -4678,14 +4678,14 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .btn_add{
     border: none;
     background-repeat: no-repeat;
-    padding: 10px 55px;
+    padding: 9px 55px;
     margin-left: 10px;
     background: url(../../img/btn_add.png);
     position: relative;
     top:1px;
 }
 .btn_add:hover{
-    padding: 10px 55px;
+    padding: 9px 55px;
     margin-left: 10px;
     background-repeat:no-repeat;
     background: url(../../img/on_btn_add.png);
