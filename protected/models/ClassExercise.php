@@ -113,6 +113,21 @@ class ClassExercise extends CActiveRecord
 		));
 	}
 
+        public function insertKey($title,$content,$createPerson,$category,$speed,$repeatNum,$libstr){
+        $newKey    =   new ClassExercise();
+        $newKey->title =   $title;
+        $newKey->content       =   $content;
+        $newKey->create_person  =   $createPerson;
+        $newKey->type = $category;
+        $newKey->repeatNum = $repeatNum;
+        $newKey->chosen_lib = $libstr;
+        if($category == "speed")
+        {
+            $newKey->speed = $speed;
+        }
+        $newKey->create_time    =   date('y-m-d H:i:s',time());
+        return $newKey->insert();
+    }
         
         public function insertClassExercise($classID,$lessonID,$title,$content,$type,$createPerson){
         $newClassExercise    =   new ClassExercise();
@@ -167,6 +182,24 @@ class ClassExercise extends CActiveRecord
         return ['lookLst'=>$lookLst,'pages'=>$pages,];
     }
     
+    public function getKeyLst($lessonID){
+        $order  =   " order by exerciseID DESC";
+        $condition = " WHERE (type = 'speed' OR type = 'correct' OR type = 'free')";
+        $select     =   "SELECT * FROM class_exercise";
+        $condition2 = "AND lessonID = $lessonID";
+        $sql        =   $select.$condition.$condition2.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $lookLst  =   $result->query();
+        
+        return ['keyLst'=>$lookLst,'pages'=>$pages,];
+    }
     public function getListenLst($type,$value,$lessonID){
         $order  =   " order by exerciseID DESC";
         if($type!="")

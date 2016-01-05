@@ -60,8 +60,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
     </div>
 
-    <div id="title_bull" class="title_select" style="width: 185px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;" >
-        <div   align="center" id="sw-bull"><h4>本 班：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $totle ?>人<br/>在 线 学 生: <font style="color: greenyellow"><?php echo $count ?></font> 人</h4></div>
+    <div id="title_bull" class="title_select" style="width: 195px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;" >
+        <div   align="center" id="sw-bull"><h4>本 班：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $totle ?>人<br/>在 线 学 生: <font style="color: greenyellow" id="countPeople"><?php echo $count ?></font> 人</h4></div>
 
     </div>
     <button id="share-Cam" class="btn btn-primary" >直播视频</button>
@@ -70,6 +70,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
     <div id="showOnline"  class="online"  style="display: none;border: 0px;width:120px;">
         <div id="dd" disabled="disabled"  style="border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:570px; padding:0;">
+            <br/>
             <text id="dd1"   style="cursor: default;overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:greenyellow;width:100%;  padding:0;"></text>
             <text id="dd2"   style="cursor: default; overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:white;width:100%;  padding:0;"></text>
         </div>
@@ -108,7 +109,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             </div>
             <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
             <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
-
                 <select id="teacher-choose-file-public" style="width:150px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminPublicVdir);
@@ -601,6 +601,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 var content = data[0].join("<br/>&nbsp;&nbsp;&nbsp;&nbsp;");
                 var content2 = data[1].join("<br/>&nbsp;&nbsp;&nbsp;&nbsp;");
                 $("#dd1").html("&nbsp;&nbsp;&nbsp;&nbsp;" + content);
+                $("#countPeople").html(data[0].length);
                 $("#dd2").html("<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + content2);
             },
             error: function (xhr, type, exception) {

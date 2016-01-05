@@ -877,7 +877,7 @@ class TeacherController extends CController {
         $look = array();
         $listen = array();
         foreach ($freePractice as $v){
-            if($v['type'] ==='speed'||$v['type'] ==='correct'||$v['type'] ==='free'){
+            if($v['type'] =='speed'||$v['type'] =='correct'||$v['type'] =='free'){
                array_push($keywork, $v); 
             }else if($v['type'] ==='look'){
                array_push($look, $v); 
@@ -5280,7 +5280,26 @@ public function ActionAssignFreePractice(){
         ));
      }
      public function actionClassExercise4Type(){
-         $this->render("classExercise4Type");
+          if (isset($_GET['page'])) {
+            Yii::app()->session['lastPage'] = $_GET['page'];
+        } else {
+            Yii::app()->session['lastPage'] = 1;
+        }
+        if(isset($_GET['delete'])){
+            $exerciseID = $_GET['exerciseID'];
+            ClassExercise::model()->deleteExercise($exerciseID);
+        }
+        $classID = $_GET['classID'];
+        $number = $_GET['on'];
+        $sqlClassExercise = Lesson::model()->find("classID = '$classID' and number = '$number'");
+        $result = ClassExercise::model()->getKeyLst($sqlClassExercise['lessonID']);
+        $keyLst = $result['keyLst'];
+        $pages = $result['pages'];
+        $this->render('classExercise4Type', array(
+            'keyLst' => $keyLst,
+            'pages' => $pages,
+            'teacher' => Teacher::model()->findall()
+        ));
      }
      
      public function actionAddLook4ClassExercise(){
@@ -5292,6 +5311,38 @@ public function ActionAssignFreePractice(){
                 $result = ClassExercise::model()->insertClassExercise($classID,$sqlLesson['lessonID'],$_POST['title'],$_POST['content'],'look',Yii::app()->session['userid_now']);
             }
         $this->render('addLook4ClassExercise', ['result' => $result]);
+     }
+     
+     public function actionAddKey4ClassExercise(){
+          $result = 'no';
+        if (isset($_POST['title'])) {
+            $libstr = $_POST['libstr']; 
+            $arr = explode("$$", $libstr);
+            $condition = "";
+            foreach($arr as $a){
+                if($condition == "")
+                    $condition = "'".$a."'";
+                else
+                    $condition =$condition.","."'".$a."'";               
+            }          
+            $condition =" where name in (".$condition.")";
+            $sql = "select * from two_words_lib";
+            $order = "";
+            if($arr[count($arr) - 1] == "lib"){                
+                $order = "order by rand() limit ".$_POST['in1'];
+            }
+            $sql = $sql.$condition.$order;
+            $res = Yii::app()->db->createCommand($sql)->query();
+            $content = "";
+            foreach ($res as $record){
+                 if($content != "")
+                    $content = $content."$$".$record['yaweiCode'].$record['words'];
+                else 
+                    $content = $record['yaweiCode'].$record['words'];              
+            }     
+            $result = ClassExercise::model()->insertKey($_POST['title'], $content, Yii::app()->session['userid_now'],$_POST['category'],$_POST['speed'],$_POST['in3'],$libstr);
+        }       
+        $this->render('addKey4ClassExercise', ['result' => $result]);
      }
      
      public function actionAddListen4ClassExercise(){
@@ -5455,7 +5506,7 @@ public function ActionAssignFreePractice(){
             $maxSpeed = $ratio_maxSpeed[$end];
             $correct = $ratio_correct[$end];
             $time = count($ratio_speed)*2-2;
-            $allFont = round(($time/60)*$speed);
+            $allFont = round($time/60*$speed);
             $arrayData = ["studentID"=>$studentID,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allFont"=>$allFont];
             array_push($data, $arrayData);
          }

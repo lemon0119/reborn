@@ -11,25 +11,17 @@
                 <th >平均速度</th>
                 <th >最高速度</th>
                 <th >正确率</th>
-                <th >进行时间</th>
+                <th >进行时间(秒)</th>
                 <th >总字数</th>
             </tr>
         </thead>
         <tbody> 
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
         </tbody>
     </table>
 </body>
 <script>
     $(document).ready(function(){
+        checkAnalysis();
        setInterval(function () { 
             checkAnalysis();
         }, 2000);
@@ -45,10 +37,10 @@
                data:{exerciseID:exericseID,classID:classID},
                success:function(data){
                    for(i=0;i<data.length;i++){
-                       console.log(data[i]);
+                       $('#option'+i+'').remove(); 
+                       var newRow='<tr id="option'+i+'"><td >'+data[i]['studentID']+'</td><td >'+data[i]['studentName']+'</td><td>'+data[i]['speed']+'</td><td>'+data[i]['maxSpeed']+'</td><td>'+data[i]['correct']+'</td><td>'+data[i]['time']+'</td><td>'+data[i]['allFont']+'</td></tr>';  
+                       $('#table_of_analysis').append(newRow); 
                    }
-//                    var newRow='<tr id="option'+rowCount+'"><td class="oz-form-topLabel">选项'+rowCount+'：</td><td class="oz-property" ><input type="text"  style="width:300px"></td><td><a href="#" onclick=delRow('+rowCount+')>删除</a></td></tr>';  
-//                   $('#table_of_analysis').append(newRow);  
                },
                error:function(xhr, type, exception){
                    console.log('GetAverageSpeed error', type);
