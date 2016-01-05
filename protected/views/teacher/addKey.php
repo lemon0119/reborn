@@ -192,7 +192,7 @@ function checkAll(){
 }
 
 function selectWordLib(){
-    window.open("./index.php?r=teacher/SelectWordLib", 'newwindow', 'height=1000,width=800,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    window.open("./index.php?r=teacher/SelectWordLib&&libstr="+document.getElementById("libstr").value, 'newwindow', 'height=1000,width=800,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
 }
 
  window.getContent = function(libs) {
