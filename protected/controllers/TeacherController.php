@@ -5209,6 +5209,8 @@ public function ActionAssignFreePractice(){
      
 
      public function ActionSelectWordLib(){
+         $libstr=$_GET['libstr'];
+         $libstr=  explode('$$', $libstr);
          $sql = "select distinct name,list from two_words_lib";
          $result = Yii::app()->db->createCommand($sql)->query();
          $list = array();
@@ -5217,7 +5219,8 @@ public function ActionAssignFreePractice(){
              array_push($list, $res);            
          }
          $this->renderPartial('wordLibLst', array(
-            'list' => $list
+            'list' => $list,
+             'libstr'=>$libstr
             ));
      }
 
