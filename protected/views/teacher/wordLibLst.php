@@ -26,10 +26,24 @@
                 <th class="font-center">词库名称</th>
             </tr>
         </thead>
-        <tbody>            
+        <tbody>    
             <?php foreach ($list as $l): ?>
                 <tr>
-                    <td class="font-center" > <input type="checkbox" name="checkbox[]" value="<?php echo $l['name']; ?>" /> </td>
+                    <td class="font-center" >
+                         <?php 
+                         $n=0;
+                             foreach ($libstr  as $v) {
+                                 if($v==$l['name']){
+                                     $n=1;
+                                     break;
+                                 } 
+                              }
+                              if($n==1){?>
+                                    <input type="checkbox"  checked="true" name="checkbox[]" value="<?php echo $l['name']; ?>" />
+                                  <?php }else{?>
+                                    <input type="checkbox"  name="checkbox[]" value="<?php echo $l['name']; ?>" />
+                                    <?php }?>
+                    </td>
                     <td class="font-center" ><?php echo $l['list']; ?></td>
                     <td class="font-center" ><?php echo $l['name']; ?></td>
                 </tr> 
@@ -46,7 +60,7 @@
 
 
 <script>
-$(document).ready(function()-{
+$(document).ready(function(){
     //点击选择词库在新界面中之前选中的进行勾选，没写完-_-
 //        var libstr = window.opener.getLibs(); 
 //        var words = libstr.split("$$");
