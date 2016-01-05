@@ -25,8 +25,12 @@
                     <td><?php echo $sex;?></td>
                 </tr>
                 <tr>
-                    <td>所属部门:</td>
+                    <td>部门:</td>
                     <td><?php if($department=="") echo "无"; else echo $department;?></td>
+                </tr>
+                <tr>
+                    <td>院校:</td>
+                    <td><?php if($school=="") echo "无"; else echo $school;?></td>
                 </tr>
                 <tr>
                     <td>联系电话:</td>

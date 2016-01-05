@@ -40,8 +40,8 @@ echo $courseName; ?></h3>
                 <th>课名</th>
                 <th>创建人</th>
                 <th>创建时间</th>
-                <th>ppt</th>
-                <th>视频</th>
+<!--                <th>ppt</th>
+                <th>视频</th>-->
             </tr>
         </thead>
         <tbody>        
@@ -63,22 +63,22 @@ echo $courseName; ?></h3>
                                     echo "管理员";
                          ?></td>
                     <td><?php echo $model['createTime']; ?></td>
-                    <td><a href="./index.php?r=admin/pptLst&&pdir=<?php echo $pdir; ?>&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><img src="<?php echo IMG_URL; ?>ppt.png"><?php
-                            $num = 0;
-                            $mydir = dir($pdir);
-                            while ($file = $mydir->read()) {
-                                if ((!is_dir("$pdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                    $num = $num + 1;
-                                }
-                            }
-                            $mydir->close();
-                            echo $num;
+<!--                    <td><a href="./index.php?r=teacher/pptLst&&classID=<?php //echo Yii::app()->session['currentClass']; ?>&&progress=<?php echo Yii::app()->session['progress']; ?>&&on=<?php echo Yii::app()->session['on']; ?>&&url=schedule"><img src="<?php echo IMG_URL; ?>ppt.png"><?php
+                            //$num = 0;
+                           // $mydir = dir($pdir);
+                           // while ($file = $mydir->read()) {
+                           //     if ((!is_dir("$pdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                           //         $num = $num + 1;
+                           //     }
+                           // }
+                           // $mydir->close();
+                           // echo $num;
                             ?></a></td>
-                    <td><a href="./index.php?r=admin/videoLst&&vdir=<?php echo $vdir; ?>&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><img src="<?php echo IMG_URL; ?>video.png"><?php
-                        $num = sizeof(scandir($vdir));
-                        $num = ($num > 2) ? ($num - 2) : 0;
-                        echo $num;
-                            ?></a></td>
+                    <td><a href="./index.php?r=teacher/videoLst&&classID=<?php //echo Yii::app()->session['currentClass']; ?>&&progress=<?php echo Yii::app()->session['progress']; ?>&&on=<?php echo Yii::app()->session['on']; ?>&&url=schedule"><img src="<?php echo IMG_URL; ?>video.png"><?php
+                       // $num = sizeof(scandir($vdir));
+                       // $num = ($num > 2) ? ($num - 2) : 0;
+                       // echo $num;
+                            ?></a></td>-->
                 </tr>   
             <?php endforeach; ?> 
         </tbody>

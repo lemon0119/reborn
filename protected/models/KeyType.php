@@ -105,7 +105,7 @@ class KeyType extends CActiveRecord
 	}
         
     public function getKeyLst($type,$value){
-        $order  =   " order by exerciseID ASC";
+        $order  =   " order by exerciseID DESC";
         if($type!="")
             $condition = " WHERE $type = '$value'";
         else
@@ -148,7 +148,7 @@ class KeyType extends CActiveRecord
     }
     
     
-    public function insertKey($title,$content,$createPerson){
+    public function insertKey($title,$content,$createPerson,$category,$speed,$repeatNum,$libstr){
         $sql        =   "select max(exerciseID) as id from key_type";
         $max_id     =   Yii::app()->db->createCommand($sql)->query();
         $temp       =   $max_id->read();
@@ -165,6 +165,13 @@ class KeyType extends CActiveRecord
         $newKey->title =   $title;
         $newKey->content       =   $content;
         $newKey->createPerson  =   $createPerson;
+        $newKey->category = $category;
+        $newKey->repeatNum = $repeatNum;
+        $newKey->chosen_lib = $libstr;
+        if($category == "speed")
+        {
+            $newKey->speed = $speed;
+        }
         $newKey->createTime    =   date('y-m-d H:i:s',time());
         return $newKey->insert();
     }

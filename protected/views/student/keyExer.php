@@ -1,4 +1,5 @@
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <?php  if($isExam == false){ 
     require 'suiteSideBar.php';
 }else{ 
@@ -20,27 +21,31 @@
     }//end
  ?>
 <?php if(!$isOver){?>
+
 <div class="span9">
+    
     <div class="hero-unit"  align="center">
-        <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
+        <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>  
+        
         <table border = '0px'>
-                <tr><h3><?php echo $exerOne['title']?></h3></tr>
+                <tr><h3><?php echo $exerOne['title']?></h3>                
                 <tr>
+                    
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
                         <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime?></span><input id="timej" type="hidden"/></td>
                         <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php }else{?>
-                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>
-                    <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
+                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>       
+                    <td width = '250px'>循环次数：<span id="repeatNum"><?php echo $exerOne['repeatNum']?></span></td>
                      <?php }?>
                 </tr>
         </table>
         <br/>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
-                <td id="left-key" style="border-right: 1px solid #000; width: 300px;text-align:right;"></td>
-                <td id="right-key" style="border-left: 1px solid #000; width: 300px"></td>
+                <td id="word" style="border-right: 1px solid #000; width: 300px;text-align:right;"></td>              
             </tr>
         </table>
         <br/>
@@ -48,7 +53,17 @@
             <font id="id_right"style="color:#808080"> </font><font id="id_wrong" style="color:#ff0000"> </font><font id="id_new" style="color:#000000"> </font>
         </div>
         <div style="width: 750px; height: 350px;">
-            <?php require  Yii::app()->basePath."\\views\\student\\keyboard.php";?>
+            <?php         
+            if($exerOne['category'] == "correct")
+                require  Yii::app()->basePath."\\views\\student\\correct_keyboard.php";
+            
+            else if($exerOne['category'] == "free" )
+
+                require  Yii::app()->basePath."\\views\\student\\keyboard.php";
+            
+            else
+                require  Yii::app()->basePath."\\views\\student\\speed_keyboard.php";
+            ?>
         </div>
         <?php
             $host = Yii::app()->request->hostInfo;
@@ -65,11 +80,29 @@
     </div>
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host.$path.$page.$param;?>">
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
-        <input name="nm_answer" id="id_answer" type="hidden">
-        <input name="nm_cost" id="id_cost" type="hidden">
-        <input name="nm_correct" id="id_correct" type="hidden">
+        <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed'];?>">
+        <input  name="nm_answer"id="id_answer" type="hidden">
+        <input  name="nm_cost" id="id_cost" type="hidden">
     </form>
 </div>
+<div  class="analysisTool" id="analysis" style="left: 1050px;top: -516px; height: 670px; width: 230px;">
+        <table style="margin: 0px auto; font-size: 20px" cellpadding="20"  >
+            <tr>
+                <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
+                 <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                
+            <tr>
+                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                <tr><td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr>
+        </table>
+    </div>
   <?php } else {?>
  <h3 align="center">本题时间已经用完</h3>
 <?php }?>
@@ -77,8 +110,7 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     
     $(document).ready(function(){
-        <?php   if (!$isOver){?>
-           window.wxc.xcConfirm("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！", window.wxc.xcConfirm.typeEnum.info);
+        <?php   if (!$isOver){?>         
         <?php }?>
       if(<?php  if($isExam){echo $exerOne['time'];}else {echo 0;}?>!=0){ 
         <?php if($isExam){?>
@@ -113,6 +145,10 @@
         var length = res === null ? 0 : res.length;
         return length;
     }
+    
+    
+    
+    
     /*
     function getCorrect(pattern , answer){
         var ap = pattern.split(' ');
@@ -135,7 +171,7 @@
     */
    function formSubmit(){
 					var option = {
-						title: "警告",
+						title: "提示",
 						btn: parseInt("0011",4),
 						onOk: function(){
                                                    doSubmit(false);
@@ -162,19 +198,9 @@
        
     }
     function doSubmit(simple,doFunction){
-    console.log('simple1'+simple);
-        var answer = document.getElementById("id_answer").value;
-        var modtext = document.getElementById("id_content").value;
-        var correct = getCorrect(answer , modtext);
-        document.getElementById("id_correct").value = correct;
-        var time = getSeconds();
-        console.log(time);
-          var time = getT();
-        document.getElementById("id_cost").value = time;
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
-            if(!simple){
-                window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
+            if(!simple){               
             }else{
                 doFunction();
             }
@@ -193,7 +219,12 @@
                                                         clearWord();
                                                         clearTemplate();
 						} 
-					};
-					window.wxc.xcConfirm("这将会清除您输入的所有内容并重新计时，你确定这样做吗？", "custom", option);
-    }
+					};        
+    }   
+    window.G_saveToDatabase = 1;
+    window.G_squence = 0;
+    window.G_exerciseType = "answerRecord";
+//    var answer = document.getElementById("id_answer").value;
+//    var cost = document.getElementById("id_cost").value;
+   window.G_exerciseData = Array("1");
 </script>

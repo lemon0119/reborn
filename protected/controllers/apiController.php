@@ -94,18 +94,35 @@ class apiController extends Controller {
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
         $userID=array(Yii::app()->session['userid_now']);
-        $sql = "SELECT backTime FROM student";
+        $sql = "SELECT userName,backTime FROM student";
         $command = $connection->createCommand($sql);
         $dataReader = $command->query();
         $time = $dataReader->readAll();
         $n=0;$b=0;
+        $onLineStudent = array();
         foreach ($time as $t) {
             if(time()-strtotime($time[$b++]['backTime']) < 10){
+                array_push($onLineStudent, $t['userName']);
                 $n++;
             }
         }
-        $this->renderJSON($n);
+        $sqlstudent = Student::model()->findAll("classID = '$classID'");
+        $student = array();
+        foreach ($sqlstudent as $v){
+            $flag = 0;
+            foreach ($onLineStudent as $vo){
+                if($v['userName']==$vo){
+                    $flag = 1;
+                }
+            }
+            if($flag==0){
+                array_push($student, $v['userName']);
+            }
+        }
+       
+        $this->renderJSON(array($onLineStudent,$student,$n));
     }
+    
     public function actionGetClassState(){
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
@@ -207,4 +224,128 @@ class apiController extends Controller {
             echo 0;
         }
     }
+    
+    //AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903  ------>{
+    public function actionGetAverageSpeed(){
+        $time = $_POST['startTime'];
+        $content = $_POST['content'];
+        $data = AnalysisTool::getAverageSpeed($time, $content);
+        $this->renderJSON($data);
+    }
+    
+    public function actionGetMomentSpeed(){
+        $setTime = $_POST['setTime'];
+        $contentlength = $_POST['contentlength'];
+        $data = AnalysisTool::getMomentSpeed($setTime, $contentlength);
+        $this->renderJSON($data);
+    }
+    
+    public function actionGetBackDelete(){
+        $doneCount = $_POST['doneCount'];
+        $keyType = $_POST['keyType'];
+        $donecount = AnalysisTool::getBackDelete($doneCount, $keyType);
+        $this->renderJSON($donecount);
+    }
+    
+    public function actionGetRight_Wrong_AccuracyRate(){
+        $originalContent = $_POST['originalContent'];
+        $currentContent = $_POST['currentContent'];
+        $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
+        $this->renderJSON($data);
+    }
+    
+    public function actionAnalysisSaveToDatabase(){
+        $exerciseType = $_POST['exerciseType'];
+        $exerciseData = $_POST['exerciseData'];
+        $ratio_averageKeyType = $_POST['averageKeyType'];
+        $ratio_maxKeyType = $_POST['highstCountKey'];
+        $ratio_maxSpeed = $_POST['highstSpeed'];
+        $ratio_speed = $_POST['averageSpeed'];
+        $ratio_backDelete = $_POST['CountBackDelete'];
+        $ratio_internalTime = $_POST['IntervalTime'];
+        $ratio_maxInternalTime = $_POST['highIntervarlTime'];
+        $ratio_correct = $_POST['RightRadio'];
+        $ratio_countAllKey = $_POST['CountAllKey'];
+        $squence = $_POST['squence'];
+        if($exerciseType === "classExercise"){
+            $classExerciseID = $exerciseData[0];
+            $studentID = $exerciseData[1];
+            $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
+            if(!isset($sqlClassExerciseRecord)){
+                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+            }else{
+                 ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+            }
+        }       
+        if($exerciseType === "answerRecord"){
+           if(Yii::app()->session['isExam']){
+                if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1);
+            }else {
+                if(!SuiteRecord::saveSuiteRecord ($recordID))
+                    return false;
+                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey,$squence,0);
+            }   
+        }    
+        $this->renderJSON("");
+    }
+    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
+    
+    
+    
+  
+    public function actionGetTxtValue(){
+        $file = $_POST['url'];
+        $content = file_get_contents($file); //读取文件中的内容
+        $data = mb_convert_encoding($content, 'utf-8', 'gbk');
+        $this->renderJSON($data);
+    }
+    
+    
+         public function ActiongetExercise(){
+            if(isset($_POST['suiteID'])){
+                $suiteID = $_POST['suiteID'];
+                $array_exercise = SuiteExercise::model()->findAll("suiteID='$suiteID'");
+                $array_result = array();
+                foreach ($array_exercise as $exercise)
+                {
+                    if($exercise['type'] == 'key')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = KeyType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['workID'] = $_POST['workID'];
+                        //用数字代替类型，后面js好弄
+                        $result['type'] = 1;
+                        array_push($array_result, $result);
+                    }else 
+                    if($exercise['type'] == 'listen')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = ListenType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['workID'] = $_POST['workID'];
+                        $result['type'] = 2;
+                        array_push($array_result, $result);
+                    }else
+                    if($exercise['type'] == 'look')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = LookType::model()->findAll("exerciseID = '$exerciseID'");
+                        $result['workID'] = $_POST['workID'];                       
+                        $result['type'] = 3;
+                        array_push($array_result,$result);
+                    }
+                }
+            }            
+            $this->renderJSON($array_result);          
+     }   
+     public function getStudentRanking(){
+         $workID = $_POST['workID'];
+         $exerciseID = $_POST['exerciseID'];
+         
+     }
+     
+     
 }
+
+

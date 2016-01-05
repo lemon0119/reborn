@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
 <?php
-if (isset(Yii::app()->session['userid_now'])) {
+if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=='teacher' ) {
     ?>
 
     <?php
@@ -10,8 +10,8 @@ if (isset(Yii::app()->session['userid_now'])) {
         $classNameInfo[$value['classID']] = $value['className'];
         $classProgress[$value['classID']] = $value['currentLesson'];
     }
+    
     ?>
-
     <html lang="zh-cn"><!--<![endif]--> 
         <head>
             <meta charset="utf-8">
@@ -30,6 +30,7 @@ if (isset(Yii::app()->session['userid_now'])) {
         </head>
         <body>
             <div class="container">
+                <?php if(!isset($_GET['nobar'])){?>
                 <div class="navbar">
                     <div class="navbar-inner">
                         <div class="container">
@@ -41,7 +42,7 @@ if (isset(Yii::app()->session['userid_now'])) {
                                         <ul class="dropdown-menu">
                                             <?php if(isset($classNameInfo)){
                                                 foreach ($classNameInfo as $key => $value): ?>
-                                                <li><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $key; ?>&&progress=<?php echo $classProgress[$key]; ?>&&on=<?php echo $classProgress[$key]; ?>"><?php echo $value; ?></a></li>
+                                                <li><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $key;?>&&progress=<?php echo $classProgress[$key]; ?>&&on=<?php echo $classProgress[$key]; ?>"><?php echo $value; ?></a></li>
                                             <?php endforeach;} ?>
                                         </ul>
                                     </li>
@@ -62,17 +63,22 @@ if (isset(Yii::app()->session['userid_now'])) {
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="homework"></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/assignWork">布置作业</a></li>
+                                            <li><a href="./index.php?r=teacher/assignWork&&progress=<?php echo $classProgress[$key]; ?>">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#"  data-toggle="dropdown" id="exammanager"></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/assignExam">试卷管理</a></li>
+                                             <li><a href="./index.php?r=teacher/assignExam">试卷管理</a></li>
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
+                                    </li>                                  
+                                    <li class="dropdown">
+                                        <a href="#"  id ="startclass" data-toggle="dropdown" ></a>
+                                        <ul class="dropdown-menu">
+                                            <?php if(isset($classNameInfo)){
+                                                foreach ($classNameInfo as $key => $value): ?>
+                                                <li><a href="./index.php?r=teacher/watchData&&classID=<?php echo $key;?>"><?php echo $value; ?></a></li>
+                                            <?php endforeach;} ?>
+                                        </ul>
                                     </li>
+                                                                       
                                     <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil"></a></li>
                                     <li><a id="blank_teacher"></a></li>
                                      <li>
@@ -105,10 +111,11 @@ if (isset(Yii::app()->session['userid_now'])) {
                         </div>
                     </div>
                 </div>
+                <?php } ?>
                 <div class="row" style="min-height: 700px">
                     <?php echo $content; ?>
                 </div>
-            </div>
+            </div> 
              <div  class="copyright">
 		2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="#"  class="copyright">法律声明</a><a href="#"  class="copyright">联系我们</a><a href="#"  class="copyright">获得帮助</a>
 	</div>

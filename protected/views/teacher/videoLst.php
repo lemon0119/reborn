@@ -28,23 +28,32 @@
             endforeach;?>
         </ul>
     </div>
+    <?php if(isset($_GET['url'])){ ?>
+    <a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
+    <?php }else{ ?>
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
+    <?php }?>
 </div>
 <div class="span9" style="position: relative; left: 20px">
     <h2 style="display:inline-block;">视频列表</h2>
     <span>(支持mp4及flv格式,最大2G)</span>
     <div id ="video-table"></div>
     <form class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addVideo&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" enctype="multipart/form-data"> 
-    <div class="control-group">
+    <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />
+       <div class="control-group">
        <label class="control-label" for="input02">上传</label>
        <div class="controls">
-       <input type="file" name="file" id="input02"> 
+       <input type="file" name="file" id="input02">       
        <div id="upload" style="display:inline;" hidden="true">
-       <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
-            正在上传，请稍等...
-       </div>
+          <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>                      
+          <div id="number">0%</div>              
+       </div>      
        <button type="submit" class="btn btn-primary">上传</button>
-       </div>
+       <span style="position: relative;left: 10px">
+       <input type="checkbox" name="checkbox"  value="" />
+       是否上传为公共资源
+       </span>
+       </div> 
     </div>
     </form>
 </div>
@@ -71,9 +80,21 @@
             $("#upload").hide();
         }
     };
+    
+ function fetch_progress(){
+        $.get('./index.php?r=teacher/getProgress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
+                var progress = parseInt(data);                              
+                $('#number').html(progress + '%');
+                if(progress < 100){
+                        setTimeout('fetch_progress()', 100);
+                }else{           
+        }
+        }, 'html');
+    }
 
 $("#myForm").submit(function(){
-    $("#upload").show();
+    $("#upload").show(); 
+    setTimeout('fetch_progress()', 1000);
     $(this).ajaxSubmit(options);   
         // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
     return false;   

@@ -4,6 +4,7 @@
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <!--打字计时-->
 <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 
 <?php
     //2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar
@@ -58,12 +59,32 @@
             <object id="typeOCX" type="application/x-itst-activex" 
                     clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
                     width ='750' height='350' 
-                    event_OnStenoPress="onStenoPress">
+                    event_OnStenoPress="onStenoPressKey"
+                    >
             </object>
             <br/>
         </div>
     <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
 </div>
+
+<div  class="analysisTool" id="analysis" style="left: 1050px;top: -516px; height: 670px; width: 230px;">
+        <table style="margin: 0px auto; font-size: 20px" cellpadding="20"  >
+            <tr>
+                <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
+                 <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                
+            <tr>
+                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                <tr><td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr>
+        </table>
+    </div>
   <?php } else {?>
  <h3 align="center">本题时间已经用完</h3>
 <?php }?>
@@ -71,7 +92,10 @@
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     $(document).ready(function(){
         <?php   if (!$isOver){?>
-        alert("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！");
+                					var option = {
+						title: "提示",
+						btn: parseInt("0011",4),
+					};					
         <?php }?>
         if(<?php if($isExam){echo $exerOne['time'];}else {echo 0;} ?>!=0){
         <?php if($isExam){?>

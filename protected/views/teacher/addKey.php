@@ -56,80 +56,55 @@
             </div>
         </div>
             
-            <div class="control-group" id="div1">
-            <label class="control-label" >键位码</label>
-            <div class="controls">               
-                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12">
-                <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2">
-                <a class="btn btn-primary" onclick="addIn()"><i class="icon-plus-editwork icon-white"></i></a> <a class="btn btn-primary" onclick="deleteIn()"><i class="icon-minus icon-white"></i></a>
-            </div>             
+  <div class="control-group" > 
+    <label class="control-label" for="input">练习词库</label>
+    <div class="controls"  >  
+        <table id="lib"  style="align:left;">
+        </table>    
+        <a href="#" onclick="selectWordLib()">预置词库选择</a>
         </div>
-        <div class="control-group" id="div2">           
-            <div class="controls">               
-                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12"><span> ：</span>                
-                <input type="text"  name="in5" style="width:150px; height:15px;" id="input5"  maxlength="12">
-                <input type="text"  name="in6" style="width:40px; height:15px;" id="input6" maxlength="2">              
-            </div>             
-        </div>
-        <div class="control-group" id="div3">           
-            <div class="controls">               
-                <input type="text" name="in7" style="width:150px; height:15px;" id="input7" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in8" style="width:150px; height:15px;" id="input8" maxlength="12">
-                <input type="text" name="in9" style="width:40px; height:15px;" id="input9"  maxlength="2">              
-            </div>             
-        </div>
-        <div class="control-group" id="div4">           
-            <div class="controls">               
-                <input type="text" name="in10" style="width:150px; height:15px;" id="input10" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in11" style="width:150px; height:15px;" id="input11"maxlength="12">
-                <input type="text" name="in12" style="width:40px; height:15px;"id="input12" maxlength="2">              
-            </div>             
-        </div>
-        <div class="control-group" id="div5">           
-            <div class="controls">               
-                <input type="text" name="in13" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in14" style="width:150px; height:15px;" id="input14" maxlength="12">
-                <input type="text" name="in15" style="width:40px; height:15px;" id="input15" maxlength="2">              
-            </div>             
-        </div>
+    </div>   
+            
+    <div class="control-group" > 
+        <label class="control-label" for="input">所有二字词库</label>
+        <div class="controls"  > 
     
-    <div class="control-group" style="display: none"  id="div6">           
-            <div class="controls">               
-                <input type="text" name="in16" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in17" style="width:150px; height:15px;" id="input14" maxlength="12">
-                <input type="text" name="in18" style="width:40px; height:15px;" id="input15" maxlength="2">              
-            </div>             
+            <input type="checkbox" onclick="checkAll()" id="all">添加所有二字词库
+        </div>
+    </div>         
+                  
+    <div class="control-group" > 
+        <label class="control-label" for="input">练习类型</label>
+        <div class="controls">
+            <select  name="category" id="testSelect" style="border-color: #000; color:#000" onchange="changSelect()">
+                <option  value="free" selected="selected">自由练习</option>
+                <option  value="speed" >速度练习</option>
+                <option  value="correct">准确率练习</option>                                        
+            </select>
+        </div>
     </div>
-                <div class="control-group" style="display: none"  id="div7">           
-            <div class="controls">               
-                <input type="text" name="in19" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in20" style="width:150px; height:15px;" id="input14" maxlength="12">
-                <input type="text" name="in21" style="width:40px; height:15px;" id="input15" maxlength="2">              
+            
+       <div class="control-group" id="div3">   
+            <label class="control-label" >练习循环次数</label>
+            <div class="controls">                                                        
+                <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2" value="0">               
             </div>             
-    </div>
-    <div class="control-group" style="display: none"  id="div8">           
-            <div class="controls">               
-                <input type="text" name="in22" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in23" style="width:150px; height:15px;" id="input14" maxlength="12">
-                <input type="text" name="in24" style="width:40px; height:15px;" id="input15" maxlength="2">              
+        </div>            
+        <div class="control-group" style="display: none" id="div1">   
+            <label class="control-label" >二字词练习次数</label>
+            <div class="controls">                                                        
+                <input type="text" name="in1" style="width:40px; height:15px;" id="input1" maxlength="2" value="0">               
             </div>             
-    </div>
-    <div class="control-group"  style="display: none" id="div9">           
-            <div class="controls">               
-                <input type="text" name="in25" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in26" style="width:150px; height:15px;" id="input14" maxlength="12">
-                <input type="text" name="in27" style="width:40px; height:15px;" id="input15" maxlength="2">              
-            </div>             
-    </div>
-            <div class="control-group"  style="display: none" id="div10">           
-            <div class="controls">               
-                <input type="text" name="in28" style="width:150px; height:15px;" id="input13" maxlength="12"><span> ：</span>                 
-                <input type="text" name="in29" style="width:150px; height:15px;" id="input14" maxlength="12">
-                <input type="text" name="in30" style="width:40px; height:15px;" id="input15" maxlength="2">              
-            </div>             
-    </div>
-           
+        </div>
+            
+       <div class="control-group" style="display: none" id="div2">
+            <label class="control-label" >速度:</label>
+             <div class="controls">
+                 <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="0">         
+             词/分钟
+             </div>            
+       </div>
+                   
         <div class="form-actions">
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">添加</button>
@@ -137,11 +112,12 @@
             <a href="./index.php?r=teacher/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn">返回</a>
         </div>
         </fieldset>
+        <input id="libstr" style="display: none;" name="libstr">
     </form>   
 </div>
 <script>     
- var divCount = 5;
  var inputCount = 1;
+ var hasChooseLib = 0;
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
@@ -155,64 +131,96 @@ $("#myForm").submit(function(){
         window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
-    var i ,j ,k, y = 3*divCount;
-    var patrn = /^[ANIGDZWUEOXB]{1,12}$/;
-    var numpatrn =/^[0-9]{1,2}$/;
-    for(i = 1 ; i <=y ; i++)
-    {
-        var input = $("#input" + i)[0].value;
-        if(i%3 == 0)
-        {
-            if(!numpatrn.exec(input))
-            {
-                j = Math.floor(i/3);               
-                window.wxc.xcConfirm('第'+ j +'行第三空循环次数应设为0-100', window.wxc.xcConfirm.typeEnum.warning);
-               return false;
-           }
-        }else{
-            if(!patrn.exec(input))
-            {
-                j = Math.floor(i/3)+1;
-                k = i%3;
-                window.wxc.xcConfirm('第' + j + '行第' + k + '空应输入指定大写字母', window.wxc.xcConfirm.typeEnum.warning);
+    
+    var i;
+    var numpatrn =/^[1-9][0-9]|[1-9]$/;    
+    var numpatrn1 =/^1|[0-9]{3}$/; 
+    
+                var input1 = $("#input1")[0].value;
+                var input2 = $("#input2")[0].value;
+                var input3 = $("#input3")[0].value;
+    
+    if($("#all").is(':checked')){
+        hasChooseLib = 1;
+        if(document.getElementById("libstr").value == "")           
+            document.getElementById("libstr").value = "lib";
+        else
+            document.getElementById("libstr").value += "$$lib";
+        
+           if(!numpatrn.exec(input1))
+            {                 
+                window.wxc.xcConfirm('二字词应设为1-100', window.wxc.xcConfirm.typeEnum.warning);
                 return false;
             }
-             var arrayinput = input.split("");
-            j = Math.floor(i/3)+1;
-            k = i%3;
-            console.log(arrayinput);
-            for(var v=0;v<arrayinput.length;v++){
-                for(var n=v+1;n<arrayinput.length;n++){
-                    if(arrayinput[v]==arrayinput[n]){
-                        window.wxc.xcConfirm('第' + j + '行第' + k + '空不应出现重复字符', window.wxc.xcConfirm.typeEnum.info);
-                        return false;
-                    }
-                }
-            }
-        }           
     }
-    }
+    
+    if(hasChooseLib == 0)
+    {
+        window.wxc.xcConfirm('请选择词库', window.wxc.xcConfirm.typeEnum.warning);
+        return false;
+    }           
+            if(!numpatrn.exec(input3))
+            {                 
+                window.wxc.xcConfirm('循环次数应设为1-100', window.wxc.xcConfirm.typeEnum.warning);
+                return false;
+            }        
+ 
+           if($("#testSelect").find("option:selected").val() == "speed")
+           if(!numpatrn.exec(input2))
+            {                 
+                window.wxc.xcConfirm('速度应设为1-1000', window.wxc.xcConfirm.typeEnum.warning);
+                return false;
+            }   
+        }
 );
-    function addIn()
+
+function changSelect(){
+    if($("#testSelect").find("option:selected").val() == "speed"){
+        document.getElementById("div2").style.display = "";
+    }else{
+        document.getElementById("div2").style.display = "none";
+    }        
+}
+
+function checkAll(){
+      if($("#all").is(':checked')){
+          document.getElementById("div1").style.display = "";
+      }else
+      {
+         document.getElementById("div1").style.display = "none";
+      }
+}
+
+function selectWordLib(){
+    window.open("./index.php?r=teacher/SelectWordLib", 'newwindow', 'height=1000,width=800,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+}
+
+ window.getContent = function(libs) {
+    var Table = document.getElementById("lib"); 
+    hasChooseLib = 0;
+    var rowNum=Table.rows.length;
+    for (i=0;i<rowNum;i++)
     {
-        if(divCount<11){
-            divCount++;
-            $("#div"+divCount).show();
-        }else
-        {
-            window.wxc.xcConfirm("最多添加十个选项", window.wxc.xcConfirm.typeEnum.warning);
-        }
+        Table.deleteRow(i);
     }
-    function deleteIn()
-    {
-        if(divCount>1){
-            $("#div"+divCount).hide();           
-            divCount--;
-        }else
+    var libstr = "";
+    for(var i=0;i<libs.length;i++){
+        if(i==0)
+            libstr += libs[i];
+        else
+            libstr += "$$"+libs[i];
+        
+        hasChooseLib = 1;
+        if(i%3 == 0)
         {
-            window.wxc.xcConfirm("必须有一个答案", window.wxc.xcConfirm.typeEnum.warning);
+           var NewRow = Table.insertRow();
         }
+        var NewCell= NewRow.insertCell();
+        NewCell.style.width = "250px";      
+        NewCell.innerHTML = "<span style='float:left'>"+libs[i]+"</span>";    
     }
+    document.getElementById("libstr").value = libstr;
+ }
 
 </script>
 

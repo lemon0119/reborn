@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
 <?php
-if (isset(Yii::app()->session['userid_now'])) {
+if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']=='student' ) {
     ?>
 
     <html lang="zh-cn"><!--<![endif]--> 
@@ -32,10 +32,15 @@ if (isset(Yii::app()->session['userid_now'])) {
                                         <a id="onlineCourse" href="#"  data-toggle="dropdown"></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="./index.php?r=student/virtualClass">虚拟课堂</a></li>
-                                            <li><a href="./index.php?r=student/classwork">课堂作业</a></li>
+                                            <li><a href="./index.php?r=student/freePractice">自由练习</a></li>
                                         </ul>
                                     </li>
-                                    <li><a id="myCourse" href="./index.php?r=student/myCourse"></a></li>
+                                    <li class="dropdown"><a id="myCourse" href="#"  data-toggle="dropdown" ></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="./index.php?r=student/myCourse">我的课程</a></li>
+<!--                                            <li><a href="./index.php?r=student/classwork">课后作业</a></li>-->
+                                        </ul>
+                                    </li>
                                     <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
                                     <li><a id="suLu" href="./index.php?r=student/suLu"></a></li>
                                     <li><a id="schedule_manager"  href="./index.php?r=student/scheduleDetil"></a></li>
