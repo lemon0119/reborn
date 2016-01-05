@@ -5318,7 +5318,10 @@ public function ActionAssignFreePractice(){
      
      public function actionAddKey4ClassExercise(){
           $result = 'no';
+          $classID=$_GET['classID'];
+          $on=$_GET['on'];
         if (isset($_POST['title'])) {
+            $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
             $libstr = $_POST['libstr']; 
             $arr = explode("$$", $libstr);
             $condition = "";
@@ -5343,7 +5346,7 @@ public function ActionAssignFreePractice(){
                 else 
                     $content = $record['yaweiCode'].$record['words'];              
             }     
-            $result = ClassExercise::model()->insertKey($_POST['title'], $content, Yii::app()->session['userid_now'],$_POST['category'],$_POST['speed'],$_POST['in3'],$libstr);
+            $result = ClassExercise::model()->insertKey($classID,$sqlLesson['lessonID'],$_POST['title'], $content, Yii::app()->session['userid_now'],$_POST['category'],$_POST['speed'],$_POST['in3'],$libstr);
         }       
         $this->render('addKey4ClassExercise', ['result' => $result]);
      }
@@ -5403,6 +5406,69 @@ public function ActionAssignFreePractice(){
                 'content' => $result['content']
             ));
     }
+    
+    public function actionEditType4ClassExercise() {
+        $exerciseID = $_GET["exerciseID"];
+        $sql = "SELECT * FROM class_exercise WHERE exerciseID = '$exerciseID'";
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = $result->read();
+
+        if (!isset($_GET['action'])) {
+            $this->render("editKey4ClassExercise", array(
+                'exerciseID' => $exerciseID,
+                'key' => $result,
+            ));
+        } else if ($_GET['action'] = 'look') {
+            $this->render("editKey4ClassExercise", array(
+                'exerciseID' => $exerciseID,
+                'action' => 'look',
+                'key' => $result,
+            ));
+        }
+    }
+    
+     public function actionEditType4ClassExerciseInfo() {
+        $exerciseID = $_GET['exerciseID'];
+        $thisKey = new ClassExercise();
+        $thisKey = $thisKey->find("exerciseID = '$exerciseID'");   
+            $libstr = $_POST['libstr']; 
+            $arr = explode("$$", $libstr);
+            $condition = "";
+            foreach($arr as $a){
+                if($condition == "")
+                    $condition = "'".$a."'";
+                else
+                    $condition =$condition.","."'".$a."'";               
+            }          
+            $condition =" where name in (".$condition.")";
+            $sql = "select * from two_words_lib";
+            $order = "";
+            if($arr[count($arr) - 1] == "lib"){                
+                $order = "order by rand() limit ".$_POST['in1'];
+            }
+            $sql = $sql.$condition.$order;
+            $res = Yii::app()->db->createCommand($sql)->query();
+            $content = "";
+            foreach ($res as $record){
+                 if($content != "")
+                    $content = $content."$$".$record['yaweiCode'].$record['words'];
+                else 
+                    $content = $record['yaweiCode'].$record['words'];              
+            }  
+        $thisKey->title = $_POST['title'];
+        $thisKey->content = $content;
+        $thisKey->type = $_POST['category'];
+        $thisKey->speed = $_POST['speed'];
+        $thisKey->update();
+
+        
+        
+            $this->render("editKey4ClassExercise", array(
+                'key' => $thisKey,
+                'exerciseID' => $exerciseID,
+                'result' => "修改习题成功"));
+    }
+    
     
     public function actionEditListen4ClassExercise() {
         $result  = "";

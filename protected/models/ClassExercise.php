@@ -113,10 +113,12 @@ class ClassExercise extends CActiveRecord
 		));
 	}
 
-        public function insertKey($title,$content,$createPerson,$category,$speed,$repeatNum,$libstr){
+        public function insertKey($classID,$lessonID,$title,$content,$createPerson,$category,$speed,$repeatNum,$libstr){
         $newKey    =   new ClassExercise();
         $newKey->title =   $title;
         $newKey->content       =   $content;
+        $newKey->classID       =   $classID;
+        $newKey->lessonID       =   $lessonID;
         $newKey->create_person  =   $createPerson;
         $newKey->type = $category;
         $newKey->repeatNum = $repeatNum;

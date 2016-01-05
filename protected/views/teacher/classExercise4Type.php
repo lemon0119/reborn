@@ -42,7 +42,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th class="font-center">编号</th>
+<!--                <th class="font-center">编号</th>-->
                 
                 <th class="font-center">题目</th>
                 <th class="font-center">内容</th>
@@ -57,7 +57,7 @@
                 <tbody>        
                     <?php foreach($keyLst as $model):?>
                     <tr>
-                        <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
+<!--                        <td class="font-center" style="width: 50px"><?php //echo $model['exerciseID'];?></td>-->
                       
                         <td class="font-center"><?php  if(Tool::clength($model['title'])<=7)
                                         echo $model['title'];
@@ -74,8 +74,8 @@
                         <?php if(isset($_GET['nobar'])){ ?>
                             <?php }else{ ?>
                   <td class="font-center" style="width: 100px">
-                             <a href="./index.php?r=teacher/editListen&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
-                            <a href="./index.php?r=teacher/editListen&&exerciseID=<?php echo $model['exerciseID'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                             <a href="./index.php?r=teacher/editType4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>&&exerciseID=<?php echo $model['exerciseID'];?>&&action=look"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <a href="./index.php?r=teacher/editType4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>&&exerciseID=<?php echo $model['exerciseID'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                             <?php }?>
@@ -105,7 +105,7 @@
 						title: "警告",
 						btn: parseInt("0011",2),
 						onOk: function(){
-							 window.location.href = "./index.php?r=teacher/deleteListen&&exerciseID=" + exerciseID;
+							 window.location.href = "./index.php?r=teacher/classExercise4Type&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>&&delete=1&&exerciseID=" + exerciseID;
 						}
 					}
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
