@@ -5573,7 +5573,7 @@ public function ActionAssignFreePractice(){
             $end = count($ratio_speed)-1;
             $speed = $ratio_speed[$end];
             $maxSpeed = $ratio_maxSpeed[$end];
-            $correct = $ratio_correct[$end];
+            $correct = round($ratio_correct[$end]*100);
             $time = count($ratio_speed)*2-2;
             $allFont = round($time/60*$speed);
             $arrayData = ["studentID"=>$studentID,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allFont"=>$allFont];

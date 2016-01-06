@@ -60,7 +60,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
     </div>
 
-    <div id="title_bull" class="title_select" style="width: 195px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;" >
+    <div id="title_bull" class="title_select" style="width: 185px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;" >
         <div   align="center" id="sw-bull"><h4>本 班：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $totle ?>人<br/>在 线 学 生: <font style="color: greenyellow" id="countPeople"><?php echo $count ?></font> 人</h4></div>
 
     </div>
@@ -577,7 +577,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID; ?>",
             data: {},
             success: function () {
-                console.log("set time");
             },
             error: function (xhr, type, exception) {
                 window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
@@ -592,7 +591,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             dataType: "json",
             url: "index.php?r=api/GetStuOnLine&&classID=<?php echo $classID; ?>",
             success: function (data) {
-                console.log("qq", data);
                 var now =<?php echo time() ?>;    //这个时间是页面进入的时候，生成的。
                 //虽然点击的时候，才会执行这个js代码，但是，php是加载的时候就已经生成了
                 //也就是说，等到用户点击，这个时间now的值，是加载页面的时间。
@@ -662,7 +660,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             dataType: "json",
             url: "index.php?r=api/GetLatestBulletin&&classID=<?php echo $classID; ?>",
             success: function (data) {
-                console.log(data[0]);
                 if (role === 'student') {
                     $("#bulletin-textarea").val(data[0].content);
                 } else {
@@ -784,15 +781,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         $.ajax({
                type:"POST",
                url:"index.php?r=teacher/openClassExercise",
-               data:{exerciseID:"0"},
+               data:{exerciseID:0},
                success:function(data){
                },
-               error:function(xhr, type, exception){
-                   console.log('GetAverageSpeed error', type);
-                   console.log(xhr, "Failed");
-                   console.log(exception, "exception");
-                   
-               }
         });
         //打开连接
         openConnect();
@@ -1551,15 +1542,9 @@ $dir->close();
          $.ajax({
                type:"POST",
                url:"index.php?r=teacher/openClassExercise",
-               data:{exerciseID:"0"},
+               data:{exerciseID:0},
                success:function(data){
                },
-               error:function(xhr, type, exception){
-                   console.log('GetAverageSpeed error', type);
-                   console.log(xhr, "Failed");
-                   console.log(exception, "exception");
-                   
-               }
         });
         switch (flag) {
             case "movie":

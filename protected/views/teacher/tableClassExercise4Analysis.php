@@ -38,7 +38,7 @@
                success:function(data){
                    for(i=0;i<data.length;i++){
                        $('#option'+i+'').remove(); 
-                       var newRow='<tr id="option'+i+'"><td >'+data[i]['studentID']+'</td><td >'+data[i]['studentName']+'</td><td>'+data[i]['speed']+'</td><td>'+data[i]['maxSpeed']+'</td><td>'+data[i]['correct']+'</td><td>'+data[i]['time']+'</td><td>'+data[i]['allFont']+'</td></tr>';  
+                       var newRow='<tr id="option'+i+'"><td >'+data[i]['studentID']+'</td><td >'+data[i]['studentName']+'</td><td>'+data[i]['speed']+'</td><td>'+data[i]['maxSpeed']+'</td><td>'+data[i]['correct']+'%</td><td>'+data[i]['time']+'</td><td>'+data[i]['allFont']+'</td></tr>';  
                        $('#table_of_analysis').append(newRow); 
                    }
                },

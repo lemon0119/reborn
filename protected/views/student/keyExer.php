@@ -45,7 +45,7 @@
         <br/>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
-                <td id="word" style="border-right: 1px solid #000; width: 300px;text-align:right;"></td>              
+                <td id="word" style="border-right: 1px solid #000; width: 400px;text-align:right;"></td>              
             </tr>
         </table>
         <br/>
