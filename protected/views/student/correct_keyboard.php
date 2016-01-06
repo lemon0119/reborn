@@ -174,6 +174,7 @@
             }      
         changTemplet(pszStenoString);    
         document.getElementById("correctRate").innerHTML = (getCorrect()*100).toFixed(2);
+        document.getElementById("wordisRightRadio").innerHTML = (getCorrect()*100).toFixed(2);
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();

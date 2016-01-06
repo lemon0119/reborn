@@ -27,9 +27,9 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<h3>编辑键位练习题</h3>
+<h3>编辑看打练习题</h3>
 <?php } else if($action == 'look') {?>
-<h3>查看键位练习题</h3>
+<h3>查看看打练习题</h3>
 <?php }?>
 
     <?php if(isset($_GET['nobar'])){ ?>
@@ -59,6 +59,11 @@
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">添加</button>
             <?php }?>
+                <?php if(isset($_GET['nobar'])){ ?>
+                <a class="btn" href="./index.php?r=teacher/classExercise4Look&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>">返回</a>
+                            <?php }else{ ?>
+                                  <a class="btn" href="./index.php?r=teacher/classExercise4Look&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>">返回</a>
+                            <?php }?>
         </div>
         </fieldset>
     </form>   
