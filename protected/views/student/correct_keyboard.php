@@ -172,8 +172,10 @@
                     keySet("r_"+c , true);
             }
             }      
-        changTemplet(pszStenoString);    
+        changTemplet(pszStenoString);  
+        <?php if(!$isExam){?>
         document.getElementById("correctRate").innerHTML = (getCorrect()*100).toFixed(2);
+        <?php }?>
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -206,7 +208,6 @@
         $('#keyMode').fadeIn(50);
     }
     function changTemplet(pszStenoString){
-
         if(isSameWord(pszStenoString,yaweiCode)){     
             nextWord = "";
             nextWord = getNextWord();
@@ -253,9 +254,12 @@
     }
     function getNextWord(){
         currentNum++;
+        
         if(totalNum == currentNum){
-          repeatNum--;
-            document.getElementById("repeatNum").innerHTML = repeatNum;
+            repeatNum--;
+            <?php if(!$isExam){?>
+                document.getElementById("repeatNum").innerHTML = repeatNum;
+            <?php }?>
             if(repeatNum == 0){
             window.G_isOverFlag = 1;     
             document.getElementById("id_cost").value = getSeconds();

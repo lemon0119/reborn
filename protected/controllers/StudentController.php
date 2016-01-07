@@ -619,7 +619,6 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
-
         return $this->render('keyExer',array( 
             'exercise'=>$classexam,
             'exerOne'=>$result,
@@ -1162,19 +1161,20 @@ class StudentController extends CController {
     public function saveAnswer(){
         //查看是否有answer，即是否是用户提交了答案。
         if(isset($_POST['nm_answer'])) {
-            
             $answer = $_POST['nm_answer'];
             $seconds = $_POST['nm_cost']; 
             if(Yii::app()->session['isExam']){
                 $workID = Yii::app()->session['examworkID'];
                 $createPerson = Yii::app()->session['userid_now'];
                 $oldID = ExamRecord::model()->getRecord($workID, $createPerson);
+                $studentID = Yii::app()->session['userid_now'];
+                $recordID = ExamRecord::getRecord($workID, $studentID);
                 return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
             }else {
-        $workID = Yii::app()->session['workID'];
-        $createPerson = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::model()->getRecord($workID, $createPerson);
-        return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
+                $workID = Yii::app()->session['workID'];
+                $createPerson = Yii::app()->session['userid_now'];
+                $recordID = SuiteRecord::model()->getRecord($workID, $createPerson);
+                return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
             }          
         }
     }

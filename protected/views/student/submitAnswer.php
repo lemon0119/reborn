@@ -94,7 +94,7 @@
                  }             
           }   
           writeData();
-          doSubmit();      
+          //doSubmit();      
     }
     
     function writeData(){

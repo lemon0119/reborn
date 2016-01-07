@@ -67,7 +67,7 @@
     <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
 </div>
 
-<div  class="analysisTool" id="analysis" style="left: 1050px;top: -516px; height: 670px; width: 230px;">
+<div  class="analysisTool" id="analysis" style="left: 180px;top: -675px; height: 670px; width: 230px;">
         <table style="margin: 0px auto; font-size: 20px" cellpadding="20"  >
             <tr>
                 <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
@@ -118,6 +118,11 @@
     });
     
     $(document).ready(function(){
+        setInterval(function () {   
+            writeData();
+            doSubmit(); 
+       }, 2000);
+    
         //菜单栏变色
         $("li#li-listen-<?php echo $exerOne['exerciseID'];?>").attr('class','active');
     });
@@ -130,4 +135,10 @@
     function start(){
        document.getElementById('audio_hiden').style.display="block";
     }
+        window.G_saveToDatabase = 1;
+    window.G_squence = 0;
+    window.G_exerciseType = "answerRecord";
+//    var answer = document.getElementById("id_answer").value;
+//    var cost = document.getElementById("id_cost").value;
+   window.G_exerciseData = Array("1");
 </script>

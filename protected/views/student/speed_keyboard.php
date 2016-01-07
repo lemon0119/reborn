@@ -188,7 +188,9 @@
             }
         }
         changTemplet(pszStenoString);
+        <?php if(!$isExam){?>
         document.getElementById("correctRate").innerHTML = (getCorrect()*100).toFixed(2);
+        <?php }?>
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -271,7 +273,9 @@
         currentNum++;       
         if(totalNum == currentNum){
             repeatNum--;
-            document.getElementById("repeatNum").innerHTML = repeatNum;
+           <?php if(!$isExam){?>
+                document.getElementById("repeatNum").innerHTML = repeatNum;
+            <?php }?>
             if(repeatNum == 0){
             clearInterval(time1);
             window.G_isOverFlag = 1;
