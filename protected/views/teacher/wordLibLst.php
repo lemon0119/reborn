@@ -15,9 +15,10 @@
              <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         </head>
 <!-- 学生列表-->
-<div class="span9" style=" overflow: hidden;width: 600px; height: 800px">
-    <div  style="overflow: auto;width: 600px; height: 750px" >
+<body style="background-image: none;background-color: #fff">
     <h2>词库列表</h2>
+<div  style=" overflow: hidden;width: 750px; height: 490px">
+    <div  style="overflow: auto;width: 750px; height: 420px" >
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -52,13 +53,14 @@
     </table>
    </div>
     <!-- 学生列表结束 -->
-    <div  style="width: 600px;" >
-    <button onclick="clickOK()">确定</button>
-    <button onclick="clickQX()">取消</button>
+    <div class="form-actions"  style="width: 750px;" >
+        <button class="btn btn-primary" onclick="clickOK()">确定</button>
+        
+        <button style="position: relative;left: 2px" class="btn" onclick="clickQX()">返回</button>
    </div>
 </div>
 
-
+        </body>
 <script>
 $(document).ready(function(){
     //点击选择词库在新界面中之前选中的进行勾选，没写完-_-
@@ -83,11 +85,11 @@ $(document).ready(function(){
                 j++;
            }
         }  
-      window.opener.getContent(libs); 
-      window.close();
+      window.parent.getContent(libs); 
+      window.parent.getDivAddKeyBack();
     }
     
     function clickQX(){
-        window.close();       
+        window.parent.getDivAddKeyBack();
     }
 </script>

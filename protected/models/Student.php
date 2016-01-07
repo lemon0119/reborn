@@ -311,5 +311,11 @@ class Student extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    public function findStudentByClass($classID){
+        $student = new Student();
+        $student = $student->findAll("classID='$classID'");
+        return $student;
+    }
 
 }

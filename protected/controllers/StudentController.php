@@ -1419,4 +1419,25 @@ class StudentController extends CController {
         }
         return $this->render('freePractice',['lessons'=>$lessons]);
     }
+    
+    
+    public function actionStartClassExercise(){
+        $classID = $_GET['classID'];
+        $lessonID = $_GET['lessonID'];
+        $data = ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
+        echo  $data;
+    }
+    
+    public function actionIframe4Look(){
+        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
+    }
+    public function actionIframe4Listen(){
+        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Listen",["classExercise"=>$classExercise]);
+    }
+    public function actionIframe4Key(){
+        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Key",["classExercise"=>$classExercise]);
+    }
 }

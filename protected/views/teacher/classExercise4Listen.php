@@ -57,11 +57,11 @@
                     <tr>
 <!--                        <td class="font-center" style="width: 50px"><?php //echo $model['exerciseID'];?></td>-->
                       
-                        <td class="font-center"><?php  if(Tool::clength($model['title'])<=10)
+                        <td title="<?php echo $model['title'];?>" class="font-center"><?php  if(Tool::clength($model['title'])<=10)
                                         echo $model['title'];
                                     else
                                         echo Tool::csubstr($model['title'], 0, 10)."...";?></td>
-                        <td class="font-center"><?php  if(Tool::clength($model['content'])<=10)
+                        <td title="<?php echo $model['content'];?>" class="font-center"><?php  if(Tool::clength($model['content'])<=10)
                                         echo $model['content'];
                                     else
                                         echo Tool::csubstr($model['content'], 0,10)."...";

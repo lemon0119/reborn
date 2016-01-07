@@ -184,7 +184,7 @@
         }
         changTemplet(pszStenoString);
         <?php if(!$isExam){?>
-        document.getElementById("correctRate").innerHTML = (getCorrect()*100).toFixed(2);
+        document.getElementById("wordisRightRadio").innerHTML = (getCorrect()*100).toFixed(2);
         <?php }?>
     }
     var wordArray = new Array();

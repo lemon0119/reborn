@@ -34,7 +34,7 @@
 </div>
 
     
-<div class="span9">        
+<div class="span9" id="addKey">        
 <?php if(!isset($action)) {?>
 <h3>编辑键位练习题</h3>
 <?php } else if($action == 'look') {?>
@@ -115,6 +115,9 @@
         <input id="libstr" style="display: none;" name="libstr">
     </form>   
 </div>
+<div class="span9" id="choiceLib" style="display: none">
+    <iframe style="height: 100%;width: 100%;border: 0px;" id="iframe4choiceLib"></iframe>
+</div>
 <script>     
  var inputCount = 1;
  var hasChooseLib = 0;
@@ -192,10 +195,18 @@ function checkAll(){
 }
 
 function selectWordLib(){
-    window.open("./index.php?r=teacher/SelectWordLib&&libstr="+document.getElementById("libstr").value, 'newwindow', 'height=1000,width=800,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    $("#addKey").attr("style","display:none");
+    $("#choiceLib").removeAttr("style");
+    $("#iframe4choiceLib").attr("src","./index.php?r=teacher/SelectWordLib&&libstr="+document.getElementById("libstr").value);
 }
 
- window.getContent = function(libs) {
+function getDivAddKeyBack(){
+    $("#choiceLib").attr("style","display:none");
+    $("#addKey").removeAttr("style");
+    $("#iframe4choiceLib").removeAttr("src");
+}
+
+function getContent(libs) {
     var Table = document.getElementById("lib"); 
     hasChooseLib = 0;
     var rowNum=Table.rows.length;

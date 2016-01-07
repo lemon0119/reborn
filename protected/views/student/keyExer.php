@@ -46,7 +46,7 @@
         <br/>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
-                <td id="word" style="border-right: 1px solid #000; width: 300px;text-align:right;"></td>              
+                <td id="word" style="border-right: 1px solid #000; width: 400px;text-align:right;"></td>              
             </tr>
         </table>
         <br/>
@@ -86,8 +86,8 @@
         <input  name="nm_cost" id="id_cost" type="hidden">
     </form>
 </div>
-<div  class="analysisTool" id="analysis" style="left: 1050px;top: -516px; height: 670px; width: 230px;">
-        <table style="margin: 0px auto; font-size: 20px" cellpadding="20"  >
+<div  class="analysisTool" id="analysis" style="background-color: #fff;left: 1170px; height: 670px; width: 220px;">
+        <table style="margin: 0px auto; font-size: 18px;position:relative;top: -250px;" cellpadding="20"  >
             <tr>
                 <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
                  <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
