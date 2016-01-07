@@ -233,7 +233,7 @@ $(document).ready(function(){
              }
 
                //判断统计结束
-             if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1||averageSpeed===1){
+             if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
                  window.G_endAnalysis = 1;
                  window.G_isOverFlag=0;
                   $("#getMomentKeyType").html(0);

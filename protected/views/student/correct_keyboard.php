@@ -173,8 +173,8 @@
             }
             }      
         changTemplet(pszStenoString);    
-        document.getElementById("correctRate").innerHTML = (getCorrect()*100).toFixed(2);
-        document.getElementById("wordisRightRadio").innerHTML = (getCorrect()*100).toFixed(2);
+        window.GA_RightRadio = (getCorrect()*100).toFixed(2);
+         document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
