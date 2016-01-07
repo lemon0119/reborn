@@ -36,6 +36,7 @@
     var G_oldContentLength   = 0;
     var G_exerciseData       = new Array();
     var G_squence            = 0;
+    var G_pauseFlag          = 0;
    //获取的统计内容之全局变量
     var GA_averageKeyType     = 0;
     var GA_highstCountKey     = 0;
@@ -46,7 +47,7 @@
     var GA_highIntervarlTime  = 0;
     var GA_RightRadio         = 0;
     var GA_CountAllKey        = 0;
-   
+    var GA_pauseOn            = 0;
 //统计逻辑
 $(document).ready(function(){
     var highstCountKey  = 0;
@@ -86,8 +87,10 @@ $(document).ready(function(){
                     window.G_keyBoardBreakPause = 1;
                     pauseTime = nowTime;
                     pauseOn = 1;
+                    window.G_pauseFlag = 1;
                 }else{
                     pauseOn = 0;
+                    window.G_pauseFlag = 0;
                     window.G_startTime = (nowTime-pauseTime)+ window.G_startTime;
                     startTime = window.G_startTime;
                 }
@@ -95,6 +98,7 @@ $(document).ready(function(){
             }
             if(window.G_keyBoardBreakPause===0&&pauseOn ===1){
                     pauseOn = 0;
+                    window.G_pauseFlag = 0;
                     window.G_startTime = (nowTime-pauseTime)+ window.G_startTime;
                     startTime = window.G_startTime;
                     window.G_isPause = 0;
@@ -220,7 +224,7 @@ $(document).ready(function(){
                     data:{exerciseType:window.G_exerciseType,exerciseData:window.G_exerciseData,squence:window.G_squence,
                           averageKeyType:window.GA_averageKeyType,highstCountKey:window.GA_highstCountKey,highstSpeed:window.GA_highstSpeed,
                           averageSpeed:window.GA_averageSpeed,CountBackDelete:window.GA_CountBackDelete,CountAllKey:window.GA_CountAllKey,
-                          IntervalTime:window.GA_IntervalTime,highIntervarlTime:window.GA_highIntervarlTime,RightRadio:window.GA_RightRadio   },
+                          IntervalTime:window.GA_IntervalTime,highIntervarlTime:window.GA_highIntervarlTime,RightRadio:window.GA_RightRadio },
                     success:function(data){
                     },
                     error:function(xhr, type, exception){

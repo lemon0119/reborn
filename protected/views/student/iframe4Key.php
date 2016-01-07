@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <table style="width: 580px"  border = '0px'><button id="close_exercise" class="fr btn btn-primary">结束练习</button>
+        <table style="width: 580px"  border = '0px'><button class="fl btn" id="pause">暂停统计</button><button id="close_exercise" class="fr btn btn-primary">结束练习</button>
             <tr><h3><?php echo $classExercise['title'] ?></h3></tr>
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
@@ -54,11 +54,11 @@
                 <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
                 <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
             </tr>
-                <tr >
+            <tr >
                 <td><span class="fl"   style="color: #000;font-weight: bolder">循环次数：</span></td>
-                <td><span style="color: #f46500" id="repeatNum"><?php echo $classExercise['repeatNum']?></span ></td>
+                <td><span style="color: #f46500" id="repeatNum"><?php echo $classExercise['repeatNum'] ?></span ></td>
                 <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                </tr>
+            </tr>
 
         </table>
         <br/>
@@ -72,65 +72,79 @@
             <font id="id_right"style="color:#808080"> </font><font id="id_wrong" style="color:#ff0000"> </font><font id="id_new" style="color:#000000"> </font>
         </div>
         <div style="width: 700px; height: 350px;">
-            <?php         
-            if($classExercise['type'] == "correct")
-                require  Yii::app()->basePath."\\views\\student\\correct_keyboard.php";
-            
-            else if($classExercise['type'] == "free" )
+            <?php
+            if ($classExercise['type'] == "correct")
+                require Yii::app()->basePath . "\\views\\student\\correct_keyboard.php";
 
-                require  Yii::app()->basePath."\\views\\student\\keyboard.php";
-            
+            else if ($classExercise['type'] == "free")
+                require Yii::app()->basePath . "\\views\\student\\keyboard.php";
             else
-                require  Yii::app()->basePath."\\views\\student\\speed_keyboard.php";
+                require Yii::app()->basePath . "\\views\\student\\speed_keyboard.php";
             ?>
         </div>
-        <?php
+            <?php
             $host = Yii::app()->request->hostInfo;
             $path = Yii::app()->request->baseUrl;
             $page = '/index.php?r=student/saveAnswer';
-            if(isset($_GET['page']))
+            if (isset($_GET['page']))
                 $index = $_GET['page'];
-            else 
+            else
                 $index = 1;
-            $param = '&page='.$index;
-            if(isset(Yii::app()->session['type']))
-                $param = $param.'&&type='.Yii::app()->session['type'];
-        ?>
+            $param = '&page=' . $index;
+            if (isset(Yii::app()->session['type']))
+                $param = $param . '&&type=' . Yii::app()->session['type'];
+            ?>
     </div>
-    <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host.$path.$page.$param;?>">
-        <input id="id_content" type="hidden" value="<?php echo $classExercise['content'];?>">
-        <input id="id_speed" type="hidden" value="<?php echo $classExercise['speed'];?>">
+    <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host . $path . $page . $param; ?>">
+        <input id="id_content" type="hidden" value="<?php echo $classExercise['content']; ?>">
+        <input id="id_speed" type="hidden" value="<?php echo $classExercise['speed']; ?>">
         <input  name="nm_answer"id="id_answer" type="hidden">
         <input  name="nm_cost" id="id_cost" type="hidden">
     </form>
 </body>
 <script>
-     var originalContent = "<?php echo $classExercise['content'];?>";
-     //获取学生信息转入统计JS 实时存入数据库
+    $(document).ready(function () {
+        $("#pause").click(function () {
+            if (window.G_startFlag === 1) {
+                if (window.G_isPause === 0) {
+                    window.G_isPause = 1;
+                }
+                if (window.G_pauseFlag === 1) {
+                    $("#pause").html("暂停统计");
+
+                } else {
+                    $("#pause").html("继续统计");
+                }
+            }
+        });
+    });
+    var originalContent = "<?php echo $classExercise['content']; ?>";
+    //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
-    <?php  $exerciseID = $classExercise['exerciseID'];
-            $sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '$exerciseID'");
-            $countSquence = count($sqlClassExerciseRecord);
-            $squence = $countSquence+1;
-            ?>
-    window.G_squence = <?php echo $squence;?>;
+<?php
+$exerciseID = $classExercise['exerciseID'];
+$sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '$exerciseID'");
+$countSquence = count($sqlClassExerciseRecord);
+$squence = $countSquence + 1;
+?>
+    window.G_squence = <?php echo $squence; ?>;
     window.G_exerciseType = "classExercise";
     var classExerciseID = <?php echo $exerciseID; ?>;
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
-    window.G_exerciseData = Array(classExerciseID,studentID);
+    window.G_exerciseData = Array(classExerciseID, studentID);
     $("#close_exercise").click(function () {
         window.parent.closeClassExercise();
     });
-    
-    $(document).ready(function(){
+
+    $(document).ready(function () {
         startParse();
     });
-    
-    $(document).ready(function(){
-        $("li#li-key-<?php echo $classExercise['exerciseID'];?>").attr('class','active');
+
+    $(document).ready(function () {
+        $("li#li-key-<?php echo $classExercise['exerciseID']; ?>").attr('class', 'active');
     });
-    
-    function getWordLength(){
+
+    function getWordLength() {
         var input = document.getElementById("id_answer");
         var answer = input.value;
         var reg = new RegExp(":", "g");
@@ -138,30 +152,30 @@
         var length = res === null ? 0 : res.length;
         return length;
     }
-    
-    
-    
-    
+
+
+
+
     /*
-    function getCorrect(pattern , answer){
-        var ap = pattern.split(' ');
-        var aa = answer.split(' ');
-        var tl = ap.length;
-        var al = aa.length;
-        var i = 0 , j = 0;
-        var cnum = 0;
-        while(i < tl && j < al){
-            if(ap[i] == aa[j]){
-                cnum++;
-                i++;
-                j++;
-            } else{
-                i++;
-            }
-        }
-        return cnum / tl;
-    }
-    */
-    
-     
+     function getCorrect(pattern , answer){
+     var ap = pattern.split(' ');
+     var aa = answer.split(' ');
+     var tl = ap.length;
+     var al = aa.length;
+     var i = 0 , j = 0;
+     var cnum = 0;
+     while(i < tl && j < al){
+     if(ap[i] == aa[j]){
+     cnum++;
+     i++;
+     j++;
+     } else{
+     i++;
+     }
+     }
+     return cnum / tl;
+     }
+     */
+
+
 </script>

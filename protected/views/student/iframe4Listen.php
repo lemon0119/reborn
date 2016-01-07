@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <table style="width: 580px"  border = '0px'><button id="close_exercise" class="fr btn btn-primary">结束练习</button>
+        <table style="width: 580px"  border = '0px'><button class="fl btn" id="pause">暂停统计</button><button id="close_exercise" class="fr btn btn-primary">结束练习</button>
             <tr><h3><?php echo $classExercise['title'] ?></h3></tr>
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
@@ -62,9 +62,7 @@
             ?>
         <div style="position: relative;top: -130px" align="left">
                 <br/>
-                <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; top:150px;'></div>
-                <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; top:150px;'></div>
-                <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath;?>"   preload = "auto"  onplay="start()"  controls=""></audio>
+                <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath;?>"   preload = "auto"    controls=""></audio>
             </div>
         <input id="content" type="hidden" style="height: 5px;" value="<?php echo $classExercise['content']; ?>">
         <br/>
@@ -77,11 +75,23 @@
     </div>
 </body>
 <script>
-    $(document).ready(function(){
-        yaweiOCX = document.getElementById("typeOCX4Listen");
-        yaweiOCX.HideToolBar();
-        //菜单栏变色
-        $("li#li-listen-<?php echo $classExercise['exerciseID'];?>").attr('class','active');
+    $(document).ready(function () {
+            $("#pause").click(function(){
+            if(window.G_startFlag===1){
+            if(window.G_isPause ===0){
+                window.G_isPause = 1;
+            }
+                var audio = document.getElementById('music');  
+                if(window.G_pauseFlag===1){
+                    audio.play();
+                    $("#pause").html("暂停统计");
+                    
+                }else{
+                    $("#pause").html("继续统计");
+                    audio.pause();
+                }
+            }
+        });
     });
      var originalContent = "<?php echo $classExercise['content'];?>";
      //获取学生信息转入统计JS 实时存入数据库
@@ -96,7 +106,7 @@
     var classExerciseID = <?php echo $exerciseID; ?>;
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
     window.G_exerciseData = Array(classExerciseID,studentID);
-    $("#close_exercise").click(function () {
+        $("#close_exercise").click(function () {
         $("#typeOCX4Listen").remove();
         window.parent.closeClassExercise();
     });
@@ -104,6 +114,10 @@
     function onStenoPressKey(pszStenoString, device) {
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
+        var audio = document.getElementById('music');
+         if(window.G_pauseFlag===1){
+                    audio.play();
+                }
         var myDate = new Date();
         window.G_pressTime = myDate.getTime();
         if (window.G_startFlag === 0) {
@@ -135,12 +149,10 @@
                 $("#getHighIntervarlTime").html(IntervalTime);
             }
         }
-
         //--------------------------------------------------
     }
     $(document).ready(function(){
-    yaweiOCX = document.getElementById("typeOCXListen");
-        yaweiOCX.HideToolBar();
+    document.getElementById("typeOCX4Listen").HideToolBar();
         //菜单栏变色
         $("li#li-listen-<?php echo $classExercise['exerciseID'];?>").attr('class','active');
     });
@@ -150,7 +162,4 @@
         return input.length;
     }
     
-    function start(){
-       document.getElementById('audio_hiden').style.display="block";
-    }
 </script>

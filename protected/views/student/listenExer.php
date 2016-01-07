@@ -155,8 +155,7 @@
     
     
     $(document).ready(function(){
-    yaweiOCX = document.getElementById("typeOCX");
-        yaweiOCX.HideToolBar();
+    document.getElementById("typeOCX").HideToolBar();
         //菜单栏变色
         $("li#li-listen-<?php echo $exerOne['exerciseID'];?>").attr('class','active');
     });

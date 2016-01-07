@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <table style="width: 580px"  border = '0px'><button id="close_exercise" class="fr btn btn-primary">结束练习</button>
+        <table style="width: 580px"  border = '0px'> <button class="fl btn" id="pause">暂停统计</button><button id="close_exercise" class="fr btn btn-primary">结束练习</button>
             <tr><h3><?php echo $classExercise['title'] ?></h3></tr>
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
@@ -70,19 +70,35 @@
     </div>
 </body>
 <script>
-    var originalContent = "<?php echo $classExercise['content'];?>";
-     //获取学生信息转入统计JS 实时存入数据库
+    $(document).ready(function () {
+        $("#pause").click(function () {
+            if (window.G_startFlag === 1) {
+                if (window.G_isPause === 0) {
+                    window.G_isPause = 1;
+                }
+                if (window.G_pauseFlag === 1) {
+                    $("#pause").html("暂停统计");
+
+                } else {
+                    $("#pause").html("继续统计");
+                }
+            }
+        });
+    });
+    var originalContent = "<?php echo $classExercise['content']; ?>";
+    //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
-    <?php  $exerciseID = $classExercise['exerciseID'];
-            $sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '$exerciseID'");
-            $countSquence = count($sqlClassExerciseRecord);
-            $squence = $countSquence+1;
-            ?>
-    window.G_squence = <?php echo $squence;?>;
+<?php
+$exerciseID = $classExercise['exerciseID'];
+$sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '$exerciseID'");
+$countSquence = count($sqlClassExerciseRecord);
+$squence = $countSquence + 1;
+?>
+    window.G_squence = <?php echo $squence; ?>;
     window.G_exerciseType = "classExercise";
     var classExerciseID = <?php echo $exerciseID; ?>;
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
-    window.G_exerciseData = Array(classExerciseID,studentID);
+    window.G_exerciseData = Array(classExerciseID, studentID);
     $("#close_exercise").click(function () {
         $("#typeOCX4Look").remove();
         window.parent.closeClassExercise();
@@ -102,8 +118,8 @@
         window.G_countAllKey++;
         window.G_content = document.getElementById("typeOCX4Look").GetContent();
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
-        
-        AjaxGetRight_Wrong_AccuracyRate("","","wordisRightRadio",originalContent,window.G_content);
+
+        AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", originalContent, window.G_content);
         //每击统计击键间隔时间 秒
         //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
         //每击统计最高击键间隔时间 秒
