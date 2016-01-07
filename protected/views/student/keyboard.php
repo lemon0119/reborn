@@ -183,9 +183,10 @@
             }
         }
         changTemplet(pszStenoString);
-        <?php if(!$isExam){?>
-        document.getElementById("wordisRightRadio").innerHTML = (getCorrect()*100).toFixed(2);
-        <?php }?>
+         window.GA_RightRadio = (getCorrect()*100).toFixed(2);
+         <?php if(!$isExam){?>
+                document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
+         <?php }?>
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -272,7 +273,6 @@
         return true;
     }
     function getCorrect(){        
-        window.GA_RightRadio = numKeyRight / numKeyDown;
         return numKeyRight / numKeyDown;
     }
     function getNextWord(){
