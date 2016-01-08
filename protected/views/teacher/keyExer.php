@@ -1,4 +1,4 @@
-<script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
 <?php require 'suiteSideBar.php'; ?>
 
 <div class="span9">

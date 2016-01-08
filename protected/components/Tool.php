@@ -301,4 +301,26 @@ public static function teacherNotice(){
         $list=$result->query();
         return ['list'=>$list,'pages'=>$pages,];
     }
+    
+    
+    public static function quickSort($arr,$type){
+            if(count($arr)>1){
+                $k=$arr[0][$type];
+                $x=array();
+                $y=array();
+                $_size=count($arr);
+                for($i=1;$i<$_size;$i++){
+                    if($arr[$i][$type]<=$k){
+                        array_push($y, $arr[$i]);
+                    }else if($arr[$i][$type]>$k){
+                        array_push($x, $arr[$i]);
+                    }
+                }
+                $x = Tool::quickSort($x, $type);
+                $y = Tool::quickSort($y, $type);
+                return array_merge($x,array($arr[0]),$y);
+            }else{
+                return $arr;
+            }
+    }
 }

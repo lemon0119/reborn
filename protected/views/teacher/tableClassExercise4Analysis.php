@@ -3,16 +3,17 @@
 <script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
 <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
 <body style="background-image: none;background-color: #fff">
-    <table id="table_of_analysis" style="width: 100%;position: relative;" class="table table-bordered table-striped">
+    <table id="table_of_analysis" style="width: 98%;position: relative;" class="table table-bordered table-striped">
          <thead>
             <tr>
+                <th >排名</th>
                 <th >学号</th>
                 <th >学生</th>
                 <th >平均速度</th>
                 <th >最高速度</th>
                 <th >正确率</th>
                 <th >进行时间(秒)</th>
-                <th >总字数</th>
+                <th >总击键</th>
             </tr>
         </thead>
         <tbody> 
@@ -38,7 +39,7 @@
                success:function(data){
                    for(i=0;i<data.length;i++){
                        $('#option'+i+'').remove(); 
-                       var newRow='<tr id="option'+i+'"><td >'+data[i]['studentID']+'</td><td >'+data[i]['studentName']+'</td><td>'+data[i]['speed']+'</td><td>'+data[i]['maxSpeed']+'</td><td>'+data[i]['correct']+'%</td><td>'+data[i]['time']+'</td><td>'+data[i]['allFont']+'</td></tr>';  
+                       var newRow='<tr id="option'+i+'"><td >'+(i+1)+'</td><td >'+data[i]['studentID']+'</td><td >'+data[i]['studentName']+'</td><td>'+data[i]['speed']+'</td><td>'+data[i]['maxSpeed']+'</td><td>'+data[i]['correct']+'%</td><td>'+data[i]['time']+'</td><td>'+data[i]['allKey']+'</td></tr>';  
                        $('#table_of_analysis').append(newRow); 
                    }
                },

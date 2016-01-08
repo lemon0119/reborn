@@ -5579,15 +5579,20 @@ public function ActionAssignFreePractice(){
             $ratio_speed = explode("&", $recourd['ratio_speed']);
             $ratio_maxSpeed = explode("&", $recourd['ratio_maxSpeed']);
             $ratio_correct = explode("&", $recourd['ratio_correct']);
+            $all_count = explode("&", $recourd['ratio_countAllKey']);
             $end = count($ratio_speed)-1;
-            $speed = $ratio_speed[$end];
-            $maxSpeed = $ratio_maxSpeed[$end];
+            $speed = (int)$ratio_speed[$end];
+            $maxSpeed = (int)$ratio_maxSpeed[$end];
             $correct = round($ratio_correct[$end]*100)/100;
             $time = count($ratio_speed)*2-2;
-            $allFont = round($time/60*$speed);
-            $arrayData = ["studentID"=>$studentID,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allFont"=>$allFont];
+            $allKey = (int)$all_count[$end];
+            $arrayData = ["studentID"=>$studentID,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allKey"=>$allKey];
             array_push($data, $arrayData);
          }
+         $data = Tool::quickSort($data,"correct");
          $this->renderJSON($data);
      }
+     
+     
+     
 }

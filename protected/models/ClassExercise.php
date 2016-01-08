@@ -283,6 +283,11 @@ class ClassExercise extends CActiveRecord
         $classExercise = $classExercise->find("now_open = 1");
         return $classExercise;
     }
+    public function getByExerciseID($exerciseID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+        return $classExercise;
+    }
     /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

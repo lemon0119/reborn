@@ -1416,14 +1416,21 @@ class StudentController extends CController {
     
     
         public function actionFreePractice() {
-             $studentID = Yii::app()->session['userid_now'];
-        $classID = Student::model()->findClassByStudentID($studentID);
-        if($classID!="0"){
-            $lessons = Lesson::model()->findAll("classID = '$classID'");
-        }else{
-            $lessons = array();
-        }
-        return $this->render('freePractice',['lessons'=>$lessons]);
+            $classExerciseLst = array();
+            $nowLesson = "";
+            $studentID = Yii::app()->session['userid_now'];
+            $classID = Student::model()->findClassByStudentID($studentID);
+                if($classID!="0"){
+                  $lessons = Lesson::model()->findAll("classID = '$classID'");
+                }else{
+                    $lessons = array();
+                }
+                if(isset($_GET['lessonID'])){
+                    $lessonID = $_GET['lessonID'];
+                    $nowLesson = Lesson::model()->find("lessonID = '$lessonID'");
+                    $classExerciseLst = ClassExercise::model()->findAll("classID = '$classID' AND lessonID = '$lessonID' AND is_open = 1");
+                }
+                return $this->render('freePractice',['lessons'=>$lessons,'nowlesson'=>$nowLesson,'classExerciseLst'=>$classExerciseLst]);
     }
     
     
@@ -1444,6 +1451,22 @@ class StudentController extends CController {
     }
     public function actionIframe4Key(){
         $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Key",["classExercise"=>$classExercise]);
+    }
+    
+    public function actionFreeIframe4Look(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
+        $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
+    }
+    public function actionFreeIframe4Listen(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
+        $this->renderPartial("Iframe4Listen",["classExercise"=>$classExercise]);
+    }
+    public function actionFreeIframe4Key(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
         $this->renderPartial("Iframe4Key",["classExercise"=>$classExercise]);
     }
 }
