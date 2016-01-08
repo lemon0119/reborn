@@ -5,7 +5,7 @@
 <body style="background-image: none;background-color: #fff">
 <div style="background-color: #fff">
     <div style="height: 100px !important;">
-<table style="width: 100%;position: relative;" class="table table-bordered table-striped">
+<table style="width: 98%;position: relative;" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th class="font-center">选择</th>

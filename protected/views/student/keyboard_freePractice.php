@@ -54,7 +54,9 @@
 <script>
     
     $(document).ready(function(){
-      document.getElementById("typeOCX").SetTextSize(8);
+        if(document.getElementById("typeOCX")!==null){
+             document.getElementById("typeOCX").SetTextSize(8);
+        }
    });
     
     function keySet(keyID,isRight){

@@ -7,6 +7,7 @@ var ti;
 var isExam;
 function startTime(){
 	timer = window.setInterval(function(){
+            if(window.G_startFlag===1&&window.G_pauseFlag===0){
             changWordPS();
 		strTime = "";
 		if(++ss==60)
@@ -24,6 +25,7 @@ function startTime(){
 		strTime+=":";
 		strTime+=ss<10?"0"+ss:ss;
 		document.getElementById('timej').innerHTML = strTime;
+            }
 	},1000);
 };
 function startTime2(){
@@ -92,7 +94,6 @@ function reloadTime(){
 	mm = 0;
 	ss = 0;
 	strTime = '00:00:00';
-        window.GA_time = strTime;
 if(document.getElementById('timej')!==null)
 	document.getElementById('timej').innerHTML = strTime;
 	clearInterval(timer);

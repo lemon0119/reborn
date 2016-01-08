@@ -3,7 +3,7 @@
 <!--打字控件-->
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <!--打字计时-->
-<script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 
 <?php
@@ -155,8 +155,7 @@
     
     
     $(document).ready(function(){
-    yaweiOCX = document.getElementById("typeOCX");
-        yaweiOCX.HideToolBar();
+    document.getElementById("typeOCX").HideToolBar();
         //菜单栏变色
         $("li#li-listen-<?php echo $exerOne['exerciseID'];?>").attr('class','active');
     });
