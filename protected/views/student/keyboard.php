@@ -106,6 +106,12 @@
         return false;
     }
     
+    function onChange(){
+        document.getElementById("typeOCX").UpdateView();
+        var input = getContent(document.getElementById("typeOCX"));
+        document.getElementById("typeOCX").Locate(input.length);
+    }
+    
     function onStenoPressKey(pszStenoString ,device){
         
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码

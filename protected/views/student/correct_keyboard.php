@@ -106,6 +106,12 @@
         return false;
     }
     
+    function onChange(){
+        document.getElementById("typeOCX").UpdateView();
+        var input = getContent(document.getElementById("typeOCX"));
+        document.getElementById("typeOCX").Locate(input.length);
+    }
+    
     function onStenoPressKey(pszStenoString ,device){     
         window.G_keyBoardBreakPause =0;
        var myDate = new Date();

@@ -136,7 +136,7 @@ class Suite extends CActiveRecord
     
     public function getAllSuiteByPage($pagesize,$teacherID)
     {
-        $sql  = "select * from suite where createPerson =".$teacherID;
+        $sql  = "select * from suite where createPerson = '$teacherID'";
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria   =   new CDbCriteria();
         $pages     =   new CPagination($result->rowCount);
