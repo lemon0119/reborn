@@ -31,14 +31,14 @@
     <iframe id="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
 </div>
 <div id="exerciseDiv" class="span9">
-     <h3 ><font style="color:#f46500"><?php echo $nowlesson['lessonName'];?></font> 已  开  放  的  课  堂  练 习</h3>
+     <h3 ><font style="color:#f46500"><?php echo $nowlesson['lessonName'];?></font> 已  开  放  的  练  习</h3>
        <table style="width: 98%;position: relative;" class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th style="width:15%" class="font-center">类型</th>
                 <!--<th class="font-center">科目号</th>-->
-                <th style="width:30%" class="font-center">标题</th>
-                <th style="width:40%" class="font-center">内容</th>
+                <th style="width:15%" class="font-center">标题</th>
+                <th style="width:55%" class="font-center">内容</th>
                 <th style="width:15%" class="font-center">操作</th>
             </tr>
         </thead>
@@ -56,10 +56,10 @@
                                         echo $model['title'];
                                     else
                                        echo Tool::csubstr($model['title'], 0, 10)."...";?></td>
-                        <td title="<?php echo $model['content'];?>" class="font-center"><?php  if(Tool::clength($model['content'])<=10)
+                        <td title="<?php echo $model['content'];?>" class="font-center"><?php  if(Tool::clength($model['content'])<=40)
                                         echo $model['content'];
                                    else
-                                        echo Tool::csubstr($model['content'], 0,10)."...";
+                                        echo Tool::csubstr($model['content'], 0,40)."...";
                                         ?></td>
                         <td><button id="startClassExercise" class="btn btn-primary" onclick="startClassExercise(<?php echo $model['exerciseID'];?>,'<?php echo $model['type'];?>')" >开始</a></td>
                     </tr> 

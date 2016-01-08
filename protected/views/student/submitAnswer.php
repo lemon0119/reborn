@@ -1,7 +1,7 @@
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
 <script>
     function formSubmit(){
                         var txt=  "是否确认保存答案！！";

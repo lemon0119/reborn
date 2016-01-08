@@ -1,4 +1,4 @@
-<script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <?php  if($isExam == false){ 
     require 'suiteSideBar.php';

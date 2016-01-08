@@ -3,7 +3,7 @@
 <script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
 <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
-<script src="<?php echo JS_URL; ?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
