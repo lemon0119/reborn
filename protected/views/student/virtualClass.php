@@ -12,33 +12,32 @@ echo "<script>var role='$role';</script>";
 <!--自定义css begin-->
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
-<div class="left">
+<div class="left" style="min-height: 793px">
     <div class="vp1" style="width: 100%;">
         <br/>
                 <tr>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号:</td>
-                    <td>&nbsp;&nbsp;<?php echo $userID;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号:</span></td>
+                    <td><span style="color: #f46500">&nbsp;&nbsp;<?php echo $userID;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 </tr>
                 <tr>
-                    <td>&nbsp;&nbsp;学生姓名:</td>
-                    <td>&nbsp;&nbsp;<?php echo $userName;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;学生姓名:</span></td>
+                    <td><span style="color: #f46500">&nbsp;&nbsp;<?php echo $userName;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 </tr>
                 <tr>
-                    <td>&nbsp;&nbsp;班级:</td>
-                    <td>&nbsp;&nbsp;<?php $sqlClass = TbClass::model()->find("classID = $class");
+                    <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;班级:</span></td>
+                    <td><span style="color: #f46500">&nbsp;&nbsp;<?php $sqlClass = TbClass::model()->find("classID = $class");
                     echo $sqlClass['className'];
-                    ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 </tr>
                 <tr>
-                    <td>&nbsp;&nbsp;当前课程:</td>
-                    <td>&nbsp;&nbsp;<?php foreach ($lessons as $less) {
+                    <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;当前课程:</span></td>
+                    <td><span style="color: #f46500">&nbsp;&nbsp;<?php foreach ($lessons as $less) {
                                if($less['lessonID'] === $currentLesn){
                                    echo $less['lessonName'];
                                 };
                            }?>
-                    </td>           
+                    </span></td>           
                 </tr>
-       
     </div>
     
     <!-- local/remote videos container --> 
@@ -50,22 +49,26 @@ echo "<script>var role='$role';</script>";
         <img id="ppt-img"  onmouseover="fun1();" onmouseout="fun2();" src=""  style="height: 100%;"/>  
         </div>
     </div>
+     <div id="classExercise-container" align="center" style="width: 100% ; height:760px;  margin-top:0px;display:none;overflow-x: hidden">
+         <div style="position: relative;top: 10px;height: 730px;">
+            <iframe id="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
+        </div>
+    </div>
 
     <div id="dianbo-videos-container" style="display:none;">  </div>
 </div>
 
-
-<div class="right"style="background-color: #3b3b3b;border: 0px" >
+<div class="right"style="max-height: 1200px;background-color: #3b3b3b;border: 0px" >
     <div align="center" id="sw-teacher-camera"><a href="#" ><h4 style="color: white">教 师 视 频</h4></a></div>
     <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
-        <div align="center" id="sw-bulletin"><a href="#"><h4 style="color: white">通 知 公 告</h4></a></div>
-        <div id="bulletin" class="bulletin" style="display:none;border: 0px;width: 100%;margin-left: -1.1px">
-            <textarea disabled id="bulletin-textarea" style=" background-color:#5e5e5e;color:#FFFF00;margin-left:auto;margin-right:auto;width:100%; height:200px;margin:0; padding:0;clear:both"></textarea>
+    <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:26px;color: white">虚 拟 键 盘</a><button class="fr btn" id="sw-openAnalysis">统计</button></h4></div>
+        <div id="bulletin" class="bulletin" style="border: 0px;width: 100%;margin-left: -1.1px">
+             <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
         </div>
-        <div align="center" id="sw-chat" ><a href="#"><h4 style="color: white">课 堂 问 答</h4></a></div>
-        <div id="chat-box" style="border: 0px">
+    <div class="fl" align="center" id="sw-chat" ><h4 ><a style="position: relative;left:145px;color: white"  href="#">课 堂 问 答</a></h4></div>
+        <div id="chat-box" style="display:none;border: 0px">
             <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
             <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
                 <input onfocus="setPress()"onblur="delPress()" type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
@@ -74,12 +77,29 @@ echo "<script>var role='$role';</script>";
            
         </div>
          <div align="center" >
-        <?php require  Yii::app()->basePath."\\views\\student\\keyboard_virtual_class.php";?>
+       
     </div>
 </div>
-  
+<div  class="analysisTool" id="analysis" style="display: none;left:1190px;bottom: 473px">
+        <table style="margin: 0px auto;">
+            <tr>
+                <td><span class="fl"  style="color: #fff;font-weight: bolder">平均速度：</span><span style="color: greenyellow" id="getAverageSpeed">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: #fff"> 字/分</span> </td></tr>
+             <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时速度：</span><span style="color: greenyellow" id="getMomentSpeed">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>
+                 <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高速度：</span><span style="color: greenyellow" id="getHighstSpeed">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>
+            <tr>
+                <td><span class="fl"  style="color: #fff;font-weight: bolder">平均击键：</span><span style="color: greenyellow" id="getAverageKeyType">0</span ><span class="fr" style="color: #fff"> 次/分</span></td></tr>
+             <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时击键：</span><span style="color:greenyellow" id="getMomentKeyType">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>
+                <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高击键：</span><span style="color: greenyellow" id="getHighstCountKey">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>
+                <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">击键间隔：</span><span style="color: greenyellow" id="getIntervalTime">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高间隔：</span><span style="color: greenyellow" id="getHighIntervarlTime">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">总击键数：</span><span style="color: greenyellow" id="getcountAllKey">0</span ><span class="fr" style="color: #fff"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+            <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">回改字数：</span><span style="color: greenyellow" id="getBackDelete">0</span ><span class="fr" style="color: #fff"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+        </table>
+    </div>
+<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <script>
     //显示全屏图像
+    
     var onImg = false;
     function fun1(){
         $('#ppt-asd').attr('style','margin-top: -35px');
@@ -129,7 +149,6 @@ echo "<script>var role='$role';</script>";
            var messageField = $('#messageInput');
            var msg = messageField.val();
            messageField.val('');
-
            var current_date = new Date();
             var current_time = current_date.toLocaleTimeString();
           
@@ -180,9 +199,12 @@ echo "<script>var role='$role';</script>";
     });
         
         }
+        //开始课堂练习
+        
 </script>
 
 <script>
+    var isClassExercise = 0;
     //chat and bulletin
 $(document).ready(function(){
     var current_date = new Date();
@@ -204,10 +226,45 @@ $(document).ready(function(){
     setInterval(function() {
         pollChatRoom();
     }, 1000);
-
-
-    
+    // ------------------------------------------------------ start classExercise
+    var timer = setInterval(function() {
+        if(isClassExercise===0){
+            startClassExercise();
+        }else{
+            clearInterval(timer);
+        }
+    }, 2000);
 });
+
+function startClassExercise(){
+    $.ajax({
+        type:"GET",
+        url:"index.php?r=student/startClassExercise&&classID=<?php echo $classID;?>&&lessonID=<?php echo $currentLesn;?>",
+        success:function(data){
+            if(data===""){
+            }else{
+                
+                $("#sw-bulletin").unbind("click");
+                $("#classExercise-container").toggle(200);
+                if(data==="look"){
+                    $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look");
+                }else if(data==="listen"){
+                     $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen");
+                }else if(data==='speed'||data==='correct'||data==='free'){
+                     $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key");
+                }
+                 if(!$("#bulletin").is(":hidden")){ 
+                $("#sw-openAnalysis").attr("disabled","true");
+                 $("#bulletin").toggle(200);
+                }
+               $("#analysis").hide();
+                isClassExercise=1;
+            }
+        }
+    });
+}
+
+
 
 function pollChatRoom() {
     $.ajax({
@@ -276,11 +333,27 @@ $(document).ready(function(){
     });
     $("#sw-chat").click(function() {
         $("#chat-box").toggle(200);
+        $("#analysis").hide();
     });
     $("#sw-bulletin").click(function() {
+        if(!$("#bulletin").is(":hidden")){ 
+            $("#sw-openAnalysis").attr("disabled","true");
+        }
+        if($("#bulletin").is(":hidden")){
+            $("#sw-openAnalysis").removeAttr("disabled");
+        }
         $("#bulletin").toggle(200);
+        $("#analysis").hide();
+        document.getElementById("typeOCX").SetTextSize(8);
+        document.getElementById("typeOCX").HideToolBar();
+        document.getElementById("typeOCX").HideSecondToolBar();
+    });
+    $("#sw-openAnalysis").click(function() {
+        $("#analysis").toggle(200);
+        $("#chat-box").hide();
     });
 });
+
 </script>
 
 <script>
@@ -290,7 +363,7 @@ $(document).ready(function(){
     var onCam     = -1;
     
     function clearVideo(){
-        last_path = -1
+        last_path = -1;
         var video = document.getElementById('video1');
         if(video != null){
             video.pause();
@@ -402,4 +475,34 @@ $(document).ready(function(){
         addMessageHandleForWS();
     }
 });
+
+function closeClassExercise(){
+    isClassExercise = 0;
+    $("#classExercise-container").toggle(200);
+    $("#iframe_classExercise").attr("src","");
+     $("#sw-bulletin").click(function() {
+        if(!$("#bulletin").is(":hidden")){ 
+            $("#sw-openAnalysis").attr("disabled","true");
+        }
+        if($("#bulletin").is(":hidden")){
+            $("#sw-openAnalysis").removeAttr("disabled");
+        }
+        $("#bulletin").toggle(200);
+        $("#analysis").hide();
+        document.getElementById("typeOCX").SetTextSize(8);
+        document.getElementById("typeOCX").HideToolBar();
+        document.getElementById("typeOCX").HideSecondToolBar();
+    });    
+     if($("#bulletin").is(":hidden")){
+            $("#sw-openAnalysis").removeAttr("disabled");
+        }
+                $("#analysis").hide();
+      var timer = setInterval(function() {
+        if(isClassExercise===0){
+            startClassExercise();
+        }else{
+            clearInterval(timer);
+        }
+    }, 2000);
+}
 </script>

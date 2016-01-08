@@ -83,7 +83,7 @@
     }
     
     function checkChar(char,isleft){
-        var wordArr = nextWord.split("");
+        var wordArr = yaweiCode.split("");
         var left = true;
 
         if(isleft){
@@ -107,17 +107,57 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
-        if(totalNum == 0){
+        
+        //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
+        window.G_keyBoardBreakPause =0;
+        var myDate = new Date();
+         window.G_pressTime = myDate.getTime();
+         if(window.G_startFlag ===0){
+                    window.G_startTime = myDate.getTime();
+                    window.G_startFlag = 1; 
+                    window.G_oldStartTime = window.G_pressTime;
+                }
+                window.G_countMomentKey++;
+                window.G_countAllKey++;
+                window.G_content = document.getElementById("typeOCX").GetContent();
+                window.G_keyContent = window.G_keyContent +"&"+pszStenoString;
+                
+                          //每击统计击键间隔时间 秒
+                          //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
+                          //每击统计最高击键间隔时间 秒
+                          //@param id=getHighIntervarlTime 请将最高平均速度统计的控件id设置为getHighIntervarlTime 
+          if(window.G_endAnalysis===0){
+                 var pressTime = window.G_pressTime;
+                 if(pressTime - window.G_oldStartTime >0){
+                     var IntervalTime = parseInt((pressTime - window.G_oldStartTime)/10)/100;
+                      $("#getIntervalTime").html(IntervalTime);
+                      window.GA_IntervalTime  = IntervalTime;
+                     window.G_oldStartTime = pressTime;
+                 }
+                 if(IntervalTime-window.G_highIntervarlTime>0){
+                     window.G_highIntervarlTime = IntervalTime;
+                     window.GA_IntervalTime  = window.G_highIntervarlTime ;
+                     $("#getHighIntervarlTime").html(IntervalTime);
+                 }             
+          }  
+          
+        if(HaveWindow == 1)
+            return;
+        if(totalNum == currentNum && repeatNum == 0){    
+            HaveWindow = 1;
+            window.G_isOverFlag = 1;           
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
-                    totalNum = 0;
+                    currentNum = totalNum;
+                    HaveWindow = 0;
                 },
                 onClose:function(){
-                    totalNum = 0;
+                    currentNum = totalNum;
+                    HaveWindow =0;
                 }
             });
-            totalNum = -1;
-            return ;
+            currentNum = totalNum;
+            return;
         }
         var charSet = pszStenoString.split("");
         var left = true;
@@ -131,6 +171,7 @@
             var c = charSet[i].toLowerCase();
             if(left){
                 if(checkChar(charSet[i],true))
+                    //打对择把该键显示设置true
                     keySet("l_"+ c, true);
                 else
                     keySet("l_"+c , false);
@@ -142,47 +183,74 @@
             }
         }
         changTemplet(pszStenoString);
+         window.GA_RightRadio = (getCorrect()*100).toFixed(2);
+         document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
     }
     var wordArray = new Array();
-    var wordNum = new Array();
+    var yaweiCodeArray = new Array();
     var totalNum = 0;
+    var currentNum = -1;
     var nextWord = "";
+    var yaweiCode = "";
     var numKeyDown = 0;
     var numKeyRight = 0;
+    var HaveWindow = 0;
+    var repeatNum = 1;
+    
+    function writeData(){
+        document.getElementById("id_cost").value = getSeconds();     
+    }
+     
     function startParse(){
         var content = document.getElementById("id_content").value;
-        var cont_array = content.split(":");
-        for(var i = 0; i < cont_array.length; i += 2){
-            var left = cont_array[i];
-            var rAndNum = cont_array[i+1].split("_");
-            var right = rAndNum[0];
-            wordArray.push(left + ":" + right);
-            wordNum.push(rAndNum[1]);
-            totalNum += parseInt(rAndNum[1]);
+        repeatNum = $("#repeatNum").html();
+        var cont_array = content.split("$$");
+        for(var i = 0; i < cont_array.length; i += 1){
+            var yaweiCode = cont_array[i].split(":0")[0];
+            yaweiCodeArray.push(yaweiCode);   
+            var word = cont_array[i].split(":0")[1];
+            wordArray.push(word);
+            totalNum += 1;
         }
         nextWord = getNextWord();
         setWordView(nextWord);
     }
     function setWordView(word){
-        word=word.replace("_",":");
-        var a = word.split(":");
-        document.getElementById("left-key").innerHTML = a[0];
-        document.getElementById("right-key").innerHTML = a[1];
+        document.getElementById("word").innerHTML = word;
         $('#keyMode').fadeOut(50);
         $('#keyMode').fadeIn(50);
     }
     function changTemplet(pszStenoString){
-        if(isSameWord(pszStenoString,nextWord)){
+
+        if(isSameWord(pszStenoString,yaweiCode)){
+        
             nextWord = "";
             nextWord = getNextWord();
             setWordView(nextWord);
             ++numKeyDown;
             ++numKeyRight;
-        } else {
+        } else {     
+            setTimeout(function(){
+            keyReSet();
+            var left = true;
+            for(var i = 0; i < yaweiCode.length; i++){
+            if(yaweiCode[i] == ':'){
+                left = false;
+                continue;
+            }
+            var c = yaweiCode[i].toLowerCase();
+            if(left){
+                    keySet("l_"+ c, true);
+            }else{
+                    keySet("r_"+c , true);
+            }
+            }
+            }, 500);          
             setWordView(nextWord);
             ++numKeyDown;
         }
     }
+    
     function isSameWord(word1, word2){
         var wb = word2.split(':');
         var wa = word1.split(':');
@@ -190,13 +258,10 @@
         var left2 = wb[0];
         var right1 = wa[1];
         var right2 = wb[1];
-        var ls1 = left1.split('').sort();
-        var ls2 = left2.split('').sort();
-        var leftsame = isSameArray(ls1 , ls2);
-        var rs1 = right1.split('').sort();
-        var rs2 = right2.split('').sort();
-        var rightsame = isSameArray(rs1 , rs2);
-        return  leftsame && rightsame;
+       if(left1 == left2 && right1 == right2)
+           return true;
+       else
+           return false;
     }
     function isSameArray(a1,a2){
         for(var i = 0; i < a1.length && i < a2.length; ++i){
@@ -205,31 +270,51 @@
         }
         return true;
     }
-    function getCorrect(pattern , answer){
+    function getCorrect(){        
         return numKeyRight / numKeyDown;
     }
     function getNextWord(){
-        if(totalNum == 0){
+        keyReSet();
+        currentNum++;
+        if(totalNum == currentNum){
+            repeatNum--;
+            document.getElementById("repeatNum").innerHTML = repeatNum;
+            if(repeatNum == 0){
+            window.G_isOverFlag = 1;
+            document.getElementById("id_cost").value = getSeconds();
+            doSubmit(false); 
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
-        }
+            }         
+            currentNum = 0;
+        }       
         if(nextWord != "")
-            return nextWord;
-        var randIndex = Math.round(Math.random() * totalNum);
-        var sum = 0;
-        for(var i = 0; i < wordNum.length && sum < randIndex; ++i)
-            sum += wordNum[i];
-        if(i != 0){
-            --wordNum[i - 1];
-            --totalNum;
-            return wordArray[i - 1];
-        }
-        else{
-            --wordNum[0];
-            --totalNum;
-            return wordArray[0];
-        }
+        return nextWord;
+        var result = wordArray[currentNum];
+        yaweiCode = yaweiCodeArray[currentNum]; 
+        setTimeout(function(){
+            keyReSet();
+            var left = true;
+            for(var i = 0; i < yaweiCode.length; i++){
+            if(yaweiCode[i] == ':'){
+                left = false;
+                continue;
+            }
+            var c = yaweiCode[i].toLowerCase();
+            if(left){
+                    keySet("l_"+ c, true);
+            }else{
+                    keySet("r_"+c , true);
+            }
+            }
+            }, 2000);
+        return result;
     }
+    
+    function getYaweiCode(){
+        return yaweiCode[currentNum];
+    }
+    
 </script>
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 

@@ -66,8 +66,7 @@
             <?php }else{ ?>
              <li class="nav-header" ><br/></li>
                  <li class="nav-header">
-                 <a type="button" href="#" class="btn btn-large" style="width: 30%"  onclick="submitSuite();">提交</a>    
-                 <a type="button" href="#" style="width:30%" class="btn btn-primary btn-large" onclick="formSubmit();">保存</a>
+                 <a type="button" href="#" class="btn btn-large" style="width: 30%"  onclick="submitSuite();">提交</a>                 
              </li>
            <?php }?>
         </div>

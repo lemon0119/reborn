@@ -544,13 +544,21 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
+           $exerciseID = $result['exerciseID'];           
+//         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
+           //加上后连带不想关的练习答案也删除了？？？？？？
+ //         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
+            //这里有问题，重新答题时旧的答案没有清除           
+           //      AnswerRecord::model()->deleteRecord($record['recordID'], $result['exerciseID'], 'key', $studentID);
+        
         return $this->render('keyExer',array( 
             'exercise'=>$classwork,
             'exercise2'=>$classwork2,
-                'exerOne'=>$result,
+            'exerOne'=>$result,
             'isExam' => $isExam,
-                'cent' => $cent,
-            'workId' =>$wID,'isOver'=>$isOver
+            'cent' => $cent,
+            'workId' =>$wID,
+            'isOver'=>$isOver
         ));
     }
     
@@ -622,7 +630,8 @@ class StudentController extends CController {
             'typeNow' => 'key',
             'exerID' =>$exerID,
             'isOver' => $isOver, //edit by LC
-            'costTime' => $costTime
+            'costTime' => $costTime,
+            
         ));
     }
     
@@ -1153,16 +1162,20 @@ class StudentController extends CController {
     public function saveAnswer(){
         //查看是否有answer，即是否是用户提交了答案。
         if(isset($_POST['nm_answer'])) {
+            
             $answer = $_POST['nm_answer'];
-            $seconds = $_POST['nm_cost'];
+            $seconds = $_POST['nm_cost']; 
             if(Yii::app()->session['isExam']){
-                if(!ExamRecord::saveExamRecord($recordID))
-                    return false;
-            } else {
-                if(!SuiteRecord::saveSuiteRecord ($recordID))
-                    return false;
-            }
-            return AnswerRecord::saveAnswer($recordID, $answer, $seconds);
+                $workID = Yii::app()->session['examworkID'];
+                $createPerson = Yii::app()->session['userid_now'];
+                $oldID = ExamRecord::model()->getRecord($workID, $createPerson);
+                return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
+            }else {
+        $workID = Yii::app()->session['workID'];
+        $createPerson = Yii::app()->session['userid_now'];
+        $recordID = SuiteRecord::model()->getRecord($workID, $createPerson);
+        return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
+            }          
         }
     }
     public function saveParam() {
@@ -1405,5 +1418,26 @@ class StudentController extends CController {
             $lessons = array();
         }
         return $this->render('freePractice',['lessons'=>$lessons]);
+    }
+    
+    
+    public function actionStartClassExercise(){
+        $classID = $_GET['classID'];
+        $lessonID = $_GET['lessonID'];
+        $data = ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
+        echo  $data;
+    }
+    
+    public function actionIframe4Look(){
+        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
+    }
+    public function actionIframe4Listen(){
+        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Listen",["classExercise"=>$classExercise]);
+    }
+    public function actionIframe4Key(){
+        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $this->renderPartial("Iframe4Key",["classExercise"=>$classExercise]);
     }
 }

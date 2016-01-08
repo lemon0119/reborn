@@ -4589,7 +4589,9 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_tea/topic_manager.png");
 }
 #topicmanager:hover{
-    padding: 28px 60px;
+    position: relative;
+    top: 1px;
+    padding: 27px 60px;
     background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/on_topic_manager.png");
 }
@@ -4674,15 +4676,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background: url(../../img/on_btn_serch.png);
 }
 .btn_add{
+    border: none;
     background-repeat: no-repeat;
-    padding: 10px 55px;
+    padding: 9px 55px;
     margin-left: 10px;
     background: url(../../img/btn_add.png);
     position: relative;
     top:1px;
 }
 .btn_add:hover{
-    padding: 10px 55px;
+    padding: 9px 55px;
     margin-left: 10px;
     background-repeat:no-repeat;
     background: url(../../img/on_btn_add.png);
@@ -4917,7 +4920,28 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 10px 40px;
     background: url("../../img/UI_stu/on_btn_message.png");
 }
+#bth_bigregray{
+    border: 0px;
+    position: relative;
+    width: 225px;
+    top: 1px;
+    padding: 18px 0px;
+    margin-left: 0px;
+    background-repeat: no-repeat;
+    background: url("../../img/UI_tea/bth_bigregray.png");
+}
+#bth_bigregray:hover{
+    border: 0px;
+    position: relative;
+    width: 225px;
+    top: 1px;
+    padding: 18px 0px;
+    margin-left: 0px;
+    background-repeat: no-repeat;
+    background: url("../../img/UI_tea/on_bth_bigregray.png");
+}
 #bth_create{
+    border: 0px;
     position: relative;
     width: 225px;
     top: 1px;
@@ -5025,6 +5049,30 @@ table tr td{
     color: #fff;
     margin: 0px 0px 0px 0px;
 }
+.startcourse-virtualclass-begin{
+    background-color:#17a639;
+    position: relative;
+    padding: 50px 133px 50px 133px;
+    font-size: 30px;
+    right: 1px;
+    bottom: -70px;
+    float: bottom;
+    border-bottom-left-radius: 5px;
+    color: #fff;
+    margin: 0px 0px 0px 0px;
+}
+.startcourse-virtualclass-begin:hover{
+    background-color:#11bb3c;
+    position: relative;
+    padding: 50px 133px 50px 133px;
+    font-size: 30px;
+    right: 1px;
+    bottom: -70px;
+    float: bottom;
+    border-bottom-left-radius: 5px;
+    color: #fff;
+    margin: 0px 0px 0px 0px;
+}
 .startcourse-startclass{
     background-color: gray;
     position: relative;
@@ -5038,7 +5086,7 @@ table tr td{
     margin: 0px 0px 0px 0px;
 }
 .startcourse-startclass:hover{
-    background-color: #e5e5e5;
+    background-color: #aaacaa;
     position: relative;
     right: 6px;
     padding: 50px 133px 50px 133px;
@@ -5068,6 +5116,20 @@ table tr td{
 .table_schedule:hover{
     font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
+}
+.table_pointer{
+    font-weight:100 !important;
+    box-shadow: #666 0px 0px 0px;background: #fff;behavior: url(/PIE.htc) !important; 
+}
+
+.table_pointer:hover{
+     font-weight: bolder !important;
+    box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important; 
+}
+
+.table_pointer:active{
+     font-weight: bolder !important;
+    box-shadow: #666 0px 0px 5px;background: #f2f2f2;behavior: url(/PIE.htc) !important; 
 }
 #postnotice{
     cursor: pointer;
@@ -5349,4 +5411,12 @@ table tr td{
     height: 590px;
     overflow: auto;
     width:1090px;
+}
+.analysisTool{
+    border-radius: 5px;
+    position:relative;
+    height: 230px;
+    width:150px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }

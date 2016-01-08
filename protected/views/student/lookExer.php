@@ -1,6 +1,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/time.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
+<script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <?php
   if($isExam == false) {
     require 'suiteSideBar.php';
@@ -50,17 +51,74 @@ if ($isExam) {
             <br/>
             <object id="typeOCX" type="application/x-itst-activex" 
                     clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                    width ='750' height='350' 
-                    event_OnChange="onChange">
+                    width ='750' height='310' 
+                    event_OnChange="onChange"
+                    event_OnStenoPress="onStenoPressKey">
             </object>
         </div>
         <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
+    </div>
+
+
+<div  class="analysisTool" id="analysis" style="background-color: #fff;left: 1170px; height: 670px; width: 220px;">
+        <table style="margin: 0px auto; font-size: 18px;position:relative;top: -250px;" cellpadding="20"  >
+            <tr>
+                <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
+                 <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                
+            <tr>
+                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td></tr>
+                <tr><td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td></tr>
+                <tr><td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+                <tr><td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr><tr><td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr>
+        </table>
     </div>
 <?php } else { ?>
     <h3 align="center">本题时间已经用完</h3>
 <?php } ?>
 <script>
 
+function onStenoPressKey(pszStenoString ,device){
+     //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
+        window.G_keyBoardBreakPause =0;
+        var myDate = new Date();
+         window.G_pressTime = myDate.getTime();
+         if(window.G_startFlag ===0){
+                    window.G_startTime = myDate.getTime();
+                    window.G_startFlag = 1; 
+                    window.G_oldStartTime = window.G_pressTime;
+                }
+                window.G_countMomentKey++;
+                window.G_countAllKey++;
+                window.G_content = document.getElementById("typeOCX").GetContent();
+                window.G_keyContent = window.G_keyContent +"&"+pszStenoString;
+                
+                          //每击统计击键间隔时间 秒
+                          //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
+                          //每击统计最高击键间隔时间 秒
+                          //@param id=getHighIntervarlTime 请将最高平均速度统计的控件id设置为getHighIntervarlTime 
+          if(window.G_endAnalysis===0){
+                 var pressTime = window.G_pressTime;
+                 if(pressTime - window.G_oldStartTime >0){
+                     var IntervalTime = parseInt((pressTime - window.G_oldStartTime)/10)/100;
+                      $("#getIntervalTime").html(IntervalTime);
+                      window.GA_IntervalTime  = IntervalTime;
+                     window.G_oldStartTime = pressTime;
+                 }
+                 if(IntervalTime-window.G_highIntervarlTime>0){
+                     window.G_highIntervarlTime = IntervalTime;
+                      window.GA_IntervalTime  = window.G_highIntervarlTime ;
+                     $("#getHighIntervarlTime").html(IntervalTime);
+                 }             
+          }                
+           
+        //--------------------------------------------------
+     }
 
     $(document).ready(function () {
 
@@ -77,8 +135,7 @@ if ($isExam) {
                         					var option = {
 						title: "提示",
 						btn: parseInt("0011",4),
-					};
-					window.wxc.xcConfirm("本题作答时，不能中途退出，做完需点击保存后方可做下一题！！", "custom", option);
+					};					
         <?php }?>
         if (<?php
 if ($isExam) {
@@ -119,6 +176,9 @@ if ($isExam) {
     }
 
     $(document).ready(function () {
+        yaweiOCX = document.getElementById("typeOCX");
+        yaweiOCX.HideToolBar();
+        
         //菜单栏变色
         $("li#li-look-<?php echo $exerOne['exerciseID']; ?>").attr('class', 'active');
         //显示题目

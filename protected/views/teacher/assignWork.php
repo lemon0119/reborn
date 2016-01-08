@@ -1,4 +1,4 @@
-<div class="span3">
+ <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
         <ul class="nav nav-list">                     
             <li class="nav-header"><i class="icon-knowlage"></i>班级列表</li>
@@ -13,7 +13,7 @@
             <li class="divider"></li>
             <?php if(Yii::app()->session['currentClass']&&Yii::app()->session['currentLesson']){?>
             
-                <li class="nav-header" ><i class="icon-knowlage"></i>作业题目</li>
+                <li class="nav-header" ><i class="icon-knowlage"></i>新建作业</li>
                 <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
                 <li style="margin-top:10px">
                     <a href="#"onclick="chkIt()" id="bth_create"></a>
@@ -43,14 +43,26 @@
             <tr>
                 <th class="font-center">选择</th>
                 <th class="font-center">标题</th>
+                <th class="font-center">单选</th>
+                <th class="font-center">填空</th>
+                <th class="font-center">简答</th>
+                <th class="font-center">键打</th>
+                <th class="font-center">看打</th>
+                <th class="font-center">听打</th>
                 <th class="font-center">状态</th>
                 <th class="font-center">操作</th>               
             </tr>
         </thead>
         <tbody>     
             <form id="deleForm" method="post" action="./index.php?r=teacher/deleteSuite" > 
-            <?php
+            <?php 
             foreach ($array_allsuite as $suite):
+                $classwork = array();
+                 $suitID = $suite['suiteID'];
+                            foreach (Tool::$EXER_TYPE as $type) {
+                               $classwork[$type] = Suite::model()->getSuiteExerByType($suitID, $type);
+                        }
+                
                 $isOpen = false;
             if($array_suite){
                 foreach ($array_suite as $exitsuite)
@@ -62,8 +74,18 @@
                 ?>                    
                 <tr>
                     <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $suite['suiteID']; ?>" /> </td>
-                    <td class="font-center" ><?php echo $suite['suiteName']; ?></td>
-                    <td class="font-center" style="width: 100px">
+                    <td class="font-center"  ><?php  if(Tool::clength($suite['suiteName'])<=10)
+                                        echo $suite['suiteName'];
+                                    else
+                                        echo Tool::csubstr($suite['suiteName'], 0,8)."...";
+                                        ?></td>
+                    <td class="font-center" style="width: 30px"><?php if(count($classwork['choice'])==0){echo '-';}else{echo count($classwork['choice']);}  ?></td>
+                    <td class="font-center" style="width: 30px"><?php if(count($classwork['filling'])==0){echo '-';}else{echo count($classwork['filling']);} ?></td>
+                    <td class="font-center" style="width: 30px"><?php if(count($classwork['question'])==0){echo '-';}else{echo count($classwork['question']);} ?></td>
+                    <td class="font-center" style="width: 30px"><?php if(count($classwork['key'])==0){echo '-';}else{echo count($classwork['key']);} ?></td>
+                    <td class="font-center" style="width: 30px"><?php if(count($classwork['look'])==0){echo '-';}else{echo count($classwork['look']);} ?></td>
+                    <td class="font-center" style="width: 30px"><?php if(count($classwork['listen'])==0){echo '-';}else{echo count($classwork['listen']);} ?></td>
+                    <td class="font-center" style="width: 80px">
                         <?php if ($isOpen == false) { ?>
                             <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color:green">发布</a>
                             <font style="color:grey">关闭</font>
@@ -96,7 +118,7 @@
     $(document).ready(function(){
         if(<?php echo $res;?>==1){
             var txt=  "此作业已经被创建！";
-	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+	    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
             document.getElementById("title").value="";
         }
     });
@@ -146,11 +168,11 @@
     function chkIt(){
     var usernameVal = document.getElementById("title").value;  
     if(usernameVal==""){
-        window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm("题目不能为空", window.wxc.xcConfirm.typeEnum.info);
             return false;
     }
     if(usernameVal.length > 30){ //一个汉字算一个字符  
-        window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm("大于30个字符", window.wxc.xcConfirm.typeEnum.info);
         document.getElementById("title").value="";
         return false;
     }

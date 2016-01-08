@@ -193,8 +193,8 @@ foreach ($classAll as $key => $value) {
     usertipsSpan = document.getElementById("usertips");  
     usertipsSpan.style.color = "red";  
     usertipsSpan.style.marginLeft="25px";
-    if (!usernameVal.match( /^[A-Za-z0-9]+$/)) {  
-        usertipsSpan.innerHTML="必须由数字、英文、数字、下划线组成";  
+    if (!usernameVal.match( /^[A-Za-z]+[A-Za-z0-9]+$/)) {  
+        usertipsSpan.innerHTML="必须由首字符英文加数字、英文、下划线组成";  
         document.getElementById("input01").value="";
         return false;  
     } else {  

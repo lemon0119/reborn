@@ -34,9 +34,10 @@
 </div>
 
 <?php 
-    $content=  str_replace("_", ":", $content);
-    $optArr = explode(":",$content);
-      $count = round(count($optArr)/3);?>
+
+
+
+  ?>
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
@@ -47,88 +48,67 @@
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editKeyInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
-        
+        <?php if(!isset($action)) {?>
+            <legend>填写题目</legend>
+        <?php } else if($action == 'look') {?>
+            <legend>查看题目</legend>
+        <?php }?>
         <div class="control-group">
-            <label class="control-label" for="input01">题目</label>
+            <label class="control-label" for="input">题目</label>
             <div class="controls">
-                <textarea name="title" style="width:450px; height:20px;" id="input" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $title; ?></textarea>
+                <textarea name="title" style="width:450px; height:20px;" id="input" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>><?php echo $key['title']?></textarea>
             </div>
         </div>
-            <div class="control-group" id="div1">
-            <label class="control-label" >键位码</label>
-            <div class="controls">               
-                <input type="text" name="in1" style="width:150px; height:15px;" id="input1" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>0) echo $optArr[0];?>"> <span> ：</span>                 
-                <input type="text" name="in2" style="width:150px; height:15px;" id="input2" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?> value="<?php if ($count>0)echo $optArr[1];?>">
-                <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2"  <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>0)echo $optArr[2];?>">
-                <?php if(!isset($action)) {?> 
-                <a class="btn btn-primary"  <?php if(!isset($action)){ echo 'onclick="addIn()"';  }?>><i class="icon-plus-editwork icon-white" ></i></a> <a class="btn btn-primary" <?php if(!isset($action)){ echo 'onclick="deleteIn()" '; }?>><i class="icon-minus icon-white"></i></a>
-                <?php }?>
-            </div>             
+            
+  <div class="control-group" > 
+    <label class="control-label" for="input">练习词库</label>
+    <div class="controls"  >  
+        <table id="lib"  style="align:left;">
+        </table>    
+        <a href="#" onclick="selectWordLib()">预置词库选择</a>
         </div>
-            <div class="control-group" id="div2" style="<?php if ($count<2) echo "display:none";?>">           
-            <div class="controls">               
-                <input type="text"  name="in4" style="width:150px; height:15px;" id="input4" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?> value="<?php if ($count>1)echo $optArr[3];?>"> <span> ：</span>                 
-                <input type="text"  name="in5" style="width:150px; height:15px;" id="input5"  maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>1)echo $optArr[4];?>">
-                <input type="text"  name="in6" style="width:40px; height:15px;" id="input6" maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>1)echo $optArr[5];?>">              
-            </div>             
-        </div>
-        <div class="control-group" id="div3" style="<?php if ($count<3) echo "display:none";?>">           
-            <div class="controls">               
-                <input type="text" name="in7" style="width:150px; height:15px;" id="input7" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>2)echo $optArr[6];?>"> <span> ：</span>                 
-                <input type="text" name="in8" style="width:150px; height:15px;" id="input8" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>2)echo $optArr[7];?>">
-                <input type="text" name="in9" style="width:40px; height:15px;" id="input9"  maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>2)echo $optArr[8];?>">              
-            </div>             
-        </div>
-        <div class="control-group" id="div4" style="<?php if ($count<4) echo "display:none";?>">           
-            <div class="controls">               
-                <input type="text" name="in10" style="width:150px; height:15px;" id="input10" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>3)echo $optArr[9];?>"> <span> ：</span>                 
-                <input type="text" name="in11" style="width:150px; height:15px;" id="input11"maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>3) echo $optArr[10];?>">
-                <input type="text" name="in12" style="width:40px; height:15px;"id="input12" maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>3) echo $optArr[11];?>">              
-            </div>             
-        </div>
-        <div class="control-group" id="div5" style="<?php if ($count<5) echo "display:none";?>">            
-            <div class="controls">               
-                <input type="text" name="in13" style="width:150px; height:15px;" id="input13" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>4) echo $optArr[12];?>"> <span> ：</span>                 
-                <input type="text" name="in14" style="width:150px; height:15px;" id="input14" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>4) echo $optArr[13];?>">
-                <input type="text" name="in15" style="width:40px; height:15px;" id="input15" maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>4) echo $optArr[14];?>">              
-            </div>             
-        </div>
+    </div>   
+            
+    <div class="control-group" > 
+        <label class="control-label" for="input" >所有二字词库</label>
+        <div class="controls"  > 
     
-    <div class="control-group" style="display: none"  id="div6" style="<?php if ($count<6) echo "display:none";?>">           
-            <div class="controls">               
-                <input type="text" name="in16" style="width:150px; height:15px;" id="input13" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>5) echo $optArr[15];?>"> <span> ：</span>                 
-                <input type="text" name="in17" style="width:150px; height:15px;" id="input14" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>5) echo $optArr[16];?>">
-                <input type="text" name="in18" style="width:40px; height:15px;" id="input15" maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>5) echo $optArr[17];?>">              
-            </div>             
+            <input type="checkbox" onclick="checkAll()" id="all" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>添加所有二字词库
+        </div>
+    </div>         
+                  
+    <div class="control-group" > 
+        <label class="control-label" for="input">练习类型</label>
+        <div class="controls">
+            <select  name="category" id="testSelect" style="border-color: #000; color:#000" onchange="changSelect()" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>
+                <option  value="free" <?php if($key['category'] == "free") echo "selected='selected'";?>>自由练习</option>
+                <option  value="speed" <?php if($key['category'] == "speed") echo "selected='selected'";?>>速度练习</option>
+                <option  value="correct" <?php if($key['category'] == "correct") echo "selected='selected'";?>>准确率练习</option>                                        
+            </select>
+        </div>
     </div>
-    <div class="control-group" style="display: none"  id="div7" style="<?php if ($count<7) echo "display:none";?>">           
-            <div class="controls">               
-                <input type="text" name="in19" style="width:150px; height:15px;" id="input13" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>6)echo $optArr[18];?>"> <span> ：</span>                
-                <input type="text" name="in20" style="width:150px; height:15px;" id="input14" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>6) echo $optArr[19];?>">
-                <input type="text" name="in21" style="width:40px; height:15px;" id="input15" maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>6) echo $optArr[20];?>">              
+            
+       <div class="control-group" id="div3">   
+            <label class="control-label" >练习循环次数</label>
+            <div class="controls">                                                        
+                <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2" value="0" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>               
             </div>             
-    </div>
-    <div class="control-group" style="display: none"  id="div8" style="<?php if ($count<8) echo "display:none";?>">           
-            <div class="controls">               
-                <input type="text" name="in22" style="width:150px; height:15px;" id="input13" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>7)echo $optArr[21];?>"> <span> ：</span>                 
-                <input type="text" name="in23" style="width:150px; height:15px;" id="input14" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>7) echo $optArr[22];?>">
-                <input type="text" name="in24" style="width:40px; height:15px;" id="input15" maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>7)echo $optArr[23];?>">              
+        </div>            
+        <div class="control-group" style="display: none" id="div1">   
+            <label class="control-label" >二字词练习次数</label>
+            <div class="controls">                                                        
+                <input type="text" name="in1" style="width:40px; height:15px;" id="input1" maxlength="2" value="0" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>               
             </div>             
-    </div>
-    <div class="control-group"  style="display: none" id="div9" style="<?php if ($count<9) echo "display:none";?>">           
-            <div class="controls">               
-                <input type="text" name="in25" style="width:150px; height:15px;" id="input13" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>8)echo $optArr[24];?>"> <span> ：</span>                 
-                <input type="text" name="in26" style="width:150px; height:15px;" id="input14" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>8)echo $optArr[25];?>">
-                <input type="text" name="in27" style="width:40px; height:15px;" id="input15" maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>8)echo $optArr[26];?>">              
-            </div>             
-    </div>
-    <div class="control-group"  style="display: none" id="div10" style="<?php if ($count<10) echo "display:none";?>">           
-            <div class="controls">               
-                <input type="text" name="in28" style="width:150px; height:15px;" id="input13" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>9)echo $optArr[27];?>"> <span> ：</span>                 
-                <input type="text" name="in29" style="width:150px; height:15px;" id="input14" maxlength="12" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>9) echo $optArr[28];?>">
-                <input type="text" name="in30" style="width:40px; height:15px;" id="input15" maxlength="2" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>value="<?php if ($count>9) echo $optArr[29];?>">              
-            </div>             
-    </div>
+        </div>
+            
+       <div class="control-group" style="display: none" id="div2">
+            <label class="control-label" >速度:</label>
+             <div class="controls">
+                 <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="0" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>         
+             词/分钟
+             </div>            
+       </div>   
+       
         <div class="form-actions">
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">修改</button>
@@ -136,73 +116,167 @@
             <a href="./index.php?r=teacher/keyLst" class="btn">返回</a>
         </div>
         </fieldset>
+        <input id="libstr" style="display: none;" name="libstr" value="">
     </form>   
 </div>
 <script>     
- $(document).ready(function(){
-    <?php if(isset($result))
-            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>
-});
- var divCount = <?php echo $count?>;
  var inputCount = 1;
+ var hasChooseLib = 0;
+$(document).ready(function(){
+   <?php if(isset($result))
+            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>   
+    init();                               
+});
 $("#myForm").submit(function(){
     var requirements = $("#input")[0].value;
     if(requirements === ""){
-        	window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
-    var i ,j ,k, y = 3*divCount;
-    var patrn = /^[A-Z]{1,12}$/;
-    var numpatrn =/^[0-9]{1,2}$/;
-    for(i = 1 ; i <=y ; i++)
-    {
-        var input = $("#input" + i)[0].value;
-        if(i%3 == 0)
-        {
-            if(!numpatrn.exec(input))
-            {
-                j = Math.floor(i/3);               
-                	window.wxc.xcConfirm('第'+ j +'行第三空循环次数应设为0-100', window.wxc.xcConfirm.typeEnum.warning);
-               return false;
-           }
-        }else{
-            if(!patrn.exec(input))
-            {
-                j = Math.floor(i/3)+1;
-                k = i%3;
-                	window.wxc.xcConfirm('第' + j + '行第' + k + '空应输入0-12个A-Z的字母', window.wxc.xcConfirm.typeEnum.warning);
+    
+    var i;
+    var numpatrn =/^[1-9][0-9]|[1-9]$/;    
+    var numpatrn1 =/^1|[0-9]{3}$/; 
+    
+                var input1 = $("#input1")[0].value;
+                var input2 = $("#input2")[0].value;
+                var input3 = $("#input3")[0].value;
+    
+    if($("#all").is(':checked')){
+        hasChooseLib = 1;
+        if(document.getElementById("libstr").value == "")           
+            document.getElementById("libstr").value = "lib";
+        else
+            document.getElementById("libstr").value += "$$lib";
+        
+           if(!numpatrn.exec(input1))
+            {                 
+                window.wxc.xcConfirm('二字词应设为1-100', window.wxc.xcConfirm.typeEnum.warning);
                 return false;
             }
-        }           
     }
-    }
+    
+    if(hasChooseLib == 0)
+    {
+        window.wxc.xcConfirm('请选择词库', window.wxc.xcConfirm.typeEnum.warning);
+        return false;
+    }           
+            if(!numpatrn.exec(input3))
+            {                 
+                window.wxc.xcConfirm('循环次数应设为1-100', window.wxc.xcConfirm.typeEnum.warning);
+                return false;
+            }        
+ 
+           if($("#testSelect").find("option:selected").val() == "speed")
+           if(!numpatrn.exec(input2))
+            {                 
+                window.wxc.xcConfirm('速度应设为1-1000', window.wxc.xcConfirm.typeEnum.warning);
+                return false;
+            }   
+        }
 );
-    function addIn()
+
+function changSelect(){
+    if($("#testSelect").find("option:selected").val() == "speed"){
+        document.getElementById("div2").style.display = "";
+    }else{
+        document.getElementById("div2").style.display = "none";
+    }        
+}
+
+function checkAll(){
+      if($("#all").is(':checked')){
+          document.getElementById("div1").style.display = "";
+      }else
+      {
+         document.getElementById("div1").style.display = "none";
+      }
+}
+
+function selectWordLib(){
+    var libstr = document.getElementById("libstr").value;    
+    var des = "./index.php?r=teacher/SelectWordLib&&libstr="+libstr;
+    window.open(des, 'newwindow', 'height=1000,width=800,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+}
+
+
+ window.getContent = function(libs) {
+    var Table = document.getElementById("lib"); 
+    hasChooseLib = 0;
+    var rowNum=Table.rows.length;
+    for (i=0;i<rowNum;i++)
     {
-        if(divCount<11){
-            divCount++;
-            $("#div"+divCount).show();
-        }else
-        {
-            	window.wxc.xcConfirm("最多添加十个选项", window.wxc.xcConfirm.typeEnum.warning);
-        }
+        Table.deleteRow(i);
     }
-    function deleteIn()
+    var libstr = "";
+    for(var i=0;i<libs.length;i++){
+        if(i==0)
+            libstr += libs[i];
+        else
+            libstr += "$$"+libs[i];
+        
+        hasChooseLib = 1;
+        if(i%3 == 0)
+        {
+           var NewRow = Table.insertRow();
+        }
+        var NewCell= NewRow.insertCell();
+        NewCell.style.width = "250px";      
+        NewCell.innerHTML = "<span style='float:left'>"+libs[i]+"</span>";    
+    }
+    document.getElementById("libstr").value = libstr;
+ }
+
+
+
+
+function init() {
+    var libstr = "<?php echo $key['chosen_lib']?>";
+    var libs = libstr.split("$$");
+    var length = libs.length;
+    if(libs[libs.length-1] == "lib")
     {
-        if(divCount>1){
-            $("#div"+divCount).hide();
-            var num = 1;
-            divCount--;
-            for(;num<=3;num++)
-            {
-                count = 3*divCount + num;
-                $("#input"+count).val("");
-            }
-        }else
-        {
-            	window.wxc.xcConfirm("必须有一个答案", window.wxc.xcConfirm.typeEnum.warning);
-        }
+        document.getElementById("all").checked = true;
+        document.getElementById("div1").style.display = "";
+        var content = "<?php echo $key['content'];?>";
+        var words = content.split("$$");
+        document.getElementById("input1").value = words.length;
+        length -=1;
     }
+    var Table = document.getElementById("lib"); 
+    hasChooseLib = 0;
+    var rowNum=Table.rows.length;
+    for (i=0;i<rowNum;i++)
+    {
+        Table.deleteRow(i);
+    }
+    for(var i=0;i<length;i++){      
+        hasChooseLib = 1;
+        if(i%3 == 0)
+        {
+           var NewRow = Table.insertRow();
+        }
+        var NewCell= NewRow.insertCell();
+        NewCell.style.width = "250px";      
+        NewCell.innerHTML = "<span style='float:left'>"+libs[i]+"</span>";    
+    }
+    document.getElementById("libstr").value = libstr;
+    
+    var category = "<?php echo $key['category'];?>";
+    if(category == "speed")
+    {
+        document.getElementById("div2").style.display = "";
+        document.getElementById("input2").value = "<?php echo $key['speed'];?>";
+    }
+    
+    document.getElementById("input3").value = "<?php echo $key['repeatNum'];?>";
+ }
+ 
+ 
+  window.getLibs = function() {
+      return document.getElementById("libstr").value;
+  }
+  
 
 </script>
 

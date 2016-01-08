@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+<TITLE>TEST-OCL</TITLE>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <script language="javascript" type="text/javascript">
+    var yaweiOCX = null;
+
+    function getContent() {
+		yaweiOCX.UpdateView();
+        var str = yaweiOCX.GetContent();
+        return str;
+    }
+    function doGetContent() {
+        var res = this.getContent();
+        alert(res);
+    }
+	function getContentSteno() {
+        var str = yaweiOCX.GetContentWithSteno();
+        return str;
+    }
+    function doGetContentSteno() {
+        var res = this.getContentSteno();
+        alert(res);
+    }
+	/*
+    function setLibPath(spath) {
+        var res;
+        try{
+            res = yaweiOCX.SetLibPath(spath);
+        }catch(e){
+            alert(e);
+        }
+        return res;
+    }
+	*/
+	function onStenoPress(str, i)
+	{
+		console.log(str);
+	}
+</script>
+
+<!---->
+<script type="text/javascript">
+    window.onload = function(){
+        yaweiOCX = document.getElementById("myocx");
+    };
+</script>
+
+</HEAD>
+<body>
+<!--使用标签<object> 嵌入ocx标签。-->
+<div id = "ocxDIV">
+    <object id="myocx" type="application/x-itst-activex" 
+            clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
+            width ='800' height='300' 
+			event_OnStenoPress="onStenoPress"
+			>
+    </object>
+</div>
+
+<input type ="button" style="margin-top: 10px" value="获得字符" onclick="doGetContent()"/>
+<input type ="button" style="margin-top: 10px" value="获得字符(有键位码)" onclick="doGetContentSteno()"/>
+<br/>
+<input type ="button" style="margin-top: 10px" value="隐藏工具栏" onclick="yaweiOCX.HideToolBar();"/>
+<input type ="button" style="margin-top: 10px" value="显示工具栏" onclick="yaweiOCX.ShowToolBar();"/>
+<br/>
+<input type ="button" style="margin-top: 10px" value="隐藏工具栏2" onclick="yaweiOCX.HideSecondToolBar();"/>
+<input type ="button" style="margin-top: 10px" value="显示工具栏2" onclick="yaweiOCX.ShowSecondToolBar();"/>
+</body>
+
+</HTML>
