@@ -107,7 +107,8 @@
             return;
         lcs.doLCS();
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
-        document.getElementById("id_correct").value = correct;      
+        document.getElementById("id_correct").value = (correct*100).toFixed(2);
+        window.GA_RightRadio = (correct*100).toFixed(2);
         document.getElementById("id_cost").value = getSeconds();
         document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
         document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;

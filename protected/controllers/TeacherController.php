@@ -4409,8 +4409,11 @@ class TeacherController extends CController {
                 break;
         }
 
-        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $ty, $exerID);
         $accomplish = $_GET['accomplish'];
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render($render, ['exercise' => $classwork,
                     'student' => $student,
                     'suiteID' => $suiteID,
@@ -4429,7 +4432,7 @@ class TeacherController extends CController {
                     'array_accomplished' => $array_accomplished,
                     'exam_exercise' => $suite_exercise,
                     'answer' => $answer['answer'],
-                    'correct' => $answer['ratio_correct']]);
+                    'correct' => $correct]);
     }
 
     public function actionAnsKeyType() {
@@ -4508,9 +4511,12 @@ class TeacherController extends CController {
                 break;
         }
 
-        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $ty, $exerID);
         $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
         $accomplish = $_GET['accomplish'];
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render($render, ['exercise' => $classwork,
                     'student' => $student,
                     'examID' => $examID,
@@ -4528,7 +4534,7 @@ class TeacherController extends CController {
                     'type' => $ty,
                     'exam_exercise' => $exam_exercise,
                     'answer' => $answer['answer'],
-                    'correct' => $answer['ratio_correct']]);
+                    'correct' =>$correct]);
     }
 
     //
@@ -4678,8 +4684,11 @@ class TeacherController extends CController {
             $arr = explode(",", $_POST['score']);
             $m = 0;
             foreach ($array_exercise as $k => $work) {
-                if ($arr[$m] != " ")
+                if ($arr[$m] != " "){
                     AnswerRecord::model()->changeScore($ansWork[$k]['answerID'], $arr[$m++]);
+                    if($ty=='choice')
+                        break;
+                }
             }
         }
 

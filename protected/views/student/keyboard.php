@@ -184,9 +184,7 @@
         }
         changTemplet(pszStenoString);
          window.GA_RightRadio = (getCorrect()*100).toFixed(2);
-         <?php if(!$isExam){?>
-                document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
-         <?php }?>
+         document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -280,9 +278,7 @@
         currentNum++;
         if(totalNum == currentNum){
             repeatNum--;
-            <?php if(!$isExam){?>
-                document.getElementById("repeatNum").innerHTML = repeatNum;
-            <?php }?>
+            document.getElementById("repeatNum").innerHTML = repeatNum;
             if(repeatNum == 0){
             window.G_isOverFlag = 1;
             document.getElementById("id_cost").value = getSeconds();

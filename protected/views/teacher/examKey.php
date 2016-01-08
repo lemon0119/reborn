@@ -16,7 +16,7 @@ require 'examAnsSideBar.php';
         <table border = '0px' width="100%">
             <tr>
                 <td width = '50%' align='center'><?php echo $exer['title']?></td>
-                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$ansWork['ratio_correct'] * 100);echo '%';?></span></td>
+                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct);echo '%';?></span></td>
             </tr>
             <tr>
                 <td colspan='3'>

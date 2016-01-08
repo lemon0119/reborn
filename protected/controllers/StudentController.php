@@ -56,10 +56,13 @@ class StudentController extends CController {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
         }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render('ansDetail_1',['exercise' => $classwork,
             'exer' => $exer,
             'answer' => $answer['answer'],
-            'correct' => $answer['ratio_correct'],
+            'correct' =>$correct,
             'type'=>$type,
                 ]);
     }
@@ -85,11 +88,14 @@ class StudentController extends CController {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
         }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render('ansKey',
             ['exercise' => $classwork,
             'exer' => $result,
             'answer' => $answer['answer'],
-            'correct' => $answer['ratio_correct']]);
+            'correct' =>$correct]);
     }
     
     public function actionAnsQuestion(){
