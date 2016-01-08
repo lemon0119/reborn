@@ -8,7 +8,7 @@
             <h2><?php if($type=='look') echo '看打练习';else echo '听打练习';?></h2>
             <tr>
                 <td width = '50%' align='center'>题目：<?php echo $exer['title']?></td>
-                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct * 100);echo '%';?></span></td>
+                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct );echo '%';?></span></td>
             </tr>
             <tr>
                 <td colspan='3'>

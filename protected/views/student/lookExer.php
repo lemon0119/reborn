@@ -176,9 +176,12 @@ if ($isExam) {
     }
 
     $(document).ready(function () {
+        setInterval(function () {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
+            writeData();
+            doSubmit(); 
+       }, 2000);
         yaweiOCX = document.getElementById("typeOCX");
         yaweiOCX.HideToolBar();
-        
         //菜单栏变色
         $("li#li-look-<?php echo $exerOne['exerciseID']; ?>").attr('class', 'active');
         //显示题目
@@ -324,4 +327,10 @@ if ($isExam) {
 
         }
     }
+    window.G_saveToDatabase = 1;
+    window.G_squence = 0;
+    window.G_exerciseType = "answerRecord";
+//    var answer = document.getElementById("id_answer").value;
+//    var cost = document.getElementById("id_cost").value;
+   window.G_exerciseData = Array("1");
 </script>

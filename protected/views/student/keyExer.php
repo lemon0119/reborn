@@ -31,9 +31,11 @@
                 <tr><h3><?php echo $exerOne['title']?></h3>                
                 <tr>
                     
+                <span id="repeatNum" style="display: none"><?php echo $exerOne['repeatNum']?></span>
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
                         <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime?></span><input id="timej" type="hidden"/></td>
+                        <span id="wordisRightRadio" style="display: none;">0</span>
                         <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php }else{?>
                     <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
