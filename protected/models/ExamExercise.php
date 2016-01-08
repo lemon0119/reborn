@@ -186,6 +186,7 @@ class ExamExercise extends CActiveRecord
             $select = 'select key_type.exerciseID, '
                     . 'key_type.content, '
                     . 'key_type.title, '
+                    .'key_type.repeatNum,'
                     . 'exam_exercise.score, '
                     . 'key_type.category,'
                     . 'key_type.speed,'

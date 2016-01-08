@@ -6,27 +6,15 @@
  * The followings are the available columns in table 'answer_record':
  * @property string $answerID
  * @property string $recordID
- * @property integer $exerciseID
+ * @property string $exerciseID
  * @property string $type
- * @property integer $costTime
- * @property double $ratio_accomplish
- * @property double $ratio_correct
  * @property string $answer
  * @property string $createPerson
  * @property string $createTime
- * @property integer $score
- * @property double $ratio_speed
- * @property double $ratio_maxSpeed
- * @property double $ratio_backDelete
- * @property double $ratio_maxKeyType
- * @property double $ratio_averageKeyType
- * @property double $ratio_maxInternalTime
- * @property double $ratio_countAllKey
- * @property integer $squence
- * @property integer $isExam
  */
 class AnswerRecord extends CActiveRecord
 {
+    
     public static function ansToArray($answer){
         if($answer == NULL)
             return NULL;
@@ -244,30 +232,15 @@ class AnswerRecord extends CActiveRecord
             $oldAnswer->ratio_maxInternalTime = $oldAnswer['ratio_maxInternalTime'].'&'.$HighIntervarlTime;
             $oldAnswer->ratio_countAllKey = $oldAnswer['ratio_countAllKey'].'&'.$countAllKey;
             $oldAnswer->isExam = $isExam;
-            
-            $correct=$oldAnswer['ratio_correct'].'&'.$correct;
-            $cTime=date("Y-m-d  H:i:s");
-            $rspeed=$oldAnswer['ratio_speed'].'&'.$AverageSpeed;
-            $rmaxSpeed=$oldAnswer['ratio_maxSpeed'].'&'.$HighstSpeed;
-            $rbackDelete = $oldAnswer['ratio_backDelete'].'&'.$BackDelete;
-            $rmaxKeyType = $oldAnswer['ratio_maxKeyType'].'&'.$HighstCountKey;
-            $raverageKeyType = $oldAnswer['ratio_averageKeyType'].'&'.$AveragekeyType;
-            $rmaxInternalTime = $oldAnswer['ratio_maxInternalTime'].'&'.$HighIntervarlTime;
-            $rcountAllKey = $oldAnswer['ratio_countAllKey'].'&'.$countAllKey;
-            error_log($correct);
-            $sql = "UPDATE answer_record SET ratio_correct='$correct',createTime='$cTime',ratio_speed='$rspeed',ratio_maxSpeed='$rmaxSpeed',ratio_backDelete='$rbackDelete',ratio_maxKeyType='$rmaxKeyType'"
-                    . ",ratio_averageKeyType='$raverageKeyType',ratio_maxInternalTime='$rmaxInternalTime', ratio_countAllKey='$rcountAllKey'"
-                    . " where recordID='$recordID' and type='$type' and exerciseID='$exerID'";
-            $result=Yii::app()->db->createCommand($sql)->query(); 
-            
-//            if($result) {
-//                echo Tool::jsLog('更新答案记录失败！');
-//                return false;
-//            } else{
+            if(!($oldAnswer->update())) {
+                echo Tool::jsLog('更新答案记录失败！');
+                return false;
+            } else{
+                error_log($oldAnswer -> ratio_correct);
                 $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerID);
-                
+                error_log($oldAnswer['ratio_correct']);
                 return true;
-//            }
+            }
         }
     }
   
@@ -376,14 +349,12 @@ class AnswerRecord extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('answerID, recordID, exerciseID, type, answer, createPerson, createTime, ratio_speed, ratio_maxSpeed, ratio_backDelete, ratio_maxKeyType, ratio_averageKeyType, ratio_maxInternalTime, ratio_countAllKey, squence, isExam', 'required'),
-			array('exerciseID, costTime, score, squence, isExam', 'numerical', 'integerOnly'=>true),
-			array('ratio_accomplish, ratio_correct, ratio_speed, ratio_maxSpeed, ratio_backDelete, ratio_maxKeyType, ratio_averageKeyType, ratio_maxInternalTime, ratio_countAllKey', 'numerical'),
-			array('answerID, recordID, createPerson', 'length', 'max'=>30),
+			array('answerID, recordID, exerciseID, type,costTime,radio_accomplish,ratio_correct,answer, createPerson, createTime,score,ratio_speed,ratio_maxSpeed,ratio_backDelete,ratio_maxKeyType,ratio_averageKeyType,ratio_maxInternalTime,ratio_countAllKey,squence,isExam', 'required'),
+			array('answerID, recordID, exerciseID, createPerson', 'length', 'max'=>30),
 			array('type', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('answerID, recordID, exerciseID, type, costTime, ratio_accomplish, ratio_correct, answer, createPerson, createTime, score, ratio_speed, ratio_maxSpeed, ratio_backDelete, ratio_maxKeyType, ratio_averageKeyType, ratio_maxInternalTime, ratio_countAllKey, squence, isExam', 'safe', 'on'=>'search'),
+			array('answerID, recordID, exerciseID, type, answer, createPerson, createTime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -408,22 +379,12 @@ class AnswerRecord extends CActiveRecord
 			'recordID' => 'Record',
 			'exerciseID' => 'Exercise',
 			'type' => 'Type',
-			'costTime' => 'Cost Time',
-			'ratio_accomplish' => 'Ratio Accomplish',
-			'ratio_correct' => 'Ratio Correct',
 			'answer' => 'Answer',
 			'createPerson' => 'Create Person',
 			'createTime' => 'Create Time',
-			'score' => 'Score',
-			'ratio_speed' => 'Ratio Speed',
-			'ratio_maxSpeed' => 'Ratio Max Speed',
-			'ratio_backDelete' => 'Ratio Back Delete',
-			'ratio_maxKeyType' => 'Ratio Max Key Type',
-			'ratio_averageKeyType' => 'Ratio Average Key Type',
-			'ratio_maxInternalTime' => 'Ratio Max Internal Time',
-			'ratio_countAllKey' => 'Ratio Count All Key',
-			'squence' => 'Squence',
-			'isExam' => 'Is Exam',
+                        'costTime'=>'Cost Time',
+                        'radio_accomplish'=>'Radio Accomplish',
+                        radio_accomplish,ratio_correct,answer, createPerson, createTime,score,ratio_speed,ratio_maxSpeed,ratio_backDelete,ratio_maxKeyType,ratio_averageKeyType,ratio_maxInternalTime,ratio_countAllKey,squence,isExam
 		);
 	}
 
@@ -447,39 +408,15 @@ class AnswerRecord extends CActiveRecord
 
 		$criteria->compare('answerID',$this->answerID,true);
 		$criteria->compare('recordID',$this->recordID,true);
-		$criteria->compare('exerciseID',$this->exerciseID);
+		$criteria->compare('exerciseID',$this->exerciseID,true);
 		$criteria->compare('type',$this->type,true);
-		$criteria->compare('costTime',$this->costTime);
-		$criteria->compare('ratio_accomplish',$this->ratio_accomplish);
-		$criteria->compare('ratio_correct',$this->ratio_correct);
 		$criteria->compare('answer',$this->answer,true);
 		$criteria->compare('createPerson',$this->createPerson,true);
 		$criteria->compare('createTime',$this->createTime,true);
-		$criteria->compare('score',$this->score);
-		$criteria->compare('ratio_speed',$this->ratio_speed);
-		$criteria->compare('ratio_maxSpeed',$this->ratio_maxSpeed);
-		$criteria->compare('ratio_backDelete',$this->ratio_backDelete);
-		$criteria->compare('ratio_maxKeyType',$this->ratio_maxKeyType);
-		$criteria->compare('ratio_averageKeyType',$this->ratio_averageKeyType);
-		$criteria->compare('ratio_maxInternalTime',$this->ratio_maxInternalTime);
-		$criteria->compare('ratio_countAllKey',$this->ratio_countAllKey);
-		$criteria->compare('squence',$this->squence);
-		$criteria->compare('isExam',$this->isExam);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
-	}
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return AnswerRecord the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
 	}
         
         public function getAndSaveScoreByRecordID($recordID)
@@ -522,4 +459,23 @@ class AnswerRecord extends CActiveRecord
             } else
                 return true;
         }
+        
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return AnswerRecord the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+        
+        
+        
+        
+        
+        
+        
 }

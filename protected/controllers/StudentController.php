@@ -56,10 +56,13 @@ class StudentController extends CController {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
         }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render('ansDetail_1',['exercise' => $classwork,
             'exer' => $exer,
             'answer' => $answer['answer'],
-            'correct' => $answer['ratio_correct'],
+            'correct' =>$correct,
             'type'=>$type,
                 ]);
     }
@@ -85,11 +88,14 @@ class StudentController extends CController {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
         }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render('ansKey',
             ['exercise' => $classwork,
             'exer' => $result,
             'answer' => $answer['answer'],
-            'correct' => $answer['ratio_correct']]);
+            'correct' =>$correct]);
     }
     
     public function actionAnsQuestion(){
@@ -619,7 +625,6 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
-
         return $this->render('keyExer',array( 
             'exercise'=>$classexam,
             'exerOne'=>$result,
@@ -1162,19 +1167,20 @@ class StudentController extends CController {
     public function saveAnswer(){
         //查看是否有answer，即是否是用户提交了答案。
         if(isset($_POST['nm_answer'])) {
-            
             $answer = $_POST['nm_answer'];
             $seconds = $_POST['nm_cost']; 
             if(Yii::app()->session['isExam']){
                 $workID = Yii::app()->session['examworkID'];
                 $createPerson = Yii::app()->session['userid_now'];
                 $oldID = ExamRecord::model()->getRecord($workID, $createPerson);
+                $studentID = Yii::app()->session['userid_now'];
+                $recordID = ExamRecord::getRecord($workID, $studentID);
                 return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
             }else {
-        $workID = Yii::app()->session['workID'];
-        $createPerson = Yii::app()->session['userid_now'];
-        $recordID = SuiteRecord::model()->getRecord($workID, $createPerson);
-        return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
+                $workID = Yii::app()->session['workID'];
+                $createPerson = Yii::app()->session['userid_now'];
+                $recordID = SuiteRecord::model()->getRecord($workID, $createPerson);
+                return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
             }          
         }
     }

@@ -20,7 +20,7 @@
         </tbody>   
     </table> 
     <div class="well" style="padding: 8px 0;">
-        <a style="margin-right:10px" href="./index.php?r=teacher/NextStuWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $work['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>&&suiteID=<?php echo $suiteID?>" class="btn fr">下一人</a>
+        <a style="margin-right:10px" href="./index.php?r=teacher/NextStuWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $work['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>&&suiteID=<?php echo $suiteID?>">下一人</a>
         <br/>
     <div>
     <ul class="nav nav-list">

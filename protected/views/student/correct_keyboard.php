@@ -180,7 +180,7 @@
             }      
         changTemplet(pszStenoString);    
         window.GA_RightRadio = (getCorrect()*100).toFixed(2);
-         document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
+        document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -213,7 +213,6 @@
         $('#keyMode').fadeIn(50);
     }
     function changTemplet(pszStenoString){
-
         if(isSameWord(pszStenoString,yaweiCode)){     
             nextWord = "";
             nextWord = getNextWord();
@@ -260,8 +259,9 @@
     }
     function getNextWord(){
         currentNum++;
+        
         if(totalNum == currentNum){
-          repeatNum--;
+            repeatNum--;
             document.getElementById("repeatNum").innerHTML = repeatNum;
             if(repeatNum == 0){
             window.G_isOverFlag = 1;     

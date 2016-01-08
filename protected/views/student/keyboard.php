@@ -149,7 +149,7 @@
           
         if(HaveWindow == 1)
             return;
-        if(totalNum == currentNum && repeatNum == 0){    
+        if(totalNum == currentNum && repeatNum == 0){  
             HaveWindow = 1;
             window.G_isOverFlag = 1;           
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
