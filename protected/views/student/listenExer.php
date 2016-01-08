@@ -3,7 +3,7 @@
 <!--打字控件-->
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <!--打字计时-->
-<script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 
 <?php
