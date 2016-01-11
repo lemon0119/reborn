@@ -57,7 +57,8 @@
 
 
         </table>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php echo str_replace('\r\n', '<br/>', $classExercise['content']); ?>">
+        <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "", $classExercise['content']);
+$str = str_replace("\r", "", $str); echo $str;?>">
         <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 190px">
         </div>
         <br/>
@@ -70,7 +71,9 @@
     </div>
 </body>
 <script>
+    var yaweiOCX4Look = null;
     $(document).ready(function () {
+        yaweiOCX4Look = document.getElementById("typeOCX4Look");
         $("#pause").click(function () {
             if (window.G_startFlag === 1) {
                 if (window.G_isPause === 0) {
@@ -85,7 +88,7 @@
             }
         });
     });
-    var originalContent = "<?php echo $classExercise['content']; ?>";
+    var originalContent = "<?php echo $str;?>";
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
 <?php
@@ -100,7 +103,7 @@ $squence = $countSquence + 1;
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
     window.G_exerciseData = Array(classExerciseID, studentID);
     $("#close_exercise").click(function () {
-        $("#typeOCX4Look").remove();
+        yaweiOCX4Look.remove();
         window.parent.closeClassExercise();
     });
 
@@ -116,7 +119,7 @@ $squence = $countSquence + 1;
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = document.getElementById("typeOCX4Look").GetContent();
+        window.G_content = yaweiOCX4Look.GetContent();
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", originalContent, window.G_content);
@@ -144,13 +147,12 @@ $squence = $countSquence + 1;
 
 
     function getWordLength() {
-        var input = getContent(document.getElementById("typeOCX4Look"));
+        var input = getContent(yaweiOCX4Look);
         return input.length;
     }
 
     $(document).ready(function () {
-        yaweiOCX = document.getElementById("typeOCX4Look");
-        yaweiOCX.HideToolBar();
+       yaweiOCX4Look.HideToolBar();
 
         //菜单栏变色
         $("li#li-look-<?php echo $classExercise['exerciseID']; ?>").attr('class', 'active');
@@ -169,7 +171,6 @@ $squence = $countSquence + 1;
     });
     //document.getElementById("templet").style.font_size = "25px";
     function createFontWithP(color, text, p, father) {
-
         var f = document.createElement("font");
         f.style = "color:" + color;
         //var t = document.createTextNode(text);
@@ -191,7 +192,7 @@ $squence = $countSquence + 1;
 
 
     function controlScroll() {
-        var input = getContent(document.getElementById("typeOCX4Look"));
+        var input = getContent(yaweiOCX4Look);
         var div = document.getElementById('templet');
         var line = parseInt(input.length / 23);
         if (line > 3) {
@@ -208,7 +209,7 @@ $squence = $countSquence + 1;
             while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
                 div.removeChild(div.firstChild);
             }
-            var input_old = getContent(document.getElementById("typeOCX4Look"));
+            var input_old = getContent(yaweiOCX4Look);
             var arrayinput = input_old.split("\r\n");
             var father = document.getElementById("templet");
             var arraytext = text_old.split("\n");
@@ -257,7 +258,7 @@ $squence = $countSquence + 1;
 
 
         } else {
-            var input = getContent(document.getElementById("typeOCX4Look")).split("");
+            var input = getContent(yaweiOCX4Look).split("");
             var text = text_old.split("");
             var old = "";
             var isWrong = false;

@@ -64,7 +64,7 @@
                 <br/>
                 <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath;?>"   preload = "auto"    controls=""></audio>
             </div>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php echo $classExercise['content']; ?>">
+        <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>">
         <br/>
         <object id="typeOCX4Listen" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
@@ -93,7 +93,7 @@
             }
         });
     });
-     var originalContent = "<?php echo $classExercise['content'];?>";
+     var originalContent = "<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>";
      //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
     <?php  $exerciseID = $classExercise['exerciseID'];

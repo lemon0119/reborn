@@ -337,9 +337,15 @@ function AjaxGetRight_Wrong_AccuracyRate(id1,id2,id3,originalContent,currentCont
                data:{originalContent:originalContent,currentContent:currentContent},
                success:function(data){
                    window.GA_RightRadio = data[2];
-                   $("#"+id1).html(data[0]);
-                   $("#"+id2).html(data[1]);
-                   $("#"+id3).html(data[2]);
+                   if(id1!==""){
+                       $("#"+id1).html(data[0]);
+                   }
+                   if(id2!==""){
+                       $("#"+id2).html(data[1]);
+                   }
+                   if(id3!==""){
+                        $("#"+id3).html(data[2]);
+                   }
                },
                error:function(xhr, type, exception){
                    console.log('GetAverageSpeed error', type);

@@ -1237,6 +1237,9 @@ class StudentController extends CController {
         ),false,true);
     }
     public function actionIndex(){
+        if(isset($_GET['insert'])){
+            
+        }
         $this->render('index');
     }
     public function actionHeadPic(){

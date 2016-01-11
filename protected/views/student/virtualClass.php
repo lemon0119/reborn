@@ -309,7 +309,9 @@ function pollBulletin() {
         url: "index.php?r=api/GetLatestBulletin&&classID=<?php echo $classID;?>",
         success: function(data) {
             if (role === 'student') {
-                $("#bulletin-textarea").val(data[0].content);
+                if(data[0]!== undefined){
+                    $("#bulletin-textarea").val(data[0].content);
+                }
             } else {
                 if ($("#bulletin-textarea").val() === "") {
                     $("#bulletin-textarea").val(data[0].content);
