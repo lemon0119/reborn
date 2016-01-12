@@ -31,7 +31,7 @@
        <div style="display: none" id="id_classExerciseLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
-                 <li><div ><a href="#" ><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                  
+                 <li><div ><a href="#" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                  
              <?php endforeach; ?> 
              </ul>
        </div>        
@@ -43,9 +43,8 @@
                      foreach($array_exam as $exam)
                          if($exam['examID'] == $examList['examID'])
                          {
-                             
                          ?>
-                              <li><div ><a href="#" ><i class="icon-list"></i><?php echo $exam['examName']; ?></a></div></li>
+                 <li><div ><a href="#" onclick="getExamExercise(<?php echo $exam['examID'];?>)"><i class="icon-list"></i><?php echo $exam['examName']; ?></a></div></li>
                         <?php 
                               }
                  }
@@ -57,20 +56,28 @@
 </div>
 
 
-<div class="span9" style="">
+<div class="span9" id="sp" style="display: none;">
+     <select name = "selectID" id="selectID"  style="width:13%; height:auto;display:inline;float:left;">
+        <option value = "correct" > 正确率 </option >
+        <option value = "speed" >速度 </option >
+        <option value = "maxSpeed">maxSpeed</option >
+        <option value = "allKey"> allKey</option >
+     </select > 
     <div id="div1" style="width:33%; height:auto;display:inline;float:left;" >
-        <ul id="ul1">
+        <ul>题目：</ul>
+        <ul id="ul1" style="list-style: none;">
         </ul>
     </div>
     <div id="div1" style="width:33%; height:auto;display:inline;float:left;">
-        <ul id="ul2">
+        <ul>排名：</ul>
+        <ul id="ul2" style="list-style: none;">
             <li>练习一</li>
             <li>练习二</li>
             <li>练习三</li>          
         </ul>
     </div>
         <div id="div1" style="width:33%; height:auto;display:inline;float:left;">
-            <ul id="ul3">
+            <ul id="ul3" style="list-style: none;">
             <li>练习一</li>
             <li>练习二</li>
             <li>练习三</li>          
@@ -104,7 +111,6 @@ $(document).ready(function(){
     });
         getBackTime();
 });
-
 function showClassWork(lessonID){
     var str = "#test" + lessonID;
      $("#test" + lessonID).toggle(200);
@@ -119,12 +125,66 @@ function getSuiteExercise(suiteID,workID){
                     workID:workID
                 },
              success: function(data){
+                   document.getElementById("sp").style.display='block';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
                    for(var i=0;i<data.length;i++){                                         
-                      var str = "<a href='#' onclick='getStudentRanking("+data[i]['workID']+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
+                      var str = "<a href='#' onclick='getStudentRanking("+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
+                      var li = document.createElement("li");               
+                      li.innerHTML= str;
+                      ul.appendChild(li);
+                   }  
+                 },     
+                error: function(xhr, type, exception){
+                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr, "Failed");
+                }
+         });    
+}
+function getClassExer(lessonID){
+        $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=api/getClassExer",
+             data: {lessonID:lessonID,
+                },
+             success: function(data){
+                 document.getElementById("sp").style.display='block';
+                   var ul = document.getElementById("ul1");          
+                   $('#ul1').children().filter('li').remove();
+                   $('#ul2').children().filter('li').remove();
+                   $('#ul3').children().filter('li').remove();
+                   for(var i=0;i<data.length;i++){       
+                      var ab=document.getElementById("selectID").value;
+                      var str = "<a href='#' onclick='getClassExerRanking("+data[i]['exerciseID']+","+ data[i]['type']+")'>"+data[i]['title']+"</a>";       
+                      var li = document.createElement("li");               
+                      li.innerHTML= str;
+                      ul.appendChild(li);
+                   }  
+                 },     
+                error: function(xhr, type, exception){
+                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr, "Failed");
+                }
+         });    
+}
+function getExamExercise(examID){
+        $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=api/getExamExercise",
+             data: {examID:examID,
+                },
+             success: function(data){
+                 document.getElementById("sp").style.display='block';
+                   var ul = document.getElementById("ul1");          
+                   $('#ul1').children().filter('li').remove();
+                   $('#ul2').children().filter('li').remove();
+                   $('#ul3').children().filter('li').remove();
+                   for(var i=0;i<data.length;i++){                                         
+                      var str = "<a href='#' onclick='getStudentRanking("+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
                       var li = document.createElement("li");               
                       li.innerHTML= str;
                       ul.appendChild(li);
@@ -137,35 +197,67 @@ function getSuiteExercise(suiteID,workID){
          });    
 }
 
-function getStudentRanking(workID,exerciseID,type){
+function getStudentRanking(isExam,exerciseID,type){
+        var choice=document.getElementById("selectID").value;
         $.ajax({
              type: "POST",
              dataType:"json",
              url: "index.php?r=api/getStudentRanking",
-             data: {workID:workID,
+             data: {
                     exerciseID:exerciseID,
                     type:type,
+                    isExam:isExam,
+                    choice:choice,
                 },
              success: function(data){
-                   var ul = document.getElementById("ul1");          
-                   $('#ul1').children().filter('li').remove();
+                 document.getElementById("sp").style.display='block';
+                   var ul = document.getElementById("ul2");          
+                   //$('#ul1').children().filter('li').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
                    for(var i=0;i<data.length;i++){                                         
-                      var str = "<a href='#' onclick='getStudentRanking("+data[i]['workID']+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
+                      var str = "<a href='#'>"+data[i]['studentName']+"</a>";       
                       var li = document.createElement("li");               
                       li.innerHTML= str;
                       ul.appendChild(li);
                    }  
                  },     
-                error: function(xhr, type, exception){
-                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
-                    console.log(xhr, "Failed");
-                }
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr, "Failed");
+            }
          }); 
 }
-
-
+function getClassExerRanking(exerciseID,type){
+        var choice=document.getElementById("selectID").value;
+        $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=api/getClassExerRanking",
+             data: {
+                    exerciseID:exerciseID,
+                    type:type,
+                    choice:choice,
+                },
+             success: function(data){
+                 document.getElementById("sp").style.display='block';
+                   var ul = document.getElementById("ul2");          
+                   //$('#ul1').children().filter('li').remove();
+                   $('#ul2').children().filter('li').remove();
+                   $('#ul3').children().filter('li').remove();
+                   for(var i=0;i<data.length;i++){                                         
+                      var str = "<a href='#'>"+data[i]['studentName']+"</a>";       
+                      var li = document.createElement("li");               
+                      li.innerHTML= str;
+                      ul.appendChild(li);
+                   }  
+                 },     
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr, "Failed");
+            }
+         }); 
+}
 
 
 </script>
