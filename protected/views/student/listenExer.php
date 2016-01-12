@@ -29,8 +29,8 @@
     }//end
 ?>
   <?php if(!$isOver){?>
-<div class="span9">
-        <div class="hero-unit"  align="center">
+<div class="span9" style="position: relative;left: 180px;bottom: 300px;width: 970px">
+        <div class="hero-unit fl"  align="center">
             <table border = '0px'>
                 <tr><h3><?php echo $exerOne['title']?></h3></tr>
                 <tr>
@@ -65,12 +65,8 @@
             <br/>
         </div>
     <?php require  Yii::app()->basePath."\\views\\student\\submitAnswer.php";?>
-</div>
-
-
-<div  class="analysisTool" id="analysis" style="background-color: #fff;left: 1170px; height: 670px; width: 220px;">
-        <table style="margin: 0px auto;position:relative;top: -250px; font-size: 18px" cellpadding="20"  >
-
+    <div class="fr"   id="analysis" style="background-color: #fff;">
+        <table style="font-size: 18px; border: 3px" cellpadding="20"  >
             <tr>
                 <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
                  <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
@@ -87,6 +83,8 @@
             </tr>
         </table>
     </div>
+</div>
+
   <?php } else {?>
  <h3 align="center">本题时间已经用完</h3>
 <?php }?>
