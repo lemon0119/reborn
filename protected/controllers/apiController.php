@@ -339,12 +339,191 @@ class apiController extends Controller {
             }            
             $this->renderJSON($array_result);          
      }   
-     public function getStudentRanking(){
-         $workID = $_POST['workID'];
-         $exerciseID = $_POST['exerciseID'];
-         
+     public function ActiongetExamExercise(){
+            if(isset($_POST['examID'])){
+                $examID = $_POST['examID'];
+                $array_exercise = ExamExercise::model()->findAll("examID='$examID'");
+                $array_result = array();
+                foreach ($array_exercise as $exercise)
+                {
+                    if($exercise['type'] == 'key')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = KeyType::model()->findAll("exerciseID = '$exerciseID'");
+                        //$result['workID'] = $_POST['workID'];
+                        //用数字代替类型，后面js好弄
+                        $result['type'] = 1;
+                        array_push($array_result, $result);
+                    }else 
+                    if($exercise['type'] == 'listen')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = ListenType::model()->findAll("exerciseID = '$exerciseID'");
+                        //$result['workID'] = $_POST['workID'];
+                        $result['type'] = 2;
+                        array_push($array_result, $result);
+                    }else
+                    if($exercise['type'] == 'look')
+                    {
+                        $exerciseID = $exercise['exerciseID'];
+                        $result = LookType::model()->findAll("exerciseID = '$exerciseID'");
+                        //$result['workID'] = $_POST['workID'];                       
+                        $result['type'] = 3;
+                        array_push($array_result,$result);
+                    }
+                }
+            }            
+            $this->renderJSON($array_result);          
+     }  
+     public function ActiongetClassExer(){
+            if(isset($_POST['lessonID'])){
+                $lessonID = $_POST['lessonID'];
+                $array_exercise = ClassExercise::model()->findAll("lessonID='$lessonID'");
+                $array_result = array();
+                foreach ($array_exercise as $exercise)
+                {
+                    if($exercise['type'] == 'key')
+                    {
+                        $result['exerciseID'] = $exercise['exerciseID'];
+                        $result['title'] = $exercise['title'];
+                        $result['type'] = 1;
+                        array_push($array_result, $result);
+                    }else 
+                    if($exercise['type'] == 'listen')
+                    {
+                        $result['exerciseID']= $exercise['exerciseID'];
+                        $result['title'] = $exercise['title'];
+                        $result['type'] = 2;
+                        array_push($array_result, $result);
+                    }else
+                    if($exercise['type'] == 'look')
+                    {
+                        $result['exerciseID']= $exercise['exerciseID'];
+                        $result['title'] = $exercise['title'];                       
+                        $result['type'] = 3;
+                        array_push($array_result,$result);
+                    }
+                }
+            }            
+            $this->renderJSON($array_result);          
      }
-     
+     public function ActiongetStudentRanking(){
+         //$workID = $_POST['workID'];
+         $exerciseID = $_POST['exerciseID'];
+         $type=$_POST['type'];
+         $isExam=$_POST['isExam'];
+         $choice=$_POST['choice'];
+         $all=Array();
+         if($type==1){
+             $type='key';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }
+         $all=  AnswerRecord::model()->findAll('type=? and exerciseID=? and isExam=?',array($type,$exerciseID,$isExam));
+         $arrayData = Array();
+         $data = Array();
+         foreach ($all as $a) {
+              $correct=$a['ratio_correct'];
+              if(strpos($correct,"&") === false){     
+                   $correct=$correct."&".$correct;
+              }
+              $n=  strrpos($correct, "&");
+              $correct= substr($correct, $n+1);
+              
+              $speed=$a['ratio_speed'];
+              if(strpos($speed,"&") === false){     
+                   $speed=$speed."&".$speed;
+              }
+              $n=  strrpos($speed, "&");
+              $speed= substr($speed, $n+1);
+              $maxSpeed=$a['ratio_maxSpeed'];
+              if(strpos($maxSpeed,"&") === false){     
+                   $maxSpeed=$maxSpeed."&".$maxSpeed;
+              }
+              $n=  strrpos($maxSpeed, "&");
+              $maxSpeed= substr($maxSpeed, $n+1);
+              
+              $countAllKey=$a['ratio_countAllKey'];
+              if(strpos($countAllKey,"&") === false){     
+                   $countAllKey=$countAllKey."&".$countAllKey;
+              }
+              $n=  strrpos($countAllKey, "&");
+              $countAllKey= substr($countAllKey, $n+1);
+
+              $time = count($speed)*2-2;
+              if($isExam==1){
+                  $student=  ExamRecord::model()->find('recordID=?',array($a['recordID']))['studentID'];
+              }else{
+                 $student=SuiteRecord::model()->find('recordID=?',array($a['recordID']))['studentID'];
+              }
+              $studentName=Student::model()->find('userID=?',array($student))['userName'];
+              $arrayData = ["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allKey"=>$countAllKey];
+              array_push($data, $arrayData);
+            
+         }
+         $data = Tool::quickSort($data,$choice);
+         $this->renderJSON($data);
+     }
+     public function ActiongetClassExerRanking(){
+         $exerciseID = $_POST['exerciseID'];
+         $type=$_POST['type'];
+         $choice=$_POST['choice'];
+         $all=Array();
+         if($type==1){
+             $type='key';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }
+         $all= ClassexerciseRecord::model()->findAll('classExerciseID=?',array($exerciseID));
+         $arrayData = Array();
+         $data = Array();
+         foreach ($all as $a) {
+              $correct=$a['ratio_correct'];
+              if(strpos($correct,"&") === false){     
+                   $correct=$correct."&".$correct;
+              }
+              $n=  strrpos($correct, "&");
+              $correct= substr($correct, $n+1);
+              
+              $speed=$a['ratio_speed'];
+              if(strpos($speed,"&") === false){     
+                   $speed=$speed."&".$speed;
+              }
+              $n=  strrpos($speed, "&");
+              $speed= substr($speed, $n+1);
+              $maxSpeed=$a['ratio_maxSpeed'];
+              if(strpos($maxSpeed,"&") === false){     
+                   $maxSpeed=$maxSpeed."&".$maxSpeed;
+              }
+              $n=  strrpos($maxSpeed, "&");
+              $maxSpeed= substr($maxSpeed, $n+1);
+              
+              $countAllKey=$a['ratio_countAllKey'];
+              if(strpos($countAllKey,"&") === false){     
+                   $countAllKey=$countAllKey."&".$countAllKey;
+              }
+              $n=  strrpos($countAllKey, "&");
+              $countAllKey= substr($countAllKey, $n+1);
+
+              $time = count($speed)*2-2;
+              $student=$a['studentID'];
+              $studentName=Student::model()->find('userID=?',array($student))['userName'];
+              $arrayData = ["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allKey"=>$countAllKey];
+              array_push($data, $arrayData);
+            
+         }
+         $data = Tool::quickSort($data,"correct");
+         if($choice=='correct'){
+             $data = Tool::quickSort($data,"correct");
+         }else if($choice=='speed'){
+             $data = Tool::quickSort($data,"speed");
+         }
+         $this->renderJSON($data);
+     }
     
      
 }
