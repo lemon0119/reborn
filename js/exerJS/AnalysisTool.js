@@ -37,6 +37,7 @@
     var G_exerciseData       = new Array();
     var G_squence            = 0;
     var G_pauseFlag          = 0;
+    var G_briefResult        = "false";
    //获取的统计内容之全局变量
     var GA_averageKeyType     = 0;
     var GA_highstCountKey     = 0;
@@ -55,7 +56,6 @@ $(document).ready(function(){
     var isAgain         = 0;
     var pauseTime       = 0;
     var pauseOn         = 0;
-     
     //2s内统计统计瞬时击键 次/秒
     //@param id=getMomentKeyType 请将瞬时击键统计的控件id设置为getMomentKeyType
     //2s内统计统计最高击键 次/秒
@@ -353,7 +353,60 @@ function AjaxGetRight_Wrong_AccuracyRate(id1,id2,id3,originalContent,currentCont
                    console.log(exception, "exception");
                }
            });
-}
+       }
+       
+ function AjaxCheckBrief(word){
+     $.ajax({
+               type:"POST",
+               url:"index.php?r=api/checkBrief",
+               data:{word:word},
+               success:function(data){
+                   window.G_briefResult = data;
+               },
+               error:function(xhr, type, exception){
+                   console.log('GetAverageSpeed error', type);
+                   console.log(xhr, "Failed");
+                   console.log(exception, "exception");
+               }
+           });
+ }      
+       
+ function AjaxWordCheckBrief(content){
+    var ArrayContent = content.split(">,");
+    for(var i=0;i<ArrayContent.length;i++){
+        if((i+1)=== ArrayContent.length){
+          AjaxCheckBrief(ArrayContent[i]);
+        }
+    }
+ }   
+ 
+ function briefToChange(content,color,divName){
+        var father = document.getElementById(divName);
+        var f = document.createElement("font");
+        f.style = "color:" + color;
+        $.ajax({
+               type:"POST",
+               url:"index.php?r=api/briefToChange",
+               data:{content:content},
+               success:function(data){
+                   window.G_briefResult = data;
+               },
+               error:function(xhr, type, exception){
+                   console.log('GetAverageSpeed error', type);
+                   console.log(xhr, "Failed");
+                   console.log(exception, "exception");
+               }
+           });
+        
+        
+        f.innerHTML = text;
+        father.appendChild(f);
+ }
+ 
+ function AjaxAllCheckBrief(){
+     
+ }
+           
 
    
 

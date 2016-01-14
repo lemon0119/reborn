@@ -292,12 +292,11 @@ function checkOnLine(){
              type: "GET",
              dataType: "json",
              url: "index.php?r=api/updateStuOnLine&&classID=<?php echo $classID;?>&&userid=<?php echo Yii::app()->session['userid_now']?>",
-             data: {},
+             data:{},
              success: function(){ console.log("set time");},
                 error: function(xhr, type, exception){
                     console.log(xhr, "Failed");
                     window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
-                    
                 }
          });
         return false;

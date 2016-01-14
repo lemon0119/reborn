@@ -345,8 +345,39 @@ class apiController extends Controller {
          
      }
      
-    
-     
+     public function actionCheckBrief(){
+         $word = $_POST['word'];
+         $isBrief = FALSE;
+         $content = str_replace("<", "", explode("><", $word)[0]);
+         $yaweiCode = str_replace(">", "", explode("><", $word)[1]);
+         $array_brief = TwoWordsLibBrief::model()->findAll();
+         foreach ($array_brief as $v){
+             if($v['words']===$content){
+                 $origenCode = str_replace(":0", "", $v['yaweiCode']);
+                 if($origenCode===$yaweiCode){
+                     $isBrief = TRUE;
+                 }
+             }
+         }
+         if(iconv_strlen($content,"UTF-8")>2){
+             echo  "true";   
+         }else if($isBrief){
+             echo  "true";
+         }else{
+              echo "false";  
+         }
+     }
+    public function actionGetBrief(){
+        $array_brief = TwoWordsLibBrief::model()->findAll();
+        $data = array();
+        $data2 = array();
+         foreach ($array_brief as $v){
+             array_push($data, $v['words']);
+             array_push($data2, $v['yaweiCode']);
+         }
+         $data = implode('&',$data)."$".implode('&',$data2);
+         echo $data;
+    }
 }
 
 

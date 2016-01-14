@@ -75,7 +75,9 @@
     </div>
 </body>
 <script>
+    var yaweiOCX4Listen = null;
     $(document).ready(function () {
+        yaweiOCX4Listen = document.getElementById("typeOCX4Listen");
             $("#pause").click(function(){
             if(window.G_startFlag===1){
             if(window.G_isPause ===0){
@@ -107,10 +109,16 @@
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
     window.G_exerciseData = Array(classExerciseID,studentID);
         $("#close_exercise").click(function () {
-        $("#typeOCX4Listen").remove();
+        yaweiOCX4Listen.remove();
         window.parent.closeClassExercise();
     });
 
+    function onChange(){
+        yaweiOCX4Listen.UpdateView();
+        var input = getContent(yaweiOCX4Listen);
+        yaweiOCX4Listen.Locate(input.length);
+    }
+    
     function onStenoPressKey(pszStenoString, device) {
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
@@ -127,7 +135,7 @@
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = document.getElementById("typeOCX4Listen").GetContent();
+        window.G_content = yaweiOCX4Listen.GetContent();
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
         
         AjaxGetRight_Wrong_AccuracyRate("","","wordisRightRadio",originalContent,window.G_content);
@@ -152,13 +160,13 @@
         //--------------------------------------------------
     }
     $(document).ready(function(){
-    document.getElementById("typeOCX4Listen").HideToolBar();
+    yaweiOCX4Listen.HideToolBar();
         //菜单栏变色
         $("li#li-listen-<?php echo $classExercise['exerciseID'];?>").attr('class','active');
     });
     
     function getWordLength(){
-        var input = getContent(document.getElementById("typeOCX4Listen"));
+        var input = getContent(yaweiOCX4Listen);
         return input.length;
     }
     

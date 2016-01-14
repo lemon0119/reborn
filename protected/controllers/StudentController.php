@@ -243,7 +243,7 @@ class StudentController extends CController {
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:$currentLesn;
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
         $myCourses = array();
-         $n=0;
+        $n=0;
         $ratio_accomplish = array();
         foreach ($myCourse as $c){
             array_push($myCourses, $c);
@@ -1238,6 +1238,26 @@ class StudentController extends CController {
     }
     public function actionIndex(){
         if(isset($_GET['insert'])){
+            //导入数据库略码
+//            $file_dir="E:\\php_workstation\\reborn\\2.txt"; 
+//                $fp=fopen($file_dir,"r"); 
+//                $content=fread($fp,filesize($file_dir));//读文件 
+//                fclose($fp); 
+//                $str = explode("\r\n", $content);
+//                foreach ($str as $v){
+//                   TwoWordsLibBrief::model()->insertBrief($v); 
+//                }
+//                //向略码表导入正常输入的yaweiCode
+//            $TwoWordsLibBrief=TwoWordsLibBrief::model()->findAll();
+//            foreach ($TwoWordsLibBrief as $value) {
+//                $v = $value['words'];
+//                $TwoWordsLib = TwoWordsLib::model()->find("words LIKE '$v'");
+//                $yaweiCode = $TwoWordsLib['yaweiCode'];
+//                $newTwoWordsLibBrief = new TwoWordsLibBrief();
+//                $newTwoWordsLibBrief = TwoWordsLibBrief::model()->find("words LIKE '$v'");
+//                $newTwoWordsLibBrief->yaweiCode = $yaweiCode;
+//                $newTwoWordsLibBrief->update();
+//            }
             
         }
         $this->render('index');
