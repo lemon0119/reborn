@@ -45,7 +45,8 @@ if ($isExam) {
                 </tr>
             </table>
             <br/>
-            <input id="content" type="hidden" style="height: 5px;" value="<?php echo str_replace('\r\n', '<br/>', $exerOne['content']); ?>">
+            <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "", $exerOne['content']);
+$str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;?>">
             <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 120px">
             </div>
             <br/>
@@ -117,10 +118,8 @@ function onStenoPressKey(pszStenoString ,device){
                      $("#getHighIntervarlTime").html(IntervalTime);
                  }             
           }                
-           
         //--------------------------------------------------
      }
-
     $(document).ready(function () {
 
         var isExam = <?php
@@ -170,17 +169,38 @@ if ($isExam) {
 <?php } ?>
         }
     });
-
-    function getWordLength() {
-        var input = getContent(document.getElementById("typeOCX"));
-        return input.length;
-    }
-
+   
+var briefCode = "";
+    var briefOriginalYaweiCode = "";   
+var yaweiOCX = null;
     $(document).ready(function () {
         setInterval(function () {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
             writeData();
             doSubmit(); 
-       }, 2000);
+            window.G_squence = 0;
+       }, 3000);
+       <?php
+$studentID = Yii::app()->session['userid_now'];
+$sqlAnswerRecord = AnswerRecord::model()->findAll("createPerson = '$studentID' AND recordID = '$recordID'");
+$countSquence = count($sqlAnswerRecord);
+$squence = $countSquence + 1;
+?>
+       
+       $.ajax({
+               type:"POST",
+               url:"index.php?r=api/getBrief",
+               async: false,
+               data:{},
+               success:function(data){
+                    briefCode = (data.split("$")[0]).split("&");
+                    briefOriginalYaweiCode = (data.split("$")[1]).split("&");
+               },
+               error:function(xhr, type, exception){
+                   console.log('GetAverageSpeed error', type);
+                   console.log(xhr, "Failed");
+                   console.log(exception, "exception");
+               }
+           });
         yaweiOCX = document.getElementById("typeOCX");
         yaweiOCX.HideToolBar();
         //菜单栏变色
@@ -198,6 +218,12 @@ if ($isExam) {
             createFont("#000000", document.getElementById("content").value);
         }
     });
+    
+     function getWordLength() {
+        var input = getContent(yaweiOCX);
+        return input.length;
+    }
+    
     //document.getElementById("templet").style.font_size = "25px";
     function createFontWithP(color, text, p, father) {
 
@@ -210,87 +236,63 @@ if ($isExam) {
         father.appendChild(p);
     }
 
-    function createFont(color, text) {
+   function createFont(color, text,code) {
         var father = document.getElementById("templet");
         var f = document.createElement("font");
-        f.style = "color:" + color;
-        //var t = document.createTextNode(text);
-        //f.appendChild(t);
-        f.innerHTML = text;
-        father.appendChild(f);
+        var content = "";
+        var isBrief = 0;
+        if(color=="#808080"){
+             for(var i=0;i<text.length;i++){
+                 if(text[i].length<3){
+                        for(var j=0;j<briefCode.length;j++){
+                            if((text[i]==briefCode[j])&&(code[i]!=briefOriginalYaweiCode[j].replace(":0",""))){
+                                isBrief ++;
+                            }
+                         }
+                 }else{
+                     isBrief ++;
+                 }
+                 if(isBrief===0){
+                    content += text[i];
+                 }else{
+                    content += "<font style='color:green'>"+text[i]+"</font>";
+                    isBrief--;
+                 }
+             }
+             f.style = "color:" + color;
+                    f.innerHTML = content;
+                    father.appendChild(f);
+        }else{
+            f.style = "color:" + color;
+                    //var t = document.createTextNode(text);
+                    //f.appendChild(t);
+                    f.innerHTML = text;
+                    father.appendChild(f);
+        }
     }
 
 
     function controlScroll() {
-        var input = getContent(document.getElementById("typeOCX"));
+        var input = getContent(yaweiOCX);
         var div = document.getElementById('templet');
         var line = parseInt(input.length / 23);
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }
     }
-    function onChange() {
+     function onChange() {
+        yaweiOCX.UpdateView();
+        var input = getContent(yaweiOCX);
+        yaweiOCX.Locate(input.length);
         controlScroll();
         changWordPS();
-
-        var text_old = document.getElementById("content").value;
-        if (text_old.indexOf("\n") > 0) {
-            var div = document.getElementById("templet");
-            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
-                div.removeChild(div.firstChild);
-            }
-            var input_old = getContent(document.getElementById("typeOCX"));
-            var arrayinput = input_old.split("\r\n");
-            var father = document.getElementById("templet");
-            var arraytext = text_old.split("\n");
-            for (var s = 0; s < arraytext.length; s++) {
-                var p = document.createElement("p");
-                if (arrayinput[s]) {
-                    var input_p = arrayinput[s].split("");
-                    var text_p = arraytext[s].split("");
-                    var old = "";
-                    var isWrong = false;
-                    var wrong = "";
-                    for (var i = 0; i < input_p.length && i < text_p.length; i++) {
-                        if (input_p[i] == text_p[i]) {
-                            if (isWrong == true) {
-                                isWrong = false;
-                                createFontWithP("#ff0000", wrong ,p, father);
-                                wrong = "";
-                                old = text_p[i];
-                            } else {
-                                old += text_p[i];
-                            }
-                        }
-                        else {
-                            if (isWrong == true)
-                                wrong += text_p[i];
-                            else {
-                                isWrong = true;
-                                createFontWithP("#808080", old, p, father);
-                                old = "";
-                                wrong = text_p[i];
-                            }
-                        }
-                    }
-                    createFontWithP("#808080", old, p, father);
-                    createFontWithP("#ff0000", wrong, p, father);
-                    if (input_p.length < text_p.length) {
-                            var left_p = arraytext[s].substr(input_p.length);
-                            createFontWithP("#000000", left_p, p, father);
-                    }
-                }else if(!arrayinput[s]){
-                    
-                    createFontWithP("#000000", arraytext[s], p, father);
-                }
-
-            }
-
-
-        } else {
-            var input = getContent(document.getElementById("typeOCX")).split("");
+        var text_old = "<?php echo $str;?>";
+            var input = getContent(yaweiOCX).split("");
             var text = text_old.split("");
-            var old = "";
+            var allInput2 = yaweiOCX.GetContentWithSteno().split(">,");
+            var longIsAgo = 0;
+            var old = new Array();
+            var oldCode = new Array();
             var isWrong = false;
             var wrong = "";
             var div = document.getElementById("templet");
@@ -298,38 +300,55 @@ if ($isExam) {
                 div.removeChild(div.firstChild);
             }
             for (var i = 0; i < input.length && i < text.length; i++) {
-                if (input[i] == text[i]) {
-                    if (isWrong == true) {
-                        isWrong = false;
-                        createFont("#ff0000", wrong);
-                        wrong = "";
-                        old = text[i];
-                    } else {
-                        old += text[i];
+                if(allInput2[i]!== undefined){
+                    var num = allInput2[i].indexOf(">");
+                    var content  = allInput2[i].substring(1,num);
+                    var yaweiCode = allInput2[i].substring(num+2,allInput2[i].length).replace(">","");
+                    var long = content.length;
+                    longIsAgo += long;
+                    var stringText = text[longIsAgo-long];
+                    for(var j=1;j<long;j++){
+                        stringText += text[longIsAgo-long+j];
                     }
-                }
-                else {
-                    if (isWrong == true)
-                        wrong += text[i];
-                    else {
-                        isWrong = true;
-                        createFont("#808080", old);
-                        old = "";
-                        wrong = text[i];
+                    if (content == stringText) {
+                        if (isWrong == true) {
+                            isWrong = false;
+                            createFont("#ff0000", wrong,"");
+                            wrong = "";
+                            old = new Array();
+                            old.push(stringText);
+                            oldCode = new Array();
+                            oldCode.push(yaweiCode);
+                        } else {
+                            old.push(stringText);
+                            oldCode.push(yaweiCode);
+                        }
+                    }else {
+                        if (isWrong == true)
+                            wrong += stringText;
+                        else {
+                            isWrong = true;
+                            createFont("#808080",old,oldCode);
+                            old = Array("");
+                            oldCode = Array("");
+                            wrong = stringText;
+                        }
                     }
                 }
             }
-            createFont("#808080", old);
-            createFont("#ff0000", wrong);
+            createFont("#808080",old,oldCode);
+            createFont("#ff0000",wrong,"");
             if (input.length < text.length) {
-                var left = document.getElementById("content").value.substr(0 - (text.length - i));
-                createFont("#000000", left);
+                var left =document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
+                createFont("#000000", left,"");
             }
-
+            if((text.length - longIsAgo)<1){
+                window.G_isOverFlag = 1;
+            }
         }
-    }
+        
     window.G_saveToDatabase = 1;
-    window.G_squence = 0;
+    window.G_squence = <?php echo $squence; ?>;
     window.G_exerciseType = "answerRecord";
 //    var answer = document.getElementById("id_answer").value;
 //    var cost = document.getElementById("id_cost").value;

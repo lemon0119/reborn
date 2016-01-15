@@ -281,8 +281,15 @@ class apiController extends Controller {
            if(Yii::app()->session['isExam']){
                 if(!ExamRecord::saveExamRecord($recordID))
                     return false;
+                if($squence>0){
+                    error_log("已有");
+                    
+                }
                 return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1);
             }else {
+                if($squence>0){
+                    error_log("已有");
+                }
                 if(!SuiteRecord::saveSuiteRecord ($recordID))
                     return false;
                 return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey,$squence,0);

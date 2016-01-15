@@ -55,10 +55,9 @@
                 <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
             </tr>
 
-
         </table>
         <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "", $classExercise['content']);
-$str = str_replace("\r", "", $str); echo $str;?>">
+$str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;?>">
         <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 190px">
         </div>
         <br/>
@@ -98,14 +97,14 @@ $str = str_replace("\r", "", $str); echo $str;?>">
                 }
                 if (window.G_pauseFlag === 1) {
                     $("#pause").html("暂停统计");
-
+                    
                 } else {
                     $("#pause").html("继续统计");
                 }
             }
         });
     });
-    var originalContent = "<?php echo $str;?>";
+    var originalContent = "<?php $str1 = str_replace("<br/>", "", $str); echo $str1;?>".replace(/(^\s*)|(\s*$)/g, "");
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
 <?php
@@ -202,10 +201,14 @@ $squence = $countSquence + 1;
         var isBrief = 0;
         if(color=="#808080"){
              for(var i=0;i<text.length;i++){
-                 for(var j=0;j<briefCode.length;j++){
-                     if((text[i]==briefCode[j])&&(code[i]!=briefOriginalYaweiCode[j].replace(":0",""))){
-                         isBrief ++;
-                     }
+                 if(text[i].length<3){
+                        for(var j=0;j<briefCode.length;j++){
+                            if((text[i]==briefCode[j])&&(code[i]!=briefOriginalYaweiCode[j].replace(":0",""))){
+                                isBrief ++;
+                            }
+                         }
+                 }else{
+                     isBrief ++;
                  }
                  if(isBrief===0){
                     content += text[i];
@@ -215,8 +218,6 @@ $squence = $countSquence + 1;
                  }
              }
              f.style = "color:" + color;
-                    //var t = document.createTextNode(text);
-                    //f.appendChild(t);
                     f.innerHTML = content;
                     father.appendChild(f);
         }else{
@@ -226,11 +227,7 @@ $squence = $countSquence + 1;
                     f.innerHTML = text;
                     father.appendChild(f);
         }
-       
-       
     }
-
-
     function controlScroll() {
         var input = getContent(yaweiOCX4Look);
         var div = document.getElementById('templet');
@@ -245,63 +242,61 @@ $squence = $countSquence + 1;
         yaweiOCX4Look.Locate(input.length);
         controlScroll();
         changWordPS();
-        var text_old = originalContent;
-        if (text_old.indexOf("\n") > 0) {
-            var div = document.getElementById("templet");
-            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
-                div.removeChild(div.firstChild);
-            }
-            var input_old = getContent(yaweiOCX4Look);
-            var arrayinput = input_old.split("\r\n");
-            var father = document.getElementById("templet");
-            var arraytext = text_old.split("\n");
-            for (var s = 0; s < arraytext.length; s++) {
-                var p = document.createElement("p");
-                if (arrayinput[s]) {
-                    var input_p = arrayinput[s].split("");
-                    var text_p = arraytext[s].split("");
-                    var old = "";
-                    var isWrong = false;
-                    var wrong = "";
-                    for (var i = 0; i < input_p.length && i < text_p.length; i++) {
-                        if (input_p[i] == text_p[i]) {
-                            if (isWrong == true) {
-                                isWrong = false;
-                                createFontWithP("#ff0000", wrong, p, father);
-                                wrong = "";
-                                old = text_p[i];
-                            } else {
-                                old += text_p[i];
-                            }
-                        }
-                        else {
-                            if (isWrong == true)
-                                wrong += text_p[i];
-                            else {
-                                isWrong = true;
-                                createFontWithP("#808080", old, p, father);
-                                old = "";
-                                wrong = text_p[i];
-                            }
-                        }
-                    }
-                    createFontWithP("#808080", old, p, father);
-                    createFontWithP("#ff0000", wrong, p, father);
-                    if (input_p.length < text_p.length) {
-                        var left_p = arraytext[s].substr(input_p.length);
-                        createFontWithP("#000000", left_p, p, father);
-                    }
-                } else if (!arrayinput[s]) {
-                    createFontWithP("#000000", arraytext[s], p, father);
-                }
-            }
-        } else {
+        var text_old = "<?php echo $str;?>";
+//        if (text_old.indexOf("<br/>") > 0) {
+//            var div = document.getElementById("templet");
+//            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
+//                div.removeChild(div.firstChild);
+//            }
+//            var input_old = getContent(yaweiOCX4Look);
+//            var arrayinput = input_old.split("\n");
+//            var father = document.getElementById("templet");
+//            var arraytext = text_old.split("<br/>");
+//            for (var s = 0; s < arraytext.length; s++) {
+//                var p = document.createElement("p");
+//                if (arrayinput[s]) {
+//                    var input_p = arrayinput[s].split("");
+//                    var text_p = arraytext[s].split("");
+//                    var old = "";
+//                    var isWrong = false;
+//                    var wrong = "";
+//                    for (var i = 0; i < input_p.length && i < text_p.length; i++) {
+//                        if (input_p[i] == text_p[i]) {
+//                            if (isWrong == true) {
+//                                isWrong = false;
+//                                createFontWithP("#ff0000", wrong, p, father);
+//                                wrong = "";
+//                                old = text_p[i];
+//                            } else {
+//                                old += text_p[i];
+//                            }
+//                        }
+//                        else {
+//                            if (isWrong == true)
+//                                wrong += text_p[i];
+//                            else {
+//                                isWrong = true;
+//                                createFontWithP("#808080", old, p, father);
+//                                old = "";
+//                                wrong = text_p[i];
+//                            }
+//                        }
+//                    }
+//                    createFontWithP("#808080", old, p, father);
+//                    createFontWithP("#ff0000", wrong, p, father);
+//                    if (input_p.length < text_p.length) {
+//                        var left_p = arraytext[s].substr(input_p.length);
+//                        createFontWithP("#000000", left_p, p, father);
+//                    }
+//                } else if (!arrayinput[s]) {
+//                    createFontWithP("#000000", arraytext[s], p, father);
+//                }
+//            }
+//        } else {
             var input = getContent(yaweiOCX4Look).split("");
             var text = text_old.split("");
-            //----实验体
             var allInput2 = yaweiOCX4Look.GetContentWithSteno().split(">,");
             var longIsAgo = 0;
-            //-----
             var old = new Array();
             var oldCode = new Array();
             var isWrong = false;
@@ -353,6 +348,9 @@ $squence = $countSquence + 1;
                 var left =document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
                 createFont("#000000", left,"");
             }
-        }
+            if((text.length - longIsAgo)<1){
+                window.G_isOverFlag = 1;
+            }
+       // }
     }
 </script>
