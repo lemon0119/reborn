@@ -28,8 +28,9 @@
         $strTime .= $ss < 10 ? "0".$ss : $ss;
     }//end
 ?>
+
   <?php if(!$isOver){?>
-<div class="span9" style="position: relative;left: 180px;bottom: 300px;width: 970px">
+<div class="span9" style="position: relative;left: 180px;bottom: 450px;width: 970px">
         <div class="hero-unit fl"  align="center">
             <table border = '0px'>
                 <tr><h3><?php echo $exerOne['title']?></h3></tr>
@@ -105,11 +106,11 @@
 
                 var seconds =<?php if($isExam) echo $exerOne['time']; else echo '0';?>;
                
-        if(time==0){
+        if(time==1){
                     alert("本题时间已到，不可答题！");
                     clearInterval(isover);
                    doSubmit(true,function(){
-                      window.location.href="index.php?r=student/examlistenType&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
+                      window.location.href="index.php?r=student/examlistenType&&over=1&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
                     });
                 }
             },1000);

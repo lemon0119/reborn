@@ -24,7 +24,7 @@ if ($isExam) {
 }//end
 ?>
 <?php if (!$isOver) { ?>
-<div class="span9" style="position: relative;left: 180px;bottom: 300px;width: 970px">
+<div class="span9" style="position: relative;left: 180px;bottom: 450px;width: 970px">
         <div class="hero-unit fl" align="center">
             <?php
             Yii::app()->session['exerID'] = $exerOne['exerciseID'];
@@ -33,14 +33,14 @@ if ($isExam) {
                 <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
                 <tr>
                     <?php if ($isExam) { ?>
-                        <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                        <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="timej" type="hidden"/></td>
-                        <td width = '250px'>字数：<span id="wordCount">0</span></td>
-                        <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                        <td width = '180px'>分数：<?php echo $exerOne['score'] ?></td>
+                        <td width = '180px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="timej" type="hidden"/></td>
+                        <td width = '180px'>字数：<span id="wordCount">0</span></td>
+                        <td width = '180px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php } else { ?>
-                        <td width = '250px'>计时：<span id="timej">00:00:00</span></td>
-                        <td width = '250px'>字数：<span id="wordCount">0</span></td>
-                        <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
+                        <td width = '180px'>计时：<span id="timej">00:00:00</span></td>
+                        <td width = '180px'>字数：<span id="wordCount">0</span></td>
+                        <td width = '180px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php } ?>
                 </tr>
             </table>
@@ -163,7 +163,7 @@ if ($isExam) {
 					window.wxc.xcConfirm("本题时间已到，不可答题！", "custom", option);           
                         clearInterval(isover);
                         doSubmit(true, function () {
-                            window.location.href = "index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['examsuiteID']; ?>&&workID=<?php echo Yii::app()->session['examworkID'] ?>";
+                            window.location.href="index.php?r=student/examlookType&&over=1&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
                         });
                     }
                 }, 1000);

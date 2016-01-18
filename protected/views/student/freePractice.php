@@ -53,11 +53,11 @@
                             case 'free': echo '自由练习'; break;
                         }?></td>
                         <td title="<?php echo $model['title'];?>" class="font-center"><?php  if(Tool::clength($model['title'])<=10)
-                                        echo $model['title'];
+                                        echo Tool::csubstr($model['title'], 0, 10);
                                     else
                                        echo Tool::csubstr($model['title'], 0, 10)."...";?></td>
                         <td title="<?php echo $model['content'];?>" class="font-center"><?php  if(Tool::clength($model['content'])<=40)
-                                        echo $model['content'];
+                                        echo Tool::csubstr($model['content'], 0,40);
                                    else
                                         echo Tool::csubstr($model['content'], 0,40)."...";
                                         ?></td>

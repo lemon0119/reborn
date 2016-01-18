@@ -307,6 +307,10 @@ class StudentController extends CController {
     
     //2015-8-3 宋杰 获取考试听打练习
         public function actionExamlistenType(){
+            if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
+                
         $suiteID = Yii::app()->session['examsuiteID'];
           $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -322,6 +326,9 @@ class StudentController extends CController {
                $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         $exerID = $_GET['exerID'];
+        if(isset($_GET['over'])){
+             $over=$_GET['over'];
+         }
         Yii::app()->session['exerType'] = 'listen';
         //edit by LC
         //$result = ListenType::model()->findByPK($exerID);
@@ -345,6 +352,12 @@ class StudentController extends CController {
         $isOver=0;
         if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
+        if(isset($over) && $over==1){
+            $isOver=1;
+            $t= AnswerRecord::model()->find("recordID=? and type=?",array($record->recordID,'listen'));
+            $t->costTime=$totalTime;
+            $t->update();
+        }
         //end
          if($recordID==null){
           return $this->render('listenExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exercise2'=>$classexam2,'exerOne'=>$result,'cent' =>$cent,'isExam'=>$isExam,'examInfo'=>$examInfo,'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime ));
@@ -429,6 +442,9 @@ class StudentController extends CController {
     
     //2015-8-3 宋杰 获取考试看打练习
         public function actionExamlookType(){
+            if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -444,6 +460,9 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
          $exerID = $_GET['exerID'];
+         if(isset($_GET['over'])){
+             $over=$_GET['over'];
+         }
         Yii::app()->session['exerType'] = 'look';
         //edit by LC
         //$result = LookType::model()->findByPK($exerID);
@@ -467,6 +486,13 @@ class StudentController extends CController {
         $isOver=0;
         if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
+        
+        if(isset($over) && $over==1){
+            $isOver=1;
+            $t= AnswerRecord::model()->find("recordID=? and type=?",array($record->recordID,'look'));
+            $t->costTime=$totalTime;
+            $t->update();
+        }
         //end
        if($recordID==null){
          return $this->render('lookExer',array( 
@@ -570,6 +596,9 @@ class StudentController extends CController {
     
     //2015-8-3 宋杰 获取考试键位练习
        public function actionExamKeyType(){
+           if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -584,6 +613,9 @@ class StudentController extends CController {
              $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
          $exerID = $_GET['exerID'];
+         if(isset($_GET['over'])){
+             $over=$_GET['over'];
+         }
         Yii::app()->session['exerID'] = $exerID;
         Yii::app()->session['exerType'] = 'key';
         //edit by LC
@@ -608,6 +640,12 @@ class StudentController extends CController {
         $isOver=0;
         if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
+        if(isset($over) && $over==1){
+            $isOver=1;
+            $t= AnswerRecord::model()->find("recordID=? and type=?",array($record->recordID,'key'));
+            $t->costTime=$totalTime;
+            $t->update();
+        }
         //end
          if($recordID==null){
           return $this->render('keyExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
@@ -961,6 +999,7 @@ class StudentController extends CController {
   //课堂作业套题  
    public function actionClswkOne(){
         $workID = $_GET['suiteID'];
+        error_log($workID);
         $isExam = false;
         Yii::app()->session['isExam']=$isExam;
         Yii::app()->session['workID'] = $workID;
@@ -1429,6 +1468,22 @@ class StudentController extends CController {
                     $lessonID = $_GET['lessonID'];
                     $nowLesson = Lesson::model()->find("lessonID = '$lessonID'");
                     $classExerciseLst = ClassExercise::model()->findAll("classID = '$classID' AND lessonID = '$lessonID' AND is_open = 1");
+                    $array=Array();
+                    foreach ($classExerciseLst as $list) {
+                        if(strstr($list['content'],"$$")){
+                            $string="";
+                            $list['content']=  str_replace("$$", " ", $list['content']);
+                            $array=  explode(" ", $list['content']);
+
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"0");
+                                $arr=substr($arr, $pos+1);
+                                $string=$string." ".$arr;
+                            }
+                            $list['content']=$string;
+                        }
+                    }
+                    
                 }
                 return $this->render('freePractice',['lessons'=>$lessons,'nowlesson'=>$nowLesson,'classExerciseLst'=>$classExerciseLst]);
     }
@@ -1438,7 +1493,6 @@ class StudentController extends CController {
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
         $data = ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
-        echo  $data;
     }
     
     public function actionIframe4Look(){

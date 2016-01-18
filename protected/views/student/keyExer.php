@@ -1,9 +1,13 @@
-<script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
+
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <?php  if($isExam == false){ 
-    require 'suiteSideBar.php';
+    require 'suiteSideBar.php'; ?>
+    <script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
+    <?php
 }else{ 
-    require 'examSideBar.php';
+    require 'examSideBar.php';  ?>
+    <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+    <?php
 } 
      //add by lc 
     $type = 'key'; 
@@ -22,7 +26,7 @@
  ?>
 <?php if(!$isOver){?>
 
-<div class="span9" style="position: relative;left: 180px;bottom: 300px;width: 970px">
+<div class="span9" style="position: relative;left: 180px;bottom: 450px;width: 970px">
     
     <div class="hero-unit fl"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>  
@@ -124,7 +128,7 @@
                     window.wxc.xcConfirm("本题时间已到，不可答题！", window.wxc.xcConfirm.typeEnum.error);
                     clearInterval(isover);
                     doSubmit(true,function(){
-                        window.location.href="index.php?r=student/examkeyType&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
+                        window.location.href="index.php?r=student/examkeyType&&over=1&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
                     });
                     
                 }
