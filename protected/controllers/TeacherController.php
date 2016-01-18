@@ -5089,9 +5089,6 @@ public function ActionAssignFreePractice(){
             $array_exam = Exam::model()->findAll();
             
             
-      
-            
-            
             
             
             

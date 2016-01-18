@@ -1,4 +1,17 @@
- <div class="span3">
+<script src="https://localhost/reborn/js/echarts.min.js"></script>
+<style>
+    .bb{
+        color:black;
+        margin-left: 20px;
+        margin-top: 10px;
+        text-decoration: none;
+        
+    }
+    .bb:hover{
+        text-decoration: none;
+    }
+</style>
+<div class="span3">
      <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
@@ -44,7 +57,7 @@
                          if($exam['examID'] == $examList['examID'])
                          {
                          ?>
-                 <li><div ><a href="#" onclick="getExamExercise(<?php echo $exam['examID'];?>)"><i class="icon-list"></i><?php echo $exam['examName']; ?></a></div></li>
+                 <li><div ><a href="#" onclick="getExamExercise(<?php echo $exam['examID'];?>,<?php echo $examList['workID'];?>)"><i class="icon-list"></i><?php echo $exam['examName']; ?></a></div></li>
                         <?php 
                               }
                  }
@@ -57,33 +70,40 @@
 
 
 <div class="span9" id="sp" style="display: none;">
-     <select name = "selectID" id="selectID"  style="width:13%; height:auto;display:inline;float:left;">
-        <option value = "correct" > 正确率 </option >
-        <option value = "speed" >速度 </option >
-        <option value = "maxSpeed">maxSpeed</option >
-        <option value = "allKey"> allKey</option >
-     </select > 
-    <div id="div1" style="width:33%; height:auto;display:inline;float:left;" >
-        <ul>题目：</ul>
-        <ul id="ul1" style="list-style: none;">
+    
+    <div id="div1" style="width:43%; height:346px;display:inline;float:left;" >
+        <ul style="font-size: 23px;margin-top: 10px;">题目</ul>
+        <ul>
+            <select name = "selectID" id="selectID"  style="height:36px;width:300px; display:inline;float:left;">
+            <option value = "correct" > 正确率 </option >
+            <option value = "speed" >速度 </option >
+            <option value = "maxSpeed">最大速度</option >
+            <option value = "backDelete"> 回改字数</option >
+            <option value="maxInternalTime">最高间隔</option>
+            </select > 
+        </ul>
+        <ul id="ul1" style="list-style: none;border-radius: 3px;background-color: #AAACAA;position: relative;float:left;height:250px;overflow: auto;width:300px;color:black;">
         </ul>
     </div>
-    <div id="div1" style="width:33%; height:auto;display:inline;float:left;">
-        <ul>排名：</ul>
-        <ul id="ul2" style="list-style: none;">
+    <div id="div1" style="width:55%; height:346px;display:inline;float:right;margin-top: 8px;">
+        <ul style="font-size: 23px;">排名</ul>
+        <ul  id="ul2" style="list-style: none;margin-left: 20px;">
             <li>练习一</li>
             <li>练习二</li>
             <li>练习三</li>          
         </ul>
+        <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>名次</th>
+                        <th>姓名</th>
+                    </tr>
+                </thead>
+                <tbody id="bo">
+                </tbody>
+            </table>
     </div>
-        <div id="div1" style="width:33%; height:auto;display:inline;float:left;">
-            <ul id="ul3" style="list-style: none;">
-            <li>练习一</li>
-            <li>练习二</li>
-            <li>练习三</li>          
-        </ul>
-    </div>
-  
+    <div id="main" style="width: 800px;height:400px;position: absolute;left:60px;top:380px;"></div>
     
 </div>
 
@@ -130,8 +150,9 @@ function getSuiteExercise(suiteID,workID){
                    $('#ul1').children().filter('li').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
+                   $('#bo').hide();
                    for(var i=0;i<data.length;i++){                                         
-                      var str = "<a href='#' onclick='getStudentRanking("+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
+                      var str = "<a class='bb' onclick='getStudentRanking("+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
                       var li = document.createElement("li");               
                       li.innerHTML= str;
                       ul.appendChild(li);
@@ -155,10 +176,14 @@ function getClassExer(lessonID){
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul2').children().filter('li').remove();
+                   
                    $('#ul3').children().filter('li').remove();
+                   //$('#bo').hide();
+                   //$('#main').hide();
+                   
                    for(var i=0;i<data.length;i++){       
                       var ab=document.getElementById("selectID").value;
-                      var str = "<a href='#' onclick='getClassExerRanking("+data[i]['exerciseID']+","+ data[i]['type']+")'>"+data[i]['title']+"</a>";       
+                      var str = "<a class='bb' onclick='getClassExerRanking("+data[i]['exerciseID']+","+ data[i]['type']+")'>"+data[i]['title']+"</a>";       
                       var li = document.createElement("li");               
                       li.innerHTML= str;
                       ul.appendChild(li);
@@ -170,12 +195,13 @@ function getClassExer(lessonID){
                 }
          });    
 }
-function getExamExercise(examID){
+function getExamExercise(examID,workID){
         $.ajax({
              type: "POST",
              dataType:"json",
              url: "index.php?r=api/getExamExercise",
              data: {examID:examID,
+                 workID:workID,
                 },
              success: function(data){
                  document.getElementById("sp").style.display='block';
@@ -183,8 +209,9 @@ function getExamExercise(examID){
                    $('#ul1').children().filter('li').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
-                   for(var i=0;i<data.length;i++){                                         
-                      var str = "<a href='#' onclick='getStudentRanking("+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
+                   $('#bo').hide();
+                   for(var i=0;i<data.length;i++){ 
+                      var str = "<a class='bb' onclick='getStudentRanking("+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+data[i][0]['title']+"</a>";       
                       var li = document.createElement("li");               
                       li.innerHTML= str;
                       ul.appendChild(li);
@@ -197,7 +224,8 @@ function getExamExercise(examID){
          });    
 }
 
-function getStudentRanking(isExam,exerciseID,type){
+
+function getStudentRanking(workID,isExam,exerciseID,type){
         var choice=document.getElementById("selectID").value;
         $.ajax({
              type: "POST",
@@ -208,19 +236,166 @@ function getStudentRanking(isExam,exerciseID,type){
                     type:type,
                     isExam:isExam,
                     choice:choice,
+                    workID:workID,
                 },
              success: function(data){
                  document.getElementById("sp").style.display='block';
-                   var ul = document.getElementById("ul2");          
-                   //$('#ul1').children().filter('li').remove();
+                   var tbody = document.getElementById("bo");      
+                   $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
-                   for(var i=0;i<data.length;i++){                                         
-                      var str = "<a href='#'>"+data[i]['studentName']+"</a>";       
-                      var li = document.createElement("li");               
-                      li.innerHTML= str;
-                      ul.appendChild(li);
-                   }  
+                   $('#bo').show();
+                   var times = new Array();
+                   var per=new Array();
+                   for(var i=0;i<data[0].length;i++){       
+                       var name=data[0][i]['time'];
+                      var  str = "<th>"+(i+1)+"</th>"+"<th><a onclick='getStudentRankingAll("+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>";
+                      var tr = document.createElement("tr");               
+                      tr.innerHTML= str;
+                      tbody.appendChild(tr);
+                   }
+                   for(var j=0;j<data[1][0].length;j++){
+                       times[j]=data[1][0][j]['duration'];
+                       per[j]=data[1][0][j][choice];
+                   }
+                   var choose;
+                   if(choice=='correct'){
+                       choose='正确率';
+                   }else if(choice=='speed'){
+                       choose='速度';
+                   }else if(choice=='maxSpeed'){
+                       choose='最大速度';
+                   }else if(choice=='backDelete'){
+                       choose='回改字数';
+                   }else if(choice=='maxInternalTime'){
+                       choose='最高间隔';
+                   }
+                    var myChart = echarts.init(document.getElementById('main'));
+                    var option = {
+                        title: {
+                            text: '图'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['平均成绩']
+                        },
+                        xAxis: {
+                            data: times
+                        },
+                        yAxis: {},
+                        series: [{
+                            name:choose,
+                            type: 'bar',
+                            data: per
+                        }]
+                    };
+                    myChart.setOption(option);
+                    
+                 },     
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr, "Failed");
+            }
+         }); 
+}
+function getStudentRankingAll(workID,isExam,exerciseID,type,name){
+        if(name==0){
+            alert("请选择题目");
+            return ;
+        }
+        var choice=document.getElementById("selectID").value;
+        console.log(name);
+        $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=api/getStudentRankingAll",
+             data: {
+                    exerciseID:exerciseID,
+                    type:type,
+                    isExam:isExam,
+                    choice:choice,
+                    workID:workID,
+                    name:name,
+                },
+             success: function(data){
+                 document.getElementById("sp").style.display='block';
+                   var tbody = document.getElementById("bo");      
+                   $('#bo').children().filter('tr').remove();
+                   $('#ul2').children().filter('li').remove();
+                   $('#ul3').children().filter('li').remove();
+                   var times = new Array();
+                   var per=new Array();
+                   var myTimes = new Array();
+                   var myPer=new Array();
+                   
+                   for(var h=0;h<data[2].length;h++){
+                       myTimes[h]=data[2][h]['time'];
+                       myPer[h]=data[2][h][choice];
+                       
+                   }
+                   for(var i=0;i<data[0].length;i++){   
+                      var  str = "<th>"+(i+1)+"</th>"+"<th><a onclick='getStudentRankingAll("+workID+","+"1"+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>";
+                      var tr = document.createElement("tr");               
+                      tr.innerHTML= str;
+                      tbody.appendChild(tr);
+                   }
+                   for(var j=0;j<data[1][0].length;j++){
+                       times[j]=data[1][0][j]['duration'];
+                       per[j]=data[1][0][j][choice];
+                   }
+                   
+                   var choose;
+                   if(choice=='correct'){
+                       choose='正确率';
+                   }else if(choice=='speed'){
+                       choose='速度';
+                   }else if(choice=='maxSpeed'){
+                       choose='最大速度';
+                   }else if(choice=='backDelete'){
+                       choose='回改字数';
+                   }else if(choice=='maxInternalTime'){
+                       choose='最高间隔';
+                   }
+                    var myChart = echarts.init(document.getElementById('main'));
+                    var option = {
+                        title: {
+                            text: '图'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['平均成绩','学生成绩']
+                        },
+                        xAxis: {
+                            data: times
+                        },
+                        yAxis: {},
+                        series: [{
+                            name:choose,
+                            type: 'bar',
+                            data: per
+                        },
+                        {
+                            name:'学生成绩',
+                            type:'bar',
+                            data:myPer,
+                            markLine : {
+                                itemStyle:{
+                                    normal:{
+                                        lineStyle:{
+                                            type: 'dashed'
+                                        }
+                                    }
+                                },
+                                data : [
+                                    [{type : 'min'}, {type : 'max'}]
+                                ]
+                            }
+                        },
+
+                    ]
+                    };
+                    myChart.setOption(option);
+                    
                  },     
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
@@ -242,15 +417,56 @@ function getClassExerRanking(exerciseID,type){
              success: function(data){
                  document.getElementById("sp").style.display='block';
                    var ul = document.getElementById("ul2");          
-                   //$('#ul1').children().filter('li').remove();
+                   var tbody = document.getElementById("bo");      
+                   $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
-                   for(var i=0;i<data.length;i++){                                         
-                      var str = "<a href='#'>"+data[i]['studentName']+"</a>";       
-                      var li = document.createElement("li");               
-                      li.innerHTML= str;
-                      ul.appendChild(li);
+                   //$('#bo').show();
+                   //$('#main').show();
+                   var times  = new Array();
+                   var per=new Array();
+                   for(var i=0;i<data[0].length;i++){                                         
+                      var str =  "<th>"+(i+1)+"</th>"+"<th><a onclick='getClassExerRankingAll("+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>";
+                      var tr = document.createElement("tr");               
+                      tr.innerHTML= str;
+                      tbody.appendChild(tr);
                    }  
+                   for(var j=0;j<data[1][0].length;j++){
+                       times[j]=data[1][0][j]['duration'];
+                       per[j]=data[1][0][j][choice];
+                   }
+                   var choose;
+                   if(choice=='correct'){
+                       choose='正确率';
+                   }else if(choice=='speed'){
+                       choose='速度';
+                   }else if(choice=='maxSpeed'){
+                       choose='最大速度';
+                   }else if(choice=='backDelete'){
+                       choose='回改字数';
+                   }else if(choice=='maxInternalTime'){
+                       choose='最高间隔';
+                   }
+                   var myChart = echarts.init(document.getElementById('main'));
+                    var option = {
+                        title: {
+                            text: '图'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['平均成绩']
+                        },
+                        xAxis: {
+                            data: times
+                        },
+                        yAxis: {},
+                        series: [{
+                            name:choose,
+                            type: 'bar',
+                            data: per
+                        }]
+                    };
+                    myChart.setOption(option);
                  },     
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
@@ -258,6 +474,103 @@ function getClassExerRanking(exerciseID,type){
             }
          }); 
 }
-
+function getClassExerRankingAll(exerciseID,type,name){
+        if(name==0){
+            alert("请选择题目");
+            return ;
+        }
+        var choice=document.getElementById("selectID").value;
+        $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=api/getClassExerRankingAll",
+             data: {
+                    exerciseID:exerciseID,
+                    type:type,
+                    choice:choice,
+                    name:name,
+                },
+             success: function(data){
+                 document.getElementById("sp").style.display='block';
+                   var ul = document.getElementById("ul2");          
+                   var tbody = document.getElementById("bo");      
+                   $('#bo').children().filter('tr').remove();
+                   $('#ul2').children().filter('li').remove();
+                   $('#ul3').children().filter('li').remove();
+                   var times = new Array();
+                   var per=new Array();
+                   var myTimes = new Array();
+                   var myPer=new Array();
+                   for(var h=0;h<data[2].length;h++){
+                       myTimes[h]=data[2][h]['time'];
+                       myPer[h]=data[2][h][choice];
+                   }
+                   for(var i=0;i<data[0].length;i++){                                         
+                      var str =  "<th>"+(i+1)+"</th>"+"<th><a onclick='getClassExerRankingAll("+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>";
+                      var tr = document.createElement("tr");               
+                      tr.innerHTML= str;
+                      tbody.appendChild(tr);
+                   }  
+                   for(var j=0;j<data[1][0].length;j++){
+                       times[j]=data[1][0][j]['duration'];
+                       per[j]=data[1][0][j][choice];
+                   }
+                   var choose;
+                   if(choice=='correct'){
+                       choose='正确率';
+                   }else if(choice=='speed'){
+                       choose='速度';
+                   }else if(choice=='maxSpeed'){
+                       choose='最大速度';
+                   }else if(choice=='backDelete'){
+                       choose='回改字数';
+                   }else if(choice=='maxInternalTime'){
+                       choose='最高间隔';
+                   }
+                   var myChart = echarts.init(document.getElementById('main'));
+                    var option = {
+                        title: {
+                            text: '图'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['平均成绩','学生成绩']
+                        },
+                        xAxis: {
+                            data: times
+                        },
+                        yAxis: {},
+                        series: [{
+                            name:choose,
+                            type: 'bar',
+                            data: per
+                        },
+                        {
+                            name:'学生成绩',
+                            type:'bar',
+                            data:myPer,
+                            markLine : {
+                                itemStyle:{
+                                    normal:{
+                                        lineStyle:{
+                                            type: 'dashed'
+                                        }
+                                    }
+                                },
+                                data : [
+                                    [{type : 'min'}, {type : 'max'}]
+                                ]
+                            }
+                        },
+                    ]
+                    };
+                    myChart.setOption(option);
+                 },     
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr, "Failed");
+            }
+         }); 
+}
 
 </script>
