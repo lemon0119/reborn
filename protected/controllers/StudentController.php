@@ -1001,7 +1001,6 @@ class StudentController extends CController {
   //课堂作业套题  
    public function actionClswkOne(){
         $workID = $_GET['suiteID'];
-        error_log($workID);
         $isExam = false;
         Yii::app()->session['isExam']=$isExam;
         Yii::app()->session['workID'] = $workID;
@@ -1518,6 +1517,7 @@ class StudentController extends CController {
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
         $data = ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
+        echo  $data;
     }
     
     public function actionIframe4Look(){
