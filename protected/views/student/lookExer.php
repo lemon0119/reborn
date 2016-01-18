@@ -24,23 +24,72 @@ if ($isExam) {
 }//end
 ?>
 <?php if (!$isOver) { ?>
-<div class="span9" style="position: relative;left: 180px;bottom: 300px;width: 970px">
+<div class="span9" >
+    <?php if($isExam){?>
+                    <?php }else{?>
+    <div align="center">
+                      <table style="width: 580px"  border = '0px'> 
+                          <tr><td colspan="9"><h3><?php echo $exerOne['title']?></h3></td></tr>
+            <tr>
+                <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+                <td><span style="color: #f46500" id="timej">00:00:00</span></td>
+                <td></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">正确率：&nbsp;&nbsp;</span></td>
+                <td style="width: 60px;"><span style="color: #f46500" id="">----</span></td>
+                <td><span class="fr" style="color: gray"> %&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                <td><span class="fl" style="color: #000;font-weight: bolder">回改字数：</span></td>
+                <td style="width: 60px;"><span style="color: #f46500" id="getBackDelete">0</span></td>
+                <td><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr>
+            <tr>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">平均速度：</span></td>
+                <td><span style="color: #f46500" id="getAverageSpeed">0</span></td>
+                <td><span class="fr" style="color: gray"> 字/分</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">瞬时速度：</span></td>
+                <td><span style="color: #f46500" id="getMomentSpeed">0</span ></td>
+                <td><span class="fr" style="color:gray"> 字/分</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">最高速度：</span></td>
+                <td><span style="color: #f46500" id="getHighstSpeed">0</span ></td>
+                <td><span class="fr" style="color:gray"> 字/分</span></td>
+            </tr>
+            <tr>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">平均击键：</span></td>
+                <td><span style="color: #f46500" id="getAverageKeyType">0</span ></td>
+                <td><span class="fr" style="color: gray"> 次/分</span></td>
+                <td><span class="fl"  style="color: #000;font-weight: bolder">瞬时击键：</span></td>
+                <td><span style="color:#f46500" id="getMomentKeyType">0</span ></td>
+                <td><span class="fr" style="color:gray"> 次/秒</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">最高击键：</span></td>
+                <td><span style="color: #f46500" id="getHighstCountKey">0</span ></td>
+                <td><span class="fr" style="color: gray"> 次/秒</span></td>
+            </tr>
+            <tr>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">击键间隔：</span></td>
+                <td><span style="color: #f46500" id="getIntervalTime">0</span ></td>
+                <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">最高间隔：</span></td>
+                <td><span style="color: #f46500" id="getHighIntervarlTime">0</span ></td>
+                <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">总击键数：</span></td>
+                <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
+                <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr>
+
+        </table>
+    </div>
+                     <?php }?>
         <div class="hero-unit fl" align="center">
             <?php
             Yii::app()->session['exerID'] = $exerOne['exerciseID'];
             ?>
             <table border = '0px'>
+                <?php if ($isExam) { ?>
                 <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
                 <tr>
-                    <?php if ($isExam) { ?>
                         <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
                         <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="timej" type="hidden"/></td>
                         <td width = '250px'>字数：<span id="wordCount">0</span></td>
-                        <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php } else { ?>
-                        <td width = '250px'>计时：<span id="timej">00:00:00</span></td>
-                        <td width = '250px'>字数：<span id="wordCount">0</span></td>
-                        <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php } ?>
                 </tr>
             </table>
@@ -52,30 +101,12 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;
             <br/>
             <object id="typeOCX" type="application/x-itst-activex" 
                     clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                    width ='750' height='310' 
+                    width ='750' height='250' 
                     event_OnChange="onChange"
                     event_OnStenoPress="onStenoPressKey">
             </object>
         </div>
         <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
-    <div class="fr"   id="analysis" style="background-color: #fff;">
-        <table style="font-size: 18px; border: 3px" cellpadding="20"  >
-            <tr>
-                <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
-                 <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
-                <tr><td><span style="font-weight: bolder">瞬时速度：</span><span style="color: #f46500" id="getMomentSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
-                <tr><td><span style="font-weight: bolder">回改字数：</span><span style="color: #f46500" id="getBackDelete">0</span ><span style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
-                
-            <tr>
-                <td><span style="font-weight: bolder">平均击键：</span><span style="color: #f46500" id="getAverageKeyType">0</span ><span style="color: gray"> 次/分</span></td></tr>
-                <tr><td><span style="font-weight: bolder">最高击键：</span><span style="color: #f46500" id="getHighstCountKey">0</span ><span style="color: gray"> 次/秒</span></td></tr>
-                <tr><td><span style="font-weight: bolder">瞬时击键：</span><span style="color: #f46500" id="getMomentKeyType">0</span ><span style="color: gray"> 次/秒</span></td></tr>
-                <tr><td><span style="font-weight: bolder">总击键数：</span><span style="color: #f46500" id="getcountAllKey">0</span ><span style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
-                <tr><td><span style="font-weight: bolder">击键间隔：</span><span style="color: #f46500" id="getIntervalTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr><tr><td><span style="font-weight: bolder">最高间隔：</span><span style="color: #f46500" id="getHighIntervarlTime">0</span ><span style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr>
-        </table>
-    </div>
     </div>
 
 
@@ -352,5 +383,9 @@ $squence = $countSquence + 1;
     window.G_exerciseType = "answerRecord";
 //    var answer = document.getElementById("id_answer").value;
 //    var cost = document.getElementById("id_cost").value;
-   window.G_exerciseData = Array("1");
+   window.G_exerciseData = <?php if(isset($recordID)){
+       echo $recordID;
+   }else {
+       echo '0';
+   }?>
 </script>
