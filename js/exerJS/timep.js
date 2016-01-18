@@ -8,24 +8,26 @@ var isExam;
 function startTime(){
 	timer = window.setInterval(function(){
             if(window.G_startFlag===1&&window.G_pauseFlag===0){
-            changWordPS();
-		strTime = "";
-		if(++ss==60)
-		{
-			if(++mm==60)
-			{
-				hh++;
-				mm=0;
-			}
-			ss=0;
-		}
-		strTime+=hh<10?"0"+hh:hh;
-		strTime+=":";
-		strTime+=mm<10?"0"+mm:mm;
-		strTime+=":";
-		strTime+=ss<10?"0"+ss:ss;
-		document.getElementById('timej').innerHTML = strTime;
-            }
+                if(window.G_isOverFlag === 0){
+                changWordPS();
+                    strTime = "";
+                    if(++ss==60)
+                    {
+                            if(++mm==60)
+                            {
+                                    hh++;
+                                    mm=0;
+                            }
+                            ss=0;
+                    }
+                    strTime+=hh<10?"0"+hh:hh;
+                    strTime+=":";
+                    strTime+=mm<10?"0"+mm:mm;
+                    strTime+=":";
+                    strTime+=ss<10?"0"+ss:ss;
+                    document.getElementById('timej').innerHTML = strTime;
+                }
+             }
 	},1000);
 };
 function startTime2(){

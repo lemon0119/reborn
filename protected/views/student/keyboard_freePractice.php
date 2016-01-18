@@ -8,6 +8,7 @@
 ?>
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle_v.css" rel="stylesheet" type="text/css" />
+<button onclick="getSteno()">测试</button>
 <table border="0">
     <tr>
       <td><div id="l_a" class = "key"><div>A</div></div></td>
@@ -52,11 +53,10 @@
 </table>
 <br/>
 <script>
-    
+    var yaweiOCX = null;
     $(document).ready(function(){
-        if(document.getElementById("typeOCX")!==null){
-             document.getElementById("typeOCX").SetTextSize(8);
-        }
+            yaweiOCX = document.getElementById("typeOCX");
+             yaweiOCX.SetTextSize(8);
    });
     
     function keySet(keyID,isRight){
@@ -82,12 +82,17 @@
     }
     
     function onChange(){
-        document.getElementById("typeOCX").UpdateView();
+        yaweiOCX.UpdateView();
         var input = getContent(document.getElementById("typeOCX"));
-        document.getElementById("typeOCX").Locate(input.length);
+        yaweiOCX.Locate(input.length);
+    }
+    function getSteno(){
+        var str = yaweiOCX.GetContentWithSteno();
+        alert(str);
     }
     
     function onStenoPressKey(pszStenoString ,device){
+        
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause =0;
         var myDate = new Date();
@@ -99,7 +104,7 @@
                 }
                 window.G_countMomentKey++;
                 window.G_countAllKey++;
-                window.G_content = document.getElementById("typeOCX").GetContent();
+                window.G_content = yaweiOCX.GetContent();
                 window.G_keyContent = window.G_keyContent +"&"+pszStenoString;
                 
                           //每击统计击键间隔时间 秒

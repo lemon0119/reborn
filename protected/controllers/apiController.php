@@ -280,9 +280,20 @@ class apiController extends Controller {
         if($exerciseType === "answerRecord"){
            if(Yii::app()->session['isExam']){
                 if(!ExamRecord::saveExamRecord($recordID))
-                    return false;
+                if($squence>0){
+                    error_log("已有");
+                    $createPerson = Yii::app()->session['userid_now'];
+                    AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData, $createPerson);
+                    
+                }
+                return false;
                 return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1);
             }else {
+                if($squence>0){
+                    error_log("已有");
+                    $createPerson = Yii::app()->session['userid_now'];
+                    AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData, $createPerson);
+                }
                 if(!SuiteRecord::saveSuiteRecord ($recordID))
                     return false;
                 return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey,$squence,0);
@@ -524,8 +535,41 @@ class apiController extends Controller {
          }
          $this->renderJSON($data);
      }
-    
      
+     public function actionCheckBrief(){
+         $word = $_POST['word'];
+         $isBrief = FALSE;
+         $content = str_replace("<", "", explode("><", $word)[0]);
+         $yaweiCode = str_replace(">", "", explode("><", $word)[1]);
+         $array_brief = TwoWordsLibBrief::model()->findAll();
+         foreach ($array_brief as $v){
+             if($v['words']===$content){
+                 $origenCode = str_replace(":0", "", $v['yaweiCode']);
+                 if($origenCode===$yaweiCode){
+                     $isBrief = TRUE;
+                 }
+             }
+         }
+         if(iconv_strlen($content,"UTF-8")>2){
+             echo  "true";   
+         }else if($isBrief){
+             echo  "true";
+         }else{
+              echo "false";  
+         }
+     }
+     
+    public function actionGetBrief(){
+        $array_brief = TwoWordsLibBrief::model()->findAll();
+        $data = array();
+        $data2 = array();
+         foreach ($array_brief as $v){
+             array_push($data, $v['words']);
+             array_push($data2, $v['yaweiCode']);
+         }
+         $data = implode('&',$data)."$".implode('&',$data2);
+         echo $data;
+    }
 }
 
 

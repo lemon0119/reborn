@@ -505,6 +505,14 @@ class AnswerRecord extends CActiveRecord
             Yii::app()->db->createCommand($sql)->query();   
         }
         
+        public function  deleteRecordByIDandPerson($recordID,$createPerson){
+            $AnswerRecord = AnswerRecord::model()->find("recordID= '$recordID' AND createPerson='$createPerson'");
+            if($AnswerRecord!=""){
+              $AnswerRecord->delete();  
+            }
+        }
+
+
         
         public function updateAnswer($recordID, $answer, $seconds){
         $userID = Yii::app()->session['userid_now'];
