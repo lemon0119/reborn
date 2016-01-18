@@ -4583,6 +4583,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/on_start_class.png");
 }
+#exam_statistics{
+    padding: 28px 60px;
+    background-repeat:no-repeat;
+    background-image: url("../../img/UI_tea/exam_statistics.png");
+}
+#exam_statistics:hover{
+    padding: 28px 60px;
+    background-repeat:no-repeat;
+    background-image: url("../../img/UI_tea/on_exam_statistics.png");
+}
 #topicmanager{
     padding: 28px 60px;
     background-repeat:no-repeat;

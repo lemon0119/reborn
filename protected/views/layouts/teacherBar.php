@@ -63,21 +63,14 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="homework"></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/assignWork&&progress=<?php echo $classProgress[$key]; ?>">布置作业</a></li>
+                                            <li><a href="./index.php?r=teacher/assignWork&&progress=<?php if(isset($classProgress)) echo $classProgress[$key]; ?>">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
                                              <li><a href="./index.php?r=teacher/assignExam">试卷管理</a></li>
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
-                                    </li>                                  
-                                    <li class="dropdown">
-                                        <a href="#"  id ="startclass" data-toggle="dropdown" ></a>
-                                        <ul class="dropdown-menu">
-                                            <?php if(isset($classNameInfo)){
-                                                foreach ($classNameInfo as $key => $value): ?>
-                                                <li><a href="./index.php?r=teacher/watchData&&classID=<?php echo $key;?>"><?php echo $value; ?></a></li>
-                                            <?php endforeach;} ?>
-                                        </ul>
-                                    </li>
+                                    </li>             
+                                    <li><a id ="exam_statistics" href="./index.php?r=teacher/watchData&&classID=<?php echo $key;?>"></a></li>
+                                 
                                                                        
                                     <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil"></a></li>
                                     <li><a id="blank_teacher"></a></li>
