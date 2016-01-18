@@ -64,7 +64,7 @@
                 <br/>
                 <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath;?>"   preload = "auto"    controls=""></audio>
             </div>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php echo $classExercise['content']; ?>">
+        <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>">
         <br/>
         <object id="typeOCX4Listen" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
@@ -75,7 +75,9 @@
     </div>
 </body>
 <script>
+    var yaweiOCX4Listen = null;
     $(document).ready(function () {
+        yaweiOCX4Listen = document.getElementById("typeOCX4Listen");
             $("#pause").click(function(){
             if(window.G_startFlag===1){
             if(window.G_isPause ===0){
@@ -93,7 +95,7 @@
             }
         });
     });
-     var originalContent = "<?php echo $classExercise['content'];?>";
+     var originalContent = "<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>";
      //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
     <?php  $exerciseID = $classExercise['exerciseID'];
@@ -107,10 +109,16 @@
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
     window.G_exerciseData = Array(classExerciseID,studentID);
         $("#close_exercise").click(function () {
-        $("#typeOCX4Listen").remove();
+        yaweiOCX4Listen.remove();
         window.parent.closeClassExercise();
     });
 
+    function onChange(){
+        yaweiOCX4Listen.UpdateView();
+        var input = getContent(yaweiOCX4Listen);
+        yaweiOCX4Listen.Locate(input.length);
+    }
+    
     function onStenoPressKey(pszStenoString, device) {
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
@@ -127,7 +135,7 @@
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = document.getElementById("typeOCX4Listen").GetContent();
+        window.G_content = yaweiOCX4Listen.GetContent();
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
         
         AjaxGetRight_Wrong_AccuracyRate("","","wordisRightRadio",originalContent,window.G_content);
@@ -152,13 +160,13 @@
         //--------------------------------------------------
     }
     $(document).ready(function(){
-    document.getElementById("typeOCX4Listen").HideToolBar();
+    yaweiOCX4Listen.HideToolBar();
         //菜单栏变色
         $("li#li-listen-<?php echo $classExercise['exerciseID'];?>").attr('class','active');
     });
     
     function getWordLength(){
-        var input = getContent(document.getElementById("typeOCX4Listen"));
+        var input = getContent(yaweiOCX4Listen);
         return input.length;
     }
     
