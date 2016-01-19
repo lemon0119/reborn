@@ -195,7 +195,6 @@
         }
         changTemplet(pszStenoString);
         window.GA_RightRadio = (getCorrect()*100).toFixed(2);
-        window.alert((getCorrect()*100).toFixed(2));
         document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
     }
     var wordArray = new Array();
