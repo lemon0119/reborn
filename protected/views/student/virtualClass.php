@@ -243,7 +243,6 @@ function startClassExercise(){
         success:function(data){
             if(data===""){
             }else{
-                
                 $("#sw-bulletin").unbind("click");
                 $("#classExercise-container").toggle(200);
                 if(data==="look"){
