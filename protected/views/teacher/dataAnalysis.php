@@ -273,21 +273,40 @@ function getStudentRanking(workID,isExam,exerciseID,type){
                     var myChart = echarts.init(document.getElementById('main'));
                     var option = {
                         title: {
-                            text: '图'
+                            text: '折线图'
                         },
-                        tooltip: {},
+                        tooltip : {
+                            trigger: 'axis'
+                        },
                         legend: {
                             data:['平均成绩']
                         },
-                        xAxis: {
-                            data: times
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
                         },
-                        yAxis: {},
-                        series: [{
-                            name:choose,
-                            type: 'bar',
-                            data: per
-                        }]
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                data : times
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'平均成绩',
+                                type:'line',
+                                data:per
+                            },
+
+                        ]
                     };
                     myChart.setOption(option);
                     
@@ -343,7 +362,10 @@ function getStudentRankingAll(workID,isExam,exerciseID,type,name){
                        times[j]=data[1][0][j]['duration'];
                        per[j]=data[1][0][j][choice];
                    }
-                   
+                   for(var h=data[2].length;h<data[1][0].length;h++){
+                       myPer[h]=0;
+                       
+                   }
                    var choose;
                    if(choice=='correct'){
                        choose='正确率';
@@ -359,40 +381,45 @@ function getStudentRankingAll(workID,isExam,exerciseID,type,name){
                     var myChart = echarts.init(document.getElementById('main'));
                     var option = {
                         title: {
-                            text: '图'
+                            text: '折线图'
                         },
-                        tooltip: {},
+                        tooltip : {
+                            trigger: 'axis'
+                        },
                         legend: {
                             data:['平均成绩','学生成绩']
                         },
-                        xAxis: {
-                            data: times
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
                         },
-                        yAxis: {},
-                        series: [{
-                            name:choose,
-                            type: 'bar',
-                            data: per
-                        },
-                        {
-                            name:'学生成绩',
-                            type:'bar',
-                            data:myPer,
-                            markLine : {
-                                itemStyle:{
-                                    normal:{
-                                        lineStyle:{
-                                            type: 'dashed'
-                                        }
-                                    }
-                                },
-                                data : [
-                                    [{type : 'min'}, {type : 'max'}]
-                                ]
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                data : times
                             }
-                        },
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'平均成绩',
+                                type:'line',
+                                data:per
+                            },
+                            {
+                                name:'学生成绩',
+                                type:'line',
+                                data:myPer
+                            },
 
-                    ]
+                        ]
                     };
                     myChart.setOption(option);
                     
@@ -450,21 +477,40 @@ function getClassExerRanking(exerciseID,type){
                    var myChart = echarts.init(document.getElementById('main'));
                     var option = {
                         title: {
-                            text: '图'
+                            text: '折线图'
                         },
-                        tooltip: {},
+                        tooltip : {
+                            trigger: 'axis'
+                        },
                         legend: {
                             data:['平均成绩']
                         },
-                        xAxis: {
-                            data: times
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
                         },
-                        yAxis: {},
-                        series: [{
-                            name:choose,
-                            type: 'bar',
-                            data: per
-                        }]
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                data : times
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'平均成绩',
+                                type:'line',
+                                data:per
+                            },
+
+                        ]
                     };
                     myChart.setOption(option);
                  },     
@@ -515,6 +561,9 @@ function getClassExerRankingAll(exerciseID,type,name){
                        times[j]=data[1][0][j]['duration'];
                        per[j]=data[1][0][j][choice];
                    }
+                   for(var h=data[2].length;h<data[1][0].length;h++){
+                       myPer[h]=0;
+                   }
                    var choose;
                    if(choice=='correct'){
                        choose='正确率';
@@ -530,39 +579,45 @@ function getClassExerRankingAll(exerciseID,type,name){
                    var myChart = echarts.init(document.getElementById('main'));
                     var option = {
                         title: {
-                            text: '图'
+                            text: '折线图'
                         },
-                        tooltip: {},
+                        tooltip : {
+                            trigger: 'axis'
+                        },
                         legend: {
                             data:['平均成绩','学生成绩']
                         },
-                        xAxis: {
-                            data: times
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
                         },
-                        yAxis: {},
-                        series: [{
-                            name:choose,
-                            type: 'bar',
-                            data: per
-                        },
-                        {
-                            name:'学生成绩',
-                            type:'bar',
-                            data:myPer,
-                            markLine : {
-                                itemStyle:{
-                                    normal:{
-                                        lineStyle:{
-                                            type: 'dashed'
-                                        }
-                                    }
-                                },
-                                data : [
-                                    [{type : 'min'}, {type : 'max'}]
-                                ]
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                data : times
                             }
-                        },
-                    ]
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'平均成绩',
+                                type:'line',
+                                data:per
+                            },
+                            {
+                                name:'学生成绩',
+                                type:'line',
+                                data:myPer
+                            },
+
+                        ]
                     };
                     myChart.setOption(option);
                  },     
