@@ -548,6 +548,12 @@ class apiController extends Controller {
             $allMaxSpeed=Array();
             $allDelete=Array();
             $allMaxInternalTime=Array();
+            
+            $num1=Array();
+            $num2=Array();
+            $num3=Array();
+            $num4=Array();
+            $num5=Array();
             foreach ($data2 as $d) {
                 $correct=$d['correct'];     
                 $corrects=explode("&", $correct);
@@ -568,40 +574,50 @@ class apiController extends Controller {
                     foreach ($speeds as $key => $value) {
                         if(isset($allSpeed[$key])){
                             $allSpeed[$key]+=$value;
+                            $num1[$key]++;
                         }else{
                             $allSpeed[]+=$value;
+                            $num1[]+=1;
                         }
                     }
                 }else if($choice=='correct'){
                     foreach ($corrects as $key => $value) {
                         if(isset($allCorrect[$key])){
                             $allCorrect[$key]+=$value;
+                            $num2[$key]++;
                         }else{
                             $allCorrect[]+=$value;
+                            $num2[]+=1;
                         }
                     }
                 }else if($choice=='maxSpeed'){
                     foreach ($maxSpeeds as $key => $value) {
                         if(isset($allMaxSpeed[$key])){
                             $allMaxSpeed[$key]+=$value;
+                            $num3[$key]++;
                         }else{
                             $allMaxSpeed[]+=$value;
+                            $num3[]+=1;
                         }
                     }
                 }else if($choice=='backDelete'){
                     foreach ($deletes as $key => $value) {
                         if(isset($allDelete[$key])){
                             $allDelete[$key]+=$value;
+                            $num4[$key]++;
                         }else{
                             $allDelete[]+=$value;
+                            $num4[]+=1;
                         }
                     }
                 }else if($choice=='maxInternalTime'){
                     foreach ($maxInternalTimes as $key => $value) {
                         if(isset($allMaxInternalTime[$key])){
                             $allMaxInternalTime[$key]+=$value;
+                            $num5[$key]++;
                         }else{
                             $allMaxInternalTime[]+=$value;
+                            $num5[]+=1;
                         }
                     }
                 }
@@ -610,32 +626,32 @@ class apiController extends Controller {
             if($choice=='correct'){
                 foreach ($allCorrect as $key => $value) {
                     
-                    $allCorrect[$key]=$allCorrect[$key]/count($data);
+                    $allCorrect[$key]=$allCorrect[$key]/$num2[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"correct"=>$allCorrect[$key]];
                 }
                 
             }else if($choice=='speed'){
                 foreach ($allSpeed as $key => $value) {
-                    $allSpeed[$key]=$allSpeed[$key]/count($data);
+                    $allSpeed[$key]=$allSpeed[$key]/$num1[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"speed"=>$allSpeed[$key]];
                 }
             }else if($choice=='maxSpeed'){
                 foreach ($allMaxSpeed as $key => $value) {
                     $n=$key*2;
-                    $allMaxSpeed[$key]=$allMaxSpeed[$key]/count($data);
+                    $allMaxSpeed[$key]=$allMaxSpeed[$key]/$num3[$key];
                     $arrayData4[] = ["duration"=>$n,"maxSpeed"=>$allMaxSpeed[$key]];
                 }
             }else if($choice=='backDelete'){
                 foreach ($allDelete as $key => $value) {
-                    $allDelete[$key]=$allDelete[$key]/count($data);
+                    $allDelete[$key]=$allDelete[$key]/$num4[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"backDelete"=>$allDelete[$key]];
                 }
             }else if($choice=='maxInternalTime'){
                 foreach ($allMaxInternalTime as $key => $value) {
-                    $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/count($data);
+                    $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/$num4[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"maxInternalTime"=>$allMaxInternalTime[$key]];
                 }
@@ -817,6 +833,11 @@ class apiController extends Controller {
             $allMaxSpeed=Array();
             $allDelete=Array();
             $allMaxInternalTime=Array();
+            $num1=Array();
+            $num2=Array();
+            $num3=Array();
+            $num4=Array();
+            $num5=Array();
             foreach ($data2 as $d) {
                 $correct=$d['correct'];     
                 $corrects=explode("&", $correct);
@@ -832,40 +853,50 @@ class apiController extends Controller {
                     foreach ($speeds as $key => $value) {
                         if(isset($allSpeed[$key])){
                             $allSpeed[$key]+=$value;
+                            $num1[$key]++;
                         }else{
                             $allSpeed[]+=$value;
+                            $num1[]+=1;
                         }
                     }
                 }else if($choice=='correct'){
                     foreach ($corrects as $key => $value) {
                         if(isset($allCorrect[$key])){
                             $allCorrect[$key]+=$value;
+                            $num2[$key]++;
                         }else{
                             $allCorrect[]+=$value;
+                            $num2[]+=1;
                         }
                     }
                 }else if($choice=='maxSpeed'){
                     foreach ($maxSpeeds as $key => $value) {
                         if(isset($allMaxSpeed[$key])){
                             $allMaxSpeed[$key]+=$value;
+                            $num3[$key]++;
                         }else{
                             $allMaxSpeed[]+=$value;
+                            $num3[]+=1;
                         }
                     }
                 }else if($choice=='backDelete'){
                     foreach ($deletes as $key => $value) {
                         if(isset($allDelete[$key])){
                             $allDelete[$key]+=$value;
+                            $num4[$key]++;
                         }else{
                             $allDelete[]+=$value;
+                            $num4[]+=1;
                         }
                     }
                 }else if($choice=='maxInternalTime'){
                     foreach ($maxInternalTimes as $key => $value) {
                         if(isset($allMaxInternalTime[$key])){
                             $allMaxInternalTime[$key]+=$value;
+                            $num5[$key]++;
                         }else{
                             $allMaxInternalTime[]+=$value;
+                            $num5[]+=1;
                         }
                     }
                 }
@@ -874,32 +905,32 @@ class apiController extends Controller {
             if($choice=='correct'){
                 foreach ($allCorrect as $key => $value) {
                     
-                    $allCorrect[$key]=$allCorrect[$key]/count($data);
+                    $allCorrect[$key]=$allCorrect[$key]/$num2[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"correct"=>$allCorrect[$key]];
                 }
                 
             }else if($choice=='speed'){
                 foreach ($allSpeed as $key => $value) {
-                    $allSpeed[$key]=$allSpeed[$key]/count($data);
+                    $allSpeed[$key]=$allSpeed[$key]/$num1[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"speed"=>$allSpeed[$key]];
                 }
             }else if($choice=='maxSpeed'){
                 foreach ($allMaxSpeed as $key => $value) {
-                    $allMaxSpeed[$key]=$allMaxSpeed[$key]/count($data);
+                    $allMaxSpeed[$key]=$allMaxSpeed[$key]/$num3[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"maxSpeed"=>$allMaxSpeed[$key]];
                 }
             }else if($choice=='backDelete'){
                 foreach ($allDelete as $key => $value) {
-                    $allDelete[$key]=$allDelete[$key]/count($data);
+                    $allDelete[$key]=$allDelete[$key]/$num4[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"backDelete"=>$allDelete[$key]];
                 }
             }else if($choice=='maxInternalTime'){
                 foreach ($allMaxInternalTime as $key => $value) {
-                    $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/count($data);
+                    $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/$num5[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"maxInternalTime"=>$allMaxInternalTime[$key]];
                 }
@@ -1022,6 +1053,11 @@ class apiController extends Controller {
             $allMaxSpeed=Array();
             $allDelete=Array();
             $allMaxInternalTime=Array();
+            $num1=Array();
+            $num2=Array();
+            $num3=Array();
+            $num4=Array();
+            $num5=Array();
             foreach ($data2 as $d) {
                 $correct=$d['correct'];     
                 $corrects=explode("&", $correct);
@@ -1042,40 +1078,51 @@ class apiController extends Controller {
                     foreach ($speeds as $key => $value) {
                         if(isset($allSpeed[$key])){
                             $allSpeed[$key]+=$value;
+                            $num1[$key]++;
                         }else{
                             $allSpeed[]+=$value;
+                            $num1[]+=1;
                         }
+                        error_log($num1[$key]);
                     }
                 }else if($choice=='correct'){
                     foreach ($corrects as $key => $value) {
                         if(isset($allCorrect[$key])){
                             $allCorrect[$key]+=$value;
+                            $num2[$key]++;
                         }else{
                             $allCorrect[]+=$value;
+                            $num2[]+=1;
                         }
                     }
                 }else if($choice=='maxSpeed'){
                     foreach ($maxSpeeds as $key => $value) {
                         if(isset($allMaxSpeed[$key])){
                             $allMaxSpeed[$key]+=$value;
+                            $num3[$key]++;
                         }else{
                             $allMaxSpeed[]+=$value;
+                            $num3[]+=1;
                         }
                     }
                 }else if($choice=='backDelete'){
                     foreach ($deletes as $key => $value) {
                         if(isset($allDelete[$key])){
                             $allDelete[$key]+=$value;
+                            $num4[$key]++;
                         }else{
                             $allDelete[]+=$value;
+                            $num4[]+=1;
                         }
                     }
                 }else if($choice=='maxInternalTime'){
                     foreach ($maxInternalTimes as $key => $value) {
                         if(isset($allMaxInternalTime[$key])){
                             $allMaxInternalTime[$key]+=$value;
+                            $num5[$key]++;
                         }else{
                             $allMaxInternalTime[]+=$value;
+                            $num5[]+=1;
                         }
                     }
                 }
@@ -1084,32 +1131,32 @@ class apiController extends Controller {
             if($choice=='correct'){
                 foreach ($allCorrect as $key => $value) {
                     
-                    $allCorrect[$key]=$allCorrect[$key]/count($data);
+                    $allCorrect[$key]=$allCorrect[$key]/$num2[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"correct"=>$allCorrect[$key]];
                 }
                 
             }else if($choice=='speed'){
                 foreach ($allSpeed as $key => $value) {
-                    $allSpeed[$key]=$allSpeed[$key]/count($data);
+                    $allSpeed[$key]=$allSpeed[$key]/$num1[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"speed"=>$allSpeed[$key]];
                 }
             }else if($choice=='maxSpeed'){
                 foreach ($allMaxSpeed as $key => $value) {
                     $n=$key*2;
-                    $allMaxSpeed[$key]=$allMaxSpeed[$key]/count($data);
+                    $allMaxSpeed[$key]=$allMaxSpeed[$key]/$num3[$key];
                     $arrayData4[] = ["duration"=>$n,"maxSpeed"=>$allMaxSpeed[$key]];
                 }
             }else if($choice=='backDelete'){
                 foreach ($allDelete as $key => $value) {
-                    $allDelete[$key]=$allDelete[$key]/count($data);
+                    $allDelete[$key]=$allDelete[$key]/$num4[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"backDelete"=>$allDelete[$key]];
                 }
             }else if($choice=='maxInternalTime'){
                 foreach ($allMaxInternalTime as $key => $value) {
-                    $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/count($data);
+                    $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/$num5[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"maxInternalTime"=>$allMaxInternalTime[$key]];
                 }
@@ -1271,6 +1318,11 @@ class apiController extends Controller {
             $allMaxSpeed=Array();
             $allDelete=Array();
             $allMaxInternalTime=Array();
+            $num1=Array();
+            $num2=Array();
+            $num3=Array();
+            $num4=Array();
+            $num5=Array();
             foreach ($data2 as $d) {
                 $correct=$d['correct'];     
                 $corrects=explode("&", $correct);
@@ -1291,40 +1343,51 @@ class apiController extends Controller {
                     foreach ($speeds as $key => $value) {
                         if(isset($allSpeed[$key])){
                             $allSpeed[$key]+=$value;
+                            $num1[$key]++;
                         }else{
                             $allSpeed[]+=$value;
+                            $num1[]+=1;
                         }
+                        
                     }
                 }else if($choice=='correct'){
                     foreach ($corrects as $key => $value) {
                         if(isset($allCorrect[$key])){
                             $allCorrect[$key]+=$value;
+                            $num2[$key]++;
                         }else{
                             $allCorrect[]+=$value;
+                            $num2[]+=1;
                         }
                     }
                 }else if($choice=='maxSpeed'){
                     foreach ($maxSpeeds as $key => $value) {
                         if(isset($allMaxSpeed[$key])){
                             $allMaxSpeed[$key]+=$value;
+                            $num3[$key]++;
                         }else{
                             $allMaxSpeed[]+=$value;
+                            $num3[]+=1;
                         }
                     }
                 }else if($choice=='backDelete'){
                     foreach ($deletes as $key => $value) {
                         if(isset($allDelete[$key])){
                             $allDelete[$key]+=$value;
+                            $num4[$key]++;
                         }else{
                             $allDelete[]+=$value;
+                            $num4[]+=1;
                         }
                     }
                 }else if($choice=='maxInternalTime'){
                     foreach ($maxInternalTimes as $key => $value) {
                         if(isset($allMaxInternalTime[$key])){
                             $allMaxInternalTime[$key]+=$value;
+                            $num5[$key]++;
                         }else{
                             $allMaxInternalTime[]+=$value;
+                            $num5[]+=1;
                         }
                     }
                 }
@@ -1333,32 +1396,32 @@ class apiController extends Controller {
             if($choice=='correct'){
                 foreach ($allCorrect as $key => $value) {
                     
-                    $allCorrect[$key]=$allCorrect[$key]/count($data);
+                    $allCorrect[$key]=$allCorrect[$key]/$num2[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"correct"=>$allCorrect[$key]];
                 }
                 
             }else if($choice=='speed'){
                 foreach ($allSpeed as $key => $value) {
-                    $allSpeed[$key]=$allSpeed[$key]/count($data);
+                    $allSpeed[$key]=$allSpeed[$key]/$num1[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"speed"=>$allSpeed[$key]];
                 }
             }else if($choice=='maxSpeed'){
                 foreach ($allMaxSpeed as $key => $value) {
                     $n=$key*2;
-                    $allMaxSpeed[$key]=$allMaxSpeed[$key]/count($data);
+                    $allMaxSpeed[$key]=$allMaxSpeed[$key]/$num3[$key];
                     $arrayData4[] = ["duration"=>$n,"maxSpeed"=>$allMaxSpeed[$key]];
                 }
             }else if($choice=='backDelete'){
                 foreach ($allDelete as $key => $value) {
-                    $allDelete[$key]=$allDelete[$key]/count($data);
+                    $allDelete[$key]=$allDelete[$key]/$num4[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"backDelete"=>$allDelete[$key]];
                 }
             }else if($choice=='maxInternalTime'){
                 foreach ($allMaxInternalTime as $key => $value) {
-                    $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/count($data);
+                    $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/$num5[$key];
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"maxInternalTime"=>$allMaxInternalTime[$key]];
                 }
