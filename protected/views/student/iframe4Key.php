@@ -123,7 +123,8 @@
     window.G_saveToDatabase = 1;
 <?php
 $exerciseID = $classExercise['exerciseID'];
-$sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '$exerciseID'");
+$studentID = Yii::app()->session['userid_now'];
+$sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '$exerciseID' AND studentID = '$studentID'");
 $countSquence = count($sqlClassExerciseRecord);
 $squence = $countSquence + 1;
 ?>

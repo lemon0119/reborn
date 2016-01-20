@@ -18,13 +18,13 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
             <title>亚伟速录</title>
             <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo CSS_URL; ?>site.css" rel="stylesheet">
-            <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
-            <script src="<?php echo JS_URL; ?>bootstrap.min.js"></script>
-            <script src="<?php echo JS_URL; ?>site.js"></script>
+            <script src="<?php echo JS_URL; ?>jquery.min.js" ></script>
+            <script src="<?php echo JS_URL; ?>bootstrap.min.js" ></script>
+            <script src="<?php echo JS_URL; ?>site.js" ></script>
             <!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
                 <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
-                <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
-		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+                <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js" ></script>
+		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js"></script>
 <!--            -->
             <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         </head>
