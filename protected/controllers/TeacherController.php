@@ -932,7 +932,8 @@ class TeacherController extends CController {
     public function actionAddLook() {
         $result = 'no';
         if (isset($_POST['title'])) {
-            $result = LookType::model()->insertLook($_POST['title'], $_POST['content'], Yii::app()->session['userid_now']);
+            $newContent = Tool::SBC_DBC($_POST['content'], 0);
+            $result = LookType::model()->insertLook($_POST['title'],$newContent, Yii::app()->session['userid_now']);
         }
         $this->render('addLook', ['result' => $result]);
     }
@@ -5226,6 +5227,7 @@ public function ActionAssignFreePractice(){
      
 
      public function ActionSelectWordLib(){
+         $uploadResult = "";
          $libstr=$_GET['libstr'];
          $libstr=  explode('$$', $libstr);
          $sql = "select distinct name,list from two_words_lib";
@@ -5235,9 +5237,34 @@ public function ActionAssignFreePractice(){
              if($res['name'] != "lib")
              array_push($list, $res);            
          }
+         if(isset($_GET['upload'])){
+              if (!empty($_FILES ['file'] ['name'])) {
+            $tmp_file = $_FILES ['file'] ['tmp_name'];
+            $file_types = explode(".", $_FILES ['file'] ['type']);
+            $file_type = $file_types [count($file_types) - 1];
+            // 判别是不是excel文件
+            if (strtolower($file_type) != "text/plain") {
+                $uploadResult = '不是txt文件';
+            } else {
+                // 解析文件并存入数据库逻辑
+                /* 设置上传路径 */
+                $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                /* 以时间来命名上传的文件 */
+                $str = date('Ymdhis');
+                $file_name = "Lib" . $str . ".txt";
+                if (!copy($tmp_file, $savePath . $file_name)) {
+                    $uploadResult = '上传失败';
+                } else {
+                    error_log($savePath.$file_name);
+                    $uploadResult= '上传成功';
+                   }
+                 }
+              }
+         }
          $this->renderPartial('wordLibLst', array(
             'list' => $list,
-             'libstr'=>$libstr
+             'libstr'=>$libstr,
+             'uploadResult'=>$uploadResult
             ));
      }
 
@@ -5317,7 +5344,8 @@ public function ActionAssignFreePractice(){
           $on=$_GET['on'];
             if (isset($_POST['title'])) {
                  $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
-                $result = ClassExercise::model()->insertClassExercise($classID,$sqlLesson['lessonID'],$_POST['title'],$_POST['content'],'look',Yii::app()->session['userid_now']);
+                 $newContent = Tool::SBC_DBC($_POST['content'], 0);
+                $result = ClassExercise::model()->insertClassExercise($classID,$sqlLesson['lessonID'],$_POST['title'],$newContent,'look',Yii::app()->session['userid_now']);
             }
         $this->render('addLook4ClassExercise', ['result' => $result]);
      }

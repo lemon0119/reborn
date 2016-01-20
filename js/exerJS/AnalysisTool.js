@@ -355,57 +355,12 @@ function AjaxGetRight_Wrong_AccuracyRate(id1,id2,id3,originalContent,currentCont
            });
        }
        
- function AjaxCheckBrief(word){
-     $.ajax({
-               type:"POST",
-               url:"index.php?r=api/checkBrief",
-               data:{word:word},
-               success:function(data){
-                   window.G_briefResult = data;
-               },
-               error:function(xhr, type, exception){
-                   console.log('GetAverageSpeed error', type);
-                   console.log(xhr, "Failed");
-                   console.log(exception, "exception");
-               }
-           });
- }      
+   
        
- function AjaxWordCheckBrief(content){
-    var ArrayContent = content.split(">,");
-    for(var i=0;i<ArrayContent.length;i++){
-        if((i+1)=== ArrayContent.length){
-          AjaxCheckBrief(ArrayContent[i]);
-        }
-    }
- }   
+
  
- function briefToChange(content,color,divName){
-        var father = document.getElementById(divName);
-        var f = document.createElement("font");
-        f.style = "color:" + color;
-        $.ajax({
-               type:"POST",
-               url:"index.php?r=api/briefToChange",
-               data:{content:content},
-               success:function(data){
-                   window.G_briefResult = data;
-               },
-               error:function(xhr, type, exception){
-                   console.log('GetAverageSpeed error', type);
-                   console.log(xhr, "Failed");
-                   console.log(exception, "exception");
-               }
-           });
-        
-        
-        f.innerHTML = text;
-        father.appendChild(f);
- }
+
  
- function AjaxAllCheckBrief(){
-     
- }
            
 
    
