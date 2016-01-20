@@ -8,7 +8,7 @@
 ?>
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle_v.css" rel="stylesheet" type="text/css" />
-<button onclick="getSteno()">测试</button>
+<!--<button onclick="getSteno()">测试</button>-->
 <table border="0">
     <tr>
       <td><div id="l_a" class = "key"><div>A</div></div></td>
@@ -16,7 +16,7 @@
       <td><div id="l_i" class = "key"><div>I</div></div></td>
       <td><div id="l_g" class = "key"><div>G</div></div></td>
       <td><div id="l_d" class = "key"><div>D</div></div></td>
-              <td>&nbsp;</td>
+      <td>&nbsp;</td>
       <td><div id="r_d" class = "key"><div>D</div></div></td>
       <td><div id="r_g" class = "key"><div>G</div></div></td>
       <td><div id="r_i" class = "key"><div>I</div></div></td>

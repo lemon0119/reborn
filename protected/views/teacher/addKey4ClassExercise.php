@@ -236,6 +236,12 @@
         }
         document.getElementById("libstr").value = libstr;
     }
-
+    
+    function error(result){
+            window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.error);
+    }
+     function success(result){
+            window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
+    }
 </script>
 
