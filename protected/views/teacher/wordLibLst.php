@@ -54,26 +54,30 @@
    </div>
     <!-- 学生列表结束 -->
     <div class="form-actions"  style="width: 750px;" >
-        <button class="btn btn-primary" onclick="clickOK()">确定</button>
+        <button class="fl btn btn-primary" onclick="clickOK()">确定</button>
         
-        <button style="position: relative;left: 2px" class="btn" onclick="clickQX()">返回</button>
+        <button style="position: relative;left: 10px" class="fl btn" onclick="clickQX()">返回</button>
+        
+        <div style="margin-left: 50px" class="fl"><form action="./index.php?r=teacher/SelectWordLib&&libstr=<?php echo $_GET['libstr'];?>&&upload=true" 
+          method="post" id="form-upload" enctype="multipart/form-data"><font style="color: #595959;font-family: fantasy;margin-right: 10px">添加私人词库</font><input type="file" name="file" id="file" />
+        <button class="btn" type="submit">上传</button></form>
+        </div>
    </div>
 </div>
 
         </body>
 <script>
-$(document).ready(function(){
-    //点击选择词库在新界面中之前选中的进行勾选，没写完-_-
-//        var libstr = window.opener.getLibs(); 
-//        var words = libstr.split("$$");
-//        var checkboxs = document.getElementByName("checkbox[]");
-//        for(var i=0;i<checkboxs.length;i++){
-//            for(var j=0;j<words.length;j++){
-//                if(checkboxs[i] == words[j])
-//                    checkboxs[i].checked = true;
-//            }
-//        }
-});
+     $(document).ready(function () {
+         <?php
+            if(isset($uploadResult)){
+                if($uploadResult=='上传成功'){
+                    echo 'window.parent.success("'.$uploadResult.'"); ';
+                }else if($uploadResult!=''){
+                    echo 'window.parent.error("'.$uploadResult.'"); ';
+                }
+            }
+         ?>
+    });
     function clickOK(){
     var checkboxs = document.getElementsByName('checkbox[]');
     var libs=new Array();

@@ -324,4 +324,43 @@ public static function teacherNotice(){
             }
     }
     
+        // 第一个参数：传入要转换的字符串
+    // 第二个参数：取0，英文转简体；取1，简体到英文
+    public static function SBC_DBC($str, $args2) {
+        $DBC = Array(
+             '：' ,
+            '。' , '，' , '/' , '%' , '#' ,
+            '！' , '＠' , '＆' , '（' , '）' ,
+            '《' , '＞' , '＂' , '＇' , '？' ,
+            '【' , '】' , '{' , '}' , '\'' ,
+            '｜' , '+' , '=' , '_' , '＾' ,
+            
+        );
+
+        $SBC = Array( // 半角
+            ':',
+            '.', ',', '/', '%', '#',
+            '!', '@', '&', '(', ')',
+            '<', '>', '"', '\'','?',
+            '[', ']', '{', '}', '\\',
+            '|', '+', '=', '_', '^',
+        );
+
+        if ($args2 == 0) {
+            return str_replace($SBC, $DBC, $str);  // 半角到全角
+        } else if ($args2 == 1) {
+            return str_replace($DBC, $SBC, $str);  // 全角到半角
+        } else {
+            return false;
+        }
+    }
+    
+     public static function fixEncoding($in_str)
+        {
+        $cur_encoding = mb_detect_encoding($in_str) ;
+        if($cur_encoding == "UTF-8" && mb_check_encoding($in_str,"UTF-8"))
+        return $in_str;
+        else
+        return utf8_encode($in_str);
+        }
 }
