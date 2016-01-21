@@ -5031,6 +5031,16 @@ table tr td{
     text-align: center !important;
     vertical-align: middle !important;
 }
+table tr td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+.tab tr td {
+    text-align: left !important;
+}
+.detailed tr{
+    height:36px;
+}
 .font-startcourse{
     padding: 15px 15px 0 15px;
     font-size: 20px;
