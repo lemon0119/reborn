@@ -241,17 +241,11 @@ $(document).ready(function(){
                  window.G_endAnalysis = 1;
                  window.G_isOverFlag=0;
                   $("#getMomentKeyType").html(0);
-                  $("#getHighstSpeed").html(0);
                   $("#getIntervalTime").html(0);
                  clearInterval(timer);
              }
         },2000);
     
-    if(isAgain===1){
-        var timerAgain = setInterval(function(){
-            
-        });
-    }
 });
 
 //拿取键码值

@@ -5249,13 +5249,25 @@ public function ActionAssignFreePractice(){
                 // 解析文件并存入数据库逻辑
                 /* 设置上传路径 */
                 $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
-                /* 以时间来命名上传的文件 */
-                $str = date('Ymdhis');
-                $file_name = "Lib" . $str . ".txt";
+                $file_name = $_FILES ['file'] ['name'];
                 if (!copy($tmp_file, $savePath . $file_name)) {
                     $uploadResult = '上传失败';
                 } else {
-                    error_log($savePath.$file_name);
+                    $file_dir=$savePath.$file_name; 
+                    $file_dir = str_replace("\\", "\\\\", $file_dir);
+                    $fp=fopen($file_dir,"r"); 
+                    $content=fread($fp,filesize($file_dir));//读文件 
+                    fclose($fp); 
+                    $str = explode("\r\n", $content);
+                    $name = str_replace(".txt", "", $file_name);
+                    $createPerson = Yii::app()->session['userid_now'];
+                    foreach ($str as $value) {
+                        $words = iconv('GBK','utf-8',$value);
+                        $strSerchFromLib = TwoWordsLib::model()->find("words LIKE '$words' AND list = 'lib'");
+                        $spell = $strSerchFromLib['spell'];
+                        $yaweiCode = $strSerchFromLib['yaweiCode'];
+                        TwoWordsLibPersonal::model()->insertPersonalLib($spell, $yaweiCode, $words, $name, $createPerson);
+                    }
                     $uploadResult= '上传成功';
                    }
                  }
