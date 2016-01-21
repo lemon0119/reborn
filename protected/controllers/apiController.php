@@ -697,6 +697,7 @@ class apiController extends Controller {
          $data3 = Array();
          $allData=Array();
          $myData=Array();
+         $myDetail=Array();
          if($all){
             foreach ($all as $a) {
                 //correct
@@ -742,6 +743,28 @@ class apiController extends Controller {
                  //time
                  $time = count($speed)*2-2;
                  $time2 = count($speed)*2-2;
+                 
+                 $averageKeyType=$a['ratio_averageKeyType'];   
+                 if(strpos($averageKeyType,"&") === false){     
+                      $averageKeyType=$averageKeyType."&".$averageKeyType;
+                 }
+                 $n=  strrpos($averageKeyType, "&");
+                 $averageKeyType= substr($averageKeyType, $n+1);
+                 
+                 $maxKeyType=$a['ratio_maxKeyType'];     
+                 if(strpos($maxKeyType,"&") === false){     
+                      $maxKeyType=$maxKeyType."&".$maxKeyType;
+                 }
+                 $n=  strrpos($maxKeyType, "&");
+                 $maxKeyType= substr($maxKeyType, $n+1);
+                 
+                 $countAllKey=$a['ratio_countAllKey'];     
+                 if(strpos($countAllKey,"&") === false){     
+                      $countAllKey=$countAllKey."&".$countAllKey;
+                 }
+                 $n=  strrpos($countAllKey, "&");
+                 $countAllKey= substr($countAllKey, $n+1);
+                 
                  if($isExam==1){
                      $student=  ExamRecord::model()->find('recordID=?',array($a['recordID']))['studentID'];
                  }else{
@@ -752,8 +775,11 @@ class apiController extends Controller {
                  if($student==$name){
                      //通过名字获取相应记录
                     $myData = ["speed"=>$speed2,"maxSpeed"=>$maxSpeed2,"correct"=>$correct2,"backDelete"=>$backDelete2,'maxInternalTime'=>$maxInternalTime2];
+                    $myDetail=["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime,
+                     'averageKeyType'=>$averageKeyType,"maxKeyType"=>$maxKeyType,"countAllKey"=>$countAllKey];
                  }
-                 $arrayData = ["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime];
+                 $arrayData = ["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime,
+                     'averageKeyType'=>$averageKeyType,"maxKeyType"=>$maxKeyType,"countAllKey"=>$countAllKey];
                  $arrayData2 = ["speed"=>$speed2,"maxSpeed"=>$maxSpeed2,"correct"=>$correct2,"backDelete"=>$backDelete2,'maxInternalTime'=>$maxInternalTime2];
 
                  array_push($data, $arrayData);
@@ -940,6 +966,7 @@ class apiController extends Controller {
          array_push($allData, $data3);
          
          array_push($allData, $myDataReturn);
+         array_push($allData, $myDetail);
          $this->renderJSON($allData);
      }
      public function ActiongetClassExerRanking(){
@@ -1256,6 +1283,8 @@ class apiController extends Controller {
          $arrayData = Array();
          $arrayData2 = Array();
          $arrayData3 = Array();$arrayData4 = Array();
+         $arrayDetail=Array();
+         $arrayDetailData=Array();
         
          $data2 = Array();
          $data3 = Array();
@@ -1281,7 +1310,7 @@ class apiController extends Controller {
              if($n!=0)
                 array_push($all3, $all2);
          }
-         $n1=0;$n2=0;$n3=0;$n4=0;$n5=0;
+         $n1=0;$n2=0;$n3=0;$n4=0;$n5=0;$n6=0;$n7=0;$n8=0;
          $studentName='';
          $data = Array();
          foreach ($all3 as $al) {
@@ -1326,11 +1355,43 @@ class apiController extends Controller {
                  $n=  strrpos($maxInternalTime, "&");
                  $maxInternalTime= substr($maxInternalTime, $n+1);
                  $n5+=$maxInternalTime;
+                 
+                 $averageKeyType=$a['ratio_averageKeyType'];   
+                 if(strpos($averageKeyType,"&") === false){     
+                      $averageKeyType=$averageKeyType."&".$averageKeyType;
+                 }
+                 $n=  strrpos($averageKeyType, "&");
+                 $averageKeyType= substr($averageKeyType, $n+1);
+                 $n6+=$averageKeyType;
+                 
+                 $maxKeyType=$a['ratio_maxKeyType'];     
+                 if(strpos($maxKeyType,"&") === false){     
+                      $maxKeyType=$maxKeyType."&".$maxKeyType;
+                 }
+                 $n=  strrpos($maxKeyType, "&");
+                 $maxKeyType= substr($maxKeyType, $n+1);
+                 $n7+=$maxKeyType;
+                 
+                 $countAllKey=$a['ratio_countAllKey'];     
+                 if(strpos($countAllKey,"&") === false){     
+                      $countAllKey=$countAllKey."&".$countAllKey;
+                 }
+                 $n=  strrpos($countAllKey, "&");
+                 $countAllKey= substr($countAllKey, $n+1);
+                 $n8+=$countAllKey;
+                 
                  $studentName=Student::model()->find('userID=?',array($a['studentID']))['userName'];
                  $f++;
+                 $arrayDetail=["studentID"=>$a['studentID'],"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,
+                 "time"=>$studentName,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime,'sequence'=>$f,'averageKeyType'=>$averageKeyType,
+                 'maxKeyType'=>$maxKeyType,'countAllKey'=>$countAllKey];
+                 array_push($arrayDetailData, $arrayDetail);
              }
-             $arrayData = ["studentID"=>$a['studentID'],"studentName"=>$studentName,"speed"=>$n2/count($al),"maxSpeed"=>$n3/count($al),"correct"=>$n1/count($al),"time"=>$studentName,"backDelete"=>$n4/count($al),'maxInternalTime'=>$n5/count($al),'sequence'=>$f];
+             $arrayData = ["studentID"=>$a['studentID'],"studentName"=>$studentName,"speed"=>$n2/count($al),"maxSpeed"=>$n3/count($al),"correct"=>$n1/count($al),
+                 "time"=>$studentName,"backDelete"=>$n4/count($al),'maxInternalTime'=>$n5/count($al),'sequence'=>$f,'averageKeyType'=>$n6/count($al),
+                 'maxKeyType'=>$n7/count($al),'countAllKey'=>$n8/count($al)];
              array_push($data, $arrayData);
+             
          }
          
          foreach ($all as $a) {
@@ -1576,6 +1637,7 @@ class apiController extends Controller {
          array_push($allData, $data);
          array_push($allData, $data3);
          array_push($allData, $myDataReturn);
+         array_push($allData, $arrayDetailData);
          $this->renderJSON($allData);
      }
 
