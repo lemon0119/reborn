@@ -104,6 +104,7 @@
 </body>
 <script>
     $(document).ready(function () {
+        document.getElementById('span').scrollIntoView();
         $("#pause").click(function () {
             if (window.G_startFlag === 1) {
                 if (window.G_isPause === 0) {

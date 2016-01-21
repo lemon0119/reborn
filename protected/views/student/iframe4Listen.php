@@ -77,6 +77,7 @@
 <script>
     var yaweiOCX4Listen = null;
     $(document).ready(function () {
+        document.getElementById('span').scrollIntoView();
         yaweiOCX4Listen = document.getElementById("typeOCX4Listen");
             $("#pause").click(function(){
             if(window.G_startFlag===1){
