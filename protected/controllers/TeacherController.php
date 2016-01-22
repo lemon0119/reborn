@@ -207,22 +207,42 @@ class TeacherController extends CController {
     }
 
     public function actionChangeProgress() {
+        $result = '1';
         $classID = $_GET['classID'];
         $on = $_GET['on'];
+        $lesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
+        $lessonID = $lesson['lessonID'];
+        $freePractice = ClassExercise::model()->findAll("classID = '$classID' and lessonID = '$lessonID'");
+        $keywork = array();
+        $look = array();
+        $listen = array();
         $class = new TbClass();
         $class = $class->find("classID = '$classID'");
         $class->currentLesson = $on;
         $class->update();
         $stu = Array();
         $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
+         foreach ($freePractice as $v){
+            if($v['type'] =='speed'||$v['type'] =='correct'||$v['type'] =='free'){
+               array_push($keywork, $v); 
+            }else if($v['type'] ==='look'){
+               array_push($look, $v); 
+            }else if($v['type'] ==='listen'){
+               array_push($listen, $v); 
+            }
+        }
         return $this->render('startCourse', [
                     'classID' => $classID,
                     'progress' => $on,
                     'on' => $on,
-                    'stu' => $stu
+                    'stu' => $stu,
+                    'keywork'=>$keywork,
+                    'look'=>$look,
+                    'listen'=>$listen,
+                    'result' => $result
         ]);
     }
-
+    
     public function actionPptLSt() {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
