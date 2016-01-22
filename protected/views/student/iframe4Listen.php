@@ -97,6 +97,7 @@
         });
     });
      var originalContent = "<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>";
+     window.GA_originalContent = originalContent;
      //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
     <?php  $exerciseID = $classExercise['exerciseID'];
@@ -122,6 +123,7 @@
     }
     
     function onStenoPressKey(pszStenoString, device) {
+        window.GA_answer = yaweiOCX4Listen.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
         var audio = document.getElementById('music');

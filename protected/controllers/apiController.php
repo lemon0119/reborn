@@ -267,14 +267,16 @@ class apiController extends Controller {
         $ratio_correct = $_POST['RightRadio'];
         $ratio_countAllKey = $_POST['CountAllKey'];
         $squence = $_POST['squence'];
+        $answer = $_POST['answer'];
+        $originalContent = $_POST['originalContent'];
         if($exerciseType === "classExercise"){
             $classExerciseID = $exerciseData[0];
             $studentID = $exerciseData[1];
             $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
             if(!isset($sqlClassExerciseRecord)){
-                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence,$originalContent,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }else{
-                 ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+                 ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }
         }       
         if($exerciseType === "answerRecord"){

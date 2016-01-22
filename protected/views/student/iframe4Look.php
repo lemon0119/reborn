@@ -128,6 +128,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;
         
     });
     var originalContent = "<?php $str1 = str_replace("<br/>", "", $str); echo $str1;?>".replace(/(^\s*)|(\s*$)/g, "");
+    window.GA_originalContent = originalContent;
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
 <?php
@@ -148,6 +149,7 @@ $squence = $countSquence + 1;
     });
 
     function onStenoPressKey(pszStenoString, device) {
+        window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
         var myDate = new Date();

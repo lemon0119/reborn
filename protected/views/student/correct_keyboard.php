@@ -112,7 +112,9 @@
         document.getElementById("typeOCX").Locate(input.length);
     }
     
-    function onStenoPressKey(pszStenoString ,device){     
+    function onStenoPressKey(pszStenoString ,device){    
+        
+        window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
         window.G_keyBoardBreakPause =0;
        var myDate = new Date();
          window.G_pressTime = myDate.getTime();
