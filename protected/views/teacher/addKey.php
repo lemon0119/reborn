@@ -236,7 +236,11 @@ function getContent(libs) {
                window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.error);
        }
      function success(result){
-            window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
+             window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function(){
+                    window.document.getElementById('iframe4choiceLib').contentWindow.clickQX();
+                }
+            });
     }
 </script>
 

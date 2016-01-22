@@ -92,7 +92,6 @@
       window.parent.getContent(libs); 
       window.parent.getDivAddKeyBack();
     }
-    
     function clickQX(){
         window.parent.getDivAddKeyBack();
     }

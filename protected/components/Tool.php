@@ -355,12 +355,20 @@ public static function teacherNotice(){
         }
     }
     
-     public static function fixEncoding($in_str)
-        {
-        $cur_encoding = mb_detect_encoding($in_str) ;
-        if($cur_encoding == "UTF-8" && mb_check_encoding($in_str,"UTF-8")){
-        return $in_str;}
-        else{
-        return utf8_encode($in_str);}
-        }
+    public static function filterKeyContent($content){
+                        if(strstr($content,"$$")){
+                            $string="";
+                            $content=  str_replace("$$", " ", $content);
+                            $array=  explode(" ", $content);
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"0");
+                                $arr=substr($arr, $pos+1);
+                                $string=$string." ".$arr;
+                            }
+                            return $string;
+                        }else{
+                            return $content;
+                        }
+    }
+    
 }

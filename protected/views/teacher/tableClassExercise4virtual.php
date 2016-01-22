@@ -32,14 +32,14 @@
                             case 'correct': echo '准确率练习'; break;
                             case 'free': echo '自由练习'; break;
                         }?></td>
-                        <td class="font-center"><?php  if(Tool::clength($model['title'])<=10)
+                        <td class="font-center" title="<?php echo $model['title'];?>"><?php  if(Tool::clength($model['title'])<=10)
                                         echo $model['title'];
                                     else
                                        echo Tool::csubstr($model['title'], 0, 10)."...";?></td>
-                        <td class="font-center"><?php  if(Tool::clength($model['content'])<=10)
-                                        echo $model['content'];
+                        <td class="font-center" title="<?php echo Tool::filterKeyContent($model['content']);?>"><?php  if(Tool::clength($model['content'])<=10)
+                                        echo Tool::filterKeyContent($model['content']);
                                    else
-                                        echo Tool::csubstr($model['content'], 0,10)."...";
+                                        echo Tool::csubstr(Tool::filterKeyContent($model['content']),0,12)."...";
                                         ?></td>
                         <td><button id="startClassExercise" class="btn btn-primary" onclick="startClassExercise(<?php echo $model['exerciseID'];?>)" >开始</a></td>
                     </tr> 

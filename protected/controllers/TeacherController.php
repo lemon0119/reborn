@@ -5233,6 +5233,12 @@ public function ActionAssignFreePractice(){
          $sql = "select distinct name,list from two_words_lib";
          $result = Yii::app()->db->createCommand($sql)->query();
          $list = array();
+         $createPerson = Yii::app()->session['userid_now'];
+         $sql4Personal = "select distinct name,list from two_words_lib_personal WHERE createPerson LIKE '$createPerson'";
+         $resulet4Personal = Yii::app()->db->createCommand($sql4Personal)->query();
+         foreach ($resulet4Personal as $v){
+             array_push($list, $v); 
+         }
          foreach ($result as $res){
              if($res['name'] != "lib")
              array_push($list, $res);            
@@ -5249,7 +5255,7 @@ public function ActionAssignFreePractice(){
                 // 解析文件并存入数据库逻辑
                 /* 设置上传路径 */
                 $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
-                $file_name = $_FILES ['file'] ['name'];
+                $file_name = "-".$_FILES ['file'] ['name']."-";
                 if (!copy($tmp_file, $savePath . $file_name)) {
                     $uploadResult = '上传失败';
                 } else {
@@ -5366,18 +5372,29 @@ public function ActionAssignFreePractice(){
           $result = 'no';
           $classID=$_GET['classID'];
           $on=$_GET['on'];
+          $content = "";
         if (isset($_POST['title'])) {
             $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
             $libstr = $_POST['libstr']; 
             $arr = explode("$$", $libstr);
             $condition = "";
+            $conditionPersonal ="";
             foreach($arr as $a){
-                if($condition == "")
+                $flag = substr($a, 0, 1);
+                if($flag=='-'){
+                     if($conditionPersonal == "")
+                    $conditionPersonal = "'".$a."'";
+                else
+                    $conditionPersonal =$conditionPersonal.","."'".$a."'";  
+                }else{
+                      if($condition == "")
                     $condition = "'".$a."'";
                 else
-                    $condition =$condition.","."'".$a."'";               
-            }          
-            $condition =" where name in (".$condition.")";
+                    $condition =$condition.","."'".$a."'";  
+                }
+            }
+            if($condition!=""){
+                  $condition =" where name in (".$condition.")";
             $sql = "select * from two_words_lib";
             $order = "";
             if($arr[count($arr) - 1] == "lib"){                
@@ -5385,13 +5402,27 @@ public function ActionAssignFreePractice(){
             }
             $sql = $sql.$condition.$order;
             $res = Yii::app()->db->createCommand($sql)->query();
-            $content = "";
             foreach ($res as $record){
                  if($content != "")
                     $content = $content."$$".$record['yaweiCode'].$record['words'];
                 else 
                     $content = $record['yaweiCode'].$record['words'];              
-            }     
+            } 
+            }
+            if($conditionPersonal!=""){
+                    $conditionPersonal =" where name in (".$conditionPersonal.")";
+                    $sqlPersonal = "select * from two_words_lib_personal";
+                    $sqlPersonal = $sqlPersonal.$conditionPersonal;
+                    $resPersonal = Yii::app()->db->createCommand($sqlPersonal)->query();
+                    $conditionPersonal = "";
+                    foreach ($resPersonal as $v){
+                     if($content != "")
+                        $content = $content."$$".$v['yaweiCode'].$v['words'];
+                    else 
+                        $content = $v['yaweiCode'].$v['words'];              
+                }  
+            }
+            
             $result = ClassExercise::model()->insertKey($classID,$sqlLesson['lessonID'],$_POST['title'], $content, Yii::app()->session['userid_now'],$_POST['category'],$_POST['speed'],$_POST['in3'],$libstr);
         }       
         $this->render('addKey4ClassExercise', ['result' => $result]);
