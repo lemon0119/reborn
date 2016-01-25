@@ -1660,5 +1660,29 @@ $dir->close();
         document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4Analysis&&exerciseID="+exerciseID+"&&classID="+classID;
     }
     
+    function startNow(exerciseID){
+        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info,{
+            onOk:function(){
+                        $.ajax({
+                       type:"POST",
+                       url:"index.php?r=teacher/openClassExercise",
+                       data:{exerciseID:exerciseID},
+                       success:function(data){
+                           if(data==1){
+                               window.parent.startClassExercise(exerciseID);
+                           }else{
+                               alert("开放失败");
+                           }
+                       },
+                       error:function(xhr, type, exception){
+                           console.log('GetAverageSpeed error', type);
+                           console.log(xhr, "Failed");
+                           console.log(exception, "exception");
+
+                       }
+                }); 
+            }
+        });
+    }
 
 </script>

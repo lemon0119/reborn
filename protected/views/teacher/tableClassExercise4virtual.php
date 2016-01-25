@@ -50,25 +50,9 @@
 </div>
 </body>
 <script>
+    
     function startClassExercise(exerciseID){
-        $.ajax({
-               type:"POST",
-               url:"index.php?r=teacher/openClassExercise",
-               data:{exerciseID:exerciseID},
-               success:function(data){
-                   if(data==1){
-                       window.parent.startClassExercise(exerciseID);
-                   }else{
-                       alert("开放失败");
-                   }
-               },
-               error:function(xhr, type, exception){
-                   console.log('GetAverageSpeed error', type);
-                   console.log(xhr, "Failed");
-                   console.log(exception, "exception");
-                   
-               }
-        });
+        window.parent.startNow(exerciseID);
     }
     
     function check_all(obj, cName)

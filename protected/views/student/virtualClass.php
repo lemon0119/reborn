@@ -243,21 +243,26 @@ function startClassExercise(){
         success:function(data){
             if(data===""){
             }else{
-                $("#sw-bulletin").unbind("click");
-                $("#classExercise-container").toggle(200);
-                if(data==="look"){
-                    $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look");
-                }else if(data==="listen"){
-                     $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen");
-                }else if(data==='speed'||data==='correct'||data==='free'){
-                     $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key");
-                }
-                 if(!$("#bulletin").is(":hidden")){ 
-                $("#sw-openAnalysis").attr("disabled","true");
-                 $("#bulletin").toggle(200);
-                }
-               $("#analysis").hide();
                 isClassExercise=1;
+                window.wxc.xcConfirm("有新练习发布，点击开始！", window.wxc.xcConfirm.typeEnum.info,{
+                    onOk:function(){
+                                $("#sw-bulletin").unbind("click");
+                        $("#classExercise-container").toggle(200);
+                        if(data==="look"){
+                            $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look");
+                        }else if(data==="listen"){
+                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen");
+                        }else if(data==='speed'||data==='correct'||data==='free'){
+                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key");
+                        }
+                         if(!$("#bulletin").is(":hidden")){ 
+                        $("#sw-openAnalysis").attr("disabled","true");
+                         $("#bulletin").toggle(200);
+                        }
+                       $("#analysis").hide();
+                    }
+                });
+                
             }
         }
     });
