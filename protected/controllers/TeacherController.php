@@ -5623,7 +5623,21 @@ public function ActionAssignFreePractice(){
     }
     
     public function actionTableClassExercise4Analysis(){
-        $this->renderPartial("tableClassExercise4Analysis");
+        $allIsOpen = Array();
+        $exerciseID = $_GET['exerciseID'];
+        $ClassExercise = ClassExercise::model()->getByExerciseID($exerciseID);
+        $result= ClassExercise::model()->getAllNowOpenExercise();
+        foreach ($result as $v){
+            if($v['exerciseID'] != $exerciseID){
+                array_push($allIsOpen, $v);
+            }
+        }
+        $this->renderPartial("tableClassExercise4Analysis",['ClassExercise'=>$ClassExercise,'AllIsOpen'=>$allIsOpen]);
+    }
+    
+    public function actionCloseAllOpenExerciseNow(){
+        ClassExercise::model()->closeAllOpenExerciseNow();
+        echo "关闭成功！";
     }
     
     public function actionOpenClassExercise4lot(){
@@ -5632,6 +5646,7 @@ public function ActionAssignFreePractice(){
         foreach ($arrayClassExercise as $exerciseID){
             if($exerciseID!==""){
                 ClassExercise::model()->openExercise($exerciseID);
+                ClassExercise::model()->openExerciseNow($exerciseID);
             }
         }
         if($allClassExercise!==""){
@@ -5658,6 +5673,7 @@ public function ActionAssignFreePractice(){
          $arrayData = Array();
          $data = Array();
          $exerciseID = $_POST['exerciseID'];
+         $title = ClassExercise::model()->getByExerciseID($exerciseID)['title'];
          $classID = $_POST['classID'];
          $sqlStudent = Student::model()->findStudentByClass($classID);
          foreach ($sqlStudent as $v){
@@ -5674,7 +5690,7 @@ public function ActionAssignFreePractice(){
             $correct = round($ratio_correct[$end]*100)/100;
             $time = count($ratio_speed)*2-2;
             $allKey = (int)$all_count[$end];
-            $arrayData = ["studentID"=>$studentID,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allKey"=>$allKey];
+            $arrayData = ["studentID"=>$studentID,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allKey"=>$allKey,"title"=>$title];
             array_push($data, $arrayData);
          }
          $data = Tool::quickSort($data,"correct");

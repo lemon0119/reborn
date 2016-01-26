@@ -20,7 +20,7 @@
                      <tr>
                          <td><input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"></td>
                          <td class="font-center">全选</td>
-                         <td id="play-classExercise" style="cursor: pointer;height: 30px !important;font-size: 18px ;color: green" colspan="3" class="table_pointer font-center">点击开放选中练习</td>
+                         <td id="play-classExercise" style="cursor: pointer;height: 30px !important;font-size: 18px ;color: green" colspan="3" class="table_pointer font-center">点击批量开放选中练习</td>
                     </tr> 
                     <?php foreach($classExerciseLst as $model):?>
                     <tr>
@@ -65,25 +65,6 @@
     
     $('#play-classExercise').click(function(){
         var checkboxs = document.getElementsByName('checkbox[]');
-        var check ="";
-        for (var i = 0; i < checkboxs.length; i++) {
-            if(checkboxs[i].checked){
-                check+=checkboxs[i].value+"&";
-            }
-        }
-        $.ajax({
-               type:"POST",
-               url:"index.php?r=teacher/openClassExercise4lot",
-               data:{check:check},
-               success:function(data){
-                   alert(data);
-               },
-               error:function(xhr, type, exception){
-                   console.log('GetAverageSpeed error', type);
-                   console.log(xhr, "Failed");
-                   console.log(exception, "exception");
-                   
-               }
-        });
+        window.parent.startNow4Lot(checkboxs);
     });
 </script>
