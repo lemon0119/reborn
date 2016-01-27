@@ -87,6 +87,7 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
+        window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause =0;
         var myDate = new Date();

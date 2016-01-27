@@ -81,7 +81,7 @@
                <?php } ?>
             <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $classID; ?>&&lessonID=<?php $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
                echo $less['lessonID'];
-               ?>" class="startcourse-startclass">课堂作业</a>
+               ?>" class="startcourse-startclass">课后作业</a>
         </div>
         </div>
         <h1>

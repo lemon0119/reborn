@@ -198,7 +198,7 @@ class AnswerRecord extends CActiveRecord
 //        }
 //    }   
     
-     public static function saveAnswer($recordID, $correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$ratio_internalTime=0,$HighIntervarlTime=0,$countAllKey=0 ,$squence, $isExam) {  
+     public static function saveAnswer($recordID, $correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$ratio_internalTime=0,$HighIntervarlTime=0,$countAllKey=0 ,$squence, $isExam,$ratio_internalTime) {  
         $userID = Yii::app()->session['userid_now'];
         $exerID = Yii::app()->session['exerID'];
         $type = Yii::app()->session['exerType'];
@@ -224,6 +224,7 @@ class AnswerRecord extends CActiveRecord
             $newAnswer->ratio_maxKeyType = $HighstCountKey;
             $newAnswer->ratio_averageKeyType = $AveragekeyType;
             $newAnswer->ratio_maxInternalTime = $HighIntervarlTime;
+            $newAnswer->ratio_internalTime = $ratio_internalTime;
             $newAnswer->ratio_countAllKey = $countAllKey;
             $newAnswer->isExam = $isExam;
             if(!($newAnswer->insert())) {
@@ -520,7 +521,6 @@ class AnswerRecord extends CActiveRecord
         $type = Yii::app()->session['exerType'];
         $type = str_replace(["Exer"],"",$type);
         $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerID);
-        echo $answer;
         $oldAnswer->answer = $answer;
         $oldAnswer->costTime = $seconds;
         $oldAnswer->ratio_accomplish = 1;

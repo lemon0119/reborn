@@ -340,8 +340,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         <div >
             <div  class="title_split"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;"  align="center" ><h4 >备 课 资 源 </h4></div>
         </div>
-         <div >
-             <button onclick="addNewClassExercise()"  style="font-size: 20px;position: relative;height: 40px;width:100%;" class="btn btn-primary">添加新练习</button>
+        <div style="height: 40px;">
+             <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
+             <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>
         </div>
         <div style="position: relative;text-align: center;top: 10px;height: 550px;overflow: auto">
             <iframe id="iframe_class" style="border: 0px;height: 95%;width: 95%;"></iframe>
@@ -438,7 +439,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         var keycode = e.which;
 
 //     var realkey = String.fromCharCode(e.which);   　　 　　    
-        console.log("按键码: " + " 字符: ");
         if (cur_ppt != -1)
         {
             if (keycode == 37)
@@ -1660,5 +1660,91 @@ $dir->close();
         document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4Analysis&&exerciseID="+exerciseID+"&&classID="+classID;
     }
     
+    function startNow4Lot(checkboxs){
+        var check ="";
+        var exerciseID = "";
+        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info,{
+            onOk:function(){
+                for (var i = 0; i < checkboxs.length; i++) {
+                    exerciseID = checkboxs[0].value;
+                    if(checkboxs[i].checked){
+                        check+=checkboxs[i].value+"&";
+                    }
+                }
+                $.ajax({
+                       type:"POST",
+                       url:"index.php?r=teacher/openClassExercise4lot",
+                       data:{check:check},
+                       success:function(data){
+                           if(data=="开放成功！"){
+                                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
+                                window.parent.startClassExercise(exerciseID);
+                           }else{
+                               window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
+                           }
+                       },
+                       error:function(xhr, type, exception){
+                           console.log('GetAverageSpeed error', type);
+                           console.log(xhr, "Failed");
+                           console.log(exception, "exception");
+
+                       }
+                 });
+            }
+        });
+        
+        
+    }
+    
+    function startNow(exerciseID){
+        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info,{
+            onOk:function(){
+                        $.ajax({
+                       type:"POST",
+                       url:"index.php?r=teacher/openClassExercise",
+                       data:{exerciseID:exerciseID},
+                       success:function(data){
+                           if(data==1){
+                               window.parent.startClassExercise(exerciseID);
+                           }else{
+                               alert("开放失败");
+                           }
+                       },
+                       error:function(xhr, type, exception){
+                           console.log('GetAverageSpeed error', type);
+                           console.log(xhr, "Failed");
+                           console.log(exception, "exception");
+
+                       }
+                }); 
+            }
+        });
+    }
+    
+    function backToTableClassExercise4virtual(){
+        document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>";
+    }
+    
+    function closeAllOpenNow(){
+         window.wxc.xcConfirm("确定要关闭当前所有正在进行中的练习？", window.wxc.xcConfirm.typeEnum.info,{
+            onOk:function(){
+                
+                 $.ajax({
+                       type:"POST",
+                       url:"index.php?r=teacher/closeAllOpenExerciseNow",
+                       data:{},
+                       success:function(data){
+                           backToTableClassExercise4virtual();
+                               window.wxc.xcConfirm(data,window.wxc.xcConfirm.typeEnum.success);
+                       },
+                       error:function(xhr, type, exception){
+                           console.log('GetAverageSpeed error', type);
+                           console.log(xhr, "Failed");
+                           console.log(exception, "exception");
+                       }
+            }); 
+             }
+         });
+    }
 
 </script>

@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <table style="width: 580px"  border = '0px'><button class="fl btn" id="pause">暂停统计</button><button id="close_exercise" class="fr btn btn-primary">刷新</button>
+        <table style="width: 580px"  border = '0px'><button class="fl btn" id="pause">暂停统计</button><button id="close_exercise" class="fr btn btn-primary">关闭</button>
             <tr><h3><?php echo $classExercise['title'] ?></h3></tr>
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
@@ -77,6 +77,7 @@
 <script>
     var yaweiOCX4Listen = null;
     $(document).ready(function () {
+        document.getElementById('span').scrollIntoView();
         yaweiOCX4Listen = document.getElementById("typeOCX4Listen");
             $("#pause").click(function(){
             if(window.G_startFlag===1){
@@ -96,6 +97,7 @@
         });
     });
      var originalContent = "<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>";
+     window.GA_originalContent = originalContent;
      //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
     <?php  $exerciseID = $classExercise['exerciseID'];
@@ -121,6 +123,7 @@
     }
     
     function onStenoPressKey(pszStenoString, device) {
+        window.GA_answer = yaweiOCX4Listen.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
         var audio = document.getElementById('music');

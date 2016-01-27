@@ -257,6 +257,22 @@ class ClassExercise extends CActiveRecord
         $classExercise->update();
     }
     public function openExerciseNow($exerciseID){
+//        $classExercise = new ClassExercise();
+//        $classExercise = $classExercise->findAll("now_open = 1");
+//        if($classExercise!==""){
+//            foreach ($classExercise as $v){
+//                $v->now_open = 0;
+//                $v->update();
+//            }
+//        }
+            $classExercise = new ClassExercise();
+            $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+            $classExercise->is_open = 1;
+            $classExercise->now_open = 1;
+            $classExercise->update();
+    }
+    
+    public function closeAllOpenExerciseNow(){
         $classExercise = new ClassExercise();
         $classExercise = $classExercise->findAll("now_open = 1");
         if($classExercise!==""){
@@ -265,13 +281,9 @@ class ClassExercise extends CActiveRecord
                 $v->update();
             }
         }
-            $classExercise = new ClassExercise();
-            $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
-            $classExercise->is_open = 1;
-            $classExercise->now_open = 1;
-            $classExercise->update();
     }
-    
+
+
     public function isHasClassExerciseOpen($classID,$lessonID){
         $classExercise = new ClassExercise();
         $classExercise = $classExercise->find("classID = '$classID' AND lessonID = '$lessonID' AND now_open = 1");
@@ -283,6 +295,13 @@ class ClassExercise extends CActiveRecord
         $classExercise = $classExercise->find("now_open = 1");
         return $classExercise;
     }
+    
+    public function getAllNowOpenExercise(){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->findAll("now_open = 1");
+        return $classExercise;
+    }
+    
     public function getByExerciseID($exerciseID){
         $classExercise = new ClassExercise();
         $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
