@@ -76,31 +76,34 @@
 <div class="span9" id="sp" style="display: none;">
     <div style="position: relative;top: 10px;">
         
-        <div id="div1" style="width:45%;display:inline;float:left;overflow: auto;" >
+        <div id="div1" style="width:15%;display:inline;float:left;overflow: auto;" >
             
             <ul>
                 <table class="tab">
                     <tr>
                         <td style="width:160px;">
-                            <input name="selectID" id="selectID" type="radio" value="correct" checked/>正确率&nbsp;  &nbsp;&nbsp;  &nbsp;
+                            <input name="selectID" id="selectID" type="radio" value="correct" checked/>&nbsp;  &nbsp;正确率
                         </td>
+                    <tr>   
                         <td>
-                            <input name="selectID" id="selectID" type="radio" value="speed" />速度&nbsp;  &nbsp;
+                            <input name="selectID" id="selectID" type="radio" value="speed" />&nbsp;  &nbsp;速度
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input name="selectID" id="selectID" type="radio" value="maxSpeed" />最大速度&nbsp;  &nbsp;&nbsp;  &nbsp;
+                            <input name="selectID" id="selectID" type="radio" value="maxSpeed" />&nbsp;  &nbsp;最大速度
                         </td>
+                    </tr>
+                    <tr>
                         <td>
-                            <input name="selectID" id="selectID" type="radio" value="backDelete" />回改字数&nbsp;  &nbsp; 
+                            <input name="selectID" id="selectID" type="radio" value="backDelete" />&nbsp;  &nbsp;回改字数
                         </td>
                     </tr>
                 </table>
             </ul>
-
-
-            <ul id="ul1" style="list-style: none;border-radius: 3px;background-color: #AAACAA;position: relative;float:left;overflow: auto;width:300px;color:black;height:300px;">
+        </div>
+        <div  style="width:30%;display:inline;float:left;overflow: auto;">
+            <ul id="ul1" style="list-style: none;border-radius: 3px;background-color: #AAACAA;position: relative;float:left;overflow: auto;width:200px;color:black;height:300px;left:-20px;">
             </ul>
         </div>
         
