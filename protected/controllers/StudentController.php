@@ -1548,4 +1548,28 @@ class StudentController extends CController {
         $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
         $this->renderPartial("Iframe4Key",["classExercise"=>$classExercise]);
     }
+    
+    public function ActionWatchData(){
+        error_log("123");
+           $classID = $_GET['classID'];
+           $array_lesson = Lesson::model()->findAll("classID = '$classID'");
+            if (!empty($array_lesson)) {
+                if (isset($_GET['lessonID']))
+                    Yii::app()->session['currentLesson'] = $_GET['lessonID'];
+                else
+                        Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];                   
+            }
+            $array_work = ClassLessonSuite::model()->findAll("classID = '$classID'and open = 1");
+            $array_suite = Suite::model()->findAll();
+            $array_examList = ClassExam::model()->findAll("classID='$classID' and open = 1");
+            $array_exam = Exam::model()->findAll();
+            $this->render('dataAnalysis',array(
+                'array_lesson' => $array_lesson,
+                'array_work' => $array_work,
+                'array_suite' => $array_suite,
+                'classID' => $classID,
+                'array_examList' => $array_examList,
+                'array_exam' => $array_exam,
+           ));
+    }
 }
