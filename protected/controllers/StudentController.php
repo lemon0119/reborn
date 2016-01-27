@@ -33,7 +33,8 @@ class StudentController extends CController {
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $student = Student::model()->find("userID = '$userID'");
-        return $this->render('virtualClass',[ 'userID' => $student ['userID'],'lessons'=>$lessons,'currentLesn'=>$currentLesn,'userName'=>$userName,'classID'=>$classID,'class' =>$student ['classID']]);
+        $exerciseIsOpenNow = ClassExercise::model()->getAllNowOpenExercise($classID);
+        return $this->render('virtualClass',[ 'userID' => $student ['userID'],'lessons'=>$lessons,'currentLesn'=>$currentLesn,'userName'=>$userName,'classID'=>$classID,'class' =>$student ['classID'],'exerciseIsOpenNow'=>$exerciseIsOpenNow]);
     }
     
     public function actionAnslookType(){

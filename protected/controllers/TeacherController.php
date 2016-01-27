@@ -5623,10 +5623,11 @@ public function ActionAssignFreePractice(){
     }
     
     public function actionTableClassExercise4Analysis(){
+        $classID = $_GET['classID'];
         $allIsOpen = Array();
         $exerciseID = $_GET['exerciseID'];
         $ClassExercise = ClassExercise::model()->getByExerciseID($exerciseID);
-        $result= ClassExercise::model()->getAllNowOpenExercise();
+        $result= ClassExercise::model()->getAllNowOpenExercise($classID);
         foreach ($result as $v){
             if($v['exerciseID'] != $exerciseID){
                 array_push($allIsOpen, $v);

@@ -49,8 +49,9 @@ echo "<script>var role='$role';</script>";
         <img id="ppt-img"  onmouseover="fun1();" onmouseout="fun2();" src=""  style="height: 100%;"/>  
         </div>
     </div>
-     <div id="classExercise-container" align="center" style="width: 100% ; height:760px;  margin-top:0px;display:none;overflow-x: hidden">
-         <div style="position: relative;top: 10px;height: 730px;">
+     <div id="classExercise-container" align="center" style="width: 100% ; height:800px;  margin-top:0px;display:none;overflow-x: hidden">
+         <div><button id="exercise_again" style="margin-left: 10px;margin-right: 10px" class="fr btn" >再来一遍</button><button id="exercise_next" <?php if(count($exerciseIsOpenNow)<2){echo "disabled='disabled'";}?> style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary">下一题</button><button id="exercise_last" disabled="disabled" style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary" >上一题</button></div>
+         <div style="height: 730px;">
             <iframe id="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
         </div>
     </div>
