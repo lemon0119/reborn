@@ -8,16 +8,20 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <table style="width: 580px"  border = '0px'> <button class="fl btn" id="pause">暂停统计</button><button id="close_exercise" class="fr btn btn-primary">刷新</button>
-            <tr><h3><?php echo $classExercise['title'] ?></h3></tr>
+        <div style="width: 700px">
+            <button class="fl btn" id="pause">暂停统计</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button><button id="close_exercise"  style="margin-left:30px;" class="fr btn btn-primary">关闭</button>
+        </div>
+        <div id="Analysis">
+             <h3 ><?php echo $classExercise['title'] ?></h3>
+             <table style="width: 580px"  border = '0px'> 
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                 <td><span style="color: #f46500" id="timej">00:00:00</span></td>
                 <td></td>
-                <td><span class="fl"   style="color: #000;font-weight: bolder">正确率：&nbsp;&nbsp;</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;正确率：&nbsp;&nbsp;</span></td>
                 <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
                 <td><span class="fr" style="color: gray"> %&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                <td><span class="fl" style="color: #000;font-weight: bolder">回改字数：</span></td>
+                <td><span class="fl" style="color: #000;font-weight: bolder">&nbsp;&nbsp;回改字数：</span></td>
                 <td style="width: 60px;"><span style="color: #f46500" id="getBackDelete">0</span></td>
                 <td><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
             </tr>
@@ -25,45 +29,50 @@
                 <td><span class="fl"   style="color: #000;font-weight: bolder">平均速度：</span></td>
                 <td><span style="color: #f46500" id="getAverageSpeed">0</span></td>
                 <td><span class="fr" style="color: gray"> 字/分</span></td>
-                <td><span class="fl"   style="color: #000;font-weight: bolder">瞬时速度：</span></td>
-                <td><span style="color: #f46500" id="getMomentSpeed">0</span ></td>
-                <td><span class="fr" style="color:gray"> 字/分</span></td>
-                <td><span class="fl"   style="color: #000;font-weight: bolder">最高速度：</span></td>
-                <td><span style="color: #f46500" id="getHighstSpeed">0</span ></td>
-                <td><span class="fr" style="color:gray"> 字/分</span></td>
-            </tr>
-            <tr>
-                <td><span class="fl"   style="color: #000;font-weight: bolder">平均击键：</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;平均击键：</span></td>
                 <td><span style="color: #f46500" id="getAverageKeyType">0</span ></td>
                 <td><span class="fr" style="color: gray"> 次/分</span></td>
-                <td><span class="fl"  style="color: #000;font-weight: bolder">瞬时击键：</span></td>
-                <td><span style="color:#f46500" id="getMomentKeyType">0</span ></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;总击键数：</span></td>
+                <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
+                <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            </tr>
+        </table>
+        </div>
+        <div id="allAnalysis" style="display:none">
+        <table style="width: 580px"  border = '0px'> 
+            <tr>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">瞬时速度：</span></td>
+                <td style="width: 64px;"><span style="color: #f46500" id="getMomentSpeed">0</span ></td>
+                <td><span class="fr" style="color:gray"> 字/分</span></td>
+                <td><span class="fl"  style="color: #000;font-weight: bolder">&nbsp;&nbsp;瞬时击键：</span></td>
+                <td style="width: 60px;"><span style="color:#f46500" id="getMomentKeyType">0</span ></td>
                 <td><span class="fr" style="color:gray"> 次/秒</span></td>
-                <td><span class="fl"   style="color: #000;font-weight: bolder">最高击键：</span></td>
-                <td><span style="color: #f46500" id="getHighstCountKey">0</span ></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高击键：</span></td>
+                <td style="width: 60px;"><span style="color: #f46500" id="getHighstCountKey">0</span ></td>
                 <td><span class="fr" style="color: gray"> 次/秒</span></td>
             </tr>
             <tr>
                 <td><span class="fl"   style="color: #000;font-weight: bolder">击键间隔：</span></td>
                 <td><span style="color: #f46500" id="getIntervalTime">0</span ></td>
                 <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                <td><span class="fl"   style="color: #000;font-weight: bolder">最高间隔：</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高间隔：</span></td>
                 <td><span style="color: #f46500" id="getHighIntervarlTime">0</span ></td>
                 <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                <td><span class="fl"   style="color: #000;font-weight: bolder">总击键数：</span></td>
-                <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
-                <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高速度：</span></td>
+                <td><span style="color: #f46500" id="getHighstSpeed">0</span ></td>
+                <td><span class="fr" style="color:gray"> 字/分</span></td>
             </tr>
 
         </table>
+        </div>
         <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "", $classExercise['content']);
 $str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;?>">
-        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 190px">
+        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 260px">
         </div>
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='700' height='310' 
+                width ='700' height='300' 
                 event_OnChange="onChange"
                 event_OnStenoPress="onStenoPressKey">
         </object>
@@ -74,6 +83,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     $(document).ready(function () {
+        document.getElementById('Analysis').scrollIntoView();
         $.ajax({
                type:"POST",
                url:"index.php?r=api/getBrief",
@@ -103,8 +113,22 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;
                 }
             }
         });
+        $("#toggle").click(function (){
+            var flag =$("#toggle").text();
+            if(flag =='展开'){
+                $("#toggle").text("收起");
+                $("#templet").css('height','180px');
+            }else{
+                $("#toggle").text("展开");
+                $("#templet").css('height','260px');
+                
+            }
+            $("#allAnalysis").toggle(0);
+        });
+        
     });
     var originalContent = "<?php $str1 = str_replace("<br/>", "", $str); echo $str1;?>".replace(/(^\s*)|(\s*$)/g, "");
+    window.GA_originalContent = originalContent;
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
 <?php
@@ -125,6 +149,7 @@ $squence = $countSquence + 1;
     });
 
     function onStenoPressKey(pszStenoString, device) {
+        window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
         var myDate = new Date();
@@ -222,10 +247,13 @@ $squence = $countSquence + 1;
                     f.innerHTML = content;
                     father.appendChild(f);
         }else{
+            for(var i=0;i<text.length;i++){
+                    content += text[i];
+             }
             f.style = "color:" + color;
                     //var t = document.createTextNode(text);
                     //f.appendChild(t);
-                    f.innerHTML = text;
+                    f.innerHTML = content;
                     father.appendChild(f);
         }
     }
@@ -296,32 +324,42 @@ $squence = $countSquence + 1;
 //        } else {
             var input = getContent(yaweiOCX4Look).split("");
             var text = text_old.split("");
-            var allInput2 = yaweiOCX4Look.GetContentWithSteno().split(">,");
+            var allInput2 = yaweiOCX4Look.GetContentWithSteno().split(">,"); 
             var longIsAgo = 0;
             var old = new Array();
             var oldCode = new Array();
             var isWrong = false;
-            var wrong = "";
+            var wrong = new Array();
             var div = document.getElementById("templet");
             while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
                 div.removeChild(div.firstChild);
             }
-            for (var i = 0; i < input.length && i < text.length; i++) {
+            var length = allInput2.length;
+            var countLength = 0;
+            for (var i = 0; i < length; i++) {
                 if(allInput2[i]!== undefined){
                     var num = allInput2[i].indexOf(">");
                     var content  = allInput2[i].substring(1,num);
                     var yaweiCode = allInput2[i].substring(num+2,allInput2[i].length).replace(">","");
                     var long = content.length;
-                    longIsAgo += long;
-                    var stringText = text[longIsAgo-long];
-                    for(var j=1;j<long;j++){
-                        stringText += text[longIsAgo-long+j];
+                    countLength += content.length;
+                    if(countLength>=text.length){
+                        length = i;
                     }
-                    if (content == stringText) {
+                    longIsAgo += long;
+                     if(text[longIsAgo-long]!=undefined){
+                            var stringText = text[longIsAgo-long];
+                        }
+                    for(var j=1;j<long;j++){
+                        if(text[longIsAgo-long+j]!=undefined){
+                            stringText += text[longIsAgo-long+j];
+                        }
+                    }
+                    if (content == stringText ) {
                         if (isWrong == true) {
                             isWrong = false;
                             createFont("#ff0000", wrong,"");
-                            wrong = "";
+                            wrong = new Array();
                             old = new Array();
                             old.push(stringText);
                             oldCode = new Array();
@@ -332,13 +370,14 @@ $squence = $countSquence + 1;
                         }
                     }else {
                         if (isWrong == true)
-                            wrong += stringText;
+                            wrong.push(stringText);
                         else {
                             isWrong = true;
                             createFont("#808080",old,oldCode);
-                            old = Array("");
-                            oldCode = Array("");
-                            wrong = stringText;
+                            old = new Array();
+                            oldCode = new Array();
+                            wrong = new Array();
+                            wrong.push(stringText);
                         }
                     }
                 }

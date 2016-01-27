@@ -39,6 +39,8 @@
     var G_pauseFlag          = 0;
     var G_briefResult        = "false";
    //获取的统计内容之全局变量
+    var GA_originalContent    = "";
+    var GA_answer             = "";
     var GA_averageKeyType     = 0;
     var GA_highstCountKey     = 0;
     var GA_highstSpeed        = 0;
@@ -221,7 +223,7 @@ $(document).ready(function(){
                     type:"POST",
                     dataType:"json",
                     url:"index.php?r=api/analysisSaveToDatabase",
-                    data:{exerciseType:window.G_exerciseType,exerciseData:window.G_exerciseData,squence:window.G_squence,
+                    data:{exerciseType:window.G_exerciseType,exerciseData:window.G_exerciseData,squence:window.G_squence,answer:window.GA_answer,originalContent:window.GA_originalContent,
                           averageKeyType:window.GA_averageKeyType,highstCountKey:window.GA_highstCountKey,highstSpeed:window.GA_highstSpeed,
                           averageSpeed:window.GA_averageSpeed,CountBackDelete:window.GA_CountBackDelete,CountAllKey:window.GA_CountAllKey,
                           IntervalTime:window.GA_IntervalTime,highIntervarlTime:window.GA_highIntervarlTime,RightRadio:window.GA_RightRadio },
@@ -241,17 +243,11 @@ $(document).ready(function(){
                  window.G_endAnalysis = 1;
                  window.G_isOverFlag=0;
                   $("#getMomentKeyType").html(0);
-                  $("#getHighstSpeed").html(0);
                   $("#getIntervalTime").html(0);
                  clearInterval(timer);
              }
         },2000);
     
-    if(isAgain===1){
-        var timerAgain = setInterval(function(){
-            
-        });
-    }
 });
 
 //拿取键码值

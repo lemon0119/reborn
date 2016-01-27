@@ -262,11 +262,14 @@ $squence = $countSquence + 1;
             f.innerHTML = content;
             father.appendChild(f);
         } else {
+           for(var i=0;i<text.length;i++){
+                    content += text[i];
+             }
             f.style = "color:" + color;
-            //var t = document.createTextNode(text);
-            //f.appendChild(t);
-            f.innerHTML = text;
-            father.appendChild(f);
+                    //var t = document.createTextNode(text);
+                    //f.appendChild(t);
+                    f.innerHTML = content;
+                    father.appendChild(f);
         }
     }
 
@@ -279,71 +282,82 @@ $squence = $countSquence + 1;
             div.scrollTop = (line - 3) * 30;
         }
     }
-    function onChange() {
-        yaweiOCX.UpdateView();
-        var input = getContent(yaweiOCX);
-        yaweiOCX.Locate(input.length);
+     function onChange() {
+        yaweiOCX4Look.UpdateView();
+        var input = getContent(yaweiOCX4Look);
+        yaweiOCX4Look.Locate(input.length);
         controlScroll();
         changWordPS();
-        var text_old = "<?php echo $str; ?>";
-        var input = getContent(yaweiOCX).split("");
-        var text = text_old.split("");
-        var allInput2 = yaweiOCX.GetContentWithSteno().split(">,");
-        var longIsAgo = 0;
-        var old = new Array();
-        var oldCode = new Array();
-        var isWrong = false;
-        var wrong = "";
-        var div = document.getElementById("templet");
-        while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
-            div.removeChild(div.firstChild);
-        }
-        for (var i = 0; i < input.length && i < text.length; i++) {
-            if (allInput2[i] !== undefined) {
-                var num = allInput2[i].indexOf(">");
-                var content = allInput2[i].substring(1, num);
-                var yaweiCode = allInput2[i].substring(num + 2, allInput2[i].length).replace(">", "");
-                var long = content.length;
-                longIsAgo += long;
-                var stringText = text[longIsAgo - long];
-                for (var j = 1; j < long; j++) {
-                    stringText += text[longIsAgo - long + j];
-                }
-                if (content == stringText) {
-                    if (isWrong == true) {
-                        isWrong = false;
-                        createFont("#ff0000", wrong, "");
-                        wrong = "";
-                        old = new Array();
-                        old.push(stringText);
-                        oldCode = new Array();
-                        oldCode.push(yaweiCode);
-                    } else {
-                        old.push(stringText);
-                        oldCode.push(yaweiCode);
+        var text_old = "<?php echo $str;?>";
+            var input = getContent(yaweiOCX4Look).split("");
+            var text = text_old.split("");
+            var allInput2 = yaweiOCX4Look.GetContentWithSteno().split(">,"); 
+            var longIsAgo = 0;
+            var old = new Array();
+            var oldCode = new Array();
+            var isWrong = false;
+            var wrong = new Array();
+            var div = document.getElementById("templet");
+            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
+                div.removeChild(div.firstChild);
+            }
+            var length = allInput2.length;
+            var countLength = 0;
+            for (var i = 0; i < length; i++) {
+                if(allInput2[i]!== undefined){
+                    var num = allInput2[i].indexOf(">");
+                    var content  = allInput2[i].substring(1,num);
+                    var yaweiCode = allInput2[i].substring(num+2,allInput2[i].length).replace(">","");
+                    var long = content.length;
+                    countLength += content.length;
+                    if(countLength>=text.length){
+                        length = i;
                     }
-                } else {
-                    if (isWrong == true)
-                        wrong += stringText;
-                    else {
-                        isWrong = true;
-                        createFont("#808080", old, oldCode);
-                        old = Array("");
-                        oldCode = Array("");
-                        wrong = stringText;
+                    longIsAgo += long;
+                     if(text[longIsAgo-long]!=undefined){
+                            var stringText = text[longIsAgo-long];
+                        }
+                    for(var j=1;j<long;j++){
+                        if(text[longIsAgo-long+j]!=undefined){
+                            stringText += text[longIsAgo-long+j];
+                        }
+                    }
+                    if (content == stringText ) {
+                        if (isWrong == true) {
+                            isWrong = false;
+                            createFont("#ff0000", wrong,"");
+                            wrong = new Array();
+                            old = new Array();
+                            old.push(stringText);
+                            oldCode = new Array();
+                            oldCode.push(yaweiCode);
+                        } else {
+                            old.push(stringText);
+                            oldCode.push(yaweiCode);
+                        }
+                    }else {
+                        if (isWrong == true)
+                            wrong.push(stringText);
+                        else {
+                            isWrong = true;
+                            createFont("#808080",old,oldCode);
+                            old = new Array();
+                            oldCode = new Array();
+                            wrong = new Array();
+                            wrong.push(stringText);
+                        }
                     }
                 }
             }
-        }
-        createFont("#808080", old, oldCode);
-        createFont("#ff0000", wrong, "");
-        if (input.length < text.length) {
-            var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
-            createFont("#000000", left, "");
-        }
-        if ((text.length - longIsAgo) < 1) {
-            window.G_isOverFlag = 1;
-        }
+            createFont("#808080",old,oldCode);
+            createFont("#ff0000",wrong,"");
+            if (input.length < text.length) {
+                var left =document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
+                createFont("#000000", left,"");
+            }
+            if((text.length - longIsAgo)<1){
+                window.G_isOverFlag = 1;
+            }
     }
 
     window.G_saveToDatabase = 1;

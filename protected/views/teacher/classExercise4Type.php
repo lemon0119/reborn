@@ -26,7 +26,6 @@
                 </ul>
         </div>
 </div>
-    
     <?php
         //得到老师ID对应的名称
        foreach ($teacher as $model):
@@ -43,10 +42,9 @@
         <thead>
             <tr>
 <!--                <th class="font-center">编号</th>-->
-                
                 <th class="font-center">题目</th>
                 <th class="font-center">类型</th>
-<!--                <th class="font-center">词库</th>-->
+                <th class="font-center">词库</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>
                 <?php if(isset($_GET['nobar'])){ ?>
@@ -64,17 +62,18 @@
                                         echo $model['title'];
                                     else
                                         echo Tool::csubstr($model['title'], 0, 7)."...";?></td>
-<!--          内容              <td class="font-center"><?php  //if(Tool::clength($model['content'])<=10)
-                                        //echo $model['content'];
-                                  // else
-                                      //  echo Tool::csubstr($model['content'], 0,10)."...";
-                                        ?></td>-->
+                       
                                         <td class="font-center"><?php switch($model['type']){
                                             case 'speed': echo '速度练习'; break;
                                             case 'correct': echo '准确率练习'; break;
                                             case 'free': echo '自由练习'; break;
                                         }
-                            ?></td>              
+                            ?></td> 
+                        <td class="font-center" title="<?php echo Tool::filterKeyContent($model['content']);?>"><?php  if(Tool::clength($model['content'])<=10)
+                                        echo Tool::filterKeyContent($model['content']);
+                                   else
+                                        echo Tool::csubstr(Tool::filterKeyContent($model['content']),0,12)."...";
+                                        ?></td>
                         <td class="font-center"><?php  echo  $teachers[$model['create_person']];
                             ?></td>
                         <td class="font-center"><?php echo $model['create_time'];?></td>
@@ -86,7 +85,6 @@
                             <a href="#"  onclick="dele(<?php echo $model['exerciseID'];?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                             <?php }?>
-                       
                     </tr>            
                     <?php endforeach;?> 
                     </form>

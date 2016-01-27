@@ -20,11 +20,13 @@
 class ClassexerciseRecord extends CActiveRecord
 {
     
-     public function insertClassexerciseRecord($classExerciseID,$studentID,$squence,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
+     public function insertClassexerciseRecord($classExerciseID,$studentID,$squence,$originalContent,$answer,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
         $newClassexerciseRecord = new ClassexerciseRecord();
         $newClassexerciseRecord->classExerciseID = $classExerciseID;
         $newClassexerciseRecord->studentID = $studentID;
         $newClassexerciseRecord->squence = $squence;
+        $newClassexerciseRecord->originalContent = $originalContent;
+        $newClassexerciseRecord->answer = $answer;
         $newClassexerciseRecord->ratio_speed = $ratio_speed;
         $newClassexerciseRecord->ratio_correct =$ratio_correct;
         $newClassexerciseRecord->ratio_maxSpeed =$ratio_maxSpeed;
@@ -37,8 +39,9 @@ class ClassexerciseRecord extends CActiveRecord
         
         return $newClassexerciseRecord->insert();
     }
-    public function updateClassexerciseRecord($classExerciseID,$studentID,$squence,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
+    public function updateClassexerciseRecord($classExerciseID,$studentID,$squence,$answer,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
                 $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
+                $sqlClassExerciseRecord->answer = $answer;
                 $sqlClassExerciseRecord->ratio_averageKeyType = $sqlClassExerciseRecord['ratio_averageKeyType']."&".$ratio_averageKeyType;
                 $sqlClassExerciseRecord->ratio_maxKeyType = $sqlClassExerciseRecord['ratio_maxKeyType']."&".$ratio_maxKeyType;
                 $sqlClassExerciseRecord->ratio_maxSpeed = $sqlClassExerciseRecord['ratio_maxSpeed']."&".$ratio_maxSpeed;
@@ -49,6 +52,7 @@ class ClassexerciseRecord extends CActiveRecord
                 $sqlClassExerciseRecord->ratio_correct = $sqlClassExerciseRecord['ratio_correct']."&".$ratio_correct;
                 $sqlClassExerciseRecord->ratio_countAllKey = $sqlClassExerciseRecord['ratio_countAllKey']."&".$ratio_countAllKey;
                 $sqlClassExerciseRecord->update();
+                $sqlClassExerciseRecord->answer = "";
                 $sqlClassExerciseRecord->ratio_averageKeyType = "";
                 $sqlClassExerciseRecord->ratio_maxKeyType = "";
                 $sqlClassExerciseRecord->ratio_maxSpeed = "";

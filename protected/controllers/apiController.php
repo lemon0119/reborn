@@ -267,29 +267,29 @@ class apiController extends Controller {
         $ratio_correct = $_POST['RightRadio'];
         $ratio_countAllKey = $_POST['CountAllKey'];
         $squence = $_POST['squence'];
+        $answer = $_POST['answer'];
+        $originalContent = $_POST['originalContent'];
         if($exerciseType === "classExercise"){
             $classExerciseID = $exerciseData[0];
             $studentID = $exerciseData[1];
             $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
             if(!isset($sqlClassExerciseRecord)){
-                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence,$originalContent,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }else{
-                 ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence, $ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+                 ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }
         }       
         if($exerciseType === "answerRecord"){
            if(Yii::app()->session['isExam']){
                 if(!ExamRecord::saveExamRecord($recordID))
                 if($squence>0){
-                    error_log("已有");
                     $createPerson = Yii::app()->session['userid_now'];
                     AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData[0], $createPerson);
                 }
                 return false;
-                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1);
+                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1,$ratio_internalTime);
             }else {
                 if($squence>0){
-                    error_log("已有");
                     $createPerson = Yii::app()->session['userid_now'];
                     AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData[0], $createPerson);
                 }

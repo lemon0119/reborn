@@ -57,9 +57,9 @@
                                     else
                                        echo Tool::csubstr($model['title'], 0, 10)."...";?></td>
                         <td title="<?php echo $model['content'];?>" class="font-center"><?php  if(Tool::clength($model['content'])<=40)
-                                        echo Tool::csubstr($model['content'], 0,40);
+                                        echo Tool::csubstr($model['content'], 0,25);
                                    else
-                                        echo Tool::csubstr($model['content'], 0,40)."...";
+                                        echo Tool::csubstr($model['content'], 0,25)."...";
                                         ?></td>
                         <td><button id="startClassExercise" class="btn btn-primary" onclick="startClassExercise(<?php echo $model['exerciseID'];?>,'<?php echo $model['type'];?>')" >开始</a></td>
                     </tr> 
