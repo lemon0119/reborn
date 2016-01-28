@@ -140,9 +140,3 @@
         intervalid = setInterval("keyReSet()", 1000); 
     }
 </script>
-<object id="typeOCX" type="application/x-itst-activex" 
-        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-        width ='380' height='200'
-        event_OnChange="onChange"
-        event_OnStenoPress="onStenoPressKey">
-</object>

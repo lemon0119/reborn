@@ -229,7 +229,7 @@ $squence = $countSquence + 1;
              for(var i=0;i<text.length;i++){
                  if(text[i].length<3){
                         for(var j=0;j<briefCode.length;j++){
-                            if((text[i]==briefCode[j])&&(code[i]!=briefOriginalYaweiCode[j].replace(":0",""))){
+                            if((text[i]==briefCode[j])&&(code[i]!=briefOriginalYaweiCode[j].replace(":0",""))&&(code[i]!="W:X")){
                                 isBrief ++;
                             }
                          }

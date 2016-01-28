@@ -34,14 +34,14 @@ echo "<script>var role='$role';</script>";
                     <td><span style="color: #f46500">&nbsp;&nbsp;<?php foreach ($lessons as $less) {
                                if($less['lessonID'] === $currentLesn){
                                    echo $less['lessonName'];
-                                };
+                                }
                            }?>
                     </span></td>           
                 </tr>
     </div>
     
     <!-- local/remote videos container --> 
-    <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
+    <div id="ppt-container" align="center" style="width: 100% ; height:560px;;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 200px; top: 40px;display:none;">
             <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3"/> 
         </div>
@@ -56,7 +56,15 @@ echo "<script>var role='$role';</script>";
         </div>
     </div>
 
-    <div id="dianbo-videos-container" style="display:none;">  </div>
+    <div id="dianbo-videos-container" style="height:560px;display:none;">  </div>
+    <div id="bulletin_activex">
+    <object style="position: absolute;top:713px;" id="typeOCX" type="application/x-itst-activex" 
+        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
+        width ='744' height='180'
+        event_OnChange="onChange"
+        event_OnStenoPress="onStenoPressKey">
+</object>
+        </div>
 </div>
 
 <div class="right"style="max-height: 1200px;background-color: #3b3b3b;border: 0px" >
@@ -259,6 +267,7 @@ function startClassExercise(){
                          if(!$("#bulletin").is(":hidden")){ 
                         $("#sw-openAnalysis").attr("disabled","true");
                          $("#bulletin").toggle(200);
+                         $("#bulletin_activex").toggle(200);
                         }
                        $("#analysis").hide();
                     }
@@ -349,13 +358,14 @@ $(document).ready(function(){
             $("#sw-openAnalysis").removeAttr("disabled");
         }
         $("#bulletin").toggle(200);
+        $("#bulletin_activex").toggle(200);
         $("#analysis").hide();
         document.getElementById("typeOCX").SetTextSize(8);
         document.getElementById("typeOCX").HideToolBar();
         document.getElementById("typeOCX").HideSecondToolBar();
     });
     $("#sw-openAnalysis").click(function() {
-        $("#analysis").toggle(200);
+        $("#analysis").toggle(0);
         $("#chat-box").hide();
     });
 });
@@ -385,7 +395,7 @@ $(document).ready(function(){
             var video = document.getElementById('video1');
             if(video===null){
                 var html = "";
-                html += '<video id="video1" width="100%" controls>';
+                html += '<video id="video1"  width="100%" controls>';
                 html += '<source src="' + video_path + '">';
                 html += '</video>';
                 $("#dianbo-videos-container").empty();
@@ -494,6 +504,7 @@ function closeClassExercise(){
             $("#sw-openAnalysis").removeAttr("disabled");
         }
         $("#bulletin").toggle(200);
+        $("#bulletin_activex").toggle(200);
         $("#analysis").hide();
         document.getElementById("typeOCX").SetTextSize(8);
         document.getElementById("typeOCX").HideToolBar();
