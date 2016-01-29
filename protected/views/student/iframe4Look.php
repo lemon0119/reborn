@@ -385,8 +385,11 @@ $squence = $countSquence + 1;
                     }
                 }
             }
-            createFont("#808080",old,oldCode);
-            createFont("#ff0000",wrong,"");
+            
+            if(countLength!==0){
+                createFont("#808080",old,oldCode);
+                createFont("#ff0000",wrong,"");
+            }
             if (input.length < text.length) {
                 var left =document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
                 createFont("#000000", left,"");
