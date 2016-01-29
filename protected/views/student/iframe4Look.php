@@ -163,8 +163,7 @@ $squence = $countSquence + 1;
         window.G_countAllKey++;
         window.G_content = yaweiOCX4Look.GetContent();
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
-
-        AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", originalContent, window.G_content);
+        
         //每击统计击键间隔时间 秒
         //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
         //每击统计最高击键间隔时间 秒
@@ -394,9 +393,9 @@ $squence = $countSquence + 1;
                 var left =document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
                 createFont("#000000", left,"");
             }
-            if((text.length - longIsAgo)<1){
-                window.G_isOverFlag = 1;
-            }
+//            if((text.length - longIsAgo)<1){
+//                window.G_isOverFlag = 1;
+//            }
        // }
     }
 </script>

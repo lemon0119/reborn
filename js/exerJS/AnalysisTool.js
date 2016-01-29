@@ -237,7 +237,7 @@ $(document).ready(function(){
                 });
                 }
              }
-
+             AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", window.GA_originalContent, window.G_content);
                //判断统计结束
              if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
                  window.G_endAnalysis = 1;
