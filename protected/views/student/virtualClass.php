@@ -265,10 +265,10 @@ function startClassExercise(){
                              $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key");
                         }
                          if(!$("#bulletin").is(":hidden")){ 
-                        $("#sw-openAnalysis").attr("disabled","true");
                          $("#bulletin").toggle(200);
                          $("#bulletin_activex").toggle(200);
                         }
+                        $("#sw-openAnalysis").attr("disabled","true");
                        $("#analysis").hide();
                     }
                 });

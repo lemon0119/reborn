@@ -74,7 +74,7 @@ $(document).ready(function(){
     //@param id=getMomentSpeed 请将最高平均速度统计的控件id设置为getMomentSpeed 
     //2s内统计回改字数     字
     //@param id=getBackDelete 请将最高平均速度统计的控件id设置为getBackDelete  
-        var timer = setInterval(function(){
+        var interval = setInterval(function(){
             var content        = window.G_content;
             var keyContent     = window.G_keyContent;
             var setEndTime     = window.G_setEndTime;
@@ -241,10 +241,9 @@ $(document).ready(function(){
                //判断统计结束
              if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
                  window.G_endAnalysis = 1;
-                 window.G_isOverFlag=0;
                   $("#getMomentKeyType").html(0);
                   $("#getIntervalTime").html(0);
-                 clearInterval(timer);
+                 clearInterval(interval);
              }
         },2000);
     
