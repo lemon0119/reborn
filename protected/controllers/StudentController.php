@@ -1521,16 +1521,25 @@ class StudentController extends CController {
         echo  $data;
     }
     
+    public function actionPassClassExercise(){
+        $exerciseID = $_GET['exerciseID'];
+        $data = ClassExercise::model()->getByExerciseID($exerciseID)['type'];
+        echo  $data;
+    }
+    
     public function actionIframe4Look(){
-        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getNowOpenExercise($exerciseID);
         $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
     }
     public function actionIframe4Listen(){
-        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getNowOpenExercise($exerciseID);
         $this->renderPartial("Iframe4Listen",["classExercise"=>$classExercise]);
     }
     public function actionIframe4Key(){
-        $classExercise = ClassExercise::model()->getNowOpenExercise();
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getNowOpenExercise($exerciseID);
         $this->renderPartial("Iframe4Key",["classExercise"=>$classExercise]);
     }
     
