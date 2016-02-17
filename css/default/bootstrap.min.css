@@ -5031,6 +5031,9 @@ table tr td{
     text-align: center !important;
     vertical-align: middle !important;
 }
+.ul1 tr td{
+    text-align: left !important;
+}
 table tr td {
     text-align: center !important;
     vertical-align: middle !important;
