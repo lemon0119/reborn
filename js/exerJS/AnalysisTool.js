@@ -1,6 +1,5 @@
 /* 
  * Js AnalysisTool
- * Create By pengjingcheng @qq 390928903   date 2015_12_3
  * 
  * 请在主view中设置全局变量 
  * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000

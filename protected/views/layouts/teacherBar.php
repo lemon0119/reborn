@@ -69,7 +69,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
                                     </li>             
-                                    <li><a id ="exam_statistics" href="./index.php?r=teacher/watchData&&classID=<?php echo $key;?>"></a></li>
+                                    <li><a id ="exam_statistics" href="./index.php?r=teacher/watchData&&classID=<?php if(isset($key)){echo $key;}?>"></a></li>
                                  
                                                                        
                                     <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil"></a></li>

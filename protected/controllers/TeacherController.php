@@ -878,6 +878,9 @@ class TeacherController extends CController {
         //$user_model = new User;
         //$username_now=Yii::app()->user->name;
         //$info=$user_model->find("username='$username_now'");//,'pageInden'=>$pageIndex
+        if(isset($_GET['modify'])){
+            TwoWordsLib::model()->modify();
+        }
         $this->render('index'); //,['info'=>$info]);
     }
 

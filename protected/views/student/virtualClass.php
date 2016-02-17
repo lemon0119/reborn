@@ -587,7 +587,11 @@ function reExercise(){
 function finish(){
     isfinish[nowOn] = 1;
     if(nowOn<exerciseIsOpenNow.length){
-        nextExercise();
+        window.wxc.xcConfirm("点击确定将进入下一个练习", window.wxc.xcConfirm.typeEnum.info,{
+                    onOk:function(){
+                        nextExercise();
+                    }
+                });
     }
 }
 </script>
