@@ -179,7 +179,9 @@
             window.G_isOverFlag = 1; 
             $("#finish").attr("disabled","disabled");
             audio.pause();
+            window.parent.finish();
         }
+         
     }
     
 </script>

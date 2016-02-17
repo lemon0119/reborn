@@ -50,7 +50,7 @@ echo "<script>var role='$role';</script>";
         </div>
     </div>
      <div id="classExercise-container" align="center" style="width: 100% ; height:800px;  margin-top:0px;display:none;overflow-x: hidden">
-         <div><button id="exercise_again" onclick="againExercise()" style="margin-left: 10px;margin-right: 10px" class="fr btn" >再来一遍</button><button id="exercise_next" onclick="nextExercise()" <?php if(count($exerciseIsOpenNow)<2){echo "disabled='disabled'";}?> style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary">下一题</button><button id="exercise_last" onclick="lastExercise()" disabled="disabled" style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary" >上一题</button></div>
+         <div><button id="exercise_again" onclick="reExercise()" style="margin-left: 10px;margin-right: 10px" class="fr btn" >再来一遍</button><button id="exercise_next" onclick="nextExercise()" <?php if(count($exerciseIsOpenNow)<2){echo "disabled='disabled'";}?> style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary">下一题</button><button id="exercise_last" onclick="lastExercise()" disabled="disabled" style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary" >上一题</button></div>
          <div style="height: 730px;">
             <iframe id="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
         </div>
@@ -109,9 +109,11 @@ echo "<script>var role='$role';</script>";
 <script>
     //显示全屏图像
     var exerciseIsOpenNow = new Array();
+    var isfinish = new Array();
     var nowOn = 0;
 <?php foreach ($exerciseIsOpenNow as $key=>$value) { ?>
         exerciseIsOpenNow[<?php echo $key?>] = <?php echo $value['exerciseID']?>;
+        isfinish[<?php echo $key?>] = 0;
   <?php  } ?>
     var onImg = false;
     function fun1(){
@@ -292,13 +294,17 @@ function passClassExercise(){
         success:function(data){
             if(data===""){
             }else{
-                        if(data==="look"){
+                if(isfinish[nowOn]===0){
+                     if(data==="look"){
                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look&exerciseID="+exerciseID);
                         }else if(data==="listen"){
                              $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen&exerciseID="+exerciseID);
                         }else if(data==='speed'||data==='correct'||data==='free'){
                              $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key&exerciseID="+exerciseID);
                         }
+                }else{
+                    $("#iframe_classExercise").attr("src","index.php?r=student/iframe4finish&exerciseID="+exerciseID);
+                }
              }
         }
     });
@@ -559,7 +565,6 @@ function nextExercise(){
       
       passClassExercise();
     }
-    
 }
 
 function lastExercise(){
@@ -574,7 +579,15 @@ function lastExercise(){
     }
 }
 
-function againExercise(){
+function reExercise(){
+    isfinish[nowOn] = 0;
     passClassExercise();
+}
+
+function finish(){
+    isfinish[nowOn] = 1;
+    if(nowOn<exerciseIsOpenNow.length){
+        nextExercise();
+    }
 }
 </script>

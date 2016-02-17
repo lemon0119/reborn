@@ -406,6 +406,7 @@ $squence = $countSquence + 1;
         if(window.G_startFlag===1){
             window.G_isOverFlag = 1; 
             $("#finish").attr("disabled","disabled");
+            window.parent.finish();
         }
     }
     

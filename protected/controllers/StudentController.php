@@ -1526,6 +1526,11 @@ class StudentController extends CController {
         $data = ClassExercise::model()->getByExerciseID($exerciseID)['type'];
         echo  $data;
     }
+    public function actionIframe4finish(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getNowOpenExercise($exerciseID);
+        $this->renderPartial("Iframe4finish",["classExercise"=>$classExercise]);
+    }
     
     public function actionIframe4Look(){
         $exerciseID = $_GET['exerciseID'];
