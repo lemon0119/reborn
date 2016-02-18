@@ -399,7 +399,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             <div id="chat-box" style="border: 0px">   
                 <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%">
                  </div>
->>>>>>> 666
+>>>>>>> 
                 
     
                 </div>-->
@@ -1666,8 +1666,10 @@ $dir->close();
         window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info,{
             onOk:function(){
                 for (var i = 0; i < checkboxs.length; i++) {
-                    exerciseID = checkboxs[0].value;
                     if(checkboxs[i].checked){
+                        if(exerciseID === ""){
+                            exerciseID = checkboxs[i].value;
+                        }
                         check+=checkboxs[i].value+"&";
                     }
                 }

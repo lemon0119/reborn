@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <table style="width: 580px"  border = '0px'><button class="fl btn" id="pause">暂停统计</button><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise" class="fr btn btn-primary">关闭</button>
+        <table style="width: 580px"  border = '0px'><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise" class="fr btn btn-primary">关闭</button>
             <tr><h3><?php echo $classExercise['title'] ?></h3></tr>
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
@@ -17,9 +17,9 @@
                 <td><span class="fl"   style="color: #000;font-weight: bolder">正确率：&nbsp;&nbsp;</span></td>
                 <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
                 <td><span class="fr" style="color: gray"> %&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                <td><span class="fl" style="color: #000;font-weight: bolder">回改字数：</span></td>
-                <td style="width: 60px;"><span style="color: #f46500" id="getBackDelete">0</span></td>
-                <td><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">循环次数：</span></td>
+                <td><span style="color: #f46500" id="repeatNum"><?php echo $classExercise['repeatNum'] ?></span ></td>
+                <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
             </tr>
             <tr>
                 <td><span class="fl"   style="color: #000;font-weight: bolder">平均速度：</span></td>
@@ -52,11 +52,6 @@
                 <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td><span class="fl"   style="color: #000;font-weight: bolder">总击键数：</span></td>
                 <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
-                <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr>
-            <tr >
-                <td><span class="fl"   style="color: #000;font-weight: bolder">循环次数：</span></td>
-                <td><span style="color: #f46500" id="repeatNum"><?php echo $classExercise['repeatNum'] ?></span ></td>
                 <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
             </tr>
 
@@ -105,19 +100,20 @@
 <script>
     $(document).ready(function () {
         document.getElementById('span').scrollIntoView();
-        $("#pause").click(function () {
-            if (window.G_startFlag === 1) {
-                if (window.G_isPause === 0) {
-                    window.G_isPause = 1;
-                }
-                if (window.G_pauseFlag === 1&&window.G_isOverFlag ===0) {
-                    $("#pause").html("暂停统计");
-
-                } else {
-                    $("#pause").html("继续统计");
-                }
-            }
-        });
+//  暂停功能        
+//        $("#pause").click(function () {
+//            if (window.G_startFlag === 1) {
+//                if (window.G_isPause === 0) {
+//                    window.G_isPause = 1;
+//                }
+//                if (window.G_pauseFlag === 1&&window.G_isOverFlag ===0) {
+//                    $("#pause").html("暂停统计");
+//
+//                } else {
+//                    $("#pause").html("继续统计");
+//                }
+//            }
+//        });
     });
     var originalContent = "<?php echo $classExercise['content']; ?>";
     window.GA_originalContent = originalContent;
@@ -140,8 +136,26 @@ $squence = $countSquence + 1;
     });
 
     $(document).ready(function () {
-        startParse();
+        window.parent.alertStartKeyExercise();
     });
+    
+    function start(){
+        var count = 0;
+                var ready = setInterval(function(){
+                    count++;
+                    if(count === 3){
+                        startParse();
+                        var myDate = new Date();
+                         window.G_pressTime = myDate.getTime();
+                         if(window.G_startFlag ===0){
+                                    window.G_startTime = myDate.getTime();
+                                    window.G_startFlag = 1; 
+                                    window.G_oldStartTime = window.G_pressTime;
+                        }
+                        clearInterval(ready);
+                    }
+                },1000);
+    }
 
     $(document).ready(function () {
         $("li#li-key-<?php echo $classExercise['exerciseID']; ?>").attr('class', 'active');

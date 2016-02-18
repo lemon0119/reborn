@@ -120,15 +120,16 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
-        window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
+        if(window.G_startFlag ===1){
+            window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
         window.G_keyBoardBreakPause =0;
           var myDate = new Date();
          window.G_pressTime = myDate.getTime();
-         if(window.G_startFlag ===0){
-                    window.G_startTime = myDate.getTime();
-                    window.G_startFlag = 1; 
-                    window.G_oldStartTime = window.G_pressTime;
-                }
+//         if(window.G_startFlag ===0){
+//                    window.G_startTime = myDate.getTime();
+//                    window.G_startFlag = 1; 
+//                    window.G_oldStartTime = window.G_pressTime;
+//                }
                 window.G_countMomentKey++;
                 window.G_countAllKey++;
                 window.G_content = document.getElementById("typeOCX").GetContent();
@@ -197,6 +198,8 @@
         changTemplet(pszStenoString);
         window.GA_RightRadio = (getCorrect()*100).toFixed(2);
         document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
+        }
+        
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -222,7 +225,7 @@
             totalNum += 1;           
         }
         display();
-        time1 = setInterval("display()",1/(speed/60)*1000); 
+        time1 = setInterval("display()",2/(speed/60)*1000); 
     }
     
     function setWordView(word){
@@ -293,7 +296,8 @@
         if(nextWord != "")
             return nextWord;
         var result = wordArray[currentNum];
-        yaweiCode = yaweiCodeArray[currentNum];        
+        yaweiCode = yaweiCodeArray[currentNum];   
+        keyReSet();
         return result;
     }
         
