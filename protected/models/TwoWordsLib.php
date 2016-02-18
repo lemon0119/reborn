@@ -94,8 +94,25 @@ class TwoWordsLib extends CActiveRecord
             $res = Yii::app()->db->createCommand($sql)->query();
             return $res;
         }
+        
+        public function change($Lib,$newList){
+            $Lib->list = $newList;
+            $Lib->update();
+        }
+        
+        public function modify(){
+            $Lib = new TwoWordsLib();
+            $Lib = TwoWordsLib::model()->findAll("name != 'lib' AND list!= '总复习'");
+            foreach ($Lib as $v){
+//                switch (Tool::csubstr($v["name"],0 ,1)){
+//                    case '声': $this->change($v, "第02-07讲");
+//                        break;
+//                }
+            }
+            return 0;
+        }
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

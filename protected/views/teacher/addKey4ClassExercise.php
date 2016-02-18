@@ -236,6 +236,30 @@
         }
         document.getElementById("libstr").value = libstr;
     }
+    function deleteLib(libs){
+        window.wxc.xcConfirm("确定要删除吗？", window.wxc.xcConfirm.typeEnum.warning,{
+            onOk:function(){
+                 $.ajax({
+                    type:"POST",
+                    async:false,
+                    url:"./index.php?r=teacher/deleteWordLib",
+                    data:{libs:libs},
+                    success:function(data){
+                        console.log(data);
+                        if(data==1){
+                            window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success,{
+                                onOk:function(){
+                                    $("#iframe4choiceLib").attr("src", "./index.php?r=teacher/SelectWordLib&&libstr=" + document.getElementById("libstr").value);
+                                }
+                            });
+                        }else if(data==0){
+                            window.wxc.xcConfirm("只能针对个人词库删除！", window.wxc.xcConfirm.typeEnum.error);
+                        }
+                    }
+                });
+            }
+        });
+    }
     
     function error(result){
             window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.error);
@@ -243,7 +267,7 @@
      function success(result){
             window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
-                    window.document.getElementById('iframe4choiceLib').contentWindow.clickQX();
+                    $("#iframe4choiceLib").attr("src", "./index.php?r=teacher/SelectWordLib&&libstr=" + document.getElementById("libstr").value);
                 }
             });
     }

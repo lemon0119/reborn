@@ -34,14 +34,14 @@ echo "<script>var role='$role';</script>";
                     <td><span style="color: #f46500">&nbsp;&nbsp;<?php foreach ($lessons as $less) {
                                if($less['lessonID'] === $currentLesn){
                                    echo $less['lessonName'];
-                                };
+                                }
                            }?>
                     </span></td>           
                 </tr>
     </div>
     
     <!-- local/remote videos container --> 
-    <div id="ppt-container" align="center" style="width: 100% ; height:100%;  margin-top:0px;display:none;overflow-x: hidden">
+    <div id="ppt-container" align="center" style="width: 100% ; height:560px;;  margin-top:0px;display:none;overflow-x: hidden">
         <div id ="full-screen" style="position: relative; left: 200px; top: 40px;display:none;">
             <img src="<?php echo IMG_URL; ?>ppt-full-screen.png" onmouseover="fun3();" onclick="fun4()" style="opacity:0.3"/> 
         </div>
@@ -49,13 +49,22 @@ echo "<script>var role='$role';</script>";
         <img id="ppt-img"  onmouseover="fun1();" onmouseout="fun2();" src=""  style="height: 100%;"/>  
         </div>
     </div>
-     <div id="classExercise-container" align="center" style="width: 100% ; height:760px;  margin-top:0px;display:none;overflow-x: hidden">
-         <div style="position: relative;top: 10px;height: 730px;">
+     <div id="classExercise-container" align="center" style="width: 100% ; height:800px;  margin-top:0px;display:none;overflow-x: hidden">
+         <div><button id="exercise_again" onclick="reExercise()" style="margin-left: 10px;margin-right: 10px" class="fr btn" >再来一遍</button><button id="exercise_next" onclick="nextExercise()" <?php if(count($exerciseIsOpenNow)<2){echo "disabled='disabled'";}?> style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary">下一题</button><button id="exercise_last" onclick="lastExercise()" disabled="disabled" style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary" >上一题</button></div>
+         <div style="height: 730px;">
             <iframe id="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
         </div>
     </div>
 
-    <div id="dianbo-videos-container" style="display:none;">  </div>
+    <div id="dianbo-videos-container" style="height:560px;display:none;">  </div>
+    <div id="bulletin_activex">
+    <object style="position: absolute;top:713px;" id="typeOCX" type="application/x-itst-activex" 
+        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
+        width ='744' height='180'
+        event_OnChange="onChange"
+        event_OnStenoPress="onStenoPressKey">
+</object>
+        </div>
 </div>
 
 <div class="right"style="max-height: 1200px;background-color: #3b3b3b;border: 0px" >
@@ -99,7 +108,13 @@ echo "<script>var role='$role';</script>";
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <script>
     //显示全屏图像
-    
+    var exerciseIsOpenNow = new Array();
+    var isfinish = new Array();
+    var nowOn = 0;
+<?php foreach ($exerciseIsOpenNow as $key=>$value) { ?>
+        exerciseIsOpenNow[<?php echo $key?>] = <?php echo $value['exerciseID']?>;
+        isfinish[<?php echo $key?>] = 0;
+  <?php  } ?>
     var onImg = false;
     function fun1(){
         $('#ppt-asd').attr('style','margin-top: -35px');
@@ -205,6 +220,7 @@ echo "<script>var role='$role';</script>";
 
 <script>
     var isClassExercise = 0;
+    
     //chat and bulletin
 $(document).ready(function(){
     var current_date = new Date();
@@ -246,19 +262,21 @@ function startClassExercise(){
                 isClassExercise=1;
                 window.wxc.xcConfirm("有新练习发布，点击开始！", window.wxc.xcConfirm.typeEnum.info,{
                     onOk:function(){
+                       var exerciseID = exerciseIsOpenNow[nowOn] ;
                                 $("#sw-bulletin").unbind("click");
                         $("#classExercise-container").toggle(200);
                         if(data==="look"){
-                            $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look");
+                            $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look&exerciseID="+exerciseID);
                         }else if(data==="listen"){
-                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen");
+                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen&exerciseID="+exerciseID);
                         }else if(data==='speed'||data==='correct'||data==='free'){
-                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key");
+                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key&exerciseID="+exerciseID);
                         }
                          if(!$("#bulletin").is(":hidden")){ 
-                        $("#sw-openAnalysis").attr("disabled","true");
                          $("#bulletin").toggle(200);
+                         $("#bulletin_activex").toggle(200);
                         }
+                        $("#sw-openAnalysis").attr("disabled","true");
                        $("#analysis").hide();
                     }
                 });
@@ -268,6 +286,29 @@ function startClassExercise(){
     });
 }
 
+function passClassExercise(){
+    var exerciseID = exerciseIsOpenNow[nowOn] ;
+    $.ajax({
+        type:"GET",
+        url:"index.php?r=student/passClassExercise&&exerciseID="+exerciseID,
+        success:function(data){
+            if(data===""){
+            }else{
+                if(isfinish[nowOn]===0){
+                     if(data==="look"){
+                            $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look&exerciseID="+exerciseID);
+                        }else if(data==="listen"){
+                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen&exerciseID="+exerciseID);
+                        }else if(data==='speed'||data==='correct'||data==='free'){
+                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key&exerciseID="+exerciseID);
+                        }
+                }else{
+                    $("#iframe_classExercise").attr("src","index.php?r=student/iframe4finish&exerciseID="+exerciseID);
+                }
+             }
+        }
+    });
+}
 
 
 function pollChatRoom() {
@@ -348,13 +389,14 @@ $(document).ready(function(){
             $("#sw-openAnalysis").removeAttr("disabled");
         }
         $("#bulletin").toggle(200);
+        $("#bulletin_activex").toggle(200);
         $("#analysis").hide();
         document.getElementById("typeOCX").SetTextSize(8);
         document.getElementById("typeOCX").HideToolBar();
         document.getElementById("typeOCX").HideSecondToolBar();
     });
     $("#sw-openAnalysis").click(function() {
-        $("#analysis").toggle(200);
+        $("#analysis").toggle(0);
         $("#chat-box").hide();
     });
 });
@@ -384,7 +426,7 @@ $(document).ready(function(){
             var video = document.getElementById('video1');
             if(video===null){
                 var html = "";
-                html += '<video id="video1" width="100%" controls>';
+                html += '<video id="video1"  width="100%" controls>';
                 html += '<source src="' + video_path + '">';
                 html += '</video>';
                 $("#dianbo-videos-container").empty();
@@ -493,6 +535,7 @@ function closeClassExercise(){
             $("#sw-openAnalysis").removeAttr("disabled");
         }
         $("#bulletin").toggle(200);
+        $("#bulletin_activex").toggle(200);
         $("#analysis").hide();
         document.getElementById("typeOCX").SetTextSize(8);
         document.getElementById("typeOCX").HideToolBar();
@@ -509,5 +552,46 @@ function closeClassExercise(){
             clearInterval(timer);
         }
     }, 2000);
+}
+
+
+function nextExercise(){
+    $("#exercise_last").removeAttr("disabled");
+    if(nowOn === exerciseIsOpenNow.length-2){
+        $("#exercise_next").attr("disabled","disabled");
+      }
+    if(nowOn<exerciseIsOpenNow.length){
+      nowOn++;
+      
+      passClassExercise();
+    }
+}
+
+function lastExercise(){
+        $("#exercise_next").removeAttr("disabled");
+        if(nowOn ===1){
+          $("#exercise_last").attr("disabled","disabled");  
+        }
+        
+    if(nowOn>0){
+      nowOn--;  
+      passClassExercise();
+    }
+}
+
+function reExercise(){
+    isfinish[nowOn] = 0;
+    passClassExercise();
+}
+
+function finish(){
+    isfinish[nowOn] = 1;
+    if(nowOn<exerciseIsOpenNow.length){
+        window.wxc.xcConfirm("点击确定将进入下一个练习", window.wxc.xcConfirm.typeEnum.info,{
+                    onOk:function(){
+                        nextExercise();
+                    }
+                });
+    }
 }
 </script>

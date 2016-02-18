@@ -290,15 +290,16 @@ class ClassExercise extends CActiveRecord
         return $classExercise['type'];
     }
     
-    public function getNowOpenExercise(){
+    
+    public function getNowOpenExercise($exerciseID){
         $classExercise = new ClassExercise();
-        $classExercise = $classExercise->find("now_open = 1");
+        $classExercise = $classExercise->find("now_open = 1 AND exerciseID = $exerciseID");
         return $classExercise;
     }
     
-    public function getAllNowOpenExercise(){
+    public function getAllNowOpenExercise($classID){
         $classExercise = new ClassExercise();
-        $classExercise = $classExercise->findAll("now_open = 1");
+        $classExercise = $classExercise->findAll("now_open = 1 AND classID = '$classID'");
         return $classExercise;
     }
     

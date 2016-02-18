@@ -8,7 +8,6 @@ var isExam;
 function startTime(){
 	timer = window.setInterval(function(){
             if(window.G_startFlag===1&&window.G_pauseFlag===0){
-                if(window.G_isOverFlag === 0){
                 changWordPS();
                     strTime = "";
                     if(++ss==60)
@@ -26,6 +25,8 @@ function startTime(){
                     strTime+=":";
                     strTime+=ss<10?"0"+ss:ss;
                     document.getElementById('timej').innerHTML = strTime;
+                    if(window.G_endAnalysis === 1){
+                    clearInterval(timer);
                 }
              }
 	},1000);
@@ -98,7 +99,6 @@ function reloadTime(){
 	strTime = '00:00:00';
 if(document.getElementById('timej')!==null)
 	document.getElementById('timej').innerHTML = strTime;
-	clearInterval(timer);
 	startTime();
 };
 $(document).ready(function(){

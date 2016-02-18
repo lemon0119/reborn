@@ -20,7 +20,7 @@
                 <li id="li-<?php echo $progress;?>">
                     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>">
                         <i class="icon-list-alt"></i> 
-                        <?php echo $lessonsName[$progress]; ?>
+                        <?php if(isset($lessonsName[$progress])){echo $lessonsName[$progress];} ?>
                     </a>
                 </li>
                 <?php }?>
@@ -66,8 +66,8 @@
     <h1>
        <?php  
        $nowOn = $_GET['on'];
-         if($lessonsName!=null)
-            echo $lessonsName[$nowOn];?>
+         if(isset($lessonsName[$nowOn])){echo $lessonsName[$nowOn];}
+            ?>
     </h1>
     <div class="hero-unit table-bordered" style="height:200px; width: 770px">
         <p class="font-startcourse">
