@@ -5310,6 +5310,7 @@ public function ActionAssignFreePractice(){
                     $fp=fopen($file_dir,"r"); 
                     $content=fread($fp,filesize($file_dir));//读文件 
                     fclose($fp); 
+                    unlink($file_dir);
                     $str = explode("\r\n", $content);
                     $name = str_replace(".txt", "", $file_name);
                     $createPerson = Yii::app()->session['userid_now'];
