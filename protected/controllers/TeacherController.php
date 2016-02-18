@@ -5248,13 +5248,33 @@ public function ActionAssignFreePractice(){
             $this->renderJSON($array_result);          
      }
      
-
+     public function ActionDeleteWordLib(){
+         $Libs = $_POST['libs'];
+         $count = 0;
+         foreach ($Libs as $v){
+             $Lib = TwoWordsLibPersonal::model()->findAll("name = '$v'");
+             if(count($Lib)>0){
+                 $count++;
+                 foreach ($Lib as $l){
+                     $l->delete();
+                 }
+             }
+         }
+         if($count>0){
+             echo 1;
+         }else{
+             echo 0;
+         }
+     }
+     
      public function ActionSelectWordLib(){
          $uploadResult = "";
          $libstr=$_GET['libstr'];
          $libstr=  explode('$$', $libstr);
-         $sql = "select distinct name,list from two_words_lib";
+         $sql = "SELECT DISTINCT name,list FROM two_words_lib WHERE list != '总复习' ORDER BY name";
          $result = Yii::app()->db->createCommand($sql)->query();
+         $sql_1 = "SELECT DISTINCT name,list FROM two_words_lib WHERE list = '总复习' ORDER BY name";
+         $result_1 = Yii::app()->db->createCommand($sql_1)->query();
          $list = array();
          $createPerson = Yii::app()->session['userid_now'];
          $sql4Personal = "select distinct name,list from two_words_lib_personal WHERE createPerson LIKE '$createPerson'";
@@ -5264,6 +5284,9 @@ public function ActionAssignFreePractice(){
          }
          foreach ($result as $res){
              if($res['name'] != "lib")
+             array_push($list, $res);            
+         }
+         foreach ($result_1 as $res){
              array_push($list, $res);            
          }
          if(isset($_GET['upload'])){
