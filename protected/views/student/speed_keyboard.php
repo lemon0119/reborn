@@ -193,14 +193,12 @@
                     //打对择把该键显示设置true
                     keySet("l_"+ c, true);
                 }else{
-                    judgementFlag = 1;
                     keySet("l_"+c , false);
               }
             }else{
                 if(checkChar(charSet[i],false)){
                     keySet("r_"+c , true);
                 }else{
-                    judgementFlag = 1;
                     keySet("r_"+c , false);
               }
             }
@@ -255,6 +253,8 @@
     function changTemplet(pszStenoString){
         if(isSameWord(pszStenoString,yaweiCode)){
             ++numKeyRight;
+        }else{
+            judgementFlag = 1;
         }
     }
     
