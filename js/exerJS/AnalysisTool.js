@@ -18,6 +18,7 @@
  * 
  */
     var G_exerciseType       ="";
+    var G_isLook             = 0;
     var G_keyBoardBreakPause = 0;
     var G_saveToDatabase     = 0;
     var G_isOverFlag         = 0;
@@ -236,7 +237,9 @@ $(document).ready(function(){
                 });
                 }
              }
-             AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", window.GA_originalContent, window.G_content);
+             if(window.G_isLook ===1){
+                  AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", window.GA_originalContent, window.G_content);
+             }
                //判断统计结束
              if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
                  window.G_endAnalysis = 1;

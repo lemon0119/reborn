@@ -97,9 +97,11 @@
     function deleteLib(){
         var checkboxs = document.getElementsByName('checkbox[]');
         var libs=new Array();
+        var j=0;
         for (var i = 0; i < checkboxs.length; i++) {
            if(checkboxs[i].checked){
-                libs[i] = checkboxs[i].value;
+                libs[j] = checkboxs[i].value;
+                j++;
            }
         }  
        window.parent.deleteLib(libs);
