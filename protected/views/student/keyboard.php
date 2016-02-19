@@ -106,8 +106,15 @@
         return false;
     }
     
+    function onChange(){
+        document.getElementById("typeOCX").UpdateView();
+        var input = getContent(document.getElementById("typeOCX"));
+        document.getElementById("typeOCX").Locate(input.length);
+    }
+    
     function onStenoPressKey(pszStenoString ,device){
-        
+        window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
+        console.log(window.GA_answer);
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause =0;
         var myDate = new Date();
@@ -143,9 +150,9 @@
           
         if(HaveWindow == 1)
             return;
-        if(totalNum == currentNum){
+        if(totalNum == currentNum && repeatNum == 0){  
             HaveWindow = 1;
-            window.G_isOverFlag = 1;
+            window.G_isOverFlag = 1;           
             window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
                     currentNum = totalNum;
@@ -157,7 +164,7 @@
                 }
             });
             currentNum = totalNum;
-            return ;
+            return;
         }
         var charSet = pszStenoString.split("");
         var left = true;
@@ -183,8 +190,8 @@
             }
         }
         changTemplet(pszStenoString);
-        writeData();   
-        doSubmit(false);
+         window.GA_RightRadio = (getCorrect()*100).toFixed(2);
+         document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -195,25 +202,15 @@
     var numKeyDown = 0;
     var numKeyRight = 0;
     var HaveWindow = 0;
+    var repeatNum = 1;
     
     function writeData(){
-        document.getElementById("id_correct").value = getCorrect();
-        document.getElementById("id_cost").value = getSeconds();
-        document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
-        document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;
-        document.getElementById("id_BackDelete").value = document.getElementById("getBackDelete").innerHTML;
-        document.getElementById("id_HighstCountKey").value = document.getElementById("getHighstCountKey").innerHTML;
-        document.getElementById("id_AverageKeyType").value = document.getElementById("getAverageKeyType").innerHTML;
-        document.getElementById("id_HighIntervarlTime").value = document.getElementById("getHighIntervarlTime").innerHTML;
-        document.getElementById("id_countAllKey").value = document.getElementById("getcountAllKey").innerHTML;        
+        document.getElementById("id_cost").value = getSeconds();     
     }
-    
-    
-    
-    
-    
+     
     function startParse(){
         var content = document.getElementById("id_content").value;
+        repeatNum = $("#repeatNum").html();
         var cont_array = content.split("$$");
         for(var i = 0; i < cont_array.length; i += 1){
             var yaweiCode = cont_array[i].split(":0")[0];
@@ -268,13 +265,6 @@
         var left2 = wb[0];
         var right1 = wa[1];
         var right2 = wb[1];
-//        var ls1 = left1.split('').sort();
-//        var ls2 = left2.split('').sort();
-//        var leftsame = isSameArray(ls1 , ls2);
-//        var rs1 = right1.split('').sort();
-//        var rs2 = right2.split('').sort();
-//        var rightsame = isSameArray(rs1 , rs2);
-//        return  leftsame && rightsame;
        if(left1 == left2 && right1 == right2)
            return true;
        else
@@ -287,21 +277,44 @@
         }
         return true;
     }
-    function getCorrect(pattern , answer){
+    function getCorrect(){        
         return numKeyRight / numKeyDown;
     }
     function getNextWord(){
+        keyReSet();
         currentNum++;
-        if(totalNum == currentNum){     
+        if(totalNum == currentNum){
+            repeatNum--;
+            document.getElementById("repeatNum").innerHTML = repeatNum;
+            if(repeatNum == 0){
             window.G_isOverFlag = 1;
-            window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);           
+            document.getElementById("id_cost").value = getSeconds();
+            doSubmit(false); 
+            window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
+            }         
+            currentNum = 0;
         }       
         if(nextWord != "")
-            return nextWord;
+        return nextWord;
         var result = wordArray[currentNum];
-        yaweiCode = yaweiCodeArray[currentNum];
-        
+        yaweiCode = yaweiCodeArray[currentNum]; 
+        setTimeout(function(){
+            keyReSet();
+            var left = true;
+            for(var i = 0; i < yaweiCode.length; i++){
+            if(yaweiCode[i] == ':'){
+                left = false;
+                continue;
+            }
+            var c = yaweiCode[i].toLowerCase();
+            if(left){
+                    keySet("l_"+ c, true);
+            }else{
+                    keySet("r_"+c , true);
+            }
+            }
+            }, 2000);
         return result;
     }
     

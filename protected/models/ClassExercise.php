@@ -15,6 +15,7 @@
  * @property string $create_time
  * @property string $create_person
  * @property integer $is_open
+ * @property integer $now_open
  */
 class ClassExercise extends CActiveRecord
 {
@@ -34,13 +35,13 @@ class ClassExercise extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('classID, lessonID, title, content, type, file_path, file_name, create_time, create_person, is_open', 'required'),
-			array('classID, lessonID, is_open', 'numerical', 'integerOnly'=>true),
+			array('classID, lessonID, title, content, type, file_path, file_name, create_time, create_person, is_open, now_open', 'required'),
+			array('classID, lessonID, is_open, now_open', 'numerical', 'integerOnly'=>true),
 			array('title, file_path, file_name, create_person', 'length', 'max'=>30),
 			array('type', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('exerciseID, classID, lessonID, title, content, type, file_path, file_name, create_time, create_person, is_open', 'safe', 'on'=>'search'),
+			array('exerciseID, classID, lessonID, title, content, type, file_path, file_name, create_time, create_person, is_open, now_open', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,6 +73,7 @@ class ClassExercise extends CActiveRecord
 			'create_time' => 'Create Time',
 			'create_person' => 'Create Person',
 			'is_open' => 'Is Open',
+                        'now_open' => 'Now Open',
 		);
 	}
 
@@ -104,12 +106,30 @@ class ClassExercise extends CActiveRecord
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('create_person',$this->create_person,true);
 		$criteria->compare('is_open',$this->is_open);
+                $criteria->compare('now_open',$this->now_open);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
 
+        public function insertKey($classID,$lessonID,$title,$content,$createPerson,$category,$speed,$repeatNum,$libstr){
+        $newKey    =   new ClassExercise();
+        $newKey->title =   $title;
+        $newKey->content       =   $content;
+        $newKey->classID       =   $classID;
+        $newKey->lessonID       =   $lessonID;
+        $newKey->create_person  =   $createPerson;
+        $newKey->type = $category;
+        $newKey->repeatNum = $repeatNum;
+        $newKey->chosen_lib = $libstr;
+        if($category == "speed")
+        {
+            $newKey->speed = $speed;
+        }
+        $newKey->create_time    =   date('y-m-d H:i:s',time());
+        return $newKey->insert();
+    }
         
         public function insertClassExercise($classID,$lessonID,$title,$content,$type,$createPerson){
         $newClassExercise    =   new ClassExercise();
@@ -164,6 +184,24 @@ class ClassExercise extends CActiveRecord
         return ['lookLst'=>$lookLst,'pages'=>$pages,];
     }
     
+    public function getKeyLst($lessonID){
+        $order  =   " order by exerciseID DESC";
+        $condition = " WHERE (type = 'speed' OR type = 'correct' OR type = 'free')";
+        $select     =   "SELECT * FROM class_exercise";
+        $condition2 = "AND lessonID = $lessonID";
+        $sql        =   $select.$condition.$condition2.$order;
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->query();
+        $pages      =   new CPagination($result->rowCount);
+        $pages->pageSize    =   10; 
+        $pages->applyLimit($criteria); 
+        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $lookLst  =   $result->query();
+        
+        return ['keyLst'=>$lookLst,'pages'=>$pages,];
+    }
     public function getListenLst($type,$value,$lessonID){
         $order  =   " order by exerciseID DESC";
         if($type!="")
@@ -193,7 +231,7 @@ class ClassExercise extends CActiveRecord
     
     
     public function getExerciseByType($exerciseID,$type){
-        $sql = "SELECT * FROM class_exercise WHERE exerciseID = '$exerciseID' and type = '$type'";
+        $sql = "SELECT * FROM class_exercise WHERE exerciseID = '$exerciseID' AND type = '$type'";
         return Yii::app()->db->createCommand($sql)->query();
     }
     
@@ -211,7 +249,66 @@ class ClassExercise extends CActiveRecord
         Resourse::model()->delName($FileName);
         $classExercise->deleteAll("exerciseID = '$exerciseID'");
     }
-	/**
+    
+    public function openExercise($exerciseID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+        $classExercise->is_open = 1;
+        $classExercise->update();
+    }
+    public function openExerciseNow($exerciseID){
+//        $classExercise = new ClassExercise();
+//        $classExercise = $classExercise->findAll("now_open = 1");
+//        if($classExercise!==""){
+//            foreach ($classExercise as $v){
+//                $v->now_open = 0;
+//                $v->update();
+//            }
+//        }
+            $classExercise = new ClassExercise();
+            $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+            $classExercise->is_open = 1;
+            $classExercise->now_open = 1;
+            $classExercise->update();
+    }
+    
+    public function closeAllOpenExerciseNow(){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->findAll("now_open = 1");
+        if($classExercise!==""){
+            foreach ($classExercise as $v){
+                $v->now_open = 0;
+                $v->update();
+            }
+        }
+    }
+
+
+    public function isHasClassExerciseOpen($classID,$lessonID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("classID = '$classID' AND lessonID = '$lessonID' AND now_open = 1");
+        return $classExercise['type'];
+    }
+    
+    
+    public function getNowOpenExercise($exerciseID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("now_open = 1 AND exerciseID = $exerciseID");
+        return $classExercise;
+    }
+    
+    public function getAllNowOpenExercise($classID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->findAll("now_open = 1 AND classID = '$classID'");
+        return $classExercise;
+    }
+    
+    public function getByExerciseID($exerciseID){
+        $classExercise = new ClassExercise();
+        $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
+        return $classExercise;
+    }
+    /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

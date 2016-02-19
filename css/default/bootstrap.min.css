@@ -4583,6 +4583,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-repeat:no-repeat;
     background-image: url("../../img/UI_tea/on_start_class.png");
 }
+#exam_statistics{
+    padding: 28px 60px;
+    background-repeat:no-repeat;
+    background-image: url("../../img/UI_tea/exam_statistics.png");
+}
+#exam_statistics:hover{
+    padding: 28px 60px;
+    background-repeat:no-repeat;
+    background-image: url("../../img/UI_tea/on_exam_statistics.png");
+}
 #topicmanager{
     padding: 28px 60px;
     background-repeat:no-repeat;
@@ -4678,14 +4688,14 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 .btn_add{
     border: none;
     background-repeat: no-repeat;
-    padding: 10px 55px;
+    padding: 9px 55px;
     margin-left: 10px;
     background: url(../../img/btn_add.png);
     position: relative;
     top:1px;
 }
 .btn_add:hover{
-    padding: 10px 55px;
+    padding: 9px 55px;
     margin-left: 10px;
     background-repeat:no-repeat;
     background: url(../../img/on_btn_add.png);
@@ -5021,6 +5031,19 @@ table tr td{
     text-align: center !important;
     vertical-align: middle !important;
 }
+.ul1 tr td{
+    text-align: left !important;
+}
+table tr td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+.tab tr td {
+    text-align: left !important;
+}
+.detailed tr{
+    height:36px;
+}
 .font-startcourse{
     padding: 15px 15px 0 15px;
     font-size: 20px;
@@ -5118,13 +5141,18 @@ table tr td{
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important;  
 }
 .table_pointer{
-    font-weight:100 !important;
+    font-weight:500 !important;
     box-shadow: #666 0px 0px 0px;background: #fff;behavior: url(/PIE.htc) !important; 
 }
 
 .table_pointer:hover{
      font-weight: bolder !important;
     box-shadow: #666 0px 0px 10px;background: #fff;behavior: url(/PIE.htc) !important; 
+}
+
+.table_pointer:active{
+     font-weight: bolder !important;
+    box-shadow: #666 0px 0px 5px;background: #f2f2f2;behavior: url(/PIE.htc) !important; 
 }
 #postnotice{
     cursor: pointer;
@@ -5409,12 +5437,9 @@ table tr td{
 }
 .analysisTool{
     border-radius: 5px;
-    background-color: #fff;
     position:relative;
-    float: right;
     height: 230px;
     width:150px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    position: relative;
 }

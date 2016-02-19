@@ -33,7 +33,8 @@ class StudentController extends CController {
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $student = Student::model()->find("userID = '$userID'");
-        return $this->render('virtualClass',[ 'userID' => $student ['userID'],'lessons'=>$lessons,'currentLesn'=>$currentLesn,'userName'=>$userName,'classID'=>$classID,'class' =>$student ['classID']]);
+        $exerciseIsOpenNow = ClassExercise::model()->getAllNowOpenExercise($classID);
+        return $this->render('virtualClass',[ 'userID' => $student ['userID'],'lessons'=>$lessons,'currentLesn'=>$currentLesn,'userName'=>$userName,'classID'=>$classID,'class' =>$student ['classID'],'exerciseIsOpenNow'=>$exerciseIsOpenNow]);
     }
     
     public function actionAnslookType(){
@@ -56,10 +57,13 @@ class StudentController extends CController {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
         }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render('ansDetail_1',['exercise' => $classwork,
             'exer' => $exer,
             'answer' => $answer['answer'],
-            'correct' => $answer['ratio_correct'],
+            'correct' =>$correct,
             'type'=>$type,
                 ]);
     }
@@ -85,11 +89,14 @@ class StudentController extends CController {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
         }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render('ansKey',
             ['exercise' => $classwork,
             'exer' => $result,
             'answer' => $answer['answer'],
-            'correct' => $answer['ratio_correct']]);
+            'correct' =>$correct]);
     }
     
     public function actionAnsQuestion(){
@@ -237,7 +244,7 @@ class StudentController extends CController {
         $currentLesn = isset($_GET['lessonID'])?$_GET['lessonID']:$currentLesn;
         $myCourse = Suite::model()->getClassworkAll( $currentLesn);
         $myCourses = array();
-         $n=0;
+        $n=0;
         $ratio_accomplish = array();
         foreach ($myCourse as $c){
             array_push($myCourses, $c);
@@ -272,7 +279,7 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
          if($record==null){
-           return $this->render('listenExer',array( 'exercise'=>$classwork,'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workId'=>$wID,'isOver'=>$isOver ));
+           return $this->render('listenExer',array('recordID'=>$record['recordID'], 'exercise'=>$classwork,'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workId'=>$wID,'isOver'=>$isOver ));
          }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -290,6 +297,7 @@ class StudentController extends CController {
 
        
         return $this->render('listenExer',array( 
+            'recordID'=>$record['recordID'],
             'exercise'=>$classwork,
             'exercise2'=>$classwork2,
             'exerOne'=>$result,
@@ -301,6 +309,10 @@ class StudentController extends CController {
     
     //2015-8-3 宋杰 获取考试听打练习
         public function actionExamlistenType(){
+            if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
+                
         $suiteID = Yii::app()->session['examsuiteID'];
           $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -316,6 +328,9 @@ class StudentController extends CController {
                $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         $exerID = $_GET['exerID'];
+        if(isset($_GET['over'])){
+             $over=$_GET['over'];
+         }
         Yii::app()->session['exerType'] = 'listen';
         //edit by LC
         //$result = ListenType::model()->findByPK($exerID);
@@ -339,6 +354,12 @@ class StudentController extends CController {
         $isOver=0;
         if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
+        if(isset($over) && $over==1){
+            $isOver=1;
+            $t= AnswerRecord::model()->find("recordID=? and type=?",array($record->recordID,'listen'));
+            $t->costTime=$totalTime;
+            $t->update();
+        }
         //end
          if($recordID==null){
           return $this->render('listenExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exercise2'=>$classexam2,'exerOne'=>$result,'cent' =>$cent,'isExam'=>$isExam,'examInfo'=>$examInfo,'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime ));
@@ -395,7 +416,7 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
          if($record==null){
-           return $this->render('lookExer',array( 'exercise'=>$classwork,'exercise2'=>$classwork2,'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workID' =>$wID,'isOver'=>$isOver ));    
+           return $this->render('lookExer',array( 'recordID'=>$record['recordID'],'exercise'=>$classwork,'exercise2'=>$classwork2,'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workID' =>$wID,'isOver'=>$isOver ));    
          }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -412,6 +433,7 @@ class StudentController extends CController {
         }
 
         return $this->render('lookExer',array( 
+            'recordID'=>$record['recordID'],
             'exercise'=>$classwork,
             'exercise2'=>$classwork2,
             'exerOne'=>$result,
@@ -423,6 +445,9 @@ class StudentController extends CController {
     
     //2015-8-3 宋杰 获取考试看打练习
         public function actionExamlookType(){
+            if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -438,6 +463,9 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
          $exerID = $_GET['exerID'];
+         if(isset($_GET['over'])){
+             $over=$_GET['over'];
+         }
         Yii::app()->session['exerType'] = 'look';
         //edit by LC
         //$result = LookType::model()->findByPK($exerID);
@@ -461,6 +489,13 @@ class StudentController extends CController {
         $isOver=0;
         if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
+        
+        if(isset($over) && $over==1){
+            $isOver=1;
+            $t= AnswerRecord::model()->find("recordID=? and type=?",array($record->recordID,'look'));
+            $t->costTime=$totalTime;
+            $t->update();
+        }
         //end
        if($recordID==null){
          return $this->render('lookExer',array( 
@@ -544,18 +579,29 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
+           $exerciseID = $result['exerciseID'];           
+//         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
+           //加上后连带不想关的练习答案也删除了？？？？？？
+ //         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
+            //这里有问题，重新答题时旧的答案没有清除           
+           //      AnswerRecord::model()->deleteRecord($record['recordID'], $result['exerciseID'], 'key', $studentID);
+        
         return $this->render('keyExer',array( 
             'exercise'=>$classwork,
             'exercise2'=>$classwork2,
-                'exerOne'=>$result,
+            'exerOne'=>$result,
             'isExam' => $isExam,
-                'cent' => $cent,
-            'workId' =>$wID,'isOver'=>$isOver
+            'cent' => $cent,
+            'workId' =>$wID,
+            'isOver'=>$isOver
         ));
     }
     
     //2015-8-3 宋杰 获取考试键位练习
        public function actionExamKeyType(){
+           if(!ExamRecord::saveExamRecord($recordID))
+                    return false;
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -570,6 +616,9 @@ class StudentController extends CController {
              $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
          $exerID = $_GET['exerID'];
+         if(isset($_GET['over'])){
+             $over=$_GET['over'];
+         }
         Yii::app()->session['exerID'] = $exerID;
         Yii::app()->session['exerType'] = 'key';
         //edit by LC
@@ -594,6 +643,12 @@ class StudentController extends CController {
         $isOver=0;
         if($totalTime!=0)
         $isOver = $costTime < $totalTime ? 0 : 1;
+        if(isset($over) && $over==1){
+            $isOver=1;
+            $t= AnswerRecord::model()->find("recordID=? and type=?",array($record->recordID,'key'));
+            $t->costTime=$totalTime;
+            $t->update();
+        }
         //end
          if($recordID==null){
           return $this->render('keyExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
@@ -611,7 +666,6 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
-
         return $this->render('keyExer',array( 
             'exercise'=>$classexam,
             'exerOne'=>$result,
@@ -1155,26 +1209,20 @@ class StudentController extends CController {
         //查看是否有answer，即是否是用户提交了答案。
         if(isset($_POST['nm_answer'])) {
             $answer = $_POST['nm_answer'];
-            $seconds = $_POST['nm_cost'];
-            echo $seconds;
-            $correct = $_POST['nm_correct'];
-            $AverageSpeed = $_POST['nm_AverageSpeed'];
-            $HighstSpeed = $_POST['nm_HighstSpeed'];
-            $BackDelete = $_POST['nm_BackDelete'];
-            $HighstCountKey = $_POST['nm_HighstCountKey'];
-            $AveragekeyType = $_POST['nm_AverageKeyType'];
-            $HighIntervarlTime = $_POST['nm_HighIntervarlTime'];            
-            $countAllKey = $_POST["nm_countAllKey"];      
+            $seconds = $_POST['nm_cost']; 
             if(Yii::app()->session['isExam']){
-                if(!ExamRecord::saveExamRecord($recordID))
-                    return false;
-                return AnswerRecord::saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey,1);
+                $workID = Yii::app()->session['examworkID'];
+                $createPerson = Yii::app()->session['userid_now'];
+                $oldID = ExamRecord::model()->getRecord($workID, $createPerson);
+                $studentID = Yii::app()->session['userid_now'];
+                $recordID = ExamRecord::getRecord($workID, $studentID);
+                return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
             }else {
-                if(!SuiteRecord::saveSuiteRecord ($recordID))
-                    return false;
-                return AnswerRecord::saveAnswer($recordID, $answer, $seconds,$correct,$AverageSpeed,$HighstSpeed,$BackDelete,$HighstCountKey,$AveragekeyType,$HighIntervarlTime,$countAllKey,0);
-            }
-            
+                $workID = Yii::app()->session['workID'];
+                $createPerson = Yii::app()->session['userid_now'];
+                $recordID = SuiteRecord::model()->getRecord($workID, $createPerson);
+                return AnswerRecord::model()->updateAnswer($recordID, $answer, $seconds);
+            }          
         }
     }
     public function saveParam() {
@@ -1230,6 +1278,29 @@ class StudentController extends CController {
         ),false,true);
     }
     public function actionIndex(){
+        if(isset($_GET['insert'])){
+            //导入数据库略码
+//            $file_dir="E:\\php_workstation\\reborn\\2.txt"; 
+//                $fp=fopen($file_dir,"r"); 
+//                $content=fread($fp,filesize($file_dir));//读文件 
+//                fclose($fp); 
+//                $str = explode("\r\n", $content);
+//                foreach ($str as $v){
+//                   TwoWordsLibBrief::model()->insertBrief($v); 
+//                }
+//                //向略码表导入正常输入的yaweiCode
+//            $TwoWordsLibBrief=TwoWordsLibBrief::model()->findAll();
+//            foreach ($TwoWordsLibBrief as $value) {
+//                $v = $value['words'];
+//                $TwoWordsLib = TwoWordsLib::model()->find("words LIKE '$v'");
+//                $yaweiCode = $TwoWordsLib['yaweiCode'];
+//                $newTwoWordsLibBrief = new TwoWordsLibBrief();
+//                $newTwoWordsLibBrief = TwoWordsLibBrief::model()->find("words LIKE '$v'");
+//                $newTwoWordsLibBrief->yaweiCode = $yaweiCode;
+//                $newTwoWordsLibBrief->update();
+//            }
+            
+        }
         $this->render('index');
     }
     public function actionHeadPic(){
@@ -1409,13 +1480,111 @@ class StudentController extends CController {
     
     
         public function actionFreePractice() {
-             $studentID = Yii::app()->session['userid_now'];
-        $classID = Student::model()->findClassByStudentID($studentID);
-        if($classID!="0"){
-            $lessons = Lesson::model()->findAll("classID = '$classID'");
-        }else{
-            $lessons = array();
-        }
-        return $this->render('freePractice',['lessons'=>$lessons]);
+            $classExerciseLst = array();
+            $nowLesson = "";
+            $studentID = Yii::app()->session['userid_now'];
+            $classID = Student::model()->findClassByStudentID($studentID);
+                if($classID!="0"){
+                  $lessons = Lesson::model()->findAll("classID = '$classID'");
+                }else{
+                    $lessons = array();
+                }
+                if(isset($_GET['lessonID'])){
+                    $lessonID = $_GET['lessonID'];
+                    $nowLesson = Lesson::model()->find("lessonID = '$lessonID'");
+                    $classExerciseLst = ClassExercise::model()->findAll("classID = '$classID' AND lessonID = '$lessonID' AND is_open = 1");
+                    $array=Array();
+                    foreach ($classExerciseLst as $list) {
+                        if(strstr($list['content'],"$$")){
+                            $string="";
+                            $list['content']=  str_replace("$$", " ", $list['content']);
+                            $array=  explode(" ", $list['content']);
+
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"0");
+                                $arr=substr($arr, $pos+1);
+                                $string=$string." ".$arr;
+                            }
+                            $list['content']=$string;
+                        }
+                    }
+                    
+                }
+                return $this->render('freePractice',['lessons'=>$lessons,'nowlesson'=>$nowLesson,'classExerciseLst'=>$classExerciseLst]);
+    }
+    
+    
+    public function actionStartClassExercise(){
+        $classID = $_GET['classID'];
+        $lessonID = $_GET['lessonID'];
+        $data = ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
+        echo  $data;
+    }
+    
+    public function actionPassClassExercise(){
+        $exerciseID = $_GET['exerciseID'];
+        $data = ClassExercise::model()->getByExerciseID($exerciseID)['type'];
+        echo  $data;
+    }
+    public function actionIframe4finish(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getNowOpenExercise($exerciseID);
+        $this->renderPartial("Iframe4finish",["classExercise"=>$classExercise]);
+    }
+    
+    public function actionIframe4Look(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getNowOpenExercise($exerciseID);
+        $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
+    }
+    public function actionIframe4Listen(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getNowOpenExercise($exerciseID);
+        $this->renderPartial("Iframe4Listen",["classExercise"=>$classExercise]);
+    }
+    public function actionIframe4Key(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getNowOpenExercise($exerciseID);
+        $this->renderPartial("Iframe4Key",["classExercise"=>$classExercise]);
+    }
+    
+    public function actionFreeIframe4Look(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
+        $this->renderPartial("Iframe4Look",["classExercise"=>$classExercise]);
+    }
+    public function actionFreeIframe4Listen(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
+        $this->renderPartial("Iframe4Listen",["classExercise"=>$classExercise]);
+    }
+    public function actionFreeIframe4Key(){
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
+        $this->renderPartial("Iframe4Key",["classExercise"=>$classExercise]);
+    }
+    
+    public function ActionWatchData(){
+        error_log("123");
+           $classID = $_GET['classID'];
+           $array_lesson = Lesson::model()->findAll("classID = '$classID'");
+            if (!empty($array_lesson)) {
+                if (isset($_GET['lessonID']))
+                    Yii::app()->session['currentLesson'] = $_GET['lessonID'];
+                else
+                        Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];                   
+            }
+            $array_work = ClassLessonSuite::model()->findAll("classID = '$classID'and open = 1");
+            $array_suite = Suite::model()->findAll();
+            $array_examList = ClassExam::model()->findAll("classID='$classID' and open = 1");
+            $array_exam = Exam::model()->findAll();
+            $this->render('dataAnalysis',array(
+                'array_lesson' => $array_lesson,
+                'array_work' => $array_work,
+                'array_suite' => $array_suite,
+                'classID' => $classID,
+                'array_examList' => $array_examList,
+                'array_exam' => $array_exam,
+           ));
     }
 }

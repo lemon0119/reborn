@@ -1,7 +1,7 @@
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+<script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
 <script>
     function formSubmit(){
                         var txt=  "是否确认保存答案！！";
@@ -65,7 +65,9 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
-         var myDate = new Date();
+        //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
+        window.G_keyBoardBreakPause =0;
+        var myDate = new Date();
          window.G_pressTime = myDate.getTime();
          if(window.G_startFlag ===0){
                     window.G_startTime = myDate.getTime();
@@ -86,20 +88,23 @@
                  if(pressTime - window.G_oldStartTime >0){
                      var IntervalTime = parseInt((pressTime - window.G_oldStartTime)/10)/100;
                       $("#getIntervalTime").html(IntervalTime);
+                      window.GA_IntervalTime  = IntervalTime;
                      window.G_oldStartTime = pressTime;
                  }
                  if(IntervalTime-window.G_highIntervarlTime>0){
                      window.G_highIntervarlTime = IntervalTime;
+                      window.GA_IntervalTime  = window.G_highIntervarlTime ;
                      $("#getHighIntervarlTime").html(IntervalTime);
                  }             
-          }   
+          }                
+        //--------------------------------------------------
           writeData();
           doSubmit();      
     }
     
     function writeData(){
         var obj =  document.getElementById("typeOCX");
-        var theString = getContent( obj);
+        var theString = obj.GetContentWithSteno();
         var text = document.getElementById("content").value;
         document.getElementById("id_answer").value = theString;
         var lcs = new LCS(text, theString);
@@ -107,7 +112,8 @@
             return;
         lcs.doLCS();
         var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
-        document.getElementById("id_correct").value = correct;      
+        document.getElementById("id_correct").value = (correct*100).toFixed(2);
+        window.GA_RightRadio = (correct*100).toFixed(2);
         document.getElementById("id_cost").value = getSeconds();
         document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
         document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;

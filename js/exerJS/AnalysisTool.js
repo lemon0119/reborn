@@ -1,6 +1,5 @@
 /* 
  * Js AnalysisTool
- * Create By pengjingcheng @qq 390928903   date 2015_12_3
  * 
  * 请在主view中设置全局变量 
  * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000
@@ -36,7 +35,11 @@
     var G_oldContentLength   = 0;
     var G_exerciseData       = new Array();
     var G_squence            = 0;
+    var G_pauseFlag          = 0;
+    var G_briefResult        = "false";
    //获取的统计内容之全局变量
+    var GA_originalContent    = "";
+    var GA_answer             = "";
     var GA_averageKeyType     = 0;
     var GA_highstCountKey     = 0;
     var GA_highstSpeed        = 0;
@@ -46,7 +49,7 @@
     var GA_highIntervarlTime  = 0;
     var GA_RightRadio         = 0;
     var GA_CountAllKey        = 0;
-   
+    var GA_pauseOn            = 0;
 //统计逻辑
 $(document).ready(function(){
     var highstCountKey  = 0;
@@ -54,7 +57,6 @@ $(document).ready(function(){
     var isAgain         = 0;
     var pauseTime       = 0;
     var pauseOn         = 0;
-     
     //2s内统计统计瞬时击键 次/秒
     //@param id=getMomentKeyType 请将瞬时击键统计的控件id设置为getMomentKeyType
     //2s内统计统计最高击键 次/秒
@@ -71,7 +73,7 @@ $(document).ready(function(){
     //@param id=getMomentSpeed 请将最高平均速度统计的控件id设置为getMomentSpeed 
     //2s内统计回改字数     字
     //@param id=getBackDelete 请将最高平均速度统计的控件id设置为getBackDelete  
-        var timer = setInterval(function(){
+        var interval = setInterval(function(){
             var content        = window.G_content;
             var keyContent     = window.G_keyContent;
             var setEndTime     = window.G_setEndTime;
@@ -86,8 +88,10 @@ $(document).ready(function(){
                     window.G_keyBoardBreakPause = 1;
                     pauseTime = nowTime;
                     pauseOn = 1;
+                    window.G_pauseFlag = 1;
                 }else{
                     pauseOn = 0;
+                    window.G_pauseFlag = 0;
                     window.G_startTime = (nowTime-pauseTime)+ window.G_startTime;
                     startTime = window.G_startTime;
                 }
@@ -95,6 +99,7 @@ $(document).ready(function(){
             }
             if(window.G_keyBoardBreakPause===0&&pauseOn ===1){
                     pauseOn = 0;
+                    window.G_pauseFlag = 0;
                     window.G_startTime = (nowTime-pauseTime)+ window.G_startTime;
                     startTime = window.G_startTime;
                     window.G_isPause = 0;
@@ -217,10 +222,10 @@ $(document).ready(function(){
                     type:"POST",
                     dataType:"json",
                     url:"index.php?r=api/analysisSaveToDatabase",
-                    data:{exerciseType:window.G_exerciseType,exerciseData:window.G_exerciseData,squence:window.G_squence,
+                    data:{exerciseType:window.G_exerciseType,exerciseData:window.G_exerciseData,squence:window.G_squence,answer:window.GA_answer,originalContent:window.GA_originalContent,
                           averageKeyType:window.GA_averageKeyType,highstCountKey:window.GA_highstCountKey,highstSpeed:window.GA_highstSpeed,
                           averageSpeed:window.GA_averageSpeed,CountBackDelete:window.GA_CountBackDelete,CountAllKey:window.GA_CountAllKey,
-                          IntervalTime:window.GA_IntervalTime,highIntervarlTime:window.GA_highIntervarlTime,RightRadio:window.GA_RightRadio   },
+                          IntervalTime:window.GA_IntervalTime,highIntervarlTime:window.GA_highIntervarlTime,RightRadio:window.GA_RightRadio },
                     success:function(data){
                     },
                     error:function(xhr, type, exception){
@@ -229,26 +234,18 @@ $(document).ready(function(){
                         console.log(exception, "exception");
                     }
                 });
-
                 }
              }
-
+             AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", window.GA_originalContent, window.G_content);
                //判断统计结束
-             if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1||averageSpeed===1){
+             if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
                  window.G_endAnalysis = 1;
-                 window.G_isOverFlag=0;
                   $("#getMomentKeyType").html(0);
-                  $("#getHighstSpeed").html(0);
                   $("#getIntervalTime").html(0);
-                 clearInterval(timer);
+                 clearInterval(interval);
              }
         },2000);
     
-    if(isAgain===1){
-        var timerAgain = setInterval(function(){
-            
-        });
-    }
 });
 
 //拿取键码值
@@ -330,12 +327,19 @@ function AjaxGetRight_Wrong_AccuracyRate(id1,id2,id3,originalContent,currentCont
     $.ajax({
                type:"POST",
                dataType:"json",
-               url:"index.php?r=api/getWrongFont",
+               url:"index.php?r=api/getRight_Wrong_AccuracyRate",
                data:{originalContent:originalContent,currentContent:currentContent},
                success:function(data){
-                   $("#"+id1).html(data[0]);
-                   $("#"+id2).html(data[1]);
-                   $("#"+id3).html(data[2]);
+                   window.GA_RightRadio = data[2];
+                   if(id1!==""){
+                       $("#"+id1).html(data[0]);
+                   }
+                   if(id2!==""){
+                       $("#"+id2).html(data[1]);
+                   }
+                   if(id3!==""){
+                        $("#"+id3).html(data[2]);
+                   }
                },
                error:function(xhr, type, exception){
                    console.log('GetAverageSpeed error', type);
@@ -343,7 +347,15 @@ function AjaxGetRight_Wrong_AccuracyRate(id1,id2,id3,originalContent,currentCont
                    console.log(exception, "exception");
                }
            });
-}
+       }
+       
+   
+       
+
+ 
+
+ 
+           
 
    
 

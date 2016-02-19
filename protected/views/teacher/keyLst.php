@@ -72,9 +72,8 @@
                                     else
                                         echo Tool::csubstr($model['title'], 0, 7)."...";?></td>
                         <td class="font-center"><?php  
-                             $arr = explode("$$", $model['content']);
-                             $count = count($arr);
-                             echo $count;
+                             $arr = explode("$$", $model['chosen_lib']);                             
+                             echo $arr[0];
                                         ?>
                                         </td>
                         <td class="font-center"><?php  

@@ -20,11 +20,13 @@
 class ClassexerciseRecord extends CActiveRecord
 {
     
-     public function insertClassexerciseRecord($classExerciseID,$studentID,$squence,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
+     public function insertClassexerciseRecord($classExerciseID,$studentID,$squence,$originalContent,$answer,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
         $newClassexerciseRecord = new ClassexerciseRecord();
         $newClassexerciseRecord->classExerciseID = $classExerciseID;
         $newClassexerciseRecord->studentID = $studentID;
         $newClassexerciseRecord->squence = $squence;
+        $newClassexerciseRecord->originalContent = $originalContent;
+        $newClassexerciseRecord->answer = $answer;
         $newClassexerciseRecord->ratio_speed = $ratio_speed;
         $newClassexerciseRecord->ratio_correct =$ratio_correct;
         $newClassexerciseRecord->ratio_maxSpeed =$ratio_maxSpeed;
@@ -37,8 +39,9 @@ class ClassexerciseRecord extends CActiveRecord
         
         return $newClassexerciseRecord->insert();
     }
-    public function updateClassexerciseRecord($classExerciseID,$studentID,$squence,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
+    public function updateClassexerciseRecord($classExerciseID,$studentID,$squence,$answer,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
                 $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
+                $sqlClassExerciseRecord->answer = $answer;
                 $sqlClassExerciseRecord->ratio_averageKeyType = $sqlClassExerciseRecord['ratio_averageKeyType']."&".$ratio_averageKeyType;
                 $sqlClassExerciseRecord->ratio_maxKeyType = $sqlClassExerciseRecord['ratio_maxKeyType']."&".$ratio_maxKeyType;
                 $sqlClassExerciseRecord->ratio_maxSpeed = $sqlClassExerciseRecord['ratio_maxSpeed']."&".$ratio_maxSpeed;
@@ -47,7 +50,9 @@ class ClassexerciseRecord extends CActiveRecord
                 $sqlClassExerciseRecord->ratio_internalTime = $sqlClassExerciseRecord['ratio_internalTime']."&".$ratio_internalTime;
                 $sqlClassExerciseRecord->ratio_maxInternalTime = $sqlClassExerciseRecord['ratio_maxInternalTime']."&".$ratio_maxInternalTime;
                 $sqlClassExerciseRecord->ratio_correct = $sqlClassExerciseRecord['ratio_correct']."&".$ratio_correct;
+                $sqlClassExerciseRecord->ratio_countAllKey = $sqlClassExerciseRecord['ratio_countAllKey']."&".$ratio_countAllKey;
                 $sqlClassExerciseRecord->update();
+                $sqlClassExerciseRecord->answer = "";
                 $sqlClassExerciseRecord->ratio_averageKeyType = "";
                 $sqlClassExerciseRecord->ratio_maxKeyType = "";
                 $sqlClassExerciseRecord->ratio_maxSpeed = "";
@@ -55,7 +60,8 @@ class ClassexerciseRecord extends CActiveRecord
                 $sqlClassExerciseRecord->ratio_backDelete = "";
                 $sqlClassExerciseRecord->ratio_internalTime = "";
                 $sqlClassExerciseRecord->ratio_maxInternalTime = "";
-                $sqlClassExerciseRecord->ratio_correct = "";
+                $sqlClassExerciseRecord->ratio_correct = ""; 
+                $sqlClassExerciseRecord->ratio_countAllKey = "";
         return "";
     }
 	/**
@@ -150,8 +156,24 @@ class ClassexerciseRecord extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function getSingleRecord($studentID,$exerciseID){
+            $classexerciseRecord = new ClassexerciseRecord();
+            $sql = "SELECT MAX(squence) FROM classexercise_record WHERE studentID = '$studentID' AND classExerciseID = $exerciseID";
+            $connection = Yii::app()->db;
+            $command = $connection->createCommand($sql);
+            $squenceSQL = $command->query();
+            $squence = "";
+            foreach ($squenceSQL as $v){
+                if($v['MAX(squence)']!=""){
+                     $squence = $v['MAX(squence)'];
+                }
+            }
+            $classexerciseRecord = $this->find("studentID = '$studentID' AND classExerciseID = $exerciseID AND squence = '$squence'");
+            return $classexerciseRecord;
+        }
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

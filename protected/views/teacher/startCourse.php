@@ -20,7 +20,7 @@
                 <li id="li-<?php echo $progress;?>">
                     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>">
                         <i class="icon-list-alt"></i> 
-                        <?php echo $lessonsName[$progress]; ?>
+                        <?php if(isset($lessonsName[$progress])){echo $lessonsName[$progress];} ?>
                     </a>
                 </li>
                 <?php }?>
@@ -66,8 +66,8 @@
     <h1>
        <?php  
        $nowOn = $_GET['on'];
-         if($lessonsName!=null)
-            echo $lessonsName[$nowOn];?>
+         if(isset($lessonsName[$nowOn])){echo $lessonsName[$nowOn];}
+            ?>
     </h1>
     <div class="hero-unit table-bordered" style="height:200px; width: 770px">
         <p class="font-startcourse">
@@ -81,7 +81,7 @@
                <?php } ?>
             <a href="./index.php?r=teacher/assignWork&&classID=<?php echo $classID; ?>&&lessonID=<?php $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
                echo $less['lessonID'];
-               ?>" class="startcourse-startclass">课堂作业</a>
+               ?>" class="startcourse-startclass">课后作业</a>
         </div>
         </div>
         <h1>
@@ -314,7 +314,7 @@
     <h1>课堂练习</h1>
     <div class="table-bordered summary">
                 <li>
-                    <a  id="ppt" href="./index.php?r=teacher/classExercise4Type&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($type)){echo count($type);}else{echo '0';}?>
+                    <a  id="ppt" href="./index.php?r=teacher/classExercise4Type&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($keywork)){echo count($keywork);}else{echo '0';}?>
                         </span > <font style="color:#000">键打练习</font></a>
                 </li>
                 <li>

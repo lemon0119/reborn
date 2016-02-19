@@ -301,4 +301,74 @@ public static function teacherNotice(){
         $list=$result->query();
         return ['list'=>$list,'pages'=>$pages,];
     }
+    
+    
+    public static function quickSort($arr,$type){
+            if(count($arr)>1){
+                $k=$arr[0][$type];
+                $x=array();
+                $y=array();
+                $_size=count($arr);
+                for($i=1;$i<$_size;$i++){
+                    if($arr[$i][$type]<=$k){
+                        array_push($y, $arr[$i]);
+                    }else if($arr[$i][$type]>$k){
+                        array_push($x, $arr[$i]);
+                    }
+                }
+                $x = Tool::quickSort($x, $type);
+                $y = Tool::quickSort($y, $type);
+                return array_merge($x,array($arr[0]),$y);
+            }else{
+                return $arr;
+            }
+    }
+    
+        // 第一个参数：传入要转换的字符串
+    // 第二个参数：取0，英文转简体；取1，简体到英文
+    public static function SBC_DBC($str, $args2) {
+        $DBC = Array(
+             '：' ,
+            '。' , '，' , '/' , '%' , '#' ,
+            '！' , '＠' , '＆' , '（' , '）' ,
+            '《' , '＞' , '＂' , '＇' , '？' ,
+            '【' , '】' , '{' , '}' , '\'' ,
+            '｜' , '+' , '=' , '_' , '＾' ,
+            
+        );
+
+        $SBC = Array( // 半角
+            ':',
+            '.', ',', '/', '%', '#',
+            '!', '@', '&', '(', ')',
+            '<', '>', '"', '\'','?',
+            '[', ']', '{', '}', '\\',
+            '|', '+', '=', '_', '^',
+        );
+
+        if ($args2 == 0) {
+            return str_replace($SBC, $DBC, $str);  // 半角到全角
+        } else if ($args2 == 1) {
+            return str_replace($DBC, $SBC, $str);  // 全角到半角
+        } else {
+            return false;
+        }
+    }
+    
+    public static function filterKeyContent($content){
+                        if(strstr($content,"$$")){
+                            $string="";
+                            $content=  str_replace("$$", " ", $content);
+                            $array=  explode(" ", $content);
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"0");
+                                $arr=substr($arr, $pos+1);
+                                $string=$string." ".$arr;
+                            }
+                            return $string;
+                        }else{
+                            return $content;
+                        }
+    }
+    
 }

@@ -3,7 +3,10 @@
 <?php
 if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']=='student' ) {
     ?>
-
+    <?php
+    $classID = Student::model()->findClassByStudentID(Yii::app()->session['userid_now']);
+    
+    ?>
     <html lang="zh-cn"><!--<![endif]--> 
         <head>
             <meta charset="utf-8">
@@ -11,13 +14,13 @@ if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']==
             <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo CSS_URL; ?>site.css" rel="stylesheet">
             <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-            <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
-            <script src="<?php echo JS_URL; ?>bootstrap.min.js"></script>
-            <script src="<?php echo JS_URL; ?>site.js"></script>
+            <script src="<?php echo JS_URL; ?>jquery.min.js" ></script>
+            <script src="<?php echo JS_URL; ?>bootstrap.min.js" ></script>
+            <script src="<?php echo JS_URL; ?>site.js" ></script>
             <!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
                 <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
-		<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
-		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+		<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js" ></script>
+		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js"   ></script>
 <!--            -->
         </head>
         <body>
@@ -32,7 +35,7 @@ if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']==
                                         <a id="onlineCourse" href="#"  data-toggle="dropdown"></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="./index.php?r=student/virtualClass">虚拟课堂</a></li>
-                                            <li><a href="./index.php?r=student/freePractice">自由练习</a></li>
+                                            <li><a href="./index.php?r=student/freePractice">自主练习</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown"><a id="myCourse" href="#"  data-toggle="dropdown" ></a>
@@ -42,6 +45,8 @@ if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']==
                                         </ul>
                                     </li>
                                     <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
+                                    
+<!--                                    <li><a id ="exam_statistics" href="./index.php?r=student/watchData&&classID=<?php echo $classID;?>"></a></li>-->
                                     <li><a id="suLu" href="./index.php?r=student/suLu"></a></li>
                                     <li><a id="schedule_manager"  href="./index.php?r=student/scheduleDetil"></a></li>
                                     <li><a id="blank_stu"></a></li>

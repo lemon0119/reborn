@@ -9,6 +9,17 @@
 //crt by LC 2015-4-21
 
 class TeacherController extends CController {
+     protected function renderJSON($data) {
+        header('Content-type: application/json');
+        echo CJSON::encode($data);
+
+        foreach (Yii::app()->log->routes as $route) {
+            if ($route instanceof CWebLogRoute) {
+                $route->enabled = false; // disable any weblogroutes
+            }
+        }
+        Yii::app()->end();
+    }
 
     public $layout = '//layouts/teacherBar';
 
@@ -196,22 +207,42 @@ class TeacherController extends CController {
     }
 
     public function actionChangeProgress() {
+        $result = '1';
         $classID = $_GET['classID'];
         $on = $_GET['on'];
+        $lesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
+        $lessonID = $lesson['lessonID'];
+        $freePractice = ClassExercise::model()->findAll("classID = '$classID' and lessonID = '$lessonID'");
+        $keywork = array();
+        $look = array();
+        $listen = array();
         $class = new TbClass();
         $class = $class->find("classID = '$classID'");
         $class->currentLesson = $on;
         $class->update();
         $stu = Array();
         $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
+         foreach ($freePractice as $v){
+            if($v['type'] =='speed'||$v['type'] =='correct'||$v['type'] =='free'){
+               array_push($keywork, $v); 
+            }else if($v['type'] ==='look'){
+               array_push($look, $v); 
+            }else if($v['type'] ==='listen'){
+               array_push($listen, $v); 
+            }
+        }
         return $this->render('startCourse', [
                     'classID' => $classID,
                     'progress' => $on,
                     'on' => $on,
-                    'stu' => $stu
+                    'stu' => $stu,
+                    'keywork'=>$keywork,
+                    'look'=>$look,
+                    'listen'=>$listen,
+                    'result' => $result
         ]);
     }
-
+    
     public function actionPptLSt() {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
@@ -847,6 +878,9 @@ class TeacherController extends CController {
         //$user_model = new User;
         //$username_now=Yii::app()->user->name;
         //$info=$user_model->find("username='$username_now'");//,'pageInden'=>$pageIndex
+        if(isset($_GET['modify'])){
+            TwoWordsLib::model()->modify();
+        }
         $this->render('index'); //,['info'=>$info]);
     }
 
@@ -866,7 +900,7 @@ class TeacherController extends CController {
         $look = array();
         $listen = array();
         foreach ($freePractice as $v){
-            if($v['type'] ==='speed'||$v['type'] ==='correct'||$v['type'] ==='free'){
+            if($v['type'] =='speed'||$v['type'] =='correct'||$v['type'] =='free'){
                array_push($keywork, $v); 
             }else if($v['type'] ==='look'){
                array_push($look, $v); 
@@ -921,7 +955,8 @@ class TeacherController extends CController {
     public function actionAddLook() {
         $result = 'no';
         if (isset($_POST['title'])) {
-            $result = LookType::model()->insertLook($_POST['title'], $_POST['content'], Yii::app()->session['userid_now']);
+            $newContent = Tool::SBC_DBC($_POST['content'], 0);
+            $result = LookType::model()->insertLook($_POST['title'],$newContent, Yii::app()->session['userid_now']);
         }
         $this->render('addLook', ['result' => $result]);
     }
@@ -1205,22 +1240,32 @@ class TeacherController extends CController {
     public function actionAddKey() {
         $result = 'no';
         if (isset($_POST['title'])) {
-            $category = $_POST['category'];      
-            if($category == "speed")
-                $num = $_POST['speed']*$_POST['exerciseTime'];
-            else
-                $num = $_POST['in1'];
-            $res = TwoWordsLib::model()->getRandomRecord($num);
-            $answer = "";
-            foreach( $res as $record){
-                if($answer != "")
-                    $answer = $answer."$$".$record['yaweiCode'].$record['words'];
+            $libstr = $_POST['libstr']; 
+            $arr = explode("$$", $libstr);
+            $condition = "";
+            foreach($arr as $a){
+                if($condition == "")
+                    $condition = "'".$a."'";
+                else
+                    $condition =$condition.","."'".$a."'";               
+            }          
+            $condition =" where name in (".$condition.")";
+            $sql = "select * from two_words_lib";
+            $order = "";
+            if($arr[count($arr) - 1] == "lib"){                
+                $order = "order by rand() limit ".$_POST['in1'];
+            }
+            $sql = $sql.$condition.$order;
+            $res = Yii::app()->db->createCommand($sql)->query();
+            $content = "";
+            foreach ($res as $record){
+                 if($content != "")
+                    $content = $content."$$".$record['yaweiCode'].$record['words'];
                 else 
-                    $answer = $record['yaweiCode'].$record['words'];
-            }         
-            $result = KeyType::model()->insertKey($_POST['title'], $answer, Yii::app()->session['userid_now'],$category,$_POST['speed'],$_POST['exerciseTime']);
-        }
-        
+                    $content = $record['yaweiCode'].$record['words'];              
+            }     
+            $result = KeyType::model()->insertKey($_POST['title'], $content, Yii::app()->session['userid_now'],$_POST['category'],$_POST['speed'],$_POST['in3'],$libstr);
+        }       
         $this->render('addKey', ['result' => $result]);
     }
 
@@ -1233,22 +1278,14 @@ class TeacherController extends CController {
         if (!isset($_GET['action'])) {
             $this->render("editKey", array(
                 'exerciseID' => $exerciseID,
-                'title' => $result['title'],
-                'content' => $result['content'],
-                'category' => $result['category'],
-                'speed' => $result['speed'],
-                'exerciseTime' => $result['exerciseTime']
+                'key' => $result,
             
             ));
         } else if ($_GET['action'] = 'look') {
             $this->render("editKey", array(
                 'exerciseID' => $exerciseID,
-                'title' => $result['title'],
-                'content' => $result['content'],
                 'action' => 'look',
-                'category'=>$result['category'],
-                'speed' => $result['speed'],
-                'exerciseTime' => $result['exerciseTime']
+                'key' => $result,
             ));
         }
     }
@@ -1257,49 +1294,49 @@ class TeacherController extends CController {
         $exerciseID = $_GET['exerciseID'];
         $thisKey = new KeyType();
         $thisKey = $thisKey->find("exerciseID = '$exerciseID'");   
-            if($_POST['category'] == "speed")
-            {
-                $num = $_POST['speed'] * $_POST['exerciseTime'];
-            }else{
-            $num = $_POST['in1'];
+            $libstr = $_POST['libstr']; 
+            $arr = explode("$$", $libstr);
+            $condition = "";
+            foreach($arr as $a){
+                if($condition == "")
+                    $condition = "'".$a."'";
+                else
+                    $condition =$condition.","."'".$a."'";               
+            }          
+            $condition =" where name in (".$condition.")";
+            $sql = "select * from two_words_lib";
+            $order = "";
+            if($arr[count($arr) - 1] == "lib"){                
+                $order = "order by rand() limit ".$_POST['in1'];
             }
-            $res = TwoWordsLib::model()->getRandomRecord($num);
-            $answer = "";
-            foreach( $res as $record){
-                if($answer != "")
-                $answer = $answer."$$".$record['yaweiCode'].$record['words'];
+            $sql = $sql.$condition.$order;
+            $res = Yii::app()->db->createCommand($sql)->query();
+            $content = "";
+            foreach ($res as $record){
+                 if($content != "")
+                    $content = $content."$$".$record['yaweiCode'].$record['words'];
                 else 
-                $answer = $record['yaweiCode'].$record['words'];
-            }
+                    $content = $record['yaweiCode'].$record['words'];              
+            }  
         $thisKey->title = $_POST['title'];
-        $thisKey->content = $answer;
+        $thisKey->content = $content;
         $thisKey->category = $_POST['category'];
-        if($_POST['category'] == "speed")
-        {
-            $thisKey->speed = $_POST['speed'];
-            $thisKey->exerciseTime = $_POST['exerciseTime'];           
-        }
+        $thisKey->speed = $_POST['speed'];
         $thisKey->update();
 
+        
+        
         if (Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam") {
             $this->render("ModifyEditKey", array(
                 'type' => "key",
                 'exerciseID' => $exerciseID,
-                'title' => $thisKey->title,
-                'content' => $thisKey->content,
-                'category'=>$thisKey->category,
-                'speed' => $thisKey->speed,
-                'exerciseTime' => $thisKey->exerciseTime,
+                'key' => $thisKey,
                 'result' => "修改习题成功"
             ));
         } else {
             $this->render("editKey", array(
-                'exerciseID' => $thisKey->exerciseID,
-                'title' => $thisKey->title,
-                'content' => $thisKey->content,
-                'category'=>$thisKey->category,
-                'speed' => $thisKey->speed,
-                'exerciseTime' => $thisKey->exerciseTime,
+                'key' => $thisKey,
+                'exerciseID' => $exerciseID,
                 'result' => "修改习题成功"
             ));
         }
@@ -4396,8 +4433,11 @@ class TeacherController extends CController {
                 break;
         }
 
-        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $ty, $exerID);
         $accomplish = $_GET['accomplish'];
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render($render, ['exercise' => $classwork,
                     'student' => $student,
                     'suiteID' => $suiteID,
@@ -4416,7 +4456,7 @@ class TeacherController extends CController {
                     'array_accomplished' => $array_accomplished,
                     'exam_exercise' => $suite_exercise,
                     'answer' => $answer['answer'],
-                    'correct' => $answer['ratio_correct']]);
+                    'correct' => $correct]);
     }
 
     public function actionAnsKeyType() {
@@ -4495,9 +4535,12 @@ class TeacherController extends CController {
                 break;
         }
 
-        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $ty, $exerID);
         $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
         $accomplish = $_GET['accomplish'];
+        $correct=$answer['ratio_correct'];
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
         return $this->render($render, ['exercise' => $classwork,
                     'student' => $student,
                     'examID' => $examID,
@@ -4515,7 +4558,7 @@ class TeacherController extends CController {
                     'type' => $ty,
                     'exam_exercise' => $exam_exercise,
                     'answer' => $answer['answer'],
-                    'correct' => $answer['ratio_correct']]);
+                    'correct' =>$correct]);
     }
 
     //
@@ -4665,8 +4708,11 @@ class TeacherController extends CController {
             $arr = explode(",", $_POST['score']);
             $m = 0;
             foreach ($array_exercise as $k => $work) {
-                if ($arr[$m] != " ")
+                if ($arr[$m] != " "){
                     AnswerRecord::model()->changeScore($ansWork[$k]['answerID'], $arr[$m++]);
+                    if($ty=='choice')
+                        break;
+                }
             }
         }
 
@@ -5070,9 +5116,6 @@ public function ActionAssignFreePractice(){
             
             
             
-            
-            
-            
             $this->render('dataAnalysis',array(
                 'array_lesson' => $array_lesson,
                 'array_work' => $array_work,
@@ -5205,6 +5248,91 @@ public function ActionAssignFreePractice(){
             $this->renderJSON($array_result);          
      }
      
+     public function ActionDeleteWordLib(){
+         $Libs = $_POST['libs'];
+         $count = 0;
+         foreach ($Libs as $v){
+             $Lib = TwoWordsLibPersonal::model()->findAll("name = '$v'");
+             if(count($Lib)>0){
+                 $count++;
+                 foreach ($Lib as $l){
+                     $l->delete();
+                 }
+             }
+         }
+         if($count>0){
+             echo 1;
+         }else{
+             echo 0;
+         }
+     }
+     
+     public function ActionSelectWordLib(){
+         $uploadResult = "";
+         $libstr=$_GET['libstr'];
+         $libstr=  explode('$$', $libstr);
+         $sql = "SELECT DISTINCT name,list FROM two_words_lib WHERE list != '总复习' ORDER BY name";
+         $result = Yii::app()->db->createCommand($sql)->query();
+         $sql_1 = "SELECT DISTINCT name,list FROM two_words_lib WHERE list = '总复习' ORDER BY name";
+         $result_1 = Yii::app()->db->createCommand($sql_1)->query();
+         $list = array();
+         $createPerson = Yii::app()->session['userid_now'];
+         $sql4Personal = "select distinct name,list from two_words_lib_personal WHERE createPerson LIKE '$createPerson'";
+         $resulet4Personal = Yii::app()->db->createCommand($sql4Personal)->query();
+         foreach ($resulet4Personal as $v){
+             array_push($list, $v); 
+         }
+         foreach ($result as $res){
+             if($res['name'] != "lib")
+             array_push($list, $res);            
+         }
+         foreach ($result_1 as $res){
+             array_push($list, $res);            
+         }
+         if(isset($_GET['upload'])){
+              if (!empty($_FILES ['file'] ['name'])) {
+            $tmp_file = $_FILES ['file'] ['tmp_name'];
+            $file_types = explode(".", $_FILES ['file'] ['type']);
+            $file_type = $file_types [count($file_types) - 1];
+            // 判别是不是excel文件
+            if (strtolower($file_type) != "text/plain") {
+                $uploadResult = '不是txt文件';
+            } else {
+                // 解析文件并存入数据库逻辑
+                /* 设置上传路径 */
+                $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                $file_name = "-".$_FILES ['file'] ['name']."-";
+                if (!copy($tmp_file, $savePath . $file_name)) {
+                    $uploadResult = '上传失败';
+                } else {
+                    $file_dir=$savePath.$file_name; 
+                    $file_dir = str_replace("\\", "\\\\", $file_dir);
+                    $fp=fopen($file_dir,"r"); 
+                    $content=fread($fp,filesize($file_dir));//读文件 
+                    fclose($fp); 
+                    unlink($file_dir);
+                    $str = explode("\r\n", $content);
+                    $name = str_replace(".txt", "", $file_name);
+                    $createPerson = Yii::app()->session['userid_now'];
+                    foreach ($str as $value) {
+                        $words = iconv('GBK','utf-8',$value);
+                        $strSerchFromLib = TwoWordsLib::model()->find("words LIKE '$words' AND list = 'lib'");
+                        $spell = $strSerchFromLib['spell'];
+                        $yaweiCode = $strSerchFromLib['yaweiCode'];
+                        TwoWordsLibPersonal::model()->insertPersonalLib($spell, $yaweiCode, $words, $name, $createPerson);
+                    }
+                    $uploadResult= '上传成功';
+                   }
+                 }
+              }
+         }
+         $this->renderPartial('wordLibLst', array(
+            'list' => $list,
+             'libstr'=>$libstr,
+             'uploadResult'=>$uploadResult
+            ));
+     }
+
      
      
      public function actionClassExercise4Look(){
@@ -5253,7 +5381,26 @@ public function ActionAssignFreePractice(){
         ));
      }
      public function actionClassExercise4Type(){
-         $this->render("classExercise4Type");
+          if (isset($_GET['page'])) {
+            Yii::app()->session['lastPage'] = $_GET['page'];
+        } else {
+            Yii::app()->session['lastPage'] = 1;
+        }
+        if(isset($_GET['delete'])){
+            $exerciseID = $_GET['exerciseID'];
+            ClassExercise::model()->deleteExercise($exerciseID);
+        }
+        $classID = $_GET['classID'];
+        $number = $_GET['on'];
+        $sqlClassExercise = Lesson::model()->find("classID = '$classID' and number = '$number'");
+        $result = ClassExercise::model()->getKeyLst($sqlClassExercise['lessonID']);
+        $keyLst = $result['keyLst'];
+        $pages = $result['pages'];
+        $this->render('classExercise4Type', array(
+            'keyLst' => $keyLst,
+            'pages' => $pages,
+            'teacher' => Teacher::model()->findall()
+        ));
      }
      
      public function actionAddLook4ClassExercise(){
@@ -5262,9 +5409,70 @@ public function ActionAssignFreePractice(){
           $on=$_GET['on'];
             if (isset($_POST['title'])) {
                  $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
-                $result = ClassExercise::model()->insertClassExercise($classID,$sqlLesson['lessonID'],$_POST['title'],$_POST['content'],'look',Yii::app()->session['userid_now']);
+                 $newContent = Tool::SBC_DBC($_POST['content'], 0);
+                $result = ClassExercise::model()->insertClassExercise($classID,$sqlLesson['lessonID'],$_POST['title'],$newContent,'look',Yii::app()->session['userid_now']);
             }
         $this->render('addLook4ClassExercise', ['result' => $result]);
+     }
+     
+     public function actionAddKey4ClassExercise(){
+          $result = 'no';
+          $classID=$_GET['classID'];
+          $on=$_GET['on'];
+          $content = "";
+        if (isset($_POST['title'])) {
+            $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
+            $libstr = $_POST['libstr']; 
+            $arr = explode("$$", $libstr);
+            $condition = "";
+            $conditionPersonal ="";
+            foreach($arr as $a){
+                $flag = substr($a, 0, 1);
+                if($flag=='-'){
+                     if($conditionPersonal == "")
+                    $conditionPersonal = "'".$a."'";
+                else
+                    $conditionPersonal =$conditionPersonal.","."'".$a."'";  
+                }else{
+                      if($condition == "")
+                    $condition = "'".$a."'";
+                else
+                    $condition =$condition.","."'".$a."'";  
+                }
+            }
+            if($condition!=""){
+                  $condition =" where name in (".$condition.")";
+            $sql = "select * from two_words_lib";
+            $order = "";
+            if($arr[count($arr) - 1] == "lib"){                
+                $order = "order by rand() limit ".$_POST['in1'];
+            }
+            $sql = $sql.$condition.$order;
+            $res = Yii::app()->db->createCommand($sql)->query();
+            foreach ($res as $record){
+                 if($content != "")
+                    $content = $content."$$".$record['yaweiCode'].$record['words'];
+                else 
+                    $content = $record['yaweiCode'].$record['words'];              
+            } 
+            }
+            if($conditionPersonal!=""){
+                    $conditionPersonal =" where name in (".$conditionPersonal.")";
+                    $sqlPersonal = "select * from two_words_lib_personal";
+                    $sqlPersonal = $sqlPersonal.$conditionPersonal;
+                    $resPersonal = Yii::app()->db->createCommand($sqlPersonal)->query();
+                    $conditionPersonal = "";
+                    foreach ($resPersonal as $v){
+                     if($content != "")
+                        $content = $content."$$".$v['yaweiCode'].$v['words'];
+                    else 
+                        $content = $v['yaweiCode'].$v['words'];              
+                }  
+            }
+            
+            $result = ClassExercise::model()->insertKey($classID,$sqlLesson['lessonID'],$_POST['title'], $content, Yii::app()->session['userid_now'],$_POST['category'],$_POST['speed'],$_POST['in3'],$libstr);
+        }       
+        $this->render('addKey4ClassExercise', ['result' => $result]);
      }
      
      public function actionAddListen4ClassExercise(){
@@ -5275,7 +5483,6 @@ public function ActionAssignFreePractice(){
         $userid = Yii::app()->session['userid_now'];
         $filePath = $typename . "/" . $userid . "/";
         $dir = "resources/" . $filePath;
-
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
         }
@@ -5323,6 +5530,69 @@ public function ActionAssignFreePractice(){
                 'content' => $result['content']
             ));
     }
+    
+    public function actionEditType4ClassExercise() {
+        $exerciseID = $_GET["exerciseID"];
+        $sql = "SELECT * FROM class_exercise WHERE exerciseID = '$exerciseID'";
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $result = $result->read();
+
+        if (!isset($_GET['action'])) {
+            $this->render("editKey4ClassExercise", array(
+                'exerciseID' => $exerciseID,
+                'key' => $result,
+            ));
+        } else if ($_GET['action'] = 'look') {
+            $this->render("editKey4ClassExercise", array(
+                'exerciseID' => $exerciseID,
+                'action' => 'look',
+                'key' => $result,
+            ));
+        }
+    }
+    
+     public function actionEditType4ClassExerciseInfo() {
+        $exerciseID = $_GET['exerciseID'];
+        $thisKey = new ClassExercise();
+        $thisKey = $thisKey->find("exerciseID = '$exerciseID'");   
+            $libstr = $_POST['libstr']; 
+            $arr = explode("$$", $libstr);
+            $condition = "";
+            foreach($arr as $a){
+                if($condition == "")
+                    $condition = "'".$a."'";
+                else
+                    $condition =$condition.","."'".$a."'";               
+            }          
+            $condition =" where name in (".$condition.")";
+            $sql = "select * from two_words_lib";
+            $order = "";
+            if($arr[count($arr) - 1] == "lib"){                
+                $order = "order by rand() limit ".$_POST['in1'];
+            }
+            $sql = $sql.$condition.$order;
+            $res = Yii::app()->db->createCommand($sql)->query();
+            $content = "";
+            foreach ($res as $record){
+                 if($content != "")
+                    $content = $content."$$".$record['yaweiCode'].$record['words'];
+                else 
+                    $content = $record['yaweiCode'].$record['words'];              
+            }  
+        $thisKey->title = $_POST['title'];
+        $thisKey->content = $content;
+        $thisKey->type = $_POST['category'];
+        $thisKey->speed = $_POST['speed'];
+        $thisKey->update();
+
+        
+        
+            $this->render("editKey4ClassExercise", array(
+                'key' => $thisKey,
+                'exerciseID' => $exerciseID,
+                'result' => "修改习题成功"));
+    }
+    
     
     public function actionEditListen4ClassExercise() {
         $result  = "";
@@ -5378,4 +5648,83 @@ public function ActionAssignFreePractice(){
         $classExerciseLst = ClassExercise::model()->findAll("classID = '$classID' AND lessonID = '$lessonID'");
         $this->renderPartial("tableClassExercise4virtual",['classExerciseLst'=>$classExerciseLst]);
     }
+    
+    public function actionTableClassExercise4Analysis(){
+        $classID = $_GET['classID'];
+        $allIsOpen = Array();
+        $exerciseID = $_GET['exerciseID'];
+        $ClassExercise = ClassExercise::model()->getByExerciseID($exerciseID);
+        $result= ClassExercise::model()->getAllNowOpenExercise($classID);
+        foreach ($result as $v){
+            if($v['exerciseID'] != $exerciseID){
+                array_push($allIsOpen, $v);
+            }
+        }
+        $this->renderPartial("tableClassExercise4Analysis",['ClassExercise'=>$ClassExercise,'AllIsOpen'=>$allIsOpen]);
+    }
+    
+    public function actionCloseAllOpenExerciseNow(){
+        ClassExercise::model()->closeAllOpenExerciseNow();
+        echo "关闭成功！";
+    }
+    
+    public function actionOpenClassExercise4lot(){
+        $allClassExercise = $_POST['check'];
+        $arrayClassExercise = explode("&", $allClassExercise);
+        foreach ($arrayClassExercise as $exerciseID){
+            if($exerciseID!==""){
+                ClassExercise::model()->openExercise($exerciseID);
+                ClassExercise::model()->openExerciseNow($exerciseID);
+            }
+        }
+        if($allClassExercise!==""){
+          $data = '开放成功！';  
+        }else{
+            $data = '未选中任何内容';  
+        }
+        echo $data;
+    }
+    
+    public function actionOpenClassExercise(){
+        $exerciseID = $_POST['exerciseID'];
+        ClassExercise::model()->openExerciseNow($exerciseID);
+        if($exerciseID!==""){
+          $data = 1;  
+        }else{
+            $data = 0;  
+        }
+        echo $data;
+    }
+    
+    
+     public function actionGetVirtualClassAnalysis(){
+         $arrayData = Array();
+         $data = Array();
+         $exerciseID = $_POST['exerciseID'];
+         $title = ClassExercise::model()->getByExerciseID($exerciseID)['title'];
+         $classID = $_POST['classID'];
+         $sqlStudent = Student::model()->findStudentByClass($classID);
+         foreach ($sqlStudent as $v){
+            $studentID = $v['userID'];
+            $studentName = $v['userName'];
+            $recourd = ClassexerciseRecord::model()->getSingleRecord($studentID,$exerciseID);
+            $ratio_speed = explode("&", $recourd['ratio_speed']);
+            $ratio_maxSpeed = explode("&", $recourd['ratio_maxSpeed']);
+            $ratio_correct = explode("&", $recourd['ratio_correct']);
+            $all_count = explode("&", $recourd['ratio_countAllKey']);
+            $end = count($ratio_speed)-1;
+            $speed = (int)$ratio_speed[$end];
+            $maxSpeed = (int)$ratio_maxSpeed[$end];
+            $correct = round($ratio_correct[$end]*100)/100;
+            $time = count($ratio_speed)*2-2;
+            $allKey = (int)$all_count[$end];
+            $arrayData = ["studentID"=>$studentID,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$time,"allKey"=>$allKey,"title"=>$title];
+            array_push($data, $arrayData);
+         }
+         $data = Tool::quickSort($data,"correct");
+         $this->renderJSON($data);
+     }
+     
+     
+     
 }

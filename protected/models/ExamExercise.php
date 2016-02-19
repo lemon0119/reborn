@@ -186,9 +186,9 @@ class ExamExercise extends CActiveRecord
             $select = 'select key_type.exerciseID, '
                     . 'key_type.content, '
                     . 'key_type.title, '
+                    .'key_type.repeatNum,'
                     . 'exam_exercise.score, '
                     . 'key_type.category,'
-                    . 'key_type.exerciseTime,'
                     . 'key_type.speed,'
                     . 'exam_exercise.time from key_type, exam_exercise ';
             $condition = "where exam_exercise.exerciseID=key_type.exerciseID "

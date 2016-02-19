@@ -145,7 +145,6 @@ p {
 
 .title_select{
     border: 3px solid ;
-    overflow-y: auto;
     position: relative;
     border-color: #fff;
     background-color: #3b3b3b;

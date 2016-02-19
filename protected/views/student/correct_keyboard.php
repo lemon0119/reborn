@@ -106,7 +106,15 @@
         return false;
     }
     
-    function onStenoPressKey(pszStenoString ,device){     
+    function onChange(){
+        document.getElementById("typeOCX").UpdateView();
+        var input = getContent(document.getElementById("typeOCX"));
+        document.getElementById("typeOCX").Locate(input.length);
+    }
+    
+    function onStenoPressKey(pszStenoString ,device){    
+        
+        window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
         window.G_keyBoardBreakPause =0;
        var myDate = new Date();
          window.G_pressTime = myDate.getTime();
@@ -172,9 +180,9 @@
                     keySet("r_"+c , true);
             }
             }      
-        changTemplet(pszStenoString); 
-        writeData();
-        doSubmit();
+        changTemplet(pszStenoString);    
+        window.GA_RightRadio = (getCorrect()*100).toFixed(2);
+        document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -185,8 +193,10 @@
     var numKeyDown = 0;
     var numKeyRight = 0;
     var HaveWindow = 0;
+    var repeatNum = 0;
     function startParse(){
         var content = document.getElementById("id_content").value;
+        repeatNum = $("#repeatNum").html();
         var cont_array = content.split("$$");
         for(var i = 0; i < cont_array.length; i += 1){
             var yaweiCode = cont_array[i].split(":0")[0];
@@ -205,7 +215,6 @@
         $('#keyMode').fadeIn(50);
     }
     function changTemplet(pszStenoString){
-
         if(isSameWord(pszStenoString,yaweiCode)){     
             nextWord = "";
             nextWord = getNextWord();
@@ -252,35 +261,30 @@
     }
     function getNextWord(){
         currentNum++;
+        
         if(totalNum == currentNum){
+            repeatNum--;
+            document.getElementById("repeatNum").innerHTML = repeatNum;
+            if(repeatNum == 0){
+            window.G_isOverFlag = 1;     
+            document.getElementById("id_cost").value = getSeconds();
+            doSubmit(false); 
             window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
         }       
+        currentNum = 0;
+      }
         if(nextWord != "")
             return nextWord;
         var result = wordArray[currentNum];
-        yaweiCode = yaweiCodeArray[currentNum];
-        
+        yaweiCode = yaweiCodeArray[currentNum];      
         return result;
     }
     
     function getYaweiCode(){
         return yaweiCode[currentNum];
     }
-    
-    
-      function writeData(){
-        document.getElementById("id_correct").value = getCorrect();
-        document.getElementById("id_cost").value = getSeconds();
-        document.getElementById("id_AverageSpeed").value = document.getElementById("getAverageSpeed").innerHTML;
-        document.getElementById("id_HighstSpeed").value = document.getElementById("getHighstSpeed").innerHTML;
-        document.getElementById("id_BackDelete").value = document.getElementById("getBackDelete").innerHTML;
-        document.getElementById("id_HighstCountKey").value = document.getElementById("getHighstCountKey").innerHTML;
-        document.getElementById("id_AverageKeyType").value = document.getElementById("getAverageKeyType").innerHTML;
-        document.getElementById("id_HighIntervarlTime").value = document.getElementById("getHighIntervarlTime").innerHTML;
-        document.getElementById("id_countAllKey").value = document.getElementById("getcountAllKey").innerHTML;        
-    }
-    
+     
 </script>
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 

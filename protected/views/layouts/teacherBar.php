@@ -18,13 +18,13 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
             <title>亚伟速录</title>
             <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo CSS_URL; ?>site.css" rel="stylesheet">
-            <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
-            <script src="<?php echo JS_URL; ?>bootstrap.min.js"></script>
-            <script src="<?php echo JS_URL; ?>site.js"></script>
+            <script src="<?php echo JS_URL; ?>jquery.min.js" ></script>
+            <script src="<?php echo JS_URL; ?>bootstrap.min.js" ></script>
+            <script src="<?php echo JS_URL; ?>site.js" ></script>
             <!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
                 <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
-                <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
-		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+                <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js" ></script>
+		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js"></script>
 <!--            -->
             <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         </head>
@@ -63,21 +63,14 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="homework"></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/assignWork&&progress=<?php echo $classProgress[$key]; ?>">布置作业</a></li>
+                                            <li><a href="./index.php?r=teacher/assignWork&&progress=<?php if(isset($classProgress)) echo $classProgress[$key]; ?>">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
                                              <li><a href="./index.php?r=teacher/assignExam">试卷管理</a></li>
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
-                                    </li>                                  
-                                    <li class="dropdown">
-                                        <a href="#"  id ="startclass" data-toggle="dropdown" ></a>
-                                        <ul class="dropdown-menu">
-                                            <?php if(isset($classNameInfo)){
-                                                foreach ($classNameInfo as $key => $value): ?>
-                                                <li><a href="./index.php?r=teacher/watchData&&classID=<?php echo $key;?>"><?php echo $value; ?></a></li>
-                                            <?php endforeach;} ?>
-                                        </ul>
-                                    </li>
+                                    </li>             
+                                    <li><a id ="exam_statistics" href="./index.php?r=teacher/watchData&&classID=<?php if(isset($key)){echo $key;}?>"></a></li>
+                                 
                                                                        
                                     <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil"></a></li>
                                     <li><a id="blank_teacher"></a></li>

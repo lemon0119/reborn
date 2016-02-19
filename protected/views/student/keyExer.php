@@ -1,9 +1,13 @@
-<script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+
 <script src="<?php echo JS_URL;?>exerJS/AnalysisTool.js"></script>
 <?php  if($isExam == false){ 
-    require 'suiteSideBar.php';
+    require 'suiteSideBar.php'; ?>
+    <script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
+    <?php
 }else{ 
-    require 'examSideBar.php';
+    require 'examSideBar.php';  ?>
+    <script src="<?php echo JS_URL;?>exerJS/time.js"></script>
+    <?php
 } 
      //add by lc 
     $type = 'key'; 
@@ -21,29 +25,33 @@
     }//end
  ?>
 <?php if(!$isOver){?>
-<div class="span9">
+
+<div class="span9" style="position: relative;left: 180px;bottom: 450px;width: 970px">
     
-    <div class="hero-unit"  align="center">
+    <div class="hero-unit fl"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>  
         
         <table border = '0px'>
                 <tr><h3><?php echo $exerOne['title']?></h3>                
                 <tr>
                     
+                <span id="repeatNum" style="display: none"><?php echo $exerOne['repeatNum']?></span>
                     <?php if($isExam){?>
                         <td width = '250px'>分数：<?php echo $exerOne['score']?></td>
                         <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime?></span><input id="timej" type="hidden"/></td>
+                        <span id="wordisRightRadio" style="display: none;">0</span>
                         <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                     <?php }else{?>
                     <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
-                    <td width = '250px'>准确率：<span id="correctRate">0</span>%</td>                    
+                    <td width = '250px'>准确率：<span id="wordisRightRadio">0</span>%</td>       
+                    <td width = '250px'>循环次数：<span id="repeatNum"><?php echo $exerOne['repeatNum']?></span></td>
                      <?php }?>
                 </tr>
         </table>
         <br/>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
-                <td id="word" style="border-right: 1px solid #000; width: 300px;text-align:right;"></td>              
+                <td id="word" style="border-right: 1px solid #000; width: 400px;text-align:right;"></td>              
             </tr>
         </table>
         <br/>
@@ -79,21 +87,11 @@
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host.$path.$page.$param;?>">
         <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>">
         <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed'];?>">
-        <input id="id_exerciseTime" type="hidden" value="<?php echo $exerOne['exerciseTime'];?>">
-        <input name="nm_correct" id="id_correct" type="hidden">
         <input  name="nm_answer"id="id_answer" type="hidden">
         <input  name="nm_cost" id="id_cost" type="hidden">
-        <input name="nm_AverageSpeed" id="id_AverageSpeed" type="hidden">
-        <input name="nm_HighstSpeed" id="id_HighstSpeed" type="hidden">
-        <input name="nm_BackDelete" id="id_BackDelete" type="hidden">
-        <input name="nm_HighstCountKey" id="id_HighstCountKey" type="hidden">
-        <input  name="nm_AverageKeyType" id="id_AverageKeyType" type="hidden">
-        <input name="nm_HighIntervarlTime" id="id_HighIntervarlTime" type="hidden">
-        <input name="nm_countAllKey"  id="id_countAllKey" type="hidden" > 
     </form>
-</div>
-<div  class="analysisTool" id="analysis" style="left: 1050px;top: -516px; height: 670px; width: 230px;">
-        <table style="margin: 0px auto; font-size: 20px" cellpadding="20"  >
+    <div class="fr"   id="analysis" style="background-color: #fff;">
+        <table style="font-size: 18px; border: 3px" cellpadding="20"  >
             <tr>
                 <td ><span  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">0</span><span style="color: gray"> 字/分</span> </td></tr>
                  <tr><td><span style="font-weight: bolder">最高速度：</span><span style="color: #f46500" id="getHighstSpeed">0</span ><span style="color: gray"> 字/分</span></td></tr>
@@ -110,6 +108,7 @@
             </tr>
         </table>
     </div>
+</div>
   <?php } else {?>
  <h3 align="center">本题时间已经用完</h3>
 <?php }?>
@@ -129,7 +128,7 @@
                     window.wxc.xcConfirm("本题时间已到，不可答题！", window.wxc.xcConfirm.typeEnum.error);
                     clearInterval(isover);
                     doSubmit(true,function(){
-                        window.location.href="index.php?r=student/examkeyType&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
+                        window.location.href="index.php?r=student/examkeyType&&over=1&&exerID=<?php echo $exerID;?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>";
                     });
                     
                 }
@@ -207,8 +206,7 @@
     function doSubmit(simple,doFunction){
         //$('#id_answer_form').submit();
         $.post($('#id_answer_form').attr('action'),$('#id_answer_form').serialize(),function(result){
-            if(!simple){
-               
+            if(!simple){               
             }else{
                 doFunction();
             }
@@ -228,5 +226,11 @@
                                                         clearTemplate();
 						} 
 					};        
-    }
+    }   
+    window.G_saveToDatabase = 1;
+    window.G_squence = 0;
+    window.G_exerciseType = "answerRecord";
+//    var answer = document.getElementById("id_answer").value;
+//    var cost = document.getElementById("id_cost").value;
+   window.G_exerciseData = Array("1");
 </script>

@@ -61,7 +61,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
 
     <div id="title_bull" class="title_select" style="width: 185px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;" >
-        <div   align="center" id="sw-bull"><h4>本 班：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $totle ?>人<br/>在 线 学 生: <font style="color: greenyellow"><?php echo $count ?></font> 人</h4></div>
+        <div   align="center" id="sw-bull"><h4>本 班：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $totle ?>人<br/>在 线 学 生: <font style="color: greenyellow" id="countPeople"><?php echo $count ?></font> 人</h4></div>
 
     </div>
     <button id="share-Cam" class="btn btn-primary" >直播视频</button>
@@ -70,6 +70,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
     <div id="showOnline"  class="online"  style="display: none;border: 0px;width:120px;">
         <div id="dd" disabled="disabled"  style="border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:570px; padding:0;">
+            <br/>
             <text id="dd1"   style="cursor: default;overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:greenyellow;width:100%;  padding:0;"></text>
             <text id="dd2"   style="cursor: default; overflow-y:hidden;overflow-x:hidden;border: 0px; background-color:#5e5e5e;color:white;width:100%;  padding:0;"></text>
         </div>
@@ -108,7 +109,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             </div>
             <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
             <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
-
                 <select id="teacher-choose-file-public" style="width:150px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminPublicVdir);
@@ -340,11 +340,12 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         <div >
             <div  class="title_split"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;"  align="center" ><h4 >备 课 资 源 </h4></div>
         </div>
-         <div >
-             <button onclick="addNewClassExercise()"  style="font-size: 20px;position: relative;height: 40px;width:100%;" class="btn btn-primary">添加新练习</button>
+        <div style="height: 40px;">
+             <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
+             <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>
         </div>
-        <div style="position: relative;top: 10px;height: 550px;overflow: auto">
-            <iframe id="iframe_class" style="border: 0px;height: 95%;width: 100%;" src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>"></iframe>
+        <div style="position: relative;text-align: center;top: 10px;height: 550px;overflow: auto">
+            <iframe id="iframe_class" style="border: 0px;height: 95%;width: 95%;"></iframe>
         </div>
     </div>
     <div id="scroll-video" style="display:inline;">
@@ -438,7 +439,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         var keycode = e.which;
 
 //     var realkey = String.fromCharCode(e.which);   　　 　　    
-        console.log("按键码: " + " 字符: ");
         if (cur_ppt != -1)
         {
             if (keycode == 37)
@@ -577,7 +577,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID; ?>",
             data: {},
             success: function () {
-                console.log("set time");
             },
             error: function (xhr, type, exception) {
                 window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
@@ -592,7 +591,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             dataType: "json",
             url: "index.php?r=api/GetStuOnLine&&classID=<?php echo $classID; ?>",
             success: function (data) {
-                console.log("qq", data);
                 var now =<?php echo time() ?>;    //这个时间是页面进入的时候，生成的。
                 //虽然点击的时候，才会执行这个js代码，但是，php是加载的时候就已经生成了
                 //也就是说，等到用户点击，这个时间now的值，是加载页面的时间。
@@ -601,6 +599,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 var content = data[0].join("<br/>&nbsp;&nbsp;&nbsp;&nbsp;");
                 var content2 = data[1].join("<br/>&nbsp;&nbsp;&nbsp;&nbsp;");
                 $("#dd1").html("&nbsp;&nbsp;&nbsp;&nbsp;" + content);
+                $("#countPeople").html(data[0].length);
                 $("#dd2").html("<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + content2);
             },
             error: function (xhr, type, exception) {
@@ -661,7 +660,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             dataType: "json",
             url: "index.php?r=api/GetLatestBulletin&&classID=<?php echo $classID; ?>",
             success: function (data) {
-                console.log(data[0]);
                 if (role === 'student') {
                     $("#bulletin-textarea").val(data[0].content);
                 } else {
@@ -747,6 +745,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#show-voice").toggle(200);
         });
         $("#sw-classExercise").click(function () {
+            document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>";
             if (flag === "classExercise") {
                 flag = "";
                 $("#title_classExercise").css({"color": "#fff"});
@@ -779,6 +778,13 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     $("#scroll-page").hide();
     $("#scroll-video").hide();
     $(document).ready(function () {
+        $.ajax({
+               type:"POST",
+               url:"index.php?r=teacher/openClassExercise",
+               data:{exerciseID:0},
+               success:function(data){
+               },
+        });
         //打开连接
         openConnect();
 
@@ -1533,6 +1539,13 @@ $dir->close();
         $("#title_bull").css({"color": "#fff"});
     }
     function closeTitleWithoutFlag(flag) {
+         $.ajax({
+               type:"POST",
+               url:"index.php?r=teacher/openClassExercise",
+               data:{exerciseID:0},
+               success:function(data){
+               },
+        });
         switch (flag) {
             case "movie":
                 $("#show-picture").hide();
@@ -1639,7 +1652,99 @@ $dir->close();
     }
     
     function iframReload(){
-          document.getElementById('iframe_class').contentWindow.location.reload(true)
+          document.getElementById('iframe_class').contentWindow.location.reload(true);
+    }
+    
+    function startClassExercise(exerciseID){
+        var classID = <?php echo $_GET['classID'];?>;
+        document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4Analysis&&exerciseID="+exerciseID+"&&classID="+classID;
+    }
+    
+    function startNow4Lot(checkboxs){
+        var check ="";
+        var exerciseID = "";
+        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info,{
+            onOk:function(){
+                for (var i = 0; i < checkboxs.length; i++) {
+                    exerciseID = checkboxs[0].value;
+                    if(checkboxs[i].checked){
+                        check+=checkboxs[i].value+"&";
+                    }
+                }
+                $.ajax({
+                       type:"POST",
+                       url:"index.php?r=teacher/openClassExercise4lot",
+                       data:{check:check},
+                       success:function(data){
+                           if(data=="开放成功！"){
+                                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
+                                window.parent.startClassExercise(exerciseID);
+                           }else{
+                               window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
+                           }
+                       },
+                       error:function(xhr, type, exception){
+                           console.log('GetAverageSpeed error', type);
+                           console.log(xhr, "Failed");
+                           console.log(exception, "exception");
+
+                       }
+                 });
+            }
+        });
+        
+        
+    }
+    
+    function startNow(exerciseID){
+        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info,{
+            onOk:function(){
+                        $.ajax({
+                       type:"POST",
+                       url:"index.php?r=teacher/openClassExercise",
+                       data:{exerciseID:exerciseID},
+                       success:function(data){
+                           if(data==1){
+                               window.parent.startClassExercise(exerciseID);
+                           }else{
+                               alert("开放失败");
+                           }
+                       },
+                       error:function(xhr, type, exception){
+                           console.log('GetAverageSpeed error', type);
+                           console.log(xhr, "Failed");
+                           console.log(exception, "exception");
+
+                       }
+                }); 
+            }
+        });
+    }
+    
+    function backToTableClassExercise4virtual(){
+        document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>";
+    }
+    
+    function closeAllOpenNow(){
+         window.wxc.xcConfirm("确定要关闭当前所有正在进行中的练习？", window.wxc.xcConfirm.typeEnum.info,{
+            onOk:function(){
+                
+                 $.ajax({
+                       type:"POST",
+                       url:"index.php?r=teacher/closeAllOpenExerciseNow",
+                       data:{},
+                       success:function(data){
+                           backToTableClassExercise4virtual();
+                               window.wxc.xcConfirm(data,window.wxc.xcConfirm.typeEnum.success);
+                       },
+                       error:function(xhr, type, exception){
+                           console.log('GetAverageSpeed error', type);
+                           console.log(xhr, "Failed");
+                           console.log(exception, "exception");
+                       }
+            }); 
+             }
+         });
     }
 
 </script>
