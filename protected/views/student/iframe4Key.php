@@ -59,7 +59,9 @@
         <br/>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
-                <td id="word" style="border-right: 1px solid #000; width: 400px;text-align:right;"></td>              
+                <td id="wordLast" style="border-right: 1px solid #000; width: 180px;text-align:right;"></td>  
+                <td id="word" style="border-right: 1px solid #000; width: 250px;text-align:right;"></td>   
+                <td id="wordNext" style="color:#909090;border-right: 1px solid #000; width: 180px;text-align:right;"></td>  
             </tr>
         </table>
         <br/>
@@ -140,8 +142,10 @@ $squence = $countSquence + 1;
     });
     
     function start(){
+        $("#word").html(3);
         var count = 0;
                 var ready = setInterval(function(){
+                    $("#word").html(2-count);
                     count++;
                     if(count === 3){
                         startParse();
@@ -176,7 +180,6 @@ $squence = $countSquence + 1;
             $("#finish").attr("disabled","disabled");
              window.parent.finish();
         }
-       
     }
     
 

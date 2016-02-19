@@ -51,6 +51,10 @@
     </tr>
 </table>
 <script>
+    var isPress = 0;
+    var judgementFlag = 0;
+    var psz = "";
+    var flag4CheckLastWord = new Array();
     function keySet(keyID,isRight){
         var obj = document.getElementById(keyID);
         if(isRight)
@@ -172,10 +176,12 @@
             currentNum = totalNum;
             return ;
         }
+        //判断键位是否正确
         var charSet = pszStenoString.split("");
         var left = true;
         storyKey(pszStenoString);
         keyReSet();
+        
         for(var i = 0; i < charSet.length; i++){
             if(charSet[i] == ':'){
                 left = false;
@@ -183,21 +189,24 @@
             }
             var c = charSet[i].toLowerCase();
             if(left){
-                if(checkChar(charSet[i],true))
+                if(checkChar(charSet[i],true)){
                     //打对择把该键显示设置true
                     keySet("l_"+ c, true);
-                else
+                }else{
+                    judgementFlag = 1;
                     keySet("l_"+c , false);
+              }
             }else{
-                if(checkChar(charSet[i],false))
+                if(checkChar(charSet[i],false)){
                     keySet("r_"+c , true);
-                else
+                }else{
+                    judgementFlag = 1;
                     keySet("r_"+c , false);
+              }
             }
         }
-        changTemplet(pszStenoString);
-        window.GA_RightRadio = (getCorrect()*100).toFixed(2);
-        document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
+        isPress = 1;
+        psz = pszStenoString;
         }
         
     }
@@ -225,11 +234,20 @@
             totalNum += 1;           
         }
         display();
-        time1 = setInterval("display()",2/(speed/60)*1000); 
+        time1 = setInterval("display()",1/(speed/60)*1000); 
     }
     
     function setWordView(word){
-        document.getElementById("word").innerHTML = word;
+        if (word===undefined) {
+            document.getElementById("word").innerHTML = "";
+        }else{
+            document.getElementById("word").innerHTML = word;
+        }
+        if(wordArray[currentNum+1]!==undefined){
+            document.getElementById("wordNext").innerHTML = wordArray[currentNum+1];
+        }else{
+            document.getElementById("wordNext").innerHTML = "";
+        }
         $('#keyMode').fadeOut(50);
         $('#keyMode').fadeIn(50);
     }   
@@ -279,10 +297,38 @@
     }
     
     function getNextWord(){
-        currentNum++;       
+        currentNum++; 
+        //按每跳的最后一次击键计算正确率
+         if(psz!==""){
+            changTemplet(psz);
+              window.GA_RightRadio = (getCorrect()*100).toFixed(2);
+              document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;  
+          }
+          //-----
+          //已击过窗口词语的正确错误判断
+        if(judgementFlag === 0){
+                if(isPress === 1){
+                    flag4CheckLastWord[currentNum] = 0;
+                }else if(isPress === 0){
+                   flag4CheckLastWord[currentNum] = 1;
+                }
+            }else if(judgementFlag ===1){
+                flag4CheckLastWord[currentNum] = 1;
+            }
+            isPress = 0;
+            judgementFlag = 0;
+            if(currentNum>0){
+                if(flag4CheckLastWord[currentNum]===0){
+                   document.getElementById("wordLast").innerHTML = "<span style='color:green'>"+wordArray[currentNum-1]+"</span>"; 
+                }else if(flag4CheckLastWord[currentNum]===1){
+                    document.getElementById("wordLast").innerHTML = "<span style='color:red'>"+wordArray[currentNum-1]+"</span>"; 
+                }
+        }else{
+            document.getElementById("wordLast").innerHTML = "";
+        }
+        //----------
         if(totalNum == currentNum){
             repeatNum--;
-            document.getElementById("repeatNum").innerHTML = repeatNum;
             if(repeatNum == 0){
             clearInterval(time1);
             window.G_isOverFlag = 1;

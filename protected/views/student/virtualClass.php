@@ -338,7 +338,7 @@ function checkOnLine(){
              dataType: "json",
              url: "index.php?r=api/updateStuOnLine&&classID=<?php echo $classID;?>&&userid=<?php echo Yii::app()->session['userid_now']?>",
              data:{},
-             success: function(){ console.log("set time");},
+             success: function(){ },
                 error: function(xhr, type, exception){
                     console.log(xhr, "Failed");
                     window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
@@ -594,6 +594,7 @@ function alertStartKeyExercise(){
 
 function finish(){
     isfinish[nowOn] = 1;
+    passClassExercise();
     if(nowOn<exerciseIsOpenNow.length){
         window.wxc.xcConfirm("点击确定将进入下一个练习", window.wxc.xcConfirm.typeEnum.info,{
                     onOk:function(){

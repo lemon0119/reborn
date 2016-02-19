@@ -151,22 +151,31 @@
 
             if (HaveWindow == 1)
                 return;
-            if (totalNum == currentNum && repeatNum == 0) {
-                HaveWindow = 1;
+//            if (totalNum == currentNum && repeatNum == 0) {
+//                HaveWindow = 1;
+//                window.G_isOverFlag = 1;
+//                window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success, {
+//                    onOk: function () {
+//                        currentNum = totalNum;
+//                        HaveWindow = 0;
+//                    },
+//                    onClose: function () {
+//                        currentNum = totalNum;
+//                        HaveWindow = 0;
+//                    }
+//                });
+//                currentNum = totalNum;
+//                return;
+//            }
+             if (totalNum == currentNum) {
+            repeatNum--;
+            if (repeatNum == 0) {
                 window.G_isOverFlag = 1;
-                window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success, {
-                    onOk: function () {
-                        currentNum = totalNum;
-                        HaveWindow = 0;
-                    },
-                    onClose: function () {
-                        currentNum = totalNum;
-                        HaveWindow = 0;
-                    }
-                });
-                currentNum = totalNum;
-                return;
+                document.getElementById("id_cost").value = getSeconds();
+                doSubmit(false);
             }
+            currentNum = 0;
+        }
             var charSet = pszStenoString.split("");
             var left = true;
             storyKey(pszStenoString);
@@ -192,7 +201,6 @@
             }
             changTemplet(pszStenoString);
             window.GA_RightRadio = (getCorrect() * 100).toFixed(2);
-            console.log(window.GA_RightRadio);
             document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
         }
 
@@ -227,7 +235,21 @@
         setWordView(nextWord);
     }
     function setWordView(word) {
-        document.getElementById("word").innerHTML = word;
+        if(currentNum>0){
+            document.getElementById("wordLast").innerHTML = "<span style='color:green'>"+wordArray[currentNum-1]+"</span>";
+        }else{
+            document.getElementById("wordLast").innerHTML = "";
+        }
+        if (word===undefined) {
+            document.getElementById("word").innerHTML = "";
+        }else{
+            document.getElementById("word").innerHTML = word;
+        }
+        if(wordArray[currentNum+1]!==undefined){
+            document.getElementById("wordNext").innerHTML = wordArray[currentNum+1];
+        }else{
+            document.getElementById("wordNext").innerHTML = "";
+        }
         $('#keyMode').fadeOut(50);
         $('#keyMode').fadeIn(50);
     }
@@ -287,18 +309,18 @@
     function getNextWord() {
         keyReSet();
         currentNum++;
-        if (totalNum == currentNum) {
-            repeatNum--;
-            document.getElementById("repeatNum").innerHTML = repeatNum;
-            if (repeatNum == 0) {
-                window.G_isOverFlag = 1;
-                document.getElementById("id_cost").value = getSeconds();
-                doSubmit(false);
-                window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
-                return '';
-            }
-            currentNum = 0;
-        }
+//        if (totalNum == currentNum) {
+//            repeatNum--;
+//            document.getElementById("repeatNum").innerHTML = repeatNum;
+//            if (repeatNum == 0) {
+//                window.G_isOverFlag = 1;
+//                document.getElementById("id_cost").value = getSeconds();
+//                doSubmit(false);
+//                window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
+//                return '';
+//            }
+//            currentNum = 0;
+//        }
         if (nextWord != "")
             return nextWord;
         var result = wordArray[currentNum];
