@@ -292,6 +292,7 @@
     }
     function getNextWord() {
         currentNum++;
+        $("#isDone").html(currentNum);
         if(wordArray[currentNum+1]!==undefined){
                 document.getElementById("wordNext").innerHTML = wordArray[currentNum+1];
             }else{

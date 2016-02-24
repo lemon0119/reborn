@@ -159,23 +159,23 @@
           }   
         
         
-        if(HaveWindow == 1)
-            return;
-        if(totalNum == currentNum && repeatNum == 0){
-            HaveWindow = 1;
-            window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
-                onOk:function(){
-                    currentNum = totalNum;
-                    HaveWindow = 0;
-                },
-                onClose:function(){
-                    currentNum = totalNum;
-                    HaveWindow = 0;
-                }
-            });
-            currentNum = totalNum;
-            return ;
-        }
+//        if(HaveWindow == 1)
+//            return;
+//        if(totalNum == currentNum && repeatNum == 0){
+//            HaveWindow = 1;
+//            window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
+//                onOk:function(){
+//                    currentNum = totalNum;
+//                    HaveWindow = 0;
+//                },
+//                onClose:function(){
+//                    currentNum = totalNum;
+//                    HaveWindow = 0;
+//                }
+//            });
+//            currentNum = totalNum;
+//            return ;
+//        }
         //判断键位是否正确
         var charSet = pszStenoString.split("");
         var left = true;
@@ -236,11 +236,7 @@
     }
     
     function setWordView(word){
-        if (word===undefined) {
-            document.getElementById("word").innerHTML = "";
-        }else{
             document.getElementById("word").innerHTML = word;
-        }
         if(wordArray[currentNum+1]!==undefined){
             document.getElementById("wordNext").innerHTML = wordArray[currentNum+1];
         }else{
@@ -298,6 +294,7 @@
     
     function getNextWord(){
         currentNum++; 
+        $("#isDone").html(currentNum);
         //按每跳的最后一次击键计算正确率
          if(psz!==""){
             changTemplet(psz);
@@ -326,18 +323,16 @@
         }else{
             document.getElementById("wordLast").innerHTML = "";
         }
-        //----------
         if(totalNum == currentNum){
             repeatNum--;
             if(repeatNum == 0){
+             document.getElementById("word").innerHTML = "";   
             clearInterval(time1);
             window.G_isOverFlag = 1;
             document.getElementById("id_cost").value = getSeconds();
             doSubmit(false); 
-            window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
         }
-        currentNum = 0;
         }       
         if(nextWord != "")
             return nextWord;

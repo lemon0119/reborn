@@ -309,6 +309,7 @@
     function getNextWord() {
         keyReSet();
         currentNum++;
+        $("#isDone").html(currentNum);
 //        if (totalNum == currentNum) {
 //            repeatNum--;
 //            document.getElementById("repeatNum").innerHTML = repeatNum;

@@ -17,10 +17,8 @@
                 <td><span class="fl"   style="color: #000;font-weight: bolder">正确率：&nbsp;&nbsp;</span></td>
                 <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
                 <td><span class="fr" style="color: gray"> %&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                <td><span class="fl"   style="color: #000;font-weight: bolder">循环次数：</span></td>
-                <td><span style="color: #f46500" id="repeatNum"><?php echo $classExercise['repeatNum'] ?></span ></td>
-                <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">完成进度：</span></td>
+                <td colspan="2"><span style="color:green" id="isDone">0</span>/<span  style="color: #f46500" id="AllOfWord"></span><span hidden="true" style="color: #f46500" id="repeatNum"><?php echo $classExercise['repeatNum'] ?></span ></td>
             <tr>
                 <td><span class="fl"   style="color: #000;font-weight: bolder">平均速度：</span></td>
                 <td><span style="color: #f46500" id="getAverageSpeed">0</span></td>
@@ -101,6 +99,9 @@
 </body>
 <script>
     $(document).ready(function () {
+        var content = document.getElementById("id_content").value;
+        var cont_array = content.split("$$");
+        $("#AllOfWord").html(cont_array.length);
         document.getElementById('span').scrollIntoView();
 //  暂停功能        
 //        $("#pause").click(function () {
