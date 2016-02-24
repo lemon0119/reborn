@@ -27,7 +27,7 @@ if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']==
             <div class="container">
                 <div class="navbar">
                     <div class="navbar-inner">
-                        <div class="container">
+                        <div class="container" style="width:1300px">
                             <a class="brand" href="./index.php?r=student/index"></a>
                             <div class="nav-collapse">
                                 <ul class="nav">
