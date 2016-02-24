@@ -46,7 +46,7 @@ if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']==
                                     </li>
                                     <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
                                     
-<!--                                    <li><a id ="exam_statistics" href="./index.php?r=student/watchData&&classID=<?php echo $classID;?>"></a></li>-->
+                                    <li><a id ="exam_statistics" href="./index.php?r=student/watchData&&classID=<?php echo $classID;?>"></a></li>
                                     <li><a id="suLu" href="./index.php?r=student/suLu"></a></li>
                                     <li><a id="schedule_manager"  href="./index.php?r=student/scheduleDetil"></a></li>
                                     <li><a id="blank_stu"></a></li>
