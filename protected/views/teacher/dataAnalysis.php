@@ -120,8 +120,7 @@
             </table>
         </div>
         <div style="width:100%;">
-            <div style="">
-            <div id="div1" style="width:30%; display:inline;float:left;overflow: auto;position: relative;top:30px;height:480px;border-radius: 5px;">
+            <div id="div11" style="width:30%; display:inline;float:left;overflow: auto;position: relative;top:30px;height:480px;border-radius: 5px;">
                 <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -133,7 +132,6 @@
                         <tbody id="bo">
                         </tbody>
                     </table>
-            </div>
             </div>
             <div style="width:70%;float:right;">
                 <div id="main" style="display: none;overflow: auto;height:300px;position: relative;top:10px"></div>    
@@ -252,6 +250,7 @@ function getClassExer(lessonID){
              success: function(data){
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
+                 document.getElementById("div11").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -309,6 +308,7 @@ function getExamExercise(examID,workID){
              success: function(data){
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
+                 document.getElementById("div11").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -377,6 +377,7 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
+                 document.getElementById("div11").style.display='block';
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
@@ -416,7 +417,7 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                     var myChart = echarts.init(document.getElementById('main'));
                     var option = {
                         title: {
-                            text: '折线图'
+                            text: ''
                         },
                         tooltip : {
                             trigger: 'axis'
@@ -560,7 +561,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                     var myChart = echarts.init(document.getElementById('main'));
                     var option = {
                         title: {
-                            text: '折线图'
+                            text: ''
                         },
                         tooltip : {
                             trigger: 'axis'
@@ -637,6 +638,7 @@ function getClassExerRanking(ii,classID,exerciseID,type){
              success: function(data){
                  document.getElementById("sp").style.display='block';
                  document.getElementById("main").style.display='block';
+                 document.getElementById("div11").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
                    var ul = document.getElementById("ul2");          
