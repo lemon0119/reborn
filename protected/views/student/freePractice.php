@@ -28,7 +28,7 @@
 </div>
 <?php if (isset($_GET['lessonID'])) { ?>
 <div id="iframeDiv" style="display:none;"  class="span9">
-    <iframe id="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
+    <iframe id="iframe_classExercise" name="iframe_classExercise"  style="border: 0px;height: 100%;width: 95%;"></iframe>
 </div>
 <div id="exerciseDiv" class="span9">
      <h3 ><font style="color:#f46500"><?php echo $nowlesson['lessonName'];?></font> 已  开  放  的  练  习</h3>
@@ -129,4 +129,12 @@
         $("#iframeDiv").attr("style","display:none");
         $("#exerciseDiv").removeAttr("style");
     }
+    
+    function alertStartKeyExercise(){
+    window.wxc.xcConfirm("即将开始！您将有3秒准备时间！", window.wxc.xcConfirm.typeEnum.warning,{
+            onOk:function(){
+                iframe_classExercise.window.start();
+            }
+        });
+}
 </script>
