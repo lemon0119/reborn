@@ -239,6 +239,7 @@ class AdminController extends CController {
                 } else {
                     $res = Tool::excelreadToArray($savePath . $file_name, $file_type);
                     //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
+                    unlink($savePath . $file_name);
                     $array_fail = array();
                     $array_success = array();
                     $flag = 0;
@@ -431,6 +432,7 @@ class AdminController extends CController {
                 } else {
                     $res = Tool::excelreadToArray($savePath . $file_name, $file_type);
                     //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
+                    unlink($savePath . $file_name);
                     $array_fail = array();
                     $array_success = array();
                     $flag = 0;

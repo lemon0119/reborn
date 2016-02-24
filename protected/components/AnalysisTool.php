@@ -74,6 +74,13 @@ class AnalysisTool{
            }
            $allCount++;
        }
+       
+       if(count($array_current)>count($array_original)){
+           $rightCount -= (count($array_current)-count($array_original));
+           if($rightCount<0){
+               $rightCount = 0;
+           }
+       }
        $accuracyRate = round(($rightCount/$allCount)*100);
        unset($array_original);
        unset($array_current);

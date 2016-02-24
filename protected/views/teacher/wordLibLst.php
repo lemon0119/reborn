@@ -60,11 +60,10 @@
         
         <div style="margin-left: 50px" class="fl"><form action="./index.php?r=teacher/SelectWordLib&&libstr=<?php echo $_GET['libstr'];?>&&upload=true" 
           method="post" id="form-upload" enctype="multipart/form-data"><font style="color: #595959;font-family: fantasy;margin-right: 10px">添加私人词库</font><input type="file" name="file" id="file" />
-        <button class="btn" type="submit">上传</button></form>
+                <button class="btn" type="submit">上传</button><button style="margin-left: 30px" class="btn" onclick="deleteLib()">删除</button></form>
         </div>
    </div>
 </div>
-
         </body>
 <script>
      $(document).ready(function () {
@@ -94,5 +93,17 @@
     }
     function clickQX(){
         window.parent.getDivAddKeyBack();
+    }
+    function deleteLib(){
+        var checkboxs = document.getElementsByName('checkbox[]');
+        var libs=new Array();
+        var j=0;
+        for (var i = 0; i < checkboxs.length; i++) {
+           if(checkboxs[i].checked){
+                libs[j] = checkboxs[i].value;
+                j++;
+           }
+        }  
+       window.parent.deleteLib(libs);
     }
 </script>

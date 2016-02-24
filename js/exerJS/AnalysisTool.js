@@ -1,6 +1,5 @@
 /* 
  * Js AnalysisTool
- * Create By pengjingcheng @qq 390928903   date 2015_12_3
  * 
  * 请在主view中设置全局变量 
  * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000
@@ -19,6 +18,7 @@
  * 
  */
     var G_exerciseType       ="";
+    var G_isLook             = 0;
     var G_keyBoardBreakPause = 0;
     var G_saveToDatabase     = 0;
     var G_isOverFlag         = 0;
@@ -74,7 +74,7 @@ $(document).ready(function(){
     //@param id=getMomentSpeed 请将最高平均速度统计的控件id设置为getMomentSpeed 
     //2s内统计回改字数     字
     //@param id=getBackDelete 请将最高平均速度统计的控件id设置为getBackDelete  
-        var timer = setInterval(function(){
+        var interval = setInterval(function(){
             var content        = window.G_content;
             var keyContent     = window.G_keyContent;
             var setEndTime     = window.G_setEndTime;
@@ -237,14 +237,15 @@ $(document).ready(function(){
                 });
                 }
              }
-
+             if(window.G_isLook ===1){
+                  AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", window.GA_originalContent, window.G_content);
+             }
                //判断统计结束
              if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
                  window.G_endAnalysis = 1;
-                 window.G_isOverFlag=0;
                   $("#getMomentKeyType").html(0);
                   $("#getIntervalTime").html(0);
-                 clearInterval(timer);
+                 clearInterval(interval);
              }
         },2000);
     

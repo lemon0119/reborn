@@ -878,6 +878,9 @@ class TeacherController extends CController {
         //$user_model = new User;
         //$username_now=Yii::app()->user->name;
         //$info=$user_model->find("username='$username_now'");//,'pageInden'=>$pageIndex
+        if(isset($_GET['modify'])){
+            TwoWordsLib::model()->modify();
+        }
         $this->render('index'); //,['info'=>$info]);
     }
 
@@ -5245,13 +5248,33 @@ public function ActionAssignFreePractice(){
             $this->renderJSON($array_result);          
      }
      
-
+     public function ActionDeleteWordLib(){
+         $Libs = $_POST['libs'];
+         $count = 0;
+         foreach ($Libs as $v){
+             $Lib = TwoWordsLibPersonal::model()->findAll("name = '$v'");
+             if(count($Lib)>0){
+                 $count++;
+                 foreach ($Lib as $l){
+                     $l->delete();
+                 }
+             }
+         }
+         if($count>0){
+             echo 1;
+         }else{
+             echo 0;
+         }
+     }
+     
      public function ActionSelectWordLib(){
          $uploadResult = "";
          $libstr=$_GET['libstr'];
          $libstr=  explode('$$', $libstr);
-         $sql = "select distinct name,list from two_words_lib";
+         $sql = "SELECT DISTINCT name,list FROM two_words_lib WHERE list != '总复习' ORDER BY name";
          $result = Yii::app()->db->createCommand($sql)->query();
+         $sql_1 = "SELECT DISTINCT name,list FROM two_words_lib WHERE list = '总复习' ORDER BY name";
+         $result_1 = Yii::app()->db->createCommand($sql_1)->query();
          $list = array();
          $createPerson = Yii::app()->session['userid_now'];
          $sql4Personal = "select distinct name,list from two_words_lib_personal WHERE createPerson LIKE '$createPerson'";
@@ -5261,6 +5284,9 @@ public function ActionAssignFreePractice(){
          }
          foreach ($result as $res){
              if($res['name'] != "lib")
+             array_push($list, $res);            
+         }
+         foreach ($result_1 as $res){
              array_push($list, $res);            
          }
          if(isset($_GET['upload'])){
@@ -5284,6 +5310,7 @@ public function ActionAssignFreePractice(){
                     $fp=fopen($file_dir,"r"); 
                     $content=fread($fp,filesize($file_dir));//读文件 
                     fclose($fp); 
+                    unlink($file_dir);
                     $str = explode("\r\n", $content);
                     $name = str_replace(".txt", "", $file_name);
                     $createPerson = Yii::app()->session['userid_now'];
@@ -5623,10 +5650,11 @@ public function ActionAssignFreePractice(){
     }
     
     public function actionTableClassExercise4Analysis(){
+        $classID = $_GET['classID'];
         $allIsOpen = Array();
         $exerciseID = $_GET['exerciseID'];
         $ClassExercise = ClassExercise::model()->getByExerciseID($exerciseID);
-        $result= ClassExercise::model()->getAllNowOpenExercise();
+        $result= ClassExercise::model()->getAllNowOpenExercise($classID);
         foreach ($result as $v){
             if($v['exerciseID'] != $exerciseID){
                 array_push($allIsOpen, $v);

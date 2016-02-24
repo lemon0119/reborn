@@ -233,4 +233,24 @@
 //    var answer = document.getElementById("id_answer").value;
 //    var cost = document.getElementById("id_cost").value;
    window.G_exerciseData = Array("1");
+   
+   function start(){
+        $("#word").html(3);
+        var count = 0;
+                var ready = setInterval(function(){
+                    $("#word").html(2-count);
+                    count++;
+                    if(count === 3){
+                        startParse();
+                        var myDate = new Date();
+                         window.G_pressTime = myDate.getTime();
+                         if(window.G_startFlag ===0){
+                                    window.G_startTime = myDate.getTime();
+                                    window.G_startFlag = 1; 
+                                    window.G_oldStartTime = window.G_pressTime;
+                        }
+                        clearInterval(ready);
+                    }
+                },1000);
+    }
 </script>

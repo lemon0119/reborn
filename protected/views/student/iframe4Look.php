@@ -9,7 +9,7 @@
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
         <div style="width: 700px">
-            <button class="fl btn" id="pause">暂停统计</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button><button id="close_exercise"  style="margin-left:30px;" class="fr btn btn-primary">关闭</button>
+            <button class="fl btn" id="pause">暂停统计</button><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise"  style="margin-left:30px;" class="fr btn btn-primary">关闭</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
         </div>
         <div id="Analysis">
              <h3 ><?php echo $classExercise['title'] ?></h3>
@@ -101,7 +101,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;
            });
            yaweiOCX4Look = document.getElementById("typeOCX4Look");
         $("#pause").click(function () {
-            if (window.G_startFlag === 1) {
+            if (window.G_startFlag === 1&&window.G_isOverFlag ===0 ) {
                 if (window.G_isPause === 0) {
                     window.G_isPause = 1;
                 }
@@ -151,7 +151,11 @@ $squence = $countSquence + 1;
     function onStenoPressKey(pszStenoString, device) {
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
-        window.G_keyBoardBreakPause = 0;
+        if(window.G_pauseFlag===1){
+            window.G_isLook = 1;
+             window.G_keyBoardBreakPause = 0;
+              $("#pause").html("暂停统计");
+        }
         var myDate = new Date();
         window.G_pressTime = myDate.getTime();
         if (window.G_startFlag === 0) {
@@ -163,8 +167,7 @@ $squence = $countSquence + 1;
         window.G_countAllKey++;
         window.G_content = yaweiOCX4Look.GetContent();
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
-
-        AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", originalContent, window.G_content);
+        
         //每击统计击键间隔时间 秒
         //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
         //每击统计最高击键间隔时间 秒
@@ -229,8 +232,11 @@ $squence = $countSquence + 1;
              for(var i=0;i<text.length;i++){
                  if(text[i].length<3){
                         for(var j=0;j<briefCode.length;j++){
-                            if((text[i]==briefCode[j])&&(code[i]!=briefOriginalYaweiCode[j].replace(":0",""))){
+                            if(text[i]==briefCode[j]){
                                 isBrief ++;
+                                if(code[i]!=briefOriginalYaweiCode[j].replace(":0","")&&(code[i]!="W:X")){
+                                    isBrief--;
+                                }
                             }
                          }
                  }else{
@@ -382,15 +388,27 @@ $squence = $countSquence + 1;
                     }
                 }
             }
-            createFont("#808080",old,oldCode);
-            createFont("#ff0000",wrong,"");
+            
+            if(countLength!==0){
+                createFont("#808080",old,oldCode);
+                createFont("#ff0000",wrong,"");
+            }
             if (input.length < text.length) {
                 var left =document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
                 createFont("#000000", left,"");
             }
-            if((text.length - longIsAgo)<1){
-                window.G_isOverFlag = 1;
-            }
+//            if((text.length - longIsAgo)<1){
+//                window.G_isOverFlag = 1;
+//            }
        // }
     }
+    
+    function finish(){
+        if(window.G_startFlag===1){
+            window.G_isOverFlag = 1; 
+            $("#finish").attr("disabled","disabled");
+            window.parent.finish();
+        }
+    }
+    
 </script>
