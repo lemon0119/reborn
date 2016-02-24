@@ -55,6 +55,11 @@
 
         </table>
         <br/>
+        <div class="progressbox" align="left">
+            <div class="progresstbox">
+                <div class="progresstiao"></div>
+            </div>
+        </div>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
                 <td id="wordLast" style="border-right: 1px solid #000; width: 180px;text-align:right;"></td>  
@@ -63,8 +68,9 @@
             </tr>
         </table>
         <br/>
+        
         <div id ="templet" class ="questionBlock" onselectstart="return false" style="display: none">
-            <font id="id_right"style="color:#808080"> </font><font id="id_wrong" style="color:#ff0000"> </font><font id="id_new" style="color:#000000"> </font>
+            <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font>
         </div>
         <div style="width: 700px; height: 350px;">
             <?php
@@ -77,18 +83,18 @@
                 require Yii::app()->basePath . "\\views\\student\\speed_keyboard.php";
             ?>
         </div>
-            <?php
-            $host = Yii::app()->request->hostInfo;
-            $path = Yii::app()->request->baseUrl;
-            $page = '/index.php?r=student/saveAnswer';
-            if (isset($_GET['page']))
-                $index = $_GET['page'];
-            else
-                $index = 1;
-            $param = '&page=' . $index;
-            if (isset(Yii::app()->session['type']))
-                $param = $param . '&&type=' . Yii::app()->session['type'];
-            ?>
+        <?php
+        $host = Yii::app()->request->hostInfo;
+        $path = Yii::app()->request->baseUrl;
+        $page = '/index.php?r=student/saveAnswer';
+        if (isset($_GET['page']))
+            $index = $_GET['page'];
+        else
+            $index = 1;
+        $param = '&page=' . $index;
+        if (isset(Yii::app()->session['type']))
+            $param = $param . '&&type=' . Yii::app()->session['type'];
+        ?>
     </div>
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host . $path . $page . $param; ?>">
         <input id="id_content" type="hidden" value="<?php echo $classExercise['content']; ?>">
@@ -101,7 +107,8 @@
     $(document).ready(function () {
         var content = document.getElementById("id_content").value;
         var cont_array = content.split("$$");
-        $("#AllOfWord").html(cont_array.length);
+        var repeatNum = $("#repeatNum").html();
+        $("#AllOfWord").html(cont_array.length*repeatNum);
         document.getElementById('span').scrollIntoView();
 //  暂停功能        
 //        $("#pause").click(function () {
@@ -141,25 +148,25 @@ $squence = $countSquence + 1;
     $(document).ready(function () {
         window.parent.alertStartKeyExercise();
     });
-    
-    function start(){
+
+    function start() {
         $("#word").html(3);
         var count = 0;
-                var ready = setInterval(function(){
-                    $("#word").html(2-count);
-                    count++;
-                    if(count === 3){
-                        startParse();
-                        var myDate = new Date();
-                         window.G_pressTime = myDate.getTime();
-                         if(window.G_startFlag ===0){
-                                    window.G_startTime = myDate.getTime();
-                                    window.G_startFlag = 1; 
-                                    window.G_oldStartTime = window.G_pressTime;
-                        }
-                        clearInterval(ready);
-                    }
-                },1000);
+        var ready = setInterval(function () {
+            $("#word").html(2 - count);
+            count++;
+            if (count === 3) {
+                startParse();
+                var myDate = new Date();
+                window.G_pressTime = myDate.getTime();
+                if (window.G_startFlag === 0) {
+                    window.G_startTime = myDate.getTime();
+                    window.G_startFlag = 1;
+                    window.G_oldStartTime = window.G_pressTime;
+                }
+                clearInterval(ready);
+            }
+        }, 1000);
     }
 
     $(document).ready(function () {
@@ -175,14 +182,14 @@ $squence = $countSquence + 1;
         return length;
     }
 
- function finish(){
-        if(window.G_startFlag===1){
-            window.G_isOverFlag = 1; 
-            $("#finish").attr("disabled","disabled");
-             window.parent.finish();
+    function finish() {
+        if (window.G_startFlag === 1) {
+            window.G_isOverFlag = 1;
+            $("#finish").attr("disabled", "disabled");
+            window.parent.finish();
         }
     }
-    
+
 
 
     /*
