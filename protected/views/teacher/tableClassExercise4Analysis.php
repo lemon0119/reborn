@@ -16,6 +16,7 @@
                 <th >正确率</th>
                 <th >进行时间(秒)</th>
                 <th >总击键</th>
+                <th >完成次数</th>
             </tr>
         </thead>
         <tbody> 
@@ -56,7 +57,7 @@
                success:function(data){
                    for(i=0;i<data.length;i++){
                        $('#option'+i+'').remove(); 
-                       var newRow='<tr id="option'+i+'"><td >'+(i+1)+'</td><td >'+data[i]['studentID']+'</td><td >'+data[i]['studentName']+'</td><td>'+data[i]['speed']+'</td><td>'+data[i]['maxSpeed']+'</td><td>'+data[i]['correct']+'%</td><td>'+data[i]['time']+'</td><td>'+data[i]['allKey']+'</td></tr>';  
+                       var newRow='<tr id="option'+i+'"><td >'+(i+1)+'</td><td >'+data[i]['studentID']+'</td><td >'+data[i]['studentName']+'</td><td>'+data[i]['speed']+'</td><td>'+data[i]['maxSpeed']+'</td><td>'+data[i]['correct']+'%</td><td>'+data[i]['time']+'</td><td>'+data[i]['allKey']+'</td><td>'+data[i]['allKey']+'</td></tr>';  
                        $('#table_of_analysis').append(newRow); 
                    }
                    if(flag==1){

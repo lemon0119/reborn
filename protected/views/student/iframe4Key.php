@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <table style="width: 580px"  border = '0px'><button class="fl btn" id="pause">暂停统计</button><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise" class="fr btn btn-primary">关闭</button>
+        <table style="width: 580px"  border = '0px'><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise" class="fr btn btn-primary">关闭</button>
             <tr><h3><?php echo $classExercise['title'] ?></h3></tr>
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
@@ -17,10 +17,8 @@
                 <td><span class="fl"   style="color: #000;font-weight: bolder">正确率：&nbsp;&nbsp;</span></td>
                 <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
                 <td><span class="fr" style="color: gray"> %&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                <td><span class="fl" style="color: #000;font-weight: bolder">回改字数：</span></td>
-                <td style="width: 60px;"><span style="color: #f46500" id="getBackDelete">0</span></td>
-                <td><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr>
+                <td><span class="fl"   style="color: #000;font-weight: bolder">完成进度：</span></td>
+                <td colspan="2"><span style="color:green" id="isDone">0</span>/<span  style="color: #f46500" id="AllOfWord"></span><span hidden="true" style="color: #f46500" id="repeatNum"><?php echo $classExercise['repeatNum'] ?></span ></td>
             <tr>
                 <td><span class="fl"   style="color: #000;font-weight: bolder">平均速度：</span></td>
                 <td><span style="color: #f46500" id="getAverageSpeed">0</span></td>
@@ -54,22 +52,25 @@
                 <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
                 <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
             </tr>
-            <tr >
-                <td><span class="fl"   style="color: #000;font-weight: bolder">循环次数：</span></td>
-                <td><span style="color: #f46500" id="repeatNum"><?php echo $classExercise['repeatNum'] ?></span ></td>
-                <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-            </tr>
 
         </table>
         <br/>
+        <div class="progressbox" align="left">
+            <div class="progresstbox">
+                <div class="progresstiao"></div>
+            </div>
+        </div>
         <table id="keyMode" style="height: 60px; font-size: 50px; border: 1px solid #000">
             <tr>
-                <td id="word" style="border-right: 1px solid #000; width: 400px;text-align:right;"></td>              
+                <td id="wordLast" style="border-right: 1px solid #000; width: 180px;text-align:right;"></td>  
+                <td id="word" style="border-right: 1px solid #000; width: 250px;text-align:right;"></td>   
+                <td id="wordNext" style="color:#909090;border-right: 1px solid #000; width: 180px;text-align:right;"></td>  
             </tr>
         </table>
         <br/>
+        
         <div id ="templet" class ="questionBlock" onselectstart="return false" style="display: none">
-            <font id="id_right"style="color:#808080"> </font><font id="id_wrong" style="color:#ff0000"> </font><font id="id_new" style="color:#000000"> </font>
+            <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font>
         </div>
         <div style="width: 700px; height: 350px;">
             <?php
@@ -82,18 +83,18 @@
                 require Yii::app()->basePath . "\\views\\student\\speed_keyboard.php";
             ?>
         </div>
-            <?php
-            $host = Yii::app()->request->hostInfo;
-            $path = Yii::app()->request->baseUrl;
-            $page = '/index.php?r=student/saveAnswer';
-            if (isset($_GET['page']))
-                $index = $_GET['page'];
-            else
-                $index = 1;
-            $param = '&page=' . $index;
-            if (isset(Yii::app()->session['type']))
-                $param = $param . '&&type=' . Yii::app()->session['type'];
-            ?>
+        <?php
+        $host = Yii::app()->request->hostInfo;
+        $path = Yii::app()->request->baseUrl;
+        $page = '/index.php?r=student/saveAnswer';
+        if (isset($_GET['page']))
+            $index = $_GET['page'];
+        else
+            $index = 1;
+        $param = '&page=' . $index;
+        if (isset(Yii::app()->session['type']))
+            $param = $param . '&&type=' . Yii::app()->session['type'];
+        ?>
     </div>
     <form name='nm_answer_form' id='id_answer_form' method="post" action="<?php echo $host . $path . $page . $param; ?>">
         <input id="id_content" type="hidden" value="<?php echo $classExercise['content']; ?>">
@@ -104,20 +105,25 @@
 </body>
 <script>
     $(document).ready(function () {
+        var content = document.getElementById("id_content").value;
+        var cont_array = content.split("$$");
+        var repeatNum = $("#repeatNum").html();
+        $("#AllOfWord").html(cont_array.length*repeatNum);
         document.getElementById('span').scrollIntoView();
-        $("#pause").click(function () {
-            if (window.G_startFlag === 1) {
-                if (window.G_isPause === 0) {
-                    window.G_isPause = 1;
-                }
-                if (window.G_pauseFlag === 1&&window.G_isOverFlag ===0) {
-                    $("#pause").html("暂停统计");
-
-                } else {
-                    $("#pause").html("继续统计");
-                }
-            }
-        });
+//  暂停功能        
+//        $("#pause").click(function () {
+//            if (window.G_startFlag === 1) {
+//                if (window.G_isPause === 0) {
+//                    window.G_isPause = 1;
+//                }
+//                if (window.G_pauseFlag === 1&&window.G_isOverFlag ===0) {
+//                    $("#pause").html("暂停统计");
+//
+//                } else {
+//                    $("#pause").html("继续统计");
+//                }
+//            }
+//        });
     });
     var originalContent = "<?php echo $classExercise['content']; ?>";
     window.GA_originalContent = originalContent;
@@ -140,8 +146,28 @@ $squence = $countSquence + 1;
     });
 
     $(document).ready(function () {
-        startParse();
+        window.parent.alertStartKeyExercise();
     });
+
+    function start() {
+        $("#word").html(3);
+        var count = 0;
+        var ready = setInterval(function () {
+            $("#word").html(2 - count);
+            count++;
+            if (count === 3) {
+                startParse();
+                var myDate = new Date();
+                window.G_pressTime = myDate.getTime();
+                if (window.G_startFlag === 0) {
+                    window.G_startTime = myDate.getTime();
+                    window.G_startFlag = 1;
+                    window.G_oldStartTime = window.G_pressTime;
+                }
+                clearInterval(ready);
+            }
+        }, 1000);
+    }
 
     $(document).ready(function () {
         $("li#li-key-<?php echo $classExercise['exerciseID']; ?>").attr('class', 'active');
@@ -156,15 +182,14 @@ $squence = $countSquence + 1;
         return length;
     }
 
- function finish(){
-        if(window.G_startFlag===1){
-            window.G_isOverFlag = 1; 
-            $("#finish").attr("disabled","disabled");
-             window.parent.finish();
+    function finish() {
+        if (window.G_startFlag === 1) {
+            window.G_isOverFlag = 1;
+            $("#finish").attr("disabled", "disabled");
+            window.parent.finish();
         }
-       
     }
-    
+
 
 
     /*

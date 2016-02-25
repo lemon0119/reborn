@@ -20,9 +20,10 @@
                      <tr>
                          <td><input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"></td>
                          <td class="font-center">全选</td>
-                         <td id="play-classExercise" style="cursor: pointer;height: 30px !important;font-size: 18px ;color: green" colspan="3" class="table_pointer font-center">点击批量开放选中练习</td>
+                         <td id="play-classExercise" style="cursor: pointer;height: 30px !important;font-size: 18px ;color: green" colspan="2" class="table_pointer font-center">点击批量开放选中练习</td>
+                         <td id="look-Analysis" style="cursor: pointer;height: 30px !important;font-size: 18px ;"  class="table_pointer font-center">查看完成情况</td>
                     </tr> 
-                    <?php foreach($classExerciseLst as $model):?>
+                    <?php $mark=0; foreach($classExerciseLst as $model):?>
                     <tr>
                         <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID'];?>" > </td>
                         <td class="font-center" style="width: 100px"><?php switch ($model['type']){
@@ -41,7 +42,7 @@
                                    else
                                         echo Tool::csubstr(Tool::filterKeyContent($model['content']),0,12)."...";
                                         ?></td>
-                        <td><button id="startClassExercise" class="btn btn-primary" onclick="startClassExercise(<?php echo $model['exerciseID'];?>)" >开始</a></td>
+                        <td><button id="startClassExercise" <?php if($model['now_open']==1){if($mark===0)$mark = $model['exerciseID']?> class='btn' disabled='disabled' <?php }else{ ?> class='btn btn-primary'<?php }?>   onclick="startClassExercise(<?php echo $model['exerciseID'];?>)" >开始</button></td>
                     </tr> 
                     <?php endforeach;?> 
                 </tbody>
@@ -52,6 +53,7 @@
 <script>
     
     function startClassExercise(exerciseID){
+        window.parent.exitNowOn();
         window.parent.startNow(exerciseID);
     }
     
@@ -62,9 +64,18 @@
             checkboxs[i].checked = obj.checked;
         }
     }
+    $('#look-Analysis').click(function(){
+        window.parent.exitNowOn();
+        if(<?php echo $mark;?>===0){
+          window.parent.alertError("没有已开放的练习");
+        }else{
+          window.parent.startClassExercise(<?php echo $mark;?>);  
+        }
+    });
     
     $('#play-classExercise').click(function(){
         var checkboxs = document.getElementsByName('checkbox[]');
+        window.parent.exitNowOn();
         window.parent.startNow4Lot(checkboxs);
     });
 </script>

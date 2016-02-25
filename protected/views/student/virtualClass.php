@@ -52,7 +52,7 @@ echo "<script>var role='$role';</script>";
      <div id="classExercise-container" align="center" style="width: 100% ; height:800px;  margin-top:0px;display:none;overflow-x: hidden">
          <div><button id="exercise_again" onclick="reExercise()" style="margin-left: 10px;margin-right: 10px" class="fr btn" >再来一遍</button><button id="exercise_next" onclick="nextExercise()" <?php if(count($exerciseIsOpenNow)<2){echo "disabled='disabled'";}?> style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary">下一题</button><button id="exercise_last" onclick="lastExercise()" disabled="disabled" style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary" >上一题</button></div>
          <div style="height: 730px;">
-            <iframe id="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
+            <iframe id="iframe_classExercise" name="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
         </div>
     </div>
 
@@ -338,7 +338,7 @@ function checkOnLine(){
              dataType: "json",
              url: "index.php?r=api/updateStuOnLine&&classID=<?php echo $classID;?>&&userid=<?php echo Yii::app()->session['userid_now']?>",
              data:{},
-             success: function(){ console.log("set time");},
+             success: function(){ },
                 error: function(xhr, type, exception){
                     console.log(xhr, "Failed");
                     window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
@@ -584,9 +584,18 @@ function reExercise(){
     passClassExercise();
 }
 
+function alertStartKeyExercise(){
+    window.wxc.xcConfirm("即将开始！您将有3秒准备时间！", window.wxc.xcConfirm.typeEnum.warning,{
+            onOk:function(){
+                iframe_classExercise.window.start();
+            }
+        });
+}
+
 function finish(){
     isfinish[nowOn] = 1;
-    if(nowOn<exerciseIsOpenNow.length){
+    passClassExercise();
+    if(nowOn<exerciseIsOpenNow.length-1){
         window.wxc.xcConfirm("点击确定将进入下一个练习", window.wxc.xcConfirm.typeEnum.info,{
                     onOk:function(){
                         nextExercise();

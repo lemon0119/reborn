@@ -5443,3 +5443,7 @@ table tr td {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
 }
+.progressbox{width:610px; height:30px; margin:0 auto; }
+.progresstbox{border-radius: 5px;width:610px; height:20px; background:gray; margin-top:0px;}
+.progresstbox div{border-radius: 5px;width:0px; height:20px; background:#aad326; text-align:center;
+font-family:Tahoma; font-size:18px; line-height:48px;}

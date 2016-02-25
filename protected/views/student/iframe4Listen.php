@@ -133,6 +133,7 @@
         var myDate = new Date();
         window.G_pressTime = myDate.getTime();
         if (window.G_startFlag === 0) {
+            window.G_isLook = 1;
             window.G_startTime = myDate.getTime();
             window.G_startFlag = 1;
             window.G_oldStartTime = window.G_pressTime;

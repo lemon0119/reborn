@@ -341,8 +341,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             <div  class="title_split"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;"  align="center" ><h4 >备 课 资 源 </h4></div>
         </div>
         <div style="height: 40px;">
-             <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
-             <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>
+            <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
+            <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>
         </div>
         <div style="position: relative;text-align: center;top: 10px;height: 550px;overflow: auto">
             <iframe id="iframe_class" style="border: 0px;height: 95%;width: 95%;"></iframe>
@@ -399,7 +399,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             <div id="chat-box" style="border: 0px">   
                 <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%">
                  </div>
->>>>>>> 666
+>>>>>>> 
                 
     
                 </div>-->
@@ -485,6 +485,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 </script>
 
 <script>
+    var isOnLive = "";
     var picOrppt = "";
     //chat and bulletin   
     $(document).ready(function () {
@@ -745,7 +746,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#show-voice").toggle(200);
         });
         $("#sw-classExercise").click(function () {
-            document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>";
+            document.getElementById('iframe_class').src = "index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>";
             if (flag === "classExercise") {
                 flag = "";
                 $("#title_classExercise").css({"color": "#fff"});
@@ -779,16 +780,18 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     $("#scroll-video").hide();
     $(document).ready(function () {
         $.ajax({
-               type:"POST",
-               url:"index.php?r=teacher/openClassExercise",
-               data:{exerciseID:0},
-               success:function(data){
-               },
+            type: "POST",
+            url: "index.php?r=teacher/openClassExercise",
+            data: {exerciseID: 0},
+            success: function (data) {
+            },
         });
         //打开连接
         openConnect();
 
         $("#play-ppt").click(function () {
+             exitNowOn();
+            isOnLive = "play-ppt";
             $("#voice").attr("src", "");
             window.picOrppt = "ppt";
             closeAllTitle();
@@ -797,10 +800,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 return;
             }
             window.scrollTo(0, 130);
-            document.getElementById("teacher-dianbo-public").disabled = true;
-            $("#teacher-dianbo-public").attr("class", "btn");
-            document.getElementById("teacher-dianbo").disabled = true;
-            $("#teacher-dianbo").attr("class", "btn");
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
@@ -831,6 +830,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             }, 4000);
         });
         $("#play-ppt-public").click(function () {
+        exitNowOn();
+            isOnLive = "play-ppt";
             $("#voice").attr("src", "");
             window.picOrppt = "ppt";
             closeAllTitle();
@@ -839,10 +840,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 return;
             }
             window.scrollTo(0, 130);
-            document.getElementById("teacher-dianbo-public").disabled = true;
-            $("#teacher-dianbo-public").attr("class", "btn");
-            document.getElementById("teacher-dianbo").disabled = true;
-            $("#teacher-dianbo").attr("class", "btn");
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
@@ -900,15 +897,12 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             this.disabled = true;
             $("#close-ppt").attr("class", "btn");
             document.getElementById("play-ppt").disabled = false;
-            document.getElementById("teacher-dianbo-public").disabled = false;
-            $("#teacher-dianbo-public").attr("class", "btn btn-primary");
-            document.getElementById("teacher-dianbo").disabled = false;
-            $("#teacher-dianbo").attr("class", "btn btn-primary");
             $("#ppt-container").hide();
             $("#voice-container").hide();
             $("#scroll-page").hide();
             $("#txt-container").hide();
         });
+        
 
         $("#share-Cam").click(function () {
         });
@@ -927,6 +921,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#teacher-dianbo").click(function () {
+            exitNowOn();
+            isOnLive = "teacher-dianbo";
             $("#voice").attr("src", "");
             closeAllTitle();
             if ($("#teacher-choose-file")[0].selectedIndex == -1)
@@ -934,19 +930,16 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 return;
             }
             window.scrollTo(0, 130);
-            document.getElementById("play-ppt").disabled = true;
-            $("#play-ppt").attr("class", "btn");
+
             $("#scroll-video").show();
             document.getElementById("close-dianbo").disabled = false;
             $("#close-dianbo").attr("class", "btn btn-primary");
             var server_root_path = "<?php echo SITE_URL . 'resources/' ?>";
-            console.log(server_root_path);
             var filepath = $("#teacher-choose-file option:selected").val();
             var absl_path = server_root_path + filepath;
             var video_element;
             var video_time_duration;
 
-            console.log("Choose file " + server_root_path + filepath);
 
             var video = document.getElementById('video1');
             if (video === null) {
@@ -970,15 +963,16 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#teacher-dianbo-public").click(function () {
+            exitNowOn();
+            isOnLive = "teacher-dianbo";
             $("#voice").attr("src", "");
+            disablebutton("teacher-dianbo");
             closeAllTitle();
             if ($("#teacher-choose-file-public")[0].selectedIndex == -1)
             {
                 return;
             }
             window.scrollTo(0, 130);
-            document.getElementById("play-ppt").disabled = true;
-            $("#play-ppt").attr("class", "btn");
             $("#scroll-video").show();
             document.getElementById("close-dianbo").disabled = false;
             $("#close-dianbo").attr("class", "btn btn-primary");
@@ -1013,7 +1007,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
         $("#close-dianbo").click(function () {
             $("#scroll-video").hide();
-            document.getElementById("play-ppt").disabled = false;
             $("#play-ppt").attr("class", "btn btn-primary");
             clearVideo();
             this.disabled = true;
@@ -1021,6 +1014,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-pic").click(function () {
+            exitNowOn();
+            isOnLive = "play-pic";
             $("#voice").attr("src", "");
             window.picOrppt = "pic";
             closeAllTitle();
@@ -1028,13 +1023,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             {
                 return;
             }
-            document.getElementById("teacher-dianbo-public").disabled = true;
-            $("#teacher-dianbo-public").attr("class", "btn");
-            document.getElementById("teacher-dianbo").disabled = true;
-            $("#teacher-dianbo").attr("class", "btn");
             window.scrollTo(0, 130);
-            document.getElementById("close-ppt").disabled = false;
-            $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
             $("#txt-container").hide();
             $("#voice-container").hide();
@@ -1058,6 +1047,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-pic-public").click(function () {
+            exitNowOn();
+            isOnLive = "play-pic";
             $("#voice").attr("src", "");
             window.picOrppt = "pic-public";
             closeAllTitle();
@@ -1065,10 +1056,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             {
                 return;
             }
-            document.getElementById("teacher-dianbo").disabled = true;
-            $("#teacher-dianbo").attr("class", "btn");
             window.scrollTo(0, 130);
-            document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
             $("#txt-container").hide();
@@ -1093,6 +1081,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-txt").click(function () {
+            exitNowOn();
+            isOnLive = "play-txt";
             $("#voice").attr("src", "");
             window.picOrppt = "txt";
             closeAllTitle();
@@ -1100,10 +1090,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             {
                 return;
             }
-            document.getElementById("teacher-dianbo-public").disabled = true;
-            $("#teacher-dianbo-public").attr("class", "btn");
-            document.getElementById("teacher-dianbo").disabled = true;
-            $("#teacher-dianbo").attr("class", "btn");
             $("#ppt-container").hide();
             window.scrollTo(0, 130);
             document.getElementById("close-ppt").disabled = false;
@@ -1130,6 +1116,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-txt-public").click(function () {
+            exitNowOn();
+            isOnLive = "play-txt";
             $("#voice").attr("src", "");
             window.picOrppt = "txt-public";
             closeAllTitle();
@@ -1137,8 +1125,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             {
                 return;
             }
-            document.getElementById("teacher-dianbo").disabled = true;
-            $("#teacher-dianbo").attr("class", "btn");
             window.scrollTo(0, 130);
             document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
@@ -1165,16 +1151,14 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-voice").click(function () {
+            exitNowOn();
+            isOnLive = "play-voice";
             window.picOrppt = "voice";
             closeAllTitle();
             if ($("#choose-voice")[0].selectedIndex == -1)
             {
                 return;
             }
-            document.getElementById("teacher-dianbo-public").disabled = true;
-            $("#teacher-dianbo-public").attr("class", "btn");
-            document.getElementById("teacher-dianbo").disabled = true;
-            $("#teacher-dianbo").attr("class", "btn");
             $("#ppt-container").hide();
             window.scrollTo(0, 130);
             document.getElementById("close-ppt").disabled = false;
@@ -1201,16 +1185,14 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-voice-public").click(function () {
+            exitNowOn();
+            isOnLive = "play-voice";
             window.picOrppt = "voice-public";
             closeAllTitle();
             if ($("#choose-voice-public")[0].selectedIndex == -1)
             {
                 return;
             }
-            document.getElementById("teacher-dianbo-public").disabled = true;
-            $("#teacher-dianbo-public").attr("class", "btn");
-            document.getElementById("teacher-dianbo").disabled = true;
-            $("#teacher-dianbo").attr("class", "btn");
             $("#ppt-container").hide();
             window.scrollTo(0, 130);
             document.getElementById("close-ppt").disabled = false;
@@ -1522,6 +1504,64 @@ $dir->close();
 
     }
 
+    function exitNowOn() {
+        switch (isOnLive) {
+            case "teacher-dianbo":
+                isOnLive = "";
+                $("#scroll-video").hide();
+                $("#play-ppt").attr("class", "btn btn-primary");
+                clearVideo();
+                this.disabled = true;
+                $("#close-dianbo").attr("class", "btn");
+                break;
+            case "play-ppt":
+                $("#voice").attr("src", "");
+                cur_ppt = -1;
+                ppt_pages = -1;
+                if (timer_ppt !== null)
+                    clearInterval(timer_ppt);
+                var msg = "<?php echo $classID; ?>closeppt";
+                ws.send(msg);
+                this.disabled = true;
+                $("#close-ppt").attr("class", "btn");
+                document.getElementById("play-ppt").disabled = false;
+                $("#ppt-container").hide();
+                $("#voice-container").hide();
+                $("#scroll-page").hide();
+                $("#txt-container").hide();
+                isOnLive = "";
+                break;
+            case "play-pic":
+                 $("#voice").attr("src", "");
+                cur_ppt = -1;
+                ppt_pages = -1;
+                if (timer_ppt !== null)
+                    clearInterval(timer_ppt);
+                var msg = "<?php echo $classID; ?>closeppt";
+                ws.send(msg);
+                this.disabled = true;
+                $("#close-ppt").attr("class", "btn");
+                document.getElementById("play-ppt").disabled = false;
+                $("#ppt-container").hide();
+                $("#voice-container").hide();
+                $("#scroll-page").hide();
+                $("#txt-container").hide();
+                isOnLive = "";
+                break;
+            case "play-txt":
+                isOnLive = "";
+                break;
+            case "play-voice":
+                isOnLive = "";
+                break;
+//            case "classExercis":
+//                closeAllOpenNow();
+//                isOnLive = "";
+//                break;
+        }
+
+    }
+
     function closeAllTitle() {
         $("#show-movie").hide();
         $("#title_movie").css({"color": "#fff"});
@@ -1539,12 +1579,12 @@ $dir->close();
         $("#title_bull").css({"color": "#fff"});
     }
     function closeTitleWithoutFlag(flag) {
-         $.ajax({
-               type:"POST",
-               url:"index.php?r=teacher/openClassExercise",
-               data:{exerciseID:0},
-               success:function(data){
-               },
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=teacher/openClassExercise",
+            data: {exerciseID: 0},
+            success: function (data) {
+            },
         });
         switch (flag) {
             case "movie":
@@ -1647,104 +1687,109 @@ $dir->close();
                 break;
         }
     }
-    function addNewClassExercise(){
-        window.open("./index.php?r=teacher/classExercise4Type&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['on'];?>&&on=<?php echo $_GET['on'];?>", 'newwindow','width='+(window.screen.availWidth-10)+',height='+(window.screen.availHeight-30)+ 'alwaysRaised=yes,top=0,left=0,toolbar=yes,z-look=yes,menubar=yes,scrollbars=yes,resizable=yes,location=no,status=no,' );
+    function addNewClassExercise() {
+        window.open("./index.php?r=teacher/classExercise4Type&&nobar=yes&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>", 'newwindow', 'width=' + (window.screen.availWidth - 10) + ',height=' + (window.screen.availHeight - 30) + 'alwaysRaised=yes,top=0,left=0,toolbar=yes,z-look=yes,menubar=yes,scrollbars=yes,resizable=yes,location=no,status=no,');
     }
-    
-    function iframReload(){
-          document.getElementById('iframe_class').contentWindow.location.reload(true);
+
+    function iframReload() {
+        document.getElementById('iframe_class').contentWindow.location.reload(true);
     }
-    
-    function startClassExercise(exerciseID){
-        var classID = <?php echo $_GET['classID'];?>;
-        document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4Analysis&&exerciseID="+exerciseID+"&&classID="+classID;
+
+    function startClassExercise(exerciseID) {
+        var classID = <?php echo $_GET['classID']; ?>;
+        document.getElementById('iframe_class').src = "index.php?r=teacher/tableClassExercise4Analysis&&exerciseID=" + exerciseID + "&&classID=" + classID;
     }
-    
-    function startNow4Lot(checkboxs){
-        var check ="";
+
+    function startNow4Lot(checkboxs) {
+        var check = "";
         var exerciseID = "";
-        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info,{
-            onOk:function(){
+        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info, {
+            onOk: function () {
                 for (var i = 0; i < checkboxs.length; i++) {
-                    exerciseID = checkboxs[0].value;
-                    if(checkboxs[i].checked){
-                        check+=checkboxs[i].value+"&";
+                    if (checkboxs[i].checked) {
+                        if (exerciseID === "") {
+                            exerciseID = checkboxs[i].value;
+                        }
+                        check += checkboxs[i].value + "&";
                     }
                 }
                 $.ajax({
-                       type:"POST",
-                       url:"index.php?r=teacher/openClassExercise4lot",
-                       data:{check:check},
-                       success:function(data){
-                           if(data=="开放成功！"){
-                                window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
-                                window.parent.startClassExercise(exerciseID);
-                           }else{
-                               window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
-                           }
-                       },
-                       error:function(xhr, type, exception){
-                           console.log('GetAverageSpeed error', type);
-                           console.log(xhr, "Failed");
-                           console.log(exception, "exception");
+                    type: "POST",
+                    url: "index.php?r=teacher/openClassExercise4lot",
+                    data: {check: check},
+                    success: function (data) {
+                        if (data == "开放成功！") {
+                            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
+                            window.parent.startClassExercise(exerciseID);
+                        } else {
+                            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
+                        }
+                    },
+                    error: function (xhr, type, exception) {
+                        console.log('GetAverageSpeed error', type);
+                        console.log(xhr, "Failed");
+                        console.log(exception, "exception");
 
-                       }
-                 });
+                    }
+                });
             }
         });
-        
-        
-    }
-    
-    function startNow(exerciseID){
-        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info,{
-            onOk:function(){
-                        $.ajax({
-                       type:"POST",
-                       url:"index.php?r=teacher/openClassExercise",
-                       data:{exerciseID:exerciseID},
-                       success:function(data){
-                           if(data==1){
-                               window.parent.startClassExercise(exerciseID);
-                           }else{
-                               alert("开放失败");
-                           }
-                       },
-                       error:function(xhr, type, exception){
-                           console.log('GetAverageSpeed error', type);
-                           console.log(xhr, "Failed");
-                           console.log(exception, "exception");
 
-                       }
-                }); 
+
+    }
+
+    function startNow(exerciseID) {
+        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info, {
+            onOk: function () {
+                $.ajax({
+                    type: "POST",
+                    url: "index.php?r=teacher/openClassExercise",
+                    data: {exerciseID: exerciseID},
+                    success: function (data) {
+                        if (data == 1) {
+                            window.parent.startClassExercise(exerciseID);
+                        } else {
+                            alert("开放失败");
+                        }
+                    },
+                    error: function (xhr, type, exception) {
+                        console.log('GetAverageSpeed error', type);
+                        console.log(xhr, "Failed");
+                        console.log(exception, "exception");
+
+                    }
+                });
             }
         });
     }
-    
-    function backToTableClassExercise4virtual(){
-        document.getElementById('iframe_class').src="index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>";
+
+    function backToTableClassExercise4virtual() {
+        document.getElementById('iframe_class').src = "index.php?r=teacher/tableClassExercise4virtual&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>";
     }
-    
-    function closeAllOpenNow(){
-         window.wxc.xcConfirm("确定要关闭当前所有正在进行中的练习？", window.wxc.xcConfirm.typeEnum.info,{
-            onOk:function(){
-                
-                 $.ajax({
-                       type:"POST",
-                       url:"index.php?r=teacher/closeAllOpenExerciseNow",
-                       data:{},
-                       success:function(data){
-                           backToTableClassExercise4virtual();
-                               window.wxc.xcConfirm(data,window.wxc.xcConfirm.typeEnum.success);
-                       },
-                       error:function(xhr, type, exception){
-                           console.log('GetAverageSpeed error', type);
-                           console.log(xhr, "Failed");
-                           console.log(exception, "exception");
-                       }
-            }); 
-             }
-         });
+
+    function closeAllOpenNow() {
+        window.wxc.xcConfirm("确定要关闭当前所有正在进行中的练习？", window.wxc.xcConfirm.typeEnum.info, {
+            onOk: function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: "index.php?r=teacher/closeAllOpenExerciseNow",
+                    data: {},
+                    success: function (data) {
+                        backToTableClassExercise4virtual();
+                        window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
+                    },
+                    error: function (xhr, type, exception) {
+                        console.log('GetAverageSpeed error', type);
+                        console.log(xhr, "Failed");
+                        console.log(exception, "exception");
+                    }
+                });
+            }
+        });
+    }
+    function alertError(text){
+        window.wxc.xcConfirm(text, window.wxc.xcConfirm.typeEnum.error);
     }
 
 </script>
