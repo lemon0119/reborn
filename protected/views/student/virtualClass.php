@@ -595,7 +595,7 @@ function alertStartKeyExercise(){
 function finish(){
     isfinish[nowOn] = 1;
     passClassExercise();
-    if(nowOn<exerciseIsOpenNow.length){
+    if(nowOn<exerciseIsOpenNow.length-1){
         window.wxc.xcConfirm("点击确定将进入下一个练习", window.wxc.xcConfirm.typeEnum.info,{
                     onOk:function(){
                         nextExercise();
