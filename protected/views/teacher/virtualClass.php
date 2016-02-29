@@ -293,44 +293,34 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
                 <select id="choose-voice" style="width:150px;margin-top: 10px;">
-                    <?php
+                            <?php
                     $mydir = dir($voicedir);
                     while ($file = $mydir->read()) {
-                        if ((!is_dir("$voicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$voicedir";
-                            $num = sizeof(scandir($dir));
-                            $num = ($num > 2) ? ($num - 2) : 0;
-                            echo $num;
-                            ?>+-+tea"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
-                                    <?php
-                                }
-                            }
-                            $mydir->close();
-                            ?>
+                            <option value ="<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <?php
+                        }
+                    }
+                    $mydir->close();
+                    ?>
                 </select>
                 <button id="play-voice" style="width: 150px;" class="btn btn-primary">播放音频</button>
             </div>
             <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
             <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
                 <select id="choose-voice-public" style="width:150px;margin-top: 10px;">
-                    <?php
+                             <?php
                     $mydir = dir($adminPublicVoicedir);
                     while ($file = $mydir->read()) {
                         if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$adminPublicVoicedir";
-                            $num = sizeof(scandir($dir));
-                            $num = ($num > 2) ? ($num - 2) : 0;
-                            echo $num;
-                            ?>+-+admin"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
-                                    <?php
-                                }
-                            }
-                            $mydir->close();
-                            ?>
+                            <option value ="<?php echo $adminPublicVdir . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <?php
+                        }
+                    }
+                    $mydir->close();
+                    ?>
                 </select>
                 <button id="play-voice-public" style="width: 150px;" class="btn btn-primary">播放音频</button>
             </div>
@@ -372,10 +362,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     <div id="txt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
         <textarea id="txt-textarea" style="background:transparent;border-style:none; width: 720px;height: 600px" disabled="disable">
         </textarea>
-    </div>
-    <div id="voice-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
-        <audio id="voice" style="position: relative;top: 100px;width: 500px !important;" controls src="">
-        </audio>
     </div>
 
 </div>
@@ -947,7 +933,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             var video_element;
             var video_time_duration;
 
-
             var video = document.getElementById('video1');
             if (video === null) {
                 var html = "";
@@ -1105,6 +1090,13 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#txt-container").show();
             $("#voice-container").hide();
             $("#scroll-page").show();
+            $("#page-up").hide();
+            $("#yeshu").hide();
+            $("#all-yeshu").hide();
+            $("#page-go").hide();
+            $("#page-down").hide();
+            $("#full-screen-button").hide();
+            
             cur_ppt = 1;
             var file_info = $("#choose-txt option:selected").val().split("+-+");
             var source = file_info[2];
@@ -1114,13 +1106,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             ppt_pages = file_info[1];
             $("#all-yeshu").val(ppt_pages);
             goCurPage();
-            if (timer_ppt !== null)
-                clearInterval(timer_ppt);
-            timer_ppt = setInterval(function () {
-                var syn_msg;
-                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                ws.send(syn_msg);
-            }, 4000);
         });
 
         $("#play-txt-public").click(function () {
@@ -1140,6 +1125,12 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#txt-container").show();
             $("#voice-container").hide();
             $("#scroll-page").show();
+            $("#page-up").hide();
+            $("#yeshu").hide();
+            $("#all-yeshu").hide();
+            $("#page-go").hide();
+            $("#page-down").hide();
+            $("#full-screen-button").hide();
             cur_ppt = 1;
             var file_info = $("#choose-txt-public option:selected").val().split("+-+");
             var source = file_info[2];
@@ -1149,13 +1140,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             ppt_pages = file_info[1];
             $("#all-yeshu").val(ppt_pages);
             goCurPage();
-            if (timer_ppt !== null)
-                clearInterval(timer_ppt);
-            timer_ppt = setInterval(function () {
-                var syn_msg;
-                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                ws.send(syn_msg);
-            }, 4000);
         });
 
         $("#play-voice").click(function () {
@@ -1322,8 +1306,7 @@ $dir->close();
                 data: {url: ppt_dir},
                 success: function (data) {
                     $("#txt-textarea").val(data);
-                    var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                    ws.send(msg);
+                    ws.send("show_text"+data);
                 },
                 error: function (xhr, type, exception) {
                     console.log('getTxtValue error', type);
@@ -1331,6 +1314,25 @@ $dir->close();
                     console.log(exception, "exception");
                 }
             });
+            if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "index.php?r=api/getTxtValue",
+                data: {url: ppt_dir},
+                success: function (data) {
+                    $("#txt-textarea").val(data);
+                    ws.send("show_text"+data);
+                },
+                error: function (xhr, type, exception) {
+                    console.log('getTxtValue error', type);
+                    console.log(xhr, "Failed");
+                    console.log(exception, "exception");
+                }
+            });
+            }, 4000);
 
         } else if (window.picOrppt === "txt-public") {
             var server_root_path = "./resources/public/txt/";
@@ -1358,8 +1360,7 @@ $dir->close();
                 data: {url: ppt_dir},
                 success: function (data) {
                     $("#txt-textarea").val(data);
-                    var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                    ws.send(msg);
+                    ws.send("show_text"+data);
                 },
                 error: function (xhr, type, exception) {
                     console.log('getTxtValue error', type);
@@ -1367,6 +1368,25 @@ $dir->close();
                     console.log(exception, "exception");
                 }
             });
+             if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "index.php?r=api/getTxtValue",
+                data: {url: ppt_dir},
+                success: function (data) {
+                    $("#txt-textarea").val(data);
+                    ws.send("show_text"+data);
+                },
+                error: function (xhr, type, exception) {
+                    console.log('getTxtValue error', type);
+                    console.log(xhr, "Failed");
+                    console.log(exception, "exception");
+                }
+            });
+            }, 4000);
         } else if (window.picOrppt === "voice") {
             var server_root_path = ppt_dir.split("voice")[0] + "voice/";
             var array_fileName = new Array();
@@ -1532,6 +1552,7 @@ $dir->close();
                 $("#close-dianbo").attr("class", "btn");
                 break;
             case "play-ppt":
+                isOnLive = "";
                 $("#voice").attr("src", "");
                 cur_ppt = -1;
                 ppt_pages = -1;
@@ -1549,6 +1570,7 @@ $dir->close();
                 isOnLive = "";
                 break;
             case "play-pic":
+                isOnLive = "";
                  $("#voice").attr("src", "");
                 cur_ppt = -1;
                 ppt_pages = -1;
@@ -1567,9 +1589,31 @@ $dir->close();
                 break;
             case "play-txt":
                 isOnLive = "";
+                 $("#voice").attr("src", "");
+                cur_ppt = -1;
+                ppt_pages = -1;
+                var msg = "<?php echo $classID; ?>closeppt";
+                ws.send(msg);
+                this.disabled = true;
+                $("#close-ppt").attr("class", "btn");
+                document.getElementById("play-ppt").disabled = false;
+                $("#ppt-container").hide();
+                $("#voice-container").hide();
+                $("#scroll-page").hide();
+                $("#txt-container").hide();
+                if (timer_ppt !== null)
+                    clearInterval(timer_ppt);
+                var msg = "<?php echo $classID; ?>closeppt";
+                ws.send(msg);
+                isOnLive = "";
                 break;
             case "play-voice":
                 isOnLive = "";
+                 $("#scroll-video").hide();
+                $("#play-ppt").attr("class", "btn btn-primary");
+                clearVideo();
+                this.disabled = true;
+                $("#close-dianbo").attr("class", "btn");
                 break;
 //            case "classExercis":
 //                closeAllOpenNow();
