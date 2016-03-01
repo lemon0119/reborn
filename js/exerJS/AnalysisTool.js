@@ -18,6 +18,7 @@
  * 
  */
     var G_exerciseType       ="";
+    var G_isLook             = 0;
     var G_keyBoardBreakPause = 0;
     var G_saveToDatabase     = 0;
     var G_isOverFlag         = 0;
@@ -54,7 +55,6 @@
 $(document).ready(function(){
     var highstCountKey  = 0;
     var highstSpeed     = 0;
-    var isAgain         = 0;
     var pauseTime       = 0;
     var pauseOn         = 0;
     //2s内统计统计瞬时击键 次/秒
@@ -112,7 +112,7 @@ $(document).ready(function(){
             $("#getcountAllKey").html(countAllKey);
             if(nowTime>startTime){
                 var averageKeyType = parseInt(countAllKey/(nowTime-startTime)*60000);
-                if((countAllKey/(nowTime-startTime)*1000)<1 && (countAllKey/(nowTime-startTime)*1000)>0 ){
+                if(averageKeyType<1 && averageKeyType>0 ){
                     averageKeyType = 1;
                 }
                 window.GA_averageKeyType = averageKeyType;
@@ -156,7 +156,7 @@ $(document).ready(function(){
                 //平均速度 字/分钟
                 if(content.length>0){
                     var averageSpeed = parseInt(content.length/(nowTime-startTime)*60000);
-                    if(averageSpeed ===0){
+                    if(averageSpeed<1 && averageSpeed>=0 ){
                         averageSpeed = 1;
                     }
                     window.GA_averageSpeed = averageSpeed;
@@ -236,7 +236,9 @@ $(document).ready(function(){
                 });
                 }
              }
-             AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", window.GA_originalContent, window.G_content);
+             if(window.G_isLook ===1){
+                  AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", window.GA_originalContent, window.G_content);
+             }
                //判断统计结束
              if((nowTime-startTime)>(setEndTime*1000)||window.G_isOverFlag===1){
                  window.G_endAnalysis = 1;

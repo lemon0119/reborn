@@ -152,6 +152,7 @@ $squence = $countSquence + 1;
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         if(window.G_pauseFlag===1){
+            window.G_isLook = 1;
              window.G_keyBoardBreakPause = 0;
               $("#pause").html("暂停统计");
         }

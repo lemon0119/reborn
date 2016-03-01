@@ -359,7 +359,7 @@ class AdminController extends CController {
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
                             } else if (!Tool::checkID($data ['uid'])) {
-                                $result = "学号须由首字符英文和数字、英文、字母线组成！";
+                                $result = "学号首字符必须为英文！";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
@@ -3201,7 +3201,6 @@ class AdminController extends CController {
     public function actionInfoCourse() {
         $deleteResult = 'no';
         $courseID = $_GET ['courseID'];
-       
         if(isset($_GET['delete'])){
             //删
             $lessonName = $_GET['lessonName'];
@@ -3218,8 +3217,9 @@ class AdminController extends CController {
         }else if (isset ($_GET['newName'])) {
             //改
             $lessonName = $_GET['lessonName'];
+            $number=$_GET['number'];
             $newName = $_GET['newName'];
-            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
+            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number' ";
             Yii::app()->db->createCommand($sql)->query();
         }
         $courseName = $_GET ['courseName'];

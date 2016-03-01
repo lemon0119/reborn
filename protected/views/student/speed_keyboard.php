@@ -51,6 +51,10 @@
     </tr>
 </table>
 <script>
+    var isPress = 0;
+    var judgementFlag = 0;
+    var psz = "";
+    var flag4CheckLastWord = new Array();
     function keySet(keyID,isRight){
         var obj = document.getElementById(keyID);
         if(isRight)
@@ -120,15 +124,16 @@
     }
     
     function onStenoPressKey(pszStenoString ,device){
-        window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
+        if(window.G_startFlag ===1){
+            window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
         window.G_keyBoardBreakPause =0;
           var myDate = new Date();
          window.G_pressTime = myDate.getTime();
-         if(window.G_startFlag ===0){
-                    window.G_startTime = myDate.getTime();
-                    window.G_startFlag = 1; 
-                    window.G_oldStartTime = window.G_pressTime;
-                }
+//         if(window.G_startFlag ===0){
+//                    window.G_startTime = myDate.getTime();
+//                    window.G_startFlag = 1; 
+//                    window.G_oldStartTime = window.G_pressTime;
+//                }
                 window.G_countMomentKey++;
                 window.G_countAllKey++;
                 window.G_content = document.getElementById("typeOCX").GetContent();
@@ -154,27 +159,29 @@
           }   
         
         
-        if(HaveWindow == 1)
-            return;
-        if(totalNum == currentNum && repeatNum == 0){
-            HaveWindow = 1;
-            window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
-                onOk:function(){
-                    currentNum = totalNum;
-                    HaveWindow = 0;
-                },
-                onClose:function(){
-                    currentNum = totalNum;
-                    HaveWindow = 0;
-                }
-            });
-            currentNum = totalNum;
-            return ;
-        }
+//        if(HaveWindow == 1)
+//            return;
+//        if(totalNum == currentNum && repeatNum == 0){
+//            HaveWindow = 1;
+//            window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success,{
+//                onOk:function(){
+//                    currentNum = totalNum;
+//                    HaveWindow = 0;
+//                },
+//                onClose:function(){
+//                    currentNum = totalNum;
+//                    HaveWindow = 0;
+//                }
+//            });
+//            currentNum = totalNum;
+//            return ;
+//        }
+        //判断键位是否正确
         var charSet = pszStenoString.split("");
         var left = true;
         storyKey(pszStenoString);
         keyReSet();
+        
         for(var i = 0; i < charSet.length; i++){
             if(charSet[i] == ':'){
                 left = false;
@@ -182,21 +189,24 @@
             }
             var c = charSet[i].toLowerCase();
             if(left){
-                if(checkChar(charSet[i],true))
+                if(checkChar(charSet[i],true)){
                     //打对择把该键显示设置true
                     keySet("l_"+ c, true);
-                else
+                }else{
                     keySet("l_"+c , false);
+              }
             }else{
-                if(checkChar(charSet[i],false))
+                if(checkChar(charSet[i],false)){
                     keySet("r_"+c , true);
-                else
+                }else{
                     keySet("r_"+c , false);
+              }
             }
         }
-        changTemplet(pszStenoString);
-        window.GA_RightRadio = (getCorrect()*100).toFixed(2);
-        document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
+        isPress = 1;
+        psz = pszStenoString;
+        }
+        
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();
@@ -214,19 +224,26 @@
         var speed = document.getElementById("id_speed").value;
         repeatNum = $("#repeatNum").html();
         var cont_array = content.split("$$");
-        for(var i = 0; i < cont_array.length; i += 1){
-            var yaweiCode = cont_array[i].split(":0")[0];
-            yaweiCodeArray.push(yaweiCode);   
-            var word = cont_array[i].split(":0")[1];
-            wordArray.push(word);
-            totalNum += 1;           
+         for (var j = 0; j < repeatNum; j++) {
+            for (var i = 0; i < cont_array.length; i += 1) {
+                var yaweiCode = cont_array[i].split(":0")[0];
+                yaweiCodeArray.push(yaweiCode);
+                var word = cont_array[i].split(":0")[1];
+                wordArray.push(word);
+                totalNum += 1;
+            }
         }
         display();
         time1 = setInterval("display()",1/(speed/60)*1000); 
     }
     
     function setWordView(word){
-        document.getElementById("word").innerHTML = word;
+            document.getElementById("word").innerHTML = word;
+        if(wordArray[currentNum+1]!==undefined){
+            document.getElementById("wordNext").innerHTML = wordArray[currentNum+1];
+        }else{
+            document.getElementById("wordNext").innerHTML = "";
+        }
         $('#keyMode').fadeOut(50);
         $('#keyMode').fadeIn(50);
     }   
@@ -234,6 +251,8 @@
     function changTemplet(pszStenoString){
         if(isSameWord(pszStenoString,yaweiCode)){
             ++numKeyRight;
+        }else{
+            judgementFlag = 1;
         }
     }
     
@@ -276,27 +295,58 @@
     }
     
     function getNextWord(){
-        currentNum++;       
+        currentNum++; 
+        $("#isDone").html(currentNum);
+        //调整进度条
+        var currentProgress = Math.round((currentNum/totalNum)*100);
+        add(currentProgress);
+        //按每跳的最后一次击键计算正确率
+         if(psz!==""){
+            changTemplet(psz);
+              window.GA_RightRadio = (getCorrect()*100).toFixed(2);
+              document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;  
+          }
+          //-----
+          //已击过窗口词语的正确错误判断
+        if(judgementFlag === 0){
+                if(isPress === 1){
+                    flag4CheckLastWord[currentNum] = 0;
+                }else if(isPress === 0){
+                   flag4CheckLastWord[currentNum] = 1;
+                }
+            }else if(judgementFlag ===1){
+                flag4CheckLastWord[currentNum] = 1;
+            }
+            isPress = 0;
+            judgementFlag = 0;
+            if(currentNum>0){
+                if(flag4CheckLastWord[currentNum]===0){
+                   document.getElementById("wordLast").innerHTML = "<span style='color:green'>"+wordArray[currentNum-1]+"</span>"; 
+                }else if(flag4CheckLastWord[currentNum]===1){
+                    document.getElementById("wordLast").innerHTML = "<span style='color:red'>"+wordArray[currentNum-1]+"</span>"; 
+                }
+        }else{
+            document.getElementById("wordLast").innerHTML = "";
+        }
         if(totalNum == currentNum){
-            repeatNum--;
-            document.getElementById("repeatNum").innerHTML = repeatNum;
-            if(repeatNum == 0){
+             document.getElementById("word").innerHTML = "";   
             clearInterval(time1);
             window.G_isOverFlag = 1;
             document.getElementById("id_cost").value = getSeconds();
             doSubmit(false); 
-            window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
             return '';
-        }
-        currentNum = 0;
         }       
         if(nextWord != "")
             return nextWord;
         var result = wordArray[currentNum];
-        yaweiCode = yaweiCodeArray[currentNum];        
+        yaweiCode = yaweiCodeArray[currentNum];   
+        keyReSet();
         return result;
     }
-        
+     function add(i){
+            var tiao =$(".progresstiao");
+			tiao.css("width",i+"%").html();
+		}   
 </script>
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 

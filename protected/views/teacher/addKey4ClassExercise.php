@@ -235,6 +235,7 @@
             NewCell.innerHTML = "<span style='float:left'>" + libs[i] + "</span>";
         }
         document.getElementById("libstr").value = libstr;
+        document.getElementById("input").value = libs[0];
     }
     function deleteLib(libs){
         window.wxc.xcConfirm("确定要删除吗？", window.wxc.xcConfirm.typeEnum.warning,{
