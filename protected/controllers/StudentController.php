@@ -1517,7 +1517,8 @@ class StudentController extends CController {
     public function actionStartClassExercise(){
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
-        $data = ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
+        $classExercise= ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
+        $data = $classExercise['type']."&&".$classExercise['exerciseID'];
         echo  $data;
     }
     
