@@ -55,8 +55,11 @@ echo "<script>var role='$role';</script>";
             <iframe id="iframe_classExercise" name="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
         </div>
     </div>
-
+    
     <div id="dianbo-videos-container" style="height:560px;display:none;">  </div>
+    <div id="Text-container" align="center" style="width: 100% ; height:560px;  margin-top:0px;display:none;overflow-x: hidden">
+        <textarea id="text-show" style="background:transparent;border-style:none; width: 720px;height: 550px" disabled="disable"></textarea>
+    </div>
     <div id="bulletin_activex">
     <object style="position: absolute;top:713px;" id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
@@ -243,11 +246,11 @@ $(document).ready(function(){
         pollChatRoom();
     }, 1000);
     // ------------------------------------------------------ start classExercise
-    var timer = setInterval(function() {
+    var timer4startExercise = setInterval(function() {
         if(isClassExercise===0){
             startClassExercise();
         }else{
-            clearInterval(timer);
+            clearInterval(timer4startExercise);
         }
     }, 2000);
 });
@@ -257,19 +260,26 @@ function startClassExercise(){
         type:"GET",
         url:"index.php?r=student/startClassExercise&&classID=<?php echo $classID;?>&&lessonID=<?php echo $currentLesn;?>",
         success:function(data){
+            var type = data.split("&&")[0];
+            var exerciseNowOn = data.split("&&")[1];
             if(data===""){
             }else{
                 isClassExercise=1;
                 window.wxc.xcConfirm("有新练习发布，点击开始！", window.wxc.xcConfirm.typeEnum.info,{
                     onOk:function(){
-                       var exerciseID = exerciseIsOpenNow[nowOn] ;
+                       var exerciseID ;
+                       if(exerciseIsOpenNow[nowOn]===undefined){
+                           exerciseID = exerciseNowOn;
+                       }else{
+                           exerciseID = exerciseIsOpenNow[nowOn];
+                       }
                                 $("#sw-bulletin").unbind("click");
                         $("#classExercise-container").toggle(200);
-                        if(data==="look"){
+                        if(type==="look"){
                             $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Look&exerciseID="+exerciseID);
-                        }else if(data==="listen"){
+                        }else if(type==="listen"){
                              $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Listen&exerciseID="+exerciseID);
-                        }else if(data==='speed'||data==='correct'||data==='free'){
+                        }else if(type==='speed'||type==='correct'||type==='free'){
                              $("#iframe_classExercise").attr("src","index.php?r=student/iframe4Key&exerciseID="+exerciseID);
                         }
                          if(!$("#bulletin").is(":hidden")){ 
@@ -443,7 +453,6 @@ $(document).ready(function(){
 
     function DoMessage(e){
         var msg = e.data;
-        console.log(msg);
         var local_my_video = document.getElementById("video1");
         if (msg === "<?php echo $classID;?>Play" && local_my_video !== null && local_my_video.paused) {
             //message Play
@@ -504,7 +513,10 @@ $(document).ready(function(){
         } else if(msg.indexOf('<?php echo $classID;?>closeppt') >= 0){
             last_path = -1;
             $("#ppt-container").hide();
-        } 
+        } else if(msg.substring(0,9)==="show_text"){
+            $("#Text-container").show();
+            $("#text-show").html(msg.substring(9));
+        }
     }
     
     function addMessageHandleForWS(){
@@ -545,11 +557,11 @@ function closeClassExercise(){
             $("#sw-openAnalysis").removeAttr("disabled");
         }
                 $("#analysis").hide();
-      var timer = setInterval(function() {
+      var timer_startExercise = setInterval(function() {
         if(isClassExercise===0){
             startClassExercise();
         }else{
-            clearInterval(timer);
+            clearInterval(timer_startExercise);
         }
     }, 2000);
 }
