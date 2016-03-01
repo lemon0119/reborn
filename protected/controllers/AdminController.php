@@ -359,7 +359,7 @@ class AdminController extends CController {
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
                             } else if (!Tool::checkID($data ['uid'])) {
-                                $result = "学号须由首字符英文和数字、英文、字母线组成！";
+                                $result = "学号首字符必须为英文！";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
