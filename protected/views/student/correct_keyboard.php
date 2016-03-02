@@ -166,13 +166,9 @@
 //                return;
 //            }
             if (totalNum == currentNum) {
-            repeatNum--;
-            if (repeatNum == 0) {
                 window.G_isOverFlag = 1;
                 document.getElementById("id_cost").value = getSeconds();
                 doSubmit(false);
-            }
-            currentNum = 0;
         }
             //判断键位是否正确
         var charSet = pszStenoString.split("");
@@ -223,12 +219,14 @@
         var content = document.getElementById("id_content").value;
         repeatNum = $("#repeatNum").html();
         var cont_array = content.split("$$");
-        for (var i = 0; i < cont_array.length; i += 1) {
-            var yaweiCode = cont_array[i].split(":0")[0];
-            yaweiCodeArray.push(yaweiCode);
-            var word = cont_array[i].split(":0")[1];
-            wordArray.push(word);
-            totalNum += 1;
+       for (var j = 0; j < repeatNum; j++) {
+            for (var i = 0; i < cont_array.length; i += 1) {
+                var yaweiCode = cont_array[i].split(":0")[0];
+                yaweiCodeArray.push(yaweiCode);
+                var word = cont_array[i].split(":0")[1];
+                wordArray.push(word);
+                totalNum += 1;
+            }
         }
         nextWord = getNextWord();
         setWordView(nextWord);
@@ -292,6 +290,11 @@
     }
     function getNextWord() {
         currentNum++;
+        $("#isDone").html(currentNum);
+         //调整进度条
+        var currentProgress = Math.round((currentNum/totalNum)*100);
+        add(currentProgress);
+        
         if(wordArray[currentNum+1]!==undefined){
                 document.getElementById("wordNext").innerHTML = wordArray[currentNum+1];
             }else{
@@ -351,7 +354,10 @@
     function getYaweiCode() {
         return yaweiCode[currentNum];
     }
-
+function add(i){
+            var tiao =$(".progresstiao");
+			tiao.css("width",i+"%").html();
+		}
 </script>
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
