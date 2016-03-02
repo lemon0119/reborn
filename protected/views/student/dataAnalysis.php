@@ -1,4 +1,4 @@
-<script src="https://localhost/reborn/js/echarts.min.js"></script>
+<script src="<?php echo JS_URL; ?>/echarts.min.js"></script>
 <style>
     .bb{
         color:black;
