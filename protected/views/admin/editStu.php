@@ -51,7 +51,7 @@ else
             <div class="control-group">
                 <label class="control-label" for="input03">班级</label>
                 <div class="controls">
-                    <select name="classID" style="width: 285px">
+                    <select name="classID" style="width: 285px;border:1px solid #000;color:#000;">
                         <option value="0" >以后再选</option>
                         <?php
                         $classes = TbClass::model()->findall();
