@@ -311,7 +311,7 @@ class StudentController extends CController {
         public function actionExamlistenType(){
             if(!ExamRecord::saveExamRecord($recordID))
                     return false;
-            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1);
                 
         $suiteID = Yii::app()->session['examsuiteID'];
           $workID = Yii::app()->session['examworkID'];
@@ -381,6 +381,7 @@ class StudentController extends CController {
 
 
         return $this->render('listenExer',array( 
+            'recordID'=>$recordID,
             'exercise'=>$classexam,
             'exercise2'=>$classexam2,
                 'exerOne'=>$result,
@@ -447,7 +448,7 @@ class StudentController extends CController {
         public function actionExamlookType(){
             if(!ExamRecord::saveExamRecord($recordID))
                     return false;
-            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1);
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -527,6 +528,7 @@ class StudentController extends CController {
 
 
         return $this->render('lookExer',array( 
+            'recordID'=>$recordID,
             'exercise'=>$classexam,
             'exercise2'=>$classexam2,
             'exerOne'=>$result,
@@ -601,7 +603,7 @@ class StudentController extends CController {
        public function actionExamKeyType(){
            if(!ExamRecord::saveExamRecord($recordID))
                     return false;
-            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0,1);
+            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1);
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];

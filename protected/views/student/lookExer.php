@@ -10,6 +10,7 @@ if ($isExam == false) {
 }
 //add by lc 
 $type = 'look';
+$str='';
 if ($isExam) {
     $seconds = $exerOne['time'];
     $hh = floor(($seconds * 60) / 3600);
