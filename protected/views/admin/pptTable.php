@@ -27,7 +27,7 @@
                                                                             echo $path;?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"
                                onclick=""></a>
                         <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>" ><img title="下载" src="<?php echo IMG_URL; ?>icon_download.png"></a>
-                        <a href="./index.php?r=admin/deletePpt&&pdir=<?php echo $pdir;?>&&ppt=<?php echo iconv("gb2312","UTF-8",$file);?>" id="dele"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
+                        <a href="#" onclick="deletePpt('<?php echo $pdir;?>','<?php echo iconv("gb2312","UTF-8",$file);?>')" id="dele"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>
                 <?php     
@@ -37,4 +37,16 @@
                 ?>
             </tbody>
 </table>
-    
+
+<script>
+function deletePpt(pdir,file) {
+        var option = {
+                title: "警告",
+                btn: parseInt("0011",2),
+                onOk: function(){
+                        window.location.href="./index.php?r=admin/deletePpt&&pdir="+pdir+"&&ppt="+file;
+                }
+        }
+        window.wxc.xcConfirm("您确定删除吗？", "custom", option);
+    }
+</script>    

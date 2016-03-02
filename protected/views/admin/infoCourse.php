@@ -47,7 +47,7 @@ echo $courseName; ?></h3>
                     }
                     ?>
                     <td style="width: 75px"><?php echo $model['number']; ?></td>
-                    <td  title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule cursor_pointer" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $courseID; ?>)"><?php echo $model['lessonName']; ?></td>
+                    <td  title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule cursor_pointer" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $courseID; ?>,<?php echo $model['number']; ?>)"><?php echo $model['lessonName']; ?></td>
                     <td><?php echo $createPerson; ?></td>
                     <td><?php echo $model['createTime']; ?></td>
                     <td><a href="./index.php?r=admin/pptLst&&pdir=<?php echo $pdir; ?>&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><img src="<?php echo IMG_URL; ?>ppt.png"><?php
@@ -101,7 +101,8 @@ echo $courseName; ?></h3>
         }
         
     });
-
+    
+    
     function deleteLesson(name) {
         var option = {
             title: "警告",
@@ -114,11 +115,11 @@ echo $courseName; ?></h3>
     }
     ;
 
-     function changeCourseName(courseName,courseID){
+     function changeCourseName(courseName,courseID,number){
         var txt=  "原课名:"+courseName;
 					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
 						onOk:function(v){
-                                                    window.location.href="./index.php?r=admin/infoCourse&&courseID="+courseID+"&&lessonName="+courseName+"&&newName="+v+"&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
+                                                    window.location.href="./index.php?r=admin/infoCourse&&courseID="+courseID+"&&lessonName="+courseName+"&&number="+number+"&&newName="+v+"&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
 						}
 					});
     }

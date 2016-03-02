@@ -287,7 +287,7 @@ class ClassExercise extends CActiveRecord
     public function isHasClassExerciseOpen($classID,$lessonID){
         $classExercise = new ClassExercise();
         $classExercise = $classExercise->find("classID = '$classID' AND lessonID = '$lessonID' AND now_open = 1");
-        return $classExercise['type'];
+        return $classExercise;
     }
     
     
