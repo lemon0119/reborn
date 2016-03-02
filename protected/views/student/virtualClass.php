@@ -513,6 +513,8 @@ $(document).ready(function(){
         } else if(msg.indexOf('<?php echo $classID;?>closeppt') >= 0){
             last_path = -1;
             $("#ppt-container").hide();
+            $("#text-show").html("");
+            $("#Text-container").hide();
         } else if(msg.substring(0,9)==="show_text"){
             $("#Text-container").show();
             $("#text-show").html(msg.substring(9));
