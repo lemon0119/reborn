@@ -262,7 +262,7 @@ function startClassExercise(){
         success:function(data){
             var type = data.split("&&")[0];
             var exerciseNowOn = data.split("&&")[1];
-            if(data===""){
+            if(data==="&&"){
             }else{
                 isClassExercise=1;
                 window.wxc.xcConfirm("有新练习发布，点击开始！", window.wxc.xcConfirm.typeEnum.info,{
