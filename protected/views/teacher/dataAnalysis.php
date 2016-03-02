@@ -98,19 +98,19 @@
                     </tr>
                     <tr>
                         <td>
-                            <input name="selectID" id="selectID" type="radio" value="correct" checked/>
+                            <input name="selectID" onclick="che()" id="selectID" type="radio" value="correct" checked/>
                         </td>
                         <td>  </td>
                         <td>
-                            <input name="selectID" id="selectID" type="radio" value="speed" />
+                            <input name="selectID" onclick="che()" id="selectID" type="radio" value="speed" />
                         </td>
                         <td>  </td>
                         <td>
-                            <input name="selectID" id="selectID" type="radio" value="maxSpeed" />
+                            <input name="selectID" onclick="che()" id="selectID" type="radio" value="maxSpeed" />
                         </td>
                         <td>  </td>
                         <td>
-                            <input name="selectID" id="selectID" type="radio" value="backDelete" />
+                            <input name="selectID" onclick="che()" id="selectID" type="radio" value="backDelete" />
                         </td>
                     </tr>
                 </table>
@@ -188,6 +188,12 @@ $(document).ready(function(){
         getBackTime();
     
 });
+function che(){
+    document.getElementById("div11").style.display='none';
+    document.getElementById("main").style.display='none';
+    document.getElementById("de").style.display='none';
+    $(".bb").css("color","black");
+}
 function showClassWork(lessonID){
     var str = "#test" + lessonID;
      $("#test" + lessonID).toggle(200);
