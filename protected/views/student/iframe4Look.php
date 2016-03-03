@@ -148,6 +148,23 @@ $squence = $countSquence + 1;
         window.parent.closeClassExercise();
     });
 
+    function checkYaweiCode(content){
+        var newContent = "";
+        var flag = 0;
+            for(var i=0;i<briefCode.length;i++){
+                if(content.indexOf(briefCode[i])>0){
+                    flag = 1;
+                    var re =new RegExp(briefCode[i],"g");
+                     newContent = content.replace(re,"<span style='border-bottom:2px solid green'>"+briefCode[i]+"</span>");
+                }else{
+                    if(flag === 0){
+                        newContent = content;
+                    }
+                }
+            }
+            return newContent;
+        }
+        
     function onStenoPressKey(pszStenoString, device) {
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
@@ -186,7 +203,6 @@ $squence = $countSquence + 1;
                 $("#getHighIntervarlTime").html(IntervalTime);
             }
         }
-
         //--------------------------------------------------
     }
 
@@ -245,12 +261,14 @@ $squence = $countSquence + 1;
                  if(isBrief===0){
                     content += text[i];
                  }else{
-                    content += "<font style='color:green'>"+text[i]+"</font>";
+                    content += "<span style='color:green'>"+text[i]+"</span>";
                     isBrief--;
                  }
              }
              f.style = "color:" + color;
-                    f.innerHTML = content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;");
+             var tempContent = "";
+             tempContent = checkYaweiCode(content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;"));
+                    f.innerHTML = tempContent;
                     father.appendChild(f);
         }else{
             for(var i=0;i<text.length;i++){
@@ -259,7 +277,9 @@ $squence = $countSquence + 1;
             f.style = "color:" + color;
                     //var t = document.createTextNode(text);
                     //f.appendChild(t);
-                    f.innerHTML = content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;");
+                    var tempContent = "";
+             tempContent = checkYaweiCode(content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;"));
+                    f.innerHTML = tempContent;
                     father.appendChild(f);
         }
     }
@@ -410,5 +430,6 @@ $squence = $countSquence + 1;
             window.parent.finish();
         }
     }
+    
     
 </script>
