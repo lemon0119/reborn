@@ -142,11 +142,10 @@
                                     <th>成绩</th>
                                     <th>正确率</th>
                                     <th>平均速度</th>
-                                    <th>最高速度</th>
+                                    
                                     <th>回改字数</th>
                                     <th>平均击键</th>
-                                    <th>最高击键</th>
-                                    <th>间隔</th>
+                                    <th>完成时间</th>
                                     <th>总击键数</th>
 
                                 </tr>
@@ -480,7 +479,6 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                   choice = province[a].value;
             }
         }
-        console.log(name);
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -853,11 +851,11 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                         }else{
                             str2="<th>"+Math.round(data[4][i]['speed']*100)/100+"</th>";
                         }
-                        if(i+1==data[4][len]['icon3']){
-                           str3="<th style='color:blue;'>"+Math.round(data[4][i]['maxSpeed']*100)/100+"</th>";
-                        }else{
-                            str3="<th>"+Math.round(data[4][i]['maxSpeed']*100)/100+"</th>";
-                        }
+//                        if(i+1==data[4][len]['icon3']){
+//                           str3="<th style='color:blue;'>"+Math.round(data[4][i]['maxSpeed']*100)/100+"</th>";
+//                        }else{
+//                            str3="<th>"+Math.round(data[4][i]['maxSpeed']*100)/100+"</th>";
+//                        }
                         if(i+1==data[4][len]['icon4']){
                            str4="<th style='color:blue;'>"+Math.round(data[4][i]['backDelete']*100)/100+"</th>";
                         }else{
@@ -868,31 +866,30 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                         }else{
                             str5="<th>"+Math.round(data[4][i]['averageKeyType']*100)/100+"</th>";
                         }
-                        if(i+1==data[4][len]['icon7']){
-                           str6="<th style='color:blue;'>"+Math.round(data[4][i]['maxKeyType']*100)/100+"</th>";
-                        }else{
-                            str6="<th>"+Math.round(data[4][i]['maxKeyType']*100)/100+"</th>";
-                        }
-                         if(i+1==data[4][len]['icon5']){
-                           str7="<th style='color:blue;'>"+Math.round(data[4][i]['maxInternalTime']*100)/100+"</th>";
+//                        if(i+1==data[4][len]['icon7']){
+//                           str6="<th style='color:blue;'>"+Math.round(data[4][i]['maxKeyType']*100)/100+"</th>";
+//                        }else{
+//                            str6="<th>"+Math.round(data[4][i]['maxKeyType']*100)/100+"</th>";
+//                        }
+                        if(i+1==data[4][len]['icon9']){
+                           str7="<th style='color:blue;'>"+data[4][i]['finishDate']+"</th>";
                         }else{
                             
-                            str7="<th>"+Math.round(data[4][i]['maxInternalTime']*100)/100+"</th>";
+                            str7="<th>"+data[4][i]['finishDate']+"</th>";
                         }
                         if(i+1==data[4][len]['icon8']){
                            str8="<th style='color:blue;'>"+Math.round(data[4][i]['countAllKey']*100)/100+"</th>";
                         }else{
                             str8="<th>"+Math.round(data[4][i]['countAllKey']*100)/100+"</th>";
                         }
-                        var str =  "<th>"+(i+1)+"</th>"+str1+str2+str3+str4+str5+str6+str7+str8;
+                        var str =  "<th>"+(i+1)+"</th>"+str1+str2+str4+str5+str7+str8;
                         var tr = document.createElement("tr");    
                         tr.innerHTML= str;
                         detail.appendChild(tr);
                      }  
                      //max
                      
-                    var str =  "<th style='color:red'>"+"最高"+"</th>"+"<th style='color:red'>"+Math.round(data[5]['correct']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[5]['speed']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[5]['maxSpeed']*100)/100+
-                   "</th>"+"<th style='color:red'>"+Math.round(data[5]['backDelete']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[5]['averageKeyType']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[5]['maxKeyType']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[5]['maxInternalTime']*100)/100+
+                    var str =  "<th style='color:red'>"+"最高"+"</th>"+"<th style='color:red'>"+Math.round(data[5]['correct']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[5]['speed']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[5]['backDelete']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[5]['averageKeyType']*100)/100+"</th>"+"<th style='color:red'>"+data[5]['finishDate']+
                    "</th>"+"<th style='color:red'>"+Math.round(data[5]['countAllKey']*100)/100+"</th>";
                    var tr = document.createElement("tr");  
                    tr.innerHTML= str;
