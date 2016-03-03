@@ -65,9 +65,9 @@
 
         </table>
         </div>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "", $classExercise['content']);
-$str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;?>">
-        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 260px">
+        <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "`", $classExercise['content']);
+$str = str_replace("\r", "", $str);$str = str_replace(" ", "}", $str); echo $str;?>">
+        <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
@@ -250,7 +250,7 @@ $squence = $countSquence + 1;
                  }
              }
              f.style = "color:" + color;
-                    f.innerHTML = content;
+                    f.innerHTML = content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;");
                     father.appendChild(f);
         }else{
             for(var i=0;i<text.length;i++){
@@ -259,7 +259,7 @@ $squence = $countSquence + 1;
             f.style = "color:" + color;
                     //var t = document.createTextNode(text);
                     //f.appendChild(t);
-                    f.innerHTML = content;
+                    f.innerHTML = content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;");
                     father.appendChild(f);
         }
     }
@@ -328,9 +328,9 @@ $squence = $countSquence + 1;
 //                }
 //            }
 //        } else {
-            var input = getContent(yaweiOCX4Look).split("");
+            var input = getContent(yaweiOCX4Look).replace(/\r\n/g,"`").replace(/ /g,"}").split("");
             var text = text_old.split("");
-            var allInput2 = yaweiOCX4Look.GetContentWithSteno().split(">,"); 
+            var allInput2 = yaweiOCX4Look.GetContentWithSteno().replace(/\r\n/g,"`").replace(/ /g,"}").split(">,"); 
             var longIsAgo = 0;
             var old = new Array();
             var oldCode = new Array();
