@@ -68,11 +68,11 @@
                         <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID'];?>" /> </td>
                         <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
                        
-                        <td class="font-center"><?php  if(Tool::clength($model['title'])<=7)
+                        <td class="font-center" title="<?php echo $model['title'];?>"><?php  if(Tool::clength($model['title'])<=7)
                                         echo $model['title'];
                                     else
                                         echo Tool::csubstr($model['title'], 0, 7)."...";?></td>
-                        <td class="font-center"><?php  if(Tool::clength($model['content'])<=10)
+                        <td class="font-center" title="<?php echo $model['content'];?>"><?php  if(Tool::clength($model['content'])<=10)
                                         echo $model['content'];
                                     else
                                         echo Tool::csubstr($model['content'], 0, 10)."...";
