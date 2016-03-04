@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 
-//crt by LC 2015-4-21
 
 class TeacherController extends CController {
      protected function renderJSON($data) {

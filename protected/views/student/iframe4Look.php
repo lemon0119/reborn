@@ -83,6 +83,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "}", $str); echo $str
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     $(document).ready(function () {
+        window.G_isLook = 1;
         document.getElementById('Analysis').scrollIntoView();
         $.ajax({
                type:"POST",
@@ -127,7 +128,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "}", $str); echo $str
         });
         
     });
-    var originalContent = "<?php $str1 = str_replace("<br/>", "", $str); echo $str1;?>".replace(/(^\s*)|(\s*$)/g, "");
+    var originalContent = "<?php echo $str;?>";
     window.GA_originalContent = originalContent;
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
@@ -152,7 +153,7 @@ $squence = $countSquence + 1;
         var newContent = "";
         var flag = 0;
             for(var i=0;i<briefCode.length;i++){
-                if(content.indexOf(briefCode[i])>0){
+                if(content.indexOf(briefCode[i])>=0){
                     flag = 1;
                     var re =new RegExp(briefCode[i],"g");
                      newContent = content.replace(re,"<span style='border-bottom:2px solid green'>"+briefCode[i]+"</span>");
@@ -169,7 +170,6 @@ $squence = $countSquence + 1;
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         if(window.G_pauseFlag===1){
-            window.G_isLook = 1;
              window.G_keyBoardBreakPause = 0;
               $("#pause").html("暂停统计");
         }
@@ -182,7 +182,7 @@ $squence = $countSquence + 1;
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = yaweiOCX4Look.GetContent();
+        window.G_content = yaweiOCX4Look.GetContent().replace(/\r\n/g,"`").replace(/ /g,"}");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
         
         //每击统计击键间隔时间 秒
@@ -278,7 +278,11 @@ $squence = $countSquence + 1;
                     //var t = document.createTextNode(text);
                     //f.appendChild(t);
                     var tempContent = "";
-             tempContent = checkYaweiCode(content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;"));
+                    if(color==="#ff0000"){
+                        tempContent = checkYaweiCode(content.replace(/`/g,"↓<br/>").replace(/}/g,"█"));
+                    }else{
+                        tempContent = checkYaweiCode(content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;"));
+                    }
                     f.innerHTML = tempContent;
                     father.appendChild(f);
         }

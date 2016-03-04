@@ -333,6 +333,7 @@ function AjaxGetRight_Wrong_AccuracyRate(id1,id2,id3,originalContent,currentCont
                data:{originalContent:originalContent,currentContent:currentContent},
                success:function(data){
                    window.GA_RightRadio = data[2];
+                   console.log(window.GA_RightRadio);
                    if(id1!==""){
                        $("#"+id1).html(data[0]);
                    }
