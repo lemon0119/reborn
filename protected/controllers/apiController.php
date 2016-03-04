@@ -1392,13 +1392,13 @@ class apiController extends Controller {
          $averageData=Array();
          $maxData=Array();
          $nn1=0;$nn2=0;$nn3=0;$nn4=0;$nn5=0;$nn6=0;$nn7=0;$nn8=0;
-         $f1=0;$f2=0;$f3=0;$f4=0;$f5=0;$f6=0;$f7=0;$f8=0;
+         $f1=0;$f2=0;$f3=0;$f4=0;$f5=0;$f6=0;$f7=0;$f8=0;$f9=0;
          
          foreach ($all3 as $al) {
              $f=0;
              $n1=0;$n2=0;$n3=0;$n4=0;$n5=0;$n6=0;$n7=0;$n8=0;
-             $icon1=0;$icon2=0;$icon3=0;$icon4=0;$icon5=0;$icon6=0;$icon7=0;$icon8=0;
-             $ff1=0;$ff2=0;$ff3=0;$ff4=0;$ff5=0;$ff6=0;$ff7=0;$ff8=0;
+             $icon1=0;$icon2=0;$icon3=0;$icon4=0;$icon5=0;$icon6=0;$icon7=0;$icon8=0;$icon9=0;
+             $ff1=0;$ff2=0;$ff3=0;$ff4=0;$ff5=0;$ff6=0;$ff7=0;$ff8=0;$ff9=0;
              foreach ($al as $a) {
                 $correct=$a['ratio_correct'];       //correct
                  if(strpos($correct,"&") === false){     
@@ -1537,12 +1537,27 @@ class apiController extends Controller {
                       $icon8++;
                  }
                  
+                 $finishDate=$a['finishDate'];          //finishDate
+                 error_log("111111111111111111111111111111");
+                 error_log($finishDate);
+                 if($f9<$finishDate){
+                     $f9=$finishDate;
+                     error_log("222222222222222222222222222222222");
+                     error_log($finishDate);
+                 }
+                 if($finishDate>=$ff9){
+                     $ff9=$finishDate;
+                     $icon9++;
+                     error_log("xxxxxxxxxxxxxxxx");
+                     error_log($icon9);
+                 }
+                 
                  $studentName=Student::model()->find('userID=?',array($a['studentID']))['userName'];
                  $f++;
                  if($a['studentID']==$id){
                     $arrayDetail=["studentID"=>$a['studentID'],"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,
                     "time"=>$studentName,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime,'sequence'=>$f,'averageKeyType'=>$averageKeyType,
-                    'maxKeyType'=>$maxKeyType,'countAllKey'=>$countAllKey,'icon1'=>$icon1,'icon2'=>$icon2,'icon3'=>$icon3,'icon4'=>$icon4,'icon5'=>$icon5,'icon6'=>$icon6,'icon7'=>$icon7,'icon8'=>$icon8];
+                    'maxKeyType'=>$maxKeyType,'countAllKey'=>$countAllKey,'finishDate'=>$finishDate,'icon1'=>$icon1,'icon2'=>$icon2,'icon3'=>$icon3,'icon4'=>$icon4,'icon5'=>$icon5,'icon6'=>$icon6,'icon7'=>$icon7,'icon8'=>$icon8,'icon9'=>$icon9];
                     array_push($arrayDetailData, $arrayDetail);
                  }
              }
@@ -1556,7 +1571,7 @@ class apiController extends Controller {
          $averageData=["correct"=>$nn1/count($all3),"speed"=>$nn2/count($all3),"maxSpeed"=>$nn3/count($all3),"backDelete"=>$nn4/count($all3),'maxInternalTime'=>$nn5/count($all3),
                      'averageKeyType'=>$nn6/count($all3),"maxKeyType"=>$nn7/count($all3),"countAllKey"=>$nn8/count($all3)];
          $maxData=["correct"=>$f1,"speed"=>$f2,"maxSpeed"=>$f3,"backDelete"=>$f4,'maxInternalTime'=>$f5,
-                     'averageKeyType'=>$f6,"maxKeyType"=>$f7,"countAllKey"=>$f8];
+                     'averageKeyType'=>$f6,"maxKeyType"=>$f7,"countAllKey"=>$f8,"finishDate"=>$f9];
          foreach ($all as $a) {
               $correct=$a['ratio_correct'];
               $correct2=$a['ratio_correct'];

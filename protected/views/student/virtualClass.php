@@ -262,7 +262,7 @@ function startClassExercise(){
         success:function(data){
             var type = data.split("&&")[0];
             var exerciseNowOn = data.split("&&")[1];
-            if(data===""){
+            if(data==="&&"){
             }else{
                 isClassExercise=1;
                 window.wxc.xcConfirm("有新练习发布，点击开始！", window.wxc.xcConfirm.typeEnum.info,{
@@ -513,6 +513,8 @@ $(document).ready(function(){
         } else if(msg.indexOf('<?php echo $classID;?>closeppt') >= 0){
             last_path = -1;
             $("#ppt-container").hide();
+            $("#text-show").html("");
+            $("#Text-container").hide();
         } else if(msg.substring(0,9)==="show_text"){
             $("#Text-container").show();
             $("#text-show").html(msg.substring(9));
