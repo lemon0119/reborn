@@ -1854,11 +1854,15 @@ class apiController extends Controller {
      
     public function actionGetBrief(){
         $array_brief = TwoWordsLibBrief::model()->findAll();
+        $array_brief2 = WordsLibBrief::model()->findAll();
         $data = array();
         $data2 = array();
          foreach ($array_brief as $v){
              array_push($data, $v['words']);
              array_push($data2, $v['yaweiCode']);
+         }
+         foreach ($array_brief2 as $v){
+             array_push($data, $v['words']);
          }
          $data = implode('&',$data)."$".implode('&',$data2);
          echo $data;

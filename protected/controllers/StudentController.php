@@ -566,7 +566,7 @@ class StudentController extends CController {
              $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if($record==null){
-           return $this->render('keyExer',array(  'exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
+           return $this->render('keyExer',array('exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
         }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -1282,15 +1282,15 @@ class StudentController extends CController {
     public function actionIndex(){
         if(isset($_GET['insert'])){
             //导入数据库略码
-//            $file_dir="E:\\php_workstation\\reborn\\2.txt"; 
-//                $fp=fopen($file_dir,"r"); 
-//                $content=fread($fp,filesize($file_dir));//读文件 
-//                fclose($fp); 
-//                $str = explode("\r\n", $content);
-//                foreach ($str as $v){
-//                   TwoWordsLibBrief::model()->insertBrief($v); 
-//                }
-//                //向略码表导入正常输入的yaweiCode
+            $file_dir="E:\\php_workstation\\reborn\\7.txt"; 
+                $fp=fopen($file_dir,"r"); 
+                $content=fread($fp,filesize($file_dir));//读文件 
+                fclose($fp); 
+                $str = explode("\r\n", $content);
+                foreach ($str as $v){
+                   WordsLibBrief::model()->insertBrief($v); 
+                }
+                //向略码表导入正常输入的yaweiCode
 //            $TwoWordsLibBrief=TwoWordsLibBrief::model()->findAll();
 //            foreach ($TwoWordsLibBrief as $value) {
 //                $v = $value['words'];
