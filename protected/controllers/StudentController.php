@@ -566,7 +566,7 @@ class StudentController extends CController {
              $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if($record==null){
-           return $this->render('keyExer',array('exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
+           return $this->render('keyExer',array('recordID'=>$record->recordID,'exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
         }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -582,13 +582,9 @@ class StudentController extends CController {
             $n++;
         }
            $exerciseID = $result['exerciseID'];           
-//         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
-           //加上后连带不想关的练习答案也删除了？？？？？？
- //         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
-            //这里有问题，重新答题时旧的答案没有清除           
-           //      AnswerRecord::model()->deleteRecord($record['recordID'], $result['exerciseID'], 'key', $studentID);
         
         return $this->render('keyExer',array( 
+            'recordID'=>$record->recordID,
             'exercise'=>$classwork,
             'exercise2'=>$classwork2,
             'exerOne'=>$result,
@@ -599,7 +595,6 @@ class StudentController extends CController {
         ));
     }
     
-    //2015-8-3 宋杰 获取考试键位练习
        public function actionExamKeyType(){
            if(!ExamRecord::saveExamRecord($recordID))
                     return false;

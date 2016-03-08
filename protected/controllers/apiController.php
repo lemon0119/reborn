@@ -225,7 +225,6 @@ class apiController extends Controller {
         }
     }
     
-    //AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903  ------>{
     public function actionGetAverageSpeed(){
         $time = $_POST['startTime'];
         $content = $_POST['content'];
@@ -280,7 +279,8 @@ class apiController extends Controller {
             }
         }       
         if($exerciseType === "answerRecord"){
-           if(Yii::app()->session['isExam']){
+            $recordID = $exerciseData[2];
+           if(Yii::app()->session['isExam']!==''){
                 if(!ExamRecord::saveExamRecord($recordID))
                 if($squence>0){
                     $createPerson = Yii::app()->session['userid_now'];
@@ -288,19 +288,21 @@ class apiController extends Controller {
                 }
                 return false;
                 return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1,$ratio_internalTime);
-            }else {
+            }else{
                 if($squence>0){
                     $createPerson = Yii::app()->session['userid_now'];
                     AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData[0], $createPerson);
+                }else{
+                    $exerciseID = $exerciseData[0];
+                    $type = $exerciseData[1];
+                    $createPerson = Yii::app()->session['userid_now'];
+                    AnswerRecord::saveAnswer($recordID,$exerciseID,$type,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey,$squence,0); 
                 }
-                if(!SuiteRecord::saveSuiteRecord ($recordID))
-                    return false;
-                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey,$squence,0);
             }   
         }    
         $this->renderJSON("");
     }
-    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
+
     
     
     

@@ -198,16 +198,10 @@ class AnswerRecord extends CActiveRecord
 //        }
 //    }   
     
-     public static function saveAnswer($recordID, $correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$ratio_internalTime=0,$HighIntervarlTime=0,$countAllKey=0 ,$squence, $isExam,$ratio_internalTime) {  
+     public static function saveAnswer($recordID,$exerID,$type,$correct=0,$AverageSpeed=0,$HighstSpeed=0,$BackDelete=0,$HighstCountKey=0,$AveragekeyType=0,$ratio_internalTime=0,$HighIntervarlTime=0,$countAllKey=0 ,$squence, $isExam,$ratio_internalTime) {  
         $userID = Yii::app()->session['userid_now'];
-        $exerID = Yii::app()->session['exerID'];
-        $type = Yii::app()->session['exerType'];
-        $type = str_replace(["Exer"],"",$type);
-//        $ratio = self::getRatio($exerID, $type, $answer);
-        
-        $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerID);
-        
-        if( $oldAnswer == null) {
+        $oldAnswer = AnswerRecord::getAnswer($recordID,$type,$exerID);
+        if($oldAnswer == null) {
             $newAnswer = new AnswerRecord();
             $newAnswer -> answerID = Tool::createID();
             $newAnswer -> recordID = $recordID;
@@ -245,7 +239,6 @@ class AnswerRecord extends CActiveRecord
             $oldAnswer->ratio_maxInternalTime = $oldAnswer['ratio_maxInternalTime'].'&'.$HighIntervarlTime;
             $oldAnswer->ratio_countAllKey = $oldAnswer['ratio_countAllKey'].'&'.$countAllKey;
             $oldAnswer->isExam = $isExam;
-            
             $correct=$oldAnswer['ratio_correct'].'&'.$correct;
             $cTime=date("Y-m-d  H:i:s");
             $rspeed=$oldAnswer['ratio_speed'].'&'.$AverageSpeed;
@@ -255,7 +248,6 @@ class AnswerRecord extends CActiveRecord
             $raverageKeyType = $oldAnswer['ratio_averageKeyType'].'&'.$AveragekeyType;
             $rmaxInternalTime = $oldAnswer['ratio_maxInternalTime'].'&'.$HighIntervarlTime;
             $rcountAllKey = $oldAnswer['ratio_countAllKey'].'&'.$countAllKey;
-            error_log($correct);
             $sql = "UPDATE answer_record SET ratio_correct='$correct',createTime='$cTime',ratio_speed='$rspeed',ratio_maxSpeed='$rmaxSpeed',ratio_backDelete='$rbackDelete',ratio_maxKeyType='$rmaxKeyType'"
                     . ",ratio_averageKeyType='$raverageKeyType',ratio_maxInternalTime='$rmaxInternalTime', ratio_countAllKey='$rcountAllKey'"
                     . " where recordID='$recordID' and type='$type' and exerciseID='$exerID'";
