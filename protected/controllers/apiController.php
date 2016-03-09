@@ -279,25 +279,20 @@ class apiController extends Controller {
             }
         }       
         if($exerciseType === "answerRecord"){
+            $createPerson = Yii::app()->session['userid_now'];
             $recordID = $exerciseData[2];
+            $exerciseID = $exerciseData[0];
+            $type = $exerciseData[1];
+            $category = $exerciseData[3];
            if(Yii::app()->session['isExam']!==''){
                 if(!ExamRecord::saveExamRecord($recordID))
-                if($squence>0){
+                if($squence>1){
                     $createPerson = Yii::app()->session['userid_now'];
-                    AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData[0], $createPerson);
                 }
                 return false;
                 return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1,$ratio_internalTime);
             }else{
-                if($squence>0){
-                    $createPerson = Yii::app()->session['userid_now'];
-                    AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData[0], $createPerson);
-                }else{
-                    $exerciseID = $exerciseData[0];
-                    $type = $exerciseData[1];
-                    $createPerson = Yii::app()->session['userid_now'];
-                    AnswerRecord::saveAnswer($recordID,$exerciseID,$type,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey,$squence,0); 
-                }
+                    AnswerRecord::model()->saveAnswer($recordID, $exerciseID, $type, $category, $ratio_correct, $answer, $createPerson, $ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence, 0, $ratio_internalTime); 
             }   
         }    
         $this->renderJSON("");
@@ -1414,10 +1409,8 @@ class apiController extends Controller {
                      $f1=$correct;
                  }
                  if($correct>=$ff1){
-                     error_log($correct);
                      $icon1++;
                      $ff1=$correct;
-                     error_log($icon1);
                  }
 
                  $speed=$a['ratio_speed'];        //speeed
@@ -1540,18 +1533,12 @@ class apiController extends Controller {
                  }
                  
                  $finishDate=$a['finishDate'];          //finishDate
-                 error_log("111111111111111111111111111111");
-                 error_log($finishDate);
                  if($f9<$finishDate){
                      $f9=$finishDate;
-                     error_log("222222222222222222222222222222222");
-                     error_log($finishDate);
                  }
                  if($finishDate>=$ff9){
                      $ff9=$finishDate;
                      $icon9++;
-                     error_log("xxxxxxxxxxxxxxxx");
-                     error_log($icon9);
                  }
                  
                  $studentName=Student::model()->find('userID=?',array($a['studentID']))['userName'];

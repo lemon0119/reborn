@@ -566,9 +566,12 @@ class StudentController extends CController {
              $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if($record==null){
-           return $this->render('keyExer',array('recordID'=>$record->recordID,'exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
-        }
-         foreach(Tool::$EXER_TYPE as $type){
+            error_log("render1");
+            SuiteRecord::saveSuiteRecord($recordID);
+           return $this->render('keyExer',array('recordID'=>$recordID,'exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
+        }else{
+            error_log("render2");
+            foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
@@ -593,6 +596,7 @@ class StudentController extends CController {
             'workId' =>$wID,
             'isOver'=>$isOver
         ));
+        }
     }
     
        public function actionExamKeyType(){
@@ -1563,7 +1567,6 @@ class StudentController extends CController {
     }
     
     public function ActionWatchData(){
-        error_log("123");
            $classID = $_GET['classID'];
            $array_lesson = Lesson::model()->findAll("classID = '$classID'");
             if (!empty($array_lesson)) {
