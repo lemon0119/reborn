@@ -92,8 +92,8 @@ if ($isExam) {
     <input  name="nm_cost" id="id_cost" type="hidden">
     </form>-->
         <div id="span" class="hero-unit" align="center">
-            <table style="width: 580px"  border = '0px'><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>
-                <!--                   <button id="close_exercise" class="fr btn btn-primary">关闭</button>-->
+            <table style="width: 580px"  border = '0px'><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成</button>
+
                 <tr><h3 ><?php echo $exerOne['title'] ?></h3></tr>
                 <tr>
                     <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
@@ -195,8 +195,10 @@ if ($isExam) {
 <script>
     var isExam = <?php
 if ($isExam) {
+    Yii::app()->session['isExam'] = 'isExam';
     echo 1;
 } else {
+     Yii::app()->session['isExam'] = '';
     echo 0;
 }
 ?>;
@@ -206,10 +208,8 @@ if ($isExam) {
 <?php } ?>
         if (<?php
 if ($isExam) {
-    Yii::app()->session['isExam'] = 'isExam';
     echo $exerOne['time'];
 } else {
-    Yii::app()->session['isExam'] = '';
     echo 0;
 }
 ?> != 0) {
@@ -240,24 +240,25 @@ if ($isExam) {
         }
 
         $("li#li-key-<?php echo $exerOne['exerciseID']; ?>").attr('class', 'active');
-<?php
-$exerciseID = $exerOne['exerciseID'];
-$category = $exerOne['category'];
-$studentID = Yii::app()->session['userid_now'];
-$sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'key' AND createPerson LIKE '$studentID'");
-$countSquence = count($sqlClassExerciseRecord);
-$squence = $countSquence + 1;
-if ($sqlClassExerciseRecord != null) {
-    error_log($sqlClassExerciseRecord['exerciseID']);
-    $sqlClassExerciseRecord->delete();
-}
-?>
+         <?php
+                    $exerciseID = $exerOne['exerciseID'];
+                    $category = $exerOne['category'];
+                    $studentID = Yii::app()->session['userid_now'];
+                    $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'key' AND createPerson LIKE '$studentID'");
+                    $countSquence = count($sqlClassExerciseRecord);
+                    $squence = $countSquence + 1;
+                    if ($sqlClassExerciseRecord != null) {
+                        $sqlClassExerciseRecord->delete();
+                    }
+                    ?>
+
         window.wxc.xcConfirm("即将开始！您将有3秒准备时间！", window.wxc.xcConfirm.typeEnum.warning, {
             onOk: function () {
                 start();
             }
         });
     });
+
 
     function getWordLength() {
         var input = document.getElementById("id_answer");
@@ -321,8 +322,7 @@ if ($sqlClassExerciseRecord != null) {
             }
         };
     }
-    window.G_saveToDatabase = 1;
-    window.G_exerciseType = "answerRecord";
+
     $(document).ready(function () {
         var content = document.getElementById("id_content").value;
         var cont_array = content.split("$$");
@@ -330,17 +330,14 @@ if ($sqlClassExerciseRecord != null) {
         $("#AllOfWord").html(cont_array.length * repeatNum);
         document.getElementById('span').scrollIntoView();
     });
-
+    window.G_saveToDatabase = 1;
+    window.G_exerciseType = "answerRecord";
     window.G_squence = <?php echo $squence; ?>;
     var recordID = <?php echo $recordID ?>;
     var classExerciseID = <?php echo $exerciseID; ?>;
     var category = '<?php echo $category; ?>';
     var type = "key";
     window.G_exerciseData = Array(classExerciseID, type, recordID, category);
-    $("#close_exercise").click(function () {
-        window.parent.closeClassExercise();
-    });
-
 
 
     function start() {
@@ -378,5 +375,7 @@ if ($sqlClassExerciseRecord != null) {
             window.G_isOverFlag = 1;
             $("#finish").attr("disabled", "disabled");
         }
+        var suiteID = <?php echo Yii::app()->session['suiteID']; ?>;
+        window.location.href = "./index.php?r=student/clswkOne&&suiteID=" + suiteID;
     }
 </script>

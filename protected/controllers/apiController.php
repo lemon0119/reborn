@@ -267,13 +267,12 @@ class apiController extends Controller {
         $ratio_countAllKey = $_POST['CountAllKey'];
         $squence = $_POST['squence'];
         $answer = $_POST['answer'];
-        $originalContent = $_POST['originalContent'];
         if($exerciseType === "classExercise"){
             $classExerciseID = $exerciseData[0];
             $studentID = $exerciseData[1];
             $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
             if(!isset($sqlClassExerciseRecord)){
-                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence,$originalContent,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }else{
                  ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }
@@ -289,8 +288,7 @@ class apiController extends Controller {
                 if($squence>1){
                     $createPerson = Yii::app()->session['userid_now'];
                 }
-                return false;
-                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1,$ratio_internalTime);
+                 AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1,$ratio_internalTime);
             }else{
                     AnswerRecord::model()->saveAnswer($recordID, $exerciseID, $type, $category, $ratio_correct, $answer, $createPerson, $ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence, 0, $ratio_internalTime); 
             }   

@@ -279,7 +279,8 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
          if($record==null){
-           return $this->render('listenExer',array('recordID'=>$record['recordID'], 'exercise'=>$classwork,'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workId'=>$wID,'isOver'=>$isOver ));
+             SuiteRecord::saveSuiteRecord($recordID);
+           return $this->render('listenExer',array('recordID'=>$recordID, 'exercise'=>$classwork,'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workId'=>$wID,'isOver'=>$isOver ));
          }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -417,7 +418,8 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
          if($record==null){
-           return $this->render('lookExer',array( 'recordID'=>$record['recordID'],'exercise'=>$classwork,'exercise2'=>$classwork2,'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workID' =>$wID,'isOver'=>$isOver ));    
+             SuiteRecord::saveSuiteRecord($recordID);
+           return $this->render('lookExer',array( 'recordID'=>$recordID,'exercise'=>$classwork,'exercise2'=>$classwork2,'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workID' =>$wID,'isOver'=>$isOver ));    
          }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -566,11 +568,9 @@ class StudentController extends CController {
              $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if($record==null){
-            error_log("render1");
             SuiteRecord::saveSuiteRecord($recordID);
            return $this->render('keyExer',array('recordID'=>$recordID,'exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
         }else{
-            error_log("render2");
             foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -1036,7 +1036,7 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
-        
+        Yii::app()->session['suiteID'] = $_GET['suiteID'];
          return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);     
     }
     

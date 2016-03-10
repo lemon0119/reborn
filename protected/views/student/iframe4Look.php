@@ -102,19 +102,19 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "}", $str); echo $str
                }
            });
            yaweiOCX4Look = document.getElementById("typeOCX4Look");
-        $("#pause").click(function () {
-            if (window.G_startFlag === 1&&window.G_isOverFlag ===0 ) {
-                if (window.G_isPause === 0) {
-                    window.G_isPause = 1;
-                }
-                if (window.G_pauseFlag === 1) {
-                    $("#pause").html("暂停统计");
-                    
-                } else {
-                    $("#pause").html("继续统计");
-                }
-            }
-        });
+//        $("#pause").click(function () {
+//            if (window.G_startFlag === 1&&window.G_isOverFlag ===0 ) {
+//                if (window.G_isPause === 0) {
+//                    window.G_isPause = 1;
+//                }
+//                if (window.G_pauseFlag === 1) {
+//                    $("#pause").html("暂停统计");
+//                    
+//                } else {
+//                    $("#pause").html("继续统计");
+//                }
+//            }
+//        });
         $("#toggle").click(function (){
             var flag =$("#toggle").text();
             if(flag =='展开'){
@@ -169,10 +169,10 @@ $squence = $countSquence + 1;
     function onStenoPressKey(pszStenoString, device) {
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
-        if(window.G_pauseFlag===1){
-             window.G_keyBoardBreakPause = 0;
-              $("#pause").html("暂停统计");
-        }
+//        if(window.G_pauseFlag===1){
+//             window.G_keyBoardBreakPause = 0;
+//              $("#pause").html("暂停统计");
+//        }
         var myDate = new Date();
         window.G_pressTime = myDate.getTime();
         if (window.G_startFlag === 0) {
@@ -228,15 +228,15 @@ $squence = $countSquence + 1;
         }
     });
     //document.getElementById("templet").style.font_size = "25px";
-    function createFontWithP(color, text, p, father) {
-        var f = document.createElement("font");
-        f.style = "color:" + color;
-        //var t = document.createTextNode(text);
-        //f.appendChild(t);
-        f.innerHTML = text;
-        p.appendChild(f);
-        father.appendChild(p);
-    }
+//    function createFontWithP(color, text, p, father) {
+//        var f = document.createElement("font");
+//        f.style = "color:" + color;
+//        //var t = document.createTextNode(text);
+//        //f.appendChild(t);
+//        f.innerHTML = text;
+//        p.appendChild(f);
+//        father.appendChild(p);
+//    }
 
     function createFont(color, text,code) {
         var father = document.getElementById("templet");

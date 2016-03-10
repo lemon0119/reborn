@@ -29,18 +29,18 @@ if ($isExam) {
 }//end
 ?>
 <?php if (!$isOver) { ?>
-    <div class="span9" >
+    <div class="span9"  style="height: 800px" >
         <?php if ($isExam) { ?>
         <?php } else { ?>
-            <div align="center">
-                <table style="width: 580px"  border = '0px'> 
+            <div id="span" class="hero-unit" align="center">
+                <table style="width: 660px"  border = '0px'> 
                     <tr><td colspan="9"><h3><?php echo $exerOne['title'] ?></h3></td></tr>
                     <tr>
                         <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                         <td><span style="color: #f46500" id="timej">00:00:00</span></td>
                         <td></td>
                         <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;正确率：&nbsp;&nbsp;</span></td>
-                        <td style="width: 60px;"><span style="color: #f46500" id="">----</span></td>
+                        <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
                         <td><span class="fr" style="color: gray"> %&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                         <td><span class="fl" style="color: #000;font-weight: bolder">&nbsp;&nbsp;回改字数：</span></td>
                         <td style="width: 60px;"><span style="color: #f46500" id="getBackDelete">0</span></td>
@@ -102,15 +102,15 @@ if ($isExam) {
             ?>
             <div align="left">
                 <br/>
-                <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; top:210px;'></div>
-                <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; top:210px;'></div>
-                <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:210px; '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
+                <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; top:260px;'></div>
+                <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; top:260px;'></div>
+                <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:260px; '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
             </div>
             <input id="content" type="hidden" value="<?php echo $exerOne['content']; ?>">
             <br/>
             <object id="typeOCX" type="application/x-itst-activex" 
                     clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                    width ='750' height='350' 
+                    width ='750' height='430' 
                     event_OnStenoPress="onStenoPressKey"
                     >
             </object>
@@ -124,11 +124,14 @@ if ($isExam) {
 <?php } ?>
 <script>
     var isExam = <?php if ($isExam) {
+        Yii::app()->session['isExam'] = 'isExam';
     echo 1;
 } else {
+    Yii::app()->session['isExam'] = '';
     echo 0;
 } ?>;
     $(document).ready(function () {
+        window.G_isLook = 1;
         setInterval(function () {    //setInterval才是轮询，setTimeout是一定秒数后，执行一次的！！
             window.G_squence = 0;
         }, 3000);
@@ -162,17 +165,60 @@ if ($isExam) {
                 }, 1000);
 <?php } ?>
         }
+        
+         <?php
+            $exerciseID = $exerOne['exerciseID'];
+            $studentID = Yii::app()->session['userid_now'];
+            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'listen' AND createPerson LIKE '$studentID'");
+            $countSquence = count($sqlClassExerciseRecord);
+            $squence = $countSquence + 1;
+            if ($sqlClassExerciseRecord != null) {
+                $sqlClassExerciseRecord->delete();
+            }
+            ?>
     });
-<?php
-$studentID = Yii::app()->session['userid_now'];
-$sqlAnswerRecord = AnswerRecord::model()->findAll("createPerson = '$studentID' AND recordID = '$recordID'");
-$countSquence = count($sqlAnswerRecord);
-$squence = $countSquence + 1;
-?>
+    function onStenoPressKey(pszStenoString, device) {
+        window.GA_answer = yaweiOCX.GetContentWithSteno();
+        //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
+//        if(window.G_pauseFlag===1){
+//             window.G_keyBoardBreakPause = 0;
+//              $("#pause").html("暂停统计");
+//        }
+        var myDate = new Date();
+        window.G_pressTime = myDate.getTime();
+        if (window.G_startFlag === 0) {
+            window.G_startTime = myDate.getTime();
+            window.G_startFlag = 1;
+            window.G_oldStartTime = window.G_pressTime;
+        }
+        window.G_countMomentKey++;
+        window.G_countAllKey++;
+        window.G_content = yaweiOCX.GetContent().replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
+
+        //每击统计击键间隔时间 秒
+        //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
+        //每击统计最高击键间隔时间 秒
+        //@param id=getHighIntervarlTime 请将最高平均速度统计的控件id设置为getHighIntervarlTime 
+        if (window.G_endAnalysis === 0) {
+            var pressTime = window.G_pressTime;
+            if (pressTime - window.G_oldStartTime > 0) {
+                var IntervalTime = parseInt((pressTime - window.G_oldStartTime) / 10) / 100;
+                $("#getIntervalTime").html(IntervalTime);
+                window.GA_IntervalTime = IntervalTime;
+                window.G_oldStartTime = pressTime;
+            }
+            if (IntervalTime - window.G_highIntervarlTime > 0) {
+                window.G_highIntervarlTime = IntervalTime;
+                window.GA_IntervalTime = window.G_highIntervarlTime;
+                $("#getHighIntervarlTime").html(IntervalTime);
+            }
+        }
+        //--------------------------------------------------
+    }
 
     $(document).ready(function () {
         yaweiOCX = document.getElementById("typeOCX");
-        yaweiOCX.HideToolBar();
         //菜单栏变色
         $("li#li-listen-<?php echo $exerOne['exerciseID']; ?>").attr('class', 'active');
     });
@@ -186,15 +232,11 @@ $squence = $countSquence + 1;
         document.getElementById('audio_hiden').style.display = "block";
     }
     window.G_saveToDatabase = 1;
+    window.G_exerciseType="answerRecord";
     window.G_squence = <?php echo $squence; ?>;
-    window.G_exerciseType = "answerRecord";
-//    var answer = document.getElementById("id_answer").value;
-//    var cost = document.getElementById("id_cost").value;
-    window.G_exerciseData = [<?php
-if (isset($recordID)) {
-    echo $recordID;
-} else {
-    echo '0';
-}
-?>];
+    var recordID = <?php echo $recordID ?>;
+    var classExerciseID = <?php echo $exerciseID; ?>;
+    var category = 'listen';
+    var type = "listen";
+    window.G_exerciseData = Array(classExerciseID, type, recordID, category);
 </script>

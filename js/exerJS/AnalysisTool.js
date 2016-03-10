@@ -222,7 +222,7 @@ $(document).ready(function(){
                     type:"POST",
                     dataType:"json",
                     url:"index.php?r=api/analysisSaveToDatabase",
-                    data:{exerciseType:window.G_exerciseType,exerciseData:window.G_exerciseData,squence:window.G_squence,answer:window.GA_answer,originalContent:window.GA_originalContent,
+                    data:{exerciseType:window.G_exerciseType,exerciseData:window.G_exerciseData,squence:window.G_squence,answer:window.GA_answer,
                           averageKeyType:window.GA_averageKeyType,highstCountKey:window.GA_highstCountKey,highstSpeed:window.GA_highstSpeed,
                           averageSpeed:window.GA_averageSpeed,CountBackDelete:window.GA_CountBackDelete,CountAllKey:window.GA_CountAllKey,
                           IntervalTime:window.GA_IntervalTime,highIntervarlTime:window.GA_highIntervarlTime,RightRadio:window.GA_RightRadio},
