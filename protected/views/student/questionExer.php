@@ -16,7 +16,7 @@ $rout = 'student/saveQuestion';
 $page = '/index.php?r='.$rout;
 $SNum = 0;
 ?>
-<div class="span9"style="height:480px; overflow:auto; border:1px solid #000000;">
+<div class="span9"style="height:480px; overflow:auto;">
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host.$path.$page;?>">
         <div class="hero-unit">
             <input name ="qType" type="hidden" value="question"/>

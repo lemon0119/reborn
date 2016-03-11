@@ -273,6 +273,14 @@ class StudentController extends CController {
         $wID=Yii::app()->session['workID'];
         $isOver='0';
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        if(isset($_GET['repeat'])){
+            $recordID = $record['recordID'];
+            $exerciseID = $result['exerciseID'];
+            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'listen' AND createPerson LIKE '$studentID'");
+            if($sqlClassExerciseRecord!==null){
+                 $sqlClassExerciseRecord ->delete();
+            }
+        }
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -412,6 +420,14 @@ class StudentController extends CController {
         $wID=Yii::app()->session['workID'];
         $isOver='0';
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        if(isset($_GET['repeat'])){
+            $recordID = $record['recordID'];
+            $exerciseID = $result['exerciseID'];
+            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'look' AND createPerson LIKE '$studentID'");
+            if($sqlClassExerciseRecord!==null){
+                 $sqlClassExerciseRecord ->delete();
+            }
+        }
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -562,6 +578,14 @@ class StudentController extends CController {
         $wID=Yii::app()->session['workID'];
         $isOver='0';
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        if(isset($_GET['repeat'])){
+            $recordID = $record['recordID'];
+            $exerciseID = $result['exerciseID'];
+            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'key' AND createPerson LIKE '$studentID'");
+            if($sqlClassExerciseRecord!==null){
+                 $sqlClassExerciseRecord ->delete();
+            }
+        }
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -1037,6 +1061,7 @@ class StudentController extends CController {
             $n++;
         }
         Yii::app()->session['suiteID'] = $_GET['suiteID'];
+        
          return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);     
     }
     

@@ -24,107 +24,129 @@ if ($isExam) {
     $strTime .= $ss < 10 ? "0" . $ss : $ss;
 }//end
 ?>
-<?php if (!$isOver) { ?>
-    <div class="span9" style="height: 800px">
-        <?php if ($isExam) { ?>
-        <?php } else { ?>
-            <div  id="span" class="hero-unit" align="center">
-                <div style="width: 660px">
-                    <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
-                </div>
-                <div id="Analysis">
-                    <h3 ><?php echo $exerOne['title'] ?></h3>
-                    <table style="width: 660px"  border = '0px'> 
-                        <tr>
-                            <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
-                            <td><span style="color: #f46500" id="timej">00:00:00</span></td>
-                            <td></td>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;正确率：&nbsp;&nbsp;</span></td>
-                            <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
-                            <td><span class="fr" style="color: gray"> %&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                            <td><span class="fl" style="color: #000;font-weight: bolder">&nbsp;&nbsp;回改字数：</span></td>
-                            <td style="width: 60px;"><span style="color: #f46500" id="getBackDelete">0</span></td>
-                            <td><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">平均速度：</span></td>
-                            <td><span style="color: #f46500" id="getAverageSpeed">0</span></td>
-                            <td><span class="fr" style="color: gray"> 字/分</span></td>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;平均击键：</span></td>
-                            <td><span style="color: #f46500" id="getAverageKeyType">0</span ></td>
-                            <td><span class="fr" style="color: gray"> 次/分</span></td>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;总击键数：</span></td>
-                            <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
-                            <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="allAnalysis" style="display:none">
-                    <table style="width: 660px"  border = '0px'> 
-                        <tr>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">瞬时速度：</span></td>
-                            <td style="width: 80px;"><span style="color: #f46500" id="getMomentSpeed">0</span ></td>
-                            <td><span class="fr" style="color:gray"> 字/分</span></td>
-                            <td><span class="fl"  style="color: #000;font-weight: bolder">&nbsp;&nbsp;瞬时击键：</span></td>
-                            <td style="width: 60px;"><span style="color:#f46500" id="getMomentKeyType">0</span ></td>
-                            <td><span class="fr" style="color:gray"> 次/秒</span></td>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高击键：</span></td>
-                            <td style="width: 60px;"><span style="color: #f46500" id="getHighstCountKey">0</span ></td>
-                            <td><span class="fr" style="color: gray"> 次/秒</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">击键间隔：</span></td>
-                            <td><span style="color: #f46500" id="getIntervalTime">0</span ></td>
-                            <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高间隔：</span></td>
-                            <td><span style="color: #f46500" id="getHighIntervarlTime">0</span ></td>
-                            <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
-                            <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高速度：</span></td>
-                            <td><span style="color: #f46500" id="getHighstSpeed">0</span ></td>
-                            <td><span class="fr" style="color:gray"> 字/分</span></td>
-                        </tr>
-
-                    </table>
-                </div>
-            <?php } ?>
-            <div class="hero-unit" align="center">
-                <?php
-                Yii::app()->session['exerID'] = $exerOne['exerciseID'];
-                ?>
-                <table border = '0px'>
-                    <?php if ($isExam) { ?>
-                        <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
-                        <tr>
-                            <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                            <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="timej" type="hidden"/></td>
-                            <td width = '250px'>字数：<span id="wordCount">0</span></td>
-                        <?php } else { ?>
-                        <?php } ?>
-                    </tr>
-                </table>
-                <br/>
-                <input id="content" type="hidden" style="height: 5px;" value="<?php
-                $str = str_replace("\n", "`", $exerOne['content']);
-                $str = str_replace("\r", "", $str);
-                $str = str_replace(" ", "}", $str);
-                echo $str;
-                ?>">
-                <div id ="templet" style="text-align: left;height: 260px;width: 660px" class="questionBlock" front-size ="25px" onselectstart="return false">
-                </div>
-                <br/>
-                <object id="typeOCX" type="application/x-itst-activex" 
-                        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                        width ='700' height='280' 
-                        event_OnChange="onChange"
-                        event_OnStenoPress="onStenoPressKey">
-                </object>
-            </div>
-    <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
+<?php
+if (!$isOver) {
+    $exerciseID = $exerOne['exerciseID'];
+    $studentID = Yii::app()->session['userid_now'];
+    $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'look' AND createPerson LIKE '$studentID'");
+    $countSquence = count($sqlClassExerciseRecord);
+    $squence = $countSquence + 1;
+    if ($sqlClassExerciseRecord != null) {
+        ?>
+        <div class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+            <h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3>
+            <div id="Analysis" hidden="hidden"></div>
+            <input id="content" type="hidden" style="height: 5px;" value="<?php
+            $str = str_replace("\n", "`", $exerOne['content']);
+            $str = str_replace("\r", "", $str);
+            $str = str_replace(" ", "}", $str);
+            echo $str;
+            ?>">
+            <div id ="templet" hidden="hidden"></div>
         </div>
-
-
-
     <?php } else { ?>
+        <div class="span9" style="height: 800px">
+            <?php if ($isExam) { ?>
+            <?php } else { ?>
+                <div  id="span" class="hero-unit" align="center">
+                    <div style="width: 660px">
+                        <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
+                    </div>
+                    <div id="Analysis">
+                        <h3 ><?php echo $exerOne['title'] ?></h3>
+                        <table style="width: 660px"  border = '0px'> 
+                            <tr>
+                                <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+                                <td><span style="color: #f46500" id="timej">00:00:00</span></td>
+                                <td></td>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;正确率：&nbsp;&nbsp;</span></td>
+                                <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
+                                <td><span class="fr" style="color: gray"> %&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                                <td><span class="fl" style="color: #000;font-weight: bolder">&nbsp;&nbsp;回改字数：</span></td>
+                                <td style="width: 60px;"><span style="color: #f46500" id="getBackDelete">0</span></td>
+                                <td><span class="fr" style="color: gray"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">平均速度：</span></td>
+                                <td><span style="color: #f46500" id="getAverageSpeed">0</span></td>
+                                <td><span class="fr" style="color: gray"> 字/分</span></td>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;平均击键：</span></td>
+                                <td><span style="color: #f46500" id="getAverageKeyType">0</span ></td>
+                                <td><span class="fr" style="color: gray"> 次/分</span></td>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;总击键数：</span></td>
+                                <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
+                                <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="allAnalysis" style="display:none">
+                        <table style="width: 660px"  border = '0px'> 
+                            <tr>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">瞬时速度：</span></td>
+                                <td style="width: 80px;"><span style="color: #f46500" id="getMomentSpeed">0</span ></td>
+                                <td><span class="fr" style="color:gray"> 字/分</span></td>
+                                <td><span class="fl"  style="color: #000;font-weight: bolder">&nbsp;&nbsp;瞬时击键：</span></td>
+                                <td style="width: 60px;"><span style="color:#f46500" id="getMomentKeyType">0</span ></td>
+                                <td><span class="fr" style="color:gray"> 次/秒</span></td>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高击键：</span></td>
+                                <td style="width: 60px;"><span style="color: #f46500" id="getHighstCountKey">0</span ></td>
+                                <td><span class="fr" style="color: gray"> 次/秒</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">击键间隔：</span></td>
+                                <td><span style="color: #f46500" id="getIntervalTime">0</span ></td>
+                                <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高间隔：</span></td>
+                                <td><span style="color: #f46500" id="getHighIntervarlTime">0</span ></td>
+                                <td><span class="fr" style="color: gray"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                                <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;最高速度：</span></td>
+                                <td><span style="color: #f46500" id="getHighstSpeed">0</span ></td>
+                                <td><span class="fr" style="color:gray"> 字/分</span></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                <?php } ?>
+                <div class="hero-unit" align="center">
+                    <?php
+                    Yii::app()->session['exerID'] = $exerOne['exerciseID'];
+                    ?>
+                    <table border = '0px'>
+                        <?php if ($isExam) { ?>
+                            <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
+                            <tr>
+                                <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
+                                <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="timej" type="hidden"/></td>
+                                <td width = '250px'>字数：<span id="wordCount">0</span></td>
+                            <?php } else { ?>
+                            <?php } ?>
+                        </tr>
+                    </table>
+                    <br/>
+                    <input id="content" type="hidden" style="height: 5px;" value="<?php
+                    $str = str_replace("\n", "`", $exerOne['content']);
+                    $str = str_replace("\r", "", $str);
+                    $str = str_replace(" ", "}", $str);
+                    echo $str;
+                    ?>">
+                    <div id ="templet" style="text-align: left;height: 260px;width: 660px" class="questionBlock" front-size ="25px" onselectstart="return false">
+                    </div>
+                    <br/>
+                    <object id="typeOCX" type="application/x-itst-activex" 
+                            clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
+                            width ='700' height='280' 
+                            event_OnChange="onChange"
+                            event_OnStenoPress="onStenoPressKey">
+                    </object>
+                </div>
+                <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
+            </div>
+
+
+
+        <?php }
+    } else {
+        ?>
         <h3 align="center">本题时间已经用完</h3>
 <?php } ?>
 </div>
@@ -141,7 +163,7 @@ if ($isExam) {
     Yii::app()->session['isExam'] = 'isExam';
     echo 1;
 } else {
-     Yii::app()->session['isExam'] = '';
+    Yii::app()->session['isExam'] = '';
     echo 0;
 }
 ?>;
@@ -241,17 +263,7 @@ if ($isExam) {
         } else {
             createFont("#000000", document.getElementById("content").value);
         }
-        
-         <?php
-            $exerciseID = $exerOne['exerciseID'];
-            $studentID = Yii::app()->session['userid_now'];
-            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'look' AND createPerson LIKE '$studentID'");
-            $countSquence = count($sqlClassExerciseRecord);
-            $squence = $countSquence + 1;
-            if ($sqlClassExerciseRecord != null) {
-                $sqlClassExerciseRecord->delete();
-            }
-            ?>
+
     });
 
     function getWordLength() {
@@ -520,6 +532,36 @@ if ($isExam) {
         var suiteID = <?php echo Yii::app()->session['suiteID']; ?>;
         window.location.href = "./index.php?r=student/clswkOne&&suiteID=" + suiteID;
     }
+     function submitSuite(simple) {
+        var option = {
+            title: "提交试卷",
+            btn: parseInt("0011", 4),
+            onOk: function () {
+                doSubmit(true);
+                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                    if (isExam)
+                        window.location.href = "index.php?r=student/classExam";
+                    else
+                        window.location.href = "index.php?r=student/classwork";
+                });
+            }
+        };
+        window.wxc.xcConfirm("提交以后，不能重新进行答题，你确定提交吗？", "custom", option);
 
+    }
+    function doSubmit(simple, doFunction) {
+        $.post($('#id_answer_form').attr('action'), $('#id_answer_form').serialize(), function (result) {
+            if (!simple) {
+            } else {
+                doFunction();
+            }
+        });
+    }
+
+    if (document.getElementById('repeat') !== null) {
+        document.getElementById('repeat').onclick = function () {
+            window.location.href = "./index.php?r=student/lookType&&repeat=repeat&&exerID=<?php echo $_GET['exerID']; ?>&&cent=<?php echo $_GET['cent']; ?>";
+        };
+    }
 
 </script>

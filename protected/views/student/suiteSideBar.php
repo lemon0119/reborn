@@ -80,7 +80,10 @@
     </div>
 </div>
 <script>
-
+//function submitSuite(){
+//    var suiteID = <?php //echo Yii::app()->session['suiteID']; ?>;
+//    window.location.href = "./index.php?r=student/clswkOne&&isOver=isOver&&suiteID="+suiteID;
+//}
 //    $(document).ready(function () {
 //
 //        $("div.span3 div.well ul li").find("a").click(function () {
