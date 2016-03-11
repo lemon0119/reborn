@@ -3,7 +3,7 @@
             <ul class="nav nav-list">
                         <li style="margin-top:10px">
                                 <?php if(isset($_GET['nobar'])){ ?>
-                            <button onclick="window.close()" style="height: 35px;top: 1px;left: 10px" class="btn_ret_admin"></button>
+                            <button onclick="closeWindow()" style="height: 35px;top: 1px;left: 10px" class="btn_ret_admin"></button>
                             <button  style="height: 35px;right: 5px" onclick="location.href='./index.php?r=teacher/addListen4ClassExercise&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>'" class="btn_add fr"></button>
                             <?php }else{ ?>
                                 <button onclick="window.location.href = './index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>'" style="height: 35px;top: 1px;left: 10px" class="btn_ret_admin"></button>
@@ -107,6 +107,13 @@
 						}
 					}
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
+  }
+  
+    function closeWindow(){
+    <?php if(isset($_GET['nobar'])){?>
+        opener.iframReload();
+        <?php }?>
+            window.close();
   }
 
 </script>

@@ -231,6 +231,7 @@ function getContent(libs) {
         NewCell.innerHTML = "<span style='float:left'>"+libs[i]+"</span>";    
     }
     document.getElementById("libstr").value = libstr;
+    document.getElementById("input").value = libs[0];
  }
     function error(result){
                window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.error);

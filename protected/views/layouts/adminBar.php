@@ -38,7 +38,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                     <li>
                                         <a id="class_manager" href="./index.php?r=admin/classLst"></a>
                                     </li>
-                                    <li class="dropdown">
+<!--                                    <li class="dropdown">
                                         <a href="#" id="topic_manager" data-toggle="dropdown"></a>
                                         <ul class="dropdown-menu">
                                             <li class="nav-header" style="color:#AAA9A9;">基础知识</li>
@@ -51,7 +51,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                             <li><a href="./index.php?r=admin/lookLst">看打练习</a></li>
                                             <li><a href="./index.php?r=admin/listenLst">听打练习</a></li>
                                         </ul>
-                                    </li>
+                                    </li>-->
                                    <li><a id="notice_manager" href="./index.php?r=admin/noticeLst"></a></li>
                                      <li><a id="schedule_manager"  href="./index.php?r=admin/schedule"></a></li>
                                       <li><a id="blank_admin"></a></li>

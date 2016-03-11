@@ -53,7 +53,7 @@
                 <th class="font-center">选择</th>
                 <th class="font-center">编号</th>              
                 <th class="font-center">题目</th>
-                <th class="font-center">练习次数</th>
+                <th class="font-center">内容</th>
                 <th class="font-center">练习模式</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>
@@ -64,16 +64,16 @@
                     <form id="copyForm" method="post" action="./index.php?r=teacher/copyKey" >
                     <?php foreach($keyLst as $model):?>
                     <tr>
-                        <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID'];?>" /> </td>
-                        <td class="font-center" style="width: 50px"><?php echo $model['exerciseID'];?></td>
+                        <td class="font-center" style="width: 30px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID'];?>" /> </td>
+                        <td class="font-center" style="width: 30px"><?php echo $model['exerciseID'];?></td>
                         
-                        <td class="font-center"><?php  if(Tool::clength($model['title'])<=7)
+                        <td class="font-center" title="<?php echo $model['title'];?>" ><?php  if(Tool::clength($model['title'])<=7)
                                         echo $model['title'];
                                     else
                                         echo Tool::csubstr($model['title'], 0, 7)."...";?></td>
-                        <td class="font-center"><?php  
-                             $arr = explode("$$", $model['chosen_lib']);                             
-                             echo $arr[0];
+                        <td class="font-center" title="<?php echo Tool::filterKeyContent($model['content']);?>"><?php  
+                             $arr = explode(" ", Tool::filterKeyContent($model['content']));                             
+                             echo $arr[1]."&nbsp;";echo $arr[2]."&nbsp;";echo $arr[3]."&nbsp;";echo $arr[4]."&nbsp;";
                                         ?>
                                         </td>
                         <td class="font-center"><?php  

@@ -65,9 +65,9 @@
 
         </table>
         </div>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "", $classExercise['content']);
-$str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;?>">
-        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 260px">
+        <input id="content" type="hidden" style="height: 5px;" value="<?php  $str = str_replace("\n", "`", $classExercise['content']);
+$str = str_replace("\r", "", $str);$str = str_replace(" ", "}", $str); echo $str;?>">
+        <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
@@ -83,6 +83,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     $(document).ready(function () {
+        window.G_isLook = 1;
         document.getElementById('Analysis').scrollIntoView();
         $.ajax({
                type:"POST",
@@ -127,7 +128,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "", $str); echo $str;
         });
         
     });
-    var originalContent = "<?php $str1 = str_replace("<br/>", "", $str); echo $str1;?>".replace(/(^\s*)|(\s*$)/g, "");
+    var originalContent = "<?php echo $str;?>";
     window.GA_originalContent = originalContent;
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
@@ -148,11 +149,27 @@ $squence = $countSquence + 1;
         window.parent.closeClassExercise();
     });
 
+    function checkYaweiCode(content){
+        var newContent = "";
+        var flag = 0;
+            for(var i=0;i<briefCode.length;i++){
+                if(content.indexOf(briefCode[i])>=0){
+                    flag = 1;
+                    var re =new RegExp(briefCode[i],"g");
+                     newContent = content.replace(re,"<span style='border-bottom:2px solid green'>"+briefCode[i]+"</span>");
+                }else{
+                    if(flag === 0){
+                        newContent = content;
+                    }
+                }
+            }
+            return newContent;
+        }
+        
     function onStenoPressKey(pszStenoString, device) {
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         if(window.G_pauseFlag===1){
-            window.G_isLook = 1;
              window.G_keyBoardBreakPause = 0;
               $("#pause").html("暂停统计");
         }
@@ -165,7 +182,7 @@ $squence = $countSquence + 1;
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = yaweiOCX4Look.GetContent();
+        window.G_content = yaweiOCX4Look.GetContent().replace(/\r\n/g,"`").replace(/ /g,"}");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
         
         //每击统计击键间隔时间 秒
@@ -186,7 +203,6 @@ $squence = $countSquence + 1;
                 $("#getHighIntervarlTime").html(IntervalTime);
             }
         }
-
         //--------------------------------------------------
     }
 
@@ -245,12 +261,14 @@ $squence = $countSquence + 1;
                  if(isBrief===0){
                     content += text[i];
                  }else{
-                    content += "<font style='color:green'>"+text[i]+"</font>";
+                    content += "<span style='color:green'>"+text[i]+"</span>";
                     isBrief--;
                  }
              }
              f.style = "color:" + color;
-                    f.innerHTML = content;
+             var tempContent = "";
+             tempContent = checkYaweiCode(content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;"));
+                    f.innerHTML = tempContent;
                     father.appendChild(f);
         }else{
             for(var i=0;i<text.length;i++){
@@ -259,7 +277,13 @@ $squence = $countSquence + 1;
             f.style = "color:" + color;
                     //var t = document.createTextNode(text);
                     //f.appendChild(t);
-                    f.innerHTML = content;
+                    var tempContent = "";
+                    if(color==="#ff0000"){
+                        tempContent = checkYaweiCode(content.replace(/`/g,"↓<br/>").replace(/}/g,"█"));
+                    }else{
+                        tempContent = checkYaweiCode(content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;"));
+                    }
+                    f.innerHTML = tempContent;
                     father.appendChild(f);
         }
     }
@@ -328,9 +352,9 @@ $squence = $countSquence + 1;
 //                }
 //            }
 //        } else {
-            var input = getContent(yaweiOCX4Look).split("");
+            var input = getContent(yaweiOCX4Look).replace(/\r\n/g,"`").replace(/ /g,"}").split("");
             var text = text_old.split("");
-            var allInput2 = yaweiOCX4Look.GetContentWithSteno().split(">,"); 
+            var allInput2 = yaweiOCX4Look.GetContentWithSteno().replace(/\r\n/g,"`").replace(/ /g,"}").split(">,"); 
             var longIsAgo = 0;
             var old = new Array();
             var oldCode = new Array();
@@ -410,5 +434,6 @@ $squence = $countSquence + 1;
             window.parent.finish();
         }
     }
+    
     
 </script>
