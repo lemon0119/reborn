@@ -29,7 +29,7 @@
             <tr>
                 <th class="font-center">编号</th>
                 <th class="font-center">科目</th>
-                <th class="font-center">题目</th>
+<!--                <th class="font-center">题目</th>-->
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>         
@@ -40,17 +40,17 @@
                     <?php foreach($workLst as $allwork):?>
                     <tr>
                         <td class="font-center" style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
-                        <td class="font-center"><?php echo $allwork['courseID'];
-                            ?></td>
+<!--                        <td class="font-center"><?php //echo $allwork['courseID'];
+                            ?></td>-->
                          <td title="<?php echo $allwork['title'];?>" class="font-center"><?php  if(Tool::clength($allwork['title'])<=5)
                                         echo $allwork['title'];
                                     else
                                         echo Tool::csubstr($allwork['title'], 0, 5)."...";?></td>
                         
-                        <td title="<?php echo $allwork['content'];?>" class="font-center"><?php  if(Tool::clength($allwork['content'])<=8)
-                                        echo $allwork['content'];
+                        <td title="<?php echo Tool::filterKeyContent($allwork['content']);?>" class="font-center"><?php  if(Tool::clength(Tool::filterKeyContent($allwork['content']))<=15)
+                                        echo Tool::filterKeyContent($allwork['content']);
                                     else
-                                        echo Tool::csubstr($allwork['content'], 0,8)."...";
+                                        echo Tool::csubstr(Tool::filterKeyContent($allwork['content']), 0,15)."...";
                                         ?></td>
                         <td class="font-center">
                             <?php  if($allwork['createPerson']=="0")

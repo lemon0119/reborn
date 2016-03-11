@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="span9">
-    <h3>现有习题</h3>
+    <h3>现有作业</h3>
     <!-- 键位习题列表-->
     <table class="table table-bordered table-striped" >
         <thead>
@@ -62,14 +62,13 @@
                             
                         </td>           
                         <td style="width:120px">            
-                             <?php
-                             echo $thisSuite['suiteName'];?>                 
+                             <?php echo $thisSuite['suiteName'];?>                 
                         </td>
                         <td style="width:50px">     
                             <?php if($workID==$suiteLesson['workID']){?>
-                                <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>">查看</a>   
+                            <a  href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>&&suitName=<?php echo $thisSuite['suiteName'];?> ">查看</a>   
                             <?php }else{?>
-                                <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>"  style="color:gray">查看</a> 
+                                <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>&&suitName=<?php echo $thisSuite['suiteName'];?>"  style="color:gray">查看</a> 
                             <?php }?>
                             <!--<a href="./index.php?r=teacher/seeWork&&suiteID=<?php //echo $thisSuite['suiteID']?>"><img title="查看习题" src="<?php //echo IMG_URL;?>detail.png"/></a>   -->                   
                            
@@ -87,8 +86,8 @@
     ?>
     </div>-->
 
-
-<h3>学生列表</h3>
+<?php if(isset($_GET['suitName'])){?>
+<h3><span style="color: #f46500"><?php echo $_GET['suitName']?></span>的完成情况</h3>
 <div>
 <table width="50%" style="float:left;" >
 <tr>
@@ -173,6 +172,7 @@
 </tr>
 </table>
     </div>
+<?php } ?>
 </div>
 
 

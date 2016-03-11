@@ -112,7 +112,7 @@
 						onOk: function(){
 							 window.location.href = "./index.php?r=teacher/classExercise4Type&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>&&delete=1&&exerciseID=" + exerciseID;
 						}
-					}
+					};
 					window.wxc.xcConfirm("您确定删除吗？", "custom", option);
   }
   
