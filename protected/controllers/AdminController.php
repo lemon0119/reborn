@@ -1500,17 +1500,29 @@ class AdminController extends CController {
             unset($_GET ['flag']);
         }
 
+        $sql = "SELECT * FROM student WHERE classID = '$classID'";
+        $result4nums = Yii::app()->db->createCommand($sql)->query();
+        $nums = count($result4nums);
+        
         if (isset($_GET ['action']) && isset($_POST ['checkbox'])) {
             $checkbox = $_POST ['checkbox'];
             if ($_GET ['action'] == "addStu") {
+                $j=0;
                 for ($i = 0; $i < count($checkbox); $i ++) {
-                    if (!is_null($checkbox [$i])) {
+                    $j=$nums+$i;
+                    if($j>10){
+                        break;
+                    }
+                    else if (!is_null($checkbox [$i])) {
                         $stuID = $checkbox [$i];
                         $sql = "UPDATE student SET classID= '" . $classID . "' WHERE userID= '" . $stuID . "'";
                         Yii::app()->db->createCommand($sql)->query();
                     }
                 }
-                $act_result = "添加 $i 名学生成功！";
+                if($j>10){
+                    $act_result = "班级人员超出！请重新分配！";
+                }
+                else{$act_result = "添加 $i 名学生成功！";}
             } else if ($_GET ['action'] == "addTea") {
                 for ($i = 0; $i < count($checkbox); $i ++) {
                     if (!is_null($checkbox [$i])) {
@@ -1533,7 +1545,8 @@ class AdminController extends CController {
         $sql = "SELECT * FROM student WHERE classID = '$classID' AND is_delete = 0";
         $array_stuLst = Tool::pager($sql,4);
         $stus = $array_stuLst['list'];
-        $nums = $stus->rowCount;
+        
+        
         $pages_stu = $array_stuLst['pages'];
         
         $sql = "SELECT * FROM teacher_class WHERE classID =$classID";
@@ -1577,7 +1590,11 @@ class AdminController extends CController {
         $sql = "SELECT * FROM student WHERE classID = '$classID' AND is_delete = 0";
         $array_stuLst = Tool::pager($sql,4);
         $stus = $array_stuLst['list'];
-        $nums = $stus->rowCount;
+        
+        $sql = "SELECT * FROM student WHERE classID = '$classID'";
+        $result4nums = Yii::app()->db->createCommand($sql)->query();
+        $nums = count($result4nums);
+        
         $pages_stu = $array_stuLst['pages'];
         
         $sql = "SELECT * FROM teacher_class WHERE classID =$classID";
@@ -1607,10 +1624,17 @@ class AdminController extends CController {
         $result = $array_class['list'];
         $pages = $array_class['pages'];
         
+        $classID = $_GET['classID'];
+        
+        $sql = "SELECT * FROM student WHERE classID = '$classID'";
+        $result4nums = Yii::app()->db->createCommand($sql)->query();
+        $nums = count($result4nums);
+        
         $this->render('addStuClass', array(
             'classID' => $_GET ["classID"],
             'posts' => $result,
             'pages' =>$pages,
+            'nums'=>$nums,
                 )
         );
     }

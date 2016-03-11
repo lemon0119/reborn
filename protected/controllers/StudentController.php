@@ -229,6 +229,7 @@ class StudentController extends CController {
                 echo '保存答案失败，请重新提交!';
         }
     }
+    
     //我的科目
     public function actionMyCourse(){
         $isExam=false;
