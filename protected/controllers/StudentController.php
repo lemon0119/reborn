@@ -273,13 +273,22 @@ class StudentController extends CController {
         $wID=Yii::app()->session['workID'];
         $isOver='0';
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        if(isset($_GET['repeat'])){
+            $recordID = $record['recordID'];
+            $exerciseID = $result['exerciseID'];
+            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'listen' AND createPerson LIKE '$studentID'");
+            if($sqlClassExerciseRecord!==null){
+                 $sqlClassExerciseRecord ->delete();
+            }
+        }
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
          if($record==null){
-           return $this->render('listenExer',array('recordID'=>$record['recordID'], 'exercise'=>$classwork,'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workId'=>$wID,'isOver'=>$isOver ));
+             SuiteRecord::saveSuiteRecord($recordID);
+           return $this->render('listenExer',array('recordID'=>$recordID, 'exercise'=>$classwork,'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workId'=>$wID,'isOver'=>$isOver ));
          }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -411,13 +420,22 @@ class StudentController extends CController {
         $wID=Yii::app()->session['workID'];
         $isOver='0';
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        if(isset($_GET['repeat'])){
+            $recordID = $record['recordID'];
+            $exerciseID = $result['exerciseID'];
+            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'look' AND createPerson LIKE '$studentID'");
+            if($sqlClassExerciseRecord!==null){
+                 $sqlClassExerciseRecord ->delete();
+            }
+        }
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
          if($record==null){
-           return $this->render('lookExer',array( 'recordID'=>$record['recordID'],'exercise'=>$classwork,'exercise2'=>$classwork2,'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workID' =>$wID,'isOver'=>$isOver ));    
+             SuiteRecord::saveSuiteRecord($recordID);
+           return $this->render('lookExer',array( 'recordID'=>$recordID,'exercise'=>$classwork,'exercise2'=>$classwork2,'exerOne'=>$result,'isExam' =>$isExam, 'cent' =>$cent,'workID' =>$wID,'isOver'=>$isOver ));    
          }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -560,15 +578,24 @@ class StudentController extends CController {
         $wID=Yii::app()->session['workID'];
         $isOver='0';
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        if(isset($_GET['repeat'])){
+            $recordID = $record['recordID'];
+            $exerciseID = $result['exerciseID'];
+            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'key' AND createPerson LIKE '$studentID'");
+            if($sqlClassExerciseRecord!==null){
+                 $sqlClassExerciseRecord ->delete();
+            }
+        }
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
              $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if($record==null){
-           return $this->render('keyExer',array(  'exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
-        }
-         foreach(Tool::$EXER_TYPE as $type){
+            SuiteRecord::saveSuiteRecord($recordID);
+           return $this->render('keyExer',array('recordID'=>$recordID,'exercise'=>$classwork, 'exercise2'=>$classwork2, 'exerOne'=>$result,'isExam' => $isExam,'cent' => $cent,'workId' =>$wID,'isOver'=>$isOver));
+        }else{
+            foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
@@ -582,13 +609,9 @@ class StudentController extends CController {
             $n++;
         }
            $exerciseID = $result['exerciseID'];           
-//         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
-           //加上后连带不想关的练习答案也删除了？？？？？？
- //         AnswerRecord::model()->deleteAll('recordID=? and exerciseID=? and type=? and createPerson =?', array($record['recordID'], $result['exerciseID'], 'key',$studentID));
-            //这里有问题，重新答题时旧的答案没有清除           
-           //      AnswerRecord::model()->deleteRecord($record['recordID'], $result['exerciseID'], 'key', $studentID);
         
         return $this->render('keyExer',array( 
+            'recordID'=>$record->recordID,
             'exercise'=>$classwork,
             'exercise2'=>$classwork2,
             'exerOne'=>$result,
@@ -597,9 +620,9 @@ class StudentController extends CController {
             'workId' =>$wID,
             'isOver'=>$isOver
         ));
+        }
     }
     
-    //2015-8-3 宋杰 获取考试键位练习
        public function actionExamKeyType(){
            if(!ExamRecord::saveExamRecord($recordID))
                     return false;
@@ -1037,6 +1060,7 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
+        Yii::app()->session['suiteID'] = $_GET['suiteID'];
         
          return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);     
     }
@@ -1282,15 +1306,15 @@ class StudentController extends CController {
     public function actionIndex(){
         if(isset($_GET['insert'])){
             //导入数据库略码
-//            $file_dir="E:\\php_workstation\\reborn\\2.txt"; 
-//                $fp=fopen($file_dir,"r"); 
-//                $content=fread($fp,filesize($file_dir));//读文件 
-//                fclose($fp); 
-//                $str = explode("\r\n", $content);
-//                foreach ($str as $v){
-//                   TwoWordsLibBrief::model()->insertBrief($v); 
-//                }
-//                //向略码表导入正常输入的yaweiCode
+            $file_dir="E:\\php_workstation\\reborn\\7.txt"; 
+                $fp=fopen($file_dir,"r"); 
+                $content=fread($fp,filesize($file_dir));//读文件 
+                fclose($fp); 
+                $str = explode("\r\n", $content);
+                foreach ($str as $v){
+                   WordsLibBrief::model()->insertBrief($v); 
+                }
+                //向略码表导入正常输入的yaweiCode
 //            $TwoWordsLibBrief=TwoWordsLibBrief::model()->findAll();
 //            foreach ($TwoWordsLibBrief as $value) {
 //                $v = $value['words'];
@@ -1568,7 +1592,6 @@ class StudentController extends CController {
     }
     
     public function ActionWatchData(){
-        error_log("123");
            $classID = $_GET['classID'];
            $array_lesson = Lesson::model()->findAll("classID = '$classID'");
             if (!empty($array_lesson)) {
