@@ -50,7 +50,7 @@ function doScrollRight(){
     divleft.scrollTop = divright.scrollTop;
 }
 function start(){
-    var right = '<?php echo ($exer['content']);?>'.split(' ');
+    var right = '<?php echo Tool::filterKeyContent($exer['content']);?>'.split(' ');
     var answer = '<?php echo ($answer);?>'.split(' ');
     var i, j, sright;
     i = j = 0;
@@ -60,8 +60,8 @@ function start(){
     var answer_wrong = '';
     while(i < right.length && j < answer.length){
         if(right[i] === answer[j]){
-            right_text += (right[i] + ' ');
-            answer_right += (answer[j] + ' ');
+            right_text += (right[i]+' ');
+            answer_right += (answer[j]+' ');
             i++;
             j++;
             if(sright === false){
