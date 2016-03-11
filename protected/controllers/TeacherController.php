@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 
-//crt by LC 2015-4-21
 
 class TeacherController extends CController {
      protected function renderJSON($data) {
@@ -5724,7 +5723,431 @@ public function ActionAssignFreePractice(){
          $data = Tool::quickSort($data,"correct");
          $this->renderJSON($data);
      }
-     
-     
-     
+     public function actionExport(){
+         $choice=$_GET['choice'];
+         $seq=$_GET['seq'];
+         $classID=$_GET['classID'];
+         $exerciseID=$_GET['exerciseID'];
+         $type=$_GET['type'];
+         $id=$_GET['id'];
+         
+         ////*////
+         $all=Array();
+         if($type==1){
+             $type='speed';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }else if($type==4){
+             $type='correct';
+         }else if($type==5){
+             $type='free';
+         }         
+         $all= ClassexerciseRecord::model()->findAll('classExerciseID=?',array($exerciseID));
+         $allStudent=  Student::model()->findAll('classID=?',array($classID));
+         $all2=Array();
+         $all3=Array();
+         $arrayData = Array();
+         $arrayData2 = Array();
+         $arrayData3 = Array();$arrayData4 = Array();
+         $arrayDetail=Array();
+         $arrayDetailData=Array();       
+         $data2 = Array();
+         $data3 = Array();
+         $allData=Array();
+         $myData=Array();
+         $myDataAll=Array();
+         foreach ($allStudent as $allStu) {
+             $key=0;
+             $n=0;
+             $all2=Array();
+             foreach ($all as $al) {
+                 if($al['studentID']==$allStu['userID']){
+                     $n++;
+                     array_push($all2, $al);
+                     //$key++;
+                 }
+                 
+             }
+             if($n!=0 && $allStu['userID']==$id){
+                 $nn=Array();
+                 $nn=["sequence"=>$n,"a"=>$n];
+                 array_push($allData,$nn);
+              }
+             if($n!=0)
+                array_push($all3, $all2);
+         }
+         
+         $studentName='';
+         $data = Array();
+         $averageData=Array();
+         $maxData=Array();
+         $nn1=0;$nn2=0;$nn3=0;$nn4=0;$nn5=0;$nn6=0;$nn7=0;$nn8=0;
+         $f1=0;$f2=0;$f3=0;$f4=0;$f5=0;$f6=0;$f7=0;$f8=0;$f9=0;
+         
+         foreach ($all3 as $al) {
+             $f=0;
+             $n1=0;$n2=0;$n3=0;$n4=0;$n5=0;$n6=0;$n7=0;$n8=0;
+             $icon1=0;$icon2=0;$icon3=0;$icon4=0;$icon5=0;$icon6=0;$icon7=0;$icon8=0;$icon9=0;
+             $ff1=0;$ff2=0;$ff3=0;$ff4=0;$ff5=0;$ff6=0;$ff7=0;$ff8=0;$ff9=0;
+             $i1=0;
+             $s=0;
+             foreach ($al as $a) {
+                 if($a['studentID']==$id){
+                     $i1++;
+                 }
+                $correct=$a['ratio_correct'];       //correct
+                 if(strpos($correct,"&") === false){     
+                      $correct=$correct."&".$correct;
+                 }
+                 $n=  strrpos($correct, "&");
+                 $correct= substr($correct, $n+1);
+                 $n1+=$correct;
+                 $nn1+=$correct;
+                 if($f1<$correct){
+                     $f1=$correct;
+                 }
+                 if($correct>=$ff1&& $a['studentID']==$id){
+                     $icon1=$i1;
+                     $ff1=$correct;
+                 }
+
+                 $speed=$a['ratio_speed'];        //speeed
+                 if(strpos($speed,"&") === false){     
+                      $speed=$speed."&".$speed;
+                 }
+                 $n=  strrpos($speed, "&");
+                 $speed= substr($speed, $n+1);
+                 $n2+=$speed;
+                 $nn2+=$speed;
+                 if($f2<$speed){
+                     
+                     $f2=$speed;
+                 }
+                 if($speed>=$ff2 && $a['studentID']==$id){
+                     $ff2=$speed;
+                     $icon2=$i1;
+                 }
+
+                 $maxSpeed=$a['ratio_maxSpeed'];     //maxSpeed
+                 if(strpos($maxSpeed,"&") === false){     
+                      $maxSpeed=$maxSpeed."&".$maxSpeed;
+                 }
+                 $n=  strrpos($maxSpeed, "&");
+                 $maxSpeed= substr($maxSpeed, $n+1);
+                 $n3+=$maxSpeed;
+                 $nn3+=$maxSpeed;
+                 if($f3<$maxSpeed){
+                     
+                     $f3=$maxSpeed;
+                 }
+                 if($maxSpeed>=$ff3&& $a['studentID']==$id){
+                     $ff3=$maxSpeed;
+                     $icon3=$i1;
+                 }
+
+                 $backDelete=$a['ratio_backDelete'];     //backDelete
+                 if(strpos($backDelete,"&") === false){     
+                      $backDelete=$backDelete."&".$backDelete;
+                 }
+                 $n=  strrpos($backDelete, "&");
+                 $backDelete= substr($backDelete, $n+1);
+                 $n4+=$backDelete;
+                 $nn4+=$backDelete;
+                 if($f4<$backDelete){
+                     
+                     $f4=$backDelete;
+                 }
+                 if($backDelete>=$ff4&& $a['studentID']==$id){
+                     $ff4=$backDelete;
+                     $icon4=$i1;
+                 }
+
+                 $maxInternalTime=$a['ratio_maxInternalTime'];        //maxInternalTime
+                 if(strpos($maxInternalTime,"&") === false){     
+                      $maxInternalTime=$maxInternalTime."&".$maxInternalTime;
+                 }
+                 $n=  strrpos($maxInternalTime, "&");
+                 $maxInternalTime= substr($maxInternalTime, $n+1);
+                 $n5+=$maxInternalTime;
+                 $nn5+=$maxInternalTime;
+                 if($f5<$maxInternalTime){
+                     
+                     $f5=$maxInternalTime;
+                 }
+                 if($maxInternalTime>=$ff5&& $a['studentID']==$id){
+                     $ff5=$maxInternalTime;
+                     $icon5=$i1;
+                 }
+                 
+                 $averageKeyType=$a['ratio_averageKeyType'];   
+                 if(strpos($averageKeyType,"&") === false){     
+                      $averageKeyType=$averageKeyType."&".$averageKeyType;
+                 }
+                 $n=  strrpos($averageKeyType, "&");
+                 $averageKeyType= substr($averageKeyType, $n+1);
+                 $n6+=$averageKeyType;
+                 $nn6+=$averageKeyType;
+                 if($f6<$averageKeyType){
+                    
+                     $f6=$averageKeyType;
+                 }
+                 if($averageKeyType>=$ff6&& $a['studentID']==$id){
+                     $ff6=$averageKeyType;
+                     $icon6=$i1;
+                 }
+                 
+                 $maxKeyType=$a['ratio_maxKeyType'];     
+                 if(strpos($maxKeyType,"&") === false){     
+                      $maxKeyType=$maxKeyType."&".$maxKeyType;
+                 }
+                 $n=  strrpos($maxKeyType, "&");
+                 $maxKeyType= substr($maxKeyType, $n+1);
+                 $n7+=$maxKeyType;
+                 $nn7+=$maxKeyType;
+                 if($f7<$maxKeyType){
+                    
+                     $f7=$maxKeyType;
+                 }
+                 if($maxKeyType>=$ff7&& $a['studentID']==$id){
+                     $ff7=$maxKeyType;
+                      $icon7=$i1;
+                 }
+                 
+                 $countAllKey=$a['ratio_countAllKey'];     
+                 if(strpos($countAllKey,"&") === false){     
+                      $countAllKey=$countAllKey."&".$countAllKey;
+                 }
+                 $n=  strrpos($countAllKey, "&");
+                 $countAllKey= substr($countAllKey, $n+1);
+                 $n8+=$countAllKey;
+                 $nn8+=$countAllKey;
+                 if($f8<$countAllKey){
+                     
+                     $f8=$countAllKey;
+                 }
+                 if($countAllKey>=$ff8&& $a['studentID']==$id){
+                     $ff8=$countAllKey;
+                      $icon8=$i1;
+                 }                 
+                 $finishDate=$a['finishDate'];          //finishDate
+                 if($f9<$finishDate){
+                     $f9=$finishDate;
+                 }                
+                 if($finishDate>=$ff9 && $a['studentID']==$id){
+                     $ff9=$finishDate;
+                     $icon9=$i1;
+                 }                 
+                 $studentName=Student::model()->find('userID=?',array($a['studentID']))['userName'];
+                 $f++;
+                 if($a['studentID']==$id){
+                    $s++;
+                    $arrayDetail=["s"=>$s,"correct"=>$correct,"speed"=>$speed,
+                   "backDelete"=>$backDelete,'averageKeyType'=>$averageKeyType,'finishDate'=>$finishDate,'countAllKey'=>$countAllKey];
+                    array_push($arrayDetailData, $arrayDetail);
+                 }
+             }
+             
+         }
+         $maxData=["high"=>"最高","correct"=>$f1,"speed"=>$f2,"backDelete"=>$f4,
+                     'averageKeyType'=>$f6,"finishDate"=>$f9,"countAllKey"=>$f8];
+        array_push($arrayDetailData, $maxData);
+         //array_push($allData, $arrayDetailData);
+         //array_push($allData, $maxData);
+         ////*////
+        return $this->renderPartial('01simple',['arrayDetailData'=>$arrayDetailData]);
+    }
+
+      public function actionExports(){
+         $choice=$_GET['choice'];
+        $workID=$_GET['workID'];
+         $exerciseID=$_GET['exerciseID'];
+         $type=$_GET['type'];
+         $isExam=$_GET['isExam'];
+         $name=$_GET['name'];
+       ////////****/////
+         $all=Array();
+         if($type==1){
+             $type='key';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }
+         $recordIDs=Array();
+         if($isExam==1){
+             $recordIDs=  ExamRecord::model()->findAll('workID=?',array($workID));
+         }else{
+             $recordIDs= SuiteRecord::model()->findAll('workID=?',array($workID));
+         }
+         $all=Array();
+         foreach ($recordIDs as $ids) {
+             $result=  AnswerRecord::model()->find('type=? and exerciseID=? and isExam=? and recordID=?',array($type,$exerciseID,$isExam,$ids['recordID']));
+             if($result){
+                array_push($all, $result);
+             }
+         }
+         $arrayData = Array();
+         $arrayData2 = Array();
+         $arrayData3 = Array();$arrayData4 = Array();
+         $data = Array();
+         $data2 = Array();
+         $data3 = Array();
+         $allData=Array();
+         $myData=Array();
+         $myDetail=Array();
+         $averageData=Array();
+         $maxData=Array();
+         $n1=0;$n2=0;$n3=0;$n4=0;$n5=0;$n6=0;$n7=0;$n8=0;
+         $f1=0;$f2=0;$f3=0;$f4=0;$f5=0;$f6=0;$f7=0;$f8=0;$f9=0;
+         if($all){
+            foreach ($all as $a) {
+                //correct
+                 $correct=$a['ratio_correct'];
+                 $correct2=$a['ratio_correct'];
+                 if(strpos($correct,"&") === false){     
+                      $correct=$correct."&".$correct;
+                 }
+                 $n=  strrpos($correct, "&");
+                 $correct= substr($correct, $n+1);
+                 $n1+=$correct;
+                 if($f1<$correct){
+                     $f1=$correct;
+                 }
+                 
+                 //speed
+                 $speed=$a['ratio_speed'];
+                 $speed2=$a['ratio_speed'];
+                 if(strpos($speed,"&") === false){     
+                      $speed=$speed."&".$speed;
+                 }
+                 $n=  strrpos($speed, "&");
+                 $speed= substr($speed, $n+1);
+                 $n2+=$speed;
+                 if($f2<$speed){
+                     
+                     $f2=$speed;
+                 }
+                 
+                 //maxSpeed
+                 $maxSpeed=$a['ratio_maxSpeed'];
+                 $maxSpeed2=$a['ratio_maxSpeed'];
+                 if(strpos($maxSpeed,"&") === false){     
+                      $maxSpeed=$maxSpeed."&".$maxSpeed;
+                 }
+                 $n=  strrpos($maxSpeed, "&");
+                 $maxSpeed= substr($maxSpeed, $n+1);
+                 $n3+=$maxSpeed;
+                 if($f3<$maxSpeed){
+                     
+                     $f3=$maxSpeed;
+                 }
+                 
+                 //backDelete
+                 $backDelete=$a['ratio_backDelete'];
+                 $backDelete2=$a['ratio_backDelete'];
+                 if(strpos($backDelete,"&") === false){     
+                      $backDelete=$backDelete."&".$backDelete;
+                 }
+                 $n=  strrpos($backDelete, "&");
+                 $backDelete= substr($backDelete, $n+1);
+                 $n4+=$backDelete;
+                 if($f4<$backDelete){
+                     
+                     $f4=$backDelete;
+                 }
+                 
+                 //maxInternalTime
+                 $maxInternalTime=$a['ratio_maxInternalTime'];
+                 $maxInternalTime2=$a['ratio_maxInternalTime'];
+                 if(strpos($maxInternalTime,"&") === false){     
+                      $maxInternalTime=$maxInternalTime."&".$maxInternalTime;
+                 }
+                 $n=  strrpos($maxInternalTime, "&");
+                 $maxInternalTime= substr($maxInternalTime, $n+1);
+                 $n5+=$maxInternalTime;
+                 if($f5<$maxInternalTime){
+                     
+                     $f5=$maxInternalTime;
+                 }
+                 
+                 //time
+                 $time = count($speed)*2-2;
+                 $time2 = count($speed)*2-2;
+                 //averageKeytype
+                 $averageKeyType=$a['ratio_averageKeyType'];   
+                 if(strpos($averageKeyType,"&") === false){     
+                      $averageKeyType=$averageKeyType."&".$averageKeyType;
+                 }
+                 $n=  strrpos($averageKeyType, "&");
+                 $averageKeyType= substr($averageKeyType, $n+1);
+                 $n6+=$averageKeyType;
+                 if($f6<$averageKeyType){
+                    
+                     $f6=$averageKeyType;
+                 }
+                 
+                 //maxKeyType
+                 $maxKeyType=$a['ratio_maxKeyType'];     
+                 if(strpos($maxKeyType,"&") === false){     
+                      $maxKeyType=$maxKeyType."&".$maxKeyType;
+                 }
+                 $n=  strrpos($maxKeyType, "&");
+                 $maxKeyType= substr($maxKeyType, $n+1);
+                 $n7+=$maxKeyType;
+                 if($f7<$maxKeyType){
+                    
+                     $f7=$maxKeyType;
+                 }
+                 
+                 //countAllKey
+                 $countAllKey=$a['ratio_countAllKey'];     
+                 if(strpos($countAllKey,"&") === false){     
+                      $countAllKey=$countAllKey."&".$countAllKey;
+                 }
+                 $n=  strrpos($countAllKey, "&");
+                 $countAllKey= substr($countAllKey, $n+1);
+                 $n8+=$countAllKey;
+                 if($f8<$countAllKey){
+                     
+                     $f8=$countAllKey;
+                 }
+                 
+                 //createTime
+                 $createTime=$a['createTime'];
+                 if($f9<$createTime){
+                     
+                     $f9=$createTime;
+                 }
+                 
+                 if($isExam==1){
+                     $student=  ExamRecord::model()->find('recordID=?',array($a['recordID']))['studentID'];
+                 }else{
+                    $student=SuiteRecord::model()->find('recordID=?',array($a['recordID']))['studentID'];
+                 }
+                 $studentName=Student::model()->find('userID=?',array($student))['userName'];
+                 if($student==$name){
+                     //通过名字获取相应记录
+                    $myData = ["speed"=>$speed2,"maxSpeed"=>$maxSpeed2,"correct"=>$correct2,"backDelete"=>$backDelete2,'maxInternalTime'=>$maxInternalTime2];
+                    $myDetail=["s"=>'l',"correct"=>$correct,"speed"=>$speed,"backDelete"=>$backDelete,
+                     'averageKeyType'=>$averageKeyType,"createTime"=>$createTime,"countAllKey"=>$countAllKey];
+                 }
+                 $arrayData = ["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$student,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime,
+                     'averageKeyType'=>$averageKeyType,"maxKeyType"=>$maxKeyType,"countAllKey"=>$countAllKey];
+                 $arrayData2 = ["speed"=>$speed2,"maxSpeed"=>$maxSpeed2,"correct"=>$correct2,"backDelete"=>$backDelete2,'maxInternalTime'=>$maxInternalTime2];
+                 $maxData=["high"=>"最高","correct"=>$f1,"speed"=>$f2,"backDelete"=>$f4,
+                     'averageKeyType'=>$f6,"createTime"=>$f9,"countAllKey"=>$f8];
+           
+                
+            }
+         }
+         $arrayDetailData=Array();
+         array_push($arrayDetailData, $myDetail);
+         array_push($arrayDetailData, $maxData);
+
+         ////*////
+        return $this->renderPartial('01simple',['arrayDetailData'=>$arrayDetailData]);
+    }
+
 }

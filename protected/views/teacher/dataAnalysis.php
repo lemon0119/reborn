@@ -135,6 +135,9 @@
             </div>
             <div style="width:70%;float:right;">
                 <div id="main" style="display: none;overflow: auto;height:300px;position: relative;top:10px"></div>    
+                <div id="export" style="width:50px;border-radius: 5px;background-color: #ddd;height: 30px;color:white;position: relative;margin: auto 30px -15px auto;">
+                    
+                </div>
                 <div id="de" style="display:none;width:100%;overflow: auto;height:300px;">
                     <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;top:20px;left:20px;width:480px;">
                             <thead>
@@ -154,6 +157,7 @@
                             </tbody>
                         </table>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -191,6 +195,7 @@ function che(){
     document.getElementById("div11").style.display='none';
     document.getElementById("main").style.display='none';
     document.getElementById("de").style.display='none';
+    document.getElementById("export").style.display='none';
     $(".bb").css("color","black");
 }
 function showClassWork(lessonID){
@@ -256,6 +261,9 @@ function getClassExer(lessonID){
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("div11").style.display='none';
+                 $("#export").children().filter('tr').remove();
+                 document.getElementById("export").style.display='none';
+                 
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -286,7 +294,7 @@ function getClassExer(lessonID){
                       var str;
                       if(i%4==0)
                           str="";
-                      str+= "<td><a class='bb' id='kk"+i+"'"+" onclick='getClassExerRanking("+i+","+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";   
+                      str+= "<td><a style='cursor:pointer;' class='bb' id='kk"+i+"'"+" onclick='getClassExerRanking("+i+","+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";   
                       var li;
                       if(i%4==0){
                          li = document.createElement("tr");      
@@ -314,6 +322,8 @@ function getExamExercise(examID,workID){
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("div11").style.display='none';
+                 $("#export").children().filter('tr').remove();
+                 document.getElementById("export").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -335,7 +345,7 @@ function getExamExercise(examID,workID){
                        var str;
                        if(i%4==0)
                            str="";
-                       str += "<td><a class='bb' id='kk"+i+"'"+" onclick='getStudentRanking("+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                       str += "<td><a style='cursor:pointer;'class='bb' id='kk"+i+"'"+" onclick='getStudentRanking("+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
                       var li ;
                       if(i%4==0){
                          li= document.createElement("tr");   
@@ -383,6 +393,8 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                  document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
                  document.getElementById("div11").style.display='block';
+                 $("#export").children().filter('tr').remove();
+                 document.getElementById("export").style.display='none';
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
@@ -407,7 +419,7 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                    var per=new Array();
                    for(var i=0;i<data[0].length;i++){       
                        var name=data[0][i]['time'];
-                      var  str = "<th>"+(i+1)+"</th>"+"<th><a class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                      var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
@@ -479,7 +491,6 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                   choice = province[a].value;
             }
         }
-        console.log(name);
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -496,11 +507,14 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                  document.getElementById("sp").style.display='block';
                  document.getElementById("main").style.display='block';
                  document.getElementById("de").style.display='block';
+                 document.getElementById("export").style.display='block';
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
                    $('#detail').children().filter('tr').remove();
+                   var expor=document.getElementById("export");
+                   $("#export").children().filter('tr').remove();
                    var choose;
                    if(choice=='correct'){
                        choose='正确率';
@@ -525,7 +539,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                        
                    }
                    for(var i=0;i<data[0].length;i++){   
-                      var  str = "<th>"+(i+1)+"</th>"+"<th><a class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+"1"+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                      var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+"1"+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
@@ -547,22 +561,27 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                        
                    }
                    //detail
-                    var str =  "<th>"+1+"</th>"+"<th>"+Math.round(data[3]['correct']*100)/100+"</th>"+"<th>"+Math.round(data[3]['speed']*100)/100+"</th>"+"<th>"+Math.round(data[3]['maxSpeed']*100)/100+
-                            "</th>"+"<th>"+Math.round(data[3]['backDelete']*100)/100+"</th>"+"<th>"+Math.round(data[3]['averageKeyType']*100)/100+"</th>"+"<th>"+Math.round(data[3]['maxKeyType']*100)/100+"</th>"+"<th>"+Math.round(data[3]['maxInternalTime']*100)/100+
+                    var str =  "<th>"+1+"</th>"+"<th>"+Math.round(data[3]['correct']*100)/100+"</th>"+"<th>"+Math.round(data[3]['speed']*100)/100+"</th>"+"<th>"+
+                            Math.round(data[3]['backDelete']*100)/100+"</th>"+"<th>"+Math.round(data[3]['averageKeyType']*100)/100+"</th>"+"<th>"+data[3]['createTime']+"</th>"+
                             "</th>"+"<th>"+Math.round(data[3]['countAllKey']*100)/100+"</th>";
                     var tr = document.createElement("tr");    
                     tr.innerHTML= str;
                     detail.appendChild(tr);
                     //average
-                    var str =  "<th style='color:red'>"+"最高"+"</th>"+"<th style='color:red'>"+Math.round(data[4]['correct']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[4]['speed']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[4]['maxSpeed']*100)/100+
-                            "</th>"+"<th style='color:red'>"+Math.round(data[4]['backDelete']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[4]['averageKeyType']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[4]['maxKeyType']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[4]['maxInternalTime']*100)/100+
+                    var str =  "<th style='color:red'>"+"最高"+"</th>"+"<th style='color:red'>"+Math.round(data[4]['correct']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[4]['speed']*100)/100+"</th>"
+                            +"<th style='color:red'>"+Math.round(data[4]['backDelete']*100)/100+"</th>"+"<th style='color:red'>"+Math.round(data[4]['averageKeyType']*100)/100+"</th>"+"<th style='color:red'>"+data[4]['createTime']+
                             "</th>"+"<th style='color:red'>"+Math.round(data[4]['countAllKey']*100)/100+"</th>";
                     var tr = document.createElement("tr");  
                     
                     tr.innerHTML= str;
                     detail.appendChild(tr);
-                      
-                   
+                     
+                   if(data[4].length!=0){
+                           var str = "<a style='position:relative;top:5px;left:10px;color:black;' href='index.php?r=teacher/exports&&choice="+choice+"&&workID="+workID+"&&isExam="+isExam+"&&exerciseID="+exerciseID+"&&type="+type+"&&name="+name+"'>"+"导出"+"</a>";
+                           var tr = document.createElement("tr");    
+                           tr.innerHTML= str;
+                           expor.appendChild(tr);
+                    }
                     var myChart = echarts.init(document.getElementById('main'));
                     var option = {
                         title: {
@@ -646,6 +665,9 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                  document.getElementById("div11").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
+                 
+                 $("#export").children().filter('tr').remove();
+                 document.getElementById("export").style.display='none';
                    var ul = document.getElementById("ul2");          
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
@@ -653,6 +675,7 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                    $('#ul3').children().filter('li').remove();
                    $('#detail').children().filter('tr').remove();
                    $("#sh").children().filter('b').remove();
+                   
                    //$('#bo').show();
                    //$('#main').show();
                    $('#main').show();
@@ -672,7 +695,7 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                    var times  = new Array();
                    var per=new Array();
                    for(var i=0;i<data[0].length;i++){                                         
-                      var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                      var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
@@ -758,12 +781,17 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                 },
              success: function(data){
                  document.getElementById("sp").style.display='block';
-                 document.getElementById("main").style.display='block';
+                 document.getElementById("main").style.display='block'; 
+                 
+                 
+                 document.getElementById("export").style.display='block';
                    var ul = document.getElementById("ul2");          
                    var tbody = document.getElementById("bo"); 
                    var detail = document.getElementById("detail"); 
                    var sele = document.getElementById("sequence"); 
                    var sh=document.getElementById("sh");
+                   var expor=document.getElementById("export");
+                   
                    $("#sh").children().filter('b').remove();
                    $('#sequence').show();
                    $('#bo').children().filter('tr').remove();
@@ -771,6 +799,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
                    $('#detail').children().filter('tr').remove();
+                   $("#export").children().filter('tr').remove();
                    var times = new Array();
                    var per=new Array();
 //                   var myTimes = new Array();
@@ -895,6 +924,24 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    var tr = document.createElement("tr");  
                    tr.innerHTML= str;
                    detail.appendChild(tr);
+                    if(data[4].length!=0){
+//                       var ab=document.createElement("a");
+//                        ab.href="index.php?r=teacher/export&&ii="+ii+"seq="+seq+"classID="+classID+"exerciseID"+exerciseID+"type="+type+"id="+id;
+//                        ab.title="export";                    
+//                        expor.appendChild(ab);
+                           var str = "<a style='position:relative;top:5px;left:10px;color:black;' href='index.php?r=teacher/export&&choice="+choice+"&&seq="+seq+"&&classID="+classID+"&&exerciseID="+exerciseID+"&&type="+type+"&&id="+id+"'>"+"导出"+"</a>";
+                           var tr = document.createElement("tr");    
+                           tr.innerHTML= str;
+                           expor.appendChild(tr);
+                    }
+                   
+                   
+//                   if(data[4].length!=0){
+//                       var ab=document.createElement("a");
+//                       var b=data[4].join("-");
+//                       ab.title="export";                    
+//                       expor.appendChild(ab);
+//                    }
                      
                      var myChart = echarts.init(document.getElementById('main'));
 
@@ -944,67 +991,9 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                                  };
                                  return s;
                              }()
-                                     
-//                             [
-//                                 {
-//                                     name:'平均成绩',
-//                                     type:'line',
-//                                     data:per
-//                                 },
-//                                {
-//                                    name:'学生成绩',
-//                                    type:'line',
-//                                    data:myPer[0],
-//                                },
-//                             ]
+                               
                          };
                          myChart.setOption(option);
-//                     }
-
-//var myChart2 = echarts.init(document.getElementById('main2'));
-//                        
-//                         var option2 = {
-//                             title: {
-//                                 text: '折线图'
-//                             },
-//                             tooltip : {
-//                                 trigger: 'axis'
-//                             },
-//                             legend: {
-//                                 data:['平均成绩','学生成绩']
-//                             },
-//                             grid: {
-//                                 left: '3%',
-//                                 right: '4%',
-//                                 bottom: '3%',
-//                                 containLabel: true
-//                             },
-//                             xAxis : [
-//                                 {
-//                                     type : 'category',
-//                                     boundaryGap : false,
-//                                     data : times
-//                                 }
-//                             ],
-//                             yAxis : [
-//                                 {
-//                                     type : 'value'
-//                                 }
-//                             ],
-//                             series : [
-//                                 {
-//                                     name:'平均成绩',
-//                                     type:'line',
-//                                     data:per
-//                                 },
-//                                {
-//                                name:'学生成绩',
-//                                type:'line',
-//                                data:myPer[1]
-//                                },
-//                             ]
-//                         };
-//                         myChart2.setOption(option2);
                  },     
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
