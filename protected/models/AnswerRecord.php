@@ -325,6 +325,7 @@ class AnswerRecord extends CActiveRecord {
             $newAnswer->recordID = $recordID;
             $newAnswer->exerciseID = $exerciseID;
             $newAnswer->type = $type;
+            $newAnswer->category = $type;
             $newAnswer->answer = $answer;
             $newAnswer->createPerson = Yii::app()->session['userid_now'];
             $newAnswer->createTime = date("Y-m-d  H:i:s");
@@ -335,6 +336,7 @@ class AnswerRecord extends CActiveRecord {
                 return true;
         }else {
             $oldAnswer->answer = $answer;
+            $oldAnswer->category = $type;
             $oldAnswer->createTime = date("Y-m-d  H:i:s");
             if (!($oldAnswer->upDate())) {
                 echo Tool::jsLog('更新答案记录失败！');

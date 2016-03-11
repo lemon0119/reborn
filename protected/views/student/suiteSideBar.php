@@ -80,22 +80,18 @@
     </div>
 </div>
 <script>
-//function submitSuite(){
-//    var suiteID = <?php //echo Yii::app()->session['suiteID']; ?>;
-//    window.location.href = "./index.php?r=student/clswkOne&&isOver=isOver&&suiteID="+suiteID;
-//}
-//    $(document).ready(function () {
-//
-//        $("div.span3 div.well ul li").find("a").click(function () {
-//            var url = $(this).attr("href");
-//            if (url.indexOf("index.php") > 0) {
-//                $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(),
-//                        function (result) {
-//                            console.log(result);
-//                            window.location.href = url;
-//                        });
-//                return false;
-//            }
-//        });
-//    });
+    $(document).ready(function () {
+
+        $("div.span3 div.well ul li").find("a").click(function () {
+            var url = $(this).attr("href");
+            if (url.indexOf("index.php") > 0) {
+                $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(),
+                        function (result) {
+                            console.log(result);
+                            window.location.href = url;
+                        });
+                return false;
+            }
+        });
+    });
 </script>
