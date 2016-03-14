@@ -1500,29 +1500,24 @@ class AdminController extends CController {
             unset($_GET ['flag']);
         }
 
-        $sql = "SELECT * FROM student WHERE classID = '$classID'";
-        $result4nums = Yii::app()->db->createCommand($sql)->query();
-        $nums = count($result4nums);
+        $nums=TbClass::model()->getStuNums($classID);
         
         if (isset($_GET ['action']) && isset($_POST ['checkbox'])) {
             $checkbox = $_POST ['checkbox'];
             if ($_GET ['action'] == "addStu") {
-                $j=0;
-                for ($i = 0; $i < count($checkbox); $i ++) {
-                    $j=$nums+$i;
-                    if($j>10){
-                        break;
-                    }
-                    else if (!is_null($checkbox [$i])) {
-                        $stuID = $checkbox [$i];
-                        $sql = "UPDATE student SET classID= '" . $classID . "' WHERE userID= '" . $stuID . "'";
-                        Yii::app()->db->createCommand($sql)->query();
-                    }
+                if($nums+count($checkbox)>40){
+                $act_result = "班级人员超出40人！请重新选择！";
                 }
-                if($j>10){
-                    $act_result = "班级人员超出！请重新分配！";
-                }
-                else{$act_result = "添加 $i 名学生成功！";}
+                else{
+                    for ($i = 0; $i < count($checkbox); $i ++) {
+                        if (!is_null($checkbox [$i])) {
+                            $stuID = $checkbox [$i];
+                            $sql = "UPDATE student SET classID= '" . $classID . "' WHERE userID= '" . $stuID . "'";
+                            Yii::app()->db->createCommand($sql)->query();
+                        }
+                    }
+                    $act_result = "添加 $i 名学生成功！";
+                  }
             } else if ($_GET ['action'] == "addTea") {
                 for ($i = 0; $i < count($checkbox); $i ++) {
                     if (!is_null($checkbox [$i])) {
@@ -1546,6 +1541,7 @@ class AdminController extends CController {
         $array_stuLst = Tool::pager($sql,4);
         $stus = $array_stuLst['list'];
         
+        $nums=TbClass::model()->getStuNums($classID);
         
         $pages_stu = $array_stuLst['pages'];
         

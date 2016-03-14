@@ -99,7 +99,7 @@
         }
         function addStuClass(nums)
         {
-            if(nums < 10)
+            if(nums < 40)
             {
              window.location.href="./index.php?r=admin/addStuClass&&classID=<?php echo $classID;?>";}
          else{
@@ -164,7 +164,7 @@
 							$('#deleForm').submit();
 						}
 					};
-					window.wxc.xcConfirm("确定删除选中的科目吗？", "custom", option);
+					window.wxc.xcConfirm("确定删除选中的学生吗？", "custom", option);
         }
        
     }

@@ -43,20 +43,8 @@ function check_all(obj,cName,nums)
 {    
 var checkboxs = document.getElementsByName(cName); 
 for(var i=0;i<checkboxs.length;i++){
-    nums++;
-    if(nums<10){
         checkboxs[i].checked = obj.checked;
-    }else{
-        var option = {
-						title: "警告",
-						btn: parseInt("0011",2),
-						onOk: function(){
-							$('#deleForm').submit();
-						}
-					}
-					window.wxc.xcConfirm("全选班级人员将超出！", "custom", option);
-                                        break;
-        } 
+ 
 }
 }
 
