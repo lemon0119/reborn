@@ -79,22 +79,22 @@
     $(document).ready(function () {
         document.getElementById('span').scrollIntoView();
         yaweiOCX4Listen = document.getElementById("typeOCX4Listen");
-            $("#pause").click(function(){
-            if(window.G_startFlag===1){
-            if(window.G_isPause ===0){
-                window.G_isPause = 1;
-            }
-                var audio = document.getElementById('music');  
-                if(window.G_pauseFlag===1&&window.G_isOverFlag ===0){
-                    audio.play();
-                    $("#pause").html("暂停统计");
-                    
-                }else{
-                    $("#pause").html("继续统计");
-                    audio.pause();
-                }
-            }
-        });
+//            $("#pause").click(function(){
+//            if(window.G_startFlag===1){
+//            if(window.G_isPause ===0){
+//                window.G_isPause = 1;
+//            }
+//                var audio = document.getElementById('music');  
+//                if(window.G_pauseFlag===1&&window.G_isOverFlag ===0){
+//                    audio.play();
+//                    $("#pause").html("暂停统计");
+//                    
+//                }else{
+//                    $("#pause").html("继续统计");
+//                    audio.pause();
+//                }
+//            }
+//        });
     });
      var originalContent = "<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>";
      window.GA_originalContent = originalContent;

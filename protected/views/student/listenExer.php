@@ -29,6 +29,9 @@ if ($isExam) {
 }//end
 ?>
 <?php
+$sqlClassExerciseRecord = null;
+$squence = 0;
+$exerciseID = 0;
 if (!$isOver) {
     $exerciseID = $exerOne['exerciseID'];
     $studentID = Yii::app()->session['userid_now'];
@@ -48,10 +51,10 @@ if (!$isOver) {
             ?>">
             <div id ="templet" hidden="hidden"></div>
         </div>
-        <?php } else { ?>
+    <?php } else { ?>
         <div class="span9"  style="height: 800px" >
-        <?php if ($isExam) { ?>
-        <?php } else { ?>
+            <?php if ($isExam) { ?>
+            <?php } else { ?>
                 <div id="span" class="hero-unit" align="center">
                     <div style="width: 660px">
                         <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>
@@ -107,10 +110,10 @@ if (!$isOver) {
                         </table>
                     </div>
                 </div>
-                    <?php } ?>
+            <?php } ?>
             <div class="hero-unit fl"  align="center">
-                <table border = '0px'>
-        <?php if ($isExam) { ?>
+                <table  border = '0px'>
+                    <?php if ($isExam) { ?>
                         <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
                         <tr>
                             <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
@@ -118,7 +121,7 @@ if (!$isOver) {
                             <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                         <?php } else { ?>
             <!--                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>-->
-                <?php } ?>
+                        <?php } ?>
                     </tr>
                 </table>
                 <?php
@@ -127,16 +130,28 @@ if (!$isOver) {
                 ?>
                 <div align="left">
                     <br/>
-                    <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; top:260px;'></div>
-                    <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; top:260px;'></div>
-                    <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:260px; '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
+                    <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; <?php if ($isExam) {
+            echo 'top:150px;';
+        } else {
+            echo 'top:260px;';
+        } ?>'></div>
+                    <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; <?php if ($isExam) {
+            echo 'top:150px;';
+        } else {
+            echo 'top:260px;';
+        } ?>'></div>
+                    <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px;  <?php if ($isExam) {
+                   echo 'top:150px;';
+               } else {
+                   echo 'top:260px;';
+               } ?>  '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
                 </div>
                 <input id="content" type="hidden" value="<?php
-                $str = str_replace("\n", "`", $exerOne['content']);
-                $str = str_replace("\r", "", $str);
-                $str = str_replace(" ", "}", $str);
-                echo $str;
-                ?>">
+               $str = str_replace("\n", "`", $exerOne['content']);
+               $str = str_replace("\r", "", $str);
+               $str = str_replace(" ", "}", $str);
+               echo $str;
+               ?>">
                 <br/>
                 <object id="typeOCX" type="application/x-itst-activex" 
                         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
@@ -150,8 +165,19 @@ if (!$isOver) {
         </div>
 
     <?php }
-} else { ?>
-    <h3 align="center">本题时间已经用完</h3>
+} else {
+    ?>
+    <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div id="Analysis" hidden="hidden"></div>
+        <input id="content" hidden="hidden"/>  
+        <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
+        <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;   ?>">
+            <input id="id_content" type="hidden" value="">
+            <input id="id_speed" type="hidden" value="">
+            <input  name="nm_answer"id="id_answer" type="hidden">
+            <input  name="nm_cost" id="id_cost" type="hidden">
+        </form>
+    </div>
 <?php } ?>
 <script>
     var yaweiOCX = {};
@@ -188,7 +214,8 @@ if ($isExam) {
                 var isover = setInterval(function () {
                     var time = getSeconds();
 
-                    var seconds =<?php if ($isExam)
+                    var seconds =<?php
+    if ($isExam)
         echo $exerOne['time'];
     else
         echo '0';
@@ -198,7 +225,8 @@ if ($isExam) {
                         alert("本题时间已到，不可答题！");
                         clearInterval(isover);
                         doSubmit(true, function () {
-                            window.location.href = "index.php?r=student/examlistenType&&exerID=<?php echo $exerID; ?>&&cent=<?php $arg = implode(',', $cent);
+                            window.location.href = "index.php?r=student/examlistenType&&exerID=<?php echo $exerID; ?>&&cent=<?php
+    $arg = implode(',', $cent);
     echo $arg;
     ?>";
                         });
@@ -206,8 +234,8 @@ if ($isExam) {
                 }, 1000);
 <?php } ?>
         }
-        var originalContent = "<?php echo $str; ?>";
-        window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
+       // var originalContent = "<?php //echo $str; ?>";
+       // window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     });
     function onStenoPressKey(pszStenoString, device) {
         window.GA_answer = yaweiOCX.GetContentWithSteno();
@@ -216,6 +244,10 @@ if ($isExam) {
 //             window.G_keyBoardBreakPause = 0;
 //              $("#pause").html("暂停统计");
 //        }
+        var audio = document.getElementById('music');
+        if (window.G_pauseFlag === 1) {
+            audio.play();
+        }
         var myDate = new Date();
         window.G_pressTime = myDate.getTime();
         if (window.G_startFlag === 0) {
@@ -279,8 +311,8 @@ if ($isExam) {
         var suiteID = <?php echo Yii::app()->session['suiteID']; ?>;
         window.location.href = "./index.php?r=student/clswkOne&&suiteID=" + suiteID;
     }
-    
-     function submitSuite(simple) {
+
+    function submitSuite(simple) {
         var option = {
             title: "提交试卷",
             btn: parseInt("0011", 4),

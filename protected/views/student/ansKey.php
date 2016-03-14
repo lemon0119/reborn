@@ -51,7 +51,7 @@ function doScrollRight(){
 }
 function start(){
     var right = '<?php echo Tool::filterKeyContent($exer['content']);?>'.split(' ');
-    var answer = '<?php echo ($answer);?>'.split(' ');
+    var answer = '<?php echo $answer;?>'.split(' ');
     var i, j, sright;
     i = j = 0;
     sright = false;
