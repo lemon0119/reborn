@@ -41,7 +41,7 @@ $(document).ready(function(){
     $('#leftTime').hide();
     var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
     var curtime = <?php echo time();?>;
-    var beginTime = <?php if($isExam) echo strtotime($examInfo['begintime']);?>;
+    var beginTime = <?php if($isExam){ echo strtotime($examInfo['begintime']);}else{echo 0;}?>;
     function endTimer(endID){
         document.getElementById('time').innerHTML = '<h3 class="welcome" align="center"> 考试已经开始，可以开始答题。</h3>';
         $('#leftTime').show();

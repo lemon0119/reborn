@@ -225,7 +225,6 @@ class apiController extends Controller {
         }
     }
     
-    //AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903  ------>{
     public function actionGetAverageSpeed(){
         $time = $_POST['startTime'];
         $content = $_POST['content'];
@@ -268,39 +267,31 @@ class apiController extends Controller {
         $ratio_countAllKey = $_POST['CountAllKey'];
         $squence = $_POST['squence'];
         $answer = $_POST['answer'];
-        $originalContent = $_POST['originalContent'];
         if($exerciseType === "classExercise"){
             $classExerciseID = $exerciseData[0];
             $studentID = $exerciseData[1];
             $sqlClassExerciseRecord = ClassexerciseRecord::model()->find("classExerciseID = '$classExerciseID' and squence = '$squence' and studentID = '$studentID'");
             if(!isset($sqlClassExerciseRecord)){
-                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence,$originalContent,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
+                 ClassexerciseRecord::model()->insertClassexerciseRecord($classExerciseID, $studentID, $squence,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }else{
                  ClassexerciseRecord::model()->updateClassexerciseRecord($classExerciseID, $studentID, $squence,$answer,$ratio_speed, $ratio_correct, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey);
             }
         }       
         if($exerciseType === "answerRecord"){
-           if(Yii::app()->session['isExam']){
-                if(!ExamRecord::saveExamRecord($recordID))
-                if($squence>0){
-                    $createPerson = Yii::app()->session['userid_now'];
-                    AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData[0], $createPerson);
-                }
-                return false;
-                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence,1,$ratio_internalTime);
-            }else {
-                if($squence>0){
-                    $createPerson = Yii::app()->session['userid_now'];
-                    AnswerRecord::model()->deleteRecordByIDandPerson($exerciseData[0], $createPerson);
-                }
-                if(!SuiteRecord::saveSuiteRecord ($recordID))
-                    return false;
-                return AnswerRecord::saveAnswer($recordID,$ratio_correct,$ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey,$squence,0);
+            $createPerson = Yii::app()->session['userid_now'];
+            $recordID = $exerciseData[2];
+            $exerciseID = $exerciseData[0];
+            $type = $exerciseData[1];
+            $category = $exerciseData[3];
+           if(Yii::app()->session['isExam']!==''){
+                 AnswerRecord::model()->saveAnswer($recordID, $exerciseID, $type, $category, $ratio_correct, $answer, $createPerson, $ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence, 1, $ratio_internalTime); 
+            }else{
+                 AnswerRecord::model()->saveAnswer($recordID, $exerciseID, $type, $category, $ratio_correct, $answer, $createPerson, $ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence, 0, $ratio_internalTime); 
             }   
         }    
         $this->renderJSON("");
     }
-    //<--------------AnalysisTool create by pengjingcheng_2015_12_3  @qq:390928903 }
+
     
     
     
@@ -1858,11 +1849,15 @@ class apiController extends Controller {
      
     public function actionGetBrief(){
         $array_brief = TwoWordsLibBrief::model()->findAll();
+        $array_brief2 = WordsLibBrief::model()->findAll();
         $data = array();
         $data2 = array();
          foreach ($array_brief as $v){
              array_push($data, $v['words']);
              array_push($data2, $v['yaweiCode']);
+         }
+         foreach ($array_brief2 as $v){
+             array_push($data, $v['words']);
          }
          $data = implode('&',$data)."$".implode('&',$data2);
          echo $data;
