@@ -92,8 +92,6 @@ class StudentController extends CController {
         $correct=$answer['ratio_correct'];
         $n=  strrpos($correct, "&");
         $correct= substr($correct, $n+1);
-        error_log($answer['answer']);
-        //$answerModify = str_replace(">,<", " ", $answer);
         return $this->render('ansKey',
             ['exercise' => $classwork,
             'exer' => $result,
