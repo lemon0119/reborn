@@ -1485,7 +1485,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "infoClass";
         $act_result = "";
         $classID = $_GET ["classID"];
-
+        
         // 删除某学生的班级
         if (isset($_GET ['flag'])) {
             if ($_GET ['flag'] == 'deleteStu') {
@@ -1506,7 +1506,7 @@ class AdminController extends CController {
             $checkbox = $_POST ['checkbox'];
             if ($_GET ['action'] == "addStu") {
                 if($nums+count($checkbox)>40){
-                $act_result = "班级人员超出40人！请重新选择！";
+                $act_result = "overLimites";
                 }
                 else{
                     for ($i = 0; $i < count($checkbox); $i ++) {
@@ -1587,9 +1587,7 @@ class AdminController extends CController {
         $array_stuLst = Tool::pager($sql,4);
         $stus = $array_stuLst['list'];
         
-        $sql = "SELECT * FROM student WHERE classID = '$classID'";
-        $result4nums = Yii::app()->db->createCommand($sql)->query();
-        $nums = count($result4nums);
+        $nums =TbClass::model()->getStuNums($classID);
         
         $pages_stu = $array_stuLst['pages'];
         
@@ -1622,9 +1620,7 @@ class AdminController extends CController {
         
         $classID = $_GET['classID'];
         
-        $sql = "SELECT * FROM student WHERE classID = '$classID'";
-        $result4nums = Yii::app()->db->createCommand($sql)->query();
-        $nums = count($result4nums);
+        $nums = TbClass::model()->getStuNums($classID);
         
         $this->render('addStuClass', array(
             'classID' => $_GET ["classID"],

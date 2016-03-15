@@ -130,14 +130,22 @@
            echo "<script>var result = '$result';</script>";
        }
    }
+
+   
     ?>
    <script>
        if(result != null){
+           if(result == 'overLimites'){
+               window.wxc.xcConfirm("班级人数超过40人！请重新选择！", window.wxc.xcConfirm.typeEnum.error);
+           }else{
            window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
            result = null;
+            }    
        }
-           function check_all(obj, cName)
-    {
+       
+
+       
+    function check_all(obj, cName){
         var checkboxs = document.getElementsByName(cName);
         for (var i = 0; i < checkboxs.length; i++) {
             checkboxs[i].checked = obj.checked;
