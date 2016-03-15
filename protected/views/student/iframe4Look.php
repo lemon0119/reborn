@@ -8,8 +8,9 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <div style="width: 700px">
-            <button class="fl btn" id="pause">暂停统计</button><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise"  style="margin-left:30px;" class="fr btn btn-primary">关闭</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
+        <div style="width: 660px">
+<!--            <button class="fl btn" id="pause">暂停统计</button>-->
+            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise"  style="margin-left:30px;" class="fr btn btn-primary">关闭</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
         </div>
         <div id="Analysis">
              <h3 ><?php echo $classExercise['title'] ?></h3>
@@ -72,7 +73,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "}", $str); echo $str
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='700' height='300' 
+                width ='660' height='280' 
                 event_OnChange="onChange"
                 event_OnStenoPress="onStenoPressKey">
         </object>
@@ -101,19 +102,19 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "}", $str); echo $str
                }
            });
            yaweiOCX4Look = document.getElementById("typeOCX4Look");
-        $("#pause").click(function () {
-            if (window.G_startFlag === 1&&window.G_isOverFlag ===0 ) {
-                if (window.G_isPause === 0) {
-                    window.G_isPause = 1;
-                }
-                if (window.G_pauseFlag === 1) {
-                    $("#pause").html("暂停统计");
-                    
-                } else {
-                    $("#pause").html("继续统计");
-                }
-            }
-        });
+//        $("#pause").click(function () {
+//            if (window.G_startFlag === 1&&window.G_isOverFlag ===0 ) {
+//                if (window.G_isPause === 0) {
+//                    window.G_isPause = 1;
+//                }
+//                if (window.G_pauseFlag === 1) {
+//                    $("#pause").html("暂停统计");
+//                    
+//                } else {
+//                    $("#pause").html("继续统计");
+//                }
+//            }
+//        });
         $("#toggle").click(function (){
             var flag =$("#toggle").text();
             if(flag =='展开'){
@@ -129,7 +130,7 @@ $str = str_replace("\r", "", $str);$str = str_replace(" ", "}", $str); echo $str
         
     });
     var originalContent = "<?php echo $str;?>";
-    window.GA_originalContent = originalContent;
+    window.GA_originalContent = originalContent.replace(/}/g,"").replace(/`/g,"");
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
 <?php
@@ -150,29 +151,28 @@ $squence = $countSquence + 1;
     });
 
     function checkYaweiCode(content){
-        var newContent = "";
-        var flag = 0;
             for(var i=0;i<briefCode.length;i++){
-                if(content.indexOf(briefCode[i])>=0){
-                    flag = 1;
+                if(content.content.indexOf(briefCode[i])>=0){
                     var re =new RegExp(briefCode[i],"g");
-                     newContent = content.replace(re,"<span style='border-bottom:2px solid green'>"+briefCode[i]+"</span>");
-                }else{
-                    if(flag === 0){
-                        newContent = content;
+                    if(briefCode[i].length<3){
+                        content.content = content.content.replace(re,"<span style='border-bottom:1px solid green'>"+briefCode[i]+"</span>");
+                    }else if(4>briefCode[i].length>2){
+                        content.content = content.content.replace(re,"<span style='border-bottom:2px solid green'>"+briefCode[i]+"</span>");
+                    }else if(briefCode[i].length>3){
+                        content.content = content.content.replace(re,"<span style='border-bottom:3px solid green'>"+briefCode[i]+"</span>");
                     }
+                     
                 }
             }
-            return newContent;
         }
         
     function onStenoPressKey(pszStenoString, device) {
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
-        if(window.G_pauseFlag===1){
-             window.G_keyBoardBreakPause = 0;
-              $("#pause").html("暂停统计");
-        }
+//        if(window.G_pauseFlag===1){
+//             window.G_keyBoardBreakPause = 0;
+//              $("#pause").html("暂停统计");
+//        }
         var myDate = new Date();
         window.G_pressTime = myDate.getTime();
         if (window.G_startFlag === 0) {
@@ -182,7 +182,7 @@ $squence = $countSquence + 1;
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = yaweiOCX4Look.GetContent().replace(/\r\n/g,"`").replace(/ /g,"}");
+        window.G_content = yaweiOCX4Look.GetContent().replace(/\r\n/g,"").replace(/ /g,"");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
         
         //每击统计击键间隔时间 秒
@@ -212,7 +212,6 @@ $squence = $countSquence + 1;
         return input.length;
     }
     $(document).ready(function () {
-       yaweiOCX4Look.HideToolBar();
         //菜单栏变色
         $("li#li-look-<?php echo $classExercise['exerciseID']; ?>").attr('class', 'active');
         //显示题目
@@ -229,28 +228,28 @@ $squence = $countSquence + 1;
         }
     });
     //document.getElementById("templet").style.font_size = "25px";
-    function createFontWithP(color, text, p, father) {
-        var f = document.createElement("font");
-        f.style = "color:" + color;
-        //var t = document.createTextNode(text);
-        //f.appendChild(t);
-        f.innerHTML = text;
-        p.appendChild(f);
-        father.appendChild(p);
-    }
+//    function createFontWithP(color, text, p, father) {
+//        var f = document.createElement("font");
+//        f.style = "color:" + color;
+//        //var t = document.createTextNode(text);
+//        //f.appendChild(t);
+//        f.innerHTML = text;
+//        p.appendChild(f);
+//        father.appendChild(p);
+//    }
 
     function createFont(color, text,code) {
         var father = document.getElementById("templet");
         var f = document.createElement("font");
-        var content = "";
+        var content = {content:""};
         var isBrief = 0;
         if(color=="#808080"){
              for(var i=0;i<text.length;i++){
                  if(text[i].length<3){
-                        for(var j=0;j<briefCode.length;j++){
+                        for(var j=0;j<briefOriginalYaweiCode.length;j++){
                             if(text[i]==briefCode[j]){
                                 isBrief ++;
-                                if(code[i]!=briefOriginalYaweiCode[j].replace(":0","")&&(code[i]!="W:X")){
+                                if(code[i]==briefOriginalYaweiCode[j].replace(":0","")&&(code[i]!="W:X")){
                                     isBrief--;
                                 }
                             }
@@ -259,31 +258,33 @@ $squence = $countSquence + 1;
                      isBrief ++;
                  }
                  if(isBrief===0){
-                    content += text[i];
+                    content.content += text[i];
                  }else{
-                    content += "<span style='color:green'>"+text[i]+"</span>";
+                    content.content += "<span style='color:green'>"+text[i]+"</span>";
                     isBrief--;
                  }
              }
              f.style = "color:" + color;
-             var tempContent = "";
-             tempContent = checkYaweiCode(content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;"));
-                    f.innerHTML = tempContent;
+             content.content = content.content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;");
+             checkYaweiCode(content);
+                    f.innerHTML = content.content;
                     father.appendChild(f);
         }else{
             for(var i=0;i<text.length;i++){
-                    content += text[i];
+                    content.content += text[i];
              }
             f.style = "color:" + color;
                     //var t = document.createTextNode(text);
                     //f.appendChild(t);
                     var tempContent = "";
                     if(color==="#ff0000"){
-                        tempContent = checkYaweiCode(content.replace(/`/g,"↓<br/>").replace(/}/g,"█"));
+                        content.content = content.content.replace(/`/g,"↓<br/>").replace(/}/g,"█");
+                        checkYaweiCode(content);
                     }else{
-                        tempContent = checkYaweiCode(content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;"));
+                        content.content = content.content.replace(/`/g,"<br/>").replace(/}/g,"&nbsp;");
+                        checkYaweiCode(content);
                     }
-                    f.innerHTML = tempContent;
+                    f.innerHTML = content.content;
                     father.appendChild(f);
         }
     }
@@ -431,6 +432,8 @@ $squence = $countSquence + 1;
         if(window.G_startFlag===1){
             window.G_isOverFlag = 1; 
             $("#finish").attr("disabled","disabled");
+             briefCode = null;
+             briefOriginalYaweiCode = "";
             window.parent.finish();
         }
     }
