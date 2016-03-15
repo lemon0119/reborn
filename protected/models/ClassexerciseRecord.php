@@ -20,12 +20,12 @@
 class ClassexerciseRecord extends CActiveRecord
 {
     
-     public function insertClassexerciseRecord($classExerciseID,$studentID,$squence,$originalContent,$answer,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
+     public function insertClassexerciseRecord($classExerciseID,$studentID,$squence,$answer,$ratio_speed,$ratio_correct,$ratio_maxSpeed,$ratio_backDelete,$ratio_maxKeyType,$ratio_averageKeyType,$ratio_internalTime,$ratio_maxInternalTime,$ratio_countAllKey){
         $newClassexerciseRecord = new ClassexerciseRecord();
         $newClassexerciseRecord->classExerciseID = $classExerciseID;
         $newClassexerciseRecord->studentID = $studentID;
         $newClassexerciseRecord->squence = $squence;
-        $newClassexerciseRecord->originalContent = $originalContent;
+        //$newClassexerciseRecord->originalContent = $originalContent;
         $newClassexerciseRecord->answer = $answer;
         $newClassexerciseRecord->ratio_speed = $ratio_speed;
         $newClassexerciseRecord->ratio_correct =$ratio_correct;

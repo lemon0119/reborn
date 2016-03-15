@@ -126,7 +126,7 @@
     function onStenoPressKey(pszStenoString ,device){
         if(window.G_startFlag ===1){
             window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
-        window.G_keyBoardBreakPause =0;
+            window.G_keyBoardBreakPause =0;
           var myDate = new Date();
          window.G_pressTime = myDate.getTime();
 //         if(window.G_startFlag ===0){
@@ -136,7 +136,6 @@
 //                }
                 window.G_countMomentKey++;
                 window.G_countAllKey++;
-                window.G_content = document.getElementById("typeOCX").GetContent();
                 window.G_keyContent = window.G_keyContent +"&"+pszStenoString;
                 
                           //每击统计击键间隔时间 秒

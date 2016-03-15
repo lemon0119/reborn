@@ -127,7 +127,6 @@
 //                }
             window.G_countMomentKey++;
             window.G_countAllKey++;
-            console.log(window.G_countAllKey);
             window.G_content = document.getElementById("typeOCX").GetContent();
             window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
