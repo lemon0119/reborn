@@ -1,14 +1,20 @@
-<?php require 'ansSideBar.php';?>
+<?php require 'ansSideBar.php'; ?>
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
-<script src="<?php echo JS_URL;?>exerJS/accounting.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/accounting.js"></script>
 <div class="span9">
     <div class="hero-unit">
         <table border = '0px' width="100%">
-            <h2><?php if($type=='look') echo '看打练习';else echo '听打练习';?></h2>
+            <h2><?php if ($type == 'look')
+    echo '看打练习';
+else
+    echo '听打练习';
+?></h2>
             <tr>
-                <td width = '50%' align='center'>题目：<?php echo $exer['title']?></td>
-                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct );echo '%';?></span></td>
+                <td width = '50%' align='center'>题目：<?php echo $exer['title'] ?></td>
+                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f', $correct);
+echo '%';
+?></span></td>
             </tr>
             <tr>
                 <td colspan='3'>
@@ -23,85 +29,312 @@
                 </td>
             </tr>
         </table>
-        <input id="text" type="hidden" value="<?php echo (str_replace("\n", "<br/>", $exer['content']) );?>"/>
-        <input id="text-answer" type="hidden" value="<?php echo (str_replace("\n", "<br/>", $answer));?>"/>
+        <input id="text" type="hidden" value="<?php echo $answer;?>"/>
+        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`",$exer['content'] );
+$str = str_replace("\r", "", $str);
+$str = str_replace(" ", "}", $str);
+echo $str;
+?>">
+        <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
+        </div>
     </div>
 </div>
 <?php
-    if(isset(Yii::app()->session['type'])){
-        $type = Yii::app()->session['type'];
-        echo "<script>var type = '$type';</script>"; 
-    }
+if (isset(Yii::app()->session['type'])) {
+    $type = Yii::app()->session['type'];
+    echo "<script>var type = '$type';</script>";
+}
 ?>
 <script type="text/javascript">
-    function load(){
-            var url = "./index.php?r=student/preExer&&type=classwork";
+    console.log('<?php echo $answer;?>');
+    var briefCode = "";
+    var briefOriginalYaweiCode = "";
+    $(document).ready(function () {
+        window.G_isLook = 1;
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=api/getBrief",
+            async: false,
+            data: {},
+            success: function (data) {
+                briefCode = (data.split("$")[0]).split("&");
+                briefOriginalYaweiCode = (data.split("$")[1]).split("&");
+            },
+            error: function (xhr, type, exception) {
+                console.log('GetAverageSpeed error', type);
+                console.log(xhr, "Failed");
+                console.log(exception, "exception");
+            }
+        });
+    });
+
+    function checkYaweiCode(content) {
+        for (var i = 0; i < briefCode.length; i++) {
+            if (content.content.indexOf(briefCode[i]) >= 0) {
+                var re = new RegExp(briefCode[i], "g");
+                if (briefCode[i].length < 3) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:1px solid green'>" + briefCode[i] + "</span>");
+                } else if (4 > briefCode[i].length > 2) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
+                } else if (briefCode[i].length > 3) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:3px solid green'>" + briefCode[i] + "</span>");
+                }
+
+            }
+        }
+    }
+
+    function load() {
+        var url = "./index.php?r=student/preExer&&type=classwork";
         $("#cont").load(url);
     }
-    function createFont(element, color, text){
+//    function createAnswerFont(element, color, text){
+//        var father = document.getElementById(element);
+//        var f = document.createElement("font");
+//        f.style = "color:"+color+";word-wrap:break-word;white-space:-moz-pre-wrap;";
+//        f.innerHTML = text;
+//        father.appendChild(f);
+//    }
+function createFont4Answer(element, color, text) {
         var father = document.getElementById(element);
         var f = document.createElement("font");
-        f.style = "color:"+color+";word-wrap:break-word;white-space:-moz-pre-wrap;";
+        f.style = "color:" + color;
         f.innerHTML = text;
         father.appendChild(f);
     }
-    function doScrollLeft(){
+    
+    function createFont(color, text, code) {
+        var father = document.getElementById("templet");
+        var f = document.createElement("font");
+        var content = {content: ""};
+        var isBrief = 0;
+        if (color == "#808080") {
+            for (var i = 0; i < text.length; i++) {
+                if (text[i].length < 3) {
+                    for (var j = 0; j < briefOriginalYaweiCode.length; j++) {
+                        if (text[i] == briefCode[j]) {
+                            isBrief++;
+                            if (code[i] == briefOriginalYaweiCode[j].replace(":0", "") && (code[i] != "W:X")) {
+                                isBrief--;
+                            }
+                        }
+                    }
+                } else {
+                    isBrief++;
+                }
+                if (isBrief === 0) {
+                    content.content += text[i];
+                } else {
+                    content.content += "<span style='color:green'>" + text[i] + "</span>";
+                    isBrief--;
+                }
+            }
+            f.style = "color:" + color;
+            content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
+            checkYaweiCode(content);
+            f.innerHTML = content.content;
+            father.appendChild(f);
+        } else {
+            for (var i = 0; i < text.length; i++) {
+                content.content += text[i];
+            }
+            f.style = "color:" + color;
+            //var t = document.createTextNode(text);
+            //f.appendChild(t);
+            if (color === "#ff0000") {
+                content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
+                checkYaweiCode(content);
+            } else {
+                content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
+                checkYaweiCode(content);
+            }
+            f.innerHTML = content.content;
+            father.appendChild(f);
+        }
+    }
+    function doScrollLeft() {
         var divleft = document.getElementById('templet');
         var divright = document.getElementById('answer');
         divright.scrollTop = divleft.scrollTop;
     }
-    function doScrollRight(){
+    function doScrollRight() {
         var divleft = document.getElementById('templet');
         var divright = document.getElementById('answer');
         divleft.scrollTop = divright.scrollTop;
     }
-    function start(){
-        var text =  $('#text').val(); 
-        var answer = $('#text-answer').val();
-        
-        var lcs = new LCS(text, answer);        
-        if(lcs == null)
-            return;
-        lcs.doLCS();
-        var tem = lcs.getStrOrg(1);
-        var ans = lcs.getStrOrg(2);
-        var modTem = lcs.getSubString(1);
-        var modAns = lcs.getSubString(2);
-        var correct = lcs.getSubString(3).length / lcs.getStrOrg(1).length;
-        console.log(lcs.getSubString(3).length);
-        console.log(lcs.getStrOrg(1).length);
-        console.log(correct);
-        displayTemp('templet', tem, modTem);
-        displayTemp('answer', ans, modAns);
-    }
-    function displayTemp(id, temp, modTem){
-        var flag = false;
-        var j = 0;
-        for(var i = 0; i < modTem.length && i < temp.length; i++){
-            if(modTem[i] === '*'){
-                if(!flag){
-                    flag = true;
-                    createFont(id,'#000000',temp.substring(j, i));
-                    j = i;
+    function start() {
+        var text_old = "<?php echo $str; ?>";
+        var input = "";
+        var contentAllArray = $('#text').val().substring(1,$('#text').val().length-1).split('>,<');
+        for(var i=0;i<contentAllArray.length;i++){
+            var content = contentAllArray[i].substring(0,contentAllArray[i].indexOf('><'));
+            input+=content;
+        }
+        var text = text_old.split("");
+        var allInput2 = $('#text').val().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");
+        var longIsAgo = 0;
+        var old = new Array();
+        var oldCode = new Array();
+        var isWrong = false;
+        var wrong = new Array();
+        var div = document.getElementById("templet");
+        while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
+            div.removeChild(div.firstChild);
+        }
+        var length = allInput2.length;
+        var countLength = 0;
+        for (var i = 0; i < length; i++) {
+            if (allInput2[i] !== undefined) {
+                var num = allInput2[i].indexOf(">");
+                var content = allInput2[i].substring(1, num);
+                var yaweiCode = allInput2[i].substring(num + 2, allInput2[i].length).replace(">", "");
+                var long = content.length;
+                countLength += content.length;
+                if (countLength >= text.length) {
+                    length = i;
                 }
-            } else {
-                if(flag){
-                    flag = false;
-                    createFont(id,'#ff0000',temp.substring(j, i));
-                    j = i;
+                longIsAgo += long;
+                if (text[longIsAgo - long] != undefined) {
+                    var stringText = text[longIsAgo - long];
+                }
+                for (var j = 1; j < long; j++) {
+                    if (text[longIsAgo - long + j] != undefined) {
+                        stringText += text[longIsAgo - long + j];
+                    }
+                }
+                if (content == stringText) {
+                    if (isWrong == true) {
+                        isWrong = false;
+                        createFont("#ff0000", wrong, "");
+                        wrong = new Array();
+                        old = new Array();
+                        old.push(stringText);
+                        oldCode = new Array();
+                        oldCode.push(yaweiCode);
+                    } else {
+                        old.push(stringText);
+                        oldCode.push(yaweiCode);
+                    }
+                } else {
+                    if (isWrong == true)
+                        wrong.push(stringText);
+                    else {
+                        isWrong = true;
+                        createFont("#808080", old, oldCode);
+                        old = new Array();
+                        oldCode = new Array();
+                        wrong = new Array();
+                        wrong.push(stringText);
+                    }
                 }
             }
         }
-        if(j < i){
-            if(!flag)
-                createFont(id,'#000000',temp.substring(j, i));
-            else
-                createFont(id,'#ff0000',temp.substring(j, i));
+
+        if (countLength !== 0) {
+            createFont("#808080", old, oldCode);
+            createFont("#ff0000", wrong, "");
         }
-        if(i < temp.length)
-            createFont(id,'#ff0000',temp.substr(i));
-        if(i < modTem.length)
-            createFont(id,'#ff0000',modTem.substr(i));
+        if (input.length < text.length) {
+            var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
+            createFont("#000000", left, "");
+        }
+       
+        var right = text_old.split("");
+        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']); ?>'.split(" ");
+        var answer = input.split("");
+        var i, j, sright;
+        i = 0;
+        sright = false;
+        var answer_right = '';
+        var answer_wrong = '';
+        var answerSingle = '';
+        var rightkey = '';
+        var right_text = '';
+        while (i < answer.length) {
+            rightkey = right[i];
+            //console.log(rightkey);
+            answerSingle = answer[i];
+//        if(i===0){
+//            console.log(rightkey ===answer[i].substring(0,answer[i].indexOf('><')) );
+//            console.log(rightkey.charCodeAt());
+//            console.log("懊恼".charCodeAt());
+//            console.log(answer[i].substring(0,answer[i].indexOf('><')).charCodeAt());
+//            console.log('!'+answer[i].substring(0,answer[i].indexOf('><'))+"!");
+//            //console.log("步步"===answer[i].substring(0,answer[i].indexOf('><')));
+//        }
+            if (rightkey === answerSingle) {
+                right_text += (rightkey + '');
+                answer_right += (answerSingle + '');
+                i++;
+                if (sright === false) {
+                    sright = true;
+                    createFont4Answer('answer', '#ff0000', answer_wrong);
+                    answer_wrong = '';
+                }
+            } else {
+                answer_wrong += (answerSingle + '');
+                i++;
+                if (sright === true) {
+                    sright = false;
+                    createFont4Answer('answer', '#808080', answer_right);
+                    answer_right = '';
+                }
+            }
+            answerSingle = '';
+        }
+        createFont4Answer('answer', '#808080', answer_right);
+        answer_right = '';
+        createFont4Answer('answer', '#ff0000', answer_wrong);
+       
     }
-    start();
+//    function displayTemp(id, temp, modTem) {
+//        var flag = false;
+//        var j = 0;
+//        for (var i = 0; i < modTem.length && i < temp.length; i++) {
+//            if (modTem[i] === '*') {
+//                if (!flag) {
+//                    flag = true;
+//                    createAnswerFont(id, '#000000', temp.substring(j, i));
+//                    j = i;
+//                }
+//            } else {
+//                if (flag) {
+//                    flag = false;
+//                    createAnswerFont(id, '#ff0000', temp.substring(j, i));
+//                    j = i;
+//                }
+//            }
+//        }
+//        if (j < i) {
+//            if (!flag)
+//                createAnswerFont(id, '#000000', temp.substring(j, i));
+//            else
+//                createAnswerFont(id, '#ff0000', temp.substring(j, i));
+//        }
+//        if (i < temp.length)
+//            createAnswerFont(id, '#ff0000', temp.substr(i));
+//        if (i < modTem.length)
+//            createAnswerFont(id, '#ff0000', modTem.substr(i));
+//    }
+<?php
+if (isset($_GET['type'])) {
+    if ($_GET['type'] === 'look') {
+        ?>
+            $(document).ready(function () {
+                $("li#li-look-<?php echo $exer['exerciseID']; ?>").attr('class', 'active');
+                start();
+            });
+    <?php } else if ($_GET['type'] === 'listen') { ?>
+            $(document).ready(function () {
+                $("li#li-listen-<?php echo $exer['exerciseID']; ?>").attr('class', 'active');
+                start();
+            });
+    <?php
+    }
+} else {
+    ?>
+        start();
+<?php }
+?>
+
 </script>
