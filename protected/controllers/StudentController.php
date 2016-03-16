@@ -56,7 +56,9 @@ class StudentController extends CController {
         else{
             $recordID = SuiteRecord::getRecord($workID, $studentID);
         }
+       
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
+         error_log($recordID);
         $correct=$answer['ratio_correct'];
         $n=  strrpos($correct, "&");
         $correct= substr($correct, $n+1);
@@ -669,7 +671,7 @@ class StudentController extends CController {
         }
         //end
          if($recordID==null){
-              SuiteRecord::saveSuiteRecord($recordID);
+              //SuiteRecord::saveSuiteRecord($recordID);
           return $this->render('keyExer',array( 'recordID'=>$recordID,'exercise'=>$classexam,'exerID' =>$exerID,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
         }
         foreach(Tool::$EXER_TYPE as $type){

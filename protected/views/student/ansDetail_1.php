@@ -46,6 +46,7 @@ if (isset(Yii::app()->session['type'])) {
 }
 ?>
 <script type="text/javascript">
+    console.log('<?php echo $answer;?>');
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     $(document).ready(function () {
@@ -241,8 +242,6 @@ function createFont4Answer(element, color, text) {
         var right = text_old.split("");
         //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']); ?>'.split(" ");
         var answer = input.split("");
-        console.log(right);
-        console.log(answer);
         var i, j, sright;
         i = 0;
         sright = false;
