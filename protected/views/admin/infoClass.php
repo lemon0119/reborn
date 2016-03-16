@@ -22,7 +22,7 @@
         ?>
             
         <h3><?php echo $classID; echo '&nbsp; &nbsp;'; echo $className;?></h3>
-        <p >学生人数：<font class="normal_checked_font"><?php echo $nums; echo '&nbsp; &nbsp;';?></font>科目：<font class="normal_checked_font"> <?php echo $courseName; echo '&nbsp; &nbsp;';?></font> 当前进度：<font class="normal_checked_font"> <?php echo $lessonName; echo '&nbsp; &nbsp;';?></font>   
+        <p >学生人数：<font class="normal_checked_font"><?php echo $nums;  echo '&nbsp; &nbsp;';?></font>科目：<font class="normal_checked_font"> <?php echo $courseName; echo '&nbsp; &nbsp;';?></font> 当前进度：<font class="normal_checked_font"> <?php echo $lessonName; echo '&nbsp; &nbsp;';?></font>   
         </p>
         <h4>任课老师：</h4>
          <table class="table table-bordered table-striped">
@@ -84,7 +84,7 @@
     <!-- 翻页标签结束 -->
     <div style="text-align: center">
         <button style="padding: 18px 37px;" class="btn_ret_admin"  onclick="back()"></button>
-            <button class="btn_add_student_admin" onclick="addStuClass()"></button>
+            <button class="btn_add_student_admin" onclick="addStuClass(<?php echo $nums;?>)"></button>
             <button class="btn_add_teacher_admin" onclick="addTeaClass()"></button>
         </div>
     <br/>
@@ -97,9 +97,21 @@
                 window.location.href="./index.php?r=admin/searchClass&&page=<?php echo Yii::app()->session['lastPage'];?>";
              <?php }?>
         }
-        function addStuClass()
+        function addStuClass(nums)
         {
-             window.location.href="./index.php?r=admin/addStuClass&&classID=<?php echo $classID;?>";
+            if(nums < 40)
+            {
+             window.location.href="./index.php?r=admin/addStuClass&&classID=<?php echo $classID;?>";}
+         else{
+             var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							$('#deleForm').submit();
+						}
+					}
+					window.wxc.xcConfirm("班级人数超过40人！请重新分班！", "custom", option);
+        }
         }
         function addTeaClass()
         {
@@ -118,19 +130,28 @@
            echo "<script>var result = '$result';</script>";
        }
    }
+
+   
     ?>
    <script>
        if(result != null){
+           if(result == 'overLimites'){
+               window.wxc.xcConfirm("班级人数超过40人！请重新选择！", window.wxc.xcConfirm.typeEnum.error);
+           }else{
            window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
            result = null;
+            }    
        }
-           function check_all(obj, cName)
-    {
+       
+
+       
+    function check_all(obj, cName){
         var checkboxs = document.getElementsByName(cName);
         for (var i = 0; i < checkboxs.length; i++) {
             checkboxs[i].checked = obj.checked;
         }
     }
+    
     
     function deleCheck() {
     var checkboxs = document.getElementsByName('checkbox[]');
@@ -151,7 +172,7 @@
 							$('#deleForm').submit();
 						}
 					};
-					window.wxc.xcConfirm("确定删除选中的科目吗？", "custom", option);
+					window.wxc.xcConfirm("确定删除选中的学生吗？", "custom", option);
         }
        
     }
