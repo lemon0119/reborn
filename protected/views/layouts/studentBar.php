@@ -31,24 +31,19 @@ if (isset(Yii::app()->session['userid_now'])&& Yii::app()->session['role_now']==
                             <a class="brand" href="./index.php?r=student/index"></a>
                             <div class="nav-collapse">
                                 <ul class="nav">
-                                    <li class="dropdown">
-                                        <a id="onlineCourse" href="#"  data-toggle="dropdown"></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=student/virtualClass">虚拟课堂</a></li>
-                                            <li><a href="./index.php?r=student/freePractice">自主练习</a></li>
-                                        </ul>
+                                    <li>
+                                        <a id="onlineCourse" href="./index.php?r=student/virtualClass"  >课 堂</a>
                                     </li>
-                                    <li class="dropdown"><a id="myCourse" href="#"  data-toggle="dropdown" ></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=student/myCourse">我的课程</a></li>
-<!--                                            <li><a href="./index.php?r=student/classwork">课后作业</a></li>-->
-                                        </ul>
+                                    <li>
+                                        <a id="practice" href="./index.php?r=student/freePractice"  >练 习</a>
                                     </li>
-                                    <li><a id="courseExam" href="./index.php?r=student/classExam"></a></li>
+                                    <li class="dropdown"><a id="myCourse" href="./index.php?r=student/myCourse" >作 业</a>
+                                    </li>
+                                    <li><a id="courseExam" href="./index.php?r=student/classExam">考 试</a></li>
                                     
-                                    <li><a id ="exam_statistics" href="./index.php?r=student/watchData&&classID=<?php echo $classID;?>"></a></li>
-                                    <li><a id="suLu" href="./index.php?r=student/suLu"></a></li>
-                                    <li><a id="schedule_manager"  href="./index.php?r=student/scheduleDetil"></a></li>
+                                    <li><a id ="exam_statistics_stu" href="./index.php?r=student/watchData&&classID=<?php echo $classID;?>">统 计</a></li>
+                                    <li><a id="suLu" href="./index.php?r=student/suLu">百 科</a></li>
+                                    <li><a id="schedule_manager_stu"  href="./index.php?r=student/scheduleDetil">课程表</a></li>
                                     <li><a id="blank_stu"></a></li>
                                      <li>
                                        <?php if(Tool::stuNotice() == 0){?>                                         
