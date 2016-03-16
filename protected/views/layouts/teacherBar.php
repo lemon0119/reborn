@@ -38,7 +38,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                             <div class="nav-collapse">
                                 <ul class="nav">
                                     <li class="dropdown">
-                                        <a href="#"  id ="startclass" data-toggle="dropdown" ></a>
+                                        <a href="#"  id ="startclass" data-toggle="dropdown" >课 堂</a>
                                         <ul class="dropdown-menu">
                                             <?php if(isset($classNameInfo)){
                                                 foreach ($classNameInfo as $key => $value): ?>
@@ -47,7 +47,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#"  data-toggle="dropdown" id="topicmanager"></a>
+                                        <a href="#"  data-toggle="dropdown" id="topicmanager">题 库</a>
                                         <ul class="dropdown-menu">
                                             <li class="nav-header" style="color:#AAA9A9;">基础知识</li>
                                             <li><a href="./index.php?r=teacher/choiceLst">选择</a></li>
@@ -61,18 +61,23 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="#"  data-toggle="dropdown" id="homework"></a>
+                                        <a href="#"  data-toggle="dropdown" id="homework">作 业</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="./index.php?r=teacher/assignWork&&progress=<?php if(isset($classProgress)) echo $classProgress[$key]; ?>">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
+                                        </ul>
+                                    </li>
+                                     <li class="dropdown">
+                                        <a href="#"  data-toggle="dropdown" id="exammanager">考 试</a>
+                                        <ul class="dropdown-menu">
                                              <li><a href="./index.php?r=teacher/assignExam">试卷管理</a></li>
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
-                                    </li>             
-                                    <li><a id ="exam_statistics" href="./index.php?r=teacher/watchData&&classID=<?php if(isset($key)){echo $key;}?>"></a></li>
+                                    </li>  
+                                    <li><a id ="exam_statistics" href="./index.php?r=teacher/watchData&&classID=<?php if(isset($key)){echo $key;}?>">统 计</a></li>
                                  
                                                                        
-                                    <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil"></a></li>
+                                    <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil">课程表</a></li>
                                     <li><a id="blank_teacher"></a></li>
                                      <li>
                                        <?php if(Tool::teacherNotice() == 0){?>

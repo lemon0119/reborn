@@ -70,7 +70,7 @@
 <?php } else { ?>
     <div class="span9">
         <h3 >自 主 练 习</h3>
-        <button onclick="getSteno()">测试</button>
+<!--        <button onclick="getSteno()">测试</button>-->
         <br/>
         <div class="fr" style="width:300px; position: relative;right: 10px">
             <table cellpadding="8" style="margin: 0px auto;">

@@ -4574,57 +4574,119 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 
 #startclass{
-    padding: 28px 60px;
+    position: relative;
+    background:-moz-linear-gradient(left,#3b3b3b,#454444);
+    top:1px;
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/start_class.png");
 }
 #startclass:hover{
-    padding: 28px 60px;
+    background:-moz-linear-gradient(left,#3b3b3b,#454444);
+    color: #f46500;
+    position: relative;
+    top:1px;
+    font-size: 20px;
+    text-shadow:#f46500 1px 1px 1px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/on_start_class.png");
 }
 #exam_statistics{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#565656,#6c6b6b);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/exam_statistics.png");
 }
 #exam_statistics:hover{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#565656,#6c6b6b);
+    text-shadow: #f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/on_exam_statistics.png");
+}
+#exam_statistics_stu{
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#565656,#6c6b6b);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 22px;
+    background-repeat:no-repeat;
+}
+#exam_statistics_stu:hover{
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#565656,#6c6b6b);
+    text-shadow: #f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 22px;
+    background-repeat:no-repeat;
 }
 #topicmanager{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#454444,#4d4d4d);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/topic_manager.png");
 }
 #topicmanager:hover{
     position: relative;
-    top: 1px;
-    padding: 27px 60px;
+    top:1px;
+    background:-moz-linear-gradient(left,#454444,#4d4d4d);
+    text-shadow:#f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/on_topic_manager.png");
 }
 
 #homework{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#4d4d4d,#565656);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/home_work.png");
 }
 #homework:hover{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#4d4d4d,#565656);
+    text-shadow: #f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/on_home_work.png");
 }
 #exammanager{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+     background:-moz-linear-gradient(left,#565656,#565656);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/exam_manager.png");
 }
 #exammanager:hover{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+      background:-moz-linear-gradient(left,#565656,#565656);
+    text-shadow: #f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 26px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_tea/on_exam_manager.png");
 }
 
 .userUI{
@@ -4781,14 +4843,52 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/UI_adm/on_Notice.png");
 }
 #schedule_manager{
+    position: relative;
+    top:1px;
+    background:#6c6b6b;
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 26px;
+    background-repeat:no-repeat;
+}
+#schedule_manager:hover{
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#6c6b6b,#6c6b6b);
+    text-shadow: #f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 26px;
+    background-repeat:no-repeat;
+}
+#schedule_manager_adm{
     padding: 28px 60px;
     background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/schedule.png");
 }
-#schedule_manager:hover{
+#schedule_manager_adm:hover{
     padding: 28px 60px;
     background-repeat:no-repeat;
     background-image: url("../../img/UI_adm/on_schedule.png");
+}
+#schedule_manager_stu{
+    position: relative;
+    top:1px;
+    background:#6c6b6b;
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 20px;
+    background-repeat:no-repeat;
+}
+#schedule_manager_stu:hover{
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#6c6b6b,#6c6b6b);
+    text-shadow: #f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 20px;
+    background-repeat:no-repeat;
 }
 .btn_bigserch{
     border: 0px;
@@ -4804,24 +4904,70 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 
 #onlineCourse{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#3b3b3b,#454444);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 22px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_stu/onlineCourse.png");
 }
 #onlineCourse:hover{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#3b3b3b,#454444);
+    text-shadow: #f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 22px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_stu/onlineCourseY.png");
+}
+#onlineCourse{
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#3b3b3b,#454444);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 22px;
+    background-repeat:no-repeat;
+}
+#practice:hover{
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#454444,#4d4d4d);
+    text-shadow: #f46500 1px 1px 1px;
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 22px;
+    background-repeat:no-repeat;
+}
+#practice{
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#454444,#4d4d4d);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 22px;
+    background-repeat:no-repeat;
 }
 #courseExam{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#454444,#565656);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 22px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_stu/courseExam.png");
 }
 #courseExam:hover{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    text-shadow:#f46500 1px 1px 1px;
+    background:-moz-linear-gradient(left,#454444,#565656);
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 22px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_stu/courseExamY.png");
 }
 #stuMail_off{
     padding: 27px 35px;
@@ -4842,15 +4988,23 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     background-image: url("../../img/bell.gif");
 }
 #suLu{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#6c6b6b,#6c6b6b);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 22px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_stu/encyclopedia.png");
 }
 #suLu:hover{
-    padding: 14x 60px;
+     position: relative;
+    top:1px;
+    text-shadow: #f46500 1px 1px 1px;
+    background:-moz-linear-gradient(left,#6c6b6b,#6c6b6b);
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 22px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_stu/on_encyclopedia.png");
-
 }
 #postnoticeTea{
     padding: 10px 190px;
@@ -4894,14 +5048,23 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 
 }
 #myCourse{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    background:-moz-linear-gradient(left,#4d4d4d,#454444);
+    color: #fff;
+    font-size: 20px;
+    padding: 17px 22px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_stu/myCourse.png");
 }
 #myCourse:hover{
-    padding: 28px 60px;
+    position: relative;
+    top:1px;
+    text-shadow: #f46500 1px 1px 1px;
+    background:-moz-linear-gradient(left,#4d4d4d,#454444);
+    color: #f46500;
+    font-size: 20px;
+    padding: 17px 22px;
     background-repeat:no-repeat;
-    background-image: url("../../img/UI_stu/myCourseY.png");
 }
 
 #nameStu{
@@ -4974,19 +5137,19 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #blank_stu{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#606060,#fff);
-    padding: 27px 47px;
+    background:-moz-linear-gradient(left,#6c6b6b,#fff);
+    padding: 27px 27px;
 }
 #blank_admin{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#606060,#fff);
+    background:-moz-linear-gradient(left,#6c6b6b,#fff);
     padding: 27px 82px;
 }
 #blank_teacher{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#606060,#fff);
+    background:-moz-linear-gradient(left,#6c6b6b,#fff);
     padding: 27px 47px;
 }
 #schedule{
