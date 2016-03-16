@@ -136,6 +136,7 @@
 //                }
                 window.G_countMomentKey++;
                 window.G_countAllKey++;
+                window.G_content = document.getElementById("typeOCX").GetContent();
                 window.G_keyContent = window.G_keyContent +"&"+pszStenoString;
                 
                           //每击统计击键间隔时间 秒
