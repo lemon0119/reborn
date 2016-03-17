@@ -15,8 +15,8 @@
                     <input name="value" type="text" class="search-query span2" placeholder="Search" />
             </li>
             <li style="margin-top:10px">
-                    <button type="submit" class="btn_serch"></button>
-                    <a href="./index.php?r=teacher/addFill" class="btn_add"></a>
+                   <button type="submit" class="btn_4big">搜 索</button>
+                    <button onclick="window.location.href = './index.php?r=teacher/addFill'" type="button" class="btn_4big">添 加</button>
             </li>
         </form>
             <li class="divider"></li>
