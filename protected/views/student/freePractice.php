@@ -10,7 +10,7 @@
     <div class="well" style="padding: 8px 0;">
         <br/>
         <ul >
-            <li style="padding:0px 0px;" class="nav-header"><a style="cursor:pointer" onclick="backToFreePractice()"><img src="<?php echo IMG_URL; ?>../on_btn_bigret.png"></a></li>
+            <li style="padding:0px 0px;" class="nav-header"><button style="padding:6px 60px" class="btn_4superbig" onclick="backToFreePractice()">自主练习</button></li>
         </ul>
         <br/>
         <ul class="nav nav-list">

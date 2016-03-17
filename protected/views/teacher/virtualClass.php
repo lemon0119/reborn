@@ -334,7 +334,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
             <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>
         </div>
-        <div style="position: relative;text-align: center;top: 10px;height: 550px;overflow: auto">
+        <div style="position: relative;text-align: center;top: 10px;width: 100%;height: 550px;overflow: auto">
             <iframe id="iframe_class" style="border: 0px;height: 95%;width: 95%;"></iframe>
         </div>
     </div>

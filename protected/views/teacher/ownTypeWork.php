@@ -35,10 +35,10 @@
                                     else
                                         echo Tool::csubstr($work['title'], 0, 5)."...";?></td>
                         
-                        <td title="<?php echo $work['content'];?>" class="font-center"><?php  if(Tool::clength($work['content'])<=8)
-                                        echo $work['content'];
+                        <td title="<?php echo Tool::filterKeyContent($work['content']);?>" class="font-center"><?php  if(Tool::clength(Tool::filterKeyContent($work['content']))<=15)
+                                        echo Tool::filterKeyContent($work['content']);
                                     else
-                                        echo Tool::csubstr($work['content'], 0,8)."...";
+                                        echo Tool::csubstr(Tool::filterKeyContent($work['content']), 0,15)."...";
                                         ?></td>
                         <td class="font-center">
                             <?php  echo $work['createTime']?>
