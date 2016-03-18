@@ -1781,7 +1781,8 @@ $dir->close();
                     success: function (data) {
                         if (data == "开放成功！") {
                             window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
-                            window.parent.startClassExercise(exerciseID);
+                           // window.parent.startClassExercise(exerciseID);
+                           window.parent.backToTableClassExercise4virtual();
                         } else {
                             window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
                         }
@@ -1808,7 +1809,9 @@ $dir->close();
                     data: {exerciseID: exerciseID},
                     success: function (data) {
                         if (data == 1) {
-                            window.parent.startClassExercise(exerciseID);
+                             window.wxc.xcConfirm("开放成功！", window.wxc.xcConfirm.typeEnum.success);
+                             // window.parent.startClassExercise(exerciseID);
+                           window.parent.backToTableClassExercise4virtual();
                         } else {
                             alert("开放失败");
                         }

@@ -48,10 +48,10 @@
                                         echo tool::csubstr($allwork['title'], 0, 5)."...";
                                         ?>
                         </td>
-                        <td title="<?php echo Tool::filterKeyContent($allwork['content']);?>" class="font-center"> <?php  if(tool::clength($allwork['content'])<=15)
+                        <td title="<?php echo Tool::filterKeyContent($allwork['content']);?>" class="font-center"> <?php  if(tool::clength($allwork['content'])<=10)
                                         echo Tool::filterKeyContent($allwork['content']);
                                     else
-                                        echo Tool::csubstr(Tool::filterKeyContent($allwork['content']), 0,15)."...";
+                                        echo Tool::csubstr(Tool::filterKeyContent($allwork['content']), 0,10)."...";
                                         ?>
                         </td>
                         <td class="font-center">

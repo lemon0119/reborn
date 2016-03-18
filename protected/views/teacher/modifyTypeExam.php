@@ -79,12 +79,12 @@
     <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass'];?>"  class="btn btn-primary">返回</a>
 </div>
 
-<div class="span9">
+<div class="span9" style="height: 780px;">
     <iframe src="./index.php?r=teacher/ToOwnTypeExam&&type=<?php echo $type;?>&&examID=<?php echo $exam['examID'];?>" id="iframe1" frameborder="0"  scrolling="no" width="770px" height="400px" name="iframe1"></iframe>
     
     <iframe src="./index.php?r=teacher/ToAllTypeExam&&type=<?php echo $type;?>&&examID=<?php echo $exam['examID'];?>" id="iframe2" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe2"></iframe>
 
-<div >
+</div >
 
 
 
