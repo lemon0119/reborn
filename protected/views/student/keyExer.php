@@ -116,8 +116,8 @@ if (!$isOver) {
         <input  name="nm_cost" id="id_cost" type="hidden">
         </form>-->
             <div id="span" class="hero-unit" align="center">
-                <table style="width: 580px"  border = '0px'><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成</button>
-
+                <table style="width: 580px"  border = '0px'>
+<!--                    <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成</button>-->
                     <tr><h3 ><?php echo $exerOne['title'] ?></h3></tr>
                     <tr>
                         <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>

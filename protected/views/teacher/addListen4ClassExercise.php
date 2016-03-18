@@ -4,7 +4,7 @@
                         <li style="margin-top:10px">
                                 <?php if(isset($_GET['nobar'])){ ?>
                             <?php }else{ ?>
-                               <button onclick="window.location.href = './index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>'" style="height: 35px;top: 1px;" class="btn_bigret"></button>
+                               <button onclick="window.location.href = './index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>'" style="height: 35px;top: 1px;" class="btn_4superbig">返&nbsp;&nbsp;&nbsp;回</button>
                             <?php }?>
                         </li>
                 </form>
@@ -44,8 +44,9 @@
                 <div class="controls">
                     <input type="file" name="file" id="input02">      
                     <div id="upload" style="display:inline;" hidden="true">
-                    <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+                        <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
                         正在上传，请稍等...
+                         <div id="number">0%</div>  
                     </div>
                 </div>
            </div>
@@ -87,6 +88,16 @@ $(document).ready(function(){
     }
         
 });
+ function fetch_progress(){
+        $.get('./index.php?r=teacher/getProgress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
+                var progress = parseInt(data);                              
+                $('#number').html(progress + '%');
+                if(progress < 100){
+                        setTimeout('fetch_progress()', 100);
+                }else{           
+        }
+        }, 'html');
+    }
 $("#myForm").submit(function(){
     <?php if(isset($_GET['nobar'])){?>
         opener.iframReload();
@@ -109,6 +120,7 @@ $("#myForm").submit(function(){
         return false;
     }
     $("#upload").show();
+    setTimeout('fetch_progress()', 1000);
 });
 </script>
   

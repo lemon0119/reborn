@@ -16,7 +16,7 @@
                 <li class="nav-header" ><i class="icon-knowlage"></i>新建作业</li>
                 <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
                 <li style="margin-top:10px">
-                    <a href="#"onclick="chkIt()" id="bth_create"></a>
+                    <button onclick="chkIt()" class="btn_4superbig">创&nbsp;&nbsp;&nbsp;建</button>
                 </li>
            <?php }?>
              <li class="divider"></li>

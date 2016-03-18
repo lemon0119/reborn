@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
-        <table style="width: 580px"  border = '0px'><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise" class="fr btn btn-primary">关闭</button>
+        <table style="width: 580px"  border = '0px'><?php if(!isset($_GET['exerciseID'])){ ?><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><?php }?><button id="close_exercise" class="fr btn btn-primary">关闭</button>
             <tr><h3><?php echo $classExercise['title'] ?></h3></tr>
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>

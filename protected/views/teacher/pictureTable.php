@@ -58,7 +58,7 @@
             </td>
             <td>自己</td>
             <td>
-                <a href="./index.php?r=teacher/lookPicture&&picture=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
+                <a href="./index.php?r=teacher/lookPicture&&picture=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=0&&isnew=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
                 <a href="<?php echo "$picdir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>
                  <a href="#" onclick="del('<?php echo iconv("gb2312","UTF-8",$file);?>','<?php echo $classID;?>','<?php echo $progress;?>','<?php echo $on;?>',0)"><img title="删除"  src="<?php echo IMG_URL; ?>delete.png"></a>
             </td>
@@ -82,7 +82,7 @@
             </td>
             <td>公共</td>
             <td>
-                <a href="./index.php?r=teacher/lookPicture&&picture=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=1"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
+                <a href="./index.php?r=teacher/lookPicture&&picture=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=1&&isnew=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
                 <a href="<?php echo "$publicdir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>
                 <a href="#" onclick="del('<?php echo iconv("gb2312","UTF-8",$file);?>','<?php echo $classID;?>','<?php echo $progress;?>','<?php echo $on;?>',1)" id="dele"><img src="<?php echo IMG_URL; ?>delete.png" title="删除"></a>
             </td>
@@ -112,7 +112,7 @@
                 title: "警告",
                 btn: parseInt("0011",2),
                 onOk: function(){
-                        window.location.href="./index.php?r=teacher/deletePicture&&picture="+picture2+"&&classID="+classID2+"&&progress="+progress2+"&&on="+on2+"&&ispublic="+ispublic;
+                        window.location.href="./index.php?r=teacher/deletePicture&&picture="+picture2+"&&classID="+classID2+"&&progress="+progress2+"&&on="+on2+"&&ispublic="+ispublic+"&&isnew="+'0';
                 }
         }
         window.wxc.xcConfirm("是否确定删除？", "custom", option);

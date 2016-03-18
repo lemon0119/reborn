@@ -29,7 +29,7 @@
                 <input name= "title" type="text" class="search-query span2" placeholder="题目" id="title" value="" />
                 </form>
                 <li style="margin-top:10px">
-                    <button href="#" onclick="chkIt()" id="bth_create"></button>
+                    <button href="#" onclick="chkIt()" class="btn_4superbig"></button>
                 </li>
                 <li style="margin-top:10px">
                     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo  Yii::app()->session['progress'];?>&&on=<?php echo  Yii::app()->session['progress'];?>" id="bth_bigregray"></a>

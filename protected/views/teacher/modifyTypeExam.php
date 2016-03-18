@@ -1,39 +1,39 @@
 <script src="<?php echo JS_URL; ?>laydate-master/laydate.js"></script>
 <link href="<?php echo CSS_URL; ?>laydate-master/need/laydate.css" rel="stylesheet">
 <script type="text/javascript">
-function test()
-{
-         var startTime = document.getElementById("startTime");
-	 var endTime = document.getElementById("endTime");
-         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-         Date d1 = df.parse(startTime);  //后的时间  
-            Date d2 = df.parse(endTime); //前的时间  
-            var diff = d1.getTime() - d2.getTime();   //两时间差，精确到毫秒   
-  
-            Long day = diff / (1000 * 60 * 60 * 24);          //以天数为单位取整  
-            Long hour=(diff/(60*60*1000)-day*24);             //以小时为单位取整   
-            Long min=((diff/(60*1000))-day*24*60-hour*60);    //以分钟为单位取整   
-            var secone=(diff/1000-day*24*60*60-hour*60*60-min*60);  
-              
-              
-              
-            alert("---diff的值---->" +diff);  
-            alert("---days的值---->" +day);  
-            alert("---hour的值---->" +hour);  
-            alert("---min的值---->"  +min);  
-            alert("---secone的值---->"  +secone);  
-              
-            alert("---两时间差---> " +day+"天"+hour+"小时"+min+"分"+secone+"秒");  
-	 //对电子邮件的验证
-	 var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-	 if(!myreg.test(temp.value))
-	 {
-             window.wxc.xcConfirm('请输入有效的email！', window.wxc.xcConfirm.typeEnum.info);
-	     temp.value="";
-	     myreg.focus();
-	     return false;
-	 } 
-}
+//function test()
+//{
+//         var startTime = document.getElementById("startTime");
+//	 var endTime = document.getElementById("endTime");
+//         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+//         Date d1 = df.parse(startTime);  //后的时间  
+//            Date d2 = df.parse(endTime); //前的时间  
+//            var diff = d1.getTime() - d2.getTime();   //两时间差，精确到毫秒   
+//  
+//            Long day = diff / (1000 * 60 * 60 * 24);          //以天数为单位取整  
+//            Long hour=(diff/(60*60*1000)-day*24);             //以小时为单位取整   
+//            Long min=((diff/(60*1000))-day*24*60-hour*60);    //以分钟为单位取整   
+//            var secone=(diff/1000-day*24*60*60-hour*60*60-min*60);  
+//              
+//              
+//              
+//            alert("---diff的值---->" +diff);  
+//            alert("---days的值---->" +day);  
+//            alert("---hour的值---->" +hour);  
+//            alert("---min的值---->"  +min);  
+//            alert("---secone的值---->"  +secone);  
+//              
+//            alert("---两时间差---> " +day+"天"+hour+"小时"+min+"分"+secone+"秒");  
+//	 //对电子邮件的验证
+//	 var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+//	 if(!myreg.test(temp.value))
+//	 {
+//             window.wxc.xcConfirm('请输入有效的email！', window.wxc.xcConfirm.typeEnum.info);
+//	     temp.value="";
+//	     myreg.focus();
+//	     return false;
+//	 } 
+//}
 </script>
 
 <div class="span3">
@@ -79,12 +79,12 @@ function test()
     <a href="./index.php?r=teacher/AssignExam&&classID=<?php echo Yii::app()->session['currentClass'];?>"  class="btn btn-primary">返回</a>
 </div>
 
-<div class="span9">
+<div class="span9" style="height: 780px;">
     <iframe src="./index.php?r=teacher/ToOwnTypeExam&&type=<?php echo $type;?>&&examID=<?php echo $exam['examID'];?>" id="iframe1" frameborder="0"  scrolling="no" width="770px" height="400px" name="iframe1"></iframe>
     
     <iframe src="./index.php?r=teacher/ToAllTypeExam&&type=<?php echo $type;?>&&examID=<?php echo $exam['examID'];?>" id="iframe2" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe2"></iframe>
 
-<div >
+</div >
 
 
 

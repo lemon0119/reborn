@@ -75,8 +75,8 @@ function long2(){
                 
             </div>
              <div style="margin-top: 30px;">
-                <a id="stuBack" href="./index.php?r=admin/index"></a>
-                <a id="DeterMine1" href="#" name="submit" onclick="judge()"></a> 
+                <button class="btn" type="button" onclick="window.location.href='./index.php?r=admin/index'">返 回</button>
+                <button class="btn btn-primary" type="button" name="submit"  onclick="judge()">提 交</button>
             </div>
         </fieldset>
     </form>   

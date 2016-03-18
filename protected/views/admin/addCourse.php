@@ -17,8 +17,8 @@ header('Cache-control: private, must-revalidate');
                     <input name="value" type="text" class="search-query span2" placeholder="Search" />
                 </li>
                 <li style="margin-top:10px">
-                    <button type="submit" class="btn_serch"></button>
-                    <a href="./index.php?r=admin/addCourse" class="btn_add"></a>
+                    <button type="submit" class="btn_4big">搜 索</button>
+                    <button onclick="window.location.href = './index.php?r=admin/addCourse'" type="button" class="btn_4big">添 加</button>
                 </li>
             </form>
             <li class="divider"></li>
@@ -50,9 +50,8 @@ echo 'style="color:#f46500"';Yii::app()->session['insert_course']="";}else{echo 
                 </div>
 
             </div>
-            <div  style="text-align: center;">
-                <a style="position: relative;right:80px;top: 27px" href="./index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_ret_admin"></a>
-                <button style="position: relative;right:80px;top: 25px" type="submit" class="btn_add_admin"></button> 
+            <div  style="width: 75%;text-align: center;">
+                 <button onclick="window.location.href = './index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>'" type="button" class="btn">返 回</button><button  type="submit" class="btn btn-primary">添加</button>
             </div>
         </fieldset>
     </form>   

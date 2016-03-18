@@ -22,7 +22,7 @@
     </div>
 
 </div>
-<div class="span9">
+<div class="span9" style="height: 920px">
     <!-- 显示课程列表   -->
    
     <?php if(isset($_GET['courseID'])){ ?>

@@ -10,7 +10,7 @@
     <div id="span" class="hero-unit" align="center">
         <div style="width: 660px">
             <!--            <button class="fl btn" id="pause">暂停统计</button>-->
-            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><button id="close_exercise"  style="margin-left:30px;" class="fr btn btn-primary">关闭</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
+            <?php if(!isset($_GET['exerciseID'])){ ?><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><?php }?><button id="close_exercise"  style="margin-left:30px;" class="fr btn btn-primary">关闭</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
         </div>
         <div id="Analysis">
             <h3 ><?php echo $classExercise['title'] ?></h3>

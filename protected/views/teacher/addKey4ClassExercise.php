@@ -4,7 +4,7 @@
             <li style="margin-top:10px">
                 <?php if (isset($_GET['nobar'])) { ?>
                 <?php } else { ?>
-                    <button onclick="window.location.href = './index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['progress']; ?>&&on=<?php echo $_GET['on']; ?>'" style="height: 35px;top: 1px;" class="btn_bigret"></button>
+                    <button class="btn_4superbig"  onclick="window.location.href = './index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['progress']; ?>&&on=<?php echo $_GET['on']; ?>'"  >返&nbsp;&nbsp;&nbsp;回</button>
                 <?php } ?>
             </li>
             </form>

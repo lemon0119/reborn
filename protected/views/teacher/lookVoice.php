@@ -4,7 +4,7 @@
         $lessonsName[$value['number']]=$value['lessonName'];
     }   
 ?>
-
+<?php if($new!=1){?>
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
@@ -23,6 +23,7 @@
     </div>
     <a href="./index.php?r=teacher/voiceLst&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
 </div>
+<?php }?>
 <div class="span9">
     <div id="dianbo-videos-container">
         <audio id="video1" width="100%" controls>
