@@ -6,7 +6,16 @@
                         <li <?php if($type == "question") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=question"><i class="icon-align-left"></i> 简答</a></li>
                         <li <?php if($type == "key") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=key"><i class="icon-th"></i> 键位练习</a></li>
                         <li <?php if($type == "look") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=look"><i class="icon-eye-open"></i> 看打练习</a></li>
-                        <li <?php if($type == "listen") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=listen"><i class="icon-headphones"></i> 听打练习</a></li>                           
+                        <li <?php if($type == "listen") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=listen"><i class="icon-headphones"></i> 听打练习</a></li>
+                       
+                       
+                        
+        </ul>
+        <br>
+        <ul >
+            <li class='btn btn-primary' >  <?php if($type == "choice") {  echo "<a href='./index.php?r=teacher/addChoice' ><font style='color:#fff'> 添加新题</font></a>";}
+                        else if($type == "filling"){echo "<a href='./index.php?r=teacher/addFill'><font style='color:#fff'> 添加新题</font></a>";}
+                        else if($type == "question"){ echo "<a href='./index.php?r=teacher/addQuestion'><font style='color:#fff'> 添加新题</font></a>";}?> </li>
         </ul>
         
     </div>  

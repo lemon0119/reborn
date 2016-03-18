@@ -58,6 +58,13 @@ class TbClass extends CActiveRecord
          return $an;
     }
     
+    public function getStuNums($classID){
+        $sql = "SELECT * FROM student WHERE classID = '$classID'";
+        $result4nums = Yii::app()->db->createCommand($sql)->query();
+        $nums = count($result4nums);
+        return $nums;
+    }
+    
     public function teaInClass(){
         $sql="SELECT * FROM teacher order by userID ASC";
         $an = Yii::app()->db->createCommand($sql)->query();

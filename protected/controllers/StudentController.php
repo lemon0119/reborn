@@ -56,7 +56,9 @@ class StudentController extends CController {
         else{
             $recordID = SuiteRecord::getRecord($workID, $studentID);
         }
+       
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
+         error_log($recordID);
         $correct=$answer['ratio_correct'];
         $n=  strrpos($correct, "&");
         $correct= substr($correct, $n+1);
@@ -229,6 +231,7 @@ class StudentController extends CController {
                 echo '保存答案失败，请重新提交!';
         }
     }
+    
     //我的科目
     public function actionMyCourse(){
         $isExam=false;
@@ -318,10 +321,6 @@ class StudentController extends CController {
     
     //2015-8-3 宋杰 获取考试听打练习
         public function actionExamlistenType(){
-            if(!ExamRecord::saveExamRecord($recordID))
-                    return false;
-            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1);
-                
         $suiteID = Yii::app()->session['examsuiteID'];
           $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -464,9 +463,6 @@ class StudentController extends CController {
     
     //2015-8-3 宋杰 获取考试看打练习
         public function actionExamlookType(){
-            if(!ExamRecord::saveExamRecord($recordID))
-                    return false;
-            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1);
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -624,9 +620,9 @@ class StudentController extends CController {
     }
     
        public function actionExamKeyType(){
-           if(!ExamRecord::saveExamRecord($recordID))
-                    return false;
-            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1);
+//           if(!AnswerRecord::saveExamRecord($recordID))
+//                    return false;
+//            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1);
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -676,7 +672,8 @@ class StudentController extends CController {
         }
         //end
          if($recordID==null){
-          return $this->render('keyExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
+              //SuiteRecord::saveSuiteRecord($recordID);
+          return $this->render('keyExer',array( 'recordID'=>$recordID,'exercise'=>$classexam,'exerID' =>$exerID,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
         }
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -692,6 +689,7 @@ class StudentController extends CController {
             $n++;
         }
         return $this->render('keyExer',array( 
+            'recordID'=>$record->recordID,
             'exercise'=>$classexam,
             'exerOne'=>$result,
             'exercise2'=>$classexam2,
@@ -1074,6 +1072,7 @@ class StudentController extends CController {
         Yii::app()->session['isExam'] = $isExam;
         Yii::app()->session['examsuiteID'] = $suiteID;
         Yii::app()->session['examworkID'] = $_GET['workID'];
+        Yii::app()->session['suiteID'] = $suiteID;
         //Yii::app()->session['examID'] = $suiteID;
         $classexam = Array();
         $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));

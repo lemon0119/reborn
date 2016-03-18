@@ -25,6 +25,9 @@ if ($isExam) {
 }//end
 ?>
 <?php
+$sqlClassExerciseRecord = null;
+$squence=0;
+$exerciseID=0;
 if (!$isOver) {
     $exerciseID = $exerOne['exerciseID'];
     $studentID = Yii::app()->session['userid_now'];
@@ -147,7 +150,17 @@ if (!$isOver) {
         <?php }
     } else {
         ?>
-        <h3 align="center">本题时间已经用完</h3>
+        <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+            <div id="Analysis" hidden="hidden"></div>
+            <input id="content" hidden="hidden"/>  
+            <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
+            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;  ?>">
+                <input id="id_content" type="hidden" value="">
+                <input id="id_speed" type="hidden" value="">
+                <input  name="nm_answer"id="id_answer" type="hidden">
+                <input  name="nm_cost" id="id_cost" type="hidden">
+            </form>
+        </div>
 <?php } ?>
 </div>
 <script>
@@ -157,7 +170,6 @@ if (!$isOver) {
 
     $(document).ready(function () {
         window.G_isLook = 1;
-        document.getElementById('Analysis').scrollIntoView();
         var isExam = <?php
 if ($isExam) {
     Yii::app()->session['isExam'] = 'isExam';
