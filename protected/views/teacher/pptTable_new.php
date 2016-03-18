@@ -69,7 +69,7 @@
                                                                         $len    = strlen($fileName);
                                                                         $path   = substr($fileName,0,$len-4);
 
-                                                                        echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=0&&isnew=0"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
+                                                                        echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=0&&isnew=1"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
                     <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img title="下载" src="<?php echo IMG_URL; ?>icon_download.png"></a>
                     <a href="#" onclick="dele('<?php echo iconv("gb2312","UTF-8",$file);?>','<?php echo $classID;?>','<?php echo $progress;?>','<?php echo $on;?>',0)"><img title="删除"  src="<?php echo IMG_URL; ?>delete.png"></a>
 
@@ -98,7 +98,7 @@
                 <a href="./index.php?r=teacher/lookPpt&&ppt=<?php  $fileName   = iconv("gb2312","UTF-8",$file);
                                                                         $len    = strlen($fileName);
                                                                         $path   = substr($fileName,0,$len-4);
-                                                                        echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=1&&isnew=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
+                                                                        echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=1"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
                 <a href="<?php echo "$pdir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>
                 <a href="#" onclick="dele('<?php echo iconv("gb2312","UTF-8",$file);?>','<?php echo $classID;?>','<?php echo $progress;?>','<?php echo $on;?>',1)" id="dele"><img src="<?php echo IMG_URL; ?>delete.png" title="删除"></a>
             </td>
@@ -117,7 +117,7 @@ function dele(ppt2,classID2,progress2,on2,ispublic) {
                 title: "警告",
                 btn: parseInt("0011",2),
                 onOk: function(){
-                        window.location.href="./index.php?r=teacher/deletePpt&&ppt="+ppt2+"&&classID="+classID2+"&&progress="+progress2+"&&on="+on2+"&&ispublic="+ispublic+"&&isnew="+'0';
+                        window.location.href="./index.php?r=teacher/deletePpt&&ppt="+ppt2+"&&classID="+classID2+"&&progress="+progress2+"&&on="+on2+"&&ispublic="+ispublic+"&&isnew="+'1';
                 }
         }
         window.wxc.xcConfirm("您确定删除吗？", "custom", option);

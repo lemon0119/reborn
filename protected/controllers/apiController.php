@@ -1629,7 +1629,14 @@ class apiController extends Controller {
          $myCorrect=Array();
             $myDataReturn=Array();
             $myDataReturn2=Array();
+            $s1=0;$s2=0;$s3=0;$s4=0;
+            $n1=-1;$n2=-1;$n3=-1;$n4=-1;
+            $minN1=0;$minN2=0;$minN3=0;$minN4=0;
+            
+           
             foreach ($myDataAll as $my2) {
+                $min=0;$max=0;
+                $minN=0;$maxN=0;
                 $myDataReturn=Array();
                 $myData=$my2;
             
@@ -1641,24 +1648,93 @@ class apiController extends Controller {
             $myInternalTime=  explode("&",$myData['maxInternalTime']);
             $myCorrectNum=  count($myCorrect);
             if($choice=='correct'){
+                $n1++;
+                $s1=0;
                 foreach ($myCorrect as $key => $value) {
                     $n=$key*2;
                     $myDataReturn[] = ["time"=>$n,"correct"=>$myCorrect[$key]];
+                    $s1+=intval($value);
+                    
+                }
+                $s1=$s1/($key+1);
+                if($min==0)
+                    $min=$s1;
+                if($max==0)
+                    $max=$s1;
+                if($s1<$min){
+                    $min=$s1;
+                    $minN=$n1;
+                }
+                if($s1>$max){
+                    $max=$s1;
+                    $maxN=$n1;
                 }
             }else if($choice=='speed'){
+                $n2++;
+                $s2=0;
                 foreach ($mySpeed as $key => $value) {
                     $n=$key*2;
                     $myDataReturn[] = ["time"=>$n,"speed"=>$mySpeed[$key]];
+                    $s2+=intval($value);
+                }
+                $s2=$s2/($key+1);
+                if($min==0)
+                    $min=$s2;
+                if($max==0)
+                    $max=$s2;
+                if($s2<$min){
+                    $min=$s2;
+                    $minN=$n2;
+                }
+                if($s2>$max){
+                    $max=$s2;
+                    $maxN=$n2;
                 }
             }else if($choice=='maxSpeed'){
+                $n3++;
+                $s3=0;
                 foreach ($myMaxSpeed as $key => $value) {
                     $n=$key*2;
                     $myDataReturn[] = ["time"=>$n,"maxSpeed"=>$myMaxSpeed[$key]];
+                    $s3+=intval($value);
                 }
+                
+                $s3=$s3/($key+1);
+                
+                if($min==0)
+                    $min=$s3;
+                if($max==0)
+                    $max=$s3;
+                if($s1<$min){
+                    $min=$s3;
+                    $minN=$n3;
+                }
+                if($s1>$max){
+                    $max=$s3;
+                    $maxN=$n3;
+                }
+                error_log($minN);
+                error_log($maxN);
             }else if($choice=='backDelete'){
+                $n4++;
+                $s4=0;
                 foreach ($myBackDelete as $key => $value) {
                     $n=$key*2;
                     $myDataReturn[] = ["time"=>$n,"backDelete"=>$myBackDelete[$key]];
+                    $s4+=intval($value);
+                }
+                $s4=$s4/($key+1);
+                if($min==0)
+                    $min=$s4;
+                if($max==0)
+                    $max=$s4;
+                if($s1<$min){
+                    $min=$s4;
+                    $minN=$n4;
+                }
+                if($s4>$max){
+                    $max=$s4;
+                    $maxN=$n4;
                 }
             }else if($choice=='maxInternalTime'){
                 foreach ($myInternalTime as $key => $value) {
@@ -1666,7 +1742,25 @@ class apiController extends Controller {
                     $myDataReturn[] = ["time"=>$n,"maxInternalTime"=>$myInternalTime[$key]];
                 }
             }
+            $re=Array();
+            //$re=["minN"=>$minN,"maxN"=>$maxN];
+           // array_push($myDataReturn, $re);
             array_push($myDataReturn2, $myDataReturn);
+          }
+          $myDataReturn3=Array();
+          
+          $f=-1;
+          foreach ($myDataReturn2 as $my) {
+              $f++;
+              $myDataRet=Array();
+              if($f==$minN || $f==$maxN){
+                    foreach ($my as $m) {
+                            $myDataRet[]=$m;
+                    }
+              }
+              if($myDataRet!=NULL){
+                  array_push($myDataReturn3,$myDataRet);
+              }
           }
          //平均成绩
          $allCorrect=0;$allSpeed=0;$allMaxSpeed=0;$allDelete=0;$allMaxInternalTime=0;
@@ -1817,10 +1911,15 @@ class apiController extends Controller {
          
          array_push($allData, $data);
          array_push($allData, $data3);
-         array_push($allData, $myDataReturn2);
+         array_push($allData, $myDataReturn3);
          array_push($allData, $arrayDetailData);
          //array_push($allData, $averageData);
          array_push($allData, $maxData);
+
+         $nn=Array();
+        $nn=["minN"=>$minN,"maxN"=>$maxN];
+        array_push($allData,$nn);
+        array_push($allData, $myDataReturn2);
          $this->renderJSON($allData);
      }
 

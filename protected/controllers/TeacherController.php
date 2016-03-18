@@ -252,11 +252,29 @@ class TeacherController extends CController {
                     'on' => $on
         ]);
     }
+    public function actionAddPp() {
+        error_log("ppt");
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('addPpt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
 
     public function actionPptTable() {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        if($_GET['isnew']==1){
+            return $this->renderPartial('pptTable_new', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+            ]);
+        }
         return $this->renderPartial('pptTable', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -290,6 +308,7 @@ class TeacherController extends CController {
         foreach ($sqlPpt as $v) {
             if ($v['name'] == $_FILES["file"]["name"]) {
                 echo "该文件已存在，如需重复使用请改名重新上传！";
+                $result = "该文件已存在，如需重复使用请改名重新上传！";
                 return;
             }
         }
@@ -311,6 +330,70 @@ class TeacherController extends CController {
             $result = "请上传正确类型的文件！";
         }
         echo $result;
+    }
+    public function actionAddPptNew() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+         if (isset($_POST['checkbox'])) {
+            $pptFilePath =  "public/ppt/";           
+        }else
+        {
+        $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
+        }
+        $dir = "resources/" . $pptFilePath;
+                            if (!is_dir($dir)) {
+                            mkdir($dir, 0777);
+                           }
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            $result = "请选择文件！";
+            return $this->renderPartial('addPpt', [
+                'classID' => $classID,
+                'progress' => $progress,
+                'on' => $on,
+                'result' => $result,
+            ]);
+        }
+        $sqlPpt = Resourse::model()->findAll("type = 'ppt'");
+        foreach ($sqlPpt as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                $result="该文件已存在，如需重复使用请改名重新上传！";
+                return $this->renderPartial('addPpt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+                ]);
+            }
+        }
+        if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint") {
+            if ($_FILES["file"]["size"] < 30000000) {
+                if ($_FILES["file"]["error"] > 0) {
+                    $result = "Return Code: " . $_FILES["file"]["error"];
+                } else {
+                    $newName = Tool::createID() . ".ppt";
+                    $oldName = $_FILES["file"]["name"];
+                    move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                    Resourse::model()->insertRela($newName, $oldName);
+                    $result = "上传成功！";
+                }
+            } else {
+                $reult = "PPT文件限定大小为30M！";
+            }
+        } else {
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+        return $this->renderPartial('addPpt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
     }
 
     public function actionDeletePpt() {
@@ -337,6 +420,14 @@ class TeacherController extends CController {
             Resourse::model()->delName($fileName);
             $result = "删除成功！";
         }
+        if($_GET['isnew']==1){
+            return $this->renderPartial('addPpt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+            ]);
+        }
         return $this->render('pptLst', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -361,11 +452,21 @@ class TeacherController extends CController {
             $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
             $dir = "resources/" . $pptFilePath . $fileDir;
         }
+        if($_GET['isnew']==1){
+            return $this->renderPartial('lookPpt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'dir' => $dir,
+                    'new'=>1
+            ]);
+        }
         return $this->render('lookPpt', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on,
                     'dir' => $dir,
+                    'new'=>0
         ]);
     }
 
@@ -374,6 +475,16 @@ class TeacherController extends CController {
         $progress = $_GET['progress'];
         $on = $_GET['on'];
         return $this->render('videoLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    public function actionAddMovie(){
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('addMovie', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on
@@ -390,12 +501,32 @@ class TeacherController extends CController {
                     'on' => $on
         ]);
     }
+    public function actionAddVo() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('addVoice', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
     
         public function actionPictureLst() {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
         return $this->render('pictureLst', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
+    public function actionAddPic() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('addPicture', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on
@@ -413,10 +544,27 @@ class TeacherController extends CController {
         ]);
     }
 
+    public function actionAddTx() {
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        return $this->renderPartial('addTxt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+        ]);
+    }
     public function actionVideoTable() {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        if($_GET['isnew']==1){
+            return $this->renderPartial('videoTable_new', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+            ]);
+        }
         return $this->renderPartial('videoTable', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -428,6 +576,13 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        if($_GET['isnew']==1){
+            return $this->renderPartial('voiceTable_new', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+            ]);
+        }
         return $this->renderPartial('voiceTable', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -439,6 +594,13 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        if($_GET['isnew']==1){
+            return $this->renderPartial('pictureTable_new', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+            ]);
+        }
         return $this->renderPartial('pictureTable', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -450,6 +612,13 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        if($_GET['isnew']==1){
+            return $this->renderPartial('txtTable_new', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on
+            ]);
+        }
         return $this->renderPartial('txtTable', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -502,7 +671,72 @@ class TeacherController extends CController {
         }
         echo $result;
     }
-    
+    public function actionAddVideoNew() {
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];      
+        if (isset($_POST['checkbox'])) {
+            $videoFilePath =  "public/video/";           
+        }else
+        {
+            $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
+        }
+        $dir = "resources/" . $videoFilePath;
+                            if (!is_dir($dir)) {
+                            mkdir($dir, 0777);
+                           }
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            error_log("nononoo");
+            $result = "请选择文件！";
+            return $this->renderPartial('addMovie', [
+                'classID' => $classID,
+                'progress' => $progress,
+                'on' => $on,
+                'result' => $result,
+            ]);
+            return;
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'video'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                $result="该文件已存在，如需重复使用请改名重新上传！";
+                return $this->renderPartial('addMovie', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+                ]);
+                echo "该文件已存在，如需重复使用请改名重新上传！";
+                return;
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaVideo($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+        return $this->renderPartial('addMovie', [
+                'classID' => $classID,
+                'progress' => $progress,
+                'on' => $on,
+                'result' => $result,
+        ]);
+    }
+        
     public function actionAddTxt(){
         $typename = Yii::app()->session['role_now'];
         $userid = Yii::app()->session['userid_now'];
@@ -543,6 +777,63 @@ class TeacherController extends CController {
             $result = "请上传正确类型的文件！";
         }
         echo $result;
+    }
+    public function actionAddTxtNew(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        if (isset($_POST['checkbox'])) {
+            $txtFilePath =  "public/txt/";           
+        }else
+        {
+            $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
+        }
+        $dir = "resources/" . $txtFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            $result = "请选择文件！";
+            return $this->renderPartial('addTxt', [
+                'classID' => $classID,
+                'progress' => $progress,
+                'on' => $on,
+                'result' => $result,
+            ]);
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'txt'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                $result="该文件已存在，如需重复使用请改名重新上传！";
+                return $this->renderPartial('addTxt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+                ]);
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "text/plain") {
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaTxt($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+        return $this->renderPartial('addTxt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
     }
     
         public function actionAddVoice(){
@@ -588,6 +879,65 @@ class TeacherController extends CController {
         }
         echo $result;
     }
+    public function actionAddVoiceNew(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+                if (isset($_POST['checkbox'])) {
+            $voiceFilePath =  "public/voice/";           
+        }else
+        {
+            $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
+        }
+        $dir = "resources/" . $voiceFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            $result = "请选择文件！";
+            return $this->renderPartial('addVoice', [
+                'classID' => $classID,
+                'progress' => $progress,
+                'on' => $on,
+                'result' => $result,
+            ]);
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'voice'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                $result="该文件已存在，如需重复使用请改名重新上传！";
+                return $this->renderPartial('addVoice', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+                ]);
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "audio/wav" || $_FILES["file"]["type"] == "audio/mpeg" ) {
+     
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaVoice($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {
+          
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+        return $this->renderPartial('addVoice', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
+    }
     
     
     public function actionAddPicture(){
@@ -631,7 +981,62 @@ class TeacherController extends CController {
         }
         echo $result;
     }
-    
+    public function actionAddPictureNew(){
+        $typename = Yii::app()->session['role_now'];
+        $userid = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        if (isset($_POST['checkbox'])) {
+            $picFilePath =  "public/picture/";           
+        }else
+        {
+            $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
+        }
+        $dir = "resources/" . $picFilePath;
+        $result = "上传失败!";
+        $flag = 0;
+        if (!isset($_FILES["file"])) {
+            return $this->renderPartial('addMovie', [
+                'classID' => $classID,
+                'progress' => $progress,
+                'on' => $on,
+                'result' => $result,
+            ]);
+        }
+        $sqlVideo = Resourse::model()->findAll("type = 'picture'");
+        foreach ($sqlVideo as $v) {
+            if ($v['name'] == $_FILES["file"]["name"]) {
+                $result="该文件已存在，如需重复使用请改名重新上传！";
+                return $this->renderPartial('addMovie', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+                ]);
+            }
+        }                               
+        if ($_FILES["file"]["type"] == "image/pjpeg" ||$_FILES["file"]["type"] == "image/jpeg"|| $_FILES["file"]["type"] == "image/png" || $_FILES["file"]["type"] == "image/x-png"|| $_FILES["file"]["type"] == "image/bmp" || $_FILES["file"]["type"] == "image/gif" ) {
+            if ($_FILES["file"]["error"] > 0) {
+                $result = "Return Code: " . $_FILES["file"]["error"];
+            } else {
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaPicture($newName, $oldName);
+                $result = "上传成功!";
+            }
+        } else {       
+            $result = "请上传正确类型的文件！";
+        }
+        echo $result;
+        return $this->renderPartial('addPicture', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+        ]);
+    }
     
     
 
@@ -654,6 +1059,14 @@ class TeacherController extends CController {
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
             unlink(iconv('utf-8', 'gb2312', $file));
         $result = "删除成功！";
+        if($_GET['isnew']==1){
+            return $this->renderPartial('addMovie', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+            ]);
+        }
         return $this->render('videoLst', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -681,6 +1094,14 @@ class TeacherController extends CController {
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
             unlink(iconv('utf-8', 'gb2312', $file));
         $result = "删除成功！";
+        if($_GET['isnew']==1){
+            return $this->renderPartial('addTxt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+            ]);
+        }
         return $this->render('txtLst', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -709,6 +1130,14 @@ class TeacherController extends CController {
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
             unlink(iconv('utf-8', 'gb2312', $file));
         $result = "删除成功！";
+        if($_GET['isnew']==1){
+            return $this->renderPartial('addVoice', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+            ]);
+        }
         return $this->render('voiceLst', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -738,6 +1167,14 @@ class TeacherController extends CController {
         if (file_exists(iconv('utf-8', 'gb2312', $file)))
             unlink(iconv('utf-8', 'gb2312', $file));
         $result = "删除成功！";
+        if($_GET['isnew']==1){
+            return $this->renderPartial('addPicture', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'result' => $result,
+            ]);
+        }
         return $this->render('pictureLst', [
                     'classID' => $classID,
                     'progress' => $progress,
@@ -765,12 +1202,21 @@ class TeacherController extends CController {
             
             $file = "resources/" . $videoFilePath . $file;
         }
-
+        if($_GET['isnew']==1){
+            return $this->renderPartial('lookvideo', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+                    'new'=>1
+            ]);
+        }
         return $this->render('lookvideo', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on,
                     'file' => $file,
+                    'new'=>0
         ]);
     }
     
@@ -792,12 +1238,21 @@ class TeacherController extends CController {
         }
             $file = "resources/" . $txtFilePath . $file;
         }
-
+        if($_GET['isnew']==1){
+            return $this->renderPartial('looktxt', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+                    'new'=>1
+            ]);
+        }
         return $this->render('looktxt', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on,
                     'file' => $file,
+                     'new'=>0
         ]);
     }
     
@@ -820,12 +1275,21 @@ class TeacherController extends CController {
         }
             $file = "resources/" . $voiceFilePath . $file;
         }
-
+        if($_GET['isnew']==1){
+            return $this->renderPartial('lookvoice', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+                    'new'=>1
+            ]);
+        }
         return $this->render('lookvoice', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on,
                     'file' => $file,
+                    'new'=>0
         ]);
     }
     
@@ -849,11 +1313,21 @@ class TeacherController extends CController {
         }
             $file = "resources/" . $picFilePath . $file;
         }
+        if($_GET['isnew']==1){
+            return $this->renderPartial('lookpicture', [
+                    'classID' => $classID,
+                    'progress' => $progress,
+                    'on' => $on,
+                    'file' => $file,
+                    'new'=>1
+            ]);
+        }
         return $this->render('lookpicture', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on,
                     'file' => $file,
+                    'new'=>0
         ]);
     }
     

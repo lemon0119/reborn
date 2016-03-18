@@ -37,7 +37,7 @@
 <div class="span9" style="position: relative; left: 20px">
     <h2 style="display:inline-block;">图片列表</h2>
     <div id ="picture-table"></div>
-    <form class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addPicture&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" enctype="multipart/form-data"> 
+    <form class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addPicture&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0" enctype="multipart/form-data"> 
     <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" /> 
         <div class="control-group">
        <label class="control-label" for="input02">上传</label>
@@ -64,12 +64,12 @@
     $("#upload").hide();
 });
 
-    $("#picture-table").load("./index.php?r=teacher/pictureTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
+    $("#picture-table").load("./index.php?r=teacher/pictureTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0");
 
     var options = {  
         success: function(info){
             window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.info);
-            $("#picture-table").load("./index.php?r=teacher/pictureTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
+            $("#picture-table").load("./index.php?r=teacher/pictureTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0");
             $("#upload").hide();
         },
         error: function(xhr, type, exception){
