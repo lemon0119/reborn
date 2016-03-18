@@ -71,17 +71,17 @@
                     <input name="password2" type="password" class="input-xlarge" id="input05" value="" />
                 </div>
             </div>						-->
-            <div style="text-align: center">
-                <a  style="right: 77px" href="./index.php?r=admin/stuLst" class="btn_ret_admin"></a> <a style="right: 63px" href="./index.php?r=admin/exlAddStu" class="btn_Batch_add_admin"></a> <button id="sub" style="right:50px;top: -1px;" type="submit" class="btn_AD_admin"></button>
-
+            <div style="width: 80%;text-align: center">
+                <button onclick="window.location.href = './index.php?r=admin/stuLst'" type="button" class="btn">返 回</button> <button onclick="window.location.href = './index.php?r=admin/exlAddStu'" type="button" class="btn btn-primary">批量添加</button><button  type="submit" class="btn btn-primary">添加</button>
+                
             </div>
         </fieldset>
     </form>
 </div>
 <script>
     $(document).ready(function(){
-        document.getElementById("sub").focus();
-    $("#li-addStu").attr("class", "active");
+        //document.getElementById("sub").focus();
+    $("#li-addStu").attr("class","active");
             });
             $(document).ready(function(){
     var result = <?php echo "'$result'"; ?>;
@@ -246,4 +246,5 @@ foreach ($classAll as $key => $value) {
         document.getElementById("input07").value="";
     }  
 }
+
 </script>

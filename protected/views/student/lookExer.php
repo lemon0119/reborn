@@ -53,7 +53,8 @@ if (!$isOver) {
             <?php } else { ?>
                 <div  id="span" class="hero-unit" align="center">
                     <div style="width: 660px">
-                        <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
+<!--                        <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>-->
+                        <button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
                     </div>
                     <div id="Analysis">
                         <h3 ><?php echo $exerOne['title'] ?></h3>

@@ -15,7 +15,7 @@
                     <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value=""/>
                 </li>
                 <li style="margin-top:10px">
-                    <button onclick="chkIt()" id="bth_create">创&nbsp;&nbsp;&nbsp;建</button>
+                    <button onclick="chkIt()" class="btn_4superbig">创&nbsp;&nbsp;&nbsp;建</button>
                 </li>
              
         </ul>

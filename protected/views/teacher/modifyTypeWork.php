@@ -13,9 +13,9 @@
         </ul>
         <ul>
              <br>
-                        <li class='btn btn-primary'> <?php if($type == "key") {  echo "<a href='./index.php?r=teacher/AddKey'><font style='color:#fff'> 添加新题</font></a>";}
-                        else if($type == "look"){echo "<a href='./index.php?r=teacher/AddLook'><font style='color:#fff'> 添加新题</font></a>";}
-                        else if($type == "listen"){ echo "<a href='./index.php?r=teacher/addListen'><font style='color:#fff'> 添加新题</font></a>";}?> </li>
+                        <li > <?php if($type == "key") { ?> <button class='btn btn-primary' onclick="window.location.href = './index.php?r=teacher/AddKey'">添加新题</button><?php }
+                        else if($type == "look"){ ?> <button class='btn btn-primary' onclick="window.location.href = './index.php?r=teacher/AddLook'">添加新题</button> <?php }
+                        else if($type == "listen"){ ?> <button class='btn btn-primary' onclick="window.location.href = './index.php?r=teacher/addListen'">添加新题</button><?php }?> </li>
         </ul>
         
     </div>  

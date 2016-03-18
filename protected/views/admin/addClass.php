@@ -27,9 +27,8 @@ header('Cache-control: private, must-revalidate');
                         </select>
                     </div>
             </div>
-            <div  style="text-align: center;">
-            <a style="position: relative;right:105px;top: 27px;" href="./index.php?r=admin/classLst" class="btn_ret_admin"></a>
-             <button style="position: relative;right:105px;top: 25px;" type="submit" class="btn_add_admin"></button>
+            <div  style="width: 65%;text-align: center;">
+             <button onclick="window.location.href = './index.php?r=admin/classLst'" type="button" class="btn">返 回</button><button  type="submit" class="btn btn-primary">添加</button>
             </div>
         </fieldset>
     </form>   
