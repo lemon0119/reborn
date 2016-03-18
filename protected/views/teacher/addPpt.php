@@ -12,33 +12,21 @@
     
 ?>
 <script src="<?php echo JS_URL;?>jquery-form.js"></script>
-<div class="span3">
-    <div class="well" style="padding: 8px 0;">
-        <ul class="nav nav-list">
-        <li class="nav-header">当前科目</li>
-        <li id="li-<?php echo $progress;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>"><i class="icon-list-alt"></i> <?php echo $lessonsName[$progress];?></a></li>
-        <li class="divider"></li>
-        <li class="nav-header">其余科目</li>
-        <?php foreach($lessonsName as $key => $value):
-            if($key!=$progress){
-            ?>
-            <li id="li-<?php echo $key;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $key;?>"><i class="icon-list-alt"></i> <?php echo $value;?></a></li>
-            <?php
-            } 
-            endforeach;?>
-        </ul>
-    </div>
-    <?php if(isset($_GET['url'])){ ?>
-         <a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
-    <?php }else{ ?>
-        <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
-    <?php }?>
-</div>
-<div class="span9" style="position: relative; left: 20px">
+<link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo CSS_URL; ?>site.css" rel="stylesheet">
+<script src="<?php //echo JS_URL; ?>jquery.min.js" ></script>
+<script src="<?php echo JS_URL; ?>bootstrap.min.js" ></script>
+<script src="<?php echo JS_URL; ?>site.js" ></script>
+<!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
+<link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
+<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js" ></script>
+<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js"></script>
+
+<div class="span9" style="position: relative; left: 20px;margin-left: 300px;">
     <h2 style="display:inline-block;">PPT列表</h2>
     <span>(支持PPT格式,最大100M)</span>
     <div id ="ppt-table"></div>
-    <form class="form-horizontal" method="post" action="./index.php?r=teacher/addPpt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 
+    <form class="form-horizontal" method="post" action="./index.php?r=teacher/addPptNew&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=1" id="myForm" enctype="multipart/form-data"> 
     <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />        
         <div class="control-group">
        <label class="control-label" for="input02">上传</label>
@@ -59,6 +47,21 @@
 </div>
 <script>
     $(document).ready(function(){
+        <?php if(isset($result)){ if($result=='删除成功！'){ ?>
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+        <?php  } }?>
+        <?php if(isset($result)){ if($result=='上传成功!'){ ?>
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+        <?php  } }?>
+        <?php if(isset($result)){ if($result=='请选择文件！'){ ?>
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+        <?php  } }?>
+        <?php if(isset($result)){ if($result=='请上传正确类型的文件！'){ ?>
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+        <?php  } }?>
+        <?php if(isset($result)){ if($result=='该文件已存在，如需重复使用请改名重新上传！'){ ?>
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+        <?php  } }?>
     $("#upload").hide();
     /*
     <?php if(isset($result)){?>
@@ -69,12 +72,12 @@
         */
 });
 
-    $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0");
+    $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=1");
 
     var options = {  
         success: function(info){
             window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.info);
-            $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0");
+            $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
             $("#upload").hide();
         },
         error: function(xhr, type, exception){

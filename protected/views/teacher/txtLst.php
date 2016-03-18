@@ -64,12 +64,12 @@
     $("#upload").hide();
 });
 
-    $("#txt-table").load("./index.php?r=teacher/txtTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
+    $("#txt-table").load("./index.php?r=teacher/txtTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0");
 
     var options = {  
         success: function(info){
             window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.info);
-            $("#txt-table").load("./index.php?r=teacher/txtTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>");
+            $("#txt-table").load("./index.php?r=teacher/txtTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0");
             $("#upload").hide();
         },
         error: function(xhr, type, exception){
