@@ -19,7 +19,16 @@
      <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
-         <li ><div id="id_classWork"><a href="#"><i class="icon-list"></i>课后作业</a></div></li>  
+         <li ><div id="id_classExercise"><a href="#"><i class="icon-list"></i>练习</a></div></li>
+        <div style="display: none" id="id_classExerciseLesson">
+              <ul class="nav nav-list"> 
+                <?php foreach ($array_lesson as $lesson): ?>
+                  <li><div ><a href="#" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                  
+              <?php endforeach; ?> 
+              </ul>
+        </div>
+         
+         <li ><div id="id_classWork"><a href="#"><i class="icon-list"></i>作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
@@ -44,15 +53,8 @@
                      <?php endforeach; ?> 
              </ul>
          </div>
-         <li ><div id="id_classExercise"><a href="#"><i class="icon-list"></i>课堂练习</a></div></li>
-       <div style="display: none" id="id_classExerciseLesson">
-             <ul class="nav nav-list"> 
-               <?php foreach ($array_lesson as $lesson): ?>
-                 <li><div ><a href="#" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                  
-             <?php endforeach; ?> 
-             </ul>
-       </div>        
-         <li ><div id="id_classExam"><a href="#"><i class="icon-list"></i>课堂考试</a></div></li>
+                 
+         <li ><div id="id_classExam"><a href="#"><i class="icon-list"></i>考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
@@ -135,12 +137,30 @@
             </div>
             <div style="width:70%;float:right;">
                 <div id="main" style="display: none;overflow: auto;height:300px;position: relative;top:10px"></div>    
-                <div id="export" style="width:50px;border-radius: 5px;background-color: #ddd;height: 30px;color:white;position: relative;margin: auto 30px -15px auto;">
+                <div id="export" style="diplay:none;width:50px;border-radius: 5px;background-color: #ddd;height: 30px;color:white;position: relative;margin: auto 30px -15px auto;">
                     
                 </div>
-                <div id="de" style="display:none;width:100%;overflow: auto;height:300px;">
-                    <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;top:20px;left:20px;width:480px;">
-                            <thead>
+                <div id="title" style="width:100%;overflow: auto;margin-top: 20px">
+                    <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:480px;">
+                        <thead>
+                                    <tr style="height:40;">
+                                        <th style="min-width:35px;">成绩</th>
+                                        <th style="min-width:45px;">正确率</th>
+                                        <th style="min-width:76px;">平均速度</th>
+
+                                        <th style="min-width:60px;">回改字数</th>
+                                        <th style="min-width:30px;">平均击键</th>
+                                        <th style="min-width:76px;">完成时间</th>
+                                        <th style="min-width:55px;">总击键数</th>
+
+                                    </tr>
+                        </thead>
+                     </table>
+                </div>
+                <div id="de" style="display:none;width:100%;overflow: auto;height:300px;margin-top: -20px">
+                    
+                    <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:480px;">
+                       <!--     <thead>
                                 <tr style="height:40px;">
                                     <th>成绩</th>
                                     <th>正确率</th>
@@ -152,7 +172,7 @@
                                     <th>总击键数</th>
 
                                 </tr>
-                            </thead>
+                            </thead>  -->
                             <tbody id="detail" class="detailed">
                             </tbody>
                         </table>
@@ -196,6 +216,7 @@ function che(){
     document.getElementById("main").style.display='none';
     document.getElementById("de").style.display='none';
     document.getElementById("export").style.display='none';
+    document.getElementById("title").style.display='none';
     $(".bb").css("color","black");
 }
 function showClassWork(lessonID){
@@ -213,6 +234,9 @@ function getSuiteExercise(suiteID,workID){
              success: function(data){
                    document.getElementById("sp").style.display='block';
                    document.getElementById("de").style.display='none';
+                   document.getElementById("export").style.display='none';
+                   document.getElementById("title").style.display='none';
+                   document.getElementById("div11").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -234,14 +258,15 @@ function getSuiteExercise(suiteID,workID){
                       var str;
                       if(i%4==0)
                           str="";
-                      str = "<td><a class='bb' id='kk"+i+"'"+" onclick='getStudentRanking("+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                      str += "<td><a class='bb' id='kk"+i+"'"+" onclick='getStudentRanking("+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
                       var li;
                       if(i%4==0){
                          li = document.createElement("tr");  
                       }
                       li.innerHTML= str;
-                      if(((i%4-1)==0 && i!=0) || i==data.length-1)
+                      if(((i%4-1)==0 && i!=0) || i==data.length-1){
                         ul.appendChild(li);
+                         }
                    }  
                  },     
                 error: function(xhr, type, exception){
@@ -263,7 +288,7 @@ function getClassExer(lessonID){
                  document.getElementById("div11").style.display='none';
                  $("#export").children().filter('tr').remove();
                  document.getElementById("export").style.display='none';
-                 
+                 document.getElementById("title").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -395,6 +420,7 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                  document.getElementById("div11").style.display='block';
                  $("#export").children().filter('tr').remove();
                  document.getElementById("export").style.display='none';
+                 document.getElementById("title").style.display='none';
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
@@ -508,6 +534,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                  document.getElementById("main").style.display='block';
                  document.getElementById("de").style.display='block';
                  document.getElementById("export").style.display='block';
+                 document.getElementById("title").style.display='block';
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
@@ -561,9 +588,9 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                        
                    }
                    //detail
-                    var str =  "<th>"+1+"</th>"+"<th>"+Math.round(data[3]['correct']*100)/100+"</th>"+"<th>"+Math.round(data[3]['speed']*100)/100+"</th>"+"<th>"+
-                            Math.round(data[3]['backDelete']*100)/100+"</th>"+"<th>"+Math.round(data[3]['averageKeyType']*100)/100+"</th>"+"<th>"+data[3]['createTime']+"</th>"+
-                            "</th>"+"<th>"+Math.round(data[3]['countAllKey']*100)/100+"</th>";
+                    var str =  "<th style='width:35px;'>"+1+"</th>"+"<th style='width:65px;'>"+Math.round(data[3]['correct']*100)/100+"</th>"+"<th style='width:76px;'>"+Math.round(data[3]['speed']*100)/100+"</th>"+"<th style='width:76px;'>"+
+                            Math.round(data[3]['backDelete']*100)/100+"</th>"+"<th style='width:76px;'>"+Math.round(data[3]['averageKeyType']*100)/100+"</th>"+"<th style='width:76px;'>"+data[3]['createTime']+"</th>"+
+                            "</th>"+"<th style='width:76px;'>"+Math.round(data[3]['countAllKey']*100)/100+"</th>";
                     var tr = document.createElement("tr");    
                     tr.innerHTML= str;
                     detail.appendChild(tr);
@@ -665,7 +692,7 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                  document.getElementById("div11").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
-                 
+                 document.getElementById("title").style.display='none';
                  $("#export").children().filter('tr').remove();
                  document.getElementById("export").style.display='none';
                    var ul = document.getElementById("ul2");          
@@ -694,12 +721,14 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                    document.getElementById("name").innerHTML=choose;
                    var times  = new Array();
                    var per=new Array();
-                   for(var i=0;i<data[0].length;i++){                                         
-                      var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
-                      var tr = document.createElement("tr");               
-                      tr.innerHTML= str;
-                      tbody.appendChild(tr);
-                   }  
+                    
+                    for(var i=0;i<data[0].length;i++){                                         
+                       var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                       var tr = document.createElement("tr");               
+                       tr.innerHTML= str;
+                       tbody.appendChild(tr);
+                    } 
+                   
                    if(data[1].length!=0){
                         for(var j=0;j<data[1][0].length;j++){
                             times[j]=data[1][0][j]['duration'];
@@ -782,9 +811,10 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
              success: function(data){
                  document.getElementById("sp").style.display='block';
                  document.getElementById("main").style.display='block'; 
-                 
+                 document.getElementById("title").style.display='block';
                  
                  document.getElementById("export").style.display='block';
+                 
                    var ul = document.getElementById("ul2");          
                    var tbody = document.getElementById("bo"); 
                    var detail = document.getElementById("detail"); 
@@ -822,15 +852,15 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    
                    for(var h=0;h<data[3].length;h++){
                        myPer[h]=new Array();
-                       for(var hh=0;hh<data[3][h].length;hh++){
-                           myPer[h][hh]=Array();
-                            //myTimes[h][hh]=data[3][h][hh]['time'];
-                            myPer[h][hh]=data[3][h][hh][choice];
+                        for(var hh=0;hh<data[3][h].length;hh++){
+                            myPer[h][hh]=Array();
+                             //myTimes[h][hh]=data[3][h][hh]['time'];
+                             myPer[h][hh]=data[3][h][hh][choice];
                         }
                    }
                    if(data[0]['sequence']==1){
                         for(var i=0;i<data[1].length;i++){    
-                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
+                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
                            var tr = document.createElement("tr");    
                            tr.innerHTML= str;
                            tbody.appendChild(tr);
@@ -838,7 +868,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    }else{
                         $("#sh").show();
                         for(var i=0;i<data[1].length;i++){      
-                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
+                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
                            var tr = document.createElement("tr");    
                            tr.innerHTML= str;
                            tbody.appendChild(tr);
@@ -872,14 +902,14 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    var str1,str2,str3,str4,str5,str6,str7,str8;
                    for(var i=0;i<data[4].length;i++){      
                        if(i+1==data[4][len]['icon1']){
-                           str1="<th style='color:blue;'>"+Math.round(data[4][i]['correct']*100)/100+"</th>";
+                           str1="<th style='color:blue;min-width:45px;'>"+Math.round(data[4][i]['correct']*100)/100+"</th>";
                         }else{
-                            str1="<th>"+Math.round(data[4][i]['correct']*100)/100+"</th>";
+                            str1="<th style='min-width:45px;'>"+Math.round(data[4][i]['correct']*100)/100+"</th>";
                         }
                         if(i+1==data[4][len]['icon2']){
-                           str2="<th style='color:blue;'>"+Math.round(data[4][i]['speed']*100)/100+"</th>";
+                           str2="<th style='color:blue;min-width:76px;'>"+Math.round(data[4][i]['speed']*100)/100+"</th>";
                         }else{
-                            str2="<th>"+Math.round(data[4][i]['speed']*100)/100+"</th>";
+                            str2="<th style='min-width:76px;'>"+Math.round(data[4][i]['speed']*100)/100+"</th>";
                         }
 //                        if(i+1==data[4][len]['icon3']){
 //                           str3="<th style='color:blue;'>"+Math.round(data[4][i]['maxSpeed']*100)/100+"</th>";
@@ -887,14 +917,14 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
 //                            str3="<th>"+Math.round(data[4][i]['maxSpeed']*100)/100+"</th>";
 //                        }
                         if(i+1==data[4][len]['icon4']){
-                           str4="<th style='color:blue;'>"+Math.round(data[4][i]['backDelete']*100)/100+"</th>";
+                           str4="<th style='color:blue;min-width:60px;'>"+Math.round(data[4][i]['backDelete']*100)/100+"</th>";
                         }else{
-                            str4="<th>"+Math.round(data[4][i]['backDelete']*100)/100+"</th>";
+                            str4="<th style='min-width:60px;'>"+Math.round(data[4][i]['backDelete']*100)/100+"</th>";
                         }
                         if(i+1==data[4][len]['icon6']){
-                           str5="<th style='color:blue;'>"+Math.round(data[4][i]['averageKeyType']*100)/100+"</th>";
+                           str5="<th style='color:blue;min-width:30px;'>"+Math.round(data[4][i]['averageKeyType']*100)/100+"</th>";
                         }else{
-                            str5="<th>"+Math.round(data[4][i]['averageKeyType']*100)/100+"</th>";
+                            str5="<th style='min-width:30px;'>"+Math.round(data[4][i]['averageKeyType']*100)/100+"</th>";
                         }
 //                        if(i+1==data[4][len]['icon7']){
 //                           str6="<th style='color:blue;'>"+Math.round(data[4][i]['maxKeyType']*100)/100+"</th>";
@@ -902,17 +932,17 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
 //                            str6="<th>"+Math.round(data[4][i]['maxKeyType']*100)/100+"</th>";
 //                        }
                         if(i+1==data[4][len]['icon9']){
-                           str7="<th style='color:blue;'>"+data[4][i]['finishDate']+"</th>";
+                           str7="<th style='color:blue;min-width:76px;'>"+data[4][i]['finishDate']+"</th>";
                         }else{
                             
-                            str7="<th>"+data[4][i]['finishDate']+"</th>";
+                            str7="<th style='min-width:76px;'>"+data[4][i]['finishDate']+"</th>";
                         }
                         if(i+1==data[4][len]['icon8']){
-                           str8="<th style='color:blue;'>"+Math.round(data[4][i]['countAllKey']*100)/100+"</th>";
+                           str8="<th style='color:blue;min-width:55px;'>"+Math.round(data[4][i]['countAllKey']*100)/100+"</th>";
                         }else{
-                            str8="<th>"+Math.round(data[4][i]['countAllKey']*100)/100+"</th>";
+                            str8="<th style='min-width:55px;'>"+Math.round(data[4][i]['countAllKey']*100)/100+"</th>";
                         }
-                        var str =  "<th>"+(i+1)+"</th>"+str1+str2+str4+str5+str7+str8;
+                        var str =  "<th style='min-width:35px;'>"+(i+1)+"</th>"+str1+str2+str4+str5+str7+str8;
                         var tr = document.createElement("tr");    
                         tr.innerHTML= str;
                         detail.appendChild(tr);
