@@ -5667,7 +5667,15 @@ table tr td {
     padding: 6px 75px;
     background-repeat:no-repeat;
 }
-
+.selectBox{
+    height: 50px;
+    font-size: 20px;
+    font-weight: 900;
+    font-family: HeiTi;
+    background-color: #fff;
+    color:#000;
+    border-color: #ddd;
+}
 .progressbox{width:610px; height:30px; margin:0 auto; }
 .progresstbox{border-radius: 5px;width:610px; height:20px; background:gray; margin-top:0px;}
 .progresstbox div{border-radius: 5px;width:0px; height:20px; background:#aad326; text-align:center;

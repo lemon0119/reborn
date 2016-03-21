@@ -16,13 +16,10 @@
                 <th class="font-center">现在开始</th>
             </tr>
         </thead>
+        <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="position: relative;left: 10px;top: 12px" /><span style="position: relative;left: 15px;top:15px;font-size: 20px">全选</span>
+        <button style="margin-bottom: 3px;margin-left: 20px" class="btn btn-primary" id="play-classExercise">批量开放</button>
+        <button style="margin-bottom: 3px;margin-right: 20px" class="fr btn btn-primary" id="look-Analysis">学生信息反馈</button>
                 <tbody>   
-                     <tr>
-                         <td><input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"></td>
-                         <td class="font-center">全选</td>
-                         <td id="play-classExercise" style="cursor: pointer;height: 30px !important;font-size: 18px ;color: green" colspan="2" class="table_pointer font-center">点击批量开放选中练习</td>
-                         <td id="look-Analysis" style="cursor: pointer;height: 30px !important;font-size: 18px ;"  class="table_pointer font-center">查看完成情况</td>
-                    </tr> 
                     <?php $mark=0; foreach($classExerciseLst as $model):?>
                     <tr>
                         <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID'];?>" > </td>

@@ -7,14 +7,16 @@
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <body style="background-image: none;background-color: #fff">
+    <button id="toggle" style="position: relative;" class="btn">展开</button>
     <div id="span" class="hero-unit" align="center">
-        <div style="width: 660px">
-            <!--            <button class="fl btn" id="pause">暂停统计</button>-->
-            <?php if(!isset($_GET['exerciseID'])){ ?><button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button><?php }?><button id="close_exercise"  style="margin-left:30px;" class="fr btn btn-primary">关闭</button><button id="toggle" style="margin-left:30px;" class="btn fr">展开</button>
-        </div>
+<!--        <div style="width: 660px">
+                        <button class="fl btn" id="pause">暂停统计</button>
+            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>
+            
+        </div>-->
         <div id="Analysis">
-            <h3 ><?php echo $classExercise['title'] ?></h3>
-            <table style="width: 580px"  border = '0px'> 
+             <?php if(isset($_GET['ispractice'])){?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
+        <table style="width: 580px"  border = '0px'> 
                 <tr>
                     <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                     <td><span style="color: #f46500" id="timej">00:00:00</span></td>
@@ -63,7 +65,6 @@
                     <td><span style="color: #f46500" id="getHighstSpeed">0</span ></td>
                     <td><span class="fr" style="color:gray"> 字/分</span></td>
                 </tr>
-
             </table>
         </div>
         <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`", $classExercise['content']);
@@ -76,7 +77,7 @@ echo $str;
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='660' height='280' 
+                width ='660' height='300' 
                 event_OnChange="onChange"
                 event_OnStenoPress="onStenoPressKey">
         </object>
@@ -148,10 +149,6 @@ $squence = $countSquence + 1;
     var classExerciseID = <?php echo $exerciseID; ?>;
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
     window.G_exerciseData = Array(classExerciseID, studentID);
-    $("#close_exercise").click(function () {
-        yaweiOCX4Look.remove();
-        window.parent.closeClassExercise();
-    });
 
     function checkYaweiCode(content) {
         for (var i = 0; i < briefCode.length; i++) {
