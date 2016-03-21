@@ -339,9 +339,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
     </div>
     <div id="show-classExercise"  style="position: relative;display: none;border: 0px;">
-        <div >
-            <div  class="title_split"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;"  align="center" ><h4 >备 课 资 源 </h4></div>
-        </div>
         <div style="height: 40px;">
             <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
             <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>

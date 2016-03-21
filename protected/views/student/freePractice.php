@@ -111,11 +111,11 @@
         $("#iframeDiv").attr("style","height:730px;");
         $("#exerciseDiv").attr("style","display:none");
         if(type === "look"){
-            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Look&&exerciseID="+exerciseID);
+            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Look&&ispractice&&exerciseID="+exerciseID);
         }else if(type === "listen"){
-            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Listen&&exerciseID="+exerciseID);
+            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Listen&&ispractice&&exerciseID="+exerciseID);
         }else{
-            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Key&&exerciseID="+exerciseID);
+            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Key&&ispractice&&exerciseID="+exerciseID);
         }
     }
     function backToFreePractice(){
