@@ -1,15 +1,14 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
+ <script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
 <?php
 if ($isExam == false) {
     require 'suiteSideBar.php';
     ?>
-    <script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
     <?php
 } else {
     require 'examSideBar.php';
     ?>
-    <script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
     <?php
 }
 //add by lc 
@@ -41,7 +40,7 @@ if (!$isOver) {
     if ($sqlClassExerciseRecord != null) {
         ?>
         <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
-            <h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3>
+             <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php }?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
@@ -65,7 +64,7 @@ if (!$isOver) {
                             <span id="repeatNum" style="display: none"><?php echo $exerOne['repeatNum'] ?></span>
             <?php if ($isExam) { ?>
                 -->                                        <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="timej" type="hidden"/></td><!--
+                <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="time" type="hidden"/></td><!--
                 <span id="wordisRightRadio" style="display: none;">0</span>
                 <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
             <?php } else { ?>

@@ -50,8 +50,8 @@ function startTime2() {
         strTime += mm < 10 ? "0" + mm : mm;
         strTime += ":";
         strTime += ss < 10 ? "0" + ss : ss;
-        if (document.getElementById('timej') !== null) {
-            document.getElementById('timej').innerHTML = strTime;
+        if (document.getElementById('time') !== null) {
+            document.getElementById('time').innerHTML = strTime;
         }
     }, 1000);
 }
@@ -91,8 +91,8 @@ function reloadTime2(tim, isExa) {
     strTime += mm < 10 ? "0" + mm : mm;
     strTime += ":";
     strTime += ss < 10 ? "0" + ss : ss;
-    if (document.getElementById('timej') !== null) {
-        document.getElementById('timej').innerHTML = strTime;
+    if (document.getElementById('time') !== null) {
+        document.getElementById('time').innerHTML = strTime;
     }
     clearInterval(timer);
     startTime2();

@@ -296,7 +296,7 @@ class StudentController extends CController {
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
          }
          $n=0;
          foreach(Tool::$EXER_TYPE as $type){
@@ -370,12 +370,13 @@ class StudentController extends CController {
         }
         //end
          if($recordID==null){
+             ExamRecord::saveExamRecord($recordID);
           return $this->render('listenExer',array( 'exercise'=>$classexam,'exerID' =>$exerID,'exercise2'=>$classexam2,'exerOne'=>$result,'cent' =>$cent,'isExam'=>$isExam,'examInfo'=>$examInfo,'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime ));
          }
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
         }
         $number= AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'filling'));
         $n=0;
@@ -439,7 +440,7 @@ class StudentController extends CController {
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
          }
          $n=0;
          foreach(Tool::$EXER_TYPE as $type){
@@ -513,6 +514,7 @@ class StudentController extends CController {
         }
         //end
        if($recordID==null){
+           ExamRecord::saveExamRecord($recordID);
          return $this->render('lookExer',array( 
             'exercise'=>$classexam,
             'exercise2'=>$classexam2,
@@ -528,7 +530,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
         }
         $number= AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'filling'));
         $n=0;
@@ -594,7 +596,7 @@ class StudentController extends CController {
             foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
          }
          $n=0;
          foreach(Tool::$EXER_TYPE as $type){
@@ -673,12 +675,13 @@ class StudentController extends CController {
         //end
          if($recordID==null){
               //SuiteRecord::saveSuiteRecord($recordID);
+             ExamRecord::saveExamRecord($recordID);
           return $this->render('keyExer',array( 'recordID'=>$recordID,'exercise'=>$classexam,'exerID' =>$exerID,'exerOne'=>$result,'exercise2'=>$classexam2,'cent'=>$cent, 'isExam'=>$isExam,'examInfo'=>$examInfo,  'typeNow' => 'key','isOver' => $isOver,'costTime' => $costTime));
         }
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
         }
         $n=0;
         foreach(Tool::$EXER_TYPE as $type){
@@ -744,7 +747,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
          }
          $number= AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'question'));
          $n=0;
@@ -798,7 +801,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
         }
         $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'question'));
         $n=0;
@@ -848,7 +851,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
          }
          $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'choice'));
          $n=0;
@@ -901,7 +904,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
         }
         $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'choice'));
         $n=0;
@@ -952,7 +955,7 @@ class StudentController extends CController {
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
          }
          $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'filling'));
          $n=0;
@@ -1006,7 +1009,7 @@ class StudentController extends CController {
         foreach(Tool::$EXER_TYPE as $type){
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
         }
         $number= AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'filling'));
         $n=0;
@@ -1043,7 +1046,7 @@ class StudentController extends CController {
         $finishRecord=Array();
         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
          }
         $n=0;
         $cNum=count($classwork['choice']);
@@ -1075,7 +1078,7 @@ class StudentController extends CController {
         Yii::app()->session['suiteID'] = $suiteID;
         //Yii::app()->session['examID'] = $suiteID;
         $classexam = Array();
-        $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
+        $record = ExamRecord::model()->find("workID=? and studentID=?",array($workID,$studentID,));
         
         $cent=Array("0"=>"0","1"=>"0","2"=>"0","3"=>"0","4"=>"0","5"=>"0");
         foreach(Tool::$EXER_TYPE as $type){
@@ -1091,7 +1094,7 @@ class StudentController extends CController {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
             
             
-            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,$type));
+            $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson",array($record->recordID,$type));
             
          }
         $n=0;

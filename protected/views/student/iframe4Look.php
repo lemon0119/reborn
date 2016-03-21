@@ -289,8 +289,9 @@ $squence = $countSquence + 1;
     }
     function controlScroll() {
         var input = getContent(yaweiOCX4Look);
+        var addLine = (input.split('\n\r')).length-1;
         var div = document.getElementById('templet');
-        var line = parseInt(input.length / 23);
+        var line = parseInt(input.length / 23)+addLine;
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }
