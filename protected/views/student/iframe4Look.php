@@ -65,7 +65,6 @@
                     <td><span style="color: #f46500" id="getHighstSpeed">0</span ></td>
                     <td><span class="fr" style="color:gray"> 字/分</span></td>
                 </tr>
-
             </table>
         </div>
         <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`", $classExercise['content']);
