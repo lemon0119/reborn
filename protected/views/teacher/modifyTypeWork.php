@@ -39,7 +39,7 @@
     <a href="./index.php?r=teacher/AssignWork&&classID=<?php echo $currentClass['classID'];?>&&lessonID=<?php echo $currentLesson['lessonID'];?>"  class="btn btn-primary">返回</a>
 </div>
 
-<div class="span9">
+<div class="span9" style="height: 800px">
     <iframe src="./index.php?r=teacher/ToOwnTypeWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe1" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe1"></iframe>
     
     <iframe src="./index.php?r=teacher/ToAllTypeWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe2" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe2"></iframe>
