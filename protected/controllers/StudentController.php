@@ -742,14 +742,14 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
         }
         if($record==null){
-           return $this->render('questionExer',['number'=>$number,'ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]); 
+           return $this->render('fillingExer',['number'=>$number,'ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
         }
-        foreach(Tool::$EXER_TYPE as $type){
+         foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?",array($record->recordID,$type,$studentID));
          }
-         $number= AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'question'));
+         $number=AnswerRecord::model()->findAll("recordID=? and type=?",array($record->recordID,'filling'));
          $n=0;
         foreach(Tool::$EXER_TYPE as $type){
             if(count($finishRecord[$type])!=0 && count($classwork[$type])!=0)
@@ -758,7 +758,6 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
-       
 
         return $this->render('questionExer',['number'=>$number,'ansQuest'=>$ansArr,'questionLst'=>$questionLst ,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' => $isExam,'cent'=>$cent,'workID'=>$wID]);
     }
@@ -950,7 +949,6 @@ class StudentController extends CController {
         }
         if($record==null){
            return $this->render('fillingExer',['number'=>$number,'ansFilling'=>$ansArr,'ansFilling'=>$ansArr,'fillingLst'=>$fillingLst,'exercise2'=>$classwork2 ,'exercise'=>$classwork ,'pages'=>$pages, 'isExam' =>$isExam,'cent'=>$cent,'workID'=>$wID]);
-     
         }
          foreach(Tool::$EXER_TYPE as $type){
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
