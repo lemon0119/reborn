@@ -58,7 +58,6 @@ class StudentController extends CController {
         }
        
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
-         error_log($recordID);
         $correct=$answer['ratio_correct'];
         $n=  strrpos($correct, "&");
         $correct= substr($correct, $n+1);
@@ -1035,7 +1034,7 @@ class StudentController extends CController {
         $record = SuiteRecord::model()->find("workID=? and studentID=?",array($workID,$studentID));
         $cent=Array("0"=>"0","1"=>"0","2"=>"0","3"=>"0","4"=>"0","5"=>"0");
         foreach(Tool::$EXER_TYPE as $type){
-            $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
+            $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
          }
         if($record==null){
             return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);
@@ -1058,8 +1057,6 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
-        Yii::app()->session['suiteID'] = $_GET['suiteID'];
-        
          return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);     
     }
     
