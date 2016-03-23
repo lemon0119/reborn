@@ -253,7 +253,6 @@ class TeacherController extends CController {
         ]);
     }
     public function actionAddPp() {
-        error_log("ppt");
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
@@ -690,7 +689,6 @@ class TeacherController extends CController {
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
-            error_log("nononoo");
             $result = "请选择文件！";
             return $this->renderPartial('addMovie', [
                 'classID' => $classID,
@@ -997,7 +995,7 @@ class TeacherController extends CController {
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
-            return $this->renderPartial('addMovie', [
+            return $this->renderPartial('addPicture', [
                 'classID' => $classID,
                 'progress' => $progress,
                 'on' => $on,
@@ -1008,7 +1006,7 @@ class TeacherController extends CController {
         foreach ($sqlVideo as $v) {
             if ($v['name'] == $_FILES["file"]["name"]) {
                 $result="该文件已存在，如需重复使用请改名重新上传！";
-                return $this->renderPartial('addMovie', [
+                return $this->renderPartial('addPicture', [
                     'classID' => $classID,
                     'progress' => $progress,
                     'on' => $on,
