@@ -81,6 +81,11 @@ class WordsLibBrief extends CActiveRecord
 		));
 	}
 
+        public static function findAllOrderByIDDesc(){
+            $sql = "SELECT * FROM `words_lib_brief` ORDER BY `id` DESC ";
+            $result = Yii::app()->db->createCommand($sql)->query();
+            return $result;
+        }
         
         public static function insertBrief($word){
             $object = new WordsLibBrief();

@@ -9,14 +9,14 @@
 <body style="background-image: none;background-color: #fff">
     <button id="toggle" style="position: relative;" class="btn">展开</button>
     <div id="span" class="hero-unit" align="center">
-<!--        <div style="width: 660px">
-                        <button class="fl btn" id="pause">暂停统计</button>
-            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>
-            
-        </div>-->
+        <!--        <div style="width: 660px">
+                                <button class="fl btn" id="pause">暂停统计</button>
+                    <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>
+                    
+                </div>-->
         <div id="Analysis">
-             <?php if(isset($_GET['ispractice'])){?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
-        <table style="width: 580px"  border = '0px'> 
+            <?php if (isset($_GET['ispractice'])) { ?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
+            <table style="width: 580px"  border = '0px'> 
                 <tr>
                     <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                     <td><span style="color: #f46500" id="timej">00:00:00</span></td>
@@ -67,11 +67,12 @@
                 </tr>
             </table>
         </div>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`", $classExercise['content']);
-$str = str_replace("\r", "", $str);
-$str = str_replace(" ", "}", $str);
-echo $str;
-?>">
+        <input id="content" type="hidden" style="height: 5px;" value="<?php
+        $str = str_replace("\n", "`", $classExercise['content']);
+        $str = str_replace("\r", "", $str);
+        $str = str_replace(" ", "}", $str);
+        echo $str;
+        ?>">
         <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
         <br/>
@@ -87,6 +88,7 @@ echo $str;
     var yaweiOCX4Look = null;
     var briefCode = "";
     var briefOriginalYaweiCode = "";
+    var briefType = "";
     $(document).ready(function () {
         window.G_isLook = 1;
         document.getElementById('Analysis').scrollIntoView();
@@ -98,6 +100,7 @@ echo $str;
             success: function (data) {
                 briefCode = (data.split("$")[0]).split("&");
                 briefOriginalYaweiCode = (data.split("$")[1]).split("&");
+                briefType = (data.split("$")[2]).split("&");
             },
             error: function (xhr, type, exception) {
                 console.log('GetAverageSpeed error', type);
@@ -154,14 +157,21 @@ $squence = $countSquence + 1;
         for (var i = 0; i < briefCode.length; i++) {
             if (content.content.indexOf(briefCode[i]) >= 0) {
                 var re = new RegExp(briefCode[i], "g");
-                if (briefCode[i].length < 3) {
-                    content.content = content.content.replace(re, "<span style='border-bottom:1px solid green'>" + briefCode[i] + "</span>");
-                } else if (4 > briefCode[i].length > 2) {
-                    content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
-                } else if (briefCode[i].length > 3) {
-                    content.content = content.content.replace(re, "<span style='border-bottom:3px solid green'>" + briefCode[i] + "</span>");
+                if (briefCode[i].length === 2) {
+                    if(briefType[i]=='X'){
+                        content.content = content.content.replace(re, "<span style='border-bottom:1px solid blue'>" + briefCode[i] + "</span>");
+                    }else if(briefType[i]=='W'){
+                         content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
+                    }else{
+                         content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
+                    }
+                } else if (briefCode[i].length===3) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:3px solid #0090b0'>" + briefCode[i] + "</span>");
+                } else if (briefCode[i].length===4) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:5px solid green'>" + briefCode[i] + "</span>");
+                }else if (briefCode[i].length>4) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:5px solid #FF84BA'>" + briefCode[i] + "</span>");
                 }
-
             }
         }
     }
@@ -247,9 +257,9 @@ $squence = $countSquence + 1;
             for (var i = 0; i < text.length; i++) {
                 if (text[i].length < 3) {
                     for (var j = 0; j < briefOriginalYaweiCode.length; j++) {
-                        if (text[i] == briefCode[j]) {
+                          if (text[i] == briefCode[j]) {
                             isBrief++;
-                            if (code[i] == briefOriginalYaweiCode[j].replace(":0", "") && (code[i] != "W:X")) {
+                            if (code[i] == briefOriginalYaweiCode[j].replace(":0", "") || (code[i] == "W:X")) {
                                 isBrief--;
                             }
                         }
@@ -260,7 +270,7 @@ $squence = $countSquence + 1;
                 if (isBrief === 0) {
                     content.content += text[i];
                 } else {
-                    content.content += "<span style='color:green'>" + text[i] + "</span>";
+                    content.content += "<span style='color:blue'>" + text[i] + "</span>";
                     isBrief--;
                 }
             }
@@ -289,8 +299,9 @@ $squence = $countSquence + 1;
     }
     function controlScroll() {
         var input = getContent(yaweiOCX4Look);
+        var addLine = (input.split('\n\r')).length - 1;
         var div = document.getElementById('templet');
-        var line = parseInt(input.length / 23);
+        var line = parseInt(input.length / 23) + addLine;
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }

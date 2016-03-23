@@ -1,5 +1,4 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
-<script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <?php
@@ -37,7 +36,7 @@ if (!$isOver) {
     if ($sqlClassExerciseRecord != null) {
         ?>
         <div class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
-            <h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3>
+            <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php }?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" type="hidden" style="height: 5px;" value="<?php
             $str = str_replace("\n", "`", $exerOne['content']);
@@ -168,6 +167,7 @@ if (!$isOver) {
     var yaweiOCX = null;
     var briefCode = "";
     var briefOriginalYaweiCode = "";
+    var briefType = "";
 
     $(document).ready(function () {
         window.G_isLook = 1;
@@ -251,6 +251,7 @@ if ($isExam) {
             success: function (data) {
                 briefCode = (data.split("$")[0]).split("&");
                 briefOriginalYaweiCode = (data.split("$")[1]).split("&");
+                 briefType = (data.split("$")[2]).split("&");
             },
             error: function (xhr, type, exception) {
                 console.log(xhr, "Failed");
@@ -284,16 +285,24 @@ if ($isExam) {
         return input.length;
     }
 
-    function checkYaweiCode(content) {
+  function checkYaweiCode(content) {
         for (var i = 0; i < briefCode.length; i++) {
             if (content.content.indexOf(briefCode[i]) >= 0) {
                 var re = new RegExp(briefCode[i], "g");
-                if (briefCode[i].length < 3) {
-                    content.content = content.content.replace(re, "<span style='border-bottom:1px solid green'>" + briefCode[i] + "</span>");
-                } else if (4 > briefCode[i].length > 2) {
-                    content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
-                } else if (briefCode[i].length > 3) {
-                    content.content = content.content.replace(re, "<span style='border-bottom:3px solid green'>" + briefCode[i] + "</span>");
+                if (briefCode[i].length === 2) {
+                    if(briefType[i]=='X'){
+                        content.content = content.content.replace(re, "<span style='border-bottom:1px solid blue'>" + briefCode[i] + "</span>");
+                    }else if(briefType[i]=='W'){
+                         content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
+                    }else{
+                         content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
+                    }
+                } else if (briefCode[i].length===3) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:3px solid #0090b0'>" + briefCode[i] + "</span>");
+                } else if (briefCode[i].length===4) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:5px solid green'>" + briefCode[i] + "</span>");
+                }else if (briefCode[i].length>4) {
+                    content.content = content.content.replace(re, "<span style='border-bottom:5px solid #FF84BA'>" + briefCode[i] + "</span>");
                 }
 
             }
@@ -351,7 +360,7 @@ if ($isExam) {
                     for (var j = 0; j < briefOriginalYaweiCode.length; j++) {
                         if (text[i] == briefCode[j]) {
                             isBrief++;
-                            if (code[i] == briefOriginalYaweiCode[j].replace(":0", "") && (code[i] != "W:X")) {
+                            if (code[i] == briefOriginalYaweiCode[j].replace(":0", "")|| (code[i] == "W:X")) {
                                 isBrief--;
                             }
                         }
@@ -362,7 +371,7 @@ if ($isExam) {
                 if (isBrief === 0) {
                     content.content += text[i];
                 } else {
-                    content.content += "<span style='color:green'>" + text[i] + "</span>";
+                    content.content += "<span style='color:blue'>" + text[i] + "</span>";
                     isBrief--;
                 }
             }

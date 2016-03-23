@@ -108,7 +108,7 @@
     
     function startClassExercise(exerciseID,type){
         $("#iframeDiv").removeAttr("style");
-        $("#iframeDiv").attr("style","height:730px;");
+        $("#iframeDiv").attr("style","height:800px;");
         $("#exerciseDiv").attr("style","display:none");
         if(type === "look"){
             $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Look&&ispractice&&exerciseID="+exerciseID);

@@ -84,7 +84,7 @@ echo "<script>var role='$role';</script>";
     </div>
     <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:26px;color: white">虚 拟 键 盘</a><button class="fr btn" id="sw-openAnalysis">统计</button></h4></div>
     <div id="bulletin" class="bulletin" style="border: 0px;width: 100%;margin-left: -1.1px">
-<?php require Yii::app()->basePath . "\\views\\student\\keyboard_virtual_class.php"; ?>
+        <?php require Yii::app()->basePath . "\\views\\student\\keyboard_virtual_class.php"; ?>
     </div>
     <div class="fl" align="center" id="sw-chat" ><h4 ><a style="position: relative;left:145px;color: white"  href="#">课 堂 问 答</a></h4></div>
     <div id="chat-box" style="display:none;border: 0px">
@@ -123,11 +123,7 @@ echo "<script>var role='$role';</script>";
                 var isfinish = new Array();
                 var nowOn = 0;
                 var selectage = 0;
-<?php foreach ($exerciseIsOpenNow as $key => $value) { ?>
-                    exerciseIsOpenNow[<?php echo $key ?>] = <?php echo $value['exerciseID'] ?>;
-                    allExerciseName[<?php echo $key; ?>] = '<?php echo $value['title']; ?>';
-                    isfinish[<?php echo $key ?>] = 0;
-<?php } ?>
+
                 var onImg = false;
                 function fun1() {
                     $('#ppt-asd').attr('style', 'margin-top: -35px');
@@ -267,7 +263,7 @@ echo "<script>var role='$role';</script>";
     });
 
     function optionOnclick() {
-         isfinish[selectage] = 1;
+        isfinish[selectage] = 1;
         var t = document.getElementById("selectExercise").options;
         for (var i = 0; i < t.length; i++) {
             if (t[i].selected) {
@@ -305,8 +301,16 @@ echo "<script>var role='$role';</script>";
             type: "GET",
             url: "index.php?r=student/startClassExercise&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
             success: function (data) {
-                var type = data.split("&&")[0];
-                var exerciseNowOn = data.split("&&")[1];
+                var array_exerciseID = data['exerciseID'];
+                var array_type = data['type'];
+                var array_title = data['title'];
+                for(var i=0;i<array_exerciseID.length;i++){
+                    exerciseIsOpenNow[i] = array_exerciseID[i];
+                    allExerciseName[i] = array_title[i];
+                    isfinish[i] = 0;
+                }
+                var type = array_type[0];
+                var exerciseNowOn = array_exerciseID[0];
                 if (data === "&&") {
                 } else {
                     isClassExercise = 1;
@@ -585,6 +589,11 @@ echo "<script>var role='$role';</script>";
     });
 
     function closeClassExercise() {
+        exerciseIsOpenNow = new Array();
+        allExerciseName = new Array();
+        isfinish = new Array();
+        nowOn = 0;
+        selectage = 0;
         if (document.getElementById('iframe_classExercise').contentWindow.document.getElementById("typeOCX4Listen") !== null) {
             document.getElementById('iframe_classExercise').contentWindow.document.getElementById("typeOCX4Listen").remove();
         }
