@@ -53,13 +53,13 @@
             window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
         <?php  } }?>
         <?php if(isset($result)){ if($result=='请选择文件！'){ ?>
-            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.info);
         <?php  } }?>
         <?php if(isset($result)){ if($result=='请上传正确类型的文件！'){ ?>
-            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.info);
         <?php  } }?>
         <?php if(isset($result)){ if($result=='该文件已存在，如需重复使用请改名重新上传！'){ ?>
-            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.info);
         <?php  } }?>
     $("#upload").hide();
 });

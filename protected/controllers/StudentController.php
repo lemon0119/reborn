@@ -1057,6 +1057,7 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
+
          return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);     
     }
     
