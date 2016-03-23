@@ -1948,17 +1948,19 @@ class apiController extends Controller {
      
     public function actionGetBrief(){
         $array_brief = TwoWordsLibBrief::model()->findAll();
-        $array_brief2 = WordsLibBrief::model()->findAll();
-        $data = array();
-        $data2 = array();
+        $array_brief2 = WordsLibBrief::model()->findAllOrderByIDDesc();
+        $data = array();//word
+        $data2 = array();//yaweiCode
+        $data3 = array();//type
          foreach ($array_brief as $v){
              array_push($data, $v['words']);
              array_push($data2, $v['yaweiCode']);
+             array_push($data3, $v['type']);
          }
          foreach ($array_brief2 as $v){
              array_push($data, $v['words']);
          }
-         $data = implode('&',$data)."$".implode('&',$data2);
+         $data = implode('&',$data)."$".implode('&',$data2)."$".implode('&',$data3);
          echo $data;
     }
 }
