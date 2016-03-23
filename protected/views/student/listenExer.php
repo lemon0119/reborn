@@ -3,7 +3,6 @@
 <!--打字控件-->
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <!--打字计时-->
-<script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 
 <?php
@@ -41,7 +40,7 @@ if (!$isOver) {
     if ($sqlClassExerciseRecord != null) {
         ?>
         <div class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
-            <h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3>
+           <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php }?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" type="hidden" style="height: 5px;" value="<?php
             $str = str_replace("\n", "`", $exerOne['content']);

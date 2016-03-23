@@ -84,9 +84,10 @@ class TwoWordsLibBrief extends CActiveRecord
 		));
 	}
 
-         public static function insertBrief($word){
+         public static function insertBrief($word,$type){
             $object = new TwoWordsLibBrief();
             $object ->words = $word;
+            $object ->type = $type;
             $object ->insert();
         }
 	/**

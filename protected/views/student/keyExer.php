@@ -4,12 +4,10 @@
 if ($isExam == false) {
     require 'suiteSideBar.php';
     ?>
-    <script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
     <?php
 } else {
     require 'examSideBar.php';
     ?>
-    <script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
     <?php
 }
 //add by lc 
@@ -41,7 +39,7 @@ if (!$isOver) {
     if ($sqlClassExerciseRecord != null) {
         ?>
         <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
-            <h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3>
+             <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php }?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
@@ -65,13 +63,13 @@ if (!$isOver) {
                             <span id="repeatNum" style="display: none"><?php echo $exerOne['repeatNum'] ?></span>
             <?php if ($isExam) { ?>
                 -->                                        <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="timej" type="hidden"/></td><!--
+<!--                <td width = '250px'>剩余时间：<span id="time"><?php //echo $strTime ?></span><input id="time" type="hidden"/></td>
                 <span id="wordisRightRadio" style="display: none;">0</span>
                 <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
             <?php } else { ?>
             <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
             <td width = '250px'>准确率：<span id="wordisRightRadio">0</span>%</td>       
-            <td width = '250px'>循环次数：<span id="repeatNum"><?php echo $exerOne['repeatNum'] ?></span></td>
+            <td width = '250px'>循环次数：<span id="repeatNum"><?php //echo $exerOne['repeatNum'] ?></span></td>
             <?php } ?>
         </tr>
         </table>
@@ -120,8 +118,13 @@ if (!$isOver) {
 <!--                    <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成</button>-->
                     <tr><h3 ><?php echo $exerOne['title'] ?></h3></tr>
                     <tr>
-                        <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+                        <?php if($isExam){ ?>
+                             <td><span class="fl"  style="color: #000;font-weight: bolder">剩余时间：</span></td>
+                        <td><span style="color: #f46500" id="time"><?php echo $strTime ?></span></td>
+                       <?php }else{ ?>
+                            <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                         <td><span style="color: #f46500" id="timej">00:00:00</span></td>
+                       <?php } ?>
                         <td></td>
                         <td><span class="fl"   style="color: #000;font-weight: bolder">正确率：&nbsp;&nbsp;</span></td>
                         <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>

@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<div class="span9" style="max-height: 640px">
+<div class="span9" style="max-height: 720px">
     <form id="timeForm" method="post" action="<?php echo $host.$path.$page.$param;?>">
     <div style="float:left"><h2>试卷配置</h2></div>
     <div style="margin-left:300px;position: relative;top: 25px">总分：<span id="score">0</span></div>
