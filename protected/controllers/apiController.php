@@ -1633,10 +1633,11 @@ class apiController extends Controller {
             $n1=-1;$n2=-1;$n3=-1;$n4=-1;
             $minN1=0;$minN2=0;$minN3=0;$minN4=0;
             
-           
+           $min=0;$max=0;
+           $minN=0;$maxN=0;
             foreach ($myDataAll as $my2) {
-                $min=0;$max=0;
-                $minN=0;$maxN=0;
+                
+                
                 $myDataReturn=Array();
                 $myData=$my2;
             
@@ -1657,15 +1658,16 @@ class apiController extends Controller {
                     
                 }
                 $s1=$s1/($key+1);
-                if($min==0)
+                               
+                if($n1==0){
                     $min=$s1;
-                if($max==0)
                     $max=$s1;
-                if($s1<$min){
+                }
+                if($s1<=$min){
                     $min=$s1;
                     $minN=$n1;
                 }
-                if($s1>$max){
+                if($s1>=$max){
                     $max=$s1;
                     $maxN=$n1;
                 }
@@ -1678,15 +1680,16 @@ class apiController extends Controller {
                     $s2+=intval($value);
                 }
                 $s2=$s2/($key+1);
-                if($min==0)
-                    $min=$s2;
-                if($max==0)
-                    $max=$s2;
-                if($s2<$min){
+                error_log($s2);
+                if($n2==0){
+                   $min=$s2;
+                   $max=$s2;
+                }
+                if($s2<=$min){
                     $min=$s2;
                     $minN=$n2;
                 }
-                if($s2>$max){
+                if($s2>=$max){
                     $max=$s2;
                     $maxN=$n2;
                 }
@@ -1701,15 +1704,15 @@ class apiController extends Controller {
                 
                 $s3=$s3/($key+1);
                 
-                if($min==0)
+                if($n3==0){
                     $min=$s3;
-                if($max==0)
                     $max=$s3;
-                if($s1<$min){
+                }
+                if($s3<=$min){
                     $min=$s3;
                     $minN=$n3;
                 }
-                if($s1>$max){
+                if($s3>=$max){
                     $max=$s3;
                     $maxN=$n3;
                 }
@@ -1724,15 +1727,15 @@ class apiController extends Controller {
                     $s4+=intval($value);
                 }
                 $s4=$s4/($key+1);
-                if($min==0)
+                if($n4==0){
                     $min=$s4;
-                if($max==0)
                     $max=$s4;
-                if($s1<$min){
+                }
+                if($s4<=$min){
                     $min=$s4;
                     $minN=$n4;
                 }
-                if($s4>$max){
+                if($s4>=$max){
                     $max=$s4;
                     $maxN=$n4;
                 }

@@ -17,7 +17,7 @@
 </style>
 <div class="span3">
      <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
-     <div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">
+     <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
          <li ><div id="id_classExercise"><a href="#"><i class="icon-list"></i>练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
@@ -75,7 +75,7 @@
 </div>
 
 
-<div class="span9" id="sp" style="display: none;">
+<div class="span9" id="sp" style="display: none;height: 830px;">
     <div style="position: relative;top: -15px;">
         
         <div id="div1" style="width:100%;display:inline;float:left;overflow: auto;" >
@@ -118,7 +118,7 @@
                 </table>
         </div>
         <div  style="width:100%;overflow: auto;">
-            <table id="ul1" class="ul1" style="list-style: none;border-radius: 3px;background-color: rgb(218, 225, 218);position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;margin-top:10px;">
+            <table id="ul1" class="ul1" style="overflow: auto;height:100px;list-style: none;border-radius: 3px;background-color: rgb(218, 225, 218);position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;margin-top:10px;">
             </table>
         </div>
         <div style="width:100%;">
@@ -588,9 +588,9 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                        
                    }
                    //detail
-                    var str =  "<th style='width:35px;'>"+1+"</th>"+"<th style='width:65px;'>"+Math.round(data[3]['correct']*100)/100+"</th>"+"<th style='width:76px;'>"+Math.round(data[3]['speed']*100)/100+"</th>"+"<th style='width:76px;'>"+
-                            Math.round(data[3]['backDelete']*100)/100+"</th>"+"<th style='width:76px;'>"+Math.round(data[3]['averageKeyType']*100)/100+"</th>"+"<th style='width:76px;'>"+data[3]['createTime']+"</th>"+
-                            "</th>"+"<th style='width:76px;'>"+Math.round(data[3]['countAllKey']*100)/100+"</th>";
+                    var str =  "<th style='min-width:35px;'>"+1+"</th>"+"<th style='min-width:45px;'>"+Math.round(data[3]['correct']*100)/100+"</th>"+"<th style='min-width:76px;'>"+Math.round(data[3]['speed']*100)/100+"</th>"+"<th style='min-width:60px;'>"+
+                            Math.round(data[3]['backDelete']*100)/100+"</th>"+"<th style='min-width:30px;'>"+Math.round(data[3]['averageKeyType']*100)/100+"</th>"+"<th style='min-width:76px;'>"+data[3]['createTime']+"</th>"+
+                            "</th>"+"<th style='min-width:55px;'>"+Math.round(data[3]['countAllKey']*100)/100+"</th>";
                     var tr = document.createElement("tr");    
                     tr.innerHTML= str;
                     detail.appendChild(tr);
@@ -983,7 +983,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                                  trigger: 'axis'
                              },
                              legend: {
-                                 data:['平均成绩','学生成绩']
+                                 data:['平均成绩']
                              },
                              grid: {
                                  left: '3%',

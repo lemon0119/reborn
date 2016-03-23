@@ -1058,7 +1058,6 @@ class StudentController extends CController {
                 $cent[$n]='0';
             $n++;
         }
-        Yii::app()->session['suiteID'] = $_GET['suiteID'];
         
          return $this->render('suiteDetail',['exercise'=>$classwork,'isExam' => $isExam,'cent'=>$cent]);     
     }
