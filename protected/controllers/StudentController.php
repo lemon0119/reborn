@@ -25,6 +25,17 @@ class StudentController extends CController {
             ExamRecord::overExam($recordID);
         }
     }
+     protected function renderJSON($data) {
+        header('Content-type: application/json');
+        echo CJSON::encode($data);
+
+        foreach (Yii::app()->log->routes as $route) {
+            if ($route instanceof CWebLogRoute) {
+                $route->enabled = false; // disable any weblogroutes
+            }
+        }
+        Yii::app()->end();
+    }
 
     public function actionVirtualClass() {
         $userID = Yii::app()->session['userid_now'];
@@ -1530,11 +1541,18 @@ class StudentController extends CController {
     }
 
     public function actionStartClassExercise() {
+        $array_exerciseID = [];
+        $array_type = [];
+        $array_title = [];
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
         $classExercise = ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
-        $data = $classExercise['type'] . "&&" . $classExercise['exerciseID'];
-        echo $data;
+        foreach ($classExercise as $key => $value) {
+            $array_exerciseID[$key]=$value['exerciseID'];
+            $array_type[$key]=$value['type'];
+            $array_title[$key]=$value['title'];
+        }
+        $this->renderJSON(['exerciseID'=>$array_exerciseID,'type'=>$array_type,'title'=>$array_title]);
     }
 
     public function actionPassClassExercise() {
