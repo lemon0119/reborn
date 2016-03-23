@@ -13,9 +13,9 @@
         </ul>
         <ul>
              <br>
-                        <li class='btn btn-primary'> <?php if($type == "key") {  echo "<a href='./index.php?r=teacher/AddKey'><font style='color:#fff'> 添加新题</font></a>";}
-                        else if($type == "look"){echo "<a href='./index.php?r=teacher/AddLook'><font style='color:#fff'> 添加新题</font></a>";}
-                        else if($type == "listen"){ echo "<a href='./index.php?r=teacher/addListen'><font style='color:#fff'> 添加新题</font></a>";}?> </li>
+                        <li > <?php if($type == "key") { ?> <button class='btn btn-primary' onclick="window.location.href = './index.php?r=teacher/AddKey'">添加新题</button><?php }
+                        else if($type == "look"){ ?> <button class='btn btn-primary' onclick="window.location.href = './index.php?r=teacher/AddLook'">添加新题</button> <?php }
+                        else if($type == "listen"){ ?> <button class='btn btn-primary' onclick="window.location.href = './index.php?r=teacher/addListen'">添加新题</button><?php }?> </li>
         </ul>
         
     </div>  
@@ -39,7 +39,7 @@
     <a href="./index.php?r=teacher/AssignWork&&classID=<?php echo $currentClass['classID'];?>&&lessonID=<?php echo $currentLesson['lessonID'];?>"  class="btn btn-primary">返回</a>
 </div>
 
-<div class="span9">
+<div class="span9" style="height: 800px">
     <iframe src="./index.php?r=teacher/ToOwnTypeWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe1" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe1"></iframe>
     
     <iframe src="./index.php?r=teacher/ToAllTypeWork&&type=<?php echo $type;?>&&suiteID=<?php echo $suite['suiteID'];?>" id="iframe2" frameborder="0" scrolling="no" width="770px" height="400px" name="iframe2"></iframe>

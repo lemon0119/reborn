@@ -9,7 +9,6 @@
         <textarea  id="notice-textarea" placeholder="内容...." style="width: 60%;height: 90px;"name="content"></textarea><br/>
         <br/>
         <a id="postnotice" style="text-align: right;margin-left: 360px"></a>
-       
     </div>
 </div>
 <div class="span9" style="margin-top: 25px;width: 1080px;">

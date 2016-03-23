@@ -339,14 +339,11 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
     </div>
     <div id="show-classExercise"  style="position: relative;display: none;border: 0px;">
-        <div >
-            <div  class="title_split"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;"  align="center" ><h4 >备 课 资 源 </h4></div>
-        </div>
         <div style="height: 40px;">
             <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
             <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>
         </div>
-        <div style="position: relative;text-align: center;top: 10px;height: 550px;overflow: auto">
+        <div style="position: relative;text-align: center;top: 10px;width: 100%;height: 550px;overflow: auto">
             <iframe id="iframe_class" style="border: 0px;height: 95%;width: 95%;"></iframe>
         </div>
     </div>
@@ -1808,7 +1805,8 @@ $dir->close();
                     success: function (data) {
                         if (data == "开放成功！") {
                             window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
-                            window.parent.startClassExercise(exerciseID);
+                           // window.parent.startClassExercise(exerciseID);
+                           window.parent.backToTableClassExercise4virtual();
                         } else {
                             window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
                         }
@@ -1835,7 +1833,9 @@ $dir->close();
                     data: {exerciseID: exerciseID},
                     success: function (data) {
                         if (data == 1) {
-                            window.parent.startClassExercise(exerciseID);
+                             window.wxc.xcConfirm("开放成功！", window.wxc.xcConfirm.typeEnum.success);
+                             // window.parent.startClassExercise(exerciseID);
+                           window.parent.backToTableClassExercise4virtual();
                         } else {
                             alert("开放失败");
                         }

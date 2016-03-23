@@ -56,9 +56,9 @@ if (!$isOver) {
             <?php if ($isExam) { ?>
             <?php } else { ?>
                 <div id="span" class="hero-unit" align="center">
-                    <div style="width: 660px">
+<!--                    <div style="width: 660px">
                         <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>
-                    </div>
+                    </div>-->
                     <div id="Analysis">
                         <h3 ><?php echo $exerOne['title'] ?></h3>
                         <table style="width: 660px"  border = '0px'> 
@@ -234,8 +234,8 @@ if ($isExam) {
                 }, 1000);
 <?php } ?>
         }
-       // var originalContent = "<?php //echo $str; ?>";
-       // window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
+        var originalContent = "<?php echo $str; ?>";
+        window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     });
     function onStenoPressKey(pszStenoString, device) {
         window.GA_answer = yaweiOCX.GetContentWithSteno();

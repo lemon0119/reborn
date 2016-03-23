@@ -10,7 +10,7 @@
     <div class="well" style="padding: 8px 0;">
         <br/>
         <ul >
-            <li style="padding:0px 0px;" class="nav-header"><a style="cursor:pointer" onclick="backToFreePractice()"><img src="<?php echo IMG_URL; ?>../on_btn_bigret.png"></a></li>
+            <li style="padding:0px 0px;" class="nav-header"><button style="padding:6px 60px" class="btn_4superbig" onclick="backToFreePractice()">自主练习</button></li>
         </ul>
         <br/>
         <ul class="nav nav-list">
@@ -111,11 +111,11 @@
         $("#iframeDiv").attr("style","height:730px;");
         $("#exerciseDiv").attr("style","display:none");
         if(type === "look"){
-            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Look&&exerciseID="+exerciseID);
+            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Look&&ispractice&&exerciseID="+exerciseID);
         }else if(type === "listen"){
-            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Listen&&exerciseID="+exerciseID);
+            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Listen&&ispractice&&exerciseID="+exerciseID);
         }else{
-            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Key&&exerciseID="+exerciseID);
+            $("#iframe_classExercise").attr("src","index.php?r=student/freeIframe4Key&&ispractice&&exerciseID="+exerciseID);
         }
     }
     function backToFreePractice(){

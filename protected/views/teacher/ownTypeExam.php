@@ -45,11 +45,10 @@
                                         echo Tool::csubstr($work['title'], 0, 5)."...";
                                         ?>
                         </td>
-                        <td title="<?php echo $work['content'];?>" class="font-center">
-                            <?php  if(Tool::clength($work['content'])<=8)
-                                        echo $work['content'];
+                       <td title="<?php echo Tool::filterKeyContent($work['content']);?>" class="font-center"> <?php  if(tool::clength($work['content'])<=12)
+                                        echo Tool::filterKeyContent($work['content']);
                                     else
-                                        echo Tool::csubstr($work['content'], 0, 8)."...";
+                                        echo Tool::csubstr(Tool::filterKeyContent($work['content']), 0,12)."...";
                                         ?>
                         </td>
                         <td class="font-center">
@@ -61,7 +60,7 @@
                         <td class="font-center">
                             <?php  echo $thisExam['time']?>
                         </td>
-                        <td class="font-center" style="width: 100px">            
+                        <td class="font-center" style="width: 50px">            
                             <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID'] ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>                          
                             <!--<a href="#"  onclick="configScore('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>,<?php  echo $thisExam['score']?>)"><img src="<?php echo IMG_URL; ?>delete.png">配分</a>-->
                             <!--<a href="#"  onclick="configTime('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage+1?>,<?php  echo $thisExam['time']?>)"><img src="<?php echo IMG_URL; ?>delete.png">配置时间</a>-->

@@ -30,7 +30,7 @@
         <thead>
             <tr>
                 <th class="font-center">编号</th>
-                <th class="font-center"> 科目</th>
+                <th class="font-center">科目</th>
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>         
@@ -45,10 +45,10 @@
                                         echo $allwork['courseID'];
                                     else
                                         echo Tool::csubstr($allwork['courseID'], 0, 5)."...";?></td>
-                       <td title="<?php echo $allwork['requirements'];?>" class="font-center"><?php  if(Tool::clength($allwork['requirements'])<=8)
+                       <td title="<?php echo $allwork['requirements'];?>" class="font-center"><?php  if(Tool::clength($allwork['requirements'])<=5)
                                         echo $allwork['requirements'];
                                     else
-                                        echo Tool::csubstr($allwork['requirements'], 0,8)."...";
+                                        echo Tool::csubstr($allwork['requirements'], 0,5)."...";
                                         ?></td>
                         <td class="font-center">
                             <?php  if($allwork['createPerson']=="0")
