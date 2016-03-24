@@ -48,7 +48,7 @@ a:focus {
     outline-offset:-2px
 }
 a:hover,a:active {
-    outline:0
+    outline:0;
 }
 sub,sup {
     position:relative;
@@ -5668,19 +5668,21 @@ table tr td {
     background-repeat:no-repeat;
 }
 .selectBox{
-    height: 50px;
+    height: 40px;
+    width: 350px;
     font-size: 20px;
-    font-weight: 900;
+    font-weight: 500;
     font-family: HeiTi;
     background-color: #fff;
     color:#000;
-    border-color: #ddd;
+    border-color: #959494;
 }
 .progressbox{width:610px; height:30px; margin:0 auto; }
 .progresstbox{border-radius: 5px;width:610px; height:20px; background:gray; margin-top:0px;}
 .progresstbox div{border-radius: 5px;width:0px; height:20px; background:#aad326; text-align:center;
 font-family:Tahoma; font-size:18px; line-height:48px;}
-span{
+
+.normalfont{
     font-family:SimHei;
     font-size: 15px;
     font-weight: 400;
