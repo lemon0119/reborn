@@ -301,6 +301,7 @@ echo "<script>var role='$role';</script>";
             type: "GET",
             url: "index.php?r=student/startClassExercise&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
             success: function (data) {
+                console.log()
                 var array_exerciseID = data['exerciseID'];
                 var array_type = data['type'];
                 var array_title = data['title'];
@@ -311,7 +312,7 @@ echo "<script>var role='$role';</script>";
                 }
                 var type = array_type[0];
                 var exerciseNowOn = array_exerciseID[0];
-                if (data === "&&") {
+                if (data['exerciseID'].length===0) {
                 } else {
                     isClassExercise = 1;
                     window.wxc.xcConfirm("有新练习发布，点击开始！", window.wxc.xcConfirm.typeEnum.info, {

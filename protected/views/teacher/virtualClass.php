@@ -76,7 +76,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
     </div>
 
-    <div id="show-movie"   style="position: relative;left: 325px;display: none;border: 0px;width:100px;">
+    <div id="show-movie"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
         <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
@@ -108,8 +108,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 <button id="teacher-dianbo" style="width: 150px;" class="btn btn-primary">点播视频</button>
                 
             </div>
-            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
-            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
                 <select id="teacher-choose-file-public" style="width:150px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminPublicVdir);
@@ -173,9 +173,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 <button id="play-ppt" style="width: 150px;" class="btn btn-primary">放映PPT</button>
                 
             </div>
-            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
-            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
-                <select id="choose-ppt-public" style="width:150px;margin-top: 10px;">
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
+                <select id="choose-ppt-public" style="width:160px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminPublicPdir);
                     while ($file = $mydir->read()) {
@@ -224,9 +224,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 <button id="play-pic" style="width: 150px;" class="btn btn-primary">放映图片</button>
                 
             </div>
-            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
-            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
-                <select id="choose-pic-public" style="width:150px;margin-top: 10px;">
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
+                <select id="choose-pic-public" style="width:160px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminPublicPicdir);
                     while ($file = $mydir->read()) {
@@ -274,9 +274,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 </select>
                 <button id="play-txt" style="width: 150px;" class="btn btn-primary">阅览文本</button>
             </div>
-            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
-            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
-                <select id="choose-txt-public" style="width:150px;margin-top: 10px;">
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
+                <select id="choose-txt-public" style="width:160px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminPublicTxtdir);
                     while ($file = $mydir->read()) {
@@ -318,9 +318,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 </select>
                 <button id="play-voice" style="width: 150px;" class="btn btn-primary">播放音频</button>
             </div>
-            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
-            <div  style="width:150px;position:relative;bottom: 150px;left: 100px ">
-                <select id="choose-voice-public" style="width:150px;margin-top: 10px;">
+            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
+                <select id="choose-voice-public" style="width:160px;margin-top: 10px;">
                              <?php
                     $mydir = dir($adminPublicVoicedir);
                     while ($file = $mydir->read()) {
@@ -339,7 +339,12 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
     </div>
     <div id="show-classExercise"  style="position: relative;display: none;border: 0px;">
-        <div style="height: 40px;">
+        <h3 style="margin-left: 20px;">备课资源</h3>
+        <div  style="margin-left: 20px">
+            <input style="margin-bottom: 5px;"  type="checkbox" name="all" onclick="document.getElementById('iframe_class').contentWindow.check_all(this)"  /><span >全选</span>
+            &nbsp;<span>批量操作</span>
+            <button style="margin-bottom: 3px;margin-left: 20px" class="btn btn-primary" type="button" onclick="document.getElementById('iframe_class').contentWindow.checkBoxStartExercise()">批量开放</button>
+            <button style="margin-bottom: 3px;margin-right: 20px" class="fr btn btn-primary"onclick='document.getElementById("iframe_class").contentWindow.lookAnalysis()'>学生信息反馈</button>
             <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
             <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>
         </div>
