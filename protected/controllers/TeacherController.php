@@ -5481,7 +5481,6 @@ public function ActionrecoverForbidStu(){
 
 public function ActionGetProgress(){
     session_start();
-
     $i = ini_get('session.upload_progress.name');
     $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
      if (!empty($_SESSION[$key])) {
