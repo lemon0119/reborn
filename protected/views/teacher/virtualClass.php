@@ -340,13 +340,13 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
     <div id="show-classExercise"  style="position: relative;display: none;border: 0px;">
         <h3 style="margin-left: 20px;">备课资源</h3>
-        <div  style="margin-left: 20px">
-            <input style="margin-bottom: 5px;"  type="checkbox" name="all" onclick="document.getElementById('iframe_class').contentWindow.check_all(this)"  /><span >全选</span>
-            &nbsp;<span>批量操作</span>
-            <button style="margin-bottom: 3px;margin-left: 20px" class="btn btn-primary" type="button" onclick="document.getElementById('iframe_class').contentWindow.checkBoxStartExercise()">批量开放</button>
-            <button style="margin-bottom: 3px;margin-right: 20px" class="fr btn btn-primary"onclick='document.getElementById("iframe_class").contentWindow.lookAnalysis()'>学生信息反馈</button>
-            <button onclick="addNewClassExercise()"  style="margin-left: 20px;margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn btn-primary">添加新练习</button>
-            <button onclick="closeAllOpenNow()"  style="margin-right: 10px;font-size: 20px;position: relative;width:45%;height: 100%" class="fl btn">关闭已开放练习</button>
+        <div  style="margin-left: 30px;margin-right: 30px">
+            <input style="margin-bottom: 5px;"  type="checkbox" name="all" onclick="document.getElementById('iframe_class').contentWindow.check_all(this)"  /><span class="normalfont">全选</span>
+            &nbsp;<span class="normalfont">批量操作:</span>&nbsp;
+            <a class="normalfont" style="cursor: pointer"  onclick="document.getElementById('iframe_class').contentWindow.checkBoxStartExercise()">开放</a>&nbsp;
+            <a onclick="closeAllOpenNow()"  class="normalfont" style="cursor: pointer">全部关闭</a>&nbsp;
+            <a onclick="addNewClassExercise()"  class="normalfont" style="cursor: pointer">添加</a>
+            <span class="normalfont fr" style="font-weight: bolder;color:#7c8489">>></span><a  class="normalfont fr" style="cursor: pointer" onclick='document.getElementById("iframe_class").contentWindow.lookAnalysis()'>学生信息反馈</a>
         </div>
         <div style="position: relative;text-align: center;top: 10px;width: 100%;height: 550px;overflow: auto">
             <iframe id="iframe_class" style="border: 0px;height: 95%;width: 95%;"></iframe>
