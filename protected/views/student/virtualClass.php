@@ -53,11 +53,16 @@ echo "<script>var role='$role';</script>";
         </div>
     </div>
     <div id="classExercise-container" align="center" style="width: 100% ; height:800px;  margin-top:0px;display:none;overflow-x: hidden">
-        <div><select id="selectExercise" class="selectBox" onchange="optionOnclick()"></select><button id="close_exercise" class="fr btn" onclick="closeClassExercise()">关闭</button><button id="exercise_again" onclick="reExercise()" style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary" >再来一遍</button><button id="exercise_next" onclick="nextExercise()" <?php
+        <div style="width: 90%">
+            <button id="exercise_again" onclick="reExercise()" style="margin-left: 10px;margin-right: 10px" class="fl btn btn-primary" >再来一遍</button>
+            <button id="exercise_last" onclick="lastExercise()" disabled="disabled" style="margin-left: 10px;margin-right: 10px" class="fl btn btn-primary" >上一题</button>
+            <select id="selectExercise" class="selectBox" onchange="optionOnclick()" style="width: 270px !important"></select>
+            <button id="close_exercise" class="fr btn" onclick="closeClassExercise()">关闭</button>
+            <button id="exercise_next" onclick="nextExercise()" <?php
             if (count($exerciseIsOpenNow) < 2) {
                 echo "disabled='disabled'";
             }
-            ?> style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary">下一题</button><button id="exercise_last" onclick="lastExercise()" disabled="disabled" style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary" >上一题</button></div>
+            ?> style="margin-left: 10px;margin-right: 10px" class="fr btn btn-primary">下一题</button></div>
         <div style="height: 730px;">
             <iframe id="iframe_classExercise" name="iframe_classExercise" style="border: 0px;height: 100%;width: 95%;"></iframe>
         </div>
