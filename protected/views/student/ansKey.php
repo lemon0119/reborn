@@ -52,6 +52,7 @@ echo '%'; ?></span></td>
     function start() {
         var right = '<?php echo $exer['content']; ?>'.split('$$');
         var rightKey = '<?php echo Tool::filterKeyContent($exer['content']); ?>'.split(" ");
+        
         var answer = '<?php echo $answer; ?>'.substring(1,'<?php echo $answer; ?>'.length-1).split('>,<');
         //console.log(right[0].substring(right[0].indexOf(':0') + 2).charCodeAt());
         var i, j, sright;
@@ -60,10 +61,13 @@ echo '%'; ?></span></td>
         var answer_right = '';
         var answer_wrong = '';
         var answerSingle = '';
-        var rightkey = '';
         var right_text = '';
         while (i < answer.length) {
-            rightkey = right[i].substring(right[i].indexOf(':0') + 2);
+            if(right[i]!==undefined){
+                if(i<right.length){
+                    rightkey = right[i].substring(right[i].indexOf(':0') + 2);
+                    }
+            }
             //console.log(rightkey);
             answerSingle = answer[i].substring(0, answer[i].indexOf('><'));
 //        if(i===0){
@@ -75,7 +79,9 @@ echo '%'; ?></span></td>
 //            //console.log("步步"===answer[i].substring(0,answer[i].indexOf('><')));
 //        }
             if (rightkey === answerSingle || i === 0) {
-                right_text += (rightkey + ' ');
+                if(i<right.length){
+                    right_text += (rightkey + ' ');
+                }
                 answer_right += (answerSingle + ' ');
                 i++;
                 if (sright === false) {
@@ -84,8 +90,11 @@ echo '%'; ?></span></td>
                     answer_wrong = '';
                 }
             } else {
+                if(i<right.length){
+                    right_text += (rightkey + ' ');
+                }
                 answer_wrong += (answerSingle + ' ');
-                i++;
+                i++; 
                 if (sright === true) {
                     sright = false;
                     createFont('answer', '#808080', answer_right);
@@ -95,6 +104,7 @@ echo '%'; ?></span></td>
             answerSingle = '';
         }
         createFont('templet', '#808080', right_text);
+        i++;
         if (i < rightKey.length) {
             rightKey.splice(0, i);
             createFont('templet', '#000000', rightKey.join(' '));
@@ -103,10 +113,10 @@ echo '%'; ?></span></td>
         answer_right = '';
         createFont('answer', '#ff0000', answer_wrong);
         answer_wrong = '';
-        if (j < answer.length) {
-            answer.splice(0, j);
-            createFont('answer', '#ff0000', answer.join(' '));
-        }
+//        if (j < answer.length) {
+//            answer.splice(0, j);
+//            createFont('answer', '#ff0000', answer.join(' '));
+//        }
     }
     $(document).ready(function () {
         $("li#li-key-<?php echo $exer['exerciseID']; ?>").attr('class', 'active');
