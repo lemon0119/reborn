@@ -213,9 +213,13 @@ if ($isExam) {
                         };
                         window.wxc.xcConfirm("本题时间已到，不可答题！", "custom", option);
                         clearInterval(isover);
-                        doSubmit(true, function () {
-                            window.location.href = "index.php?r=student/clsexamOne&&suiteID=<?php echo Yii::app()->session['examsuiteID']; ?>&&workID=<?php echo Yii::app()->session['examworkID'] ?>";
-                        });
+                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                    if (<?php echo $isExam; ?>){
+                        window.location.href = "index.php?r=student/classExam";
+                    }
+                    else
+                        window.location.href = "index.php?r=student/classwork";
+                });
                     }
                 }, 1000);
 <?php } ?>
@@ -559,7 +563,7 @@ if ($isExam) {
             title: "提交试卷",
             btn: parseInt("0011", 4),
             onOk: function () {
-                doSubmit(true);
+                //doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
                     if (<?php echo $isExam; ?>){
                         window.location.href = "index.php?r=student/classExam";
