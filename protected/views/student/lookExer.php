@@ -561,8 +561,9 @@ if ($isExam) {
             onOk: function () {
                 doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    if (isExam)
+                    if (<?php echo $isExam; ?>){
                         window.location.href = "index.php?r=student/classExam";
+                    }
                     else
                         window.location.href = "index.php?r=student/classwork";
                 });
