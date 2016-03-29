@@ -31,6 +31,7 @@
                             <?php }else{ ?>
                               <form class="form-horizontal" method="post" action="./index.php?r=teacher/addListen4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>" id="myForm" enctype="multipart/form-data"> 
                             <?php }?>
+                                  <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />
         <fieldset>
            <legend>填写题目</legend>
         <div class="control-group">
@@ -90,7 +91,7 @@ $(document).ready(function(){
 });
  function fetch_progress(){
         $.get('./index.php?r=teacher/getProgress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
-                var progress = parseInt(data);                              
+                var progress = parseInt(data);   
                 $('#number').html(progress + '%');
                 if(progress < 100){
                         setTimeout('fetch_progress()', 100);

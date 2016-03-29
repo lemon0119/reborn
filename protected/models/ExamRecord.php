@@ -23,6 +23,7 @@ class ExamRecord extends CActiveRecord
               $workID = Yii::app()->session['workID']; 
             $createPerson = Yii::app()->session['userid_now'];
             $oldID = ExamRecord::getRecord($workID, $createPerson);
+            Yii::app()->session['examRecordID']=$oldID;
             if($oldID == null) {
                 $newID = Tool::createID();
                 $newRecord = new ExamRecord();
@@ -36,17 +37,19 @@ class ExamRecord extends CActiveRecord
                     return false;
                 }
                 $recordID = $newID;
-                return true;
-            } else {
-                $oldRecord = ExamRecord::model()->find('recordID=?', array($oldID));
-                $oldRecord->modifyTime = date("Y-m-d H:i:s");
-                if(!($oldRecord->upDate())) {
-                    echo Tool::jsLog('更新练习记录失败！');
-                    return false;
-                }
-                $recordID = $oldRecord->recordID;
+                
                 return true;
             }
+//            else {
+//                $oldRecord = ExamRecord::model()->find('recordID=?', array($oldID));
+//                $oldRecord->modifyTime = date("Y-m-d H:i:s");
+//                if(!($oldRecord->upDate())) {
+//                    echo Tool::jsLog('更新练习记录失败！');
+//                    return false;
+//                }
+//                $recordID = $oldRecord->recordID;
+//                return true;
+//            }
         }
         public static function getRecord($workID, $createPerson, $lesnID = '0') {
             //$select = "select recordID from suite_record ";
@@ -59,6 +62,9 @@ class ExamRecord extends CActiveRecord
             }
         }
         public static function overExam($recordID){
+        if(Yii::app()->session['examRecordID']){
+            $recordID=Yii::app()->session['examRecordID'];
+        }
         $record = ExamRecord::model()->findByPK($recordID);
         $record -> ratio_accomplish = 1;
         if(!($record->upDate())) {
