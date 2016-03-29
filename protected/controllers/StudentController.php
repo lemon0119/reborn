@@ -23,6 +23,7 @@ class StudentController extends CController {
             //这里，应该改成修改考试记录examRecord
             ExamRecord::saveExamRecord($recordID);
             ExamRecord::overExam($recordID);
+            //ExamRecord::overExam();
         }
     }
      protected function renderJSON($data) {
