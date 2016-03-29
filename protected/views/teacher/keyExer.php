@@ -21,7 +21,7 @@
         </div>
         
     </div>
-    <input id="id_content" type="hidden" value="<?php echo $exerOne['content'];?>"> 
+    <input id="id_content" type="hidden" value="<?php echo Tool::filterKeyContent($exerOne['content']);?>"> 
 </div>
 
 <script>
