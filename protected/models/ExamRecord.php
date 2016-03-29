@@ -40,6 +40,7 @@ class ExamRecord extends CActiveRecord
                 
                 return true;
             }
+            $recordID = $oldID;
 //            else {
 //                $oldRecord = ExamRecord::model()->find('recordID=?', array($oldID));
 //                $oldRecord->modifyTime = date("Y-m-d H:i:s");
