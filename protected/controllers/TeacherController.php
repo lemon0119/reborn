@@ -653,8 +653,8 @@ class TeacherController extends CController {
                 echo "该文件已存在，如需重复使用请改名重新上传！";
                 return;
             }
-        }                               
-        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream") {
+        }         
+        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"],  strrpos($_FILES["file"]["name"], '.')+1)!="rm") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
