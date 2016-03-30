@@ -62,7 +62,6 @@ $(document).ready(function(){
         var url=$(this).attr("href");
         if(url.indexOf("index.php")>0){
             $.post($('#klgAnswer').attr('action'),$('#klgAnswer').serialize(),function(result){
-                console.log(result);
                 window.location.href = url;
             });
             return false;

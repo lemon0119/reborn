@@ -118,13 +118,13 @@ if (!$isOver) {
 <!--                    <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成</button>-->
                     <tr><h3 ><?php echo $exerOne['title'] ?></h3></tr>
                     <tr>
-                        <?php if($isExam){ ?>
-                             <td><span class="fl"  style="color: #000;font-weight: bolder">剩余时间：</span></td>
-                        <td><span style="color: #f46500" id="time"><?php echo $strTime ?></span></td>
-                       <?php }else{ ?>
+                        <?php //if($isExam){ ?>
+<!--                             <td><span class="fl"  style="color: #000;font-weight: bolder">剩余时间：</span></td>
+                        <td><span style="color: #f46500" id="time"><?php //echo $strTime ?></span></td>-->
+                       <?php //}else{ ?>
                             <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                         <td><span style="color: #f46500" id="timej">00:00:00</span></td>
-                       <?php } ?>
+                       <?php //} ?>
                         <td></td>
                         <td><span class="fl"   style="color: #000;font-weight: bolder">正确率：&nbsp;&nbsp;</span></td>
                         <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
@@ -258,12 +258,13 @@ if ($isExam) {
                     if (time == 0) {
                         window.wxc.xcConfirm("本题时间已到，不可答题！", window.wxc.xcConfirm.typeEnum.error);
                         clearInterval(isover);
-                        doSubmit(true, function () {
-                            window.location.href = "index.php?r=student/examkeyType&&over=1&&exerID=<?php echo $exerID; ?>&&cent=<?php
-    $arg = implode(',', $cent);
-    echo $arg;
-    ?>";
-                        });
+                         $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
+                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
+                        window.location.href = "index.php?r=student/classExam";
+                    }
+                    else
+                        window.location.href = "index.php?r=student/classwork";
+                });
 
                     }
 
@@ -298,7 +299,7 @@ if ($isExam) {
             title: "提交试卷",
             btn: parseInt("0011", 4),
             onOk: function () {
-                doSubmit(true);
+                //doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
                     if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>)
                         window.location.href = "index.php?r=student/classExam";

@@ -1633,7 +1633,6 @@ class TeacherController extends CController {
                 $oldLook = $thisLook->findAll("exerciseID = '$exerciseID'");
                 $insertresult = LookType::model()->insertLook($oldLook[0]['title'], $oldLook[0]['content'], Yii::app()->session['userid_now']);
                 Yii::app()->session['code'] = $_GET["code"];
-                error_log("1");
             }
         }
 
@@ -1667,7 +1666,6 @@ class TeacherController extends CController {
             $result = LookType::model()->getLookLst($type, $value);
             $lookLst = $result['lookLst'];
             $pages = $result['pages'];
-            error_log("2");
             $this->render('searchLook', array(
                 'lookLst' => $lookLst,
                 'pages' => $pages,
@@ -1681,7 +1679,6 @@ class TeacherController extends CController {
             $lookLst = $result['lookLst'];
             $pages = $result['pages'];
             Yii::app()->session['lastUrl'] = "LookLst";
-            error_log("3");
             $this->render('LookLst', array(
                 'lookLst' => $lookLst,
                 'pages' => $pages,
@@ -4904,7 +4901,7 @@ class TeacherController extends CController {
                 break;
         }
 
-        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $ty, $exerID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswerAndUserID($recordID, $ty, $exerID,$studentID);
         $accomplish = $_GET['accomplish'];
         $correct=$answer['ratio_correct'];
         $n=  strrpos($correct, "&");

@@ -8,9 +8,9 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <?php// if (count($exercise['choice']) != 0 && count($exercise['filling']) != 0 && count($exercise['question']) != 0) { ?>
+            <?php if (count($exercise['choice']) != 0 && count($exercise['filling']) != 0 && count($exercise['question']) != 0) { ?>
                 <li class="nav-header">基础知识</li>
-            <?php //} if (count($exercise['choice']) != 0) { ?>
+            <?php } if (count($exercise['choice']) != 0) { ?>
                 <li id="li-choice">
                     <a href="./index.php?r=student/choice&&cent=<?php $arg = implode(',', $cent);
                 echo $arg; ?>"><i class="icon-font"></i> 选 择 题<div id= "container" style="height: 5px;border:1px solid white;">
@@ -18,7 +18,7 @@
                             </div>
                         </div> </a>                           
                 </li>
-            <?php //} if (count($exercise['filling']) != 0) { ?>
+            <?php } if (count($exercise['filling']) != 0) { ?>
                 <li id="li-filling">
                     <a href="./index.php?r=student/filling&&cent=<?php $arg = implode(',', $cent);
             echo $arg; ?>"><i class="icon-text-width"></i> 填 空 题<div id= "container" style="height: 5px;border:1px solid white;">
@@ -26,7 +26,7 @@
                             </div>
                         </div> </a>
                 </li>
-<?php //} if (count($exercise['question']) != 0) { ?>
+<?php } if (count($exercise['question']) != 0) { ?>
                 <li id="li-question">
                     <a href="./index.php?r=student/question&&cent=<?php $arg = implode(',', $cent);
     echo $arg; ?>"><i class="icon-align-left"></i> 简 答 题<div id= "container" style="height: 5px;border:1px solid white;">
@@ -34,7 +34,7 @@
                             </div>
                         </div> </a>
                 </li>
-            <?php// } if (count($exercise['key']) != 0) { ?>
+            <?php} if (count($exercise['key']) != 0) { ?>
                 <li class="nav-header">键位练习</li>
     <?php foreach ($exercise['key'] as $keyType) : ?>
                     <li id="li-key-<?php echo $keyType['exerciseID']; ?>">
@@ -45,7 +45,7 @@
                         </a>
                     </li>
     <?php endforeach;
-//} if (count($exercise['look']) != 0) { ?>
+} if (count($exercise['look']) != 0) { ?>
                 <li class="nav-header">看打练习</li>
                         <?php foreach ($exercise['look'] as $lookType) : ?>
                     <li id="li-look-<?php echo $lookType['exerciseID']; ?>">
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                         <?php endforeach;
-                    //} if (count($exercise['listen']) != 0) { ?>
+                    } if (count($exercise['listen']) != 0) { ?>
                 <li class="nav-header">听打练习</li>
                 <?php foreach ($exercise['listen'] as $listenType) : ?>
                     <li id="li-listen-<?php echo $listenType['exerciseID']; ?>">
@@ -67,7 +67,7 @@
                         </a>
                     </li>                       
     <?php endforeach;
-//} ?>
+} ?>
         </ul>
 <?php if (count($exercise['choice']) == 0 && count($exercise['filling']) == 0 && count($exercise['question']) == 0 && count($exercise['key']) == 0 && count($exercise['look']) == 0 && count($exercise['listen']) == 0) { ?>
             <li class="nav-header">无内容</li>
