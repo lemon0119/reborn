@@ -36,18 +36,18 @@ echo 'style="color:#f46500"';Yii::app()->session['insert_lesson']="";}else{echo 
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
-    window.wxc.xcConfirm('添加科目成功！', window.wxc.xcConfirm.typeEnum.success,{
+    window.wxc.xcConfirm('添加课时成功！', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
                     window.location.href="./index.php?r=admin/addLesson&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>";
                 }
             });
     else if(result === '0')
-    window.wxc.xcConfirm('添加科目失败！', window.wxc.xcConfirm.typeEnum.error);
+    window.wxc.xcConfirm('添加课时失败！', window.wxc.xcConfirm.typeEnum.error);
 });    
 $("#myForm").submit(function(){
     var userID = $("#input01")[0].value;
     if(userID === ""){
-        window.wxc.xcConfirm('科目名不能为空', window.wxc.xcConfirm.typeEnum.info);
+        window.wxc.xcConfirm('课时不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
 });

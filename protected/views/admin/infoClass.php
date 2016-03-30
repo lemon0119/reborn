@@ -33,17 +33,20 @@
                 <th>操作</th>
             </tr>
         </thead>
-                <tbody>        
+                <tbody>  
                     <?php foreach($teacherOfClass as $model):?>
                     <tr>
                         <td style="width: 120px"><?php echo $model['teacherID'];?></td>
                         <td><?php echo $teachers[$model['teacherID']];?></td>
                         <td style="width: 120px">
                             <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['teacherID']; ?>&&name=<?php echo $teachers[$model['teacherID']]; ?>&&classID=<?php echo $classID; ?>"><img title="查看资料" src="<?php echo IMG_URL; ?>detail.png"></a>
-                            <a href="./index.php?r=admin/infoClass&&flag=deleteTea&&id=<?php echo $model['teacherID'];?>&&classID=<?php echo $classID;?>"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
+<!--                            <a href="./index.php?r=admin/infoClass&&flag=deleteTea&&id=<?php// echo $model['teacherID'];?>&&classID=<?php// echo $classID;?>"><img title="删除" src="<?php// echo IMG_URL; ?>delete.png"></a>-->
+                            <a href="#" onclick="deleteTea('<?php echo $model['teacherID'];?>',<?php echo $classID;?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
                     <?php endforeach;?> 
+
+
                 </tbody>
         </table>
         <h4>本班学生：</h4>
@@ -68,7 +71,9 @@
                         <td><?php echo $model['userName'];?></td>
                         <td style="width: 120px">  
                             <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID']; ?>&&name=<?php echo $model['userName']; ?>&&classID=<?php echo $classID; ?>"><img title="详细资料" src="<?php echo IMG_URL; ?>detail.png"></a>
-                            <a href="./index.php?r=admin/infoClass&&flag=deleteStu&&id=<?php echo $model['userID'];?>&&classID=<?php echo $model['classID'];?>"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
+<!--                            <a href="./index.php?r=admin/infoClass&&flag=deleteStu&&id=<?php// echo $model['userID'];?>&&classID=<?php// echo $model['classID'];?>"><img title="删除" src="<?php// echo IMG_URL; ?>delete.png"></a>-->
+                            <a href="#" onclick="deleteStu('<?php echo $model['userID'];?>',<?php echo $model['classID'];?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
+                            
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -128,6 +133,8 @@
        if(!empty($result))
        {
            echo "<script>var result = '$result';</script>";
+       }else{
+           echo "<script>var result = null;</script>";
        }
    }
 
@@ -143,7 +150,29 @@
             }    
        }
        
-
+    function deleteTea(id,classId){
+      
+        var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							window.location.href="./index.php?r=admin/infoClass&&flag=deleteTea&&id="+id+"&&classID="+classId;
+						}
+					}
+					window.wxc.xcConfirm("确定要删除该老师", "custom", option);
+    }
+    
+    function deleteStu(id,classId){
+      
+        var option = {
+						title: "警告",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							window.location.href="./index.php?r=admin/infoClass&&flag=deleteStu&&id="+id+"&&classID="+classId;
+						}
+					}
+					window.wxc.xcConfirm("确定要删除该学生", "custom", option);
+    }
        
     function check_all(obj, cName){
         var checkboxs = document.getElementsByName(cName);
