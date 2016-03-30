@@ -116,11 +116,15 @@ echo $courseName; ?></h3>
     ;
 
      function changeCourseName(courseName,courseID,number){
-        var txt=  "原课名:"+courseName;
-					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
-						onOk:function(v){
-                                                    window.location.href="./index.php?r=admin/infoCourse&&courseID="+courseID+"&&lessonName="+courseName+"&&number="+number+"&&newName="+v+"&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
-						}
-					});
+        var txt=  "原课名:"+courseName;            
+	window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
+		onOk:function(v){
+                            if(v==""){
+            window.wxc.xcConfirm("课时名不能为空", window.wxc.xcConfirm.typeEnum.info);
+        }else{
+                     window.location.href="./index.php?r=admin/infoCourse&&courseID="+courseID+"&&lessonName="+courseName+"&&number="+number+"&&newName="+v+"&&courseName=<?php echo Yii::app()->session['courseName']; ?>&&createPerson=<?php echo Yii::app()->session['createPerson']; ?>";
+		}
+                }
+	});         
     }
 </script>
