@@ -53,7 +53,7 @@
     </table>
    </div>
     <!-- 学生列表结束 -->
-    <div class="form-actions"  style="width: 750px;" >
+    <div class="form-actions"  style="margin: 0px;width: 750px;" >
         <button class="fl btn btn-primary" onclick="clickOK()">确定</button>
         
         <button style="position: relative;left: 10px" class="fl btn" onclick="clickQX()">返回</button>

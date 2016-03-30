@@ -6,6 +6,8 @@
             $lessonsName[$value['number']]=$value['lessonName'];
             $courseID=$value['courseID'];
         }
+     }else{
+         $courseID = 0;
      }
      $courseName=  Course::model()->find('courseID=?',array($courseID))['courseName'];
 ?>
@@ -328,7 +330,9 @@
      </ul>
         </div>
     </div>
-    <?php }?>
+    <?php }else{ ?>
+<h3>没有被安排的课程</h3>
+   <?php }?>
 </div>
 <script>
     $(document).ready(function(){
