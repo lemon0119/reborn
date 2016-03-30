@@ -74,11 +74,10 @@ $code = mt_rand(0, 1000000);
                             echo Tool::csubstr($model['title'], 0, 7) . "...";
                         ?></td>
                     <td class="font-center" title="<?php echo Tool::filterKeyContent($model['content']); ?>"><?php
-                        $arr = explode(" ", Tool::filterKeyContent($model['content']));
-                        echo $arr[1] . "&nbsp;";
-                        echo $arr[2] . "&nbsp;";
-                        echo $arr[3] . "&nbsp;";
-                        echo $arr[4] . "&nbsp;";
+                        if (Tool::clength(Tool::filterKeyContent($model['content'])) <= 14)
+                            echo Tool::filterKeyContent($model['content']);
+                        else
+                            echo Tool::csubstr(Tool::filterKeyContent($model['content']), 0, 14) . "...";
                         ?>
                     </td>
                     <td class="font-center"><?php
