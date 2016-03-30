@@ -564,8 +564,8 @@ if ($isExam) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 //doSubmit(true);
-                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    if (<?php echo $isExam; ?>){
+                $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
+                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
                         window.location.href = "index.php?r=student/classExam";
                     }
                     else

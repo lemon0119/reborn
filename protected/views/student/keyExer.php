@@ -234,15 +234,6 @@ if (!$isOver) {
         </div>
 <?php } ?>
 <script>
-    var isExam = <?php
-if ($isExam) {
-    Yii::app()->session['isExam'] = 'isExam';
-    echo 1;
-} else {
-    Yii::app()->session['isExam'] = '';
-    echo 0;
-}
-?>;
 
     $(document).ready(function () {
 <?php if (!$isOver) { ?>
@@ -308,8 +299,8 @@ if ($isExam) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 doSubmit(true);
-                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    if (isExam)
+                $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
+                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>)
                         window.location.href = "index.php?r=student/classExam";
                     else
                         window.location.href = "index.php?r=student/classwork";
