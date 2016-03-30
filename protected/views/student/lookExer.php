@@ -119,7 +119,7 @@ if (!$isOver) {
                             <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
                             <tr>
                                 <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                                <td width = '250px'>剩余时间：<span id="time"><?php echo $strTime ?></span><input id="timej" type="hidden"/></td>
+                                <td width = '250px'>练习计时：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
                                 <td width = '250px'>字数：<span id="wordCount">0</span></td>
                             <?php } else { ?>
                             <?php } ?>
@@ -209,12 +209,12 @@ if ($isExam) {
                     if (time == 0) {
                         var option = {
                             title: "提示",
-                            btn: parseInt("0011", 4),
+                            btn: parseInt("0011", 4)
                         };
                         window.wxc.xcConfirm("本题时间已到，不可答题！", "custom", option);
                         clearInterval(isover);
-                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    if (<?php echo $isExam; ?>){
+                        $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
+                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
                         window.location.href = "index.php?r=student/classExam";
                     }
                     else
@@ -564,8 +564,8 @@ if ($isExam) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 //doSubmit(true);
-                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    if (<?php echo $isExam; ?>){
+                $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
+                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
                         window.location.href = "index.php?r=student/classExam";
                     }
                     else
