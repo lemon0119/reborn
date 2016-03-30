@@ -1943,8 +1943,8 @@ class TeacherController extends CController {
                 if ($code != Yii::app()->session['code']) {
                     $exerciseID = $_GET["exerciseID"];
                     $thisKey = new KeyType();
-                    $oldKey = $thisKey->findAll("exerciseID = '$exerciseID'");
-                    $insertresult = KeyType::model()->insertKey($oldKey[0]['title'], $oldKey[0]['content'], Yii::app()->session['userid_now'],$oldKey['category'],$oldKey['speed'],$oldKey['exerciseTime']);
+                    $oldKey = $thisKey->find("exerciseID = '$exerciseID'");
+                    $insertresult = KeyType::model()->insertKey($oldKey['title'], $oldKey['content'], Yii::app()->session['userid_now'],$oldKey['category'],$oldKey['speed'],$oldKey['repeatNum'],$oldKey['chosen_lib']);
                     Yii::app()->session['code'] = $_GET["code"];
                 }
             }
@@ -1954,7 +1954,7 @@ class TeacherController extends CController {
             foreach ($exerciseIDlist as $v) {
                 $thisKey = new KeyType ();
                 $oldKey = $thisKey->find("exerciseID = '$v'");
-                $insertresult = KeyType::model()->insertKey($oldKey['title'], $oldKey['content'], Yii::app()->session['userid_now'],$oldKey['category'],$oldKey['speed'],$oldKey['exerciseTime']);
+                $insertresult = KeyType::model()->insertKey($oldKey['title'], $oldKey['content'], Yii::app()->session['userid_now'],$oldKey['category'],$oldKey['speed'],$oldKey['repeatNum'],$oldKey['chosen_lib']);
             }
         }
         
