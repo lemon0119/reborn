@@ -16,13 +16,16 @@ class StudentController extends CController {
     public $layout = '//layouts/studentBar';
 
     public function actionOverSuite() {
-        if (isset($_GET['isExam']) && $_GET['isExam'] == false) {
+        error_log('over');
+        if (isset($_GET['isExam']) && $_GET['isExam'] =='false') {
+            error_log($_GET['isExam']);
             SuiteRecord::saveSuiteRecord($recordID);
             SuiteRecord::overSuite($recordID);
         } else {
             //这里，应该改成修改考试记录examRecord
             ExamRecord::saveExamRecord($recordID);
             ExamRecord::overExam($recordID);
+            //ExamRecord::overExam();
         }
     }
      protected function renderJSON($data) {

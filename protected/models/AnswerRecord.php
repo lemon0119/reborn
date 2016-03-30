@@ -110,7 +110,12 @@ class AnswerRecord extends CActiveRecord {
 
     public static function getAnswer($recordID, $type, $exerID) {
         $userID = Yii::app()->session['userid_now'];
-        $record = AnswerRecord::model()->find('recordID=? and exerciseID=? and type=? and createPerson =?', array($recordID, $exerID, $type, $userID));
+        $record = AnswerRecord::model()->find('recordID=? and exerciseID=? and type LIKE ? and createPerson LIKE ?', array($recordID, $exerID, $type, $userID));
+        return $record;
+    }
+    
+    public static function getAnswerAndUserID($recordID, $type, $exerID,$userID) {
+        $record = AnswerRecord::model()->find('recordID=? and exerciseID=? and type LIKE ? and createPerson LIKE ?', array($recordID, $exerID, $type, $userID));
         return $record;
     }
 

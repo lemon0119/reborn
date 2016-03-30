@@ -15,7 +15,9 @@ $currtime = $examInfo['endtime'];
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                         <li class="nav-header" id="leftTime">考试剩余：<font id = "sideTime"></font></li>
+                         <?php if (count($exercise['choice']) != 0 && count($exercise['filling']) != 0 && count($exercise['question']) != 0) { ?>
                         <li class="nav-header">基础知识</li>
+                        <?php } if (count($exercise['choice']) != 0) { ?>
                         <li id="li-choice">
                             <a class="queTitle" href="./index.php?r=student/examchoice&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-font"></i> 选 择 题
                                 <div id= "container" style="height: 5px;border:1px solid white;">
@@ -24,6 +26,7 @@ $currtime = $examInfo['endtime'];
                                 </div> 
                             </a>
                         </li>
+                         <?php } if (count($exercise['filling']) != 0) { ?>
                         <li id="li-filling">
                                 <a class="queTitle" href="./index.php?r=student/examfilling&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-text-width"></i> 填 空 题
                                     <div id= "container" style="height: 5px;border:1px solid white;">
@@ -32,6 +35,7 @@ $currtime = $examInfo['endtime'];
                                     </div>
                                 </a>
                         </li>
+                        <?php } if (count($exercise['question']) != 0) { ?>
                         <li id="li-question">
                                 <a class="queTitle" href="./index.php?r=student/examquestion&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-align-left"></i> 简 答 题
                                     <div id= "container" style="height: 5px;border:1px solid white;">
@@ -40,6 +44,7 @@ $currtime = $examInfo['endtime'];
                                     </div>
                                 </a>
                         </li>
+                         <?php} if (count($exercise['key']) != 0) { ?>
                         <li class="nav-header">键位练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
@@ -48,7 +53,8 @@ $currtime = $examInfo['endtime'];
                                         <?php echo $keyType['title']?>
                                     </a>
                             </li>
-                        <?php endforeach;?>
+                        <?php endforeach;
+} if (count($exercise['look']) != 0) { ?>
                         <li class="nav-header">看打练习</li>
                         <?php foreach ($exercise['look'] as $lookType) :?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
@@ -57,7 +63,8 @@ $currtime = $examInfo['endtime'];
                                         <?php echo $lookType['title']?>
                                     </a>
                             </li>
-                        <?php endforeach;?>
+                        <?php endforeach;
+                                    } if (count($exercise['listen']) != 0) { ?>
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
@@ -66,16 +73,29 @@ $currtime = $examInfo['endtime'];
                                     <?php echo $listenType['title']?>
                                 </a>
                         </li>
-                        <?php endforeach;?>
+                                    <?php endforeach; }?>
                 </ul>
-            </li>
+            <?php if (count($exercise['choice']) == 0 && count($exercise['filling']) == 0 && count($exercise['question']) == 0 && count($exercise['key']) == 0 && count($exercise['look']) == 0 && count($exercise['listen']) == 0) { ?>
+            <li class="nav-header">无内容</li>
+<?php } else { ?>
+           <li class="nav-header" ><br/></li>
             <li>
                  <a type="button" class="btn btn-large" style="width: 34%"  onclick="submitSuite();">提交</a>
 
              </li>
-        </div>      
+        </div>   
+    <?php } ?>
 </div>
 <script>
+     function submitSuite2(){
+        $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
+                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
+                        window.location.href = "index.php?r=student/classExam";
+                    }
+                    else
+                        window.location.href = "index.php?r=student/classwork";
+                });
+    }
     $(document).ready(function(){
         $("div.span3 div.well ul li").find("a").click(function() {
             var url=$(this).attr("href");

@@ -62,6 +62,7 @@ require 'workAnsSideBar.php';
         i = 0;
         sright = false;
         var answer_right = '';
+        var rightkey = '';
         var answer_wrong = '';
         var answerSingle = '';
         var right_text = '';
