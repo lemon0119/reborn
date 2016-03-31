@@ -234,7 +234,7 @@
     }
     function setWordView(word) {
         if (currentNum > 0) {
-            document.getElementById("wordLast").innerHTML = "<span style='color:green'>" + wordArray[currentNum - 1] + "</span>";
+            document.getElementById("wordLast").innerHTML = "<span style='font-size: 30px;color:green'>" + wordArray[currentNum - 1] + "</span>";
         } else {
             document.getElementById("wordLast").innerHTML = "";
         }
@@ -244,7 +244,7 @@
             document.getElementById("word").innerHTML = word;
         }
         if (wordArray[currentNum + 1] !== undefined) {
-            document.getElementById("wordNext").innerHTML = wordArray[currentNum + 1];
+            document.getElementById("wordNext").innerHTML = "<span style='font-size:30px;'>"+wordArray[currentNum+1]+"</span>";
         } else {
             document.getElementById("wordNext").innerHTML = "";
         }

@@ -234,13 +234,13 @@
             }
         }
         display();
-        time1 = setInterval("display()",1/(speed/60)*1000); 
+        time1 = setInterval("display()",(speed/60)*1000); 
     }
     
     function setWordView(word){
             document.getElementById("word").innerHTML = word;
         if(wordArray[currentNum+1]!==undefined){
-            document.getElementById("wordNext").innerHTML = wordArray[currentNum+1];
+            document.getElementById("wordNext").innerHTML = "<span style='font-size: 30px;'>"+wordArray[currentNum+1]+"</span>";
         }else{
             document.getElementById("wordNext").innerHTML = "";
         }
@@ -321,9 +321,9 @@
             judgementFlag = 0;
             if(currentNum>0){
                 if(flag4CheckLastWord[currentNum]===0){
-                   document.getElementById("wordLast").innerHTML = "<span style='color:green'>"+wordArray[currentNum-1]+"</span>"; 
+                   document.getElementById("wordLast").innerHTML = "<span style='font-size: 30px;color:green'>"+wordArray[currentNum-1]+"</span>"; 
                 }else if(flag4CheckLastWord[currentNum]===1){
-                    document.getElementById("wordLast").innerHTML = "<span style='color:red'>"+wordArray[currentNum-1]+"</span>"; 
+                    document.getElementById("wordLast").innerHTML = "<span style='font-size: 30px;color:red'>"+wordArray[currentNum-1]+"</span>"; 
                 }
         }else{
             document.getElementById("wordLast").innerHTML = "";

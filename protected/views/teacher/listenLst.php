@@ -113,8 +113,8 @@ $this->widget('CLinkPager', array('pages' => $pages));
 </div>
 <script>
     $(document).ready(function () {
-        var result = <?php if (isset($result)) echo "'$result'";
-else echo'no'; ?>;
+        var result = '<?php if (isset($result)) echo "'$result'";
+else echo'no'; ?>';
         if (result === '1')
             window.wxc.xcConfirm('复制选择题成功！', window.wxc.xcConfirm.typeEnum.success);
         else
