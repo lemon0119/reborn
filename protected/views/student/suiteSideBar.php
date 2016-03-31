@@ -26,7 +26,7 @@
                             </div>
                         </div> </a>
                 </li>
-<?php } if (count($exercise['question']) != 0) { ?>
+<?php }  if (count($exercise['question']) != 0) { ?>
                 <li id="li-question">
                     <a href="./index.php?r=student/question&&cent=<?php $arg = implode(',', $cent);
     echo $arg; ?>"><i class="icon-align-left"></i> 简 答 题<div id= "container" style="height: 5px;border:1px solid white;">
@@ -34,7 +34,7 @@
                             </div>
                         </div> </a>
                 </li>
-            <?php} if (count($exercise['key']) != 0) { ?>
+            <?php }  if (count($exercise['key'])!= 0) { ?>
                 <li class="nav-header">键位练习</li>
     <?php foreach ($exercise['key'] as $keyType) : ?>
                     <li id="li-key-<?php echo $keyType['exerciseID']; ?>">
