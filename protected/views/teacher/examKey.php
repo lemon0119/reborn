@@ -16,7 +16,7 @@ require 'examAnsSideBar.php';
         <table border = '0px' width="100%">
             <tr>
                 <td width = '50%' align='center'><?php echo $exer['title']?></td>
-                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct);echo '%';?></span></td>
+                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php echo '%';?></span></td>
             </tr>
             <tr>
                 <td colspan='3'>
@@ -71,16 +71,15 @@ require 'examAnsSideBar.php';
         };
       $.ajax({
           type:"POST",
-          url:"./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID?>",
+          url:"./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID?>&&accomplish=<?php echo $_GET['accomplish']?>",
           data:user,
           dataType:"html",
           success:function(html){  
-                  
                   location.reload();
                   console.log("set time");
               },
             error: function(xhr, type, exception){
-                window.wxc.xcConfirm(xhr.responseText, window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr.responseText);
                 console.log(xhr, "Failed");
             }
       });

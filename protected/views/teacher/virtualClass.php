@@ -124,7 +124,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                     ?>
                 </select>
                 <button id="teacher-dianbo-public" style="width: 150px;" class="btn btn-primary">点播视频</button>
-                <button id="teacher-addMovie" onclick="addMovie()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加视频</button>    
+<!--                <button id="teacher-addMovie" onclick="addMovie()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加视频</button>    -->
             </div>
             <!--<div  class="title_select"  onclick="addMovie()" style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;left:300px;top:-223px;"  align="center" ><h1 >+</h1></div>  -->
             
@@ -194,7 +194,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             ?>
                 </select>
                 <button id="play-ppt-public" style="width: 150px;" class="btn btn-primary">放映PPT</button>
-                <button id="teacher-addMovie" onclick="addPpt()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加PPT</button>
+<!--                <button id="teacher-addMovie" onclick="addPpt()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加PPT</button>-->
             </div>
         </div>
     </div> 
@@ -245,7 +245,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             ?>
                 </select>
                 <button id="play-pic-public" style="width: 150px;" class="btn btn-primary">放映图片</button>
-                <button id="teacher-addMovie" onclick="addPic()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加图片</button>
+<!--                <button id="teacher-addMovie" onclick="addPic()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加图片</button>-->
             </div>
         </div>
     </div>
@@ -295,7 +295,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             ?>
                 </select>
                 <button id="play-txt-public" style="width: 150px;" class="btn btn-primary">阅览文本</button>
-                <button id="teacher-addMovie" onclick="addTxt()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加文本</button>
+<!--                <button id="teacher-addMovie" onclick="addTxt()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加文本</button>-->
             </div>
         </div>
     </div>
@@ -334,7 +334,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                     ?>
                 </select>
                 <button id="play-voice-public" style="width: 150px;" class="btn btn-primary">播放音频</button>
-                <button id="teacher-addMovie" onclick="addVoice()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加音频</button>
+<!--                <button id="teacher-addMovie" onclick="addVoice()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加音频</button>-->
             </div>
         </div>
     </div>
