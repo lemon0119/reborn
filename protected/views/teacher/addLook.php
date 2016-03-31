@@ -58,7 +58,7 @@
         <div class="control-group">
             <label class="control-label" for="input02">看打答案</label>
             <div class="controls">               
-                <textarea name="content" style="width:450px; height:200px;"></textarea>
+                <textarea name="content" style="width:450px; height:200px;"  id="input02"></textarea>
             </div>
         </div> 
         <div class="form-actions">
@@ -85,7 +85,7 @@ $("#myForm").submit(function(){
         return false;
     }
     var A = $("#input02")[0].value;
-    if(A === ""){
+    if(A == ""){
         window.wxc.xcConfirm('答案不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
