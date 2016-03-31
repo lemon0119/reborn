@@ -246,7 +246,6 @@
                     url:"./index.php?r=teacher/deleteWordLib",
                     data:{libs:libs},
                     success:function(data){
-                        console.log(data);
                         if(data==1){
                             window.wxc.xcConfirm("删除成功！", window.wxc.xcConfirm.typeEnum.success,{
                                 onOk:function(){
