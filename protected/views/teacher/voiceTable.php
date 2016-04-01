@@ -18,7 +18,7 @@
     <thead>
         <tr>
             <th>名称</th>
-            <th>创建人</th>
+            <th>资源类型</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -56,7 +56,7 @@
             <td>
                 <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
             </td>
-            <td>自己</td>
+            <td>私人</td>
             <td>
                 <a href="./index.php?r=teacher/lookVoice&&voice=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=0&&isnew=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
                 <a href="<?php echo "$vdir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>
@@ -84,7 +84,7 @@
             <td>
                 <a href="./index.php?r=teacher/lookVoice&&voice=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=1"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
                 <a href="<?php echo "$vdir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>
-                 <a href="#" onclick="del('<?php echo iconv("gb2312","UTF-8",$file);?>','<?php echo $classID;?>','<?php echo $progress;?>','<?php echo $on;?>',1)" id="dele"><img src="<?php echo IMG_URL; ?>delete.png" title="删除"></a>
+<!--                 <a href="#" onclick="del('<?php// echo iconv("gb2312","UTF-8",$file);?>','<?php// echo $classID;?>','<?php// echo $progress;?>','<?php// echo $on;?>',1)" id="dele"><img src="<?php// echo IMG_URL; ?>delete.png" title="删除"></a>-->
             </td>
         </tr>
         <?php     
