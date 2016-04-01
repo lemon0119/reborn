@@ -414,7 +414,7 @@ if ($isExam) {
     }
     function onChange() {
         yaweiOCX.UpdateView();
-        var input = getContent(yaweiOCX);
+        var inputO = getContent(yaweiOCX);
         yaweiOCX.Locate(input.length);
         controlScroll();
         changWordPS();
@@ -534,7 +534,7 @@ if ($isExam) {
             createFont("#808080", old, oldCode);
             createFont("#ff0000", wrong, "");
         }
-        if (input.length < text.length) {
+        if (inputO.length < text.length) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
             createFont("#000000", left, "");
         }
