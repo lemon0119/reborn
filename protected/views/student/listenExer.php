@@ -225,7 +225,7 @@ if ($isExam) {
                 }, 1000);
 <?php } ?>
         }
-        var originalContent = "<?php echo $str; ?>";
+        var originalContent = '<?php echo $str; ?>';
         window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     });
     function onStenoPressKey(pszStenoString, device) {

@@ -194,7 +194,7 @@ echo $str;
 //        displayTemp('answer', ans, modAns);
 //    }
     function start() {
-        var text_old = "<?php echo $str; ?>";
+        var text_old = '<?php echo $str; ?>';
         var input = "";
         var contentAllArray = $('#text').val().substring(1,$('#text').val().length-1).split('>,<');
         for(var i=0;i<contentAllArray.length;i++){
