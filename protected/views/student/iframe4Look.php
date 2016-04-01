@@ -136,7 +136,7 @@
         });
 
     });
-    var originalContent = "<?php echo $str; ?>";
+    var originalContent = '<?php echo $str; ?>';
     window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
@@ -309,10 +309,10 @@ $squence = $countSquence + 1;
     function onChange() {
         yaweiOCX4Look.UpdateView();
         var inputO = getContent(yaweiOCX4Look);
-        yaweiOCX4Look.Locate(input.length);
+        yaweiOCX4Look.Locate(inputO.length);
         controlScroll();
         changWordPS();
-        var text_old = "<?php echo $str; ?>";
+        var text_old = '<?php echo $str; ?>';
         var input = getContent(yaweiOCX4Look).replace(/\r\n/g, "`").replace(/ /g, "}").split("");
         var text = text_old.split("");
         var allInput2 = yaweiOCX4Look.GetContentWithSteno().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");

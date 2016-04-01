@@ -263,7 +263,7 @@ if ($isExam) {
             }
         });
         yaweiOCX = document.getElementById("typeOCX");
-        var originalContent = "<?php echo $str; ?>";
+        var originalContent = '<?php echo $str; ?>';
         window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
         //获取学生信息转入统计JS 实时存入数据库
         window.G_saveToDatabase = 1;
@@ -415,10 +415,10 @@ if ($isExam) {
     function onChange() {
         yaweiOCX.UpdateView();
         var inputO = getContent(yaweiOCX);
-        yaweiOCX.Locate(input.length);
+        yaweiOCX.Locate(inputO.length);
         controlScroll();
         changWordPS();
-        var text_old = "<?php echo $str; ?>";
+        var text_old = '<?php echo $str; ?>';
 //        if (text_old.indexOf("<br/>") > 0) {
 //            var div = document.getElementById("templet");
 //            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续

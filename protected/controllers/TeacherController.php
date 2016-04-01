@@ -1691,26 +1691,68 @@ class TeacherController extends CController {
             $arr = explode("$$", $libstr);
             $condition = "";
             foreach ($arr as $a) {
-                if ($condition == "")
-                    $condition = "'" . $a . "'";
-                else
-                    $condition = $condition . "," . "'" . $a . "'";
+                if (strpos($a, '-') != 0) {
+                    if ($condition == "")
+                        $condition = "'" . $a . "'";
+                    else
+                        $condition = $condition . "," . "'" . $a . "'";
+                }
             }
-            $condition = " where name in (" . $condition . ")";
+            if ($condition != "") {
+                $condition = " where name in (" . $condition . ")";
+            }
             $sql = "select * from two_words_lib";
             $order = "";
             if ($arr[count($arr) - 1] == "lib") {
                 $order = "order by rand() limit " . $_POST['in1'];
             }
             $sql = $sql . $condition . $order;
-            $res = Yii::app()->db->createCommand($sql)->query();
-            $content = "";
-            foreach ($res as $record) {
-                if ($content != "")
-                    $content = $content . "$$" . $record['yaweiCode'] . $record['words'];
-                else
-                    $content = $record['yaweiCode'] . $record['words'];
+            if ($condition != "") {
+                $res = Yii::app()->db->createCommand($sql)->query();
             }
+
+
+            $condition1 = "";
+            foreach ($arr as $a) {
+                if (strpos($a,'-') == 0) {
+                    if ($condition1 == "")
+                        $condition1 = "'" . $a . "'";
+                    else
+                        $condition1 = $condition1 . "," . "'" . $a . "'";
+                }
+            }
+            if ($condition1 != "") {
+                $condition1 = " where name in (" . $condition1 . ")";
+            }
+            $sql1 = "select * from two_words_lib_personal";
+            $order1 = "";
+            if ($arr[count($arr) - 1] == "lib") {
+                $order1 = "order by rand() limit " . $_POST['in1'];
+            }
+            $sql1 = $sql1 . $condition1 . $order1;
+            if ($condition1 != "") {
+                $res1 = Yii::app()->db->createCommand($sql1)->query();
+            }
+
+            error_log("res1+".$sql1);
+            $content = "";
+            if (isset($res)) {
+                foreach ($res as $record) {
+                    if ($content != "")
+                        $content = $content . "$$" . $record['yaweiCode'] . $record['words'];
+                    else
+                        $content = $record['yaweiCode'] . $record['words'];
+                }
+            }
+            if (isset($res1)) {
+                foreach ($res1 as $record) {
+                    if ($content != "")
+                        $content = $content . "$$" . $record['yaweiCode'] . $record['words'];
+                    else
+                        $content = $record['yaweiCode'] . $record['words'];
+                }
+            }
+
             $result = KeyType::model()->insertKey($_POST['title'], $content, Yii::app()->session['userid_now'], $_POST['category'], $_POST['speed'], $_POST['in3'], $libstr);
         }
         $this->render('addKey', ['result' => $result]);
@@ -1867,7 +1909,7 @@ class TeacherController extends CController {
             $result = KeyType::model()->getKeyLst($type, $value);
             $keyLst = $result['keyLst'];
             $pages = $result["pages"];
-            $this->render('searchKey', array(
+            $this->render('KeyLst', array(
                 'keyLst' => $keyLst,
                 'pages' => $pages,
                 'teacher' => TbClass::model()->teaInClass(),
@@ -5740,6 +5782,9 @@ class TeacherController extends CController {
                         $content = fread($fp, filesize($file_dir)); //读文件 
                         fclose($fp);
                         unlink($file_dir);
+                        $content = str_replace("\n", "\r\n", $content);
+                        $content = str_replace("\r", "\r\n", $content);
+                        $content = str_replace(" ", "\r\n", $content);
                         $str = explode("\r\n", $content);
                         $name = str_replace(".txt", "", $file_name);
                         $createPerson = Yii::app()->session['userid_now'];
