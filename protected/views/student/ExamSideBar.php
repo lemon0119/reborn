@@ -44,7 +44,7 @@ $currtime = $examInfo['endtime'];
                                     </div>
                                 </a>
                         </li>
-                         <?php} if (count($exercise['key']) != 0) { ?>
+                         <?php } if (count($exercise['key']) != 0) { ?>
                         <li class="nav-header">键位练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">

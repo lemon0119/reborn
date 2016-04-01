@@ -387,7 +387,7 @@ function createFont4Answer(element, color, text) {
             };
           $.ajax({
               type:"POST",
-              url:"./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID?>",
+              url:"./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID?>&&accomplish=<?php echo $_GET['accomplish']?>",
               data:user,
               dataType:"html",
               success:function(html){  
