@@ -28,7 +28,7 @@
         <thead>
             <tr>
                 <th class="font-center">编号</th>
-                <th class="font-center">科目</th>
+                <th class="font-center">题目</th>
 <!--                <th class="font-center">题目</th>-->
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
@@ -47,10 +47,10 @@
                                     else
                                         echo Tool::csubstr($allwork['title'], 0, 5)."...";?></td>
                         
-                        <td title="<?php echo Tool::filterKeyContent($allwork['content']);?>" class="font-center"><?php  if(Tool::clength(Tool::filterKeyContent($allwork['content']))<=15)
+                        <td title="<?php echo Tool::filterKeyContent($allwork['content']);?>" class="font-center"><?php  if(Tool::clength(Tool::filterKeyContent($allwork['content']))<=14)
                                         echo Tool::filterKeyContent($allwork['content']);
                                     else
-                                        echo Tool::csubstr(Tool::filterKeyContent($allwork['content']), 0,15)."...";
+                                        echo Tool::csubstr(Tool::filterKeyContent($allwork['content']), 0,14)."...";
                                         ?></td>
                         <td class="font-center">
                             <?php  if($allwork['createPerson']=="0")
