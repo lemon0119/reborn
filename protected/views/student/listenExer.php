@@ -146,9 +146,9 @@ if (!$isOver) {
                } ?>  '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
                 </div>
                 <input id="content" type="hidden" value="<?php
-               $str = str_replace("\n", "`", $exerOne['content']);
+               $str = str_replace("\n", "", $exerOne['content']);
                $str = str_replace("\r", "", $str);
-               $str = str_replace(" ", "}", $str);
+               $str = str_replace(" ", "", $str);
                echo $str;
                ?>">
                 <br/>
@@ -225,11 +225,11 @@ if ($isExam) {
                 }, 1000);
 <?php } ?>
         }
-        var originalContent = '<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>';
+        var originalContent = '<?php echo $str; ?>';
         window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     });
     function onStenoPressKey(pszStenoString, device) {
-        window.GA_answer = yaweiOCX.GetContentWithSteno().replace(/\r\n/g, "").replace(/ /g, "");
+        window.GA_answer = yaweiOCX.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){
 //             window.G_keyBoardBreakPause = 0;

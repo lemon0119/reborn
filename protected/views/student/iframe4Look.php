@@ -136,7 +136,7 @@
         });
 
     });
-    var originalContent = '<?php  $str = str_replace("\n", "", $classExercise['content']); $str = str_replace("\r", "", $classExercise['content']);echo $str;?>';
+    var originalContent = '<?php echo $str; ?>';
     window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
@@ -177,7 +177,7 @@ $squence = $countSquence + 1;
     }
 
     function onStenoPressKey(pszStenoString, device) {
-        window.GA_answer = yaweiOCX4Look.GetContentWithSteno().replace(/\r\n/g, "").replace(/ /g, "");
+        window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){
 //             window.G_keyBoardBreakPause = 0;
