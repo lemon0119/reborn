@@ -328,7 +328,7 @@ public static function teacherNotice(){
     // 第二个参数：取0，英文转简体；取1，简体到英文
     public static function SBC_DBC($str, $args2) {
         $DBC = Array(
-             '：' ,
+             '：','—',
             '。' , '，' , '/' , '%' , '#' ,
             '！' , '＠' , '＆' , '（' , '）' ,
             '《' , '＞' , '＂' , '＇' , '？' ,
@@ -338,7 +338,7 @@ public static function teacherNotice(){
         );
 
         $SBC = Array( // 半角
-            ':',
+            ':','-',
             '.', ',', '/', '%', '#',
             '!', '@', '&', '(', ')',
             '<', '>', '"', '\'','?',

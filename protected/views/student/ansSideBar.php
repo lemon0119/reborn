@@ -9,16 +9,21 @@
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
+                    <?php if (count($exercise['choice']) != 0 && count($exercise['filling']) != 0 && count($exercise['question']) != 0) { ?>
                         <li class="nav-header">基础知识</li>
+                         <?php } if (count($exercise['choice']) != 0) { ?>
                         <li id="li-choice">
                             <a href="./index.php?r=student/ansChoice"><i class="icon-font"></i> 选 择 题</a>
                         </li>
+                        <?php } if (count($exercise['filling']) != 0) { ?>
                         <li id="li-filling">
                                 <a href="./index.php?r=student/ansFilling"><i class="icon-text-width"></i> 填 空 题</a>
                         </li>
+                        <?php }  if (count($exercise['question']) != 0) { ?>
                         <li id="li-question">
                                 <a href="./index.php?r=student/ansQuestion"><i class="icon-align-left"></i> 简 答 题</a>
                         </li>
+                         <?php }  if (count($exercise['key'])!= 0) { ?>
                         <li class="nav-header">键位练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
@@ -27,7 +32,8 @@
                                         <?php echo $keyType['title']?>
                                     </a>
                             </li>
-                        <?php endforeach;?>
+                        <?php endforeach;
+ } if (count($exercise['look']) != 0) { ?>
                         <li class="nav-header">看打练习</li>
                         <?php foreach ($exercise['look'] as $lookType) :?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
@@ -36,7 +42,8 @@
                                         <?php echo $lookType['title']?>
                                     </a>
                             </li>
-                        <?php endforeach;?>
+                        <?php endforeach;
+         } if (count($exercise['listen']) != 0) { ?>
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
@@ -45,7 +52,7 @@
                                     <?php echo $listenType['title']?>
                                 </a>
                         </li>
-                        <?php endforeach;?>
+         <?php endforeach; } ?>
                 </ul>
         </div>
 </div>
