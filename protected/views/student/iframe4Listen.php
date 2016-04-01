@@ -119,7 +119,7 @@
     }
     
     function onStenoPressKey(pszStenoString, device) {
-        window.GA_answer = yaweiOCX4Listen.GetContentWithSteno();
+        window.GA_answer = yaweiOCX4Listen.GetContentWithSteno().replace(/\r\n/g, "").replace(/ /g, "");
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
         var audio = document.getElementById('music');
