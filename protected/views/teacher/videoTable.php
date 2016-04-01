@@ -3,7 +3,7 @@
 <?php
     $username = Yii::app()->user->name;
     $role = Yii::app()->session['role_now'];
-    $userid = Yii::app()->session['userid_now'];             
+    $userid = Yii::app()->session['userid_now'];  
     $videoFilePath =$role."/".$userid."/".$classID."/".$on."/video/"; 
     $vdir = "./resources/".$videoFilePath;
     
