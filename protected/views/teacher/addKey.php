@@ -262,7 +262,7 @@
     function success(result) {
         window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success, {
             onOk: function () {
-                window.document.getElementById('iframe4choiceLib').contentWindow.clickQX();
+                $("#iframe4choiceLib").attr("src", "./index.php?r=teacher/SelectWordLib&&libstr=" + document.getElementById("libstr").value);
             }
         });
     }
