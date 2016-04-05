@@ -152,7 +152,7 @@
                 return;
 //            if (totalNum == currentNum) {
 //                HaveWindow = 1;
-//                window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success, {
+//                window.wxc.xcConfirm('键打练习已完成', window.wxc.xcConfirm.typeEnum.success, {
 //                    onOk: function () {
 //                        currentNum = totalNum;
 //                        HaveWindow = 0;

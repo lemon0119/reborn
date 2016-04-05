@@ -7,7 +7,7 @@ require 'workAnsSideBar.php';
 <div class="span9">
 <div id="ziji">
     <div class="hero-unit">
-        <h2>键位练习</h2>
+        <h2>键打练习</h2>
                 <?php if($ansWork['answer'] == "")
                     {
                         echo "<font color=red>未作答</font>";
@@ -22,14 +22,18 @@ require 'workAnsSideBar.php';
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
 <!--                    <div ><?php //echo $ansWork['answer'];?></div>-->
-                    <div style="text-align: left" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>                    
+                    <div style="text-align: left" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                        <font><?php echo Tool::filterKeyOfInputWithYaweiCode($ansWork['answer']); ?></font>
+                    </div>                    
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
 <!--                    <div><?php// echo ($exer['content']);?></div>-->
-                    <div style="text-align: left" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>                    
+                    <div style="text-align: left" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                        <font><?php echo Tool::filterKeyContent($exer['content']); ?></font>
+                    </div>                    
                 </td>
             </tr>
         </table>
@@ -118,7 +122,7 @@ require 'workAnsSideBar.php';
     }
 $(document).ready(function(){
     $("li#li-key-<?php echo $exer['exerciseID'];?>").attr('class','active');
-    start();
+   // start();
 });
 </script>
     

@@ -61,7 +61,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>键位练习</th>
+                            <th>键打练习</th>
                             <th>完成度</th>
                             <th>正确率</th>
                         </tr>

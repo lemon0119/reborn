@@ -5,10 +5,9 @@
             <form action="./index.php?r=teacher/searchKey" method="post">
                 <li>
                     <select name="type" >
-                        <option value="exerciseID" selected="selected">编号</option>
-                        <option value="courseID" >科目号</option>
+                        <option value="exerciseID" >编号</option>
                         <option value="createPerson" >创建人</option>
-                        <option value="title">题目名</option>
+                        <option value="title" selected="selected">题目名</option>
                     </select>
                 </li>
                 <li>
@@ -26,7 +25,7 @@
             <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-typing"></i>打字练习</li>
-            <li class="active"><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+            <li class="active"><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键打练习</a></li>
             <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
             <li ><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
         </ul>
@@ -43,7 +42,7 @@ $code = mt_rand(0, 1000000);
 ?>
 
 <div class="span9">
-    <h2>键位练习列表</h2>
+    <h2>键打练习列表</h2>
     <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
     <a href="#" onclick="copyCheck()"><img title="批量复制" src="<?php echo IMG_URL; ?>copy.png"></a>
     <!-- 键位习题列表-->

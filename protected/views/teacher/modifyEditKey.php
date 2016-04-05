@@ -5,9 +5,9 @@
       $count = round(count($optArr)/3);?>    
 <div class="span9">    
 <?php if(!isset($action)) {?>
-        <h3>编辑键位练习题</h3>
+        <h3>编辑键打练习题</h3>
     <?php } else if($action == 'look') {?>
-        <h3>查看键位练习题</h3>
+        <h3>查看键打练习题</h3>
     <?php }?>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editKeyInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>

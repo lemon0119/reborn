@@ -17,10 +17,8 @@
             <li style="margin-top:10px">
                 <button onclick="chkIt()" class="btn_4superbig">创&nbsp;&nbsp;&nbsp;建</button>
             </li>
-
         </ul>
     </div>
-
 </div>
 
 <div class="span9">
@@ -71,8 +69,10 @@
                     </td>   
 
                     <td class="font-center" style="width: 210px">
+                        <?php if ($isOpen == false) { ?>
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass']; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
+                        <?php } ?>
                         <?php if ($isOpen == false) { ?>
                             <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo date("Y-m-d H:i:s", time()); ?>')"></a> 
                         <?php } ?>
