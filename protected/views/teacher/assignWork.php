@@ -64,9 +64,10 @@
                         }
                 
                 $isOpen = false;
+                
             if($array_suite){
                 foreach ($array_suite as $exitsuite)
-                    if ($suite['suiteID'] == $exitsuite['suiteID']) {
+                    if ($suite['suiteID'] == $exitsuite['suiteID'] && $exitsuite['open']==1) {
                         $isOpen = true;
                         break;
                     }
