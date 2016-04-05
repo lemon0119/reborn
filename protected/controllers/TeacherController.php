@@ -656,7 +656,7 @@ class TeacherController extends CController {
                 return;
             }
         }
-        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm") {
+        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm" &&substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
@@ -5376,7 +5376,8 @@ class TeacherController extends CController {
             $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
             return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $classResult, 'array_class' => $array_class,
                         'array_course' => $array_course, 'sqlcurrentClass' => $sqlcurrentClass]);
-        } else if (isset($_GET['courseID']) && !isset($_GET['lessonName'])) {
+        //} else if (isset($_GET['courseID']) && !isset($_GET['lessonName'])) {   
+          } else if (isset($_GET['courseID']) && !isset($_GET['lessonID'])) {
             //显示课程列表逻辑
             $courseID = $_GET ['courseID'];
             $result = Lesson::model()->getLessonLst("", "", $courseID);
@@ -5395,15 +5396,18 @@ class TeacherController extends CController {
                 'posts' => $lessonLst,
                 'pages' => $pages,
             ));
-        } else if (isset($_GET['lessonName'])) {
+        //} else if (isset($_GET['lessonName'])) {
+        } else if (isset($_GET['lessonID'])) {
             $currentClass = Yii::app()->session['currentClass'];
             $sqlcurrentClass = TbClass::model()->find("classID = '$currentClass'");
             if (!isset($sqlcurrentClass)) {
                 $sqlcurrentClass = "none";
             }
-            $lessonName = $_GET['lessonName'];
+            //$lessonName = $_GET['lessonName'];
+            $lessonID = $_GET['lessonID'];
             $newName = $_GET['newName'];
-            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
+            //$sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
+            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonID= '$lessonID'";
             Yii::app()->db->createCommand($sql)->query();
             $courseID = $_GET ['courseID'];
             $result = Lesson::model()->getLessonLst("", "", $courseID);

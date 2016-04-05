@@ -368,7 +368,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px;display:none">
         <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
     </div>
-    <div id="dianbo-videos-container" style="display:none"> 
+    <div id="dianbo-videos-container" style="display:none;margin-top: 200px;"> 
     </div>
     <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
         <img id="ppt-img" src="" style="height: 100%;"/>
