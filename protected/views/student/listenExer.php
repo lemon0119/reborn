@@ -146,9 +146,9 @@ if (!$isOver) {
                } ?>  '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
                 </div>
                 <input id="content" type="hidden" value="<?php
-               $str = str_replace("\n", "`", $exerOne['content']);
+               $str = str_replace("\n", "", $exerOne['content']);
                $str = str_replace("\r", "", $str);
-               $str = str_replace(" ", "}", $str);
+               $str = str_replace(" ", "", $str);
                echo $str;
                ?>">
                 <br/>

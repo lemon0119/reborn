@@ -239,7 +239,6 @@ if ($isExam) {
         }
         $("#allAnalysis").toggle(0);
     });
-    var yaweiOCX = null;
 
     $(document).ready(function () {
         setInterval(function () {

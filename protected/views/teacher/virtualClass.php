@@ -1157,12 +1157,11 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-voice").click(function () {
-            
             exitNowOn();
             isOnLive = "play-voice";
             $("#voice").attr("src", "");
             closeAllTitle();
-            if ($("#teacher-choose-file")[0].selectedIndex == -1)
+            if ($("#choose-voice")[0].selectedIndex == -1)
             {
                 return;
             }
@@ -1200,39 +1199,48 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-voice-public").click(function () {
-            exitNowOn();
-            isOnLive = "play-voice";
-            window.picOrppt = "voice-public";
+           exitNowOn();
+            isOnLive = "voice-public";
+            $("#voice").attr("src", "");
             closeAllTitle();
             if ($("#choose-voice-public")[0].selectedIndex == -1)
             {
                 return;
             }
-            $("#ppt-container").hide();
             window.scrollTo(0, 130);
-            document.getElementById("close-ppt").disabled = false;
-            $("#close-ppt").attr("class", "btn btn-primary");
-            $("#voice-container").show();
-            $("#txt-container").hide();
-            $("#scroll-page").show();
-            cur_ppt = 1;
-            var file_info = $("#choose-voice-public option:selected").val().split("+-+");
-            var source = file_info[2];
-            var server_root_path = "<?php echo SITE_URL . 'resources/' . $adminPublicVoicedir; ?>";
-            var dirname = file_info[0];
-            ppt_dir = server_root_path + dirname;
-            ppt_pages = file_info[1];
-            $("#all-yeshu").val(ppt_pages);
-            goCurPage();
-            if (timer_ppt !== null)
-                clearInterval(timer_ppt);
-            timer_ppt = setInterval(function () {
-                var syn_msg;
-                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                ws.send(syn_msg);
-            }, 4000);
+
+            $("#scroll-video").show();
+            document.getElementById("close-dianbo").disabled = false;
+            $("#close-dianbo").attr("class", "btn btn-primary");
+            var server_root_path = "<?php echo SITE_URL . 'resources/' ?>";
+            var filepath = $("#choose-voice option:selected").val();
+            var absl_path = server_root_path + filepath;
+            var video_element;
+            var video_time_duration;
+
+
+            var video = document.getElementById('video1');
+            if (video === null) {
+                var html = "";
+                html += '<audio id="video1" width="100%" controls>';
+                html += '<source src="' + absl_path + '">';
+                html += '</audio>';
+                $("#dianbo-videos-container").empty();
+                $("#dianbo-videos-container").append(html);
+            } else {
+                video.setAttribute("src", absl_path);
+            }
+            $("#dianbo-videos-container").show();
+            $("#videos-container").hide();
+            video_element = document.getElementById("video1");
+            video_element.onloadedmetadata = function () {
+                video_time_duration = video_element.duration;
+                console.log("sunpy: video duration " + video_time_duration);
+            };
+            WebSocketConnect(absl_path);
         });
 
+          
     });
 
     var play_fun = null;
