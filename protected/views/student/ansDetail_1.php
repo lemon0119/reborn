@@ -5,36 +5,44 @@
 <div class="span9">
     <div class="hero-unit">
         <table border = '0px' width="100%">
-            <h2><?php if ($type == 'look')
-    echo '看打练习';
-else
-    echo '听打练习';
-?></h2>
+            <h2><?php
+                if ($type == 'look')
+                    echo '看打练习';
+                else
+                    echo '听打练习';
+                ?></h2>
             <tr>
                 <td width = '50%' align='center'>题目：<?php echo $exer['title'] ?></td>
-                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f', $correct);
-echo '%';
-?></span></td>
+                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php
+                        printf('%2.1f', $correct);
+                        echo '%';
+                        ?></span></td>
             </tr>
+            <input id="text" type="hidden" value="<?php echo $answer; ?>"/>
+            <input id="content" type="hidden" style="height: 5px;" value="<?php
+            $str = str_replace("\n", "`", $exer['content']);
+            $str = str_replace("\r", "", $str);
+            $str = str_replace(" ", "}", $str);
+            echo $str;
+            ?>">
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
+                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($answer); ?></font>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
+                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                        <font><?php echo $str; ?></font>
+                    </div>
                 </td>
             </tr>
         </table>
-        <input id="text" type="hidden" value="<?php echo $answer;?>"/>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`",$exer['content'] );
-$str = str_replace("\r", "", $str);
-$str = str_replace(" ", "}", $str);
-echo $str;
-?>">
+
         <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
     </div>
@@ -48,7 +56,7 @@ if (isset(Yii::app()->session['type'])) {
 <script type="text/javascript">
     var briefCode = "";
     var briefOriginalYaweiCode = "";
-     var briefType = "";
+    var briefType = "";
     $(document).ready(function () {
         window.G_isLook = 1;
         $.ajax({
@@ -59,7 +67,7 @@ if (isset(Yii::app()->session['type'])) {
             success: function (data) {
                 briefCode = (data.split("$")[0]).split("&");
                 briefOriginalYaweiCode = (data.split("$")[1]).split("&");
-                 briefType = (data.split("$")[2]).split("&");
+                briefType = (data.split("$")[2]).split("&");
             },
             error: function (xhr, type, exception) {
                 console.log('GetAverageSpeed error', type);
@@ -69,23 +77,23 @@ if (isset(Yii::app()->session['type'])) {
         });
     });
 
-   function checkYaweiCode(content) {
+    function checkYaweiCode(content) {
         for (var i = 0; i < briefCode.length; i++) {
             if (content.content.indexOf(briefCode[i]) >= 0) {
                 var re = new RegExp(briefCode[i], "g");
                 if (briefCode[i].length === 2) {
-                    if(briefType[i]=='X'){
+                    if (briefType[i] == 'X') {
                         content.content = content.content.replace(re, "<span style='border-bottom:1px solid blue'>" + briefCode[i] + "</span>");
-                    }else if(briefType[i]=='W'){
-                         content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
-                    }else{
-                         content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
+                    } else if (briefType[i] == 'W') {
+                        content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
+                    } else {
+                        content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
                     }
-                } else if (briefCode[i].length===3) {
+                } else if (briefCode[i].length === 3) {
                     content.content = content.content.replace(re, "<span style='border-bottom:3px solid #0090b0'>" + briefCode[i] + "</span>");
-                } else if (briefCode[i].length===4) {
+                } else if (briefCode[i].length === 4) {
                     content.content = content.content.replace(re, "<span style='border-bottom:5px solid green'>" + briefCode[i] + "</span>");
-                }else if (briefCode[i].length>4) {
+                } else if (briefCode[i].length > 4) {
                     content.content = content.content.replace(re, "<span style='border-bottom:5px solid #FF84BA'>" + briefCode[i] + "</span>");
                 }
             }
@@ -103,14 +111,14 @@ if (isset(Yii::app()->session['type'])) {
 //        f.innerHTML = text;
 //        father.appendChild(f);
 //    }
-function createFont4Answer(element, color, text) {
+    function createFont4Answer(element, color, text) {
         var father = document.getElementById(element);
         var f = document.createElement("font");
         f.style = "color:" + color;
         f.innerHTML = text;
         father.appendChild(f);
     }
-    
+
     function createFont(color, text, code) {
         var father = document.getElementById("templet");
         var f = document.createElement("font");
@@ -173,10 +181,10 @@ function createFont4Answer(element, color, text) {
     function start() {
         var text_old = '<?php echo $str; ?>';
         var input = "";
-        var contentAllArray = $('#text').val().substring(1,$('#text').val().length-1).split('>,<');
-        for(var i=0;i<contentAllArray.length;i++){
-            var content = contentAllArray[i].substring(0,contentAllArray[i].indexOf('><'));
-            input+=content;
+        var contentAllArray = $('#text').val().substring(1, $('#text').val().length - 1).split('>,<');
+        for (var i = 0; i < contentAllArray.length; i++) {
+            var content = contentAllArray[i].substring(0, contentAllArray[i].indexOf('><'));
+            input += content;
         }
         var text = text_old.split("");
         var allInput2 = $('#text').val().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");
@@ -246,9 +254,9 @@ function createFont4Answer(element, color, text) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
             createFont("#000000", left, "");
         }
-       
+
         var right = text_old.split("");
-        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']); ?>'.split(" ");
+        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']);  ?>'.split(" ");
         var answer = input.split("");
         var i, j, sright;
         i = 0;
@@ -293,7 +301,7 @@ function createFont4Answer(element, color, text) {
         createFont4Answer('answer', '#808080', answer_right);
         answer_right = '';
         createFont4Answer('answer', '#ff0000', answer_wrong);
-       
+
     }
 //    function displayTemp(id, temp, modTem) {
 //        var flag = false;
@@ -330,18 +338,18 @@ if (isset($_GET['type'])) {
         ?>
             $(document).ready(function () {
                 $("li#li-look-<?php echo $exer['exerciseID']; ?>").attr('class', 'active');
-                start();
+               // start();
             });
     <?php } else if ($_GET['type'] === 'listen') { ?>
             $(document).ready(function () {
                 $("li#li-listen-<?php echo $exer['exerciseID']; ?>").attr('class', 'active');
-                start();
+                //start();
             });
-    <?php
+        <?php
     }
 } else {
     ?>
-        start();
+        // start();
 <?php }
 ?>
 

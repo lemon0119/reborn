@@ -13,6 +13,12 @@ require 'workAnsSideBar.php';
                         echo "<font color=red>未作答</font>";
                         echo '</br>';
                     } ?>
+        <input id="text" type="hidden" value="<?php echo $answer;?>"/>
+        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`",$exer['content'] );
+$str = str_replace("\r", "", $str);
+$str = str_replace(" ", "}", $str);
+echo $str;
+?>">
         <table border = '0px' width="100%">
             <tr>
                 <td width = '50%' align='center'><?php echo $exer['title']?></td>
@@ -21,22 +27,21 @@ require 'workAnsSideBar.php';
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
+                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($ansWork['answer']); ?></font>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
+                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                        <font><?php echo $str; ?></font>
+                    </div>
                 </td>
             </tr>
         </table>
-        <input id="text" type="hidden" value="<?php echo $answer;?>"/>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`",$exer['content'] );
-$str = str_replace("\r", "", $str);
-$str = str_replace(" ", "}", $str);
-echo $str;
-?>">
+        
         <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false"></div>
     </div>
 </div>
@@ -49,8 +54,8 @@ echo $str;
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("li#li-listen-<?php //echo $exer['exerciseID'];?>").attr('class','active');
-        start();
+        $("li#li-listen-<?php echo $exer['exerciseID'];?>").attr('class','active');
+        //start();
     });
     var briefCode = "";
     var briefOriginalYaweiCode = "";

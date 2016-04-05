@@ -371,4 +371,39 @@ public static function teacherNotice(){
                         }
     }
     
+    public static function filterKeyOfInputWithYaweiCode($content){
+        if(strstr($content,">,<")){
+                            $string="";
+                            $content=substr($content,1);
+                            $content=  str_replace(">,<", " ", $content);
+                            $array=  explode(" ", $content);
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"><");
+                                $arr=substr($arr,0,$pos);
+                                $string=$string." ".$arr;
+                            }
+                            return $string;
+                        }else{
+                            return $content;
+                        }
+        
+    }
+    public static function filterContentOfInputWithYaweiCode($content){
+        if(strstr($content,">,<")){
+                            $string="";
+                            $content=substr($content,1);
+                            $content=  str_replace(">,<", " ", $content);
+                            $array=  explode(" ", $content);
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"><");
+                                $arr=substr($arr,0,$pos);
+                                $string=$string.$arr;
+                            }
+                            return $string;
+                        }else{
+                            return $content;
+                        }
+        
+    }
+    
 }

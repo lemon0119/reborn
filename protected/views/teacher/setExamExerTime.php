@@ -81,7 +81,7 @@
                 foreach ($examExer['key'] as $key):                
             ?>
             <tr>
-                <td class="font-center">键位练习：<?php echo$key['title'];?></td>
+                <td class="font-center">键打练习：<?php echo$key['title'];?></td>
                 <td class="font-center"><input name= "key<?php echo$key['exerciseID'];?>Score" type="text" class="input-small input_test input_score types" value="<?php echo $key['score']?>"/>&nbsp;分</td>
         <input name= "key<?php echo$key['exerciseID'];?>Time" type="text" style="display: none" class="input-small input_test" value="<?php echo $key['time']?>"/>
 <!--                <td class="font-center">&nbsp;分钟</td>-->
