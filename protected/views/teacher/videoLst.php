@@ -101,8 +101,9 @@ $pdir = "./resources/" . $pptFilePath;
             window.wxc.xcConfirm("请选择文件！", window.wxc.xcConfirm.typeEnum.info);
         } else {
             $("#upload").show();
-                setTimeout('fetch_progress()', 1000);
+                
                 $('#myForm').ajaxSubmit(options);
+                setTimeout('fetch_progress()', 1000);
                 return false;
                 // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
        }

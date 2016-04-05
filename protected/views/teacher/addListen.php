@@ -38,6 +38,7 @@
     <h3 style="display:inline-block;">添加听打练习题</h3>
     <span>(支持mp3及wav格式,最大1G)</span>
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/AddListen" id="myForm" enctype="multipart/form-data"> 
+        <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />
         <fieldset>
             <legend>填写题目</legend>
             <div class="control-group">
@@ -53,6 +54,7 @@
                     <div id="upload" style="display:inline;" hidden="true">
                         <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
                         正在上传，请稍等...
+                        <div id="number">0%</div>
                     </div>
                 </div>
             </div>
@@ -90,6 +92,16 @@
         }
 
     });
+     function fetch_progress(){
+        $.get('./index.php?r=teacher/getProgress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
+                var progress = parseInt(data);   
+                $('#number').html(progress + '%');
+                if(progress < 100){
+                        setTimeout('fetch_progress()', 100);
+                }else{           
+        }
+        }, 'html');
+    }
     $("#myForm").submit(function () {
 
         var requirements = $("#input01")[0].value;
@@ -110,7 +122,7 @@
             return false;
         }
         $("#upload").show();
-
+        setTimeout('fetch_progress()', 1000);
 
 
     });
