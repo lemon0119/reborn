@@ -126,7 +126,7 @@
 //            }
 //        });
     });
-    var originalContent = "<?php echo $classExercise['content']; ?>";
+    var originalContent = '<?php echo $classExercise['content']; ?>';
     window.GA_originalContent = originalContent;
     //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;

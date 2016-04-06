@@ -38,17 +38,16 @@
     <h2 style="display:inline-block;">PPT列表</h2>
     <span>(支持PPT格式,最大100M)</span>
     <div id ="ppt-table"></div>
-    <form class="form-horizontal" method="post" action="./index.php?r=teacher/addPpt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 
+    <form name="form1" class="form-horizontal" method="post" action="./index.php?r=teacher/addPpt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 
     <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />        
         <div class="control-group">
-       <label class="control-label" for="input02">上传</label>
        <div class="controls">
        <input type="file" name="file" id="input02"> 
        <div id="upload" style="display:inline;" hidden="true">
        (ppt最大100M)<img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
             <div id="number">0%</div>
        </div>
-       <button type="submit" class="btn btn-primary">上传</button>
+       <button onclick="formSubmit()" type="button" class="btn btn-primary">上传</button>
        <span style="position: relative;left: 10px">
        <input type="checkbox" name="checkbox"  value="" />
        是否上传为公共资源
@@ -103,13 +102,18 @@
     
     
 
-$("#myForm").submit(function(){
-    $("#upload").show();
-    setTimeout('fetch_progress()', 1000);
-    $(this).ajaxSubmit(options);   
-        // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
-    return false;   
-});
+    function formSubmit() {
+        var s = document.form1.file.value;
+        if (s == "") {
+            window.wxc.xcConfirm("请选择文件！", window.wxc.xcConfirm.typeEnum.info);
+        } else {
+            $("#upload").show();
+                setTimeout('fetch_progress()', 1000);
+                $('#myForm').ajaxSubmit(options);
+                return false;
+                // 为了防止普通浏览器进行表单提交和产生页面导航（防止页面刷新？）返回false   
+       }
+    }
     
     $(document).ready(function(){
         $("#li-<?php echo $on;?>").attr("class","active");

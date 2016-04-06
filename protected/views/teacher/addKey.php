@@ -26,7 +26,7 @@
             <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-typing"></i>打字练习</li>
-            <li class="active"><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+            <li class="active"><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键打练习</a></li>
             <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
             <li ><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
         </ul>
@@ -36,9 +36,9 @@
 
 <div class="span9" id="addKey">        
     <?php if (!isset($action)) { ?>
-        <h3>编辑键位练习题</h3>
+        <h3>编辑键打练习题</h3>
     <?php } else if ($action == 'look') { ?>
-        <h3>查看键位练习题</h3>
+        <h3>查看键打练习题</h3>
     <?php } ?>
 
 
@@ -124,9 +124,9 @@
     $(document).ready(function () {
         var result = <?php echo "'$result'"; ?>;
         if (result === '1')
-            window.wxc.xcConfirm('添加键位练习成功！', window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm('添加键打练习成功！', window.wxc.xcConfirm.typeEnum.success);
         else if (result === '0')
-            window.wxc.xcConfirm('添加键位练习失败！', window.wxc.xcConfirm.typeEnum.error);
+            window.wxc.xcConfirm('添加键打练习失败！', window.wxc.xcConfirm.typeEnum.error);
     });
     $("#myForm").submit(function () {
         var requirements = $("#input")[0].value;
@@ -262,7 +262,7 @@
     function success(result) {
         window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success, {
             onOk: function () {
-                window.document.getElementById('iframe4choiceLib').contentWindow.clickQX();
+                $("#iframe4choiceLib").attr("src", "./index.php?r=teacher/SelectWordLib&&libstr=" + document.getElementById("libstr").value);
             }
         });
     }

@@ -15,8 +15,8 @@
                     <input name="value" type="text" class="search-query span2" placeholder="Search" />
             </li>
             <li style="margin-top:10px">
-                    <button type="submit" class="btn_serch"></button>
-                    <a href="./index.php?r=teacher/addKey" class="btn_add"></a>
+                    <button type="submit" class="btn_4big">搜 索</button>
+                    <button onclick="window.location.href = './index.php?r=teacher/addKey'" type="button" class="btn_4big">添 加</button>
             </li>
         </form>
             <li class="divider"></li>
@@ -26,7 +26,7 @@
             <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-typing"></i>打字练习</li>
-            <li class="active"><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+            <li class="active"><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键打练习</a></li>
             <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
             <li ><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
         </ul>
@@ -41,9 +41,9 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<legend><h3>编辑键位练习题</h3></legend>
+<legend><h3>编辑键打练习题</h3></legend>
 <?php } else if($action == 'look') {?>
-<legend><h3>查看键位练习题</h3></legend>
+<legend><h3>查看键打练习题</h3></legend>
 <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editKeyInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
