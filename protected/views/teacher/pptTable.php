@@ -40,7 +40,7 @@
                     <a href="./index.php?r=teacher/lookPpt&&ppt=<?php  $fileName   = iconv("gb2312","UTF-8",$file);
                                                                         $len    = strlen($fileName);
                                                                         $path   = substr($fileName,0,$len-4);
-                                                                        echo $path;?>&&pdir=<?php echo $dir;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
+                                                                        echo $path;?>&&pdir=<?php echo $dir;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=0&&isnew=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
                     <a href="<?php echo "$dir".iconv("gb2312","UTF-8",$file);?>" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>
 
                 </td>
