@@ -8,6 +8,7 @@
                 <script src="<?php echo JS_URL;?>jquery.min.js"></script>
                 <script src="<?php echo JS_URL;?>bootstrap.min.js"></script>
                 <script src="<?php echo JS_URL;?>site.js"></script>
+                
 <style>
                     body{
                         background:#fff;
@@ -82,12 +83,12 @@
     ?>
     </div>
     
-    
+                
 <script>
     $(document).ready(function(){
         var result = <?php echo "'$maniResult'";?>;
         if(result != "")
-        window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
+            parent.repeatAdd(result);
         else
             parent.refresh();
     });
