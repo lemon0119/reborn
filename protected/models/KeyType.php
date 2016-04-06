@@ -126,7 +126,7 @@ class KeyType extends CActiveRecord
     }
     
     public function getKeyLstPage($type,$value,$pagesize){
-        $order  =   " order by exerciseID ASC";
+        $order  =   " order by exerciseID DESC";
         $user_id=Yii::app()->session['userid_now'];
         if($type!="")
             $condition = " WHERE $type = '$value' and createPerson='$user_id'";
