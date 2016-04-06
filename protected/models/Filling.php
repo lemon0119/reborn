@@ -65,7 +65,7 @@ class Filling extends CActiveRecord
     }
     
         public function getFillLstPage($type,$value,$pagesize){
-        $order = " order by exerciseID ASC";
+        $order = " order by exerciseID DESC";
         $user_id=Yii::app()->session['userid_now'];
         if($type!="")
             if($type == "requirements")

@@ -63,7 +63,7 @@ class Question extends CActiveRecord
     }
     
         public function getQuestionLstPage($type,$value,$pagesize){
-        $order = " order by exerciseID ASC";
+        $order = " order by exerciseID DESC";
         $user_id=Yii::app()->session['userid_now'];
         if($type!="")
             if($type == "requirements")

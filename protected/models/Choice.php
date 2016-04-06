@@ -75,7 +75,7 @@ class Choice extends CActiveRecord
     
     //可以设置pagesize大小
       public function getChoiceLstPage($type,$value,$pagesize){
-        $order  =   " order by exerciseID ASC";
+        $order  =   " order by exerciseID DESC";
         $teacher_id=Yii::app()->session['userid_now'];
         if($type!="")
             if($type == "requirements")
