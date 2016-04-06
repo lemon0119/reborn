@@ -10,7 +10,7 @@ require 'ansSideBar.php';
 <div class="span9">
     <div class="hero-unit">
         <table border = '0px' width="100%">
-            <h2>键位练习</h2>
+            <h2>键打练习</h2>
             <tr>
                 <td width = '50%' align='center'>题目：<?php echo $exer['title'] ?></td>
                 <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f', $correct);
@@ -19,13 +19,17 @@ echo '%'; ?></span></td>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div style="text-align: left" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
+                    <div style="text-align: left" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                        <font><?php echo Tool::filterKeyOfInputWithYaweiCode($answer); ?></font>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div style="text-align: left" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
+                    <div style="text-align: left" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                        <font><?php echo Tool::filterKeyContent($exer['content']); ?></font>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -52,7 +56,6 @@ echo '%'; ?></span></td>
     function start() {
         var right = '<?php echo $exer['content']; ?>'.split('$$');
         var rightKey = '<?php echo Tool::filterKeyContent($exer['content']); ?>'.split(" ");
-        
         var answer = '<?php echo $answer; ?>'.substring(1,'<?php echo $answer; ?>'.length-1).split('>,<');
         //console.log(right[0].substring(right[0].indexOf(':0') + 2).charCodeAt());
         var i, j, sright;
@@ -120,6 +123,6 @@ echo '%'; ?></span></td>
     }
     $(document).ready(function () {
         $("li#li-key-<?php echo $exer['exerciseID']; ?>").attr('class', 'active');
-        start();
+       // start();
     });
 </script>

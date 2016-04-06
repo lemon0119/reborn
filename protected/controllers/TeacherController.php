@@ -1690,8 +1690,9 @@ class TeacherController extends CController {
             $libstr = $_POST['libstr'];
             $arr = explode("$$", $libstr);
             $condition = "";
+
             foreach ($arr as $a) {
-                if (strpos($a, '-') != 0) {
+                if (strpos($a, '-') == '') {
                     if ($condition == "")
                         $condition = "'" . $a . "'";
                     else
@@ -1714,7 +1715,7 @@ class TeacherController extends CController {
 
             $condition1 = "";
             foreach ($arr as $a) {
-                if (strpos($a,'-') == 0) {
+                if (strpos($a, '-') == 0) {
                     if ($condition1 == "")
                         $condition1 = "'" . $a . "'";
                     else
@@ -1734,7 +1735,6 @@ class TeacherController extends CController {
                 $res1 = Yii::app()->db->createCommand($sql1)->query();
             }
 
-            error_log("res1+".$sql1);
             $content = "";
             if (isset($res)) {
                 foreach ($res as $record) {
@@ -3897,7 +3897,11 @@ class TeacherController extends CController {
 
                 $array_lesson = Lesson::model()->findAll("classID = '$currentClass'");
             }
-            $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson']));
+            if (isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])) {
+                $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson'], 1));
+            } else {
+                $array_suite = 0;
+            }
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
@@ -5009,7 +5013,7 @@ class TeacherController extends CController {
                 break;
         }
 
-        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $ty, $exerID);
+        $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswerAndUserID($recordID, $ty, $exerID, $studentID);
         $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
         $accomplish = $_GET['accomplish'];
         $correct = $answer['ratio_correct'];

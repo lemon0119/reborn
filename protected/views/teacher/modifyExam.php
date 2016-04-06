@@ -42,7 +42,7 @@
             <li <?php if ($type == "choice") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=choice"><i class="icon-font"></i> 选择</a></li>
             <li <?php if ($type == "filling") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=filling"><i class="icon-text-width"></i> 填空</a></li>
             <li <?php if ($type == "question") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=question"><i class="icon-align-left"></i> 简答</a></li>
-            <li <?php if ($type == "key") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=key"><i class="icon-th"></i> 键位练习</a></li>
+            <li <?php if ($type == "key") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=key"><i class="icon-th"></i> 键打练习</a></li>
             <li <?php if ($type == "look") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=look"><i class="icon-eye-open"></i> 看打练习</a></li>
             <li <?php if ($type == "listen") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyExam&&examID=<?php echo $exam['examID'] ?>&&type=listen"><i class="icon-headphones"></i> 听打练习</a></li>                           
 
@@ -148,8 +148,9 @@ function chkIt(){
         document.getElementById("input01").value="";
     }  
 }
-function showFull(){
-    
+function repeatAdd(result){
+    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
     }
+
 </script>
 

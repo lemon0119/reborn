@@ -55,7 +55,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                             <li><a href="./index.php?r=teacher/questionLst">简答</a></li>
                                             <li class="divider"></li>
                                             <li class="nav-header" style="color:#AAA9A9;">打字练习</li>
-                                            <li><a href="./index.php?r=teacher/keyLst">键位练习</a></li>
+                                            <li><a href="./index.php?r=teacher/keyLst">键打练习</a></li>
                                             <li><a href="./index.php?r=teacher/lookLst">看打练习</a></li>
                                             <li><a href="./index.php?r=teacher/listenLst">听打练习</a></li>
                                         </ul>

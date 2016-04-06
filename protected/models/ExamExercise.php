@@ -176,7 +176,7 @@ class ExamExercise extends CActiveRecord
             return $result;
 	}
         
-        //宋杰 2015-7-31 获取键位练习 
+        //宋杰 2015-7-31 获取键打练习 
         public function getKeyExer($suiteID)
 	{
             //edit by LC

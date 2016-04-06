@@ -71,7 +71,7 @@
             </li>
             <li <?php if($exerType == 'keyExer') echo 'class="active"';?>>
                 <?php $param = '&exerType='.'keyExer'?>
-                <a href="<?php echo $host.$path.$page.$param;?>"><i class="icon-check"></i>键位练习</a>
+                <a href="<?php echo $host.$path.$page.$param;?>"><i class="icon-check"></i>键打练习</a>
             </li>
             <li <?php if($exerType == 'knlgExer') echo 'class="active"';?>>
                 <?php $param = '&exerType='.'knlgExer'?>

@@ -4,7 +4,7 @@
                         <li style="margin-top:10px">
                                 <?php if(isset($_GET['nobar'])){ ?>
                             <?php }else{ ?>
-                               <button onclick="window.location.href = './index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>'" style="height: 35px;top: 1px;" class="btn_4superbig">返&nbsp;&nbsp;&nbsp;回</button>
+                                <button class="btn_4superbig"  onclick="window.location.href = './index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['progress']; ?>&&on=<?php echo $_GET['on']; ?>'"  >返&nbsp;&nbsp;&nbsp;回</button>
                             <?php }?>
                         </li>
                 </form>
@@ -78,7 +78,7 @@ $(document).ready(function(){
     if(result === '1')
     window.wxc.xcConfirm('添加听打练习成功！', window.wxc.xcConfirm.typeEnum.success,{
         onOk:function(){
-             window.location.href="./index.php?r=teacher/addListen4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>";
+             window.location.href="./index.php?r=teacher/addListen4ClassExercise&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>";
         }
     });
     else if(result === '0')

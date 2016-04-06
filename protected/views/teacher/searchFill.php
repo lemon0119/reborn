@@ -5,10 +5,9 @@
             <form action="./index.php?r=teacher/searchFill" method="post">
                 <li>
                     <select name="type" >
-                        <option value="exerciseID" selected="selected">编号</option>
-                        <option value="courseID" >科目号</option>
+                        <option value="exerciseID" >编号</option>
                         <option value="createPerson">创建人</option>
-                        <option value="requirements">内容</option>
+                        <option value="requirements" selected="selected">内容</option>
 
                     </select>
                 </li>
@@ -27,7 +26,7 @@
             <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-typing"></i>打字练习</li>
-            <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+            <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键打练习</a></li>
             <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
             <li ><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
         </ul>
@@ -49,59 +48,52 @@ $code = mt_rand(0, 1000000);
     <?php if ($fillLst->count() != 0) { ?>
         <h2>查询结果</h2>
         <!-- 键位习题列表-->
-        <table class="table table-bordered table-striped">
-            <thead>
+       <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="font-center">选择</th>
+                <th class="font-center">编号</th>
+
+                <th class="font-center">内容</th>
+                <th class="font-center">创建人</th>
+                <th class="font-center">创建时间</th>
+                <th class="font-center">操作</th>
+            </tr>
+        </thead>
+        <tbody>   
+        <form id="copyForm" method="post" action="./index.php?r=teacher/copyFill" > 
+            <?php foreach ($fillLst as $model): ?>
                 <tr>
-                    <th>编号</th>
-                    <th>科目号</th>
-                    <th>内容</th>
-                    <th>创建人</th>
-                    <th>创建时间</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>        
-                <?php foreach ($fillLst as $model): ?>
-                    <tr>
-                        <td style="width: 50px"><?php echo $model['exerciseID']; ?></td>
-                        <td><?php echo $model['courseID']; ?></td>
-                        <td><?php
-                            if ($searchKey == 'no' || strpos($model['requirements'], $searchKey) === false) {
-                                if (strlen($model['requirements']) <= 30)
-                                    echo $model['requirements'];
-                                else
-                                    echo substr($model['requirements'], 0, 30) . "...";
-                            }else {
-                                $strStart = strpos($model['requirements'], $searchKey);
-                                $start = $strStart <= 9 ? 0 : $strStart - 9;
-                                $content = str_replace($searchKey, '<font color=red>' . $searchKey . '</font>', substr($model['requirements'], $start, 30));
-                                if ($start >= 9)
-                                    $content = "..." . $content;
-                                if (strlen($model['requirements']) > ($start + 30))
-                                    $content = $content . "...";
-                                echo $content;
-                            }
-                            ?></td>
-                        <td><?php
-                    if ($model['createPerson'] == "0")
-                        echo "管理员";
-                    else
-                        echo $teachers[$model['createPerson']];
-                    ?></td>
-                        <td><?php echo $model['createTime']; ?></td>
-                        <td>
-                            <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID']; ?>&&action=look" title="查看"><img src="<?php echo IMG_URL; ?>detail.png"></a>
-        <?php if ($model['createPerson'] == Yii::app()->session['userid_now']) { ?>
-                                <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID']; ?>" title="编辑"><img src="<?php echo IMG_URL; ?>edit.png"></a>
-                                <a href="#"  onclick="dele(<?php echo $model['exerciseID']; ?>)" title="删除"><img src="<?php echo IMG_URL; ?>delete.png"></a>
-                            <?php } else { ?>
-                                <a href="./index.php?r=teacher/copyFill&&code=<?php echo $code; ?>&&exerciseID=<?php echo $model['exerciseID']; ?>" title="复制"><img src="<?php echo IMG_URL; ?>copy.png"></a>
-        <?php } ?>
-                        </td>
-                    </tr>            
-    <?php endforeach; ?> 
-            </tbody>
-        </table>
+                    <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID']; ?>" /> </td>
+                    <td class="font-center" style="width: 50px"><?php echo $model['exerciseID']; ?></td>
+
+                    <td class="font-center"><?php
+                        if (Tool::clength($model['requirements']) <= 10)
+                            echo $model['requirements'];
+                        else
+                            echo Tool::csubstr($model['requirements'], 0, 10) . "...";
+                        ?></td>
+                    <td class="font-center"><?php
+                        if ($model['createPerson'] == "0")
+                            echo "管理员";
+                        else
+                            echo $teachers[$model['createPerson']];
+                        ?></td>
+                    <td class="font-center"><?php echo $model['createTime']; ?></td>
+                    <td class="font-center" style="width: 100px">
+                        <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID']; ?>&&action=look"><img title="查看"src="<?php echo IMG_URL; ?>detail.png"></a>
+                        <?php if ($model['createPerson'] == Yii::app()->session['userid_now']) { ?>
+                            <a href="./index.php?r=teacher/editFill&&exerciseID=<?php echo $model['exerciseID']; ?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href="#"  onclick="dele(<?php echo $model['exerciseID']; ?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>
+    <?php } else { ?>
+                            <a href="./index.php?r=teacher/copyFill&&code=<?php echo $code; ?>&&exerciseID=<?php echo $model['exerciseID']; ?>"><img title="复制一份" src="<?php echo IMG_URL; ?>copy.png"></a>
+                <?php } ?>
+                    </td>
+                </tr>            
+<?php endforeach; ?> 
+        </form>
+        </tbody>
+    </table>
         <!-- 学生列表结束 -->
         <!-- 显示翻页标签 -->
         <div align=center>

@@ -14,6 +14,12 @@ require 'examAnsSideBar.php';
                         echo "<font color=red>未作答</font>";
                         echo '</br>';
                     } ?>
+         <input id="text" type="hidden" value="<?php echo $answer;?>"/>
+        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`",$exer['content'] );
+$str = str_replace("\r", "", $str);
+$str = str_replace(" ", "}", $str);
+echo $str;
+?>">
         <table border = '0px' width="100%">            
             <tr>
                 <td width = '50%' align='center'><?php echo $exer['title']?></td>
@@ -22,23 +28,22 @@ require 'examAnsSideBar.php';
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()"></div>
+                    <div id ="answer"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($ansWork['answer']); ?></font>
+                    </div>
                     
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()"></div>
+                    <div id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                         <font><?php echo $str; ?></font>
+                    </div>
                 </td>
             </tr>
         </table>
-         <input id="text" type="hidden" value="<?php echo $answer;?>"/>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`",$exer['content'] );
-$str = str_replace("\r", "", $str);
-$str = str_replace(" ", "}", $str);
-echo $str;
-?>">
+         
         <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
     </div>
@@ -60,7 +65,7 @@ echo $str;
     $(document).ready(function(){   
         $("li#li-look-<?php echo $exer['exerciseID'];?>").attr('class','active');
       $("#score").html(<?php echo $score;?>);
-      start();
+      //start();
        
     });
     var briefCode = "";
@@ -391,8 +396,11 @@ function createFont4Answer(element, color, text) {
               data:user,
               dataType:"html",
               success:function(html){  
-                  location.reload();
-                  console.log("set time");
+                  window.wxc.xcConfirm('打分成功！', window.wxc.xcConfirm.typeEnum.success,{
+                        onOk:function(){
+                              location.reload();
+                        }
+                    });
               },
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm(xhr.responseText, window.wxc.xcConfirm.typeEnum.error);
