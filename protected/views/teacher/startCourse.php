@@ -317,7 +317,7 @@
     <div class="table-bordered summary">
                 <li>
                     <a  id="ppt" href="./index.php?r=teacher/classExercise4Type&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($keywork)){echo count($keywork);}else{echo '0';}?>
-                        </span > <font style="color:#000">键打练习</font></a>
+                        </span > <font style="color:#000">键位练习</font></a>
                 </li>
                 <li>
                     <a  id="ppt" href="./index.php?r=teacher/classExercise4Look&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($look)){echo count($look);}else{echo '0';}?>
