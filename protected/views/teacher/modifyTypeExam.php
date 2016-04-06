@@ -123,6 +123,9 @@
                }
 
             });
+function repeatAdd(result){
+    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
+}
 </script>
 
 
