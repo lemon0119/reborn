@@ -53,12 +53,9 @@ require 'examAnsSideBar.php';
             <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
             </div>
         </div>
-        配分:<?php echo $exam_exercise['score']; ?><br/>
-        得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score'] ?>" >      
-        <button onclick="saveScore(<?php echo $ansWork['score'] ?>,<?php if ($ansWork['answerID'] != "") echo $ansWork['answerID'];
-            else echo 1; ?>,<?php if ($ansWork['recordID'] != "") echo $ansWork['recordID'];
-            else echo 1; ?>,<?php echo $exam_exercise['examID']; ?>,<?php echo $exerID; ?>)" class="btn btn-primary">保存</button>
-    </div>
+分数:<?php echo $exam_exercise['score'];?><br/>
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
+   <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
 </div>
 
 <textarea id="text1" style="display: none"><?php echo ($exer['content']); ?></textarea>

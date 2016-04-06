@@ -38,7 +38,7 @@ require 'examAnsSideBar.php';
             </tr>
         </table>
 </div>
-    配分:<?php echo $exam_exercise['score'];?><br/>
+    分数:<?php echo $exam_exercise['score'];?><br/>
    得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
    <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
 </div>
