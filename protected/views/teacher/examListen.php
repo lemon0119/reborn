@@ -1,79 +1,85 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
-<script src="<?php echo JS_URL;?>exerJS/accounting.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/accounting.js"></script>
 <?php
-
 require 'examAnsSideBar.php';
 ?>
 <div class="span9">
     <div id="ziji">
-    <div class="hero-unit">
-         <h2>听打练习</h2> 
-                <?php if($ansWork['answer'] == "")
-                    {
-                        echo "<font color=red>未作答</font>";
-                        echo '</br>';
-                    } ?>
-          <input id="text" type="hidden" value="<?php echo $answer;?>"/>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`",$exer['content'] );
-$str = str_replace("\r", "", $str);
-$str = str_replace(" ", "}", $str);
-echo $str;
-?>">
-        <table border = '0px' width="100%">
-            <tr>
-                <td width = '50%' align='center'> <?php echo $exer['title']?></td>
-                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct);echo '%';?></span></td>
-            </tr>
-            <tr>
-                <td colspan='3'>
-                    <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
-                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($ansWork['answer']); ?></font>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan='3'>
-                    <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
-                        <font><?php echo $str; ?></font>
-                    </div>
-                </td>
-            </tr>
-        </table>
-                 
-        <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
+        <div class="hero-unit">
+            <h2>听打练习</h2> 
+            <?php
+            if ($ansWork['answer'] == "") {
+                echo "<font color=red>未作答</font>";
+                echo '</br>';
+            }
+            ?>
+            <input id="text" type="hidden" value="<?php
+            $str2 = str_replace("\n", "<br/>", $ansWork['answer']);
+            $str2 = str_replace("\r", "", $str2);
+            $str2 = str_replace(" ", "&nbsp;", $str2);
+            echo $str2;
+            ?>"/>
+            <input id="content" type="hidden" style="height: 5px;" value="<?php
+            $str = str_replace("\n", "<br/>", $exer['content']);
+            $str = str_replace("\r", "", $str);
+            $str = str_replace(" ", "&nbsp;", $str);
+            echo $str;
+            ?>">
+            <table border = '0px' width="100%">
+                <tr>
+                    <td width = '50%' align='center'> <?php echo $exer['title'] ?></td>
+                    <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f', $correct);
+            echo '%'; ?></span></td>
+                </tr>
+                <tr>
+                    <td colspan='3'>
+                        <div class='answer-tip-text1'>作答结果：</div>
+                        <div id ="answer" style="text-align: left;min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                            <font><?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?></font>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan='3'>
+                        <div class='answer-tip-text2'>正确答案：</div>
+                        <div id ="templet" style="text-align: left;min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                            <font><?php echo $str; ?></font>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
+            </div>
         </div>
-    </div>
 分数:<?php echo $exam_exercise['score'];?><br/>
    得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
    <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
 </div>
-        </div>
 
-<textarea id="text1" style="display: none"><?php echo ($exer['content']);?></textarea>
-<textarea id="text2" style="display: none"><?php echo ($ansWork['answer']);?></textarea>
+<textarea id="text1" style="display: none"><?php echo ($exer['content']); ?></textarea>
+<textarea id="text2" style="display: none"><?php echo ($ansWork['answer']); ?></textarea>
 <?php
-    if(isset(Yii::app()->session['type'])){
-        $type = Yii::app()->session['type'];
-        echo "<script>var type = '$type';</script>"; 
-    }
+if (isset(Yii::app()->session['type'])) {
+    $type = Yii::app()->session['type'];
+    echo "<script>var type = '$type';</script>";
+}
 ?>
 <script type="text/javascript">
-    $(document).ready(function(){   
-        $("li#li-listen-<?php echo $exer['exerciseID'];?>").attr('class','active');
-      $("#score").html(<?php echo $score;?>);
-       //start();
+    $(document).ready(function () {
+        $("li#li-listen-<?php echo $exer['exerciseID']; ?>").attr('class', 'active');
+        $("#score").html(<?php echo $score; ?>);
+        //start();
     });
-    function load(){
-       var url = "./index.php?r=student/preExer&&type=classwork";
+    function load() {
+        var url = "./index.php?r=student/preExer&&type=classwork";
         $("#cont").load(url);
     }
-    
-        var briefCode = "";
+
+    var briefCode = "";
     var briefOriginalYaweiCode = "";
-     var briefType = "";
+    var briefType = "";
     $(document).ready(function () {
         window.G_isLook = 1;
         $.ajax({
@@ -84,7 +90,7 @@ echo $str;
             success: function (data) {
                 briefCode = (data.split("$")[0]).split("&");
                 briefOriginalYaweiCode = (data.split("$")[1]).split("&");
-                 briefType = (data.split("$")[2]).split("&");
+                briefType = (data.split("$")[2]).split("&");
             },
             error: function (xhr, type, exception) {
                 console.log('GetAverageSpeed error', type);
@@ -94,30 +100,30 @@ echo $str;
         });
     });
 
-   function checkYaweiCode(content) {
+    function checkYaweiCode(content) {
         for (var i = 0; i < briefCode.length; i++) {
             if (content.content.indexOf(briefCode[i]) >= 0) {
                 var re = new RegExp(briefCode[i], "g");
                 if (briefCode[i].length === 2) {
-                    if(briefType[i]=='X'){
+                    if (briefType[i] == 'X') {
                         content.content = content.content.replace(re, "<span style='border-bottom:1px solid blue'>" + briefCode[i] + "</span>");
-                    }else if(briefType[i]=='W'){
-                         content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
-                    }else{
-                         content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
+                    } else if (briefType[i] == 'W') {
+                        content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
+                    } else {
+                        content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
                     }
-                } else if (briefCode[i].length===3) {
+                } else if (briefCode[i].length === 3) {
                     content.content = content.content.replace(re, "<span style='border-bottom:3px solid #0090b0'>" + briefCode[i] + "</span>");
-                } else if (briefCode[i].length===4) {
+                } else if (briefCode[i].length === 4) {
                     content.content = content.content.replace(re, "<span style='border-bottom:5px solid green'>" + briefCode[i] + "</span>");
-                }else if (briefCode[i].length>4) {
+                } else if (briefCode[i].length > 4) {
                     content.content = content.content.replace(re, "<span style='border-bottom:5px solid #FF84BA'>" + briefCode[i] + "</span>");
                 }
             }
         }
     }
 
-    
+
 //    function createFont(element, color, text){
 //        var father = document.getElementById(element);
 //        var f = document.createElement("font");
@@ -125,17 +131,17 @@ echo $str;
 //        f.innerHTML = text;
 //        father.appendChild(f);
 //    }
-    function doScrollLeft(){
+    function doScrollLeft() {
         var divleft = document.getElementById('templet');
         var divright = document.getElementById('answer');
         divright.scrollTop = divleft.scrollTop;
     }
-    function doScrollRight(){
+    function doScrollRight() {
         var divleft = document.getElementById('templet');
         var divright = document.getElementById('answer');
         divleft.scrollTop = divright.scrollTop;
     }
-    
+
     function createFont4Answer(element, color, text) {
         var father = document.getElementById(element);
         var f = document.createElement("font");
@@ -143,7 +149,7 @@ echo $str;
         f.innerHTML = text;
         father.appendChild(f);
     }
-    
+
     function createFont(color, text, code) {
         var father = document.getElementById("templet");
         var f = document.createElement("font");
@@ -192,15 +198,15 @@ echo $str;
             f.innerHTML = content.content;
             father.appendChild(f);
         }
-    }    
+    }
 
-        function start() {
+    function start() {
         var text_old = '<?php echo $str; ?>';
         var input = "";
-        var contentAllArray = $('#text').val().substring(1,$('#text').val().length-1).split('>,<');
-        for(var i=0;i<contentAllArray.length;i++){
-            var content = contentAllArray[i].substring(0,contentAllArray[i].indexOf('><'));
-            input+=content;
+        var contentAllArray = $('#text').val().substring(1, $('#text').val().length - 1).split('>,<');
+        for (var i = 0; i < contentAllArray.length; i++) {
+            var content = contentAllArray[i].substring(0, contentAllArray[i].indexOf('><'));
+            input += content;
         }
         var text = text_old.split("");
         var allInput2 = $('#text').val().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");
@@ -270,9 +276,9 @@ echo $str;
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
             createFont("#000000", left, "");
         }
-       
+
         var right = text_old.split("");
-        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']); ?>'.split(" ");
+        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']);  ?>'.split(" ");
         var answer = input.split("");
         var i, j, sright;
         i = 0;
@@ -317,7 +323,7 @@ echo $str;
         createFont4Answer('answer', '#808080', answer_right);
         answer_right = '';
         createFont4Answer('answer', '#ff0000', answer_wrong);
-       
+
     }
 //    function start(){
 //        var text1 = $('#text1').val();
@@ -365,48 +371,48 @@ echo $str;
 //            createFont(id,'#ff0000',modTem.substr(i));
 //    }  
 //   
-   function saveScore(scoreOld,answerID,recordID,examID,exerciseID){
-         var value1 = $("#input")[0].value;
-         var re = /^([1-9]\d*|[0]{1,1})$/ ; 
-         if(!re.test(value1)){
-             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
-             $("#input")[0].value=scoreOld;
-             return false;
+    function saveScore(scoreOld, answerID, recordID, examID, exerciseID) {
+        var value1 = $("#input")[0].value;
+        var re = /^([1-9]\d*|[0]{1,1})$/;
+        if (!re.test(value1)) {
+            window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
+            $("#input")[0].value = scoreOld;
+            return false;
         }
-         var totalscore = <?php echo $exam_exercise['score'];?>;
-        if(value1>totalscore){
+        var totalscore = <?php echo $exam_exercise['score']; ?>;
+        if (value1 > totalscore) {
             window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
-        }else{
-        var user = {
-            recordID:recordID,
-            type:"listen",
-            workID:"<?php echo $workID;?>",
-            studentID:"<?php echo $studentID;?>",
-            accomplish:"<?php echo $accomplish;?>",
-            examID:examID,
-            exerciseID:exerciseID,
-            score:$("#input")[0].value,
-            answerID:answerID
-        };
-      $.ajax({
-          type:"POST",
-          url:"./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID?>&&accomplish=<?php echo $_GET['accomplish']?>",
-          data:user,
-          dataType:"html",
-          success:function(html){  
-                  
-                   window.wxc.xcConfirm('打分成功！', window.wxc.xcConfirm.typeEnum.success,{
-                        onOk:function(){
-                              location.reload();
+        } else {
+            var user = {
+                recordID: recordID,
+                type: "listen",
+                workID: "<?php echo $workID; ?>",
+                studentID: "<?php echo $studentID; ?>",
+                accomplish: "<?php echo $accomplish; ?>",
+                examID: examID,
+                exerciseID: exerciseID,
+                score: $("#input")[0].value,
+                answerID: answerID
+            };
+            $.ajax({
+                type: "POST",
+                url: "./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID ?>&&accomplish=<?php echo $_GET['accomplish'] ?>",
+                data: user,
+                dataType: "html",
+                success: function (html) {
+
+                    window.wxc.xcConfirm('打分成功！', window.wxc.xcConfirm.typeEnum.success, {
+                        onOk: function () {
+                            location.reload();
                         }
                     });
-              },
-            error: function(xhr, type, exception){
-                window.wxc.xcConfirm(xhr.responseText, window.wxc.xcConfirm.typeEnum.error);
-                console.log(xhr, "Failed");
-            }
-      });
-      }
+                },
+                error: function (xhr, type, exception) {
+                    window.wxc.xcConfirm(xhr.responseText, window.wxc.xcConfirm.typeEnum.error);
+                    console.log(xhr, "Failed");
+                }
+            });
+        }
     }
 
 </script>

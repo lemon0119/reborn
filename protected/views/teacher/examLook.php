@@ -14,12 +14,18 @@ require 'examAnsSideBar.php';
                         echo "<font color=red>未作答</font>";
                         echo '</br>';
                     } ?>
-         <input id="text" type="hidden" value="<?php echo $answer;?>"/>
-        <input id="content" type="hidden" style="height: 5px;" value="<?php $str = str_replace("\n", "`",$exer['content'] );
-$str = str_replace("\r", "", $str);
-$str = str_replace(" ", "}", $str);
-echo $str;
-?>">
+         <input id="text" type="hidden" value="<?php
+            $str2 = str_replace("\n", "<br/>", $ansWork['answer']);
+            $str2 = str_replace("\r", "", $str2);
+            $str2 = str_replace(" ", "&nbsp;", $str2);
+            echo $str2;
+            ?>"/>
+        <input id="content" type="hidden" style="height: 5px;" value="<?php
+            $str = str_replace("\n", "<br/>", $exer['content']);
+            $str = str_replace("\r", "", $str);
+            $str = str_replace(" ", "&nbsp;", $str);
+            echo $str;
+            ?>">
         <table border = '0px' width="100%">            
             <tr>
                 <td width = '50%' align='center'><?php echo $exer['title']?></td>
@@ -28,8 +34,8 @@ echo $str;
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
-                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($ansWork['answer']); ?></font>
+                    <div style="text-align: left" id ="answer"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?></font>
                     </div>
                     
                 </td>
@@ -37,7 +43,7 @@ echo $str;
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                    <div style="text-align: left" id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
                          <font><?php echo $str; ?></font>
                     </div>
                 </td>

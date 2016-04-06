@@ -752,7 +752,7 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
         }
         if ($record == null) {
-            return $this->render('fillingExer', ['number' => $number, 'ansFilling' => $ansArr, 'ansFilling' => $ansArr, 'fillingLst' => $fillingLst, 'exercise2' => $classwork2, 'exercise' => $classwork, 'pages' => $pages, 'isExam' => $isExam, 'cent' => $cent, 'workID' => $wID]);
+            return $this->render('questionExer', ['number' => $number, 'ansQuest' => $ansArr, 'questionLst' => $questionLst, 'exercise2' => $classwork2, 'exercise' => $classwork, 'pages' => $pages, 'isExam' => $isExam, 'cent' => $cent, 'workID' => $wID]);
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
