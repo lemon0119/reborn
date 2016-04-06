@@ -352,7 +352,7 @@ if ($isExam) {
         //--------------------------------------------------
     }
 
-    function createFont(color, text, code) {
+     function createFont(color, text, code) {
         var father = document.getElementById("templet");
         var f = document.createElement("font");
         var content = {content: ""};
@@ -390,7 +390,6 @@ if ($isExam) {
             f.style = "color:" + color;
             //var t = document.createTextNode(text);
             //f.appendChild(t);
-            var tempContent = "";
             if (color === "#ff0000") {
                 content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
                 checkYaweiCode(content);
@@ -402,6 +401,7 @@ if ($isExam) {
             father.appendChild(f);
         }
     }
+
 
     function controlScroll() {
         var input = getContent(yaweiOCX);
