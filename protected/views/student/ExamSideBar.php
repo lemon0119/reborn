@@ -79,10 +79,9 @@ $currtime = $examInfo['endtime'];
             <li class="nav-header">无内容</li>
 <?php } else { ?>
            <li class="nav-header" ><br/></li>
-            <li>
-                 <a type="button" class="btn btn-large" style="width: 34%"  onclick="submitSuite();">提交</a>
-
-             </li>
+             <li class="nav-header">
+                <a type="button" href="#" class="btn btn-primary" style="width: 78%"  onclick="submitSuite();">提交</a>                 
+            </li>
         </div>   
     <?php } ?>
 </div>

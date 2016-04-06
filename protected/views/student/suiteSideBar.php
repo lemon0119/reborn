@@ -74,7 +74,7 @@
 <?php } else { ?>
             <li class="nav-header" ><br/></li>
             <li class="nav-header">
-                <a type="button" href="#" class="btn btn-large" style="width: 30%"  onclick="submitSuite();">提交</a>                 
+                <a type="button" href="#" class="btn btn-primary" style="width: 78%"  onclick="submitSuite();">提交</a>                 
             </li>
 <?php } ?>
     </div>
