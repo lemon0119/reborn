@@ -299,6 +299,14 @@ echo "<script>var role='$role';</script>";
             }
             t.options.add(option);
         }
+        $("#exercise_next").removeAttr("disabled");
+        $("#exercise_last").removeAttr("disabled");
+        if (nowOn === 0) {
+            $("#exercise_last").attr("disabled", "disabled");
+        }
+        if (nowOn === exerciseIsOpenNow.length - 1) {
+            $("#exercise_next").attr("disabled", "disabled");
+        }
     }
 
     function startClassExercise() {
@@ -306,50 +314,56 @@ echo "<script>var role='$role';</script>";
             type: "GET",
             url: "index.php?r=student/startClassExercise&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
             success: function (data) {
-                console.log()
-                var array_exerciseID = data['exerciseID'];
-                var array_type = data['type'];
-                var array_title = data['title'];
-                for(var i=0;i<array_exerciseID.length;i++){
-                    exerciseIsOpenNow[i] = array_exerciseID[i];
-                    allExerciseName[i] = array_title[i];
-                    isfinish[i] = 0;
-                }
-                var type = array_type[0];
-                var exerciseNowOn = array_exerciseID[0];
-                if (data['exerciseID'].length===0) {
+                if (data['exerciseID'].length === 0) {
                 } else {
                     isClassExercise = 1;
                     window.wxc.xcConfirm("有新练习发布，点击开始！", window.wxc.xcConfirm.typeEnum.info, {
                         onOk: function () {
-                            var exerciseID;
-                            if (exerciseIsOpenNow[nowOn] === undefined) {
-                                exerciseID = exerciseNowOn;
-                            } else {
-                                exerciseID = exerciseIsOpenNow[nowOn];
-                            }
-                            $("#sw-bulletin").unbind("click");
-                            $("#classExercise-container").toggle(200);
-                            if (type === "look") {
-                                $("#iframe_classExercise").attr("src", "index.php?r=student/iframe4Look&exerciseID=" + exerciseID);
-                            } else if (type === "listen") {
-                                $("#iframe_classExercise").attr("src", "index.php?r=student/iframe4Listen&exerciseID=" + exerciseID);
-                            } else if (type === 'speed' || type === 'correct' || type === 'free') {
-                                $("#iframe_classExercise").attr("src", "index.php?r=student/iframe4Key&exerciseID=" + exerciseID);
-                            }
-                            if (!$("#bulletin").is(":hidden")) {
-                                $("#bulletin").toggle(200);
-                                $("#bulletin_activex").toggle(200);
-                            }
-                            $("#sw-openAnalysis").attr("disabled", "true");
-                            $("#analysis").hide();
-                            selectBoxCheck(0);
+                            $.ajax({
+                                type: "GET",
+                                url: "index.php?r=student/startClassExercise&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
+                                success: function (data) {
+                                    var array_exerciseID = data['exerciseID'];
+                                    var array_type = data['type'];
+                                    var array_title = data['title'];
+                                    for (var i = 0; i < array_exerciseID.length; i++) {
+                                        exerciseIsOpenNow[i] = array_exerciseID[i];
+                                        allExerciseName[i] = array_title[i];
+                                        isfinish[i] = 0;
+                                    }
+                                    var type = array_type[0];
+                                    var exerciseNowOn = array_exerciseID[0];
+                                    var exerciseID;
+                                    if (exerciseIsOpenNow[nowOn] === undefined) {
+                                        exerciseID = exerciseNowOn;
+                                    } else {
+                                        exerciseID = exerciseIsOpenNow[nowOn];
+                                    }
+                                    $("#sw-bulletin").unbind("click");
+                                    $("#classExercise-container").toggle(200);
+                                    if (type === "look") {
+                                        $("#iframe_classExercise").attr("src", "index.php?r=student/iframe4Look&exerciseID=" + exerciseID);
+                                    } else if (type === "listen") {
+                                        $("#iframe_classExercise").attr("src", "index.php?r=student/iframe4Listen&exerciseID=" + exerciseID);
+                                    } else if (type === 'speed' || type === 'correct' || type === 'free') {
+                                        $("#iframe_classExercise").attr("src", "index.php?r=student/iframe4Key&exerciseID=" + exerciseID);
+                                    }
+                                    if (!$("#bulletin").is(":hidden")) {
+                                        $("#bulletin").toggle(200);
+                                        $("#bulletin_activex").toggle(200);
+                                    }
+                                    $("#sw-openAnalysis").attr("disabled", "true");
+                                    $("#analysis").hide();
+                                    selectBoxCheck(0);
+                                }
+                            });
                         }
                     });
 
                 }
             }
         });
+
     }
 
     function passClassExercise() {

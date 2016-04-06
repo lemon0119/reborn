@@ -146,9 +146,9 @@ if (!$isOver) {
                } ?>  '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
                 </div>
                 <input id="content" type="hidden" value="<?php
-               $str = str_replace("\n", "`", $exerOne['content']);
+               $str = str_replace("\n", "", $exerOne['content']);
                $str = str_replace("\r", "", $str);
-               $str = str_replace(" ", "}", $str);
+               $str = str_replace(" ", "", $str);
                echo $str;
                ?>">
                 <br/>
@@ -225,7 +225,7 @@ if ($isExam) {
                 }, 1000);
 <?php } ?>
         }
-        var originalContent = "<?php echo $str; ?>";
+        var originalContent = '<?php echo $str; ?>';
         window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     });
     function onStenoPressKey(pszStenoString, device) {

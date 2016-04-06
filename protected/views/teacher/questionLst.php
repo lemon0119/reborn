@@ -5,10 +5,9 @@
             <form action="./index.php?r=teacher/searchQuestion" method="post">
                 <li>
                     <select name="type" >
-                        <option value="exerciseID" selected="selected">编号</option>
-                        <option value="courseID" >科目号</option>   
+                        <option value="exerciseID" >编号</option>
                         <option value="createPerson">创建人</option>
-                        <option value="requirements">内容</option>
+                        <option value="requirements" selected="selected">内容</option>
                     </select>
                 </li>
                 <li>
@@ -26,7 +25,7 @@
             <li class="active"><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-typing"></i>打字练习</li>
-            <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+            <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键打练习</a></li>
             <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
             <li ><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
         </ul>
@@ -110,9 +109,9 @@ $code = mt_rand(0, 1000000);
         var result = <?php if (isset($result)) echo "'$result'";
         else echo'1'; ?>;
         if (result === '1')
-            window.wxc.xcConfirm('复制填空题成功！', window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm('复制简答题成功！', window.wxc.xcConfirm.typeEnum.success);
         else if (result === '0')
-            window.wxc.xcConfirm('复制填空题失败！', window.wxc.xcConfirm.typeEnum.error);
+            window.wxc.xcConfirm('复制简答题失败！', window.wxc.xcConfirm.typeEnum.error);
         result = "";
     }
     );

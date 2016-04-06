@@ -45,14 +45,16 @@
    得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $realScore?>" disabled="disabled"> 
        <?php }?>
    </div>
-   <?php if(count($works)>0){?>
-        <button onclick="saveScore(<?php if(isset($ansWork)) echo $ansWork[0]['answerID'];else echo 1;?>)" class="btn btn-primary">保存</button>
-   <?php }?>
+<!--    按键配分-->
+   <?php //if(count($works)>0){?>
+<!--        <button onclick="saveScore(<?php //if(isset($ansWork)) echo $ansWork[0]['answerID'];else echo 1;?>)" class="btn btn-primary">保存</button>-->
+   <?php //}?>
 </div>
 <script>
    $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
-       
+      //自动配分
+       saveScore(<?php  echo $realScore?>);
     });
      
     function saveScore(answerID){
@@ -72,8 +74,8 @@
                 url:"./index.php?r=teacher/ajaxExam&&classID=<?php echo $classID?>",
                 data:user,
                 dataType:"html",
-                success:function(html){     
-                    location.reload();
+                success:function(html){    
+                     $("#ziji").html(html);
                 }
             });
         

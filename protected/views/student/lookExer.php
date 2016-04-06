@@ -239,7 +239,6 @@ if ($isExam) {
         }
         $("#allAnalysis").toggle(0);
     });
-    var yaweiOCX = null;
 
     $(document).ready(function () {
         setInterval(function () {
@@ -263,7 +262,7 @@ if ($isExam) {
             }
         });
         yaweiOCX = document.getElementById("typeOCX");
-        var originalContent = "<?php echo $str; ?>";
+        var originalContent = '<?php echo $str; ?>';
         window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
         //获取学生信息转入统计JS 实时存入数据库
         window.G_saveToDatabase = 1;
@@ -414,11 +413,11 @@ if ($isExam) {
     }
     function onChange() {
         yaweiOCX.UpdateView();
-        var input = getContent(yaweiOCX);
-        yaweiOCX.Locate(input.length);
+        var inputO = getContent(yaweiOCX);
+        yaweiOCX.Locate(inputO.length);
         controlScroll();
         changWordPS();
-        var text_old = "<?php echo $str; ?>";
+        var text_old = '<?php echo $str; ?>';
 //        if (text_old.indexOf("<br/>") > 0) {
 //            var div = document.getElementById("templet");
 //            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
@@ -534,7 +533,7 @@ if ($isExam) {
             createFont("#808080", old, oldCode);
             createFont("#ff0000", wrong, "");
         }
-        if (input.length < text.length) {
+        if (inputO.length < text.length) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
             createFont("#000000", left, "");
         }

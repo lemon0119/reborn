@@ -80,7 +80,11 @@
                 data:user,
                 dataType:"html",
                 success:function(html){     
-                    $("#ziji").html(html);
+                    window.wxc.xcConfirm('打分成功！', window.wxc.xcConfirm.typeEnum.success,{
+                        onOk:function(){
+                             $("#ziji").html(html);
+                        }
+                    });
                 },
                 error: function(xhr, type, exception){
                   console.log('get Bulletin erroe', type);

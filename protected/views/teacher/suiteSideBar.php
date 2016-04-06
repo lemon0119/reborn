@@ -19,7 +19,7 @@
                         <li id="li-question">
                                 <a href="./index.php?r=teacher/question"><i class="icon-align-left"></i> 简 答 题</a>
                         </li>
-                        <li class="nav-header">键位练习</li>
+                        <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
                                     <a href="./index.php?r=teacher/keyType&&exerID=<?php echo $keyType['exerciseID'];?>">

@@ -5,9 +5,8 @@
             <form action="./index.php?r=teacher/searchListen" method="post">
                 <li>
                     <select name="type" >
-                        <option value="exerciseID" selected="selected">编号</option>
-                        <option value="courseID" >科目号</option>
-                        <option value="title" >题目名</option>
+                        <option value="exerciseID" >编号</option>
+                        <option value="title" selected="selected">题目名</option>
                         <option value="createPerson" >创建人</option>
                         <option value="content">内容</option>
                     </select>
@@ -27,7 +26,7 @@
             <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-typing"></i>打字练习</li>
-            <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键位练习</a></li>
+            <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键打练习</a></li>
             <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
             <li class="active"><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
         </ul>
@@ -113,8 +112,8 @@ $this->widget('CLinkPager', array('pages' => $pages));
 </div>
 <script>
     $(document).ready(function () {
-        var result = <?php if (isset($result)) echo "'$result'";
-else echo'no'; ?>;
+        var result = '<?php if (isset($result)) echo "'$result'";
+else echo'no'; ?>';
         if (result === '1')
             window.wxc.xcConfirm('复制选择题成功！', window.wxc.xcConfirm.typeEnum.success);
         else

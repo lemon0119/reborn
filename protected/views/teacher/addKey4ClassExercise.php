@@ -27,9 +27,9 @@
 
 <div class="span9" id="addKey" >        
     <?php if (!isset($action)) { ?>
-        <h3>编辑键位练习题</h3>
+        <h3>编辑键打练习题</h3>
     <?php } else if ($action == 'look') { ?>
-        <h3>查看键位练习题</h3>
+        <h3>查看键打练习题</h3>
     <?php } ?>
 
     <?php if (isset($_GET['nobar'])) { ?>
@@ -123,9 +123,9 @@
     $(document).ready(function () {
         var result = <?php echo "'$result'"; ?>;
         if (result === '1')
-            window.wxc.xcConfirm('添加键位练习成功！', window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm('添加键打练习成功！', window.wxc.xcConfirm.typeEnum.success);
         else if (result === '0')
-            window.wxc.xcConfirm('添加键位练习失败！', window.wxc.xcConfirm.typeEnum.error);
+            window.wxc.xcConfirm('添加键打练习失败！', window.wxc.xcConfirm.typeEnum.error);
     });
     $("#myForm").submit(function () {
         <?php if(isset($_GET['nobar'])){?>

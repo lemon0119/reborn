@@ -35,7 +35,7 @@
                         </div> </a>
                 </li>
             <?php }  if (count($exercise['key'])!= 0) { ?>
-                <li class="nav-header">键位练习</li>
+                <li class="nav-header">键打练习</li>
     <?php foreach ($exercise['key'] as $keyType) : ?>
                     <li id="li-key-<?php echo $keyType['exerciseID']; ?>">
                         <a href="./index.php?r=student/keyType&&exerID=<?php echo $keyType['exerciseID'] ?>&&cent=<?php $arg = implode(',', $cent);

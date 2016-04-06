@@ -154,7 +154,7 @@
 //            if (totalNum == currentNum && repeatNum == 0) {
 //                HaveWindow = 1;
 //                window.G_isOverFlag = 1;
-//                window.wxc.xcConfirm('键位练习已完成', window.wxc.xcConfirm.typeEnum.success, {
+//                window.wxc.xcConfirm('键打练习已完成', window.wxc.xcConfirm.typeEnum.success, {
 //                    onOk: function () {
 //                        currentNum = totalNum;
 //                        HaveWindow = 0;
@@ -234,7 +234,7 @@
     }
     function setWordView(word) {
         if (currentNum > 0) {
-            document.getElementById("wordLast").innerHTML = "<span style='color:green'>" + wordArray[currentNum - 1] + "</span>";
+            document.getElementById("wordLast").innerHTML = "<span style='font-size: 30px;color:green'>" + wordArray[currentNum - 1] + "</span>";
         } else {
             document.getElementById("wordLast").innerHTML = "";
         }
@@ -244,7 +244,7 @@
             document.getElementById("word").innerHTML = word;
         }
         if (wordArray[currentNum + 1] !== undefined) {
-            document.getElementById("wordNext").innerHTML = wordArray[currentNum + 1];
+            document.getElementById("wordNext").innerHTML = "<span style='font-size:30px;'>"+wordArray[currentNum+1]+"</span>";
         } else {
             document.getElementById("wordNext").innerHTML = "";
         }
@@ -318,7 +318,7 @@
 //                window.G_isOverFlag = 1;
 //                document.getElementById("id_cost").value = getSeconds();
 //                doSubmit(false);
-//                window.wxc.xcConfirm('键位练习完成', window.wxc.xcConfirm.typeEnum.success);
+//                window.wxc.xcConfirm('键打练习完成', window.wxc.xcConfirm.typeEnum.success);
 //                return '';
 //            }
 //            currentNum = 0;

@@ -248,7 +248,7 @@ function getSuiteExercise(suiteID,workID){
                    var type;
                    for(var i=0;i<data.length;i++){     
                        if(data[i]['type']==1){
-                           type='键位练习';
+                           type='键打练习';
                        }else if(data[i]['type']==2){
                            type='听打练习';
                        }else if(data[i]['type']==3){
@@ -360,7 +360,7 @@ function getExamExercise(examID,workID){
                    var type;
                    for(var i=0;i<data.length;i++){ 
                       if(data[i]['type']==1){
-                           type='键位练习';
+                           type='键打练习';
                        }else if(data[i]['type']==2){
                            type='听打练习';
                        }else if(data[i]['type']==3){
