@@ -99,7 +99,7 @@ $code = mt_rand(0, 1000000);
                     <td class="font-center" style="width: 100px">
                         <a href="./index.php?r=teacher/editKey&&exerciseID=<?php echo $model['exerciseID']; ?>&&action=look"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
                 <?php if ($model['createPerson'] == Yii::app()->session['userid_now']) { ?>
-                            <a href="./index.php?r=teacher/editKey&&exerciseID=<?php echo $model['exerciseID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+<!--                            <a href="./index.php?r=teacher/editKey&&exerciseID=<?php //echo $model['exerciseID']; ?>"><img title="编辑" src="<?php //echo IMG_URL; ?>edit.png"></a>-->
                             <a href="#"  onclick="dele(<?php echo $model['exerciseID']; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
     <?php } else { ?>
                             <a href="./index.php?r=teacher/copyKey&&code=<?php echo $code; ?>&&exerciseID=<?php echo $model['exerciseID']; ?>"><img title="复制" src="<?php echo IMG_URL; ?>copy.png"></a>

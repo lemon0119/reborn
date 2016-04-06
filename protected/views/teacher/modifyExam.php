@@ -148,8 +148,9 @@ function chkIt(){
         document.getElementById("input01").value="";
     }  
 }
-function showFull(){
-    
+function repeatAdd(result){
+    window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
     }
+
 </script>
 

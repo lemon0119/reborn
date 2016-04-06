@@ -67,7 +67,7 @@
                         <td class="font-center" style="width: 100px">
                             <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
                             <a href="./index.php?r=teacher/AddExamExercise&&examID=<?php echo $exam['examID']?>&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>&&code=<?php echo $code?>&&page=<?php echo $pages->currentPage+1?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&type=<?php echo $type?>&&exerciseID=<?php echo $allwork['exerciseID']?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>                            
+<!--                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&type=<?php// echo $type?>&&exerciseID=<?php// echo $allwork['exerciseID']?>"><img src="<?php// echo IMG_URL; ?>edit.png"></a>                            -->
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -84,7 +84,7 @@
     $(document).ready(function(){
         var result = <?php echo "'$maniResult'";?>;
         if(result != "")
-        window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
+            parent.repeatAdd(result);
         else
             parent.refresh();
     });  

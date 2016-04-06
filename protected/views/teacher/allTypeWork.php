@@ -102,7 +102,7 @@
     $(document).ready(function(){
         var result = <?php echo "'$maniResult'";?>;
         if(result != "")
-        window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
+            parent.repeatAdd(result);
         else
             parent.refresh();
     });
