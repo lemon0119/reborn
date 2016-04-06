@@ -10,7 +10,7 @@
             <div class="control-group">
                     <label class="control-label" for="input01">工号</label>
                     <div class="controls">
-                        <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID?>" />
+                        <input name="userID" type="text" class="input-xlarge" id="input01" value="<?php echo $userID?>" disabled="NO"/>
                     </div>
             </div>
             <div class="control-group">

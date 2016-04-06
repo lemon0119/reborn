@@ -135,7 +135,7 @@ class LookType extends CActiveRecord
     }
     
          public function getLookLstPage($type,$value,$pagesize){
-        $order  =   " order by exerciseID ASC";
+        $order  =   " order by exerciseID DESC";
         $user_id=Yii::app()->session['userid_now'];
         if($type!="")
             if($type == "content")
