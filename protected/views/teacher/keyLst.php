@@ -92,7 +92,12 @@ $code = mt_rand(0, 1000000);
                     if ($model['createPerson'] == "0")
                         echo "管理员";
                     else
-                        echo $teachers[$model['createPerson']];
+                        if(isset($teachers[$model['createPerson']])){
+                            echo $teachers[$model['createPerson']];
+                        }
+                        else{
+                            echo "未知";
+                        }
                         ?></td>
                     <td class="font-center"><?php echo $model['createTime']; ?></td>
                     <td class="font-center" style="width: 100px">
@@ -125,9 +130,9 @@ $this->widget('CLinkPager', array('pages' => $pages));
         var result = <?php if (isset($result)) echo "'$result'";
 else echo'1'; ?>;
         if (result === '1')
-            window.wxc.xcConfirm('复制键位练习成功！', window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm('复制键打练习成功！', window.wxc.xcConfirm.typeEnum.success);
         else if (result === '0')
-            window.wxc.xcConfirm('复制键位练习失败！', window.wxc.xcConfirm.typeEnum.error);
+            window.wxc.xcConfirm('复制键打练习失败！', window.wxc.xcConfirm.typeEnum.error);
         result = "";
     }
     );

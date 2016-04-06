@@ -48,7 +48,7 @@
                     echo '</div>';
                     echo '<br/>';
                     $n++;?>
-                    配分:<span class="limit"><?php echo $exam_exercise[$m++]['score'];?></span><br/>
+                    分数:<span class="limit"><?php echo $exam_exercise[$m++]['score'];?></span><br/>
                     得分:
                     <input class="value" type="text" id="input" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score'];else echo " ";?>"> 
                      
@@ -69,14 +69,15 @@
         for(var i = 0 ; i < <?php echo count($works);?>; ++i){
             var limit = $(".limit:eq("+i+")").html();
             var input = $(".value:eq("+i+")").val();
-            console.log('input',parseInt(input));
-            console.log('limit',parseInt(limit));
+//            console.log('input',parseInt(input));
+//            console.log('limit',parseInt(limit));
+         var value1 = $("#input")[0].value;
             var re = /^([1-9]\d*|[0]{1,1})$/; 
-            if(!re.test(parseInt(input))){
+            if(!re.test(value1)){
                 window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
                 $(".value:eq("+i+")").val('');
             }
-            if(parseInt(input) > parseInt(limit)){
+            if(value1 > parseInt(limit)){
                 window.wxc.xcConfirm("配分超过上限！", window.wxc.xcConfirm.typeEnum.error);
                 $(".value:eq("+i+")").val('');
             }
