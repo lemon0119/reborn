@@ -150,7 +150,7 @@
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
                 if (v < 1) {
-                    window.wxc.xcConfirm('时长不能为0！！！', window.wxc.xcConfirm.typeEnum.error, {
+                    window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error, {
                         onOk: function () {
                             openExam(examID, duration, begintime);
                         }

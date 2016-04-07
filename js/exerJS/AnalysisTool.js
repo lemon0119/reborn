@@ -1,6 +1,6 @@
 /* 
  * Js AnalysisTool
- * 
+ * 注意！需要依赖LCS.js
  * 请在主view中设置全局变量 
  * @param G_setEndTime 设置统计的轮询刷新开始到结束的时间，如果你想让JS1000秒后结束统计请设置1000
  * @param  var G_isOverFlag= 0 ; view 中 设置window.G_isOverFlag = 1 统计控件将结束统计
@@ -237,7 +237,7 @@ $(document).ready(function () {
             }
         }
         if (window.G_isLook === 1) {
-            AjaxGetRight_Wrong_AccuracyRate("", "", "wordisRightRadio", window.GA_originalContent, window.G_content);
+            AjaxGetRight_Wrong_AccuracyRate("wordisRightRadio", window.GA_originalContent, window.G_content);
         }
         //判断统计结束
         if ((nowTime - startTime) > (setEndTime * 1000) || window.G_isOverFlag === 1) {
@@ -246,7 +246,7 @@ $(document).ready(function () {
             $("#getIntervalTime").html(0);
             clearInterval(interval);
         }
-    }, 2000);
+    }, 5000);
 
 });
 
@@ -325,40 +325,20 @@ function AjaxGetBackDelete(id, doneCount, keyType) {
 //@param $id3：正确率控件id
 //@param $originalContent:答案内容
 //@param $currentContent：用户输入内容 
-function AjaxGetRight_Wrong_AccuracyRate(id1, id2, id3, originalContent, currentContent) {
+function AjaxGetRight_Wrong_AccuracyRate(id1, originalContent, currentContent) {
     var allCount = 0;
-    var wrongCount = 0;
     var rightCount = 0;
-    originalContent = originalContent.replace(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\。|\，|\！|\：|\“|\”|\‘|\’|\、|\；|\）|\》|\《|\（|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g,"");
-    var array_original = originalContent.split('');
-    var array_current = currentContent.split('');
-    for (var i = 0; i < array_original.length; i++) {
-        if (array_current[i] !== undefined) {
-            if (array_original[i] != array_current[i]) {
-                wrongCount++;
-            } else {
-                rightCount++;
-            }
-        }
-        allCount++;
-    }
-
-    if (array_current.length > array_original.length) {
-        rightCount -= (array_current.length - array_original.length);
-        if (rightCount < 0) {
-            rightCount = 0;
-        }
-    }
-    var accuracyRate = Math.round((rightCount / allCount) * 100);
+    var lcs = new LCS(currentContent,originalContent);
+    if (lcs === null)
+        return;
+    lcs.doLCS();
+    allCount = lcs.getStrOrg(1).length;
+    rightCount = lcs.getSubString(3).length;
+    var correct = rightCount / allCount;
+    var accuracyRate = Math.round(correct * 100);
     window.GA_RightRadio = accuracyRate;
     if (id1 !== "") {
-        $("#" + id1).html(rightCount);
-    }
-    if (id2 !== "") {
-        $("#" + id2).html(wrongCount);
-    }
-    if (id3 !== "") {
-        $("#" + id3).html(accuracyRate);
+        $("#" + id1).html(accuracyRate);
     }
 }
 
