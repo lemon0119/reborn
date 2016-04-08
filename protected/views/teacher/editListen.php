@@ -89,7 +89,7 @@
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">修改</button>
             <?php }?>
-            <a href="./index.php?r=teacher/listenLst" class="btn">返回</a>
+            <a href="./index.php?r=teacher/listenLst" class="btn btn-primary">返回</a>
         </div>
             
         </fieldset>

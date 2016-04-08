@@ -8,7 +8,7 @@
         <input id="notice-input" style="width: 60%;" oninput="this.style.color='red'" name="title" placeholder="标题...."><br/><br/>
         <textarea  id="notice-textarea" placeholder="内容...." style="width: 60%;height: 90px;"name="content"></textarea><br/>
         <br/>
-        <a id="postnotice" style="text-align: right;margin-left: 360px"></a>
+        <a id="postnoticel" style="text-align: right;margin-left: 360px" class="btn btn-primary">发布</a>
     </div>
 </div>
 <div class="span9" style="margin-top: 25px;width: 1080px;">
@@ -63,7 +63,7 @@ $(document).ready(function(){
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
 
-    $("#postnotice").click(function() {
+    $("#postnoticel").click(function() {
         var text1 = $("#notice-input").val();
         var text2 = $("#notice-textarea").val();
         if(text1==""||text2==""){

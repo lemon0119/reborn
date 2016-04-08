@@ -31,10 +31,10 @@
 <br>
 <div style="text-align: right;">
     <?php if($result==0){?>
-        <a href="./index.php?r=admin/noticeLst" id="returner" ></a>
+        <a href="./index.php?r=admin/noticeLst" class="btn btn-primary" >返回</a>
     <?php }else{?>
-        <a  id="change" ></a>&nbsp; &nbsp;
-        <a href="./index.php?r=admin/noticeLst" id="returner" ></a>
+        <a  id="changel" class="btn btn-primary">保存</a>&nbsp; &nbsp;
+        <a href="./index.php?r=admin/noticeLst" class="btn btn-primary" >返回</a>
     <?php }?>
     
 </div>
@@ -44,7 +44,7 @@
 $(document).ready(function(){
     var current_date = new Date();
     var current_time = current_date.toLocaleTimeString();
-    $("#change").click(function() {
+    $("#changel").click(function() {
         var text2 = $("#notice-textarea").val();
         if(text2==""){
            window.wxc.xcConfirm("内容不能为空", window.wxc.xcConfirm.typeEnum.warning);

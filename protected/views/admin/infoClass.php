@@ -88,9 +88,9 @@
         <br/>
     <!-- 翻页标签结束 -->
     <div style="text-align: center">
-        <button style="padding: 18px 37px;" class="btn_ret_admin"  onclick="back()"></button>
-            <button class="btn_add_student_admin" onclick="addStuClass(<?php echo $nums;?>)"></button>
-            <button class="btn_add_teacher_admin" onclick="addTeaClass()"></button>
+        <button  class="btn btn-primary"  onclick="back()">返回</button>
+            <button class="btn btn-primary" onclick="addStuClass(<?php echo $nums;?>)">添加学生</button>
+            <button class="btn btn-primary" onclick="addTeaClass()">添加老师</button>
         </div>
     <br/>
         <script>
