@@ -42,13 +42,13 @@
             </tbody>
     </table>
         <?php if(Yii::app()->session['lastUrl']=="stuDontHaveClass"){?>
-        <a href="./index.php?r=admin/stuDontHaveClass&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/stuDontHaveClass&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn btn-primary">返回</a>
         <?php }else if(Yii::app()->session['lastUrl']=="infoClass"){?>
-        <a href="./index.php?r=admin/infoClass&&classID=<?php echo $class;?>" style="padding: 7px 37px; "  class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/infoClass&&classID=<?php echo $class;?>" style="padding: 7px 37px; "  class="btn btn-primary">返回</a>
         <?php } else if(isset($flag)){?>
-        <a href="./index.php?r=admin/searchStu&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; "  class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/searchStu&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; "  class="btn btn-primary">返回</a>
         <?php }else{?>
-        <a href="./index.php?r=admin/stuLst&&page=<?php echo Yii::app()->session['lastPage'];?>"  style="padding: 7px 37px; " class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/stuLst&&page=<?php echo Yii::app()->session['lastPage'];?>"  style="padding: 7px 37px; " class="btn btn-primary">返回</a>
         <?php }?>
     </div>
 </div>

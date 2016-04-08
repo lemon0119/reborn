@@ -66,7 +66,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
     <button id="share-Cam" class="btn btn-primary" >直播视频</button>
     <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
-    <button onclick="checkforbid()" class="btn">查看禁言</button>
+    <button onclick="checkforbid()" class="btn btn-primary">查看禁言</button>
 
     <div id="showOnline"  class="online"  style="display: none;border: 0px;width:120px;">
         <div id="dd" disabled="disabled"  style="border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:570px; padding:0;">

@@ -44,15 +44,15 @@
             </tbody>
     </table>
         <?php if(Yii::app()->session['lastUrl']=="classLst"){ ?>
-        <a href="./index.php?r=admin/classLst&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/classLst&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn btn-primary">返回</a>
         <?php  }else if(Yii::app()->session['lastUrl']=="searchClass"){?>
-        <a href="./index.php?r=admin/searchClass&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/searchClass&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn btn-primary">返回</a>
         <?php }else if(Yii::app()->session['lastUrl']=="infoClass"){?>
-        <a href="./index.php?r=admin/infoClass&&classID=<?php echo $_GET['classID'];?>" style="padding: 7px 37px; " class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/infoClass&&classID=<?php echo $_GET['classID'];?>" style="padding: 7px 37px; " class="btn btn-primary">返回</a>
         <?php }else if(isset($flag)){?>
-        <a href="./index.php?r=admin/searchTea&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/searchTea&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn btn-primary">返回</a>
         <?php }else{?>
-        <a href="./index.php?r=admin/teaLst&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn_ret_admin"></a>
+        <a href="./index.php?r=admin/teaLst&&page=<?php echo Yii::app()->session['lastPage'];?>" style="padding: 7px 37px; " class="btn btn-primary">返回</a>
         <?php }?>
     </div>
 </div>
