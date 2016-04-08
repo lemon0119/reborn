@@ -46,13 +46,13 @@
             <div class="control-group">
                 <label class="control-label" for="input09">联系电话</label>
                 <div class="controls">
-                    <input name="phone_number" type="text" class="input-xlarge" id="input09" value="" />
+                    <input name="phone_number" type="text" class="input-xlarge" id="input09" value="" onblur="chkTel()"/><span id="usertips_tel" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="input10">联系邮箱</label>
                 <div class="controls">
-                    <input name="mail_address" type="text" class="input-xlarge" id="input10" value="" />
+                    <input name="mail_address" type="text" class="input-xlarge" id="input10" value="" onblur="chkMail()"/><span id="usertips_mail" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <!--            <div class="control-group">
@@ -68,7 +68,7 @@
                             </div>
                         </div>								-->
             <div style="width: 80%;text-align: center">
-                <button onclick="window.location.href = './index.php?r=admin/teaLst'" type="button" class="btn">返 回</button> <button onclick="window.location.href = './index.php?r=admin/exlAddTea'" type="button" class="btn btn-primary">批量添加</button><button  type="submit" class="btn btn-primary">添加</button>
+                <button onclick="window.location.href = './index.php?r=admin/teaLst'" type="button" class="btn btn-primary">返 回</button> <button onclick="window.location.href = './index.php?r=admin/exlAddTea'" type="button" class="btn btn-primary">批量添加</button><button  type="submit" class="btn btn-primary">添加</button>
             </div>
         </fieldset>
     </form>
@@ -139,22 +139,65 @@ foreach ($userAll as $key => $value) {
             }
         }
 
-        var phone_number = $("#input09")[0].value;
-        if (phone_number.length !== 11 && phone_number !== "") {
-            window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
-            return false;
-        }
-
-        var mail_address = $("#input10")[0].value;
-        var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-        if (mail_address == "") {
-            return true;
-        } else if (!pattern.test(mail_address)) {
-            window.wxc.xcConfirm('请输入正确的邮箱地址', window.wxc.xcConfirm.typeEnum.info);
-            return false;
-        }
+//        var phone_number = $("#input09")[0].value;
+//        if (phone_number.length !== 11 && phone_number !== "") {
+//            window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
+//            return false;
+//        }
+//
+//        var mail_address = $("#input10")[0].value;
+//        var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+//        if (mail_address == "") {
+//            return true;
+//        } else if (!pattern.test(mail_address)) {
+//            window.wxc.xcConfirm('请输入正确的邮箱地址', window.wxc.xcConfirm.typeEnum.info);
+//            return false;
+//        }
     });
 
+    function chkMail(){
+//        var phone_number = $("#input09")[0].value;
+//            if (phone_number.length !== 11 && phone_number !== ""){
+//        window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.info);
+//            return false;
+//        }
+        
+    var mail_address = $("#input10")[0].value;
+    var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+    usertipsSpan = document.getElementById("usertips_mail");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!pattern.test(mail_address)) {  
+        usertipsSpan.innerHTML="请输入正确的邮箱地址";  
+        document.getElementById("input10").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML=''; 
+    }  
+    }
+        
+
+    function chkTel(){
+//        var phone_number = $("#input09")[0].value;
+//            if (phone_number.length !== 11 && phone_number !== ""){
+//        window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.info);
+//            return false;
+//        }
+        
+    var phone_number = $("#input09")[0].value;
+  
+    usertipsSpan = document.getElementById("usertips_tel");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (phone_number.length !== 11 && phone_number !== "") {  
+        usertipsSpan.innerHTML="请输入正确的联系电话！";  
+        document.getElementById("input09").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+    }
+    
     //工号受限
     function chkIt() {
         var usernameVal = document.getElementById("input01").value;
@@ -163,7 +206,7 @@ foreach ($userAll as $key => $value) {
         usertipsSpan.style.color = "red";
         usertipsSpan.style.marginLeft = "25px";
         if (!usernameVal.match(/^[A-Za-z]+[A-Za-z0-9]+$/)) {
-            usertipsSpan.innerHTML = "必须由首字符英文加英文、数字、下划线组成";
+            usertipsSpan.innerHTML = "必须由英文或者数字组成，首字符必须是英文";
             document.getElementById("input01").value = "";
             return false;
         } else {
@@ -183,7 +226,7 @@ foreach ($userAll as $key => $value) {
         usertipsSpan.style.color = "red";
         usertipsSpan.style.marginLeft = "25px";
         if (!usernameVal.match(/^[A-Za-z_\u4e00-\u9fa5]+$/)) {
-            usertipsSpan.innerHTML = "必须由字符或英文组成";
+            usertipsSpan.innerHTML = "必须由汉字或英文组成";
             document.getElementById("input02").value = "";
             return false;
         } else {
@@ -203,7 +246,7 @@ foreach ($userAll as $key => $value) {
         usertipsSpan.style.color = "red";
         usertipsSpan.style.marginLeft = "25px";
         if (!usernameVal.match(/^[0-9]+$/)) {
-            usertipsSpan.innerHTML = "必须由数字组成";
+            usertipsSpan.innerHTML = "必须由数字组成的正整数";
             document.getElementById("input07").value = "";
             return false;
         } else {
