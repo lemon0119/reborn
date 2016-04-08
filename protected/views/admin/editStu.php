@@ -22,7 +22,7 @@ else
             <div class="control-group">
                 <label class="control-label" for="input02">姓名</label>
                 <div class="controls">
-                    <input name="userName" type="text" class="input-xlarge" id="input02" value="<?php echo $userName ?>" />
+                    <input name="userName" type="text" class="input-xlarge" id="input02" value="" onblur="chkName()" /><span id="usertips_name" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
@@ -45,7 +45,7 @@ else
             <div class="control-group">
                 <label class="control-label" for="input05">年龄</label>
                 <div class="controls">
-                    <input name="age" type="text" class="input-xlarge" id="input05" value="<?php echo $age ?>" />
+                    <input name="age" type="text" class="input-xlarge" id="input05" value="" onblur="chkAge()"/><span id="usertips_age" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
@@ -69,24 +69,24 @@ else
             <div class="control-group">
                 <label class="control-label" for="input06">联系电话</label>
                 <div class="controls">
-                    <input name="phone_number" type="text" class="input-xlarge" id="input06" value="<?php echo $phone_number ?>" />
+                    <input name="phone_number" type="text" class="input-xlarge" id="input06" value="" onblur="chkTel()"/><span id="usertips_tel" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="input07">联系邮箱</label>
                 <div class="controls">
-                    <input name="mail_address" type="text" class="input-xlarge" id="input07" value="<?php echo $mail_address ?>" />
+                    <input name="mail_address" type="text" class="input-xlarge" id="input07" value="" onblur="chkMail()"/><span id="usertips_mail" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div style="text-align: center">
-                <button type="submit"style="top:-2px;left: -45px" class="btn_save_admin"></button>
-                <a  style="right: 40px" class="btn_reset_password_admin" onclick="resetPass()"></a>
+                <button type="submit"style="top:-2px;left: -45px" class="btn btn-primary">保存</button>
+                <a  style="right: 40px" class="btn btn-primary" onclick="resetPass()">重置密码</a>
                 <?php if (Yii::app()->session['lastUrl'] == "stuDontHaveClass") { ?>
-                    <a style="right: 30px" href="./index.php?r=admin/stuDontHaveClass&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_ret_admin"></a>
+                    <a style="right: 30px" href="./index.php?r=admin/stuDontHaveClass&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn btn-primary">返回</a>
 <?php } else if (isset($flag)) { ?>
-                    <a style="right: 30px" href="./index.php?r=admin/searchStu&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_ret_admin"></a>
+                    <a style="right: 30px" href="./index.php?r=admin/searchStu&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn btn-primary">返回</a>
 <?php } else { ?>
-                    <a style="right: 30px" href="./index.php?r=admin/stuLst&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn_ret_admin"></a>
+                    <a style="right: 30px" href="./index.php?r=admin/stuLst&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn btn-primary">返回</a>
 <?php } ?>　　
                 
                 
@@ -166,4 +166,87 @@ foreach ($classAll as $key => $value) {
         }
 
     });
+    
+    //姓名受限
+ function chkName(){
+    var usernameVal = document.getElementById("input02").value;  
+  
+    usertipsSpan = document.getElementById("usertips_name");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!usernameVal.match( /^[A-Za-z_\u4e00-\u9fa5]+$/)) {  
+        usertipsSpan.innerHTML="必须由汉字或英文组成";  
+        document.getElementById("input02").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+      
+    if(usernameVal.length > 20){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="大于20个字符！";  
+        document.getElementById("input02").value="";
+    }  
+}
+
+ function chkAge(){
+    var usernameVal = document.getElementById("input05").value;  
+  
+    usertipsSpan = document.getElementById("usertips_age");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!usernameVal.match( /^[0-9]+$/)) {  
+        usertipsSpan.innerHTML="必须由数字组成的正整数";  
+        document.getElementById("input05").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+      
+    if(usernameVal.length > 2){ //一个汉字算一个字符  
+        usertipsSpan.innerHTML="太老了吧亲";  
+        document.getElementById("input05").value="";
+    }  
+}
+
+    function chkTel(){
+//        var phone_number = $("#input09")[0].value;
+//            if (phone_number.length !== 11 && phone_number !== ""){
+//        window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.info);
+//            return false;
+//        }
+        
+    var phone_number = $("#input06")[0].value;
+  
+    usertipsSpan = document.getElementById("usertips_tel");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (phone_number.length !== 11 && phone_number !== "") {  
+        usertipsSpan.innerHTML="请输入正确的联系电话！";  
+        document.getElementById("input06").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML='';  
+    }  
+    }
+    
+        function chkMail(){
+//        var phone_number = $("#input09")[0].value;
+//            if (phone_number.length !== 11 && phone_number !== ""){
+//        window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.info);
+//            return false;
+//        }
+        
+    var mail_address = $("#input07")[0].value;
+    var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+    usertipsSpan = document.getElementById("usertips_mail");  
+    usertipsSpan.style.color = "red";  
+    usertipsSpan.style.marginLeft="25px";
+    if (!pattern.test(mail_address)) {  
+        usertipsSpan.innerHTML="请输入正确的邮箱地址";  
+        document.getElementById("input07").value="";
+        return false;  
+    } else {  
+        usertipsSpan.innerHTML=''; 
+    }  
+    }
 </script>
