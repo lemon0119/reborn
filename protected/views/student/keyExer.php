@@ -1,5 +1,5 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <?php
 if ($isExam == false) {
     require 'suiteSideBar.php';

@@ -5,7 +5,8 @@
  * and open the template in the editor.
  */
 ?>
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <br/>

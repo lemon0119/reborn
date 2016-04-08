@@ -1,6 +1,6 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <?php
 if ($isExam == false) {
     require 'suiteSideBar.php';
