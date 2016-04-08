@@ -1692,7 +1692,7 @@ class TeacherController extends CController {
             $condition = "";
 
             foreach ($arr as $a) {
-                if (strpos($a, '-') == '') {
+                if (strpos($a, '-') == ''||strpos($a, '-') != 0) {
                     if ($condition == "")
                         $condition = "'" . $a . "'";
                     else
@@ -1700,7 +1700,7 @@ class TeacherController extends CController {
                 }
             }
             if ($condition != "") {
-                $condition = " where name in (" . $condition . ")";
+                $condition = " where name LIKE (" . $condition . ")";
             }
             $sql = "select * from two_words_lib";
             $order = "";
@@ -1723,7 +1723,7 @@ class TeacherController extends CController {
                 }
             }
             if ($condition1 != "") {
-                $condition1 = " where name in (" . $condition1 . ")";
+                $condition1 = " where name LIKE (" . $condition1 . ")";
             }
             $sql1 = "select * from two_words_lib_personal";
             $order1 = "";
