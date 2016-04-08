@@ -326,7 +326,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                     while ($file = $mydir->read()) {
                         if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo $adminPublicVdir . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <option value ="<?php echo $adminPublicVoicedir . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
                             <?php
                         }
                     }
@@ -368,7 +368,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     <div id="videos-container" style="height: 100%; width: 100%; margin-top:0px;display:none">
         <iframe src="" name="iframe_a" style="width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no"></iframe>
     </div>
-    <div id="dianbo-videos-container" style="display:none;margin-top: 200px;"> 
+    <div id="dianbo-videos-container" style="display:none;margin-top: 0px;"> 
     </div>
     <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
         <img id="ppt-img" src="" style="height: 100%;"/>
@@ -972,7 +972,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             exitNowOn();
             isOnLive = "teacher-dianbo";
             $("#voice").attr("src", "");
-            disablebutton("teacher-dianbo");
+            //disablebutton("teacher-dianbo");
             closeAllTitle();
             if ($("#teacher-choose-file-public")[0].selectedIndex == -1)
             {
@@ -1173,6 +1173,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             var server_root_path = "<?php echo SITE_URL . 'resources/' ?>";
             var filepath = $("#choose-voice option:selected").val();
             var absl_path = server_root_path + filepath;
+            console.log("per"+absl_path);
             var video_element;
             var video_time_duration;
 
@@ -1180,7 +1181,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             var video = document.getElementById('video1');
             if (video === null) {
                 var html = "";
-                html += '<audio id="video1" width="100%" controls>';
+                html += '<audio style="margin-top:100px" id="video1" width="100%" controls>';
                 html += '<source src="' + absl_path + '">';
                 html += '</audio>';
                 $("#dianbo-videos-container").empty();
@@ -1200,7 +1201,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
         $("#play-voice-public").click(function () {
            exitNowOn();
-            isOnLive = "voice-public";
+            isOnLive = "play-voice";
             $("#voice").attr("src", "");
             closeAllTitle();
             if ($("#choose-voice-public")[0].selectedIndex == -1)
@@ -1212,9 +1213,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#scroll-video").show();
             document.getElementById("close-dianbo").disabled = false;
             $("#close-dianbo").attr("class", "btn btn-primary");
-            var server_root_path = "<?php echo SITE_URL . 'resources/' ?>";
-            var filepath = $("#choose-voice option:selected").val();
-            var absl_path = server_root_path + filepath;
+            var server_root_path = "<?php echo SITE_URL; ?>";
+            var filepath = $("#choose-voice-public option:selected").val();
+            var absl_path = server_root_path+filepath;
             var video_element;
             var video_time_duration;
 
@@ -1222,7 +1223,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             var video = document.getElementById('video1');
             if (video === null) {
                 var html = "";
-                html += '<audio id="video1" width="100%" controls>';
+                html += '<audio style="margin-top:100px" id="video1" width="100%" controls>';
                 html += '<source src="' + absl_path + '">';
                 html += '</audio>';
                 $("#dianbo-videos-container").empty();
@@ -1632,6 +1633,7 @@ $dir->close();
             case "play-voice":
                 isOnLive = "";
                  $("#scroll-video").hide();
+                 $("#voice-container").hide();
                 $("#play-ppt").attr("class", "btn btn-primary");
                 clearVideo();
                 this.disabled = true;

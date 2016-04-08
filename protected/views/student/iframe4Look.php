@@ -5,7 +5,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <body style="background-image: none;background-color: #fff">
     <button id="toggle" style="position: relative;" class="btn">展开</button>
     <div id="span" class="hero-unit" align="center">
