@@ -115,7 +115,7 @@
     </table>
     <center>
         <input type="button" class="btn btn-primary" onclick="savetime();" value="保存"/>
-        <a href="./index.php?r=teacher/assignExam" class="btn" style="margin-left: 50px">返回</a>
+        <a href="./index.php?r=teacher/assignExam" class="btn btn-primary" style="margin-left: 50px">返回</a>
     </center>
     </form>
 </div>

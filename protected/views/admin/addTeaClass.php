@@ -47,7 +47,7 @@ $corr=$posts->read();
     </div>
 <br/>
     <div style="text-align: center">
-        <button type="submit" name="submit" class="btn_AD_admin" ></button> <a style="position: relative;left: 20px;top: 2px" class="btn_ret_admin" href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" ></a>
+        <button type="submit" name="submit" class="btn btn-primary" >添加</button> <a class="btn btn-primary" href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" >返回</a>
     </div>
 </form>   
 

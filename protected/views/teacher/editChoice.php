@@ -15,8 +15,9 @@
                     <input name="value" type="text" class="search-query span2" placeholder="Search" />
             </li>
             <li style="margin-top:10px">
-                    <button type="submit" class="btn_serch"></button>
-                    <a href="./index.php?r=teacher/addChoice" class="btn_add"></a>
+                    <button type="submit" class="btn_4big">搜索</button>
+<!--                    <a href="./index.php?r=teacher/addChoice" class="btn_4big">添加</a>-->
+                    <button onclick="window.location.href = './index.php?r=teacher/addChoice'" type="button" class="btn_4big">添 加</button>
             </li>
         </form>
             <li class="divider"></li>
@@ -87,7 +88,7 @@
         <?php if(!isset($action)) {?>
             <button type="submit" class="btn btn-primary">修改</button> 
         <?php }?>
-        <a href="./index.php?r=teacher/choiceLst" class="btn">返回</a>
+        <a href="./index.php?r=teacher/choiceLst" class="btn btn-primary">返回</a>
     </div>
     </fieldset>
 </form>   

@@ -51,7 +51,7 @@
              <div class="controls">
                  <input name="in1" type="text" class="input-xlarge" id="input2" value="<?php echo $optArr[0];?>" />
                  <?php if(!isset($action)) {?>
-                    <a class="btn_insert_admin" onclick="addIn()"><i class="icon-plus icon-white"></i></a> 
+                    <a class="btn_insert_admin" onclick="addIn()"></a> 
                     <a class="btn_subtract_admin" onclick="deleteIn()"></a>
                  <?php }?>
              </div>
@@ -80,7 +80,7 @@
             <?php if(!isset($action)) {?> 
                 <button type="submit" class="btn btn-primary">修改</button>
              <?php }?>
-             <a href="./index.php?r=teacher/returnFromAddFill" class="btn">返回</a>
+             <a href="./index.php?r=teacher/returnFromAddFill" class="btn btn-primary">返回</a>
          </div>
          </fieldset>
 </form>
