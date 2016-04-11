@@ -277,7 +277,7 @@ foreach ($classAll as $key => $value) {
         usertipsSpan.innerHTML='';  
     }  
       
-    if(usernameVal.length > 2){ //一个汉字算一个字符  
+    if(usernameVal > 100){ //一个汉字算一个字符  
         usertipsSpan.innerHTML="太老了吧亲";  
         document.getElementById("input07").value="";
     }  
