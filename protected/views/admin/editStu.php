@@ -22,7 +22,7 @@ else
             <div class="control-group">
                 <label class="control-label" for="input02">姓名</label>
                 <div class="controls">
-                    <input name="userName" type="text" class="input-xlarge" id="input02" value="" onblur="chkName()" /><span id="usertips_name" style="margin-left: 5px;"></span>
+                    <input name="userName" type="text" class="input-xlarge" id="input02" value="<?php echo $userName ?>" onblur="chkName()" /><span id="usertips_name" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
@@ -45,7 +45,7 @@ else
             <div class="control-group">
                 <label class="control-label" for="input05">年龄</label>
                 <div class="controls">
-                    <input name="age" type="text" class="input-xlarge" id="input05" value="" onblur="chkAge()"/><span id="usertips_age" style="margin-left: 5px;"></span>
+                    <input name="age" type="text" class="input-xlarge" id="input05" value="<?php echo $age ?>" onblur="chkAge()"/><span id="usertips_age" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
@@ -69,13 +69,13 @@ else
             <div class="control-group">
                 <label class="control-label" for="input06">联系电话</label>
                 <div class="controls">
-                    <input name="phone_number" type="text" class="input-xlarge" id="input06" value="" onblur="chkTel()"/><span id="usertips_tel" style="margin-left: 5px;"></span>
+                    <input name="phone_number" type="text" class="input-xlarge" id="input06" value="<?php echo $phone_number ?>" onblur="chkTel()"/><span id="usertips_tel" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="input07">联系邮箱</label>
                 <div class="controls">
-                    <input name="mail_address" type="text" class="input-xlarge" id="input07" value="" onblur="chkMail()"/><span id="usertips_mail" style="margin-left: 5px;"></span>
+                    <input name="mail_address" type="text" class="input-xlarge" id="input07" value="<?php echo $mail_address ?>" onblur="chkMail()"/><span id="usertips_mail" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div style="text-align: center">
@@ -202,10 +202,12 @@ foreach ($classAll as $key => $value) {
         usertipsSpan.innerHTML='';  
     }  
       
-    if(usernameVal.length > 2){ //一个汉字算一个字符  
+    if(usernameVal > 100){ //一个汉字算一个字符  
         usertipsSpan.innerHTML="太老了吧亲";  
         document.getElementById("input05").value="";
-    }  
+    }else {  
+        usertipsSpan.innerHTML='';  
+    }    
 }
 
     function chkTel(){

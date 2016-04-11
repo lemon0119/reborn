@@ -21,9 +21,11 @@ $corr=$posts->read();
     </tr>
 </thead>
         <tbody> 
+            <?php $i=0; ?>
             <?php 
             while (!empty($teacher))
             {
+               
                 if(empty($corr)|| ($teacher['userID']<$corr['teacherID'])){
                     echo "<tr>";
                     echo  "<td style=\"width: 75px\"> <input type=\"checkbox\" name=\"checkbox[]\" value= " . $teacher['userID'] ."  /> </td>";                     
@@ -31,6 +33,7 @@ $corr=$posts->read();
                     echo  "<td>" .  $teacher['userName']  . "</td>";
                     echo  "<td>" .  $teacher['department']  . "</td>";
                     echo  "</tr> ";
+                     $i++;
                  $teacher=$teachers->read();   
                 }else if($teacher['userID']==$corr['teacherID']) {
                      $teacher=$teachers->read();
@@ -47,7 +50,10 @@ $corr=$posts->read();
     </div>
 <br/>
     <div style="text-align: center">
-        <button type="submit" name="submit" class="btn btn-primary" >添加</button> <a class="btn btn-primary" href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" >返回</a>
+        <?php if($i == 0){ ?>
+        <a class="btn btn-primary" href="./index.php?r=admin/addTea" >添加</a><?php }else{ ?>
+        <button type="submit"  class="btn btn-primary" >添加</button><?php } ?>
+        <a class="btn btn-primary" href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" >返回</a>
     </div>
 </form>   
 
