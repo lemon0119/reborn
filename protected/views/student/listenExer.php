@@ -228,7 +228,11 @@ if ($isExam) {
         var originalContent = '<?php echo $str; ?>';
         window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     });
+    
     function onStenoPressKey(pszStenoString, device) {
+        yaweiOCX.UpdateView();
+        var input = getContent(yaweiOCX);
+        yaweiOCX.Locate(input.length);
         window.GA_answer = yaweiOCX.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){
@@ -248,7 +252,7 @@ if ($isExam) {
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = yaweiOCX.GetContent().replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_content = input.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒

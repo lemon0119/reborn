@@ -237,7 +237,17 @@ $(document).ready(function () {
             }
         }
         if (window.G_isLook === 1) {
-            AjaxGetRight_Wrong_AccuracyRate("wordisRightRadio", window.GA_originalContent, window.G_content);
+            var worker = new Worker('js/exerJS/GetRight_Wrong_AccuracyRate.js');
+            worker.onmessage = function (event) {
+                if (!isNaN(event.data.value)) {
+                    window.GA_RightRadio = event.data.value;
+                    $("#wordisRightRadio").html(window.GA_RightRadio);
+                }
+            };
+            worker.postMessage({
+                value: [window.G_content, window.GA_originalContent]
+            });
+
         }
         //判断统计结束
         if ((nowTime - startTime) > (setEndTime * 1000) || window.G_isOverFlag === 1) {
@@ -319,28 +329,28 @@ function AjaxGetBackDelete(id, doneCount, keyType) {
     });
 }
 
-//统计错误字数
+//统计错误字数  已放入多线程js
 //@param $id1：正确字数控件id
 //@param $id2：错误字数控件id
 //@param $id3：正确率控件id
 //@param $originalContent:答案内容
 //@param $currentContent：用户输入内容 
-function AjaxGetRight_Wrong_AccuracyRate(id1, originalContent, currentContent) {
-    var allCount = 0;
-    var rightCount = 0;
-    var lcs = new LCS(currentContent,originalContent);
-    if (lcs === null)
-        return;
-    lcs.doLCS();
-    allCount = lcs.getStrOrg(1).length;
-    rightCount = lcs.getSubString(3).length;
-    var correct = rightCount / allCount;
-    var accuracyRate = Math.round(correct * 100);
-    window.GA_RightRadio = accuracyRate;
-    if (id1 !== "") {
-        $("#" + id1).html(accuracyRate);
-    }
-}
+//function GetRight_Wrong_AccuracyRate(id1, originalContent, currentContent) {
+//    var allCount = 0;
+//    var rightCount = 0;
+//    var lcs = new LCS(currentContent,originalContent);
+//    if (lcs === null)
+//        return;
+//    lcs.doLCS();
+//    allCount = lcs.getStrOrg(1).length;
+//    rightCount = lcs.getSubString(3).length;
+//    var correct = rightCount / allCount;
+//    var accuracyRate = Math.round(correct * 100);
+//    window.GA_RightRadio = accuracyRate;
+//    if (id1 !== "") {
+//        $("#" + id1).html(accuracyRate);
+//    }
+//}
 
 
 
