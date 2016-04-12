@@ -16,7 +16,7 @@
             <div class="control-group">
                     <label class="control-label" for="input02">姓名</label>
                     <div class="controls">
-                            <input name="userName" type="text" class="input-xlarge" id="input02" value="" onblur="chkName()"/><span id="usertips_name" style="margin-left: 5px;"></span>
+                            <input name="userName" type="text" class="input-xlarge" id="input02" value="<?php echo $userName?>" onblur="chkName()"/><span id="usertips_name" style="margin-left: 5px;"></span>
                     </div>
             </div>
              <div class="control-group">
@@ -35,7 +35,7 @@
             <div class="control-group">
                 <label class="control-label" for="input05">年龄</label>
                 <div class="controls">
-                    <input name="age" type="text" class="input-xlarge" id="input05" value="" onblur="chkAge()"/><span id="usertips_age" style="margin-left: 5px;"></span>
+                    <input name="age" type="text" class="input-xlarge" id="input05" value="<?php echo $age ?>" onblur="chkAge()"/><span id="usertips_age" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
@@ -45,21 +45,21 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input8">院校</label>
+                <label class="control-label" for="input08">院校</label>
                 <div class="controls">
-                    <input name="school" type="text" class="input-xlarge" id="input08" value="<?php echo $school?>" />
+                    <input name="school" type="text" class="input-xlarge" id="input08" value="<?php echo $school ?>" />
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="input06">联系电话</label>
                 <div class="controls">
-                    <input name="phone_number" type="text" class="input-xlarge" id="input06" value="" onblur="chkTel()"/><span id="usertips_tel" style="margin-left: 5px;"></span>
+                    <input name="phone_number" type="text" class="input-xlarge" id="input06" value="<?php echo $phone_number ?>" onblur="chkTel()"/><span id="usertips_tel" style="margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="input07">联系邮箱</label>
                 <div class="controls">
-                    <input name="mail_address" type="text" class="input-xlarge" id="input07" value="" onblur="chkMail()"/><span id="usertips_mail" style="margin-left: 5px;"></span>
+                    <input name="mail_address" type="text" class="input-xlarge" id="input07" value="<?php echo $mail_address ?>" onblur="chkMail()"/><span id="usertips_mail" style="margin-left: 5px;"></span>
                 </div>
             </div>
            
@@ -172,7 +172,7 @@ $("#form-addTea").submit(function(){
             usertipsSpan.innerHTML = '';
         }
 
-        if (usernameVal.length > 2) { //一个汉字算一个字符  
+        if (usernameVal > 100) { //一个汉字算一个字符  
             usertipsSpan.innerHTML = "太老了吧亲";
             document.getElementById("input05").value = "";
         }
