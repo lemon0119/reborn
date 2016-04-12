@@ -89,8 +89,8 @@ function long2(){
                 <input type="file" name="file"  id="file"/><br>   -->
             
             <div style="margin-top: 30px;">
-                <a id="stuBack" href="./index.php?r=student/index"></a>
-                <a id="DeterMine1" href="#" name="submit" onclick="judge()"></a> 
+                <a class="btn btn-primary" href="./index.php?r=student/index">取消</a>
+                <a class="btn btn-primary" href="#" name="submit" onclick="judge()">确定</a> 
             </div>
         </fieldset>
     </form>   

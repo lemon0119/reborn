@@ -104,9 +104,9 @@ function long2(){
                 <td>
 
                 </td>
-                <td >
-                    <a id="stuBack" href="./index.php?r=teacher/index"></a>
-                    <a id="DeterMine1" href="#" name="submit" onclick="judge()"></a> 
+                <td style="float:right;">
+                    <a class="btn btn-primary" href="./index.php?r=teacher/index">取消</a>
+                    <a class="btn btn-primary" href="#" name="submit" onclick="judge()">确定</a> 
                 </td>
             </tr>
         </table>

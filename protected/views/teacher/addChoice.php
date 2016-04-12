@@ -73,7 +73,7 @@
             </div>
         </div>
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=teacher/returnFromAddChoice" class="btn">返回</a>
+        <button type="submit" class="btn btn-primary">添加</button> <a href="./index.php?r=teacher/returnFromAddChoice" class="btn btn-primary">返回</a>
     </div>
     </fieldset>
 </form>   
