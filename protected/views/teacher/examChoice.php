@@ -41,7 +41,7 @@
                     $m++;}?>
 
    <?php if($works){?>
-       配分:<?php echo $totalScore;?><br/>
+       分数:<?php echo $totalScore;?><br/>
    得分:<input type="text" id="input" style="width: 50px" value ="<?php  echo $realScore?>" disabled="disabled"> 
        <?php }?>
    </div>

@@ -76,7 +76,12 @@ $code = mt_rand(0, 1000000);
                         if ($model['createPerson'] == "0")
                             echo "管理员";
                         else
-                            echo $teachers[$model['createPerson']];
+                            if(isset($teachers[$model['createPerson']])){
+                                echo $teachers[$model['createPerson']];
+                            }else{
+                                echo "未知";
+                            }
+                            
                         ?></td>
                     <td class="font-center"><?php echo $model['createTime']; ?></td>
                     <td class="font-center" style="width: 100px">

@@ -13,11 +13,12 @@
         <th>班级</th>
     </tr>
 </thead>
-        <tbody>        
+        <tbody>  
+            <?php $i=0; ?>
             <?php foreach($posts as $model):?>
             <tr>
                 <td style="width: 75px" > <input type="checkbox" name="checkbox[]"  value=<?php echo $model['userID'];?> /> </td>                     
-                
+                <?php $i++;?>
                 <td style="width: 75px"><?php echo $model['userID'];?></td>
                 <td><?php echo $model['userName'];?></td>
                 <td>无</td>
@@ -32,7 +33,10 @@
     </div>
 <br/>
 <div style="text-align: center">
-        <button type="submit" class="btn_AD_admin"></button> <a style="position: relative;left: 20px;top: 2px" class="btn_ret_admin" href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" ></a>
+    <?php if($i==0){ ?>
+    <a  class="btn btn-primary" href="./index.php?r=admin/addStu" >添加</a><?php }else{ ?>
+    <button type="submit" class="btn btn-primary" >添加</button><?php } ?>
+        <a  class="btn btn-primary" href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" >返回</a>
     </div>
 </form>   
 

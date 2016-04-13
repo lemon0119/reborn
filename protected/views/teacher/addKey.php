@@ -109,7 +109,7 @@
                 <?php if (!isset($action)) { ?> 
                     <button type="submit" class="btn btn-primary">添加</button>
                 <?php } ?>
-                <a href="./index.php?r=teacher/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn">返回</a>
+                <a href="./index.php?r=teacher/returnFromAddKey&&page=<?php echo Yii::app()->session['lastPage']; ?>" class="btn btn-primary">返回</a>
             </div>
         </fieldset>
         <input id="libstr" style="display: none;" name="libstr">

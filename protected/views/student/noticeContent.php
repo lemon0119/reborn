@@ -21,5 +21,5 @@
     </thead>
 </table><br/>
 <div style="text-align: right;">
-        <a href="./index.php?r=student/stuNotice" id="returner" ></a>
+        <a href="./index.php?r=student/stuNotice" class="btn btn-primary" >返回</a>
 </div>

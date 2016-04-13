@@ -5,7 +5,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/timep.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
         <table style="width: 580px"  border = '0px'>
@@ -117,13 +117,11 @@
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
     window.G_exerciseData = Array(classExerciseID,studentID);
 
-    function onChange(){
+    
+    function onStenoPressKey(pszStenoString, device) {
         yaweiOCX4Listen.UpdateView();
         var input = getContent(yaweiOCX4Listen);
         yaweiOCX4Listen.Locate(input.length);
-    }
-    
-    function onStenoPressKey(pszStenoString, device) {
         window.GA_answer = yaweiOCX4Listen.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
@@ -141,7 +139,7 @@
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = yaweiOCX4Listen.GetContent();
+        window.G_content = input.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
         
         //每击统计击键间隔时间 秒

@@ -18,25 +18,30 @@
                         echo '%';
                         ?></span></td>
             </tr>
-            <input id="text" type="hidden" value="<?php echo $answer; ?>"/>
-            <input id="content" type="hidden" style="height: 5px;" value="<?php
-            $str = str_replace("\n", "`", $exer['content']);
+            <input id="text" type="hidden" value="<?php
+            $str2 = str_replace("\n", "<br/>", $answer);
+            $str2 = str_replace("\r", "", $str2);
+            $str2 = str_replace(" ", "&nbsp;", $str2);
+            echo $str2;
+            ?>"/>
+            <input  id="content" type="hidden" style="height: 5px;" value="<?php
+            $str = str_replace("\n", "<br/>", $exer['content']);
             $str = str_replace("\r", "", $str);
-            $str = str_replace(" ", "}", $str);
+            $str = str_replace(" ", "&nbsp;", $str);
             echo $str;
             ?>">
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
-                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($answer); ?></font>
+                    <div style="text-align: left" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?></font>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                    <div style="text-align: left" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
                         <font><?php echo $str; ?></font>
                     </div>
                 </td>
@@ -256,7 +261,7 @@ if (isset(Yii::app()->session['type'])) {
         }
 
         var right = text_old.split("");
-        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']);  ?>'.split(" ");
+        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']);   ?>'.split(" ");
         var answer = input.split("");
         var i, j, sright;
         i = 0;
@@ -338,7 +343,7 @@ if (isset($_GET['type'])) {
         ?>
             $(document).ready(function () {
                 $("li#li-look-<?php echo $exer['exerciseID']; ?>").attr('class', 'active');
-               // start();
+                // start();
             });
     <?php } else if ($_GET['type'] === 'listen') { ?>
             $(document).ready(function () {

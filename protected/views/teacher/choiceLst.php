@@ -74,7 +74,12 @@
                                         ?></td>
                         <td class="font-center"><?php  if($model['createPerson']=="0")
                                         echo "管理员";
-                                    else echo  $teachers[$model['createPerson']];
+                                    else 
+                                        if(isset($teachers[$model['createPerson']])){
+                                echo $teachers[$model['createPerson']];
+                            }else{
+                                echo "未知";
+                            }
                             
                             ?></td>
                         <td class="font-center"><?php echo $model['createTime'];?></td>
