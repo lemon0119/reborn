@@ -1,6 +1,6 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> 
 <?php
 if ($isExam == false) {
     require 'suiteSideBar.php';
@@ -147,7 +147,7 @@ if (!$isOver) {
 
 
 
-        <?php
+            <?php
         }
     } else {
         ?>
@@ -155,14 +155,14 @@ if (!$isOver) {
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
-            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;   ?>">
+            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;      ?>">
                 <input id="id_content" type="hidden" value="">
                 <input id="id_speed" type="hidden" value="">
                 <input  name="nm_answer"id="id_answer" type="hidden">
                 <input  name="nm_cost" id="id_cost" type="hidden">
             </form>
         </div>
-<?php } ?>
+    <?php } ?>
 </div>
 <script>
     var yaweiOCX = null;
@@ -173,14 +173,14 @@ if (!$isOver) {
     $(document).ready(function () {
         window.G_isLook = 1;
         var isExam = <?php
-if ($isExam) {
-    Yii::app()->session['isExam'] = 'isExam';
-    echo 1;
-} else {
-    Yii::app()->session['isExam'] = '';
-    echo 0;
-}
-?>;
+    if ($isExam) {
+        Yii::app()->session['isExam'] = 'isExam';
+        echo 1;
+    } else {
+        Yii::app()->session['isExam'] = '';
+        echo 0;
+    }
+    ?>;
         var v =<?php echo Tool::clength($exerOne['content']); ?>;
         $("#wordCount").text(v);
 <?php if (!$isOver) { ?>
@@ -214,16 +214,20 @@ if ($isExam) {
                         };
                         window.wxc.xcConfirm("本题时间已到，不可答题！", "custom", option);
                         clearInterval(isover);
-                        $.post('index.php?r=student/overSuite&&isExam=<?php if ($isExam) {
+                        $.post('index.php?r=student/overSuite&&isExam=<?php
+    if ($isExam) {
         echo 'true';
     } else {
         echo 'false';
-    } ?>', function () {
-                            if (<?php if ($isExam) {
+    }
+    ?>', function () {
+                            if (<?php
+    if ($isExam) {
         echo 'true';
     } else {
         echo 'false';
-    } ?>) {
+    }
+    ?>) {
                                 window.location.href = "index.php?r=student/classExam";
                             }
                             else
@@ -278,18 +282,7 @@ if ($isExam) {
         //菜单栏变色
         $("li#li-look-<?php echo $exerOne['exerciseID']; ?>").attr('class', 'active');
         //显示题目
-        var text = document.getElementById("content").value;
-        if (text.indexOf("\n") > 0) {
-            var arraytext = text.split("\n");
-            for (var i = 0; i < arraytext.length; i++) {
-                var p = document.createElement("p");
-                var father = document.getElementById("templet");
-                createFontWithP("#000000", arraytext[i], p, father);
-            }
-        } else {
             createFont("#000000", document.getElementById("content").value);
-        }
-
     });
 
     function getWordLength() {
@@ -362,78 +355,37 @@ if ($isExam) {
             }
         }
         //--------------------------------------------------
-         controlScroll();
+        controlScroll();
         changWordPS();
         var text_old = '<?php echo $str; ?>';
-        var input = getContent(yaweiOCX).replace(/\r\n/g, "`").replace(/ /g, "}").split("");
-        var text = text_old.split("");
         var allInput2 = yaweiOCX.GetContentWithSteno().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");
-        var longIsAgo = 0;
-        var old = new Array();
-        var oldCode = new Array();
-        var isWrong = false;
-        var wrong = new Array();
-        var div = document.getElementById("templet");
-        while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
-            div.removeChild(div.firstChild);
-        }
-        var length = allInput2.length;
-        var countLength = 0;
-        for (var i = 0; i < length; i++) {
-            if (allInput2[i] !== undefined) {
-                var num = allInput2[i].indexOf(">");
-                var content = allInput2[i].substring(1, num);
-                var yaweiCode = allInput2[i].substring(num + 2, allInput2[i].length).replace(">", "");
-                var long = content.length;
-                countLength += content.length;
-                if (countLength >= text.length) {
-                    length = i;
-                }
-                longIsAgo += long;
-                if (text[longIsAgo - long] != undefined) {
-                    var stringText = text[longIsAgo - long];
-                }
-                for (var j = 1; j < long; j++) {
-                    if (text[longIsAgo - long + j] != undefined) {
-                        stringText += text[longIsAgo - long + j];
-                    }
-                }
-                if (content == stringText) {
-                    if (isWrong == true) {
-                        isWrong = false;
-                        createFont("#ff0000", wrong, "");
-                        wrong = new Array();
-                        old = new Array();
-                        old.push(stringText);
-                        oldCode = new Array();
-                        oldCode.push(yaweiCode);
-                    } else {
-                        old.push(stringText);
-                        oldCode.push(yaweiCode);
-                    }
-                } else {
-                    if (isWrong == true)
-                        wrong.push(stringText);
-                    else {
-                        isWrong = true;
-                        createFont("#808080", old, oldCode);
-                        old = new Array();
-                        oldCode = new Array();
-                        wrong = new Array();
-                        wrong.push(stringText);
-                    }
-                }
+        var worker4CreateFont = new Worker('js/exerJS/Thread4CreateFont.js');
+        var contentValue = document.getElementById("content").value;
+                    
+            
+        worker4CreateFont.onmessage = function (event) {
+            var content = event.data.content;
+            var div = document.getElementById("templet");
+            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
+                div.removeChild(div.firstChild);
             }
-        }
+            var f = document.createElement("font");
+            f.innerHTML = content.content;
+            div.appendChild(f);
+        };
 
-        if (countLength !== 0) {
-            createFont("#808080", old, oldCode);
-            createFont("#ff0000", wrong, "");
-        }
-        if (inputO.length < text.length) {
-            var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
-            createFont("#000000", left, "");
-        }
+        worker4CreateFont.postMessage({
+            value: {
+                inputO: inputO,
+                text_old: text_old,
+                allInput2: allInput2,
+                briefCode: window.briefCode,
+                briefOriginalYaweiCode: window.briefOriginalYaweiCode,
+                briefType: window.briefType,
+                contentValue:contentValue
+            }
+        });
+
     }
 
     function createFont(color, text, code) {
@@ -516,16 +468,20 @@ if ($isExam) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 //doSubmit(true);
-                $.post('index.php?r=student/overSuite&&isExam=<?php if ($isExam) {
+                $.post('index.php?r=student/overSuite&&isExam=<?php
+if ($isExam) {
     echo 'true';
 } else {
     echo 'false';
-} ?>', function () {
-                    if (<?php if ($isExam) {
+}
+?>', function () {
+                    if (<?php
+if ($isExam) {
     echo 'true';
 } else {
     echo 'false';
-} ?>) {
+}
+?>) {
                         window.location.href = "index.php?r=student/classExam";
                     }
                     else
