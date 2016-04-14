@@ -3,7 +3,7 @@
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
             <li>&nbsp;</li>
-            <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><button  class="btn_bigret"></button></a>
+            <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>"><button  class="btn_4superbig" >返&nbsp;&nbsp;&nbsp;&nbsp;回</button></a>
             <li>&nbsp;</li>
         </ul>
     </div>

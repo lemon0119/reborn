@@ -13,7 +13,7 @@
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">确认删除</button>　　　　　　　　
-                <a href="./index.php?r=admin/recycleTea" class="btn" onclick="">取　　消</a>
+                <a href="./index.php?r=admin/recycleTea" class="btn btn-primary" onclick="">取　　消</a>
             </div>
         </fieldset>
     </form>

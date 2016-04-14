@@ -1456,6 +1456,22 @@ class TeacherController extends CController {
             ));
         }
     }
+    
+    public function actionteaInformation(){
+        $ID = Yii::app()->session['userid_now'];
+        $teacher = Teacher::model()->find("userID = '$ID'");
+        return $this->render('teaInformation', array(
+                    'id' => $teacher ['userID'],
+                    'name' => $teacher ['userName'],
+                    'department' => $teacher ['department'],
+                    'school'=>$teacher['school'],
+                    'sex' => $teacher['sex'],
+                    'age' => $teacher['age'],
+                    'password' => $teacher['password'],
+                    'mail_address' => $teacher['mail_address'],
+                    'phone_number' => $teacher['phone_number']
+        ));
+    }
 
     public function actionReturnFromAddLook() {
         if (Yii::app()->session['lastUrl'] == "lookLst") {
