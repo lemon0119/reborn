@@ -192,7 +192,7 @@
            }
         } 
         if(flag===0){
-           window.wxc.xcConfirm('未选中任何题目', window.wxc.xcConfirm.typeEnum.info);
+           window.wxc.xcConfirm('未选中任何学生', window.wxc.xcConfirm.typeEnum.info);
         }else{
              var option = {
 						title: "警告",

@@ -129,10 +129,18 @@ $("#form-addTea").submit(function(){
     }
     var phone_number = $("#input06")[0].value;
         if (phone_number !=="" && phone_number.length!==11 ) {
-            window.wxc.xcConfirm('联系电话格式有误', window.wxc.xcConfirm.typeEnum.warning);
+            window.wxc.xcConfirm('请按提示正确填写资料！', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
         
+        var mail_address = $("#input07")[0].value;
+        var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+        if (mail_address == "") {
+            return true;
+        } else if (!pattern.test(mail_address)) {
+            window.wxc.xcConfirm('请按提示正确填写资料！', window.wxc.xcConfirm.typeEnum.info);
+            return false;
+        }
        
 });
 
@@ -192,7 +200,7 @@ $("#form-addTea").submit(function(){
     usertipsSpan.style.marginLeft="25px";
     if (phone_number.length !== 11 && phone_number !== "") {  
         usertipsSpan.innerHTML="请输入正确的联系电话！";  
-        document.getElementById("input06").value="";
+//        document.getElementById("input06").value="";
         return false;  
     } else {  
         usertipsSpan.innerHTML='';  
@@ -213,7 +221,7 @@ $("#form-addTea").submit(function(){
     usertipsSpan.style.marginLeft="25px";
     if (!pattern.test(mail_address)) {  
         usertipsSpan.innerHTML="请输入正确的邮箱地址";  
-        document.getElementById("input07").value="";
+//        document.getElementById("input07").value="";
         return false;  
     } else {  
         usertipsSpan.innerHTML=''; 

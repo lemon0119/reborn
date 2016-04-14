@@ -139,20 +139,20 @@ foreach ($userAll as $key => $value) {
             }
         }
 
-//        var phone_number = $("#input09")[0].value;
-//        if (phone_number.length !== 11 && phone_number !== "") {
-//            window.wxc.xcConfirm('请输入正确的联系电话！', window.wxc.xcConfirm.typeEnum.warning);
-//            return false;
-//        }
-//
-//        var mail_address = $("#input10")[0].value;
-//        var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-//        if (mail_address == "") {
-//            return true;
-//        } else if (!pattern.test(mail_address)) {
-//            window.wxc.xcConfirm('请输入正确的邮箱地址', window.wxc.xcConfirm.typeEnum.info);
-//            return false;
-//        }
+        var phone_number = $("#input09")[0].value;
+        if (phone_number.length !== 11 && phone_number !== "") {
+            window.wxc.xcConfirm('请按提示正确填写资料！', window.wxc.xcConfirm.typeEnum.warning);
+            return false;
+        }
+
+        var mail_address = $("#input10")[0].value;
+        var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+        if (mail_address == "") {
+            return true;
+        } else if (!pattern.test(mail_address)) {
+            window.wxc.xcConfirm('请按提示正确填写资料！', window.wxc.xcConfirm.typeEnum.info);
+            return false;
+        }
     });
 
     function chkMail(){
@@ -169,7 +169,7 @@ foreach ($userAll as $key => $value) {
     usertipsSpan.style.marginLeft="25px";
     if (!pattern.test(mail_address)) {  
         usertipsSpan.innerHTML="请输入正确的邮箱地址";  
-        document.getElementById("input10").value="";
+//        document.getElementById("input10").value="";
         return false;  
     } else {  
         usertipsSpan.innerHTML=''; 
@@ -191,7 +191,7 @@ foreach ($userAll as $key => $value) {
     usertipsSpan.style.marginLeft="25px";
     if (phone_number.length !== 11 && phone_number !== "") {  
         usertipsSpan.innerHTML="请输入正确的联系电话！";  
-        document.getElementById("input09").value="";
+//        document.getElementById("input09").value="";
         return false;  
     } else {  
         usertipsSpan.innerHTML='';  
