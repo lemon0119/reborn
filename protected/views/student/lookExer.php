@@ -1,6 +1,6 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> 
 <?php
 if ($isExam == false) {
     require 'suiteSideBar.php';
@@ -25,8 +25,8 @@ if ($isExam) {
 ?>
 <?php
 $sqlClassExerciseRecord = null;
-$squence=0;
-$exerciseID=0;
+$squence = 0;
+$exerciseID = 0;
 if (!$isOver) {
     $exerciseID = $exerOne['exerciseID'];
     $studentID = Yii::app()->session['userid_now'];
@@ -36,7 +36,7 @@ if (!$isOver) {
     if ($sqlClassExerciseRecord != null) {
         ?>
         <div class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
-            <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php }?>
+            <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php } ?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" type="hidden" style="height: 5px;" value="<?php
             $str = str_replace("\n", "`", $exerOne['content']);
@@ -52,7 +52,7 @@ if (!$isOver) {
             <?php } else { ?>
                 <div  id="span" class="hero-unit" align="center">
                     <div style="width: 660px">
-<!--                        <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>-->
+                        <!--                        <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>-->
                         <button id="toggle" style="float: right;" class="btn btn-primary">展开</button>
                     </div>
                     <div id="Analysis">
@@ -147,21 +147,22 @@ if (!$isOver) {
 
 
 
-        <?php }
+            <?php
+        }
     } else {
         ?>
         <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
-            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;  ?>">
+            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;      ?>">
                 <input id="id_content" type="hidden" value="">
                 <input id="id_speed" type="hidden" value="">
                 <input  name="nm_answer"id="id_answer" type="hidden">
                 <input  name="nm_cost" id="id_cost" type="hidden">
             </form>
         </div>
-<?php } ?>
+    <?php } ?>
 </div>
 <script>
     var yaweiOCX = null;
@@ -172,14 +173,14 @@ if (!$isOver) {
     $(document).ready(function () {
         window.G_isLook = 1;
         var isExam = <?php
-if ($isExam) {
-    Yii::app()->session['isExam'] = 'isExam';
-    echo 1;
-} else {
-    Yii::app()->session['isExam'] = '';
-    echo 0;
-}
-?>;
+    if ($isExam) {
+        Yii::app()->session['isExam'] = 'isExam';
+        echo 1;
+    } else {
+        Yii::app()->session['isExam'] = '';
+        echo 0;
+    }
+    ?>;
         var v =<?php echo Tool::clength($exerOne['content']); ?>;
         $("#wordCount").text(v);
 <?php if (!$isOver) { ?>
@@ -213,13 +214,25 @@ if ($isExam) {
                         };
                         window.wxc.xcConfirm("本题时间已到，不可答题！", "custom", option);
                         clearInterval(isover);
-                        $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
-                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
-                        window.location.href = "index.php?r=student/classExam";
-                    }
-                    else
-                        window.location.href = "index.php?r=student/classwork";
-                });
+                        $.post('index.php?r=student/overSuite&&isExam=<?php
+    if ($isExam) {
+        echo 'true';
+    } else {
+        echo 'false';
+    }
+    ?>', function () {
+                            if (<?php
+    if ($isExam) {
+        echo 'true';
+    } else {
+        echo 'false';
+    }
+    ?>) {
+                                window.location.href = "index.php?r=student/classExam";
+                            }
+                            else
+                                window.location.href = "index.php?r=student/classwork";
+                        });
                     }
                 }, 1000);
 <?php } ?>
@@ -254,7 +267,7 @@ if ($isExam) {
             success: function (data) {
                 briefCode = (data.split("$")[0]).split("&");
                 briefOriginalYaweiCode = (data.split("$")[1]).split("&");
-                 briefType = (data.split("$")[2]).split("&");
+                briefType = (data.split("$")[2]).split("&");
             },
             error: function (xhr, type, exception) {
                 console.log(xhr, "Failed");
@@ -269,18 +282,7 @@ if ($isExam) {
         //菜单栏变色
         $("li#li-look-<?php echo $exerOne['exerciseID']; ?>").attr('class', 'active');
         //显示题目
-        var text = document.getElementById("content").value;
-        if (text.indexOf("\n") > 0) {
-            var arraytext = text.split("\n");
-            for (var i = 0; i < arraytext.length; i++) {
-                var p = document.createElement("p");
-                var father = document.getElementById("templet");
-                createFontWithP("#000000", arraytext[i], p, father);
-            }
-        } else {
             createFont("#000000", document.getElementById("content").value);
-        }
-
     });
 
     function getWordLength() {
@@ -288,23 +290,23 @@ if ($isExam) {
         return input.length;
     }
 
-  function checkYaweiCode(content) {
+    function checkYaweiCode(content) {
         for (var i = 0; i < briefCode.length; i++) {
             if (content.content.indexOf(briefCode[i]) >= 0) {
                 var re = new RegExp(briefCode[i], "g");
                 if (briefCode[i].length === 2) {
-                    if(briefType[i]=='X'){
+                    if (briefType[i] == 'X') {
                         content.content = content.content.replace(re, "<span style='border-bottom:1px solid blue'>" + briefCode[i] + "</span>");
-                    }else if(briefType[i]=='W'){
-                         content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
-                    }else{
-                         content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
+                    } else if (briefType[i] == 'W') {
+                        content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
+                    } else {
+                        content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
                     }
-                } else if (briefCode[i].length===3) {
+                } else if (briefCode[i].length === 3) {
                     content.content = content.content.replace(re, "<span style='border-bottom:3px solid #0090b0'>" + briefCode[i] + "</span>");
-                } else if (briefCode[i].length===4) {
+                } else if (briefCode[i].length === 4) {
                     content.content = content.content.replace(re, "<span style='border-bottom:5px solid green'>" + briefCode[i] + "</span>");
-                }else if (briefCode[i].length>4) {
+                } else if (briefCode[i].length > 4) {
                     content.content = content.content.replace(re, "<span style='border-bottom:5px solid #FF84BA'>" + briefCode[i] + "</span>");
                 }
 
@@ -313,6 +315,9 @@ if ($isExam) {
     }
 
     function onStenoPressKey(pszStenoString, device) {
+        yaweiOCX.UpdateView();
+        var inputO = getContent(yaweiOCX);
+        yaweiOCX.Locate(inputO.length);
         window.GA_answer = yaweiOCX.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){
@@ -328,7 +333,7 @@ if ($isExam) {
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = yaweiOCX.GetContent().replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_content = inputO.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
@@ -350,9 +355,40 @@ if ($isExam) {
             }
         }
         //--------------------------------------------------
+        controlScroll();
+        changWordPS();
+        var text_old = '<?php echo $str; ?>';
+        var allInput2 = yaweiOCX.GetContentWithSteno().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");
+        var worker4CreateFont = new Worker('js/exerJS/Thread4CreateFont.js');
+        var contentValue = document.getElementById("content").value;
+                    
+            
+        worker4CreateFont.onmessage = function (event) {
+            var content = event.data.content;
+            var div = document.getElementById("templet");
+            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
+                div.removeChild(div.firstChild);
+            }
+            var f = document.createElement("font");
+            f.innerHTML = content.content;
+            div.appendChild(f);
+        };
+
+        worker4CreateFont.postMessage({
+            value: {
+                inputO: inputO,
+                text_old: text_old,
+                allInput2: allInput2,
+                briefCode: window.briefCode,
+                briefOriginalYaweiCode: window.briefOriginalYaweiCode,
+                briefType: window.briefType,
+                contentValue:contentValue
+            }
+        });
+
     }
 
-     function createFont(color, text, code) {
+    function createFont(color, text, code) {
         var father = document.getElementById("templet");
         var f = document.createElement("font");
         var content = {content: ""};
@@ -363,7 +399,7 @@ if ($isExam) {
                     for (var j = 0; j < briefOriginalYaweiCode.length; j++) {
                         if (text[i] == briefCode[j]) {
                             isBrief++;
-                            if (code[i] == briefOriginalYaweiCode[j].replace(":0", "")|| (code[i] == "W:X")) {
+                            if (code[i] == briefOriginalYaweiCode[j].replace(":0", "") || (code[i] == "W:X")) {
                                 isBrief--;
                             }
                         }
@@ -411,137 +447,6 @@ if ($isExam) {
             div.scrollTop = (line - 3) * 30;
         }
     }
-    function onChange() {
-        yaweiOCX.UpdateView();
-        var inputO = getContent(yaweiOCX);
-        yaweiOCX.Locate(inputO.length);
-        controlScroll();
-        changWordPS();
-        var text_old = '<?php echo $str; ?>';
-//        if (text_old.indexOf("<br/>") > 0) {
-//            var div = document.getElementById("templet");
-//            while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
-//                div.removeChild(div.firstChild);
-//            }
-//            var input_old = getContent(yaweiOCX);
-//            var arrayinput = input_old.split("\n");
-//            var father = document.getElementById("templet");
-//            var arraytext = text_old.split("<br/>");
-//            for (var s = 0; s < arraytext.length; s++) {
-//                var p = document.createElement("p");
-//                if (arrayinput[s]) {
-//                    var input_p = arrayinput[s].split("");
-//                    var text_p = arraytext[s].split("");
-//                    var old = "";
-//                    var isWrong = false;
-//                    var wrong = "";
-//                    for (var i = 0; i < input_p.length && i < text_p.length; i++) {
-//                        if (input_p[i] == text_p[i]) {
-//                            if (isWrong == true) {
-//                                isWrong = false;
-//                                createFontWithP("#ff0000", wrong, p, father);
-//                                wrong = "";
-//                                old = text_p[i];
-//                            } else {
-//                                old += text_p[i];
-//                            }
-//                        }
-//                        else {
-//                            if (isWrong == true)
-//                                wrong += text_p[i];
-//                            else {
-//                                isWrong = true;
-//                                createFontWithP("#808080", old, p, father);
-//                                old = "";
-//                                wrong = text_p[i];
-//                            }
-//                        }
-//                    }
-//                    createFontWithP("#808080", old, p, father);
-//                    createFontWithP("#ff0000", wrong, p, father);
-//                    if (input_p.length < text_p.length) {
-//                        var left_p = arraytext[s].substr(input_p.length);
-//                        createFontWithP("#000000", left_p, p, father);
-//                    }
-//                } else if (!arrayinput[s]) {
-//                    createFontWithP("#000000", arraytext[s], p, father);
-//                }
-//            }
-//        } else {
-        var input = getContent(yaweiOCX).replace(/\r\n/g, "`").replace(/ /g, "}").split("");
-        var text = text_old.split("");
-        var allInput2 = yaweiOCX.GetContentWithSteno().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");
-        var longIsAgo = 0;
-        var old = new Array();
-        var oldCode = new Array();
-        var isWrong = false;
-        var wrong = new Array();
-        var div = document.getElementById("templet");
-        while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
-            div.removeChild(div.firstChild);
-        }
-        var length = allInput2.length;
-        var countLength = 0;
-        for (var i = 0; i < length; i++) {
-            if (allInput2[i] !== undefined) {
-                var num = allInput2[i].indexOf(">");
-                var content = allInput2[i].substring(1, num);
-                var yaweiCode = allInput2[i].substring(num + 2, allInput2[i].length).replace(">", "");
-                var long = content.length;
-                countLength += content.length;
-                if (countLength >= text.length) {
-                    length = i;
-                }
-                longIsAgo += long;
-                if (text[longIsAgo - long] != undefined) {
-                    var stringText = text[longIsAgo - long];
-                }
-                for (var j = 1; j < long; j++) {
-                    if (text[longIsAgo - long + j] != undefined) {
-                        stringText += text[longIsAgo - long + j];
-                    }
-                }
-                if (content == stringText) {
-                    if (isWrong == true) {
-                        isWrong = false;
-                        createFont("#ff0000", wrong, "");
-                        wrong = new Array();
-                        old = new Array();
-                        old.push(stringText);
-                        oldCode = new Array();
-                        oldCode.push(yaweiCode);
-                    } else {
-                        old.push(stringText);
-                        oldCode.push(yaweiCode);
-                    }
-                } else {
-                    if (isWrong == true)
-                        wrong.push(stringText);
-                    else {
-                        isWrong = true;
-                        createFont("#808080", old, oldCode);
-                        old = new Array();
-                        oldCode = new Array();
-                        wrong = new Array();
-                        wrong.push(stringText);
-                    }
-                }
-            }
-        }
-
-        if (countLength !== 0) {
-            createFont("#808080", old, oldCode);
-            createFont("#ff0000", wrong, "");
-        }
-        if (inputO.length < text.length) {
-            var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
-            createFont("#000000", left, "");
-        }
-//            if((text.length - longIsAgo)<1){
-//                window.G_isOverFlag = 1;
-//            }
-        // }
-    }
     window.G_exerciseType = "answerRecord";
     window.G_squence = <?php echo $squence; ?>;
     var recordID = <?php echo $recordID ?>;
@@ -557,14 +462,26 @@ if ($isExam) {
         var suiteID = <?php echo Yii::app()->session['suiteID']; ?>;
         window.location.href = "./index.php?r=student/clswkOne&&suiteID=" + suiteID;
     }
-     function submitSuite(simple) {
+    function submitSuite(simple) {
         var option = {
             title: "提交试卷",
             btn: parseInt("0011", 4),
             onOk: function () {
                 //doSubmit(true);
-                $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
-                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
+                $.post('index.php?r=student/overSuite&&isExam=<?php
+if ($isExam) {
+    echo 'true';
+} else {
+    echo 'false';
+}
+?>', function () {
+                    if (<?php
+if ($isExam) {
+    echo 'true';
+} else {
+    echo 'false';
+}
+?>) {
                         window.location.href = "index.php?r=student/classExam";
                     }
                     else
