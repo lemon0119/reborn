@@ -158,18 +158,18 @@ $squence = $countSquence + 1;
             if (content.content.indexOf(briefCode[i]) >= 0) {
                 var re = new RegExp(briefCode[i], "g");
                 if (briefCode[i].length === 2) {
-                    if(briefType[i]=='X'){
+                    if (briefType[i] == 'X') {
                         content.content = content.content.replace(re, "<span style='border-bottom:1px solid blue'>" + briefCode[i] + "</span>");
-                    }else if(briefType[i]=='W'){
-                         content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
-                    }else{
-                         content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
+                    } else if (briefType[i] == 'W') {
+                        content.content = content.content.replace(re, "<span style='border-bottom:3px solid blue'>" + briefCode[i] + "</span>");
+                    } else {
+                        content.content = content.content.replace(re, "<span style='border-bottom:2px solid green'>" + briefCode[i] + "</span>");
                     }
-                } else if (briefCode[i].length===3) {
+                } else if (briefCode[i].length === 3) {
                     content.content = content.content.replace(re, "<span style='border-bottom:3px solid #0090b0'>" + briefCode[i] + "</span>");
-                } else if (briefCode[i].length===4) {
+                } else if (briefCode[i].length === 4) {
                     content.content = content.content.replace(re, "<span style='border-bottom:5px solid green'>" + briefCode[i] + "</span>");
-                }else if (briefCode[i].length>4) {
+                } else if (briefCode[i].length > 4) {
                     content.content = content.content.replace(re, "<span style='border-bottom:5px solid #FF84BA'>" + briefCode[i] + "</span>");
                 }
             }
@@ -177,6 +177,9 @@ $squence = $countSquence + 1;
     }
 
     function onStenoPressKey(pszStenoString, device) {
+        yaweiOCX4Look.UpdateView();
+        var input = getContent(yaweiOCX4Look);
+        yaweiOCX4Look.Locate(input.length);
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){
@@ -192,7 +195,7 @@ $squence = $countSquence + 1;
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = yaweiOCX4Look.GetContent().replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_content = input.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
@@ -257,7 +260,7 @@ $squence = $countSquence + 1;
             for (var i = 0; i < text.length; i++) {
                 if (text[i].length < 3) {
                     for (var j = 0; j < briefOriginalYaweiCode.length; j++) {
-                          if (text[i] == briefCode[j]) {
+                        if (text[i] == briefCode[j]) {
                             isBrief++;
                             if (code[i] == briefOriginalYaweiCode[j].replace(":0", "") || (code[i] == "W:X")) {
                                 isBrief--;

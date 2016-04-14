@@ -315,7 +315,12 @@ function getClassExer(lessonID){
                        }else if(data[i]['type']==5){
                            type='自由练习';
                        }
-                       type=type+": "+data[i]['title'];
+                       var content=data[i]['title'];
+                       if (content.length <= 5)
+                            content=content;
+                        else
+                            content=content.substr(0,5)+"...";
+                       type=type+": "+content;
                       var str;
                       if(i%4==0)
                           str="";
@@ -349,6 +354,7 @@ function getExamExercise(examID,workID){
                  document.getElementById("div11").style.display='none';
                  $("#export").children().filter('tr').remove();
                  document.getElementById("export").style.display='none';
+                 document.getElementById("title").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -366,7 +372,12 @@ function getExamExercise(examID,workID){
                        }else if(data[i]['type']==3){
                            type='看打练习';
                        }
-                       type=type+": "+data[i][0]['title'];
+                       var content=data[i][0]['title'];
+                       if (content.length <= 5)
+                            content=content;
+                        else
+                            content=content.substr(0,5)+"...";
+                       type=type+": "+content;
                        var str;
                        if(i%4==0)
                            str="";
