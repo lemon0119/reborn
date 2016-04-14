@@ -51,7 +51,7 @@ echo 'style="color:#f46500"';Yii::app()->session['insert_course']="";}else{echo 
 
             </div>
             <div  style="width: 75%;text-align: center;">
-                 <button onclick="window.location.href = './index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>'" type="button" class="btn">返 回</button><button  type="submit" class="btn btn-primary">添加</button>
+                 <button onclick="window.location.href = './index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>'" type="button" class="btn btn-primary">返 回</button><button  type="submit" class="btn btn-primary">添加</button>
             </div>
         </fieldset>
     </form>   

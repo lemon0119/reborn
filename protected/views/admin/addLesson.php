@@ -25,8 +25,8 @@ echo 'style="color:#f46500"';Yii::app()->session['insert_lesson']="";}else{echo 
                 </div>
             </div>
             <div  style="text-align: center;">
-                <a style="position: relative;right:42px;top:2px;" href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>" class="btn_ret_admin"></a>
-                <button style="position: relative;right:42px" type="submit" class="btn_add_admin"></button>
+                <a  href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID;?>&&courseName=<?php echo $courseName;?>&&createPerson=<?php echo $createPerson;?>" class="btn btn-primary">返回</a>
+                <button  type="submit" class="btn btn-primary">添加</button>
             </div>
         </fieldset>
     </form>   

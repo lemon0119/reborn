@@ -28,7 +28,7 @@ header('Cache-control: private, must-revalidate');
                     </div>
             </div>
             <div  style="width: 65%;text-align: center;">
-             <button onclick="window.location.href = './index.php?r=admin/classLst'" type="button" class="btn">返 回</button><button  type="submit" class="btn btn-primary">添加</button>
+             <button onclick="window.location.href = './index.php?r=admin/classLst'" type="button" class="btn btn-primary">返 回</button><button  type="submit" class="btn btn-primary">添加</button>
             </div>
         </fieldset>
     </form>   
