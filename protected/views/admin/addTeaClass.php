@@ -59,6 +59,21 @@ $corr=$posts->read();
 
 <!-- js控制全选/取消全选  -->    
 <script type="text/javascript"> 
+        $("#myForm").submit(function(){
+    var checkboxs = document.getElementsByName('checkbox[]');
+    var flag = 0;
+        for (var i = 0; i < checkboxs.length; i++) {
+           if(checkboxs[i].checked){
+                flag=1;
+                break;
+           }
+        } 
+        if(flag==0){
+           window.wxc.xcConfirm('未选中任何老师', window.wxc.xcConfirm.typeEnum.info);
+           return false;
+        }
+});    
+
 function check_all(obj,cName) 
 {    
 var checkboxs = document.getElementsByName(cName); 
