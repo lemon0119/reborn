@@ -247,13 +247,13 @@ $(document).ready(function () {
             worker.postMessage({
                 value: [window.G_content, window.GA_originalContent]
             });
-
         }
         //判断统计结束
         if ((nowTime - startTime) > (setEndTime * 1000) || window.G_isOverFlag === 1) {
             window.G_endAnalysis = 1;
             $("#getMomentKeyType").html(0);
             $("#getIntervalTime").html(0);
+            worker.terminate();
             clearInterval(interval);
         }
     }, 5000);
