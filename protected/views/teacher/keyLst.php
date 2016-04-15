@@ -7,7 +7,7 @@
                     <select name="type" >
                         <option value="exerciseID" >编号</option>
                         <option value="createPerson" >创建人</option>
-                        <option value="title" selected="selected">题目名</option>
+                        <option value="title" selected="selected">题目</option>
                     </select>
                 </li>
                 <li>
@@ -127,6 +127,10 @@ $this->widget('CLinkPager', array('pages' => $pages));
 
 <script>
     $(document).ready(function () {
+        var $tip=<?php if(isset($tip)) echo "'$tip'";else echo "''"?>;
+        if($tip=='此题目已经被占用!!!'){
+            window.wxc.xcConfirm($tip, window.wxc.xcConfirm.typeEnum.success);
+        }
         var result = <?php if (isset($result)) echo "'$result'";
 else echo'1'; ?>;
         if (result === '1')
