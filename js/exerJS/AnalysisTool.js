@@ -74,6 +74,7 @@ $(document).ready(function () {
     //2s内统计回改字数     字
     //@param id=getBackDelete 请将最高平均速度统计的控件id设置为getBackDelete  
     var interval = setInterval(function () {
+        var worker;
         var content = window.G_content;
         var keyContent = window.G_keyContent;
         var setEndTime = window.G_setEndTime;
@@ -237,25 +238,31 @@ $(document).ready(function () {
             }
         }
         if (window.G_isLook === 1) {
-            var worker = new Worker('js/exerJS/GetRight_Wrong_AccuracyRate.js');
+            if (typeof (worker) == "undefined")
+            {
+                worker  = new Worker('js/exerJS/GetAccuracyRate.js');;
+            }
             worker.onmessage = function (event) {
-                if (!isNaN(event.data.value)) {
-                    window.GA_RightRadio = event.data.value;
+                if (!isNaN(event.data.accuracyRate)) {
+                    window.GA_RightRadio = event.data.accuracyRate;
                     $("#wordisRightRadio").html(window.GA_RightRadio);
                 }
+                worker.terminate();
             };
             worker.postMessage({
-                value: [window.G_content, window.GA_originalContent]
+                currentContent: window.G_content,
+                originalContent: window.GA_originalContent
             });
+
         }
         //判断统计结束
         if ((nowTime - startTime) > (setEndTime * 1000) || window.G_isOverFlag === 1) {
             window.G_endAnalysis = 1;
             $("#getMomentKeyType").html(0);
             $("#getIntervalTime").html(0);
-            worker.terminate();
             clearInterval(interval);
         }
+
     }, 5000);
 
 });
