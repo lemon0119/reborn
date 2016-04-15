@@ -128,6 +128,7 @@ function savetime(){
         .error(function(){window.wxc.xcConfirm('不好意思，保存出错了...', window.wxc.xcConfirm.typeEnum.info);});
 }
 
+
 $(document).ready(function(){
     allScore();
     function allScore(){
@@ -160,8 +161,9 @@ $(document).ready(function(){
     $('.input_test').bind({
         blur:function(){
             var score = parseInt(this.value);
-            if (this.value !== String(score) && this.value !== ""){
-					window.wxc.xcConfirm('输入内容必须是整数！', window.wxc.xcConfirm.typeEnum.info);
+            if (this.value !== String(score) && this.value !== "" || this.value<0){
+					window.wxc.xcConfirm('输入内容必须是正整数！', window.wxc.xcConfirm.typeEnum.info);
+                                        this.value=0;
             }
         }
     });

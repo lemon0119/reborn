@@ -87,7 +87,7 @@ function long2(){
                 <input type="hidden" name="flag" id="flag" value="1" />
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
                 <input type="file" name="file"  id="file"/><br>   -->
-            
+            </div>
             <div style="margin-top: 30px;">
                 <a class="btn btn-primary" href="./index.php?r=student/index">取消</a>
                 <a class="btn btn-primary" href="#" name="submit" onclick="judge()">确定</a> 

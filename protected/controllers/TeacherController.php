@@ -656,7 +656,7 @@ class TeacherController extends CController {
                 return;
             }
         }
-        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm" &&substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "RM") {
+        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
@@ -1456,6 +1456,22 @@ class TeacherController extends CController {
             ));
         }
     }
+    
+    public function actionteaInformation(){
+        $ID = Yii::app()->session['userid_now'];
+        $teacher = Teacher::model()->find("userID = '$ID'");
+        return $this->render('teaInformation', array(
+                    'id' => $teacher ['userID'],
+                    'name' => $teacher ['userName'],
+                    'department' => $teacher ['department'],
+                    'school'=>$teacher['school'],
+                    'sex' => $teacher['sex'],
+                    'age' => $teacher['age'],
+                    'password' => $teacher['password'],
+                    'mail_address' => $teacher['mail_address'],
+                    'phone_number' => $teacher['phone_number']
+        ));
+    }
 
     public function actionReturnFromAddLook() {
         if (Yii::app()->session['lastUrl'] == "lookLst") {
@@ -1715,7 +1731,7 @@ class TeacherController extends CController {
             $condition = "";
 
             foreach ($arr as $a) {
-                if (strpos($a, '-') == ''||strpos($a, '-') != 0) {
+                if (strpos($a, '-') == '' || strpos($a, '-') != 0) {
                     if ($condition == "")
                         $condition = "'" . $a . "'";
                     else
@@ -5518,8 +5534,8 @@ class TeacherController extends CController {
             $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
             return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $classResult, 'array_class' => $array_class,
                         'array_course' => $array_course, 'sqlcurrentClass' => $sqlcurrentClass]);
-        //} else if (isset($_GET['courseID']) && !isset($_GET['lessonName'])) {   
-          } else if (isset($_GET['courseID']) && !isset($_GET['lessonID'])) {
+            //} else if (isset($_GET['courseID']) && !isset($_GET['lessonName'])) {   
+        } else if (isset($_GET['courseID']) && !isset($_GET['lessonID'])) {
             //显示课程列表逻辑
             $courseID = $_GET ['courseID'];
             $result = Lesson::model()->getLessonLst("", "", $courseID);
@@ -5538,7 +5554,7 @@ class TeacherController extends CController {
                 'posts' => $lessonLst,
                 'pages' => $pages,
             ));
-        //} else if (isset($_GET['lessonName'])) {
+            //} else if (isset($_GET['lessonName'])) {
         } else if (isset($_GET['lessonID'])) {
             $currentClass = Yii::app()->session['currentClass'];
             $sqlcurrentClass = TbClass::model()->find("classID = '$currentClass'");
@@ -5929,23 +5945,27 @@ class TeacherController extends CController {
                         $file_dir = $savePath . $file_name;
                         $file_dir = str_replace("\\", "\\\\", $file_dir);
                         $fp = fopen($file_dir, "r");
-                        $content = fread($fp, filesize($file_dir)); //读文件 
-                        fclose($fp);
-                        unlink($file_dir);
-                        $content = str_replace("\n", "\r\n", $content);
-                        $content = str_replace("\r", "\r\n", $content);
-                        $content = str_replace(" ", "\r\n", $content);
-                        $str = explode("\r\n", $content);
-                        $name = str_replace(".txt", "", $file_name);
-                        $createPerson = Yii::app()->session['userid_now'];
-                        foreach ($str as $value) {
-                            $words = iconv('GBK', 'utf-8', $value);
-                            $strSerchFromLib = TwoWordsLib::model()->find("words LIKE '$words' AND list = 'lib'");
-                            $spell = $strSerchFromLib['spell'];
-                            $yaweiCode = $strSerchFromLib['yaweiCode'];
-                            TwoWordsLibPersonal::model()->insertPersonalLib($spell, $yaweiCode, $words, $name, $createPerson);
+                        if (filesize($file_dir) < 1) {
+                            $uploadResult = '空文件，上传失败';
+                        } else {
+                            $content = fread($fp, filesize($file_dir)); //读文件 
+                            fclose($fp);
+                            unlink($file_dir);
+                            $content = str_replace("\n", "\r\n", $content);
+                            $content = str_replace("\r", "\r\n", $content);
+                            $content = str_replace(" ", "\r\n", $content);
+                            $str = explode("\r\n", $content);
+                            $name = str_replace(".txt", "", $file_name);
+                            $createPerson = Yii::app()->session['userid_now'];
+                            foreach ($str as $value) {
+                                $words = iconv('GBK', 'utf-8', $value);
+                                $strSerchFromLib = TwoWordsLib::model()->find("words LIKE '$words' AND list = 'lib'");
+                                $spell = $strSerchFromLib['spell'];
+                                $yaweiCode = $strSerchFromLib['yaweiCode'];
+                                TwoWordsLibPersonal::model()->insertPersonalLib($spell, $yaweiCode, $words, $name, $createPerson);
+                            }
+                            $uploadResult = '上传成功';
                         }
-                        $uploadResult = '上传成功';
                     }
                 }
             }

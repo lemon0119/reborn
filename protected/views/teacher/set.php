@@ -49,67 +49,47 @@ function long2(){
     }
 }
 </script>
-<div class="setB" style="">
-    <br>
-    <br>
-    <h3 style="margin-left: 450px;">设置密码</h3>
-    <br>
-    <br>
-    <div>
-    <form id="myForm" method="post" action="./index.php?r=teacher/set"> 
-        <table style="margin-left: 300px;">
-            <tr>
-                <td>
-                    <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
-                </td>
-                <td>
-                    <input name="old" type="password"  onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/>
-                </td>
-                <td>
-                    <span id="usertips" style="margin-left: 15px;"></span> 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                   <label class="control-label" for="input02">新密码<h style="color:red;">*</h></label> 
-                </td>
-                <td>
-                    <input name="new1" type="password"  onblur="long()" class="input-xlarge" id="input02" style="height: 30px;"/>
-                </td>
-                <td>
-                    <span id="usertips2" style="margin-left: 15px;"></span> 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                   <label class="control-label" for="input03">确认密码<h style="color:red;">*</h> </label>
-                </td>
-                <td>
-                    <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/>
-                </td>
-                <td>
-                    <span id="usertips3" style="margin-left: 15px;"></span> 
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
-                </td>
-                <td>
-                    <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
-                </td>
-            </tr>
-            <tr style="height: 30px;"></tr>
-            <tr>
-                <td>
 
-                </td>
-                <td style="float:right;">
+<div class="span3">
+       <div class="well" style="padding: 8px 0;height: 565px;">
+           <li class="nav-header"><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人设置</h4></li> 
+           <li class="nav-header" id="two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="cont2" href="./index.php?r=teacher/teaInformation">个人资料</a></li>   
+           <li class="nav-header" id="one"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="cont1" href="./index.php?r=teacher/set">修改密码</a></li>   
+        </div>
+</div>
+
+<div class="span9">
+    <div class="span_set">
+    <h3 >设置密码</h3>
+    
+    <form id="myForm" method="post" action="./index.php?r=teacher/set" enctype="multipart/form-data">
+        <fieldset>
+        <div class="control-group">
+                    <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
+                <div class="controls">
+                    <input name="old" type="password"  onblur="long0()" class="input-xlarge" id="input01" style="height: 30px;"/>
+                    <span id="usertips" style="margin-left: 15px;"></span> 
+                </div>
+                   <label class="control-label" for="input02">新密码<h style="color:red;">*</h></label> 
+                <div class="controls">
+                    <input name="new1" type="password"  onblur="long()" class="input-xlarge" id="input02" style="height: 30px;"/>
+                    <span id="usertips2" style="margin-left: 15px;"></span> 
+                </div>
+                   <label class="control-label" for="input03">确认密码<h style="color:red;">*</h> </label>
+                <div class="controls">
+                    <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/>
+                    <span id="usertips3" style="margin-left: 15px;"></span> 
+                </div>
+                    <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
+                <div class="controls">
+                    <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
+                </div>
+        </div>
+                <div style="margin-top: 30px;">
                     <a class="btn btn-primary" href="./index.php?r=teacher/index">取消</a>
                     <a class="btn btn-primary" href="#" name="submit" onclick="judge()">确定</a> 
-                </td>
-            </tr>
-        </table>
+                </div>
+            </fieldset>
     </form>  
     </div>
 </div>
