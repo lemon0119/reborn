@@ -2187,15 +2187,18 @@ class TeacherController extends CController {
         $thisListen = new ListenType();
         $deleteListen = $thisListen->findAll("exerciseID = '$exerciseID'");
         $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");
-        $filePath = $deleteListen[0]['filePath'];
-        $fileName = $deleteListen[0]['fileName'];
-        if ($deleteResult == '1') {
-            $typename = Yii::app()->session['role_now'];
-            $userid = Yii::app()->session['userid_now'];
+        if(isset($_GET['filePath']) && isset($_GET['fileName'])){
+            $filePath = $deleteListen[0]['filePath'];
+            $fileName = $deleteListen[0]['fileName'];
+            if ($deleteResult == '1') {
+                $typename = Yii::app()->session['role_now'];
+                $userid = Yii::app()->session['userid_now'];
             //怎么用EXER_LISTEN_URL
-            $path = 'resources/' . $filePath . iconv("UTF-8", "gb2312", $fileName);
-            if (file_exists($path))
-                unlink($path);
+                $path = 'resources/' . $filePath . iconv("UTF-8", "gb2312", $fileName);
+                if (file_exists($path)){
+                    unlink($path);
+            }
+        }
         }
         if (Yii::app()->session['lastUrl'] == "listenLst") {
             $result = ListenType::model()->getListenLst("", "");
