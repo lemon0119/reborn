@@ -151,7 +151,7 @@
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (v < 1) {
+                if (!v.match (/^[0-9]+$/) || v==0) {
                     window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error, {
                         onOk: function () {
                             openExam(examID, duration, begintime);
@@ -181,8 +181,8 @@
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (v < 1) {
-                    window.wxc.xcConfirm('时长不能为0！！！', window.wxc.xcConfirm.typeEnum.error);
+                if (!v.match (/^[0-9]+$/) || v==0 ) {
+                    window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error);
                 } else {
                     window.wxc.xcConfirm("你确定要立即开始？", window.wxc.xcConfirm.typeEnum.info, {
                         onOk: function () {
