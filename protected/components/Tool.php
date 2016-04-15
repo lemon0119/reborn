@@ -406,4 +406,17 @@ public static function teacherNotice(){
         
     }
     
+    public static function spliceLookContent($content){
+        $result = [];
+        $length =strlen($content);
+        if($length<3000){
+            $result = [$content];
+        }else if($length>7000){
+           $mid = substr($content,2800,3800) ;
+           
+           
+        }
+        return $result;
+    }
+    
 }

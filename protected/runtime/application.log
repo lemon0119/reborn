@@ -5802,3 +5802,29 @@ Stack trace:
 REQUEST_URI=/reborn/index.php?r=api/getStudentRanking
 HTTP_REFERER=https://localhost/reborn/index.php?r=teacher/watchData&&classID=1
 ---
+2016/04/15 15:17:10 [error] [php] Creating default object from empty value (E:\php_workstation\reborn\protected\models\ClassExercise.php:270)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 E:\php_workstation\framework\web\CController.php(286): TeacherController->runAction()
+#2 E:\php_workstation\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 E:\php_workstation\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 E:\php_workstation\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/openClassExercise
+in E:\php_workstation\reborn\protected\models\ClassExercise.php (270)
+in E:\php_workstation\reborn\protected\controllers\TeacherController.php (6332)
+in E:\php_workstation\reborn\index.php (32)
+2016/04/15 15:17:11 [error] [php] Creating default object from empty value (E:\php_workstation\reborn\protected\models\ClassExercise.php:270)
+Stack trace:
+#0 E:\php_workstation\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 E:\php_workstation\framework\web\CController.php(286): TeacherController->runAction()
+#2 E:\php_workstation\framework\web\CController.php(265): TeacherController->runActionWithFilters()
+#3 E:\php_workstation\framework\web\CWebApplication.php(284): TeacherController->run()
+#4 E:\php_workstation\framework\web\CWebApplication.php(142): CWebApplication->runController()
+#5 E:\php_workstation\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#6 E:\php_workstation\reborn\index.php(32): CWebApplication->run()
+REQUEST_URI=/reborn/index.php?r=teacher/openClassExercise
+in E:\php_workstation\reborn\protected\models\ClassExercise.php (270)
+in E:\php_workstation\reborn\protected\controllers\TeacherController.php (6332)
+in E:\php_workstation\reborn\index.php (32)

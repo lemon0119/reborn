@@ -6357,7 +6357,7 @@ class TeacherController extends CController {
             $speed = (int) $ratio_speed[$end];
             $maxSpeed = (int) $ratio_maxSpeed[$end];
             $correct = round($ratio_correct[$end] * 100) / 100;
-            $time = count($ratio_speed) * 2 - 2;
+            $time = count($ratio_speed) * 5 - 5;
             $allKey = (int) $all_count[$end];
             $arrayData = ["studentID" => $studentID, "studentName" => $studentName, "speed" => $speed, "maxSpeed" => $maxSpeed, "correct" => $correct, "time" => $time, "allKey" => $allKey, "title" => $title];
             array_push($data, $arrayData);
