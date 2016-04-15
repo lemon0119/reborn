@@ -72,13 +72,9 @@ function LCS(str1, str2) {
     };
 }
 
-
-var accuracyRate;
-var currentContent;
-var originalContent;
 onmessage = function (event) {
-    currentContent = event.data.value[0];
-    originalContent = event.data.value[1];
+    var currentContent = event.data.currentContent;
+    var originalContent = event.data.originalContent;
     var allCount = 0;
     var rightCount = 0;
     var lcs = new LCS(currentContent, originalContent);
@@ -86,10 +82,11 @@ onmessage = function (event) {
     allCount = lcs.getStrOrg(1).length;
     rightCount = lcs.getSubString(3).length;
     var correct = rightCount / allCount;
-    accuracyRate = Math.round(correct * 100);
-    this.postMessage({
-        type: 'return',
-        value: accuracyRate
+    var accuracyRate = Math.round(correct * 100);
+    postMessage({
+        originalContent:originalContent,
+        currentContent: currentContent,
+        accuracyRate: accuracyRate
     });
 };
 

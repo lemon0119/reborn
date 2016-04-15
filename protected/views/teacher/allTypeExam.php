@@ -28,7 +28,7 @@
         <thead>
             <tr>
                 <th class="font-center">编号</th>
-                <th class="font-center">科目</th>
+<!--                <th class="font-center">科目</th>-->
                 <th class="font-center">题目</th>
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
@@ -40,8 +40,8 @@
                     <?php foreach($workLst as $allwork):?>
                     <tr>
                         <td class="font-center" style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
-                        <td class="font-center"><?php echo $allwork['courseID'];
-                            ?></td>
+<!--                        <td class="font-center"><?php //echo $allwork['courseID'];
+                            ?></td>-->
                         <td title="<?php echo $allwork['title'];?>" class="font-center"> <?php  if(tool::clength($allwork['title'])<=5)
                                         echo $allwork['title'];
                                     else

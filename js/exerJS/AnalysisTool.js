@@ -237,15 +237,16 @@ $(document).ready(function () {
             }
         }
         if (window.G_isLook === 1) {
-            var worker = new Worker('js/exerJS/GetRight_Wrong_AccuracyRate.js');
+            var worker = new Worker('js/exerJS/GetAccuracyRate.js');
             worker.onmessage = function (event) {
-                if (!isNaN(event.data.value)) {
-                    window.GA_RightRadio = event.data.value;
+                if (!isNaN(event.data.accuracyRate)) {
+                    window.GA_RightRadio = event.data.accuracyRate;
                     $("#wordisRightRadio").html(window.GA_RightRadio);
                 }
             };
             worker.postMessage({
-                value: [window.G_content, window.GA_originalContent]
+                currentContent: window.G_content, 
+                originalContent:window.GA_originalContent
             });
         }
         //判断统计结束

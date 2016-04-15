@@ -16,16 +16,15 @@ class StudentController extends CController {
     public $layout = '//layouts/studentBar';
 
     public function actionOverSuite() {
-        error_log('over');
-        if (isset($_GET['isExam']) && $_GET['isExam'] =='false') {
-            error_log($_GET['isExam']);
-            SuiteRecord::saveSuiteRecord($recordID);
-            SuiteRecord::overSuite($recordID);
-        } else {
+        //if (isset($_GET['isExam']) && $_GET['isExam'] =='false') {
+        if ($_GET['isExam']) {
             //这里，应该改成修改考试记录examRecord
             ExamRecord::saveExamRecord($recordID);
             ExamRecord::overExam($recordID);
             //ExamRecord::overExam();
+        } else {
+            SuiteRecord::saveSuiteRecord($recordID);
+            SuiteRecord::overSuite($recordID);
         }
     }
      protected function renderJSON($data) {
@@ -214,6 +213,7 @@ class StudentController extends CController {
 
     public function actionSaveChoice() {
         //查看是否有answer，即是否是用户提交了答案。
+        error_log("yy");
         if (isset($_POST['qType']) && $_POST['qType'] == "choice") {
             if (Yii::app()->session['isExam'])
                 ExamRecord::saveExamRecord($recordID);
