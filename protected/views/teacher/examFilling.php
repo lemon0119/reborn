@@ -48,9 +48,9 @@
                     echo '</div>';
                     echo '<br/>';
                     $n++;?>
-                    分数:<span class="limit"><?php $s=$m;echo $exam_exercise[$m++]['score'];?></span><br/>
+                    分数:<span class="limit"><?php echo $exam_exercise[$m++]['score'];?></span><br/>
                     得分:
-                    <input class="value" type="text" id="input" onblur="judge(<?php echo $exam_exercise[$s]['score'];?>,this)" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score'];else echo " ";?>"> 
+                    <input class="value" type="text" id="input" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score'];else echo " ";?>"> 
                      
             <?php echo "<br/>";}?>
         </div>
@@ -61,38 +61,28 @@
     
 </div>
 <script>
-    function judge(limit,a){
-        if(a.value<0){
-             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
-            a.value="";
-        }
-        if(a.value>limit){
-            window.wxc.xcConfirm("配分超过上限！", window.wxc.xcConfirm.typeEnum.error);
-            a.value="";
-        }
-    }
        $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
 
     });
-//    $('.value').blur(function (){ 
-//        for(var i = 0 ; i < <?php echo count($works);?>; ++i){
-//            var limit = $(".limit:eq("+i+")").html();
-//            var input = $(".value:eq("+i+")").val();
-////            console.log('input',parseInt(input));
-////            console.log('limit',parseInt(limit));
-//         var value1 = $("#input")[0].value;
-//            var re = /^([1-9]\d*|[0]{1,1})$/; 
-//            if(!re.test(value1)){
-//                window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
-//                $(".value:eq("+i+")").val('');
-//            }
-//            if(value1 > parseInt(limit)){
-//                window.wxc.xcConfirm("配分超过上限！", window.wxc.xcConfirm.typeEnum.error);
-//                $(".value:eq("+i+")").val('');
-//            }
-//        }
-//    });
+    $('.value').blur(function (){ 
+        for(var i = 0 ; i < <?php echo count($works);?>; ++i){
+            var limit = $(".limit:eq("+i+")").html();
+            var input = $(".value:eq("+i+")").val();
+//            console.log('input',parseInt(input));
+//            console.log('limit',parseInt(limit));
+         var value1 = $("#input")[0].value;
+            var re = /^([1-9]\d*|[0]{1,1})$/; 
+            if(!re.test(value1)){
+                window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
+                $(".value:eq("+i+")").val('');
+            }
+            if(value1 > parseInt(limit)){
+                window.wxc.xcConfirm("配分超过上限！", window.wxc.xcConfirm.typeEnum.error);
+                $(".value:eq("+i+")").val('');
+            }
+        }
+    });
     function saveScore(){
         var scores = new Array();
             var n=0;

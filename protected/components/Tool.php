@@ -110,7 +110,7 @@ class Tool {
         // echo("rand:$rand_number\n");
         // echo("cs:$cs\n");
         $tm = $tm + "";
-        $id = "1".substr($tm, - 7);
+        $id = substr($tm, - 7);
         // echo("id:$id\n");
         $str_rand = sprintf("%02d", $rand_number);
         $id = $id . $str_rand;
