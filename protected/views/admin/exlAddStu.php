@@ -36,8 +36,8 @@
             </table>
             <div class="form-actions">
                 <input type="submit" class="btn btn-primary" value="添加" />&nbsp;&nbsp;<a
-                    href="./index.php?r=admin/addStu" class="btn">逐个添加</a>&nbsp;&nbsp;<a
-                    href="./index.php?r=admin/stuLst" class="btn">返回</a>
+                    href="./index.php?r=admin/addStu" class="btn btn-primary">逐个添加</a>&nbsp;&nbsp;<a
+                    href="./index.php?r=admin/stuLst" class="btn btn-primary">返回</a>
             </div>
         </fieldset>
     </form>

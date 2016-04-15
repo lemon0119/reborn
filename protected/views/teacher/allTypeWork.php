@@ -47,10 +47,10 @@
                                     else
                                         echo Tool::csubstr($allwork['title'], 0, 5)."...";?></td>
                         
-                        <td title="<?php echo Tool::filterKeyContent($allwork['content']);?>" class="font-center"><?php  if(Tool::clength(Tool::filterKeyContent($allwork['content']))<=14)
+                        <td title="<?php echo Tool::filterKeyContent($allwork['content']);?>" class="font-center"><?php  if(Tool::clength(Tool::filterKeyContent($allwork['content']))<=10)
                                         echo Tool::filterKeyContent($allwork['content']);
                                     else
-                                        echo Tool::csubstr(Tool::filterKeyContent($allwork['content']), 0,14)."...";
+                                        echo Tool::csubstr(Tool::filterKeyContent($allwork['content']), 0,10)."...";
                                         ?></td>
                         <td class="font-center">
                             <?php  if($allwork['createPerson']=="0")
