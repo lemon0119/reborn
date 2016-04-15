@@ -40,7 +40,7 @@
             </div>             
         </div>
         <button type="submit"  class="btn btn-primary">确定</button>
-        <a onclick="deleteAll();" class="btn">清空</a>
+        <a onclick="deleteAll();" class="btn btn-primary">清空</a>
     </form>
     
 </div>
