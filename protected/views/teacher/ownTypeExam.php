@@ -23,7 +23,7 @@
                 <th class="font-center">内容</th>
                 <th class="font-center">创建时间</th>
                 <th class="font-center">分值</th>
-                <!--<th class="font-center">时长(分钟)</th>-->
+                <th class="font-center">时长(分钟)</th>
                 <th class="font-center">操作</th>               
             </tr>
         </thead>
@@ -56,6 +56,9 @@
                         </td>   
                         <td class="font-center">
                             <?php  echo $thisExam['score']?>
+                        </td>
+                        <td class="font-center">
+                            <?php  echo $thisExam['time']?>
                         </td>
                         <td class="font-center" style="width: 50px">            
                             <a href="#"  onclick="dele('<?php echo $type?>' ,<?php echo $work['exerciseID'] ?>,<?php echo $exam['examID'] ?>,<?php echo $pages->currentPage+1?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>                          

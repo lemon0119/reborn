@@ -53,18 +53,17 @@
                     <td class="font-center" style="width: 100px"><?php echo $exam['examName']; ?></td>                        
 
                     <td class="font-center">
-                        <?php if ($isOpen == false) { 
-                        echo "-";}else {echo $exam['begintime'];}?>
+                        <?php echo $exam['begintime'] ?>
                     </td>
                     <td class="font-center">
                         <?php echo $exam['duration'] . "分钟" ?>
                     </td>
                     <td class="font-center">
                         <?php if ($isOpen == false) { ?>
-                            <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo date("Y-m-d H:i:s", time()); ?>')" style="color: green" >预约发布</a>
+                            <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo $exam['begintime'] ?>')" style="color: green" >发布</a>
                             <font style="color:grey">关闭</font>
                         <?php } else { ?>
-                            <font style="color:grey">预约发布</font>
+                            <font style="color:grey">发布</font>
                             <a href="./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $exam['examID']; ?>&&duration=<?php echo $exam['duration']; ?>&&beginTime=<?php echo $exam['begintime']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1; ?>" style="color: red">关闭</a>
                         <?php } ?>  
                     </td>   
@@ -147,11 +146,10 @@
 
     function openExam(examID, duration, begintime)
     {
-        var begin=begintime;
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (v < 1) {
+                if (!v.match (/^[0-9]+$/) || v==0) {
                     window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error, {
                         onOk: function () {
                             openExam(examID, duration, begintime);
@@ -159,16 +157,8 @@
                     });
                 } else {
                     var beginTime = prompt("开始时间", begintime);
-                    if(beginTime)
                     {
-                        if(beginTime<begin){
-                              window.wxc.xcConfirm("开始时间不能小于当前时间！", window.wxc.xcConfirm.typeEnum.confirm);
-                              return ;
-                        }else{
-                            window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
-                        }
-                    }else{
-                        return ;
+                        window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
                     }
                 }
             }
@@ -181,8 +171,9 @@
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (v < 1) {
-                    window.wxc.xcConfirm('时长不能为0！！！', window.wxc.xcConfirm.typeEnum.error);
+                
+                if (!v.match (/^[0-9]+$/) || v==0 ) {
+                    window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error);
                 } else {
                     window.wxc.xcConfirm("你确定要立即开始？", window.wxc.xcConfirm.typeEnum.info, {
                         onOk: function () {

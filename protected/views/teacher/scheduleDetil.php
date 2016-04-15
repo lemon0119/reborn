@@ -224,8 +224,12 @@ echo $courseName; ?></h3>
         var txt=  "原课名:"+courseName;
 					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
 						onOk:function(v){
+                                                    if(v==""){
+                                                        window.wxc.xcConfirm('请填入新课名！', window.wxc.xcConfirm.typeEnum.warning);
+                                                    }else{
                                                     window.location.href="./index.php?r=teacher/scheduleDetil&&courseID="+courseID+"&&lessonID="+lessonID+"&&newName="+v;
 						}
+                                            }
 					});
     }
 </script>

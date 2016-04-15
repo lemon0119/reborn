@@ -316,7 +316,6 @@ function getClassExer(lessonID){
                            type='自由练习';
                        }
                        var content=data[i]['title'];
-                       var allType=type+": "+content;
                        if (content.length <= 5)
                             content=content;
                         else
@@ -325,7 +324,7 @@ function getClassExer(lessonID){
                       var str;
                       if(i%4==0)
                           str="";
-                      str+= "<td><a style='cursor:pointer;' class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getClassExerRanking("+i+","+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";   
+                      str+= "<td><a style='cursor:pointer;' class='bb' id='kk"+i+"'"+" onclick='getClassExerRanking("+i+","+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";   
                       var li;
                       if(i%4==0){
                          li = document.createElement("tr");      
@@ -374,7 +373,6 @@ function getExamExercise(examID,workID){
                            type='看打练习';
                        }
                        var content=data[i][0]['title'];
-                       var allType=type+": "+content;
                        if (content.length <= 5)
                             content=content;
                         else
@@ -383,7 +381,7 @@ function getExamExercise(examID,workID){
                        var str;
                        if(i%4==0)
                            str="";
-                       str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRanking("+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                       str += "<td><a style='cursor:pointer;'class='bb' id='kk"+i+"'"+" onclick='getStudentRanking("+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
                       var li ;
                       if(i%4==0){
                          li= document.createElement("tr");   

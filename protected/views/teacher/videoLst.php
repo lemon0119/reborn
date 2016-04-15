@@ -58,12 +58,12 @@ $pdir = "./resources/" . $pptFilePath;
     </form>
 </div>
 <script>
-    $(document).ready(function () {
-<?php if (isset($result)) {
-    if ($result == '删除成功！') { ?>
-                window.wxc.xcConfirm("<?php echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
-    <?php }
-} ?>
+    $(document).ready(function () {/*
+<?php //if (isset($result)) {
+    //if ($result == '删除成功！') { ?>
+               // window.wxc.xcConfirm("<?php// echo $result; ?>", window.wxc.xcConfirm.typeEnum.success);
+    <?php// }
+//} ?>*/
         $("#upload").hide();
     });
 
