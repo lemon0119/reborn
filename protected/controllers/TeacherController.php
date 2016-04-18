@@ -1406,7 +1406,8 @@ class TeacherController extends CController {
         $result = 'no';
         if (isset($_POST['title'])) {
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
-            $result = LookType::model()->insertLook($_POST['title'], $newContent, Yii::app()->session['userid_now']);
+            $content4000 = Tool::spliceLookContent($newContent);
+            $result = LookType::model()->insertLook($_POST['title'], $content4000, Yii::app()->session['userid_now']);
         }
         $this->render('addLook', ['result' => $result]);
     }
@@ -1436,8 +1437,10 @@ class TeacherController extends CController {
         $exerciseID = $_GET['exerciseID'];
         $thisLook = new LookType();
         $thisLook = $thisLook->find("exerciseID = '$exerciseID'");
+        $newContent = Tool::SBC_DBC($_POST['content'], 0);
+        $content4000 = Tool::spliceLookContent($newContent);
         $thisLook->title = $_POST['title'];
-        $thisLook->content = $_POST['content'];
+        $thisLook->content = $content4000;
         $thisLook->update();
         if (Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam") {
             $this->render("ModifyEditLook", array(
@@ -6053,7 +6056,8 @@ class TeacherController extends CController {
         if (isset($_POST['title'])) {
             $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
-            $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], $_POST['title'], $newContent, 'look', Yii::app()->session['userid_now']);
+            $content4000 = Tool::spliceLookContent($newContent);
+            $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], $_POST['title'], $content4000, 'look', Yii::app()->session['userid_now']);
         }
         $this->render('addLook4ClassExercise', ['result' => $result]);
     }
@@ -6161,8 +6165,9 @@ class TeacherController extends CController {
         $exerciseID = $_GET["exerciseID"];
         if (isset($_POST['title'])) {
             $title = $_POST['title'];
-            $content = $_POST['content'];
-            ClassExercise::model()->updateLook($exerciseID, $title, $content);
+            $newContent = Tool::SBC_DBC($_POST['content'], 0);
+            $content4000 = Tool::spliceLookContent($newContent);
+            ClassExercise::model()->updateLook($exerciseID, $title, $content4000);
         }
 
         $result = ClassExercise::model()->getExerciseByType($exerciseID, "look")->read();
