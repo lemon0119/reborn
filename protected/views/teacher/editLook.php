@@ -37,9 +37,9 @@
     
 <div class="span9">        
 <?php if(!isset($action)) {?>
-<legend><h3>编辑看打练习题</h3></legend>
+<legend><h3>编辑看打练习题</h3><span style="color: red;font-size: 15px">(内容不可超出4000字)</span></legend>
 <?php } else if($action == 'look') {?>
-<legend><h3>查看看打练习题</h3></legend>
+<legend><h3>查看看打练习题</h3><span style="color: red;font-size: 15px">(内容不可超出4000字)</span></legend>
 <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editLookInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 

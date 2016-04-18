@@ -1171,7 +1171,7 @@ class StudentController extends CController {
 
     //宋杰 2015-7-30 课堂考试
     public function actionClassExam() {
-        Yii::app()->session['isExam'] = true;
+        Yii::app()->session['isExam'] = 1;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
         $classexams = Exam::model()->getClassexamAll($classID);

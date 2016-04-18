@@ -2,10 +2,12 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <?php
 if ($isExam == false) {
+    Yii::app()->session['isExam'] = 0;
     require 'suiteSideBar.php';
     ?>
     <?php
 } else {
+    Yii::app()->session['isExam'] = 1;
     require 'examSideBar.php';
     ?>
     <?php
