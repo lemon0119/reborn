@@ -174,10 +174,10 @@ if (!$isOver) {
         window.G_isLook = 1;
         var isExam = <?php
 if ($isExam) {
-    Yii::app()->session['isExam'] = 'isExam';
+    Yii::app()->session['isExam'] = 1;
     echo 1;
 } else {
-    Yii::app()->session['isExam'] = '';
+    Yii::app()->session['isExam'] = 0;
     echo 0;
 }
 ?>;

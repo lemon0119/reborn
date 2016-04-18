@@ -8,9 +8,9 @@
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editLookInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
         <fieldset>
            <?php if(!isset($action)) {?>
-        <legend>编辑题目</legend>
+        <legend>编辑题目<span style="color: red;font-size: 15px">(内容不可超出4000字)</span></legend>
     <?php } else if($action == 'look') {?>
-        <legend>查看题目</legend>
+        <legend>查看题目<span style="color: red;font-size: 15px">(内容不可超出4000字)</span></legend>
     <?php }?>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>

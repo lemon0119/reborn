@@ -9,7 +9,9 @@
 //2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar
 if ($isExam == false) {
     require 'suiteSideBar.php';
+    Yii::app()->session['isExam']= 0;
 } else {
+    Yii::app()->session['isExam']=1;
     require 'examSideBar.php';
 }
 //add by lc 
@@ -139,7 +141,7 @@ if (!$isOver) {
         } else {
             echo 'top:260px;';
         } ?>'></div>
-                    <audio style='position:absolute; z-index:2; width:300px; height:28px; left:50px;  <?php if ($isExam) {
+                    <audio id="audio" style='position:absolute; z-index:2; width:300px; height:28px; left:50px;  <?php if ($isExam) {
                    echo 'top:150px;';
                } else {
                    echo 'top:260px;';
@@ -239,13 +241,11 @@ if ($isExam) {
 //             window.G_keyBoardBreakPause = 0;
 //              $("#pause").html("暂停统计");
 //        }
-        var audio = document.getElementById('music');
-        if (window.G_pauseFlag === 1) {
-            audio.play();
-        }
+        var audio = document.getElementById('audio');
         var myDate = new Date();
         window.G_pressTime = myDate.getTime();
         if (window.G_startFlag === 0) {
+            audio.play();
             window.G_startTime = myDate.getTime();
             window.G_startFlag = 1;
             window.G_oldStartTime = window.G_pressTime;
