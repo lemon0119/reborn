@@ -110,7 +110,7 @@ class Tool {
         // echo("rand:$rand_number\n");
         // echo("cs:$cs\n");
         $tm = $tm + "";
-        $id = substr($tm, - 7);
+        $id = "1".substr($tm, - 7);
         // echo("id:$id\n");
         $str_rand = sprintf("%02d", $rand_number);
         $id = $id . $str_rand;
@@ -404,6 +404,19 @@ public static function teacherNotice(){
                             return $content;
                         }
         
+    }
+    
+    public static function spliceLookContent($content){
+        $result = [];
+        $length =strlen($content);
+        if($length<3000){
+            $result = [$content];
+        }else if($length>7000){
+           $mid = substr($content,2800,3800) ;
+           
+           
+        }
+        return $result;
     }
     
 }
