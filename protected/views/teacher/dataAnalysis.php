@@ -144,7 +144,7 @@
                     <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:480px;">
                         <thead>
                                     <tr style="height:40;">
-                                        <th style="min-width:35px;">成绩</th>
+                                        <th style="min-width:35px;">次数</th>
                                         <th style="min-width:45px;">正确率</th>
                                         <th style="min-width:76px;">平均速度</th>
 
