@@ -66,17 +66,17 @@ $code = mt_rand(0, 1000000);
                     <td class="font-center" style="width: 30px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID']; ?>" /> </td>
                     <td class="font-center" style="width: 30px"><?php echo $model['exerciseID']; ?></td>
 
-                    <td class="font-center" title="<?php echo $model['title']; ?>" ><?php
+                    <td  class="font-center" title="<?php echo $model['title']; ?>" ><?php
                         if (Tool::clength($model['title']) <= 7)
                             echo $model['title'];
                         else
                             echo Tool::csubstr($model['title'], 0, 7) . "...";
                         ?></td>
                     <td class="font-center" title="<?php echo Tool::filterKeyContent($model['content']); ?>"><?php
-                        if (Tool::clength(Tool::filterKeyContent($model['content'])) <= 14)
+                        if (Tool::clength(Tool::filterKeyContent($model['content'])) <= 10)
                             echo Tool::filterKeyContent($model['content']);
                         else
-                            echo Tool::csubstr(Tool::filterKeyContent($model['content']), 0, 14) . "...";
+                            echo Tool::csubstr(Tool::filterKeyContent($model['content']), 0, 10) . "...";
                         ?>
                     </td>
                     <td class="font-center"><?php
