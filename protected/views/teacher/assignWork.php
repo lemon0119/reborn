@@ -46,7 +46,7 @@
                 <th class="font-center">单选</th>
                 <th class="font-center">填空</th>
                 <th class="font-center">简答</th>
-                <th class="font-center">键位</th>
+                <th class="font-center">键打</th>
                 <th class="font-center">看打</th>
                 <th class="font-center">听打</th>
                 <th class="font-center">状态</th>

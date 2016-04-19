@@ -147,6 +147,11 @@
                  var pressTime = window.G_pressTime;
                  if(pressTime - window.G_oldStartTime >0){
                      var IntervalTime = parseInt((pressTime - window.G_oldStartTime)/10)/100;
+                     IntervalTime=IntervalTime.toString();
+                     var rs=IntervalTime.indexOf('.');
+                     while(IntervalTime.length<=rs+2){
+                         IntervalTime+='0';
+                     }
                       $("#getIntervalTime").html(IntervalTime);
                        window.GA_IntervalTime  = IntervalTime;
                      window.G_oldStartTime = pressTime;
