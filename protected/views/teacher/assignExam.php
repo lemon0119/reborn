@@ -62,22 +62,23 @@
                         ?>
                     </td>
                     <td class="font-center">
-    <?php echo $exam['duration'] . "分钟" ?>
+                        <?php echo $exam['duration'] . "分钟" ?>
                     </td>
-                    <td class="font-center"><?php $num = ExamExercise::model()->getCountExercise($exam['examID']);
-    echo $num;
-    ?></td>
+                    <td class="font-center"><?php
+                        $num = ExamExercise::model()->getCountExercise($exam['examID']);
+                        echo $num;
+                        ?></td>
                     <td class="font-center">
-                        <?php if ($isOpen == false) { ?>
+    <?php if ($isOpen == false) { ?>
                             <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo date("Y-m-d H:i:s", time()); ?>')" style="color: green" >预约</a>
                             <font style="color:grey">关闭</font>
-                        <?php } else { ?>
+    <?php } else { ?>
                             <font style="color:grey">发布</font>
                             <a href="./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $exam['examID']; ?>&&duration=<?php echo $exam['duration']; ?>&&beginTime=<?php echo $exam['begintime']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1; ?>" style="color: red">关闭</a>
-                        <?php } ?>  
+    <?php } ?>  
                     </td>   
                     <td class="font-center" style="width: 170px">
-                        <?php if ($isOpen == false) { ?>
+    <?php if ($isOpen == false) { ?>
                             <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                             <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass']; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                         <?php } ?>
@@ -111,15 +112,22 @@
                     url: './index.php?r=teacher/changeExamName',
                     data: {examID: examID, newName: v},
                     success: function (data, textStatus, jqXHR) {
-                        if (data !== 0&&data!=='') {
+                        if (data != 0 && data !== '') {
                             window.wxc.xcConfirm('修改成功！', window.wxc.xcConfirm.typeEnum.success, {
                                 onOk: function () {
                                     window.location.href = './index.php?r=teacher/assignExam';
                                 }
                             });
-                            console.log('textStatus', textStatus);
-                            console.log('jqXHR', jqXHR);
+
+                        } else if (data == 0) {
+                            window.wxc.xcConfirm('存在重名或非法名称', window.wxc.xcConfirm.typeEnum.error, {
+                                onOk: function () {
+                                    window.location.href = './index.php?r=teacher/assignExam';
+                                }
+                            });
                         }
+                        console.log('textStatus', textStatus);
+                        console.log('jqXHR', jqXHR);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log('jqXHR', jqXHR);
