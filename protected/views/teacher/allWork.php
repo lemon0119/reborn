@@ -30,7 +30,7 @@
         <thead>
             <tr>
                 <th class="font-center">编号</th>
-                <th class="font-center">科目</th>
+<!--                <th class="font-center">科目</th>-->
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>         
@@ -41,10 +41,10 @@
                     <?php foreach($workLst as $allwork):?>
                     <tr>
                         <td class="font-center" style="width: 50px"><?php echo $allwork['exerciseID'];?></td>
-                        <td title="<?php echo $allwork['courseID'];?>" class="font-center"><?php  if(Tool::clength($allwork['courseID'])<=7)
-                                        echo $allwork['courseID'];
-                                    else
-                                        echo Tool::csubstr($allwork['courseID'], 0, 5)."...";?></td>
+<!--                        <td title="<?php //echo $allwork['courseID'];?>" class="font-center"><?php  //if(Tool::clength($allwork['courseID'])<=7)
+                                        //echo $allwork['courseID'];
+                                   // else
+                                       // echo Tool::csubstr($allwork['courseID'], 0, 5)."...";?></td>-->
                          <td title="<?php echo $allwork['requirements'];?>" class="font-center"><?php  if(Tool::clength($allwork['requirements'])<=10)
                                         echo $allwork['requirements'];
                                     else
