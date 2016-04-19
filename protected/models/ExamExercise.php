@@ -272,8 +272,14 @@ class ExamExercise extends CActiveRecord
             }
             return $totalScore;
         }
+        
+        public function getCountExercise($examID){
+            $exercise = $this->findAll('examID ='.$examID);
+            $num = count($exercise);
+            return $num;
+        }
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

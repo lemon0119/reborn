@@ -111,8 +111,12 @@ $code = mt_rand(0, 1000000);
 <script>
     $(document).ready(function () {
         var $tip=<?php if(isset($tip)) echo "'$tip'";else echo "''"?>;
-        if($tip=='此题目已经被占用!!!'){
-            window.wxc.xcConfirm($tip, window.wxc.xcConfirm.typeEnum.success);
+        if($tip=='此题目已经被占用!'){
+            window.wxc.xcConfirm($tip, window.wxc.xcConfirm.typeEnum.error,{
+                onOk:function (){
+                     window.location.href="./index.php?r=teacher/questionLst";  
+                }
+            });
         }
         var result = <?php if (isset($result)) echo "'$result'";
         else echo'1'; ?>;

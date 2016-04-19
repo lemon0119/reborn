@@ -656,7 +656,7 @@ class TeacherController extends CController {
                 return;
             }
         }
-        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm") {
+        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "RM") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
@@ -1585,7 +1585,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -1593,7 +1593,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         
 
@@ -1920,7 +1920,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -1928,7 +1928,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisKey->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         
 
@@ -2236,7 +2236,7 @@ class TeacherController extends CController {
                     foreach($examExerLst as $examExer){
                         if($exerciseID==$examExer['exerciseID']){
                             $flag=1;
-                            $tip="此题目已经被占用!!!";
+                            $tip="此题目已经被占用!";
                             break;
                         }
                     }
@@ -2244,7 +2244,7 @@ class TeacherController extends CController {
             }
             if($flag==0){
                 $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");
-                $tip="此题目删除成功!!!";
+                $tip="此题目删除成功!";
             }
 
 
@@ -2625,7 +2625,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -2633,7 +2633,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisFill->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         
         
@@ -2993,7 +2993,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -3001,7 +3001,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisChoice->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         if (Yii::app()->session['lastUrl'] == "searchChoice") {
             $type = Yii::app()->session['searchChoiceType'];
@@ -3276,7 +3276,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -3284,7 +3284,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisQuestion->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         
         
@@ -6838,4 +6838,18 @@ class TeacherController extends CController {
         return $this->renderPartial('01simple', ['arrayDetailData' => $arrayDetailData]);
     }
 
+    public function actionChangeExamName(){
+        $examID = $_POST['examID'];
+        $newName = $_POST['newName'];
+        $result = Exam::model()->changeExamName($examID, $newName);
+        echo $result;
+    }
+    
+    public function actionChangeWorkName(){
+        $workID = $_POST['workID'];
+        $newName = $_POST['newName'];
+        $result = Suite::model()->changeSuiteName($workID, $newName);
+        echo $result;
+    }
+    
 }
