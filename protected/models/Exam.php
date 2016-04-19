@@ -391,9 +391,14 @@ class Exam extends CActiveRecord
         return Yii::app()->db->createCommand($sql)->query(); 
         }  
         
-        
+        public function changeExamName($examID,$newName){
+            $exam = $this->find('examID='.$examID);
+            $exam->examName = $newName;
+            $result = $exam->update();
+            return $result;
+        }
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

@@ -441,6 +441,13 @@ class Suite extends CActiveRecord
         $new_id =   $temp['id'];
         return $new_id;
         }
+        
+         public function changeSuiteName($workID,$newName){
+            $suite = $this->find('suiteID='.$workID);
+            $suite->suiteName = $newName;
+            $result = $suite->update();
+            return $result;
+        }
 
         /**
 	 * Returns the static model of the specified AR class.

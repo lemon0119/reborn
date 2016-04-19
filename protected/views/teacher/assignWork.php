@@ -75,7 +75,7 @@
                 ?>                    
                 <tr>
                     <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $suite['suiteID']; ?>" /> </td>
-                    <td class="font-center"  ><?php  if(Tool::clength($suite['suiteName'])<=10)
+                    <td class="font-center  table_schedule" style="cursor: pointer" onclick="changeWorkName(<?php echo $suite['suiteID']; ?>, '<?php echo $suite['suiteName'] ?>')"><?php  if(Tool::clength($suite['suiteName'])<=10)
                                         echo $suite['suiteName'];
                                     else
                                         echo Tool::csubstr($suite['suiteName'], 0,8)."...";
@@ -120,6 +120,33 @@
 
 
 <script>
+    function changeWorkName(workID, workName) {
+        window.wxc.xcConfirm("原题目名为“" + workName + "”请重新命名：", window.wxc.xcConfirm.typeEnum.input, {
+            onOk: function (v) {
+                $.ajax({
+                    type: 'POST',
+                    url: './index.php?r=teacher/changeWorkName',
+                    data: {workID: workID, newName: v},
+                    success: function (data, textStatus, jqXHR) {
+                        if (data !== 0&&data!=='') {
+                            window.wxc.xcConfirm('修改成功！', window.wxc.xcConfirm.typeEnum.success, {
+                                onOk: function () {
+                                    window.location.href = './index.php?r=teacher/assignWork&&progress=<?php echo $_GET['progress'];?>';
+                                }
+                            });
+                            console.log('textStatus', textStatus);
+                            console.log('jqXHR', jqXHR);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log('jqXHR', jqXHR);
+                        console.log('textStatus', textStatus);
+                        console.log('errorThrown', errorThrown);
+                    }
+                });
+            }
+        });
+    }
     $(document).ready(function(){
         if(<?php echo $res;?>==1){
             var txt=  "此作业已经被创建！";

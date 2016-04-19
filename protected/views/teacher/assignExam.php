@@ -51,16 +51,22 @@
                 ?>                    
                 <tr>
                     <td class="font-center" style="width: 40px"> <input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /> </td>
-                    <td class="font-center" style="width: 100px"><?php echo $exam['examName']; ?></td>                        
-
+                    <td class="font-center table_schedule" style="cursor: pointer;width: 100px" onclick="changeExameName(<?php echo $exam['examID']; ?>, '<?php echo $exam['examName'] ?>')"><?php echo $exam['examName']; ?></td>                        
                     <td class="font-center">
-                        <?php if ($isOpen == false) { 
-                        echo "-";}else {echo $exam['begintime'];}?>
+                        <?php
+                        if ($isOpen == false) {
+                            echo "-";
+                        } else {
+                            echo $exam['begintime'];
+                        }
+                        ?>
                     </td>
                     <td class="font-center">
-                        <?php echo $exam['duration'] . "分钟" ?>
+    <?php echo $exam['duration'] . "分钟" ?>
                     </td>
-                    <td class="font-center"><?php $num = ExamExercise::model()->getCountExercise($exam['examID']); echo $num;?></td>
+                    <td class="font-center"><?php $num = ExamExercise::model()->getCountExercise($exam['examID']);
+    echo $num;
+    ?></td>
                     <td class="font-center">
                         <?php if ($isOpen == false) { ?>
                             <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo date("Y-m-d H:i:s", time()); ?>')" style="color: green" >预约</a>
@@ -72,18 +78,18 @@
                     </td>   
                     <td class="font-center" style="width: 170px">
                         <?php if ($isOpen == false) { ?>
-                        <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
-                        <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass']; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
+                            <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass']; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                         <?php } ?>
                         <?php if ($isOpen == false) { ?>
                             <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo date("Y-m-d H:i:s", time()); ?>')"></a> 
                         <?php } ?>
                         <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php echo IMG_URL; ?>../UI_tea/icon_SETUP.png"></a>
-                        <?php  ?>
+    <?php ?>
 
                     </td>
                 </tr>            
-            <?php endforeach; ?> 
+<?php endforeach; ?> 
         </form>
         </tbody>
 
@@ -97,6 +103,34 @@
 
 
 <script>
+    function changeExameName(examID, examName) {
+        window.wxc.xcConfirm("原题目名为“" + examName + "”请重新命名：", window.wxc.xcConfirm.typeEnum.input, {
+            onOk: function (v) {
+                $.ajax({
+                    type: 'POST',
+                    url: './index.php?r=teacher/changeExamName',
+                    data: {examID: examID, newName: v},
+                    success: function (data, textStatus, jqXHR) {
+                        if (data !== 0&&data!=='') {
+                            window.wxc.xcConfirm('修改成功！', window.wxc.xcConfirm.typeEnum.success, {
+                                onOk: function () {
+                                    window.location.href = './index.php?r=teacher/assignExam';
+                                }
+                            });
+                            console.log('textStatus', textStatus);
+                            console.log('jqXHR', jqXHR);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log('jqXHR', jqXHR);
+                        console.log('textStatus', textStatus);
+                        console.log('errorThrown', errorThrown);
+                    }
+                });
+            }
+        });
+    }
+
     $(document).ready(function () {
         if (<?php echo $res; ?> == 1) {
             var txt = "此试卷已经被创建！";
@@ -148,11 +182,11 @@
 
     function openExam(examID, duration, begintime)
     {
-        var begin=begintime;
+        var begin = begintime;
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (!v.match (/^[0-9]+$/) || v==0) {
+                if (!v.match(/^[0-9]+$/) || v == 0) {
                     window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error, {
                         onOk: function () {
                             openExam(examID, duration, begintime);
@@ -160,16 +194,16 @@
                     });
                 } else {
                     var beginTime = prompt("开始时间", begintime);
-                    if(beginTime)
+                    if (beginTime)
                     {
-                        if(beginTime<begin){
-                              window.wxc.xcConfirm("开始时间不能小于当前时间！", window.wxc.xcConfirm.typeEnum.confirm);
-                              return ;
-                        }else{
+                        if (beginTime < begin) {
+                            window.wxc.xcConfirm("开始时间不能小于当前时间！", window.wxc.xcConfirm.typeEnum.confirm);
+                            return;
+                        } else {
                             window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
                         }
-                    }else{
-                        return ;
+                    } else {
+                        return;
                     }
                 }
             }
@@ -182,7 +216,7 @@
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (!v.match (/^[0-9]+$/) || v==0 ) {
+                if (!v.match(/^[0-9]+$/) || v == 0) {
                     window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error);
                 } else {
                     window.wxc.xcConfirm("你确定要立即开始？", window.wxc.xcConfirm.typeEnum.info, {

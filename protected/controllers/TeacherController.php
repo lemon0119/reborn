@@ -6838,4 +6838,18 @@ class TeacherController extends CController {
         return $this->renderPartial('01simple', ['arrayDetailData' => $arrayDetailData]);
     }
 
+    public function actionChangeExamName(){
+        $examID = $_POST['examID'];
+        $newName = $_POST['newName'];
+        $result = Exam::model()->changeExamName($examID, $newName);
+        echo $result;
+    }
+    
+    public function actionChangeWorkName(){
+        $workID = $_POST['workID'];
+        $newName = $_POST['newName'];
+        $result = Suite::model()->changeSuiteName($workID, $newName);
+        echo $result;
+    }
+    
 }
