@@ -1731,49 +1731,38 @@ class TeacherController extends CController {
         if (isset($_POST['title'])) {
             $libstr = $_POST['libstr'];
             $arr = explode("$$", $libstr);
-            $condition = "";
-
+            $sql = "";
             foreach ($arr as $a) {
-                if (strpos($a, '-') == '' || strpos($a, '-') != 0) {
-                    if ($condition == "")
-                        $condition = "'" . $a . "'";
+                if (substr($a,0,1)!='-') {
+                    if ($sql == "")
+                        $sql = "select * from two_words_lib  where name LIKE ('" . $a . "')";
                     else
-                        $condition = $condition . "," . "'" . $a . "'";
+                        $sql = $sql ." union select * from two_words_lib  where name LIKE ('" . $a . "')";
                 }
             }
-            if ($condition != "") {
-                $condition = " where name LIKE (" . $condition . ")";
-            }
-            $sql = "select * from two_words_lib";
             $order = "";
             if ($arr[count($arr) - 1] == "lib") {
                 $order = "order by rand() limit " . $_POST['in1'];
             }
-            $sql = $sql . $condition . $order;
-            if ($condition != "") {
+            if ($sql != "") {
                 $res = Yii::app()->db->createCommand($sql)->query();
             }
 
 
-            $condition1 = "";
+            $sql1 = "";
             foreach ($arr as $a) {
-                if (strpos($a, '-') == 0) {
-                    if ($condition1 == "")
-                        $condition1 = "'" . $a . "'";
+                if (substr($a,0,1)=='-') {
+                    if ($sql1 == "")
+                        $sql1 = "select * from two_words_lib_personal  where name LIKE ('" . $a . "')";
                     else
-                        $condition1 = $condition1 . "," . "'" . $a . "'";
+                        $sql1 = $sql1 ." union select * from two_words_lib_personal  where name LIKE ('" . $a . "')";
                 }
             }
-            if ($condition1 != "") {
-                $condition1 = " where name LIKE (" . $condition1 . ")";
-            }
-            $sql1 = "select * from two_words_lib_personal";
             $order1 = "";
             if ($arr[count($arr) - 1] == "lib") {
                 $order1 = "order by rand() limit " . $_POST['in1'];
             }
-            $sql1 = $sql1 . $condition1 . $order1;
-            if ($condition1 != "") {
+            if ($sql1 != "") {
                 $res1 = Yii::app()->db->createCommand($sql1)->query();
             }
 
