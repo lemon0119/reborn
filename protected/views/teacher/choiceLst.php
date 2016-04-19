@@ -109,6 +109,10 @@
 
 <script>
     $(document).ready(function(){
+        var $tip=<?php if(isset($tip)) echo "'$tip'";else echo "''"?>;
+        if($tip=='此题目已经被占用!!!'){
+            window.wxc.xcConfirm($tip, window.wxc.xcConfirm.typeEnum.success);
+        }
     var result = <?php  if(isset($result)) echo "'$result'"; else echo'1';?>;
     if(result === '1')
         window.wxc.xcConfirm('复制选择题成功！', window.wxc.xcConfirm.typeEnum.success);

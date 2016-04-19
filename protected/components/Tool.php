@@ -23,7 +23,7 @@ class Tool {
         }
         return $result;
     }
-
+    
     public function alertInfo($info, $url) {
         return "<script type='text/javascript'>alert('$info');location.href='$url';</script>";
     }
@@ -110,7 +110,7 @@ class Tool {
         // echo("rand:$rand_number\n");
         // echo("cs:$cs\n");
         $tm = $tm + "";
-        $id = substr($tm, - 7);
+        $id = "1".substr($tm, - 7);
         // echo("id:$id\n");
         $str_rand = sprintf("%02d", $rand_number);
         $id = $id . $str_rand;
@@ -405,5 +405,42 @@ public static function teacherNotice(){
                         }
         
     }
+    
+     public static function spliceLookContent($content){
+        $result = '';
+        $length =mb_strlen($content);
+        if($length>4000){
+            $result = Tool::utf8_substr($content, 0, 4000);
+        }else{
+            $result = $content;
+        }
+        return $result;
+    }
+    
+    public static function  utf8_substr($str, $start = 0) {
+        if (empty($str)) {
+            return false;
+        }
+        if (function_exists('mb_substr')) {
+            if (func_num_args() >= 3) {
+                $end = func_get_arg(2);
+                return mb_substr($str, $start, $end, 'utf-8');
+            } else {
+                mb_internal_encoding("UTF-8");
+                return mb_substr($str, $start);
+            }
+        } else {
+            $null = "";
+            preg_match_all("/./u", $str, $ar);
+            if (func_num_args() >= 3) {
+                $end = func_get_arg(2);
+                return join($null, array_slice($ar[0], $start, $end));
+            } else {
+                return join($null, array_slice($ar[0], $start));
+            }
+        }
+    }
+
+   
     
 }
