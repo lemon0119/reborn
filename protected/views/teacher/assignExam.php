@@ -33,7 +33,7 @@
                 <th class="font-center">标题</th> 
                 <th class="font-center">开始时间</th>
                 <th class="font-center">时长</th>
-                <th class="font-center">题数</th>
+                <th class="font-center">题量</th>
                 <th class="font-center">状态</th> 
                 <th class="font-center">操作</th> 
             </tr>
@@ -50,7 +50,7 @@
                     }
                 ?>                    
                 <tr>
-                    <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /> </td>
+                    <td class="font-center" style="width: 40px"> <input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /> </td>
                     <td class="font-center" style="width: 100px"><?php echo $exam['examName']; ?></td>                        
 
                     <td class="font-center">
@@ -60,7 +60,7 @@
                     <td class="font-center">
                         <?php echo $exam['duration'] . "分钟" ?>
                     </td>
-                    <td class="font-center"></td>
+                    <td class="font-center"><?php $num = ExamExercise::model()->getCountExercise($exam['examID']); echo $num;?></td>
                     <td class="font-center">
                         <?php if ($isOpen == false) { ?>
                             <a href="#"  onclick="openExam(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo date("Y-m-d H:i:s", time()); ?>')" style="color: green" >预约</a>
@@ -70,7 +70,7 @@
                             <a href="./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $exam['examID']; ?>&&duration=<?php echo $exam['duration']; ?>&&beginTime=<?php echo $exam['begintime']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1; ?>" style="color: red">关闭</a>
                         <?php } ?>  
                     </td>   
-                    <td class="font-center" style="width: 120px">
+                    <td class="font-center" style="width: 170px">
                         <?php if ($isOpen == false) { ?>
                         <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass']; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
