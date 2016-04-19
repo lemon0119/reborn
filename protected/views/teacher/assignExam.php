@@ -20,7 +20,6 @@
         </ul>
     </div>
 </div>
-
 <div class="span9">
     <h2>现有试卷列表</h2>
     <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
@@ -194,7 +193,7 @@
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (!v.match(/^[0-9]+$/) || v == 0) {
+                if (!v.match(/^[0-9]+$/) || v == 0 ||v>720) {
                     window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error, {
                         onOk: function () {
                             openExam(examID, duration, begintime);
