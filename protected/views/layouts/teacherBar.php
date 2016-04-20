@@ -82,8 +82,6 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                             <?php endforeach;} ?>
                                         </ul>
                                     </li>
-                                 
-                                                                       
                                     <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil">课程表</a></li>
                                     <li><a id="blank_teacher"></a></li>
                                      <li>
@@ -93,21 +91,6 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                           <a id="stuMail_on" href="./index.php?r=teacher/teacherNotice"></a>  
                                        <?php }?>
                                    </li> 
-                                   
-                                  
-
-
-
-                                        <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil">课程表</a></li>
-                                        <li><a id="blank_teacher"></a></li>
-                                        <li>
-                                            <?php if (Tool::teacherNotice() == 0) { ?>
-                                                <a id="stuMail_off" href="./index.php?r=teacher/teacherNotice"></a>
-        <?php } else { ?>
-                                                <a id="stuMail_on" href="./index.php?r=teacher/teacherNotice"></a>  
-        <?php } ?>
-                                        </li> 
-
                                         <li class="dropdown">
                                             <div class="userUI">
                                                 <a href="" data-toggle="dropdown" id="userUI" >
