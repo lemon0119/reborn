@@ -78,39 +78,50 @@
 <div class="span9" id="sp" style="display: none;height: 830px;">
     <div style="position: relative;top: -15px;">
         <div  style="width:100%;overflow: auto;">
-            <table id="ul1" class="ul1" style="overflow: auto;height:100px;list-style: none;border-radius: 3px;background-color: rgb(218, 225, 218);position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;margin-top:10px;">
+            <table id="ul1" class="ul1" style="margin-left: -20px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
             </table>
         </div>
-        <div id="div1" style="width:100%;display:inline;float:left;overflow: auto;margin-top: 20px;" >
+        
+        
+        <div style="width:100%;">
+            <div id="div1" style="width:30%;display:inline;float:left;overflow: auto;margin-top: 40px;" >
+                <h3>数据类型</h3>
                 <table>
                     <tr>
-                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
+                        <td  id="bg1" style="width:224px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <input type="text" value="123"  id="id" style="display:none;"/>
                             <input type="text" value="123"  id="classID" style="display:none;"/>
                             <input type="text" value="123"  id="exerciseID"  style="display:none;"/>
                             <input type="text" value="123"  id="type" style="display:none;" />
                             <input type="text" value="123"  id="choice"  style="display:none;"/>
                             <input type="text" value="123"  id="isExam"  style="display:none;"/>
-                            <a id="correct" onclick="getClassExerRankingBef('correct')" style="color:white;cursor:pointer;">正确率</a>
+                            <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率</a>
                         </td>  
-                        <td style="width:15px;">  </td>
-                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
-                            <a  id="speed" onclick="getClassExerRankingBef('speed')" style="color:white;cursor:pointer;">速度</a>
+                    </tr>
+                    <tr><td style="height:10px;"></td></tr>
+                    <tr>
+                        <td id="bg2" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度</a>
                         </td>
-                        <td style="width:15px;">  </td>
-                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
-                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed')" style="color:white;cursor:pointer;">最大速度</a>
+                    </tr>
+                    <tr><td style="height:10px;"></td></tr>
+                    <tr>
+                        <td id="bg3" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度</a>
                         </td>
-                        <td style="width:15px;">  </td>
-                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
-                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete')" style="color:white;cursor:pointer;">回改字数</a>
+                    </tr>
+                    <tr><td style="height:10px;"></td></tr>
+                    <tr>
+                        <td id="bg4" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数</a>
                         </td>
-                        <td style="width:15px;">  </td>
                     </tr>
                 </table>
+            </div>
+            <div id="main" style="display: none;overflow: auto;height:300px;position: relative;top:10px"></div>   
+            
         </div>
-        
-        <div style="width:100%;">
+        <div  style="width:100%;">
             <div id="div11" style="width:30%; display:inline;float:left;overflow: auto;position: relative;top:30px;height:480px;border-radius: 5px;">
                 <table class="table table-bordered table-striped">
                         <thead>
@@ -125,8 +136,8 @@
                     </table>
             </div>
             <div style="width:70%;float:right;">
-                <div id="main" style="display: none;overflow: auto;height:300px;position: relative;top:10px"></div>    
-                <div id="export" style="diplay:none;width:50px;border-radius: 5px;background-color: #ddd;height: 30px;color:white;position: relative;margin: auto 30px -15px auto;">
+                 
+                <div id="export" style="diplay:none;width:50px;border-radius: 5px;background-color: #ddd;height: 30px;position: relative;margin: auto 30px -15px auto;">
                     
                 </div>
                 <div id="title" style="width:100%;overflow: auto;margin-top: 20px">
@@ -216,10 +227,14 @@ function showClassWork(lessonID){
      $("#test" + lessonID).toggle(200);
 }
 function getSuiteExercise(suiteID,workID){
-    document.getElementById('correct').style.color="#fff";
-    document.getElementById('speed').style.color="#fff";
-    document.getElementById('maxSpeed').style.color="#fff";
-    document.getElementById('backDelete').style.color="#fff";
+    document.getElementById('correct').style.color="#000";
+    document.getElementById('speed').style.color="#000";
+    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('backDelete').style.color="#000";
+    document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -228,8 +243,12 @@ function getSuiteExercise(suiteID,workID){
                     workID:workID
                 },
              success: function(data){
-                 if(data.length==0)
+                 if(data.length==0){
+                     document.getElementById('sp').style.display="none";
+                     document.getElementById('other').style.display="block";
                      return;
+                 }
+                 document.getElementById('other').style.display="none";
                    document.getElementById("sp").style.display='block';
                    document.getElementById("de").style.display='none';
                    document.getElementById("export").style.display='none';
@@ -292,10 +311,14 @@ function getClassExerRankingBefBef(ind,i,classID,exerciseID,type){
     for( var i=0; i<tds.length; i++ ){
         tds[i].style.color="#000";
     }
-    document.getElementById('correct').style.color="#fff";
-    document.getElementById('speed').style.color="#fff";
-    document.getElementById('maxSpeed').style.color="#fff";
-    document.getElementById('backDelete').style.color="#fff";
+    document.getElementById('correct').style.color="#000";
+    document.getElementById('speed').style.color="#000";
+    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('backDelete').style.color="#000";
+    document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById("de").style.display='none';
     document.getElementById("div11").style.display='none';
     document.getElementById("title").style.display='none';
@@ -317,10 +340,14 @@ function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
     for( var i=0; i<tds.length; i++ ){
         tds[i].style.color="#000";
     }
-    document.getElementById('correct').style.color="#fff";
-    document.getElementById('speed').style.color="#fff";
-    document.getElementById('maxSpeed').style.color="#fff";
-    document.getElementById('backDelete').style.color="#fff";
+    document.getElementById('correct').style.color="#000";
+    document.getElementById('speed').style.color="#000";
+    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('backDelete').style.color="#000";
+    document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById("de").style.display='none';
     document.getElementById("div11").style.display='none';
     document.getElementById("title").style.display='none';
@@ -330,13 +357,18 @@ function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
     document.getElementById(t).style.color="#F46401";
 }
 var choice;
-function getClassExerRankingBef(choice2){
-    document.getElementById('correct').style.color="#fff";
-    document.getElementById('speed').style.color="#fff";
-    document.getElementById('maxSpeed').style.color="#fff";
-    document.getElementById('backDelete').style.color="#fff";
+function getClassExerRankingBef(choice2,bg){
+    document.getElementById('correct').style.color="#000";
+    document.getElementById('speed').style.color="#000";
+    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('backDelete').style.color="#000";
+    document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
     
-    document.getElementById(choice2).style.color="#F46401";
+    document.getElementById(choice2).style.color="#fff";
+    document.getElementById(bg).style.backgroundColor="#F46401";
     document.getElementById("choice").value=choice2;
     var i=document.getElementById("id").value;
     var classID=document.getElementById("classID").value;
@@ -351,10 +383,14 @@ function getClassExerRankingBef(choice2){
         
 }
 function getClassExer(lessonID){
-    document.getElementById('correct').style.color="#fff";
-    document.getElementById('speed').style.color="#fff";
-    document.getElementById('maxSpeed').style.color="#fff";
-    document.getElementById('backDelete').style.color="#fff";
+    document.getElementById('correct').style.color="#000";
+    document.getElementById('speed').style.color="#000";
+    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('backDelete').style.color="#000";
+    document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -363,9 +399,11 @@ function getClassExer(lessonID){
                 },
              success: function(data){
                  if(data.length==0){
+                     document.getElementById('sp').style.display="none";
                      document.getElementById('other').style.display="block";
                      return;
                  }
+                 document.getElementById('other').style.display="none";
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("div11").style.display='none';
@@ -425,10 +463,14 @@ function getClassExer(lessonID){
          });    
 }
 function getExamExercise(examID,workID){
-    document.getElementById('correct').style.color="#fff";
-    document.getElementById('speed').style.color="#fff";
-    document.getElementById('maxSpeed').style.color="#fff";
-    document.getElementById('backDelete').style.color="#fff";
+    document.getElementById('correct').style.color="#000";
+    document.getElementById('speed').style.color="#000";
+    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('backDelete').style.color="#000";
+    document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -437,8 +479,12 @@ function getExamExercise(examID,workID){
                  workID:workID,
                 },
              success: function(data){
-                 if(data.length==0)
+                 if(data.length==0){
+                     document.getElementById('sp').style.display="none";
+                     document.getElementById('other').style.display="block";
                      return;
+                 }
+                 document.getElementById('other').style.display="none";
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("div11").style.display='none';
