@@ -34,7 +34,7 @@
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
     <?php }?>
 </div>
-<div class="span9" style="position: relative; left: 20px">
+<div class="span9">
     <h2 style="display:inline-block;">图片列表</h2>
     <div id ="picture-table"></div>
     <form name="form1" class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addPicture&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0" enctype="multipart/form-data"> 

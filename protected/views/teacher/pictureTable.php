@@ -1,5 +1,3 @@
-<link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
-<link href="<?php echo CSS_URL; ?>bootstrap-responsive.min.css" rel="stylesheet">
 <?php
     $username = Yii::app()->user->name;
     $role = Yii::app()->session['role_now'];

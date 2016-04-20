@@ -34,7 +34,7 @@
         <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
     <?php }?>
 </div>
-<div class="span9" style="position: relative; left: 20px">
+<div class="span9">
     <h2 style="display:inline-block;">PPT列表</h2>
     <span>(支持PPT格式,最大100M)</span>
     <div id ="ppt-table"></div>

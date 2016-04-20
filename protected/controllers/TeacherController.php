@@ -656,7 +656,7 @@ class TeacherController extends CController {
                 return;
             }
         }
-        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm") {
+        if ($_FILES["file"]["type"] == "video/mp4" || $_FILES["file"]["type"] == "application/octet-stream" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "rm" && substr($_FILES["file"]["name"], strrpos($_FILES["file"]["name"], '.') + 1) != "RM") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
@@ -1585,7 +1585,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -1593,7 +1593,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         
 
@@ -1731,49 +1731,38 @@ class TeacherController extends CController {
         if (isset($_POST['title'])) {
             $libstr = $_POST['libstr'];
             $arr = explode("$$", $libstr);
-            $condition = "";
-
+            $sql = "";
             foreach ($arr as $a) {
-                if (strpos($a, '-') == '' || strpos($a, '-') != 0) {
-                    if ($condition == "")
-                        $condition = "'" . $a . "'";
+                if (substr($a,0,1)!='-') {
+                    if ($sql == "")
+                        $sql = "select * from two_words_lib  where name LIKE ('" . $a . "')";
                     else
-                        $condition = $condition . "," . "'" . $a . "'";
+                        $sql = $sql ." union select * from two_words_lib  where name LIKE ('" . $a . "')";
                 }
             }
-            if ($condition != "") {
-                $condition = " where name LIKE (" . $condition . ")";
-            }
-            $sql = "select * from two_words_lib";
             $order = "";
             if ($arr[count($arr) - 1] == "lib") {
                 $order = "order by rand() limit " . $_POST['in1'];
             }
-            $sql = $sql . $condition . $order;
-            if ($condition != "") {
+            if ($sql != "") {
                 $res = Yii::app()->db->createCommand($sql)->query();
             }
 
 
-            $condition1 = "";
+            $sql1 = "";
             foreach ($arr as $a) {
-                if (strpos($a, '-') == 0) {
-                    if ($condition1 == "")
-                        $condition1 = "'" . $a . "'";
+                if (substr($a,0,1)=='-') {
+                    if ($sql1 == "")
+                        $sql1 = "select * from two_words_lib_personal  where name LIKE ('" . $a . "')";
                     else
-                        $condition1 = $condition1 . "," . "'" . $a . "'";
+                        $sql1 = $sql1 ." union select * from two_words_lib_personal  where name LIKE ('" . $a . "')";
                 }
             }
-            if ($condition1 != "") {
-                $condition1 = " where name LIKE (" . $condition1 . ")";
-            }
-            $sql1 = "select * from two_words_lib_personal";
             $order1 = "";
             if ($arr[count($arr) - 1] == "lib") {
                 $order1 = "order by rand() limit " . $_POST['in1'];
             }
-            $sql1 = $sql1 . $condition1 . $order1;
-            if ($condition1 != "") {
+            if ($sql1 != "") {
                 $res1 = Yii::app()->db->createCommand($sql1)->query();
             }
 
@@ -1931,7 +1920,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -1939,7 +1928,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisKey->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         
 
@@ -2247,7 +2236,7 @@ class TeacherController extends CController {
                     foreach($examExerLst as $examExer){
                         if($exerciseID==$examExer['exerciseID']){
                             $flag=1;
-                            $tip="此题目已经被占用!!!";
+                            $tip="此题目已经被占用!";
                             break;
                         }
                     }
@@ -2255,7 +2244,7 @@ class TeacherController extends CController {
             }
             if($flag==0){
                 $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");
-                $tip="此题目删除成功!!!";
+                $tip="此题目删除成功!";
             }
 
 
@@ -2636,7 +2625,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -2644,7 +2633,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisFill->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         
         
@@ -3004,7 +2993,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -3012,7 +3001,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisChoice->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         if (Yii::app()->session['lastUrl'] == "searchChoice") {
             $type = Yii::app()->session['searchChoiceType'];
@@ -3287,7 +3276,7 @@ class TeacherController extends CController {
                 foreach($examExerLst as $examExer){
                     if($exerciseID==$examExer['exerciseID']){
                         $flag=1;
-                        $tip="此题目已经被占用!!!";
+                        $tip="此题目已经被占用!";
                         break;
                     }
                 }
@@ -3295,7 +3284,7 @@ class TeacherController extends CController {
         }
         if($flag==0){
             $deleteResult = $thisQuestion->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!!!";
+            $tip="此题目删除成功!";
         }
         
         
@@ -6849,4 +6838,18 @@ class TeacherController extends CController {
         return $this->renderPartial('01simple', ['arrayDetailData' => $arrayDetailData]);
     }
 
+    public function actionChangeExamName(){
+        $examID = $_POST['examID'];
+        $newName = $_POST['newName'];
+        $result = Exam::model()->changeExamName($examID, $newName);
+        echo $result;
+    }
+    
+    public function actionChangeWorkName(){
+        $workID = $_POST['workID'];
+        $newName = $_POST['newName'];
+        $result = Suite::model()->changeSuiteName($workID, $newName);
+        echo $result;
+    }
+    
 }

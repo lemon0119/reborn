@@ -66,17 +66,17 @@ $code = mt_rand(0, 1000000);
                     <td class="font-center" style="width: 30px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID']; ?>" /> </td>
                     <td class="font-center" style="width: 30px"><?php echo $model['exerciseID']; ?></td>
 
-                    <td class="font-center" title="<?php echo $model['title']; ?>" ><?php
+                    <td  class="font-center" title="<?php echo $model['title']; ?>" ><?php
                         if (Tool::clength($model['title']) <= 7)
                             echo $model['title'];
                         else
                             echo Tool::csubstr($model['title'], 0, 7) . "...";
                         ?></td>
                     <td class="font-center" title="<?php echo Tool::filterKeyContent($model['content']); ?>"><?php
-                        if (Tool::clength(Tool::filterKeyContent($model['content'])) <= 14)
+                        if (Tool::clength(Tool::filterKeyContent($model['content'])) <= 10)
                             echo Tool::filterKeyContent($model['content']);
                         else
-                            echo Tool::csubstr(Tool::filterKeyContent($model['content']), 0, 14) . "...";
+                            echo Tool::csubstr(Tool::filterKeyContent($model['content']), 0, 10) . "...";
                         ?>
                     </td>
                     <td class="font-center"><?php
@@ -128,8 +128,12 @@ $this->widget('CLinkPager', array('pages' => $pages));
 <script>
     $(document).ready(function () {
         var $tip=<?php if(isset($tip)) echo "'$tip'";else echo "''"?>;
-        if($tip=='此题目已经被占用!!!'){
-            window.wxc.xcConfirm($tip, window.wxc.xcConfirm.typeEnum.success);
+        if($tip=='此题目已经被占用!'){
+            window.wxc.xcConfirm($tip, window.wxc.xcConfirm.typeEnum.error,{
+                onOk:function (){
+                     window.location.href="./index.php?r=teacher/keyLst";  
+                }
+            });
         }
         var result = <?php if (isset($result)) echo "'$result'";
 else echo'1'; ?>;
@@ -178,7 +182,7 @@ else echo'1'; ?>;
             onOk: function () {
                 window.location.href = "./index.php?r=teacher/deleteKey&&exerciseID=" + exerciseID;
             }
-        }
+        };
         window.wxc.xcConfirm("您确定删除吗？", "custom", option);
     }
 

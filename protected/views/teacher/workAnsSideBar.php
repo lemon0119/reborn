@@ -14,7 +14,7 @@
                  <td><?php echo $class['className']?></td>
             </tr>
             <tr>
-                <th>科目:</th>
+                <th>课时:</th>
                  <td><?php echo $lesson['lessonName']?></td>
             </tr>         
         </tbody>   

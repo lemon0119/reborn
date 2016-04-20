@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
 <?php
-if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=='teacher' ) {
+if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] == 'teacher') {
     ?>
 
     <?php
@@ -10,7 +10,6 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
         $classNameInfo[$value['classID']] = $value['className'];
         $classProgress[$value['classID']] = $value['currentLesson'];
     }
-    
     ?>
     <html lang="zh-cn"><!--<![endif]--> 
         <head>
@@ -22,14 +21,15 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
             <script src="<?php echo JS_URL; ?>bootstrap.min.js" ></script>
             <script src="<?php echo JS_URL; ?>site.js" ></script>
             <!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
-                <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
-                <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js" ></script>
-		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js"></script>
-<!--            -->
-            <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+            <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
+            <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js" ></script>
+            <script src="<?php echo XC_Confirm; ?>js/xcConfirm.js"></script>
+            <!--            -->
+                        <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         </head>
         <body>
             <div class="container">
+
                 <?php if(!isset($_GET['nobar'])){?>
                 <div class="navbar">
                     <div class="navbar-inner">
@@ -96,34 +96,42 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                    
                                   
 
-                                
-                                    <li class="dropdown">
 
-                                        <div class="userUI">
-                                        <a href="" data-toggle="dropdown" id="userUI" >
-                                             <?php echo Yii::app()->session['userName']; ?><b class="user_dropdown_logo"></b>
-                                        </a>
-                                       
-                                        <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/set">设置</a></li>
-                                            <li><a href="./index.php?r=user/login&exit=1">退出</a></li>
-                                        </ul>
-                                             </div>
-                                    </li>
-                                   
-                                </ul>
+
+                                        <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil">课程表</a></li>
+                                        <li><a id="blank_teacher"></a></li>
+                                        <li>
+                                            <?php if (Tool::teacherNotice() == 0) { ?>
+                                                <a id="stuMail_off" href="./index.php?r=teacher/teacherNotice"></a>
+        <?php } else { ?>
+                                                <a id="stuMail_on" href="./index.php?r=teacher/teacherNotice"></a>  
+        <?php } ?>
+                                        </li> 
+
+                                        <li class="dropdown">
+                                            <div class="userUI">
+                                                <a href="" data-toggle="dropdown" id="userUI" >
+        <?php echo Yii::app()->session['userName']; ?><b class="user_dropdown_logo"></b>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="./index.php?r=teacher/set">设置</a></li>
+                                                    <li><a href="./index.php?r=user/login&exit=1">退出</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <?php } ?>
+    <?php } ?>
                 <div class="row" style="min-height: 700px">
-                    <?php echo $content; ?>
+    <?php echo $content; ?>
                 </div>
             </div> 
-             <div  class="copyright">
-		2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="#"  class="copyright">法律声明</a><a href="#"  class="copyright">联系我们</a><a href="#"  class="copyright">获得帮助</a>
-	</div>
+            <div  class="copyright">
+                2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="#"  class="copyright">法律声明</a><a href="#"  class="copyright">联系我们</a><a href="#"  class="copyright">获得帮助</a>
+            </div>
         </body>
     </html>
 <?php } else { ?>
