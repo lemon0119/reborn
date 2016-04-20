@@ -74,7 +74,14 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                             <li><a href="./index.php?r=teacher/stuExam">批改试卷</a></li>
                                         </ul>
                                     </li>  
-                                    <li><a id ="exam_statistics" href="./index.php?r=teacher/watchData&&classID=<?php if(isset($key)){echo $key;}?>">统 计</a></li>
+                                    <li><a id ="exam_statistics" href="#"  data-toggle="dropdown">统 计</a>
+                                        <ul class="dropdown-menu" style="left:650px;top:54px;">
+                                            <?php if(isset($classNameInfo)){
+                                                foreach ($classNameInfo as $key => $value): ?>
+                                                <li><a  href="./index.php?r=teacher/watchData&&classID=<?php if(isset($key)){echo $key;}?>"><?php echo $value; ?></a></li>
+                                            <?php endforeach;} ?>
+                                        </ul>
+                                    </li>
                                  
                                                                        
                                     <li><a id="schedule_manager"  href="./index.php?r=teacher/scheduleDetil">课程表</a></li>
