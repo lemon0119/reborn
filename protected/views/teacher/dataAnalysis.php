@@ -77,50 +77,39 @@
 
 <div class="span9" id="sp" style="display: none;height: 830px;">
     <div style="position: relative;top: -15px;">
-        
-        <div id="div1" style="width:100%;display:inline;float:left;overflow: auto;" >
-                <table>
-                    <tr>
-                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
-                            正确率
-                        </td>  
-                        <td style="width:15px;">  </td>
-                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
-                            速度
-                        </td>
-                        <td style="width:15px;">  </td>
-                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
-                            最大速度
-                        </td>
-                        <td style="width:15px;">  </td>
-                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
-                            回改字数
-                        </td>
-                        <td style="width:15px;">  </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input name="selectID" onclick="che()" id="selectID" type="radio" value="correct" checked/>
-                        </td>
-                        <td>  </td>
-                        <td>
-                            <input name="selectID" onclick="che()" id="selectID" type="radio" value="speed" />
-                        </td>
-                        <td>  </td>
-                        <td>
-                            <input name="selectID" onclick="che()" id="selectID" type="radio" value="maxSpeed" />
-                        </td>
-                        <td>  </td>
-                        <td>
-                            <input name="selectID" onclick="che()" id="selectID" type="radio" value="backDelete" />
-                        </td>
-                    </tr>
-                </table>
-        </div>
         <div  style="width:100%;overflow: auto;">
             <table id="ul1" class="ul1" style="overflow: auto;height:100px;list-style: none;border-radius: 3px;background-color: rgb(218, 225, 218);position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;margin-top:10px;">
             </table>
         </div>
+        <div id="div1" style="width:100%;display:inline;float:left;overflow: auto;margin-top: 20px;" >
+                <table>
+                    <tr>
+                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
+                            <input type="text" value="123"  id="id" style="display:none;"/>
+                            <input type="text" value="123"  id="classID" style="display:none;"/>
+                            <input type="text" value="123"  id="exerciseID"  style="display:none;"/>
+                            <input type="text" value="123"  id="type" style="display:none;" />
+                            <input type="text" value="123"  id="choice"  style="display:none;"/>
+                            <input type="text" value="123"  id="isExam"  style="display:none;"/>
+                            <a id="correct" onclick="getClassExerRankingBef('correct')" style="color:white;cursor:pointer;">正确率</a>
+                        </td>  
+                        <td style="width:15px;">  </td>
+                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
+                            <a  id="speed" onclick="getClassExerRankingBef('speed')" style="color:white;cursor:pointer;">速度</a>
+                        </td>
+                        <td style="width:15px;">  </td>
+                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
+                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed')" style="color:white;cursor:pointer;">最大速度</a>
+                        </td>
+                        <td style="width:15px;">  </td>
+                        <td style="width:100px;border-radius: 5px;background-color: gray;height: 36px;color:white;">
+                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete')" style="color:white;cursor:pointer;">回改字数</a>
+                        </td>
+                        <td style="width:15px;">  </td>
+                    </tr>
+                </table>
+        </div>
+        
         <div style="width:100%;">
             <div id="div11" style="width:30%; display:inline;float:left;overflow: auto;position: relative;top:30px;height:480px;border-radius: 5px;">
                 <table class="table table-bordered table-striped">
@@ -144,7 +133,7 @@
                     <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:480px;">
                         <thead>
                                     <tr style="height:40;">
-                                        <th style="min-width:35px;">成绩</th>
+                                        <th style="min-width:35px;">次数</th>
                                         <th style="min-width:45px;">正确率</th>
                                         <th style="min-width:76px;">平均速度</th>
 
@@ -188,6 +177,9 @@
     
     <div id="main2" style="left:15px;display: none;width: 750px;overflow: auto;height:400px;position: relative;top:20px;"></div>
 </div>
+<div class="span9" id="other" style="display: none;height: 830px;">
+    <h3 style="alignment-adjust: center;">没有统计数据！</h3>
+</div>
 <script>
     //sunpy: switch camera and bulletin
 $(document).ready(function(){
@@ -224,6 +216,10 @@ function showClassWork(lessonID){
      $("#test" + lessonID).toggle(200);
 }
 function getSuiteExercise(suiteID,workID){
+    document.getElementById('correct').style.color="#fff";
+    document.getElementById('speed').style.color="#fff";
+    document.getElementById('maxSpeed').style.color="#fff";
+    document.getElementById('backDelete').style.color="#fff";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -232,6 +228,8 @@ function getSuiteExercise(suiteID,workID){
                     workID:workID
                 },
              success: function(data){
+                 if(data.length==0)
+                     return;
                    document.getElementById("sp").style.display='block';
                    document.getElementById("de").style.display='none';
                    document.getElementById("export").style.display='none';
@@ -254,17 +252,23 @@ function getSuiteExercise(suiteID,workID){
                        }else if(data[i]['type']==3){
                            type='看打练习';
                        }
-                       type=type+": "+data[i][0]['title'];
+                       var content=data[i][0]['title'];
+                       var allType=type+": "+content;
+                       if(content.length<=10)
+                           content=content;
+                       else
+                           content=content.substr(0,10)+"...";
+                       type=type+": "+content;
                       var str;
-                      if(i%4==0)
+                      if(i%3==0)
                           str="";
-                      str += "<td><a class='bb' id='kk"+i+"'"+" onclick='getStudentRanking("+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                      str += "<td><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
                       var li;
-                      if(i%4==0){
+                      if(i%3==0){
                          li = document.createElement("tr");  
                       }
                       li.innerHTML= str;
-                      if(((i%4-1)==0 && i!=0) || i==data.length-1){
+                      if(((i%3-1)==0 && i!=0) || i==data.length-1){
                         ul.appendChild(li);
                          }
                    }  
@@ -275,7 +279,82 @@ function getSuiteExercise(suiteID,workID){
                 }
          });    
 }
+var index;
+function getClassExerRankingBefBef(ind,i,classID,exerciseID,type){
+    index=ind;
+    document.getElementById("id").value=i;
+    var ii=i;
+    document.getElementById("classID").value=classID;
+    document.getElementById("exerciseID").value=exerciseID;
+    document.getElementById("type").value=type;
+    document.getElementById("type").value=choice;
+    var tds = document.getElementsByClassName("bb");
+    for( var i=0; i<tds.length; i++ ){
+        tds[i].style.color="#000";
+    }
+    document.getElementById('correct').style.color="#fff";
+    document.getElementById('speed').style.color="#fff";
+    document.getElementById('maxSpeed').style.color="#fff";
+    document.getElementById('backDelete').style.color="#fff";
+    document.getElementById("de").style.display='none';
+    document.getElementById("div11").style.display='none';
+    document.getElementById("title").style.display='none';
+    document.getElementById("main").style.display='none';
+    document.getElementById("export").style.display='none';
+    var t='kk'+ii;
+    document.getElementById(t).style.color="#F46401";
+}
+function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
+    index=ind;
+    document.getElementById("id").value=i;
+    var ii=i;
+    document.getElementById("classID").value=workID;
+    document.getElementById("isExam").value=isExam;
+    document.getElementById("exerciseID").value=exerciseID;
+    document.getElementById("type").value=type;
+    document.getElementById("choice").value=choice;
+    var tds = document.getElementsByClassName("bb");
+    for( var i=0; i<tds.length; i++ ){
+        tds[i].style.color="#000";
+    }
+    document.getElementById('correct').style.color="#fff";
+    document.getElementById('speed').style.color="#fff";
+    document.getElementById('maxSpeed').style.color="#fff";
+    document.getElementById('backDelete').style.color="#fff";
+    document.getElementById("de").style.display='none';
+    document.getElementById("div11").style.display='none';
+    document.getElementById("title").style.display='none';
+    document.getElementById("main").style.display='none';
+    document.getElementById("export").style.display='none';
+    var t='kk'+ii;
+    document.getElementById(t).style.color="#F46401";
+}
+var choice;
+function getClassExerRankingBef(choice2){
+    document.getElementById('correct').style.color="#fff";
+    document.getElementById('speed').style.color="#fff";
+    document.getElementById('maxSpeed').style.color="#fff";
+    document.getElementById('backDelete').style.color="#fff";
+    
+    document.getElementById(choice2).style.color="#F46401";
+    document.getElementById("choice").value=choice2;
+    var i=document.getElementById("id").value;
+    var classID=document.getElementById("classID").value;
+    var isExam=document.getElementById("isExam").value;
+    var exerciseID=document.getElementById("exerciseID").value;
+    var type=document.getElementById("type").value;
+    choice=choice2;
+    if(index==0)
+        getClassExerRanking(i,classID,exerciseID,type);
+    else
+        getStudentRanking(i,classID,isExam,exerciseID,type);
+        
+}
 function getClassExer(lessonID){
+    document.getElementById('correct').style.color="#fff";
+    document.getElementById('speed').style.color="#fff";
+    document.getElementById('maxSpeed').style.color="#fff";
+    document.getElementById('backDelete').style.color="#fff";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -283,6 +362,10 @@ function getClassExer(lessonID){
              data: {lessonID:lessonID,
                 },
              success: function(data){
+                 if(data.length==0){
+                     document.getElementById('other').style.display="block";
+                     return;
+                 }
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("div11").style.display='none';
@@ -317,21 +400,21 @@ function getClassExer(lessonID){
                        }
                        var content=data[i]['title'];
                        var allType=type+": "+content;
-                       if (content.length <= 5)
+                       if (content.length <= 10)
                             content=content;
                         else
-                            content=content.substr(0,5)+"...";
+                            content=content.substr(0,10)+"...";
                        type=type+": "+content;
                       var str;
-                      if(i%4==0)
+                      if(i%3==0)
                           str="";
-                      str+= "<td><a style='cursor:pointer;' class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getClassExerRanking("+i+","+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";   
+                      str+= "<td><a style='cursor:pointer;' class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getClassExerRankingBefBef("+"0"+","+i+","+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";   
                       var li;
-                      if(i%4==0){
+                      if(i%3==0){
                          li = document.createElement("tr");      
                       }
                       li.innerHTML= str;
-                      if(((i%4-1)==0 && i!=0) || i==data.length-1)
+                      if(((i%3-1)==0 && i!=0) || i==data.length-1)
                         ul.appendChild(li);
                    }  
                  },     
@@ -342,6 +425,10 @@ function getClassExer(lessonID){
          });    
 }
 function getExamExercise(examID,workID){
+    document.getElementById('correct').style.color="#fff";
+    document.getElementById('speed').style.color="#fff";
+    document.getElementById('maxSpeed').style.color="#fff";
+    document.getElementById('backDelete').style.color="#fff";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -350,6 +437,8 @@ function getExamExercise(examID,workID){
                  workID:workID,
                 },
              success: function(data){
+                 if(data.length==0)
+                     return;
                  document.getElementById("sp").style.display='block';
                  document.getElementById("de").style.display='none';
                  document.getElementById("div11").style.display='none';
@@ -375,21 +464,21 @@ function getExamExercise(examID,workID){
                        }
                        var content=data[i][0]['title'];
                        var allType=type+": "+content;
-                       if (content.length <= 5)
+                       if (content.length <= 10)
                             content=content;
                         else
-                            content=content.substr(0,5)+"...";
+                            content=content.substr(0,10)+"...";
                        type=type+": "+content;
                        var str;
-                       if(i%4==0)
+                       if(i%3==0)
                            str="";
-                       str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRanking("+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                       str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
                       var li ;
-                      if(i%4==0){
+                      if(i%3==0){
                          li= document.createElement("tr");   
                       }
                       li.innerHTML= str;
-                      if(((i%4-1)==0 && i!=0) || i==data.length-1)
+                      if(((i%3-1)==0 && i!=0) || i==data.length-1)
                         ul.appendChild(li);
                    }  
                  },     
@@ -400,21 +489,21 @@ function getExamExercise(examID,workID){
          });    
 }
 function getStudentRanking(ii,workID,isExam,exerciseID,type){
-        var tds = document.getElementsByClassName("bb");
-        for( var i=0; i<tds.length; i++ ){
-            tds[i].style.color="#000";
-        }
-        var t='kk'+ii;
-        document.getElementById(t).style.color="#F46401";
+//        var tds = document.getElementsByClassName("bb");
+//        for( var i=0; i<tds.length; i++ ){
+//            tds[i].style.color="#000";
+//        }
+//        var t='kk'+ii;
+//        document.getElementById(t).style.color="#F46401";
         var province = document.getElementsByName("selectID");
         var a;
-        var choice;
-        //document.getElementById('ff').style.color="#f00";
-        for(a=0; a<province.length; a++){//遍历单选框
-            if(province[a].checked){
-                  choice = province[a].value;
-            }
-        }
+//        var choice;
+//        for(a=0; a<province.length; a++){//遍历单选框
+//            if(province[a].checked){
+//                  choice = province[a].value;
+//            }
+//        }
+        
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -458,7 +547,12 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                    var per=new Array();
                    for(var i=0;i<data[0].length;i++){       
                        var name=data[0][i]['time'];
-                      var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                       if(choice=='correct'){
+                           var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"%"+"</th>";
+                        }else{
+                            var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                        }
+                      
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
@@ -490,13 +584,15 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                         xAxis : [
                             {
                                 type : 'category',
+                                name:"s",
                                 boundaryGap : false,
                                 data : times
                             }
                         ],
                         yAxis : [
                             {
-                                type : 'value'
+                                type : 'value',
+                                name:choose
                             }
                         ],
                         series : [
@@ -524,12 +620,12 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
         }
         var province = document.getElementsByName("selectID");
         var a;
-        var choice;
-        for(a=0; a<province.length; a++){//遍历单选框
-            if(province[a].checked){
-                  choice = province[a].value;
-            }
-        }
+//        var choice;
+//        for(a=0; a<province.length; a++){//遍历单选框
+//            if(province[a].checked){
+//                  choice = province[a].value;
+//            }
+//        }
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -579,7 +675,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                        
                    }
                    for(var i=0;i<data[0].length;i++){   
-                      var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+"1"+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                      var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
@@ -642,13 +738,15 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                         xAxis : [
                             {
                                 type : 'category',
+                                name:"s",
                                 boundaryGap : false,
                                 data : times
                             }
                         ],
                         yAxis : [
                             {
-                                type : 'value'
+                                type : 'value',
+                                name:choose
                             }
                         ],
                         series : [
@@ -675,20 +773,20 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
          }); 
 }
 function getClassExerRanking(ii,classID,exerciseID,type){
-        var tds = document.getElementsByClassName("bb");
-        for( var i=0; i<tds.length; i++ ){
-            tds[i].style.color="#000";
-        }
-        var t='kk'+ii;
-        document.getElementById(t).style.color="#F46401";
+//        var tds = document.getElementsByClassName("bb");
+//        for( var i=0; i<tds.length; i++ ){
+//            tds[i].style.color="#000";
+//        }
+//        var t='kk'+ii;
+//        document.getElementById(t).style.color="#F46401";
         var province = document.getElementsByName("selectID");
         var a;
-        var choice;
-        for(a=0; a<province.length; a++){//遍历单选框
-            if(province[a].checked){
-                  choice = province[a].value;
-            }
-        }
+//        var choice;
+//        for(a=0; a<province.length; a++){//遍历单选框
+//            if(province[a].checked){
+//                  choice = province[a].value;
+//            }
+//        }
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -735,8 +833,12 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                    var times  = new Array();
                    var per=new Array();
                     
-                    for(var i=0;i<data[0].length;i++){                                         
-                       var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                    for(var i=0;i<data[0].length;i++){     
+                       if(choice=='correct'){
+                           var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"%"+"</th>";
+                        }else{
+                            var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                        }
                        var tr = document.createElement("tr");               
                        tr.innerHTML= str;
                        tbody.appendChild(tr);
@@ -769,13 +871,15 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                         xAxis : [
                             {
                                 type : 'category',
+                                name:"s",
                                 boundaryGap : false,
                                 data : times
                             }
                         ],
                         yAxis : [
                             {
-                                type : 'value'
+                                type : 'value',
+                                name:choose
                             }
                         ],
                         series : [
@@ -796,19 +900,18 @@ function getClassExerRanking(ii,classID,exerciseID,type){
          }); 
 }
 function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
-        
         if(id==0){
             alert("请选择题目");
             return ;
         }
-        var province = document.getElementsByName("selectID");
+//        var province = document.getElementsByName("selectID");
         var a;
-        var choice;
-        for(a=0; a<province.length; a++){//遍历单选框
-            if(province[a].checked){
-                  choice = province[a].value;
-            }
-        }
+//        var choice;
+//        for(a=0; a<province.length; a++){//遍历单选框
+//            if(province[a].checked){
+//                  choice = province[a].value;
+//            }
+//        }
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -873,7 +976,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    }
                    if(data[0]['sequence']==1){
                         for(var i=0;i<data[1].length;i++){    
-                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
+                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
                            var tr = document.createElement("tr");    
                            tr.innerHTML= str;
                            tbody.appendChild(tr);
@@ -881,7 +984,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    }else{
                         $("#sh").show();
                         for(var i=0;i<data[1].length;i++){      
-                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+type+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
+                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
                            var tr = document.createElement("tr");    
                            tr.innerHTML= str;
                            tbody.appendChild(tr);
@@ -996,7 +1099,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                                  trigger: 'axis'
                              },
                              legend: {
-                                 data:['平均成绩']
+                                 data:['平均成绩','学生成绩']
                              },
                              grid: {
                                  left: '3%',
@@ -1007,13 +1110,15 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                              xAxis : [
                                  {
                                      type : 'category',
+                                     name:"s",
                                      boundaryGap : false,
                                      data : times
                                  }
                              ],
                              yAxis : [
                                  {
-                                     type : 'value'
+                                     type : 'value',
+                                     name:choose
                                  }
                              ],
                              series : function(){
@@ -1024,9 +1129,10 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                                      data:per
                                  };
                                  s.push(item);
+                                 
                                  for(var d=0;d<myPer.length;d++){
                                      var item={
-                                        name:'学生成绩'+d,
+                                        name:'学生成绩',
                                         type:'line',
                                         data:myPer[d]
                                     };

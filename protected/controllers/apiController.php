@@ -1538,7 +1538,8 @@ class apiController extends Controller {
                  }
                  
                  $finishDate=$a['finishDate'];          //finishDate
-                 if($f9<$finishDate){
+                 if($f9==0) $f9=$finishDate;
+                 if($f9>$finishDate){
                      $f9=$finishDate;
                  }
                  
