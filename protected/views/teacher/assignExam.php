@@ -84,7 +84,7 @@
                         <?php if ($isOpen == false) { ?>
                             <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo date("Y-m-d H:i:s", time()); ?>')"></a> 
                         <?php } ?>
-                        <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php echo IMG_URL; ?>../UI_tea/icon_SETUP.png"></a>
+<!--                        <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php// echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php //echo IMG_URL; ?>../UI_tea/icon_SETUP.png"></a>-->
     <?php ?>
 
                     </td>
@@ -207,7 +207,8 @@
                             window.wxc.xcConfirm("开始时间不能小于当前时间！", window.wxc.xcConfirm.typeEnum.confirm);
                             return;
                         } else {
-                            window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
+                              window.location.href = "./index.php?r=teacher/setTimeAndScoreExam&&examID="+examID+ "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;  
+//                            window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php //echo $pages->currentPage + 1; ?>;
                         }
                     } else {
                         return;
@@ -233,7 +234,8 @@
                                 url: "index.php?r=api/putNotice2&&class=<?php echo Yii::app()->session['currentClass'] ?>",
                                 data: {title: "考试", content: "考试时间已经到了，可以开始考试了"},
                                 success: function () {
-                                    window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + begin + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
+                                      window.location.href = "./index.php?r=teacher/setTimeAndScoreExam&&examID="+examID+ "&&duration=" + v + "&&beginTime=" + begin + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;  
+//                                    window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + begin + "&&isOpen=0&&page=" +<?php// echo $pages->currentPage + 1; ?>;
                                 },
                                 error: function (xhr, type, exception) {
                                     window.wxc.xcConfirm('出错了a...', window.wxc.xcConfirm.typeEnum.error);
