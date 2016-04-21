@@ -145,7 +145,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
         $.ajax({
             type: 'POST',
             url: "./index.php?r=api/loginOut",
-            data: {user: 'student', userID: '<?php echo Yii::app()->session['userid_now']; ?>'},
+            data: {user: 'teacher', userID: '<?php echo Yii::app()->session['userid_now']; ?>'},
             success: function (data, textStatus, jqXHR) {
                 console.log('jqXHR' + jqXHR);
                 console.log('textStatus' + textStatus);
