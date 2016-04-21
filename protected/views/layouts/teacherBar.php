@@ -98,7 +98,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                                 </a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="./index.php?r=teacher/set">设置</a></li>
-                                                    <li><a href="./index.php?r=user/login&exit=1">退出</a></li>
+                                                    <li><a href="./index.php?r=user/login&exit=1&usertype=teacher">退出</a></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -120,3 +120,42 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
 <?php } else { ?>
     <script>    window.location.href = "./index.php?r=user/login"</script>
 <?php } ?>
+<script type="text/javascript">
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        $.ajax({
+            type: 'POST',
+            url: "./index.php?r=api/loginOut",
+            data: {user:'teacher',userID:'<?php echo Yii::app()->session['userid_now'];?>'},
+            success: function (data, textStatus, jqXHR) {
+                <?php error_log('执行成功');?>
+                console.log('jqXHR' + jqXHR);
+                console.log('textStatus' + textStatus);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('jqXHR' + jqXHR);
+                console.log('textStatus' + textStatus);
+                console.log('errorThrown' + errorThrown);
+            }
+
+        });
+    }
+     function onunload_handler() {
+        $.ajax({
+            type: 'POST',
+            url: "./index.php?r=api/loginOut",
+            data: {user: 'student', userID: '<?php echo Yii::app()->session['userid_now']; ?>'},
+            success: function (data, textStatus, jqXHR) {
+                console.log('jqXHR' + jqXHR);
+                console.log('textStatus' + textStatus);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('jqXHR' + jqXHR);
+                console.log('textStatus' + textStatus);
+                console.log('errorThrown' + errorThrown);
+            }
+
+        });
+    }
+</script>
