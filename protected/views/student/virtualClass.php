@@ -12,7 +12,7 @@ echo "<script>var role='$role';</script>";
 <!--自定义css begin-->
 <link href="<?php echo CSS_URL; ?>my_style.css" rel="stylesheet" type="text/css" />
 <!--自定义css end-->
-<div class="left" style="min-height: 793px">
+<div class="left" style="min-height: 797px">
     <div class="vp1" style="width: 100%;">
         <br/>
         <tr>
@@ -76,7 +76,6 @@ echo "<script>var role='$role';</script>";
         <object style="position: absolute;top:713px;" id="typeOCX" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
                 width ='744' height='180'
-                event_OnChange="onChange"
                 event_OnStenoPress="onStenoPressKey">
         </object>
     </div>
@@ -92,8 +91,8 @@ echo "<script>var role='$role';</script>";
         <?php require Yii::app()->basePath . "\\views\\student\\keyboard_virtual_class.php"; ?>
     </div>
     <div class="fl" align="center" id="sw-chat" ><h4 ><a style="position: relative;left:145px;color: white"  href="#">课 堂 问 答</a></h4></div>
-    <div id="chat-box" style="display:none;border: 0px">
-        <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%"></div>
+    <div id="chat-box" style="border: 0px;">
+        <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%;height: 165px"></div>
         <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
             <input onfocus="setPress()"onblur="delPress()" type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
             <a id="send-msg"></a>
@@ -459,7 +458,7 @@ echo "<script>var role='$role';</script>";
             $("#teacher-camera").toggle(200);
         });
         $("#sw-chat").click(function () {
-            $("#chat-box").toggle(200);
+            $("#chat-box").toggle(0);
             $("#analysis").hide();
         });
         $("#sw-bulletin").click(function () {
@@ -478,7 +477,6 @@ echo "<script>var role='$role';</script>";
         });
         $("#sw-openAnalysis").click(function () {
             $("#analysis").toggle(0);
-            $("#chat-box").hide();
         });
     });
 
