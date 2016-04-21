@@ -11,14 +11,14 @@
     <div class="well-topnoradius" style="padding: 8px 0;border-bottom-left-radius:0px;border-bottom-right-radius:0px;">
         <ul class="nav nav-list">    
             <li class="divider"></li>
-            <?php if (Yii::app()->session['currentClass'] && Yii::app()->session['currentLesson']) { ?>
+            <?php //if (Yii::app()->session['currentClass'] && Yii::app()->session['currentLesson']) { ?>
 
                 <li class="nav-header" ><i class="icon-knowlage"></i>新建作业</li>
                 <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
                 <li style="margin-top:10px">
                     <button onclick="chkIt()" class="btn_4superbig">创&nbsp;&nbsp;&nbsp;建</button>
                 </li>
-            <?php } ?>
+            <?php //} ?>
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
         </ul>
@@ -168,14 +168,14 @@ $this->widget('CLinkPager', array('pages' => $pages));
                         if (data != 0 && data !== '') {
                             window.wxc.xcConfirm('修改成功！', window.wxc.xcConfirm.typeEnum.success, {
                                 onOk: function () {
-                                    window.location.href = './index.php?r=teacher/assignWork&&progress=<?php echo $_GET['progress']; ?>';
+                                    window.location.href = './index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass'];?>&&lessonID=<?php echo Yii::app()->session['currentLesson'];?>';
                                 }
                             });
 
                         } else if (data == 0) {
                             window.wxc.xcConfirm('存在重名或非法名称', window.wxc.xcConfirm.typeEnum.error, {
                                 onOk: function () {
-                                    window.location.href = './index.php?r=teacher/assignWork&&progress=<?php echo $_GET['progress']; ?>';
+                                    window.location.href = './index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass'];?>&&lessonID=<?php echo Yii::app()->session['currentLesson'];?>';
                                 }
                             });
                         }

@@ -1328,9 +1328,11 @@ class TeacherController extends CController {
         //$user_model = new User;
         //$username_now=Yii::app()->user->name;
         //$info=$user_model->find("username='$username_now'");//,'pageInden'=>$pageIndex
-        if (isset($_GET['modify'])) {
-            TwoWordsLib::model()->modify();
-        }
+//        if (isset($_GET['modify'])) {
+//            TwoWordsLib::model()->modify();
+//        }
+        $userID = Yii::app()->session['userid_now'];
+        Teacher::model()->isLogin($userID, 1);
         $this->render('index'); //,['info'=>$info]);
     }
 
@@ -4844,7 +4846,6 @@ class TeacherController extends CController {
 
     public function ActionCheckStuExam() {
         $workID = $_GET['workID'];
-
         $classID = $_GET['classID'];
         $class_student = Student::model()->findAll("classID = '$classID'");
         $array_accomplished = Array();
@@ -5190,7 +5191,7 @@ class TeacherController extends CController {
     }
 
     //
-    public function ActionAjaxExam2() {
+    public function Actionam2() {
         $classID = $_GET['classID'];
         if (isset($_POST['workID'])) {
             $workID = $_POST['workID'];

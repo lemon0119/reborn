@@ -1410,7 +1410,11 @@ class AdminController extends CController {
                 $ex_sq = " WHERE " . $type . " = '" . $value . "'";
             } else if ($type == "courseName") {
                 $course = Course::model()->find("courseName = ?", array($value));
-                $ex_sq = " WHERE currentCourse = '" . $course->courseID . "'";
+                if(isset($course)){
+                    $ex_sq = " WHERE currentCourse = '" . $course->courseID . "'";
+                }else{
+                    $ex_sq = " WHERE currentCourse = ''";
+                }
             } else if ($type == "teaName") {
                 $sql = "SELECT * FROM teacher WHERE userName ='" . $value . "'";
                 $an = Yii::app()->db->createCommand($sql)->query();

@@ -1336,6 +1336,8 @@ class StudentController extends CController {
 //            }
 //            
 //        }
+        $userID = Yii::app()->session['userid_now'];
+        Student::model()->isLogin($userID, 1);
         $this->render('index');
     }
 
