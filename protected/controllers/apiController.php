@@ -1971,7 +1971,6 @@ class apiController extends Controller {
     public function actionLoginOut(){
         $user = $_POST['user'];
         $userID = $_POST['userID'];
-        error_log('action');
         if($user=='student'){
             $result = Student::model()->isLogin($userID, 0);
         }else if($user=='teacher'){

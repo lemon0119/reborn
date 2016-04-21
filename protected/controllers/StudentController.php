@@ -1336,8 +1336,9 @@ class StudentController extends CController {
 //            }
 //            
 //        }
-        $userID = Yii::app()->session['userid_now'];
-        Student::model()->isLogin($userID, 1);
+//        判断重复登录
+//        $userID = Yii::app()->session['userid_now'];
+//        Student::model()->isLogin($userID, 1);
         $this->render('index');
     }
 

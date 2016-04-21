@@ -306,8 +306,8 @@ class Student extends CActiveRecord {
         $student = new Student();
         $student = $student->find("userID = '$userID'");
         $student->is_login = $login;
-        $student->update();
-        return $student;
+        $result = $student->update();
+        return $result;
     }
     /**
      * Returns the static model of the specified AR class.
