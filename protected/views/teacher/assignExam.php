@@ -224,7 +224,7 @@
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (!v.match(/^[0-9]+$/) || v == 0) {
+                if (!v.match(/^[0-9]+$/) || v == 0 ||v>720) {
                     window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error);
                 } else {
                     window.wxc.xcConfirm("你确定要立即开始？", window.wxc.xcConfirm.typeEnum.info, {
