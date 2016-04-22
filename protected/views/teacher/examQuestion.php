@@ -40,13 +40,14 @@
 </div>
 <script>
     function judge(limit,a){
-        if(a.value<0){
+        var score = parseInt(a.value);
+        if(a.value<0 || a.value!=score){
              window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
-            a.value="";
+            a.value=0;
         }
         if(a.value>limit){
             window.wxc.xcConfirm("配分超过上限！", window.wxc.xcConfirm.typeEnum.error);
-            a.value="";
+            a.value=0;
         }
     }
     $(document).ready(function(){   

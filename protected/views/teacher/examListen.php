@@ -377,7 +377,7 @@ if (isset(Yii::app()->session['type'])) {
         var re = /^([1-9]\d*|[0]{1,1})$/;
         if (!re.test(value1)) {
             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
-            $("#input")[0].value = scoreOld;
+            $("#input")[0].value = 0;
             return false;
         }
         var totalscore = <?php echo $exam_exercise['score']; ?>;
