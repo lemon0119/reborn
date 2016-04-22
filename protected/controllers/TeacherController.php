@@ -5538,7 +5538,7 @@ class TeacherController extends CController {
             return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $classResult, 'array_class' => $array_class,
                         'array_course' => $array_course, 'sqlcurrentClass' => $sqlcurrentClass]);
             //} else if (isset($_GET['courseID']) && !isset($_GET['lessonName'])) {   
-        } else if (isset($_GET['courseID']) && !isset($_GET['lessonID'])) {
+        } else if (isset($_GET['courseID']) && !isset($_GET['number'])) {
             //显示课程列表逻辑
             $courseID = $_GET ['courseID'];
             $result = Lesson::model()->getLessonLst("", "", $courseID);
@@ -5558,17 +5558,17 @@ class TeacherController extends CController {
                 'pages' => $pages,
             ));
             //} else if (isset($_GET['lessonName'])) {
-        } else if (isset($_GET['lessonID'])) {
+        } else if (isset($_GET['number'])) {
             $currentClass = Yii::app()->session['currentClass'];
             $sqlcurrentClass = TbClass::model()->find("classID = '$currentClass'");
             if (!isset($sqlcurrentClass)) {
                 $sqlcurrentClass = "none";
             }
             //$lessonName = $_GET['lessonName'];
-            $lessonID = $_GET['lessonID'];
+            $number = $_GET['number'];
             $newName = $_GET['newName'];
             //$sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
-            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonID= '$lessonID'";
+            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number'";
             Yii::app()->db->createCommand($sql)->query();
             $courseID = $_GET ['courseID'];
             $result = Lesson::model()->getLessonLst("", "", $courseID);
