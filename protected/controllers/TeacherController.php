@@ -60,12 +60,18 @@ class TeacherController extends CController {
 //add by LC 2015-10-13
     public function actionSetTimeAndScoreExam() {
         $examID = $_GET['examID'];
+        $duration=$_GET['duration'];
+        $beginTime=$_GET['beginTime'];
+        $isOpen=$_GET['isOpen'];
         $teacherID = Yii::app()->session['userid_now'];
         $array_class = array();
         $result = TbClass::model()->getClassByTeacherID($teacherID);
         foreach ($result as $class) {
             array_push($array_class, $class);
         }
+        $result = Exam::model()->getAllExamByPage(10);
+        $array_allexam = $result['examLst'];
+        $pages = $result['pages'];
         //得到当前显示班级
         if (isset($_GET['classID'])) {
             Yii::app()->session['currentClass'] = $_GET['classID'];
@@ -90,6 +96,10 @@ class TeacherController extends CController {
         if ($questAll)
             $questScore = $questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
+            'duration'=>$duration,
+            'beginTime'=>$beginTime,
+            'isOpen'=>$isOpen,
+            'pages'=>$pages,
             'array_exam' => $array_suite,
             'examExer' => $examExer,
             'examID' => $examID,
