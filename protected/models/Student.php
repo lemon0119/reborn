@@ -302,6 +302,13 @@ class Student extends CActiveRecord {
         ));
     }
 
+    public static function isLogin($userID,$login){
+        $student = new Student();
+        $student = $student->find("userID = '$userID'");
+        $student->is_login = $login;
+        $result = $student->update();
+        return $result;
+    }
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -311,6 +318,8 @@ class Student extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    
     
     public function findStudentByClass($classID){
         $student = new Student();

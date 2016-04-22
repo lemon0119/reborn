@@ -123,8 +123,9 @@
 function savetime(){
     //$('#timeForm').submit();
     $.post($('#timeForm').attr('action'),$('#timeForm').serialize(),function(data){
-            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
-        })
+//            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
+        window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $examID ?>&&duration=<?php echo $duration ?>&&beginTime=<?php echo $beginTime ?>&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
+    })
         .error(function(){window.wxc.xcConfirm('不好意思，保存出错了...', window.wxc.xcConfirm.typeEnum.info);});
 }
 

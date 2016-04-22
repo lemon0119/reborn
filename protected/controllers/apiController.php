@@ -1967,6 +1967,17 @@ class apiController extends Controller {
          $data = implode('&',$data)."$".implode('&',$data2)."$".implode('&',$data3);
          echo $data;
     }
+    
+    public function actionLoginOut(){
+        $user = $_POST['user'];
+        $userID = $_POST['userID'];
+        if($user=='student'){
+            $result = Student::model()->isLogin($userID, 0);
+        }else if($user=='teacher'){
+            $result = Teacher::model()->isLogin($userID, 0);
+        }
+        echo $result;
+    }
 }
 
 

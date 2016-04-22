@@ -60,12 +60,18 @@ class TeacherController extends CController {
 //add by LC 2015-10-13
     public function actionSetTimeAndScoreExam() {
         $examID = $_GET['examID'];
+        $duration=$_GET['duration'];
+        $beginTime=$_GET['beginTime'];
+        $isOpen=$_GET['isOpen'];
         $teacherID = Yii::app()->session['userid_now'];
         $array_class = array();
         $result = TbClass::model()->getClassByTeacherID($teacherID);
         foreach ($result as $class) {
             array_push($array_class, $class);
         }
+        $result = Exam::model()->getAllExamByPage(10);
+        $array_allexam = $result['examLst'];
+        $pages = $result['pages'];
         //得到当前显示班级
         if (isset($_GET['classID'])) {
             Yii::app()->session['currentClass'] = $_GET['classID'];
@@ -90,6 +96,10 @@ class TeacherController extends CController {
         if ($questAll)
             $questScore = $questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
+            'duration'=>$duration,
+            'beginTime'=>$beginTime,
+            'isOpen'=>$isOpen,
+            'pages'=>$pages,
             'array_exam' => $array_suite,
             'examExer' => $examExer,
             'examID' => $examID,
@@ -1328,9 +1338,12 @@ class TeacherController extends CController {
         //$user_model = new User;
         //$username_now=Yii::app()->user->name;
         //$info=$user_model->find("username='$username_now'");//,'pageInden'=>$pageIndex
-        if (isset($_GET['modify'])) {
-            TwoWordsLib::model()->modify();
-        }
+//        if (isset($_GET['modify'])) {
+//            TwoWordsLib::model()->modify();
+//        }
+//        判断重复登录
+//        $userID = Yii::app()->session['userid_now'];
+//        Teacher::model()->isLogin($userID, 1);
         $this->render('index'); //,['info'=>$info]);
     }
 
@@ -4844,7 +4857,6 @@ class TeacherController extends CController {
 
     public function ActionCheckStuExam() {
         $workID = $_GET['workID'];
-
         $classID = $_GET['classID'];
         $class_student = Student::model()->findAll("classID = '$classID'");
         $array_accomplished = Array();
@@ -5190,7 +5202,7 @@ class TeacherController extends CController {
     }
 
     //
-    public function ActionAjaxExam2() {
+    public function Actionam2() {
         $classID = $_GET['classID'];
         if (isset($_POST['workID'])) {
             $workID = $_POST['workID'];
