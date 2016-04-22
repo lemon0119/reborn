@@ -595,6 +595,8 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                        var name=data[0][i]['time'];
                        if(choice=='correct'){
                            var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"%"+"</th>";
+                        }else if(choice=='backDelete'){
+                            var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[0][i][choice]*100)/100)+"</th>";
                         }else{
                             var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
                         }
@@ -720,8 +722,14 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                        myPer[h]=data[2][h][choice];
                        
                    }
-                   for(var i=0;i<data[0].length;i++){   
-                      var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                   for(var i=0;i<data[0].length;i++){  
+                      if(choice=='correct'){
+                        var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"%"+"</th>";
+                      }else if(choice=='backDelete'){
+                          var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[0][i][choice]*100)/100)+"</th>";
+                      }else{
+                          var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
+                      }
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
@@ -882,6 +890,8 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                     for(var i=0;i<data[0].length;i++){     
                        if(choice=='correct'){
                            var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"%"+"</th>";
+                        }else if(choice=='backDelete'){
+                            var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[0][i][choice]*100)/100)+"</th>";
                         }else{
                             var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
                         }
@@ -1021,16 +1031,31 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                         }
                    }
                    if(data[0]['sequence']==1){
-                        for(var i=0;i<data[1].length;i++){    
-                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
+                        for(var i=0;i<data[1].length;i++){  
+                            var str;
+                            if(choice=='correct'){
+                                str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"%"+"</th>";
+                            }else if(choice=='backDelete'){
+                                str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[1][i][choice]*100)/100)+"</th>";
+                            }else{
+                                str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
+                            }
                            var tr = document.createElement("tr");    
                            tr.innerHTML= str;
                            tbody.appendChild(tr);
                         }  
                    }else{
                         $("#sh").show();
-                        for(var i=0;i<data[1].length;i++){      
-                           var str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
+                        for(var i=0;i<data[1].length;i++){   
+                        var str;
+                            if(choice=='correct'){
+                                str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"%"+"</th>";
+                            }else if(choice=='backDelete'){
+                                str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[1][i][choice]*100)/100)+"</th>";
+                            
+                            }else{
+                                str =  "<th>"+(i+1)+"</th>"+"<th class='sidelist'><a style='cursor: pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[1][i]['studentID']+'"'+")'>"+data[1][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[1][i][choice]*100)/100+"</th>";
+                            }
                            var tr = document.createElement("tr");    
                            tr.innerHTML= str;
                            tbody.appendChild(tr);
@@ -1177,8 +1202,14 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                                  s.push(item);
                                  
                                  for(var d=0;d<myPer.length;d++){
+                                     if(d==0)
+                                         var n='最高成绩';
+                                     else 
+                                         var n='最低成绩';
+                                     if(myPer.length>=2)
+                                         var n='成绩';
                                      var item={
-                                        name:'学生成绩',
+                                        name:n,
                                         type:'line',
                                         data:myPer[d]
                                     };
