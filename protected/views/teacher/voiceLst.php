@@ -35,7 +35,7 @@
     <?php }?>
 </div>
 <div class="span9">
-    <h2 style="display:inline-block;">音频列表</h2>
+    <h2 style="display:inline-block;">音频列表</h2>（仅支持MP3格式）
     <div id ="voice-table"></div>
     <form name="form1" class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addVoice&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" enctype="multipart/form-data"> 
      <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" /> 
