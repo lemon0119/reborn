@@ -86,13 +86,11 @@
                         <?php } ?>
 <!--                        <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php// echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php //echo IMG_URL; ?>../UI_tea/icon_SETUP.png"></a>-->
     <?php ?>
-
                     </td>
                 </tr>            
 <?php endforeach; ?> 
         </form>
         </tbody>
-
     </table>
     <div align=center>
         <?php
@@ -193,7 +191,7 @@
         var txt = "请输入预定考试时长...";
         window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
-                if (!v.match(/^[0-9]+$/) || v == 0 ||v>720) {
+                if(!v.match(/^[0-9]+$/) || v == 0 ||v>720) {
                     window.wxc.xcConfirm('非法时长！', window.wxc.xcConfirm.typeEnum.error, {
                         onOk: function () {
                             openExam(examID, duration, begintime);
