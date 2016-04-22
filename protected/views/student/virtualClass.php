@@ -236,6 +236,9 @@ echo "<script>var role='$role';</script>";
 
     //chat and bulletin
     $(document).ready(function () {
+//        setTimeout(function () {
+//            document.getElementById('bulletin').innerHTML=;
+//        }, 500);
         var current_date = new Date();
         var current_time = current_date.toLocaleTimeString();
         //每5秒，发送一次时间

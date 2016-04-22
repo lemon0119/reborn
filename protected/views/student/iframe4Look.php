@@ -390,6 +390,14 @@ $squence = $countSquence + 1;
             window.parent.finish();
         }
     }
-
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        yaweiOCX4Look.remove();
+         
+    }
+    function onunload_handler() {
+          yaweiOCX4Look.remove();
+    }
 
 </script>

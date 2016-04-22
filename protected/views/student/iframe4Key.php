@@ -9,8 +9,8 @@
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
         <table style="width: 580px"  border = '0px'>
-<!--            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>-->
-             <?php if(isset($_GET['ispractice'])){?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
+            <!--            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>-->
+            <?php if (isset($_GET['ispractice'])) { ?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                 <td><span style="color: #f46500" id="timej">00:00:00</span></td>
@@ -69,7 +69,7 @@
             </tr>
         </table>
         <br/>
-        
+
         <div id ="templet" class ="questionBlock" onselectstart="return false" style="display: none">
             <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font>
         </div>
@@ -109,7 +109,7 @@
         var content = document.getElementById("id_content").value;
         var cont_array = content.split("$$");
         var repeatNum = $("#repeatNum").html();
-        $("#AllOfWord").html(cont_array.length*repeatNum);
+        $("#AllOfWord").html(cont_array.length * repeatNum);
         document.getElementById('span').scrollIntoView();
 //  暂停功能        
 //        $("#pause").click(function () {
@@ -210,6 +210,14 @@ $squence = $countSquence + 1;
      return cnum / tl;
      }
      */
-
+    var typeOCX = document.getElementById("typeOCX");
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        document.getElementById('typeOCX').remove();
+    }
+    function onunload_handler() {
+        document.getElementById('typeOCX').remove();
+    }
 
 </script>
