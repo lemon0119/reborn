@@ -424,7 +424,7 @@ echo "<script>var role='$role';</script>";
             },
             error: function (xhr, type, exception) {
                 console.log(xhr, "Failed");
-                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
             }
         });
         return false;

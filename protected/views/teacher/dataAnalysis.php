@@ -293,7 +293,7 @@ function getSuiteExercise(suiteID,workID){
                    }  
                  },     
                 error: function(xhr, type, exception){
-                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                     console.log(xhr, "Failed");
                 }
          });    
@@ -457,7 +457,7 @@ function getClassExer(lessonID){
                    }  
                  },     
                 error: function(xhr, type, exception){
-                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                     console.log(xhr, "Failed");
                 }
          });    
@@ -529,7 +529,7 @@ function getExamExercise(examID,workID){
                    }  
                  },     
                 error: function(xhr, type, exception){
-                    window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                    window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                     console.log(xhr, "Failed");
                 }
          });    
@@ -654,7 +654,7 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                     
                  },     
             error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr, "Failed");
             }
          }); 
@@ -813,7 +813,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                     
                  },     
             error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr, "Failed");
             }
          }); 
@@ -940,7 +940,7 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                     myChart.setOption(option);
                  },     
             error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr, "Failed");
             }
          }); 
@@ -1191,7 +1191,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                          myChart.setOption(option);
                  },     
             error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr, "Failed");
             }
          }); 
