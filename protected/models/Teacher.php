@@ -136,8 +136,8 @@ class Teacher extends CActiveRecord {
         $teacher = new Teacher();
         $teacher = $teacher->find("userID = '$userID'");
         $teacher->is_login = $login;
-        $teacher->update();
-        return $teacher;
+        $result = $teacher->update();
+        return $result;
     }
 
     /**
