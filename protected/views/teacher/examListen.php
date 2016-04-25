@@ -54,7 +54,8 @@ require 'examAnsSideBar.php';
             </div>
         </div>
 分数:<?php echo $exam_exercise['score'];?><br/>
-   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >     
+    </div>
    <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
 </div>
 
@@ -376,7 +377,7 @@ if (isset(Yii::app()->session['type'])) {
         var re = /^([1-9]\d*|[0]{1,1})$/;
         if (!re.test(value1)) {
             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
-            $("#input")[0].value = scoreOld;
+            $("#input")[0].value = 0;
             return false;
         }
         var totalscore = <?php echo $exam_exercise['score']; ?>;
