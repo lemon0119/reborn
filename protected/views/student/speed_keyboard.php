@@ -239,7 +239,7 @@
             }
         }
         display();
-        time1 = setInterval("display()",(speed/60)*1000); 
+        time1 = setInterval("display()",(60/speed)*1000); 
     }
     
     function setWordView(word){

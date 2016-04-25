@@ -236,6 +236,9 @@ echo "<script>var role='$role';</script>";
 
     //chat and bulletin
     $(document).ready(function () {
+//        setTimeout(function () {
+//            document.getElementById('bulletin').innerHTML=;
+//        }, 500);
         var current_date = new Date();
         var current_time = current_date.toLocaleTimeString();
         //每5秒，发送一次时间
@@ -421,7 +424,7 @@ echo "<script>var role='$role';</script>";
             },
             error: function (xhr, type, exception) {
                 console.log(xhr, "Failed");
-                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
             }
         });
         return false;
@@ -699,5 +702,14 @@ echo "<script>var role='$role';</script>";
                 }
             });
         }
+    }
+    var typeOCX = document.getElementById("typeOCX");
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        document.getElementById('typeOCX').remove();
+    }
+    function onunload_handler() {
+        document.getElementById('typeOCX').remove();
     }
 </script>
