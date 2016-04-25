@@ -59,7 +59,7 @@ $(document).ready(function(){
             window.wxc.xcConfirm('修改发布成功！', window.wxc.xcConfirm.typeEnum.success);
             },
             error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了...', window.wxc.xcConfirm.typeEnum.error);
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr.responseText, "Failed");
             }
         });

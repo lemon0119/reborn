@@ -195,7 +195,7 @@ $squence = $countSquence + 1;
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = input.replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_content = inputO.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
@@ -390,6 +390,14 @@ $squence = $countSquence + 1;
             window.parent.finish();
         }
     }
-
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        yaweiOCX4Look.remove();
+         
+    }
+    function onunload_handler() {
+          yaweiOCX4Look.remove();
+    }
 
 </script>

@@ -79,7 +79,7 @@
             </div>             
         </div>            
         <div class="control-group" style="display: none" id="div1">   
-            <label class="control-label" >二字词练习次数</label>
+            <label class="control-label" >二字词个数</label>
             <div class="controls">                                                        
                 <input type="text" name="in1" style="width:40px; height:15px;" id="input1" maxlength="2" value="0" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>               
             </div>             

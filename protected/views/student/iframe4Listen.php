@@ -9,9 +9,9 @@
 <body style="background-image: none;background-color: #fff">
     <div id="span" class="hero-unit" align="center">
         <table style="width: 580px"  border = '0px'>
-            <?php if(isset($_GET['ispractice'])){?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
-<!--            <button class="fl btn" id="pause">暂停统计</button>-->
-<!--            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>-->
+            <?php if (isset($_GET['ispractice'])) { ?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
+            <!--            <button class="fl btn" id="pause">暂停统计</button>-->
+            <!--            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>-->
             <tr>
                 <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                 <td><span style="color: #f46500" id="timej">00:00:00</span></td>
@@ -57,19 +57,19 @@
                 <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
             </tr>
         </table>
-        <?php 
-                $listenpath = EXER_LISTEN_URL.$classExercise['file_path'].$classExercise['file_name'];
-            ?>
+        <?php
+        $listenpath = EXER_LISTEN_URL . $classExercise['file_path'] . $classExercise['file_name'];
+        ?>
         <div style="position: relative;top: -130px" align="left">
-                <br/>
-                <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath;?>"   preload = "auto"    controls=""></audio>
-            </div>
+            <br/>
+            <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath; ?>"   preload = "auto"    controls=""></audio>
+        </div>
         <input id="content" type="hidden" style="height: 5px;" value="<?php
-               $str = str_replace("\n", "", $classExercise['content']);
-               $str = str_replace("\r", "", $str);
-               $str = str_replace(" ", "", $str);
-               echo $str;
-               ?>">
+        $str = str_replace("\n", "", $classExercise['content']);
+        $str = str_replace("\r", "", $str);
+        $str = str_replace(" ", "", $str);
+        echo $str;
+        ?>">
         <br/>
         <object id="typeOCX4Listen" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
@@ -101,23 +101,24 @@
 //            }
 //        });
     });
-     var originalContent = '<?php echo $str;?>';
-     window.GA_originalContent = originalContent;
-     //获取学生信息转入统计JS 实时存入数据库
+    var originalContent = '<?php echo $str; ?>';
+    window.GA_originalContent = originalContent;
+    //获取学生信息转入统计JS 实时存入数据库
     window.G_saveToDatabase = 1;
-    <?php  $exerciseID = $classExercise['exerciseID'];
-            $studentID = Yii::app()->session['userid_now'];
-            $sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '$exerciseID' AND studentID = '$studentID'");
-            $countSquence = count($sqlClassExerciseRecord);
-            $squence = $countSquence+1;
-            ?>
-    window.G_squence = <?php echo $squence;?>;
+<?php
+$exerciseID = $classExercise['exerciseID'];
+$studentID = Yii::app()->session['userid_now'];
+$sqlClassExerciseRecord = ClassexerciseRecord::model()->findAll("classExerciseID = '$exerciseID' AND studentID = '$studentID'");
+$countSquence = count($sqlClassExerciseRecord);
+$squence = $countSquence + 1;
+?>
+    window.G_squence = <?php echo $squence; ?>;
     window.G_exerciseType = "classExercise";
     var classExerciseID = <?php echo $exerciseID; ?>;
     var studentID = "<?php echo Yii::app()->session['userid_now']; ?>";
-    window.G_exerciseData = Array(classExerciseID,studentID);
+    window.G_exerciseData = Array(classExerciseID, studentID);
 
-    
+
     function onStenoPressKey(pszStenoString, device) {
         yaweiOCX4Listen.UpdateView();
         var input = getContent(yaweiOCX4Listen);
@@ -126,9 +127,9 @@
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
         var audio = document.getElementById('music');
-         if(window.G_pauseFlag===1){
-                    audio.play();
-                }
+        if (window.G_pauseFlag === 1) {
+            audio.play();
+        }
         var myDate = new Date();
         window.G_pressTime = myDate.getTime();
         if (window.G_startFlag === 0) {
@@ -141,7 +142,7 @@
         window.G_countAllKey++;
         window.G_content = input.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
-        
+
         //每击统计击键间隔时间 秒
         //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
         //每击统计最高击键间隔时间 秒
@@ -162,25 +163,32 @@
         }
         //--------------------------------------------------
     }
-    $(document).ready(function(){
+    $(document).ready(function () {
         //菜单栏变色
-        $("li#li-listen-<?php echo $classExercise['exerciseID'];?>").attr('class','active');
+        $("li#li-listen-<?php echo $classExercise['exerciseID']; ?>").attr('class', 'active');
     });
-    
-    function getWordLength(){
+
+    function getWordLength() {
         var input = getContent(yaweiOCX4Listen);
         return input.length;
     }
-    
-     function finish(){
-          var audio = document.getElementById('music');  
-        if(window.G_startFlag===1){
-            window.G_isOverFlag = 1; 
-            $("#finish").attr("disabled","disabled");
+
+    function finish() {
+        var audio = document.getElementById('music');
+        if (window.G_startFlag === 1) {
+            window.G_isOverFlag = 1;
+            $("#finish").attr("disabled", "disabled");
             audio.pause();
             window.parent.finish();
         }
-         
+
     }
-    
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        yaweiOCX4Listen.remove();
+    }
+    function onunload_handler() {
+        yaweiOCX4Listen.remove();
+    }
 </script>
