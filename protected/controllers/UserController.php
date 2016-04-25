@@ -132,7 +132,6 @@ class UserController extends Controller {
                     Teacher::model()->isLogin($userID, 0);
                 }
             }
-
             $this->clearTrace();
         }
         $this->renderPartial('login', array('login_model' => $login_model, 'result' => $result));

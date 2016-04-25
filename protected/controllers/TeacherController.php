@@ -1341,8 +1341,9 @@ class TeacherController extends CController {
 //        if (isset($_GET['modify'])) {
 //            TwoWordsLib::model()->modify();
 //        }
-        $userID = Yii::app()->session['userid_now'];
-        Teacher::model()->isLogin($userID, 1);
+//        判断重复登录
+//        $userID = Yii::app()->session['userid_now'];
+//        Teacher::model()->isLogin($userID, 1);
         $this->render('index'); //,['info'=>$info]);
     }
 
