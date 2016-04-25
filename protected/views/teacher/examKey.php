@@ -16,7 +16,7 @@ require 'examAnsSideBar.php';
         <table border = '0px' width="100%">
             <tr>
                 <td width = '50%' align='center'><?php echo $exer['title']?></td>
-                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php echo '%';?></span></td>
+                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct); echo '%';?></span></td>
             </tr>
             <tr>
                 <td colspan='3'>
@@ -39,9 +39,10 @@ require 'examAnsSideBar.php';
         </table>
 </div>
     分数:<?php echo $exam_exercise['score'];?><br/>
-   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >      
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >   
+   </div>
    <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
-</div>
+
 </div>
 
 <script>
