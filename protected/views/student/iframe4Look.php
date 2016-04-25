@@ -195,7 +195,7 @@ $squence = $countSquence + 1;
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = input.replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_content = inputO.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
