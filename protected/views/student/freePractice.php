@@ -73,7 +73,7 @@
         <h3 >自 主 练 习</h3>
 <!--        <button onclick="getSteno()">测试</button>-->
         <br/>
-        <div class="fr" style="width:300px; position: relative;right: 10px">
+        <div class="fr" style="width:350px; position: relative;right: 10px">
             <table cellpadding="8" style="margin: 0px auto;">
                 <tr>
                     <td><span class="fl"  style="font-weight: bolder">平均速度：</span><span style="color: #f46500" id="getAverageSpeed">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: gray"> 字/分</span> </td>
