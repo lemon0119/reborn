@@ -3539,7 +3539,7 @@ class TeacherController extends CController {
         } else {
             $array_suite = 0;
         }
-
+        
         $this->render('assignWork', array(
             'array_class' => $array_class,
             'array_lesson' => $array_lesson,
@@ -3548,11 +3548,19 @@ class TeacherController extends CController {
             'pages' => $pages,
             'res' => $res
         ));
+        }else{
+             $this->render('index', array(
+            'array_class' => $array_class
+        ));
+            
+        }
+       
     }
 
     public function ActionAssignExam() {
         $res = 0;
         $teacherID = Yii::app()->session['userid_now'];
+        $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
         $array_class = array();
         $result = TbClass::model()->getClassByTeacherID($teacherID);
         foreach ($result as $class)
@@ -3562,6 +3570,10 @@ class TeacherController extends CController {
         $array_allexam = $result['examLst'];
         $pages = $result['pages'];
         //得到当前显示班级
+        if(empty($teacher_class)){
+            $this->render('index', array(
+            'array_class' => $array_class));
+        }else{
         if (isset($_GET['classID']))
             Yii::app()->session['currentClass'] = $_GET['classID'];
         else if ($array_class != NULL)
@@ -3580,6 +3592,7 @@ class TeacherController extends CController {
             'pages' => $pages,
             'res' => $res
         ));
+        }
     }
 
     public function ActionModifyWork() {
@@ -5560,10 +5573,10 @@ class TeacherController extends CController {
             //$lessonName = $_GET['lessonName'];
             $number = $_GET['number'];
             $newName = $_GET['newName'];
-            //$sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
-            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number'";
-            Yii::app()->db->createCommand($sql)->query();
             $courseID = $_GET ['courseID'];
+            //$sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
+            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number' and courseID='$courseID'";
+            Yii::app()->db->createCommand($sql)->query();            
             $result = Lesson::model()->getLessonLst("", "", $courseID);
             $sqlCourse = Course::model()->find("courseID = '$courseID'");
             $courseName = $sqlCourse['courseName'];
