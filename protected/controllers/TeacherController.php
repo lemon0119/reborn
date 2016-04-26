@@ -3533,28 +3533,24 @@ class TeacherController extends CController {
                     Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
                 }
             }
-        }
-        if (isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])) {
-            $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson'], 1));
+            if (isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])) {
+                $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson'], 1));
+            } else {
+                $array_suite = 0;
+            }
+            $this->render('assignWork', array(
+                'array_class' => $array_class,
+                'array_lesson' => $array_lesson,
+                'array_suite' => $array_suite,
+                'array_allsuite' => $array_allsuite,
+                'pages' => $pages,
+                'res' => $res
+            ));
         } else {
-            $array_suite = 0;
+            $this->render('index', array(
+                'array_class' => $array_class
+            ));
         }
-        
-        $this->render('assignWork', array(
-            'array_class' => $array_class,
-            'array_lesson' => $array_lesson,
-            'array_suite' => $array_suite,
-            'array_allsuite' => $array_allsuite,
-            'pages' => $pages,
-            'res' => $res
-        ));
-        }else{
-             $this->render('index', array(
-            'array_class' => $array_class
-        ));
-            
-        }
-       
     }
 
     public function ActionAssignExam() {
@@ -3570,28 +3566,28 @@ class TeacherController extends CController {
         $array_allexam = $result['examLst'];
         $pages = $result['pages'];
         //得到当前显示班级
-        if(empty($teacher_class)){
+        if (empty($teacher_class)) {
             $this->render('index', array(
-            'array_class' => $array_class));
-        }else{
-        if (isset($_GET['classID']))
-            Yii::app()->session['currentClass'] = $_GET['classID'];
-        else if ($array_class != NULL)
-            Yii::app()->session['currentClass'] = $array_class[0]['classID'];
-        else
-            Yii::app()->session['currentClass'] = 0;
+                'array_class' => $array_class));
+        } else {
+            if (isset($_GET['classID']))
+                Yii::app()->session['currentClass'] = $_GET['classID'];
+            else if ($array_class != NULL)
+                Yii::app()->session['currentClass'] = $array_class[0]['classID'];
+            else
+                Yii::app()->session['currentClass'] = 0;
 
-        $currentClass = Yii::app()->session['currentClass'];
+            $currentClass = Yii::app()->session['currentClass'];
 
-        $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
-        $this->render('assignExam', array(
-            'array_class' => $array_class,
-            'array_exam' => $array_suite,
-            'array_allexam' => $array_allexam,
-            'pages' => $pages,
-            'res' => $res
-        ));
+            $this->render('assignExam', array(
+                'array_class' => $array_class,
+                'array_exam' => $array_suite,
+                'array_allexam' => $array_allexam,
+                'pages' => $pages,
+                'res' => $res
+            ));
         }
     }
 
@@ -5325,7 +5321,6 @@ class TeacherController extends CController {
         ));
     }
 
-
     public function ActionAjaxExam() {
         $classID = $_GET['classID'];
         if (isset($_POST['workID'])) {
@@ -5576,7 +5571,7 @@ class TeacherController extends CController {
             $courseID = $_GET ['courseID'];
             //$sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
             $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number' and courseID='$courseID'";
-            Yii::app()->db->createCommand($sql)->query();            
+            Yii::app()->db->createCommand($sql)->query();
             $result = Lesson::model()->getLessonLst("", "", $courseID);
             $sqlCourse = Course::model()->find("courseID = '$courseID'");
             $courseName = $sqlCourse['courseName'];
