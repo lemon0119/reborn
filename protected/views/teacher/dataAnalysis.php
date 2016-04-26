@@ -235,6 +235,13 @@ function getSuiteExercise(suiteID,workID){
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    
+    document.getElementById('id').value="";
+    document.getElementById('classID').value="";
+    document.getElementById('exerciseID').value="";
+    document.getElementById('type').value="";
+    document.getElementById('choice').value="";
+    document.getElementById('isExam').value="";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -358,6 +365,10 @@ function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
 }
 var choice;
 function getClassExerRankingBef(choice2,bg){
+    if(document.getElementById('exerciseID').value==""){
+        window.wxc.xcConfirm("请选择题目！", window.wxc.xcConfirm.typeEnum.confirm);
+        return;
+    }
     document.getElementById('correct').style.color="#000";
     document.getElementById('speed').style.color="#000";
     document.getElementById('maxSpeed').style.color="#000";
@@ -391,6 +402,13 @@ function getClassExer(lessonID){
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    
+    document.getElementById('id').value="";
+    document.getElementById('classID').value="";
+    document.getElementById('exerciseID').value="";
+    document.getElementById('type').value="";
+    document.getElementById('choice').value="";
+    document.getElementById('isExam').value="";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -471,6 +489,13 @@ function getExamExercise(examID,workID){
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    
+    document.getElementById('id').value="";
+    document.getElementById('classID').value="";
+    document.getElementById('exerciseID').value="";
+    document.getElementById('type').value="";
+    document.getElementById('choice').value="";
+    document.getElementById('isExam').value="";
         $.ajax({
              type: "POST",
              dataType:"json",
