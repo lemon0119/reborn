@@ -3241,7 +3241,7 @@ class AdminController extends CController {
             $lessonName = $_GET['lessonName'];
             $number=$_GET['number'];
             $newName = $_GET['newName'];
-            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number' ";
+            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number' and courseID='$courseID' ";
             Yii::app()->db->createCommand($sql)->query();
         }
         $courseName = $_GET ['courseName'];
