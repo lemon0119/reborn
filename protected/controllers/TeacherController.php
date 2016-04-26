@@ -60,9 +60,9 @@ class TeacherController extends CController {
 //add by LC 2015-10-13
     public function actionSetTimeAndScoreExam() {
         $examID = $_GET['examID'];
-        $duration=$_GET['duration'];
-        $beginTime=$_GET['beginTime'];
-        $isOpen=$_GET['isOpen'];
+        $duration = $_GET['duration'];
+        $beginTime = $_GET['beginTime'];
+        $isOpen = $_GET['isOpen'];
         $teacherID = Yii::app()->session['userid_now'];
         $array_class = array();
         $result = TbClass::model()->getClassByTeacherID($teacherID);
@@ -96,10 +96,10 @@ class TeacherController extends CController {
         if ($questAll)
             $questScore = $questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
-            'duration'=>$duration,
-            'beginTime'=>$beginTime,
-            'isOpen'=>$isOpen,
-            'pages'=>$pages,
+            'duration' => $duration,
+            'beginTime' => $beginTime,
+            'isOpen' => $isOpen,
+            'pages' => $pages,
             'array_exam' => $array_suite,
             'examExer' => $examExer,
             'examID' => $examID,
@@ -1472,15 +1472,15 @@ class TeacherController extends CController {
             ));
         }
     }
-    
-    public function actionteaInformation(){
+
+    public function actionteaInformation() {
         $ID = Yii::app()->session['userid_now'];
         $teacher = Teacher::model()->find("userID = '$ID'");
         return $this->render('teaInformation', array(
                     'id' => $teacher ['userID'],
                     'name' => $teacher ['userName'],
                     'department' => $teacher ['department'],
-                    'school'=>$teacher['school'],
+                    'school' => $teacher['school'],
                     'sex' => $teacher['sex'],
                     'age' => $teacher['age'],
                     'password' => $teacher['password'],
@@ -1587,28 +1587,28 @@ class TeacherController extends CController {
     public function actionDeleteLook() {
         $exerciseID = $_GET['exerciseID'];
         $thisLook = new LookType();
-        $examLst=Array();
-        $examLst=Exam::model()->findAll();
-        $flag=0;
-        $deleteResult="";
-        $tip="";
-        foreach($examLst as $exam){
-            $examExerLst=ExamExercise::model()->getExamExerByType($exam['examID'],'look');
-            if($examExerLst!=NULL){
-                foreach($examExerLst as $examExer){
-                    if($exerciseID==$examExer['exerciseID']){
-                        $flag=1;
-                        $tip="此题目已经被占用!";
+        $examLst = Array();
+        $examLst = Exam::model()->findAll();
+        $flag = 0;
+        $deleteResult = "";
+        $tip = "";
+        foreach ($examLst as $exam) {
+            $examExerLst = ExamExercise::model()->getExamExerByType($exam['examID'], 'look');
+            if ($examExerLst != NULL) {
+                foreach ($examExerLst as $examExer) {
+                    if ($exerciseID == $examExer['exerciseID']) {
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
                         break;
                     }
                 }
             }
         }
-        if($flag==0){
+        if ($flag == 0) {
             $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!";
+            $tip = "此题目删除成功!";
         }
-        
+
 
         if (Yii::app()->session['lastUrl'] == "lookLst") {
             $result = LookType::model()->getLookLst("", "");
@@ -1620,7 +1620,7 @@ class TeacherController extends CController {
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
                 'deleteResult' => $deleteResult,
-                'tip'=>$tip
+                'tip' => $tip
             ));
         } else {
             $type = Yii::app()->session['searchLookType'];
@@ -1652,7 +1652,7 @@ class TeacherController extends CController {
                 'teacher' => TbClass::model()->teaInClass(),
                 'deleteResult' => $deleteResult,
                 'searchKey' => $searchKey,
-                'tip'=>$tip
+                'tip' => $tip
             ));
         }
     }
@@ -1746,11 +1746,11 @@ class TeacherController extends CController {
             $arr = explode("$$", $libstr);
             $sql = "";
             foreach ($arr as $a) {
-                if (substr($a,0,1)!='-') {
+                if (substr($a, 0, 1) != '-') {
                     if ($sql == "")
                         $sql = "select * from two_words_lib  where name LIKE ('" . $a . "')";
                     else
-                        $sql = $sql ." union select * from two_words_lib  where name LIKE ('" . $a . "')";
+                        $sql = $sql . " union select * from two_words_lib  where name LIKE ('" . $a . "')";
                 }
             }
             $order = "";
@@ -1764,11 +1764,11 @@ class TeacherController extends CController {
 
             $sql1 = "";
             foreach ($arr as $a) {
-                if (substr($a,0,1)=='-') {
+                if (substr($a, 0, 1) == '-') {
                     if ($sql1 == "")
                         $sql1 = "select * from two_words_lib_personal  where name LIKE ('" . $a . "')";
                     else
-                        $sql1 = $sql1 ." union select * from two_words_lib_personal  where name LIKE ('" . $a . "')";
+                        $sql1 = $sql1 . " union select * from two_words_lib_personal  where name LIKE ('" . $a . "')";
                 }
             }
             $order1 = "";
@@ -1922,28 +1922,28 @@ class TeacherController extends CController {
     public function actionDeleteKey() {
         $exerciseID = $_GET['exerciseID'];
         $thisKey = new KeyType();
-        $examLst=Array();
-        $examLst=Exam::model()->findAll();
-        $flag=0;
-        $deleteResult="";
-        $tip="";
-        foreach($examLst as $exam){
-            $examExerLst=ExamExercise::model()->getExamExerByType($exam['examID'],'key');
-            if($examExerLst!=NULL){
-                foreach($examExerLst as $examExer){
-                    if($exerciseID==$examExer['exerciseID']){
-                        $flag=1;
-                        $tip="此题目已经被占用!";
+        $examLst = Array();
+        $examLst = Exam::model()->findAll();
+        $flag = 0;
+        $deleteResult = "";
+        $tip = "";
+        foreach ($examLst as $exam) {
+            $examExerLst = ExamExercise::model()->getExamExerByType($exam['examID'], 'key');
+            if ($examExerLst != NULL) {
+                foreach ($examExerLst as $examExer) {
+                    if ($exerciseID == $examExer['exerciseID']) {
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
                         break;
                     }
                 }
             }
         }
-        if($flag==0){
+        if ($flag == 0) {
             $deleteResult = $thisKey->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!";
+            $tip = "此题目删除成功!";
         }
-        
+
 
         if (Yii::app()->session['lastUrl'] == "KeyLst") {
             $result = KeyType::model()->getKeyLst("", "");
@@ -1955,7 +1955,7 @@ class TeacherController extends CController {
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
                 'deleteResult' => $deleteResult,
-                 'tip'=>$tip
+                'tip' => $tip
             ));
         } else {
             $type = Yii::app()->session['searchKeyType'];
@@ -1980,7 +1980,7 @@ class TeacherController extends CController {
                 'pages' => $pages,
                 'teacher' => TbClass::model()->teaInClass(),
                 'deleteResult' => $deleteResult,
-                 'tip'=>$tip
+                'tip' => $tip
             ));
         }
     }
@@ -2237,27 +2237,27 @@ class TeacherController extends CController {
         $exerciseID = $_GET['exerciseID'];
         $thisListen = new ListenType();
         $deleteListen = $thisListen->findAll("exerciseID = '$exerciseID'");
-        $deleteResult="";
-        $tip="";
-        if($deleteListen!=NULL){
-            $examLst=Array();
-            $examLst=Exam::model()->findAll();
-            $flag=0;
-            foreach($examLst as $exam){
-                $examExerLst=ExamExercise::model()->getExamExerByType($exam['examID'],'listen');
-                if($examExerLst!=NULL){
-                    foreach($examExerLst as $examExer){
-                        if($exerciseID==$examExer['exerciseID']){
-                            $flag=1;
-                            $tip="此题目已经被占用!";
+        $deleteResult = "";
+        $tip = "";
+        if ($deleteListen != NULL) {
+            $examLst = Array();
+            $examLst = Exam::model()->findAll();
+            $flag = 0;
+            foreach ($examLst as $exam) {
+                $examExerLst = ExamExercise::model()->getExamExerByType($exam['examID'], 'listen');
+                if ($examExerLst != NULL) {
+                    foreach ($examExerLst as $examExer) {
+                        if ($exerciseID == $examExer['exerciseID']) {
+                            $flag = 1;
+                            $tip = "此题目已经被占用!";
                             break;
                         }
                     }
                 }
             }
-            if($flag==0){
+            if ($flag == 0) {
                 $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");
-                $tip="此题目删除成功!";
+                $tip = "此题目删除成功!";
             }
 
 
@@ -2272,7 +2272,7 @@ class TeacherController extends CController {
                     unlink($path);
             }
         }
-        
+
         if (Yii::app()->session['lastUrl'] == "listenLst") {
             $result = ListenType::model()->getListenLst("", "");
             $listenLst = $result['listenLst'];
@@ -2283,7 +2283,7 @@ class TeacherController extends CController {
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
                 'deleteResult' => $deleteResult,
-                'tip'=>$tip
+                'tip' => $tip
             ));
         } else {
             $type = Yii::app()->session['searchListenType'];
@@ -2314,7 +2314,7 @@ class TeacherController extends CController {
                 'teacher' => TbClass::model()->teaInClass(),
                 'deleteResult' => $deleteResult,
                 'searchKey' => $searchKey,
-                 'tip'=>$tip
+                'tip' => $tip
             ));
         }
     }
@@ -2627,29 +2627,29 @@ class TeacherController extends CController {
     public function actionDeleteFill() {
         $exerciseID = $_GET["exerciseID"];
         $thisFill = new Filling();
-        $examLst=Array();
-        $examLst=Exam::model()->findAll();
-        $flag=0;
-        $deleteResult="";
-        $tip="";
-        foreach($examLst as $exam){
-            $examExerLst=ExamExercise::model()->getExamExerByType($exam['examID'],'filling');
-            if($examExerLst!=NULL){
-                foreach($examExerLst as $examExer){
-                    if($exerciseID==$examExer['exerciseID']){
-                        $flag=1;
-                        $tip="此题目已经被占用!";
+        $examLst = Array();
+        $examLst = Exam::model()->findAll();
+        $flag = 0;
+        $deleteResult = "";
+        $tip = "";
+        foreach ($examLst as $exam) {
+            $examExerLst = ExamExercise::model()->getExamExerByType($exam['examID'], 'filling');
+            if ($examExerLst != NULL) {
+                foreach ($examExerLst as $examExer) {
+                    if ($exerciseID == $examExer['exerciseID']) {
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
                         break;
                     }
                 }
             }
         }
-        if($flag==0){
+        if ($flag == 0) {
             $deleteResult = $thisFill->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!";
+            $tip = "此题目删除成功!";
         }
-        
-        
+
+
         if (Yii::app()->session['lastUrl'] == "searchFill") {
             $type = Yii::app()->session['searchFillType'];
             $value = Yii::app()->session['searchFillValue'];
@@ -2680,7 +2680,7 @@ class TeacherController extends CController {
                 'teacher' => Teacher::model()->findall(),
                 'deleteResult' => $deleteResult,
                 'searchKey' => $searchKey,
-                'tip'=>$tip
+                'tip' => $tip
                     )
             );
         } else {
@@ -2693,7 +2693,7 @@ class TeacherController extends CController {
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
                 'deleteResult' => $deleteResult,
-                'tip'=>$tip
+                'tip' => $tip
             ));
         }
     }
@@ -2995,26 +2995,26 @@ class TeacherController extends CController {
     public function actionDeleteChoice() {
         $exerciseID = $_GET["exerciseID"];
         $thisChoice = new Choice();
-        $examLst=Array();
-        $examLst=Exam::model()->findAll();
-        $flag=0;
-        $deleteResult="";
-        $tip="";
-        foreach($examLst as $exam){
-            $examExerLst=ExamExercise::model()->getExamExerByType($exam['examID'],'choice');
-            if($examExerLst!=NULL){
-                foreach($examExerLst as $examExer){
-                    if($exerciseID==$examExer['exerciseID']){
-                        $flag=1;
-                        $tip="此题目已经被占用!";
+        $examLst = Array();
+        $examLst = Exam::model()->findAll();
+        $flag = 0;
+        $deleteResult = "";
+        $tip = "";
+        foreach ($examLst as $exam) {
+            $examExerLst = ExamExercise::model()->getExamExerByType($exam['examID'], 'choice');
+            if ($examExerLst != NULL) {
+                foreach ($examExerLst as $examExer) {
+                    if ($exerciseID == $examExer['exerciseID']) {
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
                         break;
                     }
                 }
             }
         }
-        if($flag==0){
+        if ($flag == 0) {
             $deleteResult = $thisChoice->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!";
+            $tip = "此题目删除成功!";
         }
         if (Yii::app()->session['lastUrl'] == "searchChoice") {
             $type = Yii::app()->session['searchChoiceType'];
@@ -3056,7 +3056,7 @@ class TeacherController extends CController {
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
                 'deleteResult' => $deleteResult,
-                'tip'=>$tip,
+                'tip' => $tip,
             ));
         }
     }
@@ -3278,29 +3278,29 @@ class TeacherController extends CController {
     public function actionDeleteQuestion() {
         $exerciseID = $_GET["exerciseID"];
         $thisQuestion = new Question();
-        $examLst=Array();
-        $examLst=Exam::model()->findAll();
-        $flag=0;
-        $deleteResult="";
-        $tip="";
-        foreach($examLst as $exam){
-            $examExerLst=ExamExercise::model()->getExamExerByType($exam['examID'],'question');
-            if($examExerLst!=NULL){
-                foreach($examExerLst as $examExer){
-                    if($exerciseID==$examExer['exerciseID']){
-                        $flag=1;
-                        $tip="此题目已经被占用!";
+        $examLst = Array();
+        $examLst = Exam::model()->findAll();
+        $flag = 0;
+        $deleteResult = "";
+        $tip = "";
+        foreach ($examLst as $exam) {
+            $examExerLst = ExamExercise::model()->getExamExerByType($exam['examID'], 'question');
+            if ($examExerLst != NULL) {
+                foreach ($examExerLst as $examExer) {
+                    if ($exerciseID == $examExer['exerciseID']) {
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
                         break;
                     }
                 }
             }
         }
-        if($flag==0){
+        if ($flag == 0) {
             $deleteResult = $thisQuestion->deleteAll("exerciseID = '$exerciseID'");
-            $tip="此题目删除成功!";
+            $tip = "此题目删除成功!";
         }
-        
-        
+
+
         if (Yii::app()->session['lastUrl'] == "searchQuestion") {
             $type = Yii::app()->session['searchQuestionType'];
             $value = Yii::app()->session['searchQuestionValue'];
@@ -3329,7 +3329,7 @@ class TeacherController extends CController {
                 'teacher' => Teacher::model()->findall(),
                 'deleteResult' => $deleteResult,
                 'searchKey' => $searchKey,
-                'tip'=>$tip
+                'tip' => $tip
                     )
             );
         } else {
@@ -3342,7 +3342,7 @@ class TeacherController extends CController {
                 'pages' => $pages,
                 'teacher' => Teacher::model()->findall(),
                 'deleteResult' => $deleteResult,
-                'tip'=>$tip
+                'tip' => $tip
             ));
         }
     }
@@ -4983,11 +4983,8 @@ class TeacherController extends CController {
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-
         Yii::app()->session['exerID'] = $exerID;
         Yii::app()->session['exerType'] = 'key';
-
-
         $studentID = $_GET['studentID'];
         $workID = $_GET['workID'];
 //        $studentID = Yii::app()->session['userid_now'];
@@ -5110,11 +5107,8 @@ class TeacherController extends CController {
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Exam::model()->getExamExerByType($examID, $type);
         }
-
         Yii::app()->session['exerID'] = $exerID;
         Yii::app()->session['exerType'] = 'key';
-
-
         $studentID = $_GET['studentID'];
         $workID = $_GET['workID'];
 //        $studentID = Yii::app()->session['userid_now'];
@@ -5202,7 +5196,7 @@ class TeacherController extends CController {
     }
 
     //
-    public function Actionam2() {
+    public function ActionAjaxExam2() {
         $classID = $_GET['classID'];
         if (isset($_POST['workID'])) {
             $workID = $_POST['workID'];
@@ -5318,6 +5312,7 @@ class TeacherController extends CController {
         ));
     }
 
+
     public function ActionAjaxExam() {
         $classID = $_GET['classID'];
         if (isset($_POST['workID'])) {
@@ -5360,9 +5355,6 @@ class TeacherController extends CController {
                 }
             }
         }
-
-
-
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $ty));
         $choiceAnsWork = array();
         foreach ($SQLchoiceAnsWork as $v) {
@@ -6850,18 +6842,18 @@ class TeacherController extends CController {
         return $this->renderPartial('01simple', ['arrayDetailData' => $arrayDetailData]);
     }
 
-    public function actionChangeExamName(){
+    public function actionChangeExamName() {
         $examID = $_POST['examID'];
         $newName = $_POST['newName'];
         $result = Exam::model()->changeExamName($examID, $newName);
         echo $result;
     }
-    
-    public function actionChangeWorkName(){
+
+    public function actionChangeWorkName() {
         $workID = $_POST['workID'];
         $newName = $_POST['newName'];
         $result = Suite::model()->changeSuiteName($workID, $newName);
         echo $result;
     }
-    
+
 }

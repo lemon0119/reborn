@@ -8,7 +8,7 @@ require 'examAnsSideBar.php';
     <div id="ziji">
     <div class="hero-unit">
         <h2>键打练习</h2>
-                <?php if($ansWork['answer'] == "")
+                <?php if(count($ansWork) == 0)
                     {
                         echo "<font color=red>未作答</font>";
                         echo '</br>';

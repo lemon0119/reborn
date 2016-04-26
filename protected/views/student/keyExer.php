@@ -29,8 +29,8 @@ if ($isExam) {
 ?>
 <?php
 $sqlClassExerciseRecord = null;
-$squence=0;
-$exerciseID=0;
+$squence = 0;
+$exerciseID = 0;
 $category = $exerOne['category'];
 if (!$isOver) {
     $exerciseID = $exerOne['exerciseID'];
@@ -41,11 +41,11 @@ if (!$isOver) {
     if ($sqlClassExerciseRecord != null) {
         ?>
         <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
-             <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php }?>
+            <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php } ?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
-            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;  ?>">
+            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;   ?>">
                 <input id="id_content" type="hidden" value="<?php echo $exerOne['content']; ?>">
                 <input id="id_speed" type="hidden" value="<?php echo $exerOne['speed']; ?>">
                 <input  name="nm_answer"id="id_answer" type="hidden">
@@ -65,13 +65,13 @@ if (!$isOver) {
                             <span id="repeatNum" style="display: none"><?php echo $exerOne['repeatNum'] ?></span>
             <?php if ($isExam) { ?>
                 -->                                        <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-<!--                <td width = '250px'>剩余时间：<span id="time"><?php //echo $strTime ?></span><input id="time" type="hidden"/></td>
+            <!--                <td width = '250px'>剩余时间：<span id="time"><?php //echo $strTime  ?></span><input id="time" type="hidden"/></td>
                 <span id="wordisRightRadio" style="display: none;">0</span>
                 <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
             <?php } else { ?>
             <td width = '250px'>计时：<span id="timej">00:00:00</span></td>                  
             <td width = '250px'>准确率：<span id="wordisRightRadio">0</span>%</td>       
-            <td width = '250px'>循环次数：<span id="repeatNum"><?php //echo $exerOne['repeatNum'] ?></span></td>
+            <td width = '250px'>循环次数：<span id="repeatNum"><?php //echo $exerOne['repeatNum']  ?></span></td>
             <?php } ?>
         </tr>
         </table>
@@ -117,16 +117,16 @@ if (!$isOver) {
         </form>-->
             <div id="span" class="hero-unit" align="center">
                 <table style="width: 580px"  border = '0px'>
-<!--                    <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成</button>-->
+                    <!--                    <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成</button>-->
                     <tr><h3 ><?php echo $exerOne['title'] ?></h3></tr>
                     <tr>
                         <?php //if($isExam){ ?>
-<!--                             <td><span class="fl"  style="color: #000;font-weight: bolder">剩余时间：</span></td>
-                        <td><span style="color: #f46500" id="time"><?php //echo $strTime ?></span></td>-->
-                       <?php //}else{ ?>
-                            <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+        <!--                             <td><span class="fl"  style="color: #000;font-weight: bolder">剩余时间：</span></td>
+                        <td><span style="color: #f46500" id="time"><?php //echo $strTime  ?></span></td>-->
+                        <?php //}else{ ?>
+                        <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
                         <td><span style="color: #f46500" id="timej">00:00:00</span></td>
-                       <?php //} ?>
+                        <?php //} ?>
                         <td></td>
                         <td><span class="fl"   style="color: #000;font-weight: bolder">正确率：&nbsp;&nbsp;</span></td>
                         <td style="width: 60px;"><span style="color: #f46500" id="wordisRightRadio">0</span></td>
@@ -217,23 +217,23 @@ if (!$isOver) {
                 <input  name="nm_answer"id="id_answer" type="hidden">
                 <input  name="nm_cost" id="id_cost" type="hidden">
             </form>
-                <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
+            <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
         </div>
-    <?php
+        <?php
     }
 }else {
     ?>
-     <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
-            <div id="Analysis" hidden="hidden"></div>
-            <input id="content" hidden="hidden"/>  
-            <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
-            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;  ?>">
-                <input id="id_content" type="hidden" value="">
-                <input id="id_speed" type="hidden" value="">
-                <input  name="nm_answer"id="id_answer" type="hidden">
-                <input  name="nm_cost" id="id_cost" type="hidden">
-            </form>
-        </div>
+    <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div id="Analysis" hidden="hidden"></div>
+        <input id="content" hidden="hidden"/>  
+        <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
+        <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;   ?>">
+            <input id="id_content" type="hidden" value="">
+            <input id="id_speed" type="hidden" value="">
+            <input  name="nm_answer"id="id_answer" type="hidden">
+            <input  name="nm_cost" id="id_cost" type="hidden">
+        </form>
+    </div>
 <?php } ?>
 <script>
 
@@ -260,13 +260,25 @@ if ($isExam) {
                     if (time == 0) {
                         window.wxc.xcConfirm("本题时间已到，不可答题！", window.wxc.xcConfirm.typeEnum.error);
                         clearInterval(isover);
-                         $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
-                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
-                        window.location.href = "index.php?r=student/classExam";
-                    }
-                    else
-                        window.location.href = "index.php?r=student/classwork";
-                });
+                        $.post('index.php?r=student/overSuite&&isExam=<?php if ($isExam) {
+        echo 'true';
+    } else {
+        echo 'false';
+    } ?>', function () {
+                            if (<?php if ($isExam) {
+        echo 'true';
+    } else {
+        echo 'false';
+    } ?>) {
+                                window.location.href = "index.php?r=student/classExam";
+                            }
+                            else
+    <?php if (isset($_GET['lessonID'])) { ?>
+                                window.location.href = "index.php?r=student/myCourse&&lessonID=<?php echo $_GET['lessonID']; ?>";
+    <?php } else { ?>
+                                window.location.href = "index.php?r=student/myCourse";
+    <?php } ?>
+                        });
 
                     }
 
@@ -302,8 +314,12 @@ if ($isExam) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 //doSubmit(true);
-                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>', function () {
-                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>)
+                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                    if (<?php if ($isExam) {
+    echo 'true';
+} else {
+    echo 'false';
+} ?>)
                         window.location.href = "index.php?r=student/classExam";
                     else
                         window.location.href = "index.php?r=student/classwork";
