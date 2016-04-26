@@ -46,7 +46,7 @@
                             if (Tool::clength($model['content']) <= 10)
                                 echo Tool::filterKeyContent($model['content']);
                             else
-                                echo Tool::csubstr(Tool::filterKeyContent($model['content']), 0, 12) . "...";
+                                echo Tool::csubstr(Tool::filterKeyContent($model['content']), 0, 10) . "...";
                             ?></td>
                             <td><button id="startClassExercise" <?php if ($model['now_open'] == 1) {
                                 if ($mark === 0) $mark = $model['exerciseID'] ?> class='btn' disabled='disabled' <?php }else { ?> class='btn btn-primary'<?php } ?>   onclick="startClassExercise(<?php echo $model['exerciseID']; ?>)" >开始</button></td>

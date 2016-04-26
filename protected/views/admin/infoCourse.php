@@ -4,8 +4,8 @@
             <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><i class="icon-align-left"></i> 课时列表</a></li>
         </ul>
         <br/>
-        <a href="./index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>"style="left: 18px" class="btn_4big">返回</a>
-        <a href="./index.php?r=admin/addLesson&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"style="left: 40px" class="btn_4big">添加课时</a>
+        <button onclick="window.location.href='./index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>'" style="margin-left:10px" class="btn_4big fl">返回</button>
+        <button onclick="window.location.href='./index.php?r=admin/addLesson&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>'" style="margin-left:10px" class="btn_4big fl">添加课时</button>
         <ul class="nav nav-list">
             <li>&nbsp;</li>
         </ul>

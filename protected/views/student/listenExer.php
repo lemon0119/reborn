@@ -9,9 +9,9 @@
 //2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar
 if ($isExam == false) {
     require 'suiteSideBar.php';
-    Yii::app()->session['isExam']= 0;
+    Yii::app()->session['isExam'] = 0;
 } else {
-    Yii::app()->session['isExam']=1;
+    Yii::app()->session['isExam'] = 1;
     require 'examSideBar.php';
 }
 //add by lc 
@@ -42,7 +42,7 @@ if (!$isOver) {
     if ($sqlClassExerciseRecord != null) {
         ?>
         <div class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
-           <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php }?>
+            <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php } ?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" type="hidden" style="height: 5px;" value="<?php
             $str = str_replace("\n", "`", $exerOne['content']);
@@ -57,9 +57,9 @@ if (!$isOver) {
             <?php if ($isExam) { ?>
             <?php } else { ?>
                 <div id="span" class="hero-unit" align="center">
-<!--                    <div style="width: 660px">
-                        <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>
-                    </div>-->
+                    <!--                    <div style="width: 660px">
+                                            <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>
+                                        </div>-->
                     <div id="Analysis">
                         <h3 ><?php echo $exerOne['title'] ?></h3>
                         <table style="width: 660px"  border = '0px'> 
@@ -118,7 +118,7 @@ if (!$isOver) {
                         <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
                         <tr>
                             <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                             <td width = '250px'>练习计时：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
+                            <td width = '250px'>练习计时：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
                             <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                         <?php } else { ?>
             <!--                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>-->
@@ -131,28 +131,34 @@ if (!$isOver) {
                 ?>
                 <div align="left">
                     <br/>
-                    <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; <?php if ($isExam) {
-            echo 'top:150px;';
-        } else {
-            echo 'top:260px;';
-        } ?>'></div>
-                    <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; <?php if ($isExam) {
-            echo 'top:150px;';
-        } else {
-            echo 'top:260px;';
-        } ?>'></div>
-                    <audio id="audio" style='position:absolute; z-index:2; width:300px; height:28px; left:50px;  <?php if ($isExam) {
-                   echo 'top:150px;';
-               } else {
-                   echo 'top:260px;';
-               } ?>  '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
+                    <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; <?php
+                    if ($isExam) {
+                        echo 'top:150px;';
+                    } else {
+                        echo 'top:260px;';
+                    }
+                    ?>'></div>
+                    <div style='position:absolute; z-index:3; width:180px; height:28px; left:74px; <?php
+                    if ($isExam) {
+                        echo 'top:150px;';
+                    } else {
+                        echo 'top:260px;';
+                    }
+                    ?>'></div>
+                    <audio id="audio" style='position:absolute; z-index:2; width:300px; height:28px; left:50px;  <?php
+            if ($isExam) {
+                echo 'top:150px;';
+            } else {
+                echo 'top:260px;';
+            }
+                    ?>  '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
                 </div>
                 <input id="content" type="hidden" value="<?php
-               $str = str_replace("\n", "", $exerOne['content']);
-               $str = str_replace("\r", "", $str);
-               $str = str_replace(" ", "", $str);
-               echo $str;
-               ?>">
+        $str = str_replace("\n", "", $exerOne['content']);
+        $str = str_replace("\r", "", $str);
+        $str = str_replace(" ", "", $str);
+        echo $str;
+        ?>">
                 <br/>
                 <object id="typeOCX" type="application/x-itst-activex" 
                         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
@@ -165,7 +171,8 @@ if (!$isOver) {
         <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
         </div>
 
-    <?php }
+    <?php
+    }
 } else {
     ?>
     <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
@@ -216,13 +223,25 @@ if ($isExam) {
                     if (time == 0) {
                         alert("本题时间已到，不可答题！");
                         clearInterval(isover);
-                         $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
-                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
-                        window.location.href = "index.php?r=student/classExam";
-                    }
-                    else
-                        window.location.href = "index.php?r=student/classwork";
-                });
+                        $.post('index.php?r=student/overSuite&&isExam=<?php if ($isExam) {
+        echo 'true';
+    } else {
+        echo 'false';
+    } ?>', function () {
+                            if (<?php if ($isExam) {
+        echo 'true';
+    } else {
+        echo 'false';
+    } ?>) {
+                                window.location.href = "index.php?r=student/classExam";
+                            }
+                            else
+    <?php if (isset($_GET['lessonID'])) { ?>
+                                window.location.href = "index.php?r=student/myCourse&&lessonID=<?php echo $_GET['lessonID']; ?>";
+    <?php } else { ?>
+                                window.location.href = "index.php?r=student/myCourse";
+    <?php } ?>
+                        });
                     }
                 }, 1000);
 <?php } ?>
@@ -230,7 +249,7 @@ if ($isExam) {
         var originalContent = '<?php echo $str; ?>';
         window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     });
-    
+
     function onStenoPressKey(pszStenoString, device) {
         yaweiOCX.UpdateView();
         var input = getContent(yaweiOCX);
@@ -312,9 +331,13 @@ if ($isExam) {
             title: "提交试卷",
             btn: parseInt("0011", 4),
             onOk: function () {
-               // doSubmit(true);
-                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>', function () {
-                    if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>)
+                // doSubmit(true);
+                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                    if (<?php if ($isExam) {
+    echo 'true';
+} else {
+    echo 'false';
+} ?>)
                         window.location.href = "index.php?r=student/classExam";
                     else
                         window.location.href = "index.php?r=student/classwork";
