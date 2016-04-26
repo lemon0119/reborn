@@ -267,9 +267,12 @@ class ClassExercise extends CActiveRecord
 //        }
             $classExercise = new ClassExercise();
             $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
-            $classExercise->is_open = 1;
+            if($classExercise!=null){
+                $classExercise->is_open = 1;
             $classExercise->now_open = 1;
             $classExercise->update();
+            }
+            
     }
     
     public function closeAllOpenExerciseNow(){
