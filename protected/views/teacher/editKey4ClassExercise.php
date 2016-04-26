@@ -49,7 +49,7 @@
     <div class="controls"  >  
         <table id="lib"  style="align:left;">
         </table>    
-        <a href="#" onclick="selectWordLib()">预置词库选择</a>
+<!--        <a href="#" onclick="selectWordLib()">预置词库选择</a>-->
         </div>
     </div>   
             

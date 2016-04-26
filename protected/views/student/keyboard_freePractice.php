@@ -87,8 +87,7 @@
         yaweiOCX.Locate(input.length);
     }
     function getSteno(){
-        var str = yaweiOCX.GetContentWithSteno();
-        alert(str);
+       yaweiOCX.PutBufferToContent();
     }
     
     function onStenoPressKey(pszStenoString ,device){
