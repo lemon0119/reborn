@@ -147,7 +147,7 @@ if (!$isOver) {
 
 
 
-        <?php
+            <?php
         }
     } else {
         ?>
@@ -155,14 +155,14 @@ if (!$isOver) {
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
-            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;   ?>">
+            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;    ?>">
                 <input id="id_content" type="hidden" value="">
                 <input id="id_speed" type="hidden" value="">
                 <input  name="nm_answer"id="id_answer" type="hidden">
                 <input  name="nm_cost" id="id_cost" type="hidden">
             </form>
         </div>
-<?php } ?>
+    <?php } ?>
 </div>
 <script>
     var yaweiOCX = null;
@@ -173,14 +173,14 @@ if (!$isOver) {
     $(document).ready(function () {
         window.G_isLook = 1;
         var isExam = <?php
-if ($isExam) {
-    Yii::app()->session['isExam'] = 1;
-    echo 1;
-} else {
-    Yii::app()->session['isExam'] = 0;
-    echo 0;
-}
-?>;
+    if ($isExam) {
+        Yii::app()->session['isExam'] = 1;
+        echo 1;
+    } else {
+        Yii::app()->session['isExam'] = 0;
+        echo 0;
+    }
+    ?>;
         var v =<?php echo Tool::clength($exerOne['content']); ?>;
         $("#wordCount").text(v);
 <?php if (!$isOver) { ?>
@@ -214,20 +214,28 @@ if ($isExam) {
                         };
                         window.wxc.xcConfirm("本题时间已到，不可答题！", "custom", option);
                         clearInterval(isover);
-                        $.post('index.php?r=student/overSuite&&isExam=<?php if ($isExam) {
+                        $.post('index.php?r=student/overSuite&&isExam=<?php
+    if ($isExam) {
         echo 'true';
     } else {
         echo 'false';
-    } ?>', function () {
-                            if (<?php if ($isExam) {
+    }
+    ?>', function () {
+                            if (<?php
+    if ($isExam) {
         echo 'true';
     } else {
         echo 'false';
-    } ?>) {
+    }
+    ?>) {
                                 window.location.href = "index.php?r=student/classExam";
                             }
                             else
-                                window.location.href = "index.php?r=student/classwork";
+    <?php if (isset($_GET['lessonID'])) { ?>
+                                window.location.href = "index.php?r=student/myCourse&&lessonID=<?php echo $_GET['lessonID']; ?>";
+    <?php } else { ?>
+                                window.location.href = "index.php?r=student/myCourse";
+    <?php } ?>
                         });
                     }
                 }, 1000);
@@ -360,7 +368,7 @@ if ($isExam) {
             }
         }
         //--------------------------------------------------
-         controlScroll();
+        controlScroll();
         changWordPS();
         var text_old = '<?php echo $str; ?>';
         var text = text_old.split("");
@@ -484,7 +492,7 @@ if ($isExam) {
     }
 
 
-   function controlScroll() {
+    function controlScroll() {
         var input = getContent(yaweiOCX);
         var addLine = (input.split('\n\r')).length - 1;
         var div = document.getElementById('templet');
@@ -514,12 +522,14 @@ if ($isExam) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 //doSubmit(true);
-                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>', function () {
-                    if (<?php if ($isExam) {
+                $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                    if (<?php
+if ($isExam) {
     echo 'true';
 } else {
     echo 'false';
-} ?>) {
+}
+?>) {
                         window.location.href = "index.php?r=student/classExam";
                     }
                     else

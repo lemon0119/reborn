@@ -58,9 +58,9 @@
         </label>
         <button id="submit" type="submit">登录</button>
         <div class="forget-password">
-            <p>
+<!--            <p>
                 <a href="./index.php?r=user/forgetpassword" class="" id="forget-password" style="position: relative;top: 30px;left: 95px;">忘记密码?</a>
-            </p>
+            </p>-->
             <div class="connect">
                 <p style="margin-right: 500px;margin-top:20px;">2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;</p>
             </div>
