@@ -4985,7 +4985,6 @@ class TeacherController extends CController {
         }
         Yii::app()->session['exerID'] = $exerID;
         Yii::app()->session['exerType'] = 'key';
-
         $studentID = $_GET['studentID'];
         $workID = $_GET['workID'];
 //        $studentID = Yii::app()->session['userid_now'];
