@@ -5568,10 +5568,10 @@ class TeacherController extends CController {
             //$lessonName = $_GET['lessonName'];
             $number = $_GET['number'];
             $newName = $_GET['newName'];
-            //$sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
-            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number'";
-            Yii::app()->db->createCommand($sql)->query();
             $courseID = $_GET ['courseID'];
+            //$sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
+            $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number' and courseID='$courseID'";
+            Yii::app()->db->createCommand($sql)->query();            
             $result = Lesson::model()->getLessonLst("", "", $courseID);
             $sqlCourse = Course::model()->find("courseID = '$courseID'");
             $courseName = $sqlCourse['courseName'];
