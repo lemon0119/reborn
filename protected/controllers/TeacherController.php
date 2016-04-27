@@ -23,6 +23,9 @@ class TeacherController extends CController {
     public $layout = '//layouts/teacherBar';
 
     public function actionVirtualClass() {
+        if(!isset(Yii::app()->session['userid_now'])){
+            return $this->render('index');
+        }
         $cou = 0;
         $classID = $_GET['classID'];
         $cls = TbClass::model()->findByPK($classID);

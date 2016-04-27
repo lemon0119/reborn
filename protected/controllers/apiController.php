@@ -94,7 +94,7 @@ class apiController extends Controller {
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
         $userID=array(Yii::app()->session['userid_now']);
-        $sql = "SELECT userName,backTime FROM student";
+        $sql = "SELECT userName,backTime FROM student WHERE classID ='$classID'";
         $command = $connection->createCommand($sql);
         $dataReader = $command->query();
         $time = $dataReader->readAll();
@@ -119,7 +119,6 @@ class apiController extends Controller {
                 array_push($student, $v['userName']);
             }
         }
-       
         $this->renderJSON(array($onLineStudent,$student,$n));
     }
     

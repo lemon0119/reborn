@@ -1,4 +1,4 @@
-<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
+`<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
 <script>
 
@@ -611,7 +611,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#dd2").html("<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + content2);
             },
             error: function (xhr, type, exception) {
-                console.log('get backtime erroe', type);
+                console.log('get backtime error', type);
                 console.log(xhr, "Failed");
             }
         });
