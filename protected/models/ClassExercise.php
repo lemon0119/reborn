@@ -240,7 +240,8 @@ class ClassExercise extends CActiveRecord
         $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
         $classExercise->title = $title;
         $classExercise->content = $content;
-        $classExercise->update();
+        $result = $classExercise->update();
+        return $result;
     }
     
     public function deleteExercise($exerciseID){
