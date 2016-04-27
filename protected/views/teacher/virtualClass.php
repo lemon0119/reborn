@@ -489,6 +489,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     var picOrppt = "";
     //chat and bulletin   
     $(document).ready(function () {
+        checkLeave();
          $.ajax({
                     type: "POST",
                     url: "index.php?r=teacher/closeAllOpenExerciseNow",
@@ -582,7 +583,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     function checkLeave() {
         $.ajax({
             type: "POST",
-            url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID; ?>",
+            url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID; ?>&&number=<?php echo $_GET['on']; ?>",
             data: {},
             success: function () {
             },
