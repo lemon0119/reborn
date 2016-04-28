@@ -322,7 +322,11 @@ if ($isExam) {
 } ?>)
                         window.location.href = "index.php?r=student/classExam";
                     else
-                        window.location.href = "index.php?r=student/classwork";
+                        <?php if (isset($_GET['lessonID'])) { ?>
+                                window.location.href = "index.php?r=student/myCourse&&lessonID=<?php echo $_GET['lessonID']; ?>";
+    <?php } else { ?>
+                                window.location.href = "index.php?r=student/myCourse";
+    <?php } ?>
                 });
             }
         };

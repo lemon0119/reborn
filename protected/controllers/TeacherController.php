@@ -23,6 +23,9 @@ class TeacherController extends CController {
     public $layout = '//layouts/teacherBar';
 
     public function actionVirtualClass() {
+        if(!isset(Yii::app()->session['userid_now'])){
+            return $this->render('index');
+        }
         $cou = 0;
         $classID = $_GET['classID'];
         $cls = TbClass::model()->findByPK($classID);
@@ -6164,18 +6167,20 @@ class TeacherController extends CController {
 
     public function actionEditLook4ClassExercise() {
         $exerciseID = $_GET["exerciseID"];
+        $update = 0;
         if (isset($_POST['title'])) {
             $title = $_POST['title'];
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
-            ClassExercise::model()->updateLook($exerciseID, $title, $content4000);
+            $update = ClassExercise::model()->updateLook($exerciseID, $title, $content4000);
         }
 
         $result = ClassExercise::model()->getExerciseByType($exerciseID, "look")->read();
         $this->render("editLook4ClassExercise", array(
             'exerciseID' => $exerciseID,
             'title' => $result['title'],
-            'content' => $result['content']
+            'content' => $result['content'],
+            'result' =>$update
         ));
     }
 
