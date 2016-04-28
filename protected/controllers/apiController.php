@@ -54,10 +54,12 @@ class apiController extends Controller {
     
     public function actionUpdateVirClass(){
         $classID = $_GET['classID'];
+        $number = $_GET['number'];
         $backtime = date('y-m-d H:i:s',time());
         $connection = Yii::app()->db;
-        $sql = "UPDATE tb_class SET backTime='$backtime' WHERE classID='$classID'";
+        $sql = "UPDATE lesson SET backTime='$backtime' WHERE classID='$classID' AND number ='$number'";
         $command = $connection->createCommand($sql);
+        error_log($command->execute());
         echo $command->execute();
     }
     public function actionUpdateStuOnLine(){
@@ -94,7 +96,7 @@ class apiController extends Controller {
         $classID = $_GET['classID'];
         $connection = Yii::app()->db;
         $userID=array(Yii::app()->session['userid_now']);
-        $sql = "SELECT userName,backTime FROM student";
+        $sql = "SELECT userName,backTime FROM student WHERE classID ='$classID'";
         $command = $connection->createCommand($sql);
         $dataReader = $command->query();
         $time = $dataReader->readAll();
@@ -119,14 +121,14 @@ class apiController extends Controller {
                 array_push($student, $v['userName']);
             }
         }
-       
         $this->renderJSON(array($onLineStudent,$student,$n));
     }
     
     public function actionGetClassState(){
         $classID = $_GET['classID'];
+        $number = $_GET['number'];
         $connection = Yii::app()->db;
-        $sql = "SELECT backTime FROM tb_class where classID = '$classID'";
+        $sql = "SELECT backTime FROM lesson where classID = '$classID' AND number = '$number'";
         $command = $connection->createCommand($sql);
         $dataReader = $command->query();
         $time = $dataReader->readAll();
