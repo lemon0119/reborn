@@ -338,7 +338,7 @@
             clearInterval(time1);
             window.G_isOverFlag = 1;
             document.getElementById("id_cost").value = getSeconds();
-            doSubmit(false); 
+            //doSubmit(false); 
             return '';
         }       
         if(nextWord != "")

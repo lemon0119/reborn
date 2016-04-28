@@ -4478,6 +4478,9 @@ class TeacherController extends CController {
     }
 
     public function ActionChangeSuiteClass() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $res = 0;
         $suiteID = $_GET['suiteID'];
         $isOpen = $_GET['isOpen'];

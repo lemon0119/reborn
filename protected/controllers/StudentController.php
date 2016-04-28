@@ -40,6 +40,9 @@ class StudentController extends CController {
     }
 
     public function actionVirtualClass() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $userID = Yii::app()->session['userid_now'];
         $student = Student::model()->findByPK($userID);
         $userName = $student->userName;
