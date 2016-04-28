@@ -19,7 +19,7 @@
      <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
-         <li ><div id="id_classExercise"><a href="#"><i class="icon-list"></i>练习</a></div></li>
+         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
@@ -28,7 +28,7 @@
               </ul>
         </div>
          
-         <li ><div id="id_classWork"><a href="#"><i class="icon-list"></i>作业</a></div></li>  
+         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
@@ -54,7 +54,7 @@
              </ul>
          </div>
                  
-         <li ><div id="id_classExam"><a href="#"><i class="icon-list"></i>考试</a></div></li>
+         <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
@@ -77,7 +77,7 @@
 
 <div class="span9" id="sp" style="display: none;height: 830px;">
     <div style="position: relative;top: -15px;">
-        <div  style="width:100%;overflow: auto;">
+        <div  style="width:100%;overflow: auto;height:110px;">
             <table id="ul1" class="ul1" style="margin-left: -20px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
             </table>
         </div>
