@@ -4,6 +4,15 @@
 <!--    <button onclick="modify()">测试</button>-->
 </div>
 <script>
+    <?php 
+    /** 
+    获取网卡的MAC地址原码；目前支持WIN/LINUX系统 
+    获取机器网卡的物理（MAC）地址 
+    **/ 
+         
+//方法使用
+
+?> 
 //    function modify(){
 //        window.location.href="./index.php?r=teacher/index&&modify=1";
 //    }
