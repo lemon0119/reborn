@@ -20,7 +20,7 @@ echo "<script>var role='$role';</script>";
             <td><span style="color: #f46500">&nbsp;&nbsp;<?php echo $userID; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
         </tr>
         <tr>
-            <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;姓名:</span></td>
+            <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;学生姓名:</span></td>
             <td><span style="color: #f46500">&nbsp;&nbsp;<?php echo $userName; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
         </tr>
         <tr>
@@ -82,17 +82,17 @@ echo "<script>var role='$role';</script>";
 </div>
 
 <div class="right"style="max-height: 1200px;background-color: #3b3b3b;border: 0px" >
-    <div align="center" id="sw-teacher-camera"><a href="#" ><h4 style="color: white">教 师 视 频</h4></a></div>
+    <div align="center" id="sw-teacher-camera"><h4 ><a href="#" style="color: white">教 师 视 频</a></h4></div>
     <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
-    <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:26px;color: white">虚 拟 键 盘</a><button class="fr btn" id="sw-openAnalysis">统计</button></h4></div>
+    <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:26px;color: white">虚 拟 键 盘</a><a class="fr" style="cursor:pointer;color:wheat;font-size: 15px;" id="sw-openAnalysis">统计>></a></h4></div>
     <div id="bulletin" class="bulletin" style="border: 0px;width: 100%;margin-left: -1.1px">
         <?php require Yii::app()->basePath . "\\views\\student\\keyboard_virtual_class.php"; ?>
     </div>
     <div class="fl" align="center" id="sw-chat" ><h4 ><a style="position: relative;left:145px;color: white"  href="#">课 堂 问 答</a></h4></div>
     <div id="chat-box" style="border: 0px;">
-        <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%;height: 165px"></div>
+        <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%;height: 175px"></div>
         <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
             <input onfocus="setPress()"onblur="delPress()" type='text' id='messageInput' style="border: 0px;width:283px;height:26px; margin-top:0px;margin-bottom:0px;margin-right: 0px;color:gray" oninput="this.style.color='black'">
             <a id="send-msg"></a>
