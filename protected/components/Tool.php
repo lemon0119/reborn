@@ -23,7 +23,7 @@ class Tool {
         }
         return $result;
     }
-
+    
     public function alertInfo($info, $url) {
         return "<script type='text/javascript'>alert('$info');location.href='$url';</script>";
     }
@@ -110,7 +110,7 @@ class Tool {
         // echo("rand:$rand_number\n");
         // echo("cs:$cs\n");
         $tm = $tm + "";
-        $id = "1" . substr($tm, - 7);
+        $id = "1".substr($tm, - 7);
         // echo("id:$id\n");
         $str_rand = sprintf("%02d", $rand_number);
         $id = $id . $str_rand;
@@ -178,29 +178,29 @@ class Tool {
     public static function excelreadToDatabase($arry_success) {
         // 正式导入数据库,返回成功导入的人数
         $count = 0;
-        foreach ($arry_success as $data) {
-            if ($data ['className'] == "") {
-                $classID = "0";
-            } else {
-                $className = $data ['className'];
-                $subClass = TbClass::model()->find("className = '$className'");
-                $classID = $subClass ['classID'];
+            foreach ($arry_success as $data) {
+                    if ($data ['className']=="") {
+                        $classID = "0";
+                    } else {
+                        $className = $data ['className'];
+                        $subClass = TbClass::model()->find("className = '$className'");
+                        $classID = $subClass ['classID'];
+                    }
+                    Student::model()->insertStu($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['mail_address'], $data ['phone_number'], $classID);
+             $count++;       
             }
-            Student::model()->insertStu($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['mail_address'], $data ['phone_number'], $classID);
-            $count++;
-        }
-        return $count;
+            return $count;
     }
 
     /**
      * 老师的excel导入条件判断，逻辑同学生
      */
     public static function excelReadTeaToDatabase($arry_success) {
-
+      
         $count = 0;
-        foreach ($arry_success as $data) {
-            Teacher::model()->insertTea($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'], $data['school']);
-            $count++;
+            foreach ($arry_success as $data) {
+                    Teacher::model()->insertTea($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'],$data['school']);
+                    $count++;   
         }
         return $count;
     }
@@ -251,98 +251,97 @@ class Tool {
     }
 
     //检查学生公告状态
-    public static function stuNotice() {
-        $userId = Yii::app()->session['userid_now'];
-        $noticeState = Student::model()->findByPK($userId)->noticestate;
-        return $noticeState;
-    }
-
-    //检查老师公告状态
-    public static function teacherNotice() {
-        $userId = Yii::app()->session['userid_now'];
-        $noticeState = Teacher::model()->findByPK($userId)->noticestate;
-        return $noticeState;
-    }
-
+public static function stuNotice(){
+    $userId= Yii::app()->session['userid_now'];
+    $noticeState = Student::model()->findByPK($userId)->noticestate;
+    return $noticeState;
+}
+ //检查老师公告状态
+public static function teacherNotice(){
+    $userId= Yii::app()->session['userid_now'];
+    $noticeState = Teacher::model()->findByPK($userId)->noticestate;
+    return $noticeState;
+}
     /**
      * 验证邮箱格式是否正确
      * return true 正确; false 不正确
      */
-    public static function checkMailAddress($email) {
+    public static function checkMailAddress($email){
         $regex = '/^[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[-_a-z0-9][-_a-z0-9]*\.)*(?:[a-z0-9][-a-z0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/i';
         if (preg_match($regex, $email)) {
             return TRUE;
-        } else {
+        }else{
             return FALSE;
         }
     }
-
     /**
      * 验证ID格式是否正确
      * return true 正确; false 不正确
      */
-    public static function checkID($ID) {
+    public static function checkID($ID){
         $regex = '/^[A-Za-z]+[A-Za-z0-9]+$/';
         if (preg_match($regex, $ID)) {
             return TRUE;
-        } else {
+        }else{
             return FALSE;
         }
     }
-
+    
     //分页工具，$sql为SQL  返回值list为查询内容，$pages为分页结果
-
-    public static function pager($sql, $pagesize) {
-        $criteria = new CDbCriteria();
+    
+    public static function pager($sql,$pagesize){
+        $criteria=new CDbCriteria();
         $result = Yii::app()->db->createCommand($sql)->query();
-        $pages = new CPagination($result->rowCount);
-        $pages->pageSize = $pagesize;
-        $pages->applyLimit($criteria);
-        $result = Yii::app()->db->createCommand($sql . " LIMIT :offset,:limit");
-        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize);
-        $result->bindValue(':limit', $pages->pageSize);
-        $list = $result->query();
-        return ['list' => $list, 'pages' => $pages,];
+        $pages= new CPagination($result->rowCount);
+        $pages->pageSize=$pagesize; 
+        $pages->applyLimit($criteria); 
+        $result=Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
+        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
+        $result->bindValue(':limit', $pages->pageSize); 
+        $list=$result->query();
+        return ['list'=>$list,'pages'=>$pages,];
     }
-
-    public static function quickSort($arr, $type) {
-        if (count($arr) > 1) {
-            $k = $arr[0][$type];
-            $x = array();
-            $y = array();
-            $_size = count($arr);
-            for ($i = 1; $i < $_size; $i++) {
-                if ($arr[$i][$type] <= $k) {
-                    array_push($y, $arr[$i]);
-                } else if ($arr[$i][$type] > $k) {
-                    array_push($x, $arr[$i]);
+    
+    
+    public static function quickSort($arr,$type){
+            if(count($arr)>1){
+                $k=$arr[0][$type];
+                $x=array();
+                $y=array();
+                $_size=count($arr);
+                for($i=1;$i<$_size;$i++){
+                    if($arr[$i][$type]<=$k){
+                        array_push($y, $arr[$i]);
+                    }else if($arr[$i][$type]>$k){
+                        array_push($x, $arr[$i]);
+                    }
                 }
+                $x = Tool::quickSort($x, $type);
+                $y = Tool::quickSort($y, $type);
+                return array_merge($x,array($arr[0]),$y);
+            }else{
+                return $arr;
             }
-            $x = Tool::quickSort($x, $type);
-            $y = Tool::quickSort($y, $type);
-            return array_merge($x, array($arr[0]), $y);
-        } else {
-            return $arr;
-        }
     }
-
-    // 第一个参数：传入要转换的字符串
+    
+        // 第一个参数：传入要转换的字符串
     // 第二个参数：取0，英文转简体；取1，简体到英文
     public static function SBC_DBC($str, $args2) {
         $DBC = Array(
-            '：', '—',
-            '。', '，', '/', '%', '#',
-            '！', '＠', '＆', '（', '）',
-            '《', '＞', '＂', '＇', '？',
-            '【', '】', '{', '}', '\'',
-            '｜', '+', '=', '_', '＾',
+             '：','—',
+            '。' , '，' , '/' , '%' , '#' ,
+            '！' , '＠' , '＆' , '（' , '）' ,
+            '《' , '＞' , '＂' , '＇' , '？' ,
+            '【' , '】' , '{' , '}' , '\'' ,
+            '｜' , '+' , '=' , '_' , '＾' ,
+            
         );
 
-        $SBC = Array(// 半角
-            ':', '-',
+        $SBC = Array( // 半角
+            ':','-',
             '.', ',', '/', '%', '#',
             '!', '@', '&', '(', ')',
-            '<', '>', '"', '\'', '?',
+            '<', '>', '"', '\'','?',
             '[', ']', '{', '}', '\\',
             '|', '+', '=', '_', '^',
         );
@@ -355,69 +354,70 @@ class Tool {
             return false;
         }
     }
-
-    public static function filterKeyContent($content) {
-        if (strstr($content, "$$")) {
-            $string = "";
-            $content = str_replace("$$", " ", $content);
-            $array = explode(" ", $content);
-            foreach ($array as $arr) {
-                $pos = strpos($arr, "0");
-                $arr = substr($arr, $pos + 1);
-                $string = $string . " " . $arr;
-            }
-            return $string;
-        } else {
-            return $content;
-        }
+    
+    public static function filterKeyContent($content){
+                        if(strstr($content,"$$")){
+                            $string="";
+                            $content=  str_replace("$$", " ", $content);
+                            $array=  explode(" ", $content);
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"0");
+                                $arr=substr($arr, $pos+1);
+                                $string=$string." ".$arr;
+                            }
+                            return $string;
+                        }else{
+                            return $content;
+                        }
     }
-
-    public static function filterKeyOfInputWithYaweiCode($content) {
-        if (strstr($content, ">,<")) {
-            $string = "";
-            $content = substr($content, 1);
-            $content = str_replace(">,<", " ", $content);
-            $array = explode(" ", $content);
-            foreach ($array as $arr) {
-                $pos = strpos($arr, "><");
-                $arr = substr($arr, 0, $pos);
-                $string = $string . " " . $arr;
-            }
-            return $string;
-        } else {
-            return $content;
-        }
+    
+    public static function filterKeyOfInputWithYaweiCode($content){
+        if(strstr($content,">,<")){
+                            $string="";
+                            $content=substr($content,1);
+                            $content=  str_replace(">,<", " ", $content);
+                            $array=  explode(" ", $content);
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"><");
+                                $arr=substr($arr,0,$pos);
+                                $string=$string." ".$arr;
+                            }
+                            return $string;
+                        }else{
+                            return $content;
+                        }
+        
     }
-
-    public static function filterContentOfInputWithYaweiCode($content) {
-        if (strstr($content, ">,<")) {
-            $string = "";
-            $content = substr($content, 1);
-            $content = str_replace(">,<", " ", $content);
-            $array = explode(" ", $content);
-            foreach ($array as $arr) {
-                $pos = strpos($arr, "><");
-                $arr = substr($arr, 0, $pos);
-                $string = $string . $arr;
-            }
-            return $string;
-        } else {
-            return $content;
-        }
+    public static function filterContentOfInputWithYaweiCode($content){
+        if(strstr($content,">,<")){
+                            $string="";
+                            $content=substr($content,1);
+                            $content=  str_replace(">,<", " ", $content);
+                            $array=  explode(" ", $content);
+                            foreach ($array as $arr) {
+                                $pos=  strpos($arr,"><");
+                                $arr=substr($arr,0,$pos);
+                                $string=$string.$arr;
+                            }
+                            return $string;
+                        }else{
+                            return $content;
+                        }
+        
     }
-
-    public static function spliceLookContent($content) {
+    
+     public static function spliceLookContent($content){
         $result = '';
-        $length = mb_strlen($content);
-        if ($length > 4000) {
+        $length =mb_strlen($content);
+        if($length>4000){
             $result = Tool::utf8_substr($content, 0, 4000);
-        } else {
+        }else{
             $result = $content;
         }
         return $result;
     }
-
-    public static function utf8_substr($str, $start = 0) {
+    
+    public static function  utf8_substr($str, $start = 0) {
         if (empty($str)) {
             return false;
         }
@@ -440,5 +440,7 @@ class Tool {
             }
         }
     }
-}
 
+   
+    
+}
