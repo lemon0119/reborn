@@ -59,6 +59,7 @@ class apiController extends Controller {
         $connection = Yii::app()->db;
         $sql = "UPDATE lesson SET backTime='$backtime' WHERE classID='$classID' AND number ='$number'";
         $command = $connection->createCommand($sql);
+        error_log($command->execute());
         echo $command->execute();
     }
     public function actionUpdateStuOnLine(){
