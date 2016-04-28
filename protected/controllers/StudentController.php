@@ -827,6 +827,9 @@ class StudentController extends CController {
 
     //课堂作业选择题 
     public function actionChoice() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $isExam = FALSE;
         Yii::app()->session['isExam'] = $isExam;
         $suiteID = Yii::app()->session['suiteID'];
@@ -879,6 +882,9 @@ class StudentController extends CController {
 
     //2015-8-3 宋杰 获取试题，跳转到选择题页面 isExam为true加载examsidebar
     public function actionExamChoice() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $isExam = true;
         Yii::app()->session['isExam'] = $isExam;
         $suiteID = Yii::app()->session['examsuiteID'];
@@ -930,6 +936,9 @@ class StudentController extends CController {
 
     //课堂作业填空题   
     public function actionfilling() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $isExam = false;
         Yii::app()->session['isExam'] = $isExam;
         $suiteID = Yii::app()->session['suiteID'];
@@ -982,6 +991,9 @@ class StudentController extends CController {
 
     //2015-8-3 宋杰 加载考试填空题
     public function actionExamfilling() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $isExam = true;
         Yii::app()->session['isExam'] = $isExam;
         $suiteID = Yii::app()->session['examsuiteID'];
@@ -1032,6 +1044,9 @@ class StudentController extends CController {
 
     //课堂作业套题  
     public function actionClswkOne() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $workID = $_GET['suiteID'];
         $isExam = false;
         Yii::app()->session['isExam'] = $isExam;
@@ -1071,6 +1086,9 @@ class StudentController extends CController {
 
     //获取考试套题
     public function actionClsexamOne() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $isExam = true;
         $suiteID = $_GET['suiteID'];
         $workID = $_GET['workID'];
