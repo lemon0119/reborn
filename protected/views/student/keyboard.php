@@ -129,6 +129,7 @@
             window.G_countAllKey++;
             window.G_content = document.getElementById("typeOCX").GetContent();
             window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
+
             //每击统计击键间隔时间 秒
             //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
             //每击统计最高击键间隔时间 秒
@@ -152,6 +153,7 @@
                     $("#getHighIntervarlTime").html(IntervalTime);
                 }
             }
+
             if (HaveWindow == 1)
                 return;
 //            if (totalNum == currentNum && repeatNum == 0) {
@@ -173,7 +175,7 @@
             if (totalNum == currentNum) {
                     window.G_isOverFlag = 1;
                     document.getElementById("id_cost").value = getSeconds();
-                   // doSubmit(false);
+                    doSubmit(false);
             }
             var charSet = pszStenoString.split("");
             var left = true;
@@ -202,6 +204,7 @@
             window.GA_RightRadio = (getCorrect() * 100).toFixed(2);
             document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
         }
+
     }
     var wordArray = new Array();
     var yaweiCodeArray = new Array();

@@ -1,4 +1,4 @@
-`<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
+<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
 <script>
 
@@ -489,7 +489,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     var picOrppt = "";
     //chat and bulletin   
     $(document).ready(function () {
-        checkLeave();
          $.ajax({
                     type: "POST",
                     url: "index.php?r=teacher/closeAllOpenExerciseNow",
@@ -583,7 +582,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     function checkLeave() {
         $.ajax({
             type: "POST",
-            url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID; ?>&&number=<?php echo $_GET['on']; ?>",
+            url: "index.php?r=api/updateVirClass&&classID=<?php echo $classID; ?>",
             data: {},
             success: function () {
             },
@@ -612,7 +611,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 $("#dd2").html("<br/>&nbsp;&nbsp;&nbsp;&nbsp;" + content2);
             },
             error: function (xhr, type, exception) {
-                console.log('get backtime error', type);
+                console.log('get backtime erroe', type);
                 console.log(xhr, "Failed");
             }
         });

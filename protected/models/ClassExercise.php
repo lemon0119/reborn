@@ -240,8 +240,7 @@ class ClassExercise extends CActiveRecord
         $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
         $classExercise->title = $title;
         $classExercise->content = $content;
-        $result = $classExercise->update();
-        return $result;
+        $classExercise->update();
     }
     
     public function deleteExercise($exerciseID){
@@ -268,12 +267,9 @@ class ClassExercise extends CActiveRecord
 //        }
             $classExercise = new ClassExercise();
             $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
-            if($classExercise!=null){
-                $classExercise->is_open = 1;
+            $classExercise->is_open = 1;
             $classExercise->now_open = 1;
             $classExercise->update();
-            }
-            
     }
     
     public function closeAllOpenExerciseNow(){

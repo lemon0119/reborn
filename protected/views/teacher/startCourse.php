@@ -356,7 +356,7 @@
         type: "GET",
         dataType: "json",
         //url: "index.php?r=api/GetBackTime&&classID=<?php //echo $classID;?>",
-        url: "index.php?r=api/GetClassState&&classID=<?php echo $classID;?>&&number=<?php echo $_GET['progress'];?>",
+        url: "index.php?r=api/GetClassState&&classID=<?php echo $classID;?>",
         success: function(data) {
             console.log("qq",data);
             var now=<?php echo time()?>;    //这个时间是页面进入的时候，生成的。

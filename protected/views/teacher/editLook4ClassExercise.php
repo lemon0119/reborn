@@ -33,7 +33,7 @@
         <div class="control-group">
             <label class="control-label" for="input02">看打答案</label>
             <div class="controls">               
-                <textarea name="content" id="input02" style="width:450px; height:200px;"<?php if(isset($_GET['action'])){ if($_GET['action']=='look'){echo 'disabled="disabled"'; } }?> ><?php echo $content; ?></textarea>
+                <textarea name="content" style="width:450px; height:200px;"<?php if(isset($_GET['action'])){ if($_GET['action']=='look'){echo 'disabled="disabled"'; } }?> ><?php echo $content; ?></textarea>
                 <br>字数：<span id="wordCount">0</span> 字
             </div>
         </div> 
@@ -52,14 +52,8 @@
 </div>
 <script>     
 $(document).ready(function(){
-    <?php if(isset($result)&&$result!=0){ 
-        ?>
-            window.wxc.xcConfirm("修改成功！", window.wxc.xcConfirm.typeEnum.success,{
-                onOk:function(){
-                    window.location.href='./index.php?r=teacher/editLook4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>&&exerciseID=<?php echo $_GET['exerciseID'];?>';
-                }
-            });
-        <?php  } ?>
+    <?php if(isset($result))
+            echo "window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>
     var v=<?php echo Tool::clength($content);?>;
     $("#wordCount").text(v);
 });

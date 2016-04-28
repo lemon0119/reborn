@@ -235,13 +235,6 @@ function getSuiteExercise(suiteID,workID){
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    
-    document.getElementById('id').value="";
-    document.getElementById('classID').value="";
-    document.getElementById('exerciseID').value="";
-    document.getElementById('type').value="";
-    document.getElementById('choice').value="";
-    document.getElementById('isExam').value="";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -365,10 +358,6 @@ function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
 }
 var choice;
 function getClassExerRankingBef(choice2,bg){
-    if(document.getElementById('exerciseID').value==""){
-        window.wxc.xcConfirm("请选择题目！", window.wxc.xcConfirm.typeEnum.confirm);
-        return;
-    }
     document.getElementById('correct').style.color="#000";
     document.getElementById('speed').style.color="#000";
     document.getElementById('maxSpeed').style.color="#000";
@@ -402,13 +391,6 @@ function getClassExer(lessonID){
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    
-    document.getElementById('id').value="";
-    document.getElementById('classID').value="";
-    document.getElementById('exerciseID').value="";
-    document.getElementById('type').value="";
-    document.getElementById('choice').value="";
-    document.getElementById('isExam').value="";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -489,13 +471,6 @@ function getExamExercise(examID,workID){
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    
-    document.getElementById('id').value="";
-    document.getElementById('classID').value="";
-    document.getElementById('exerciseID').value="";
-    document.getElementById('type').value="";
-    document.getElementById('choice').value="";
-    document.getElementById('isExam').value="";
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -744,8 +719,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                    
                    for(var h=0;h<data[2].length;h++){
                        myTimes[h]=data[2][h]['time'];
-                       //myPer[h]=data[2][h][choice];
-                       myPer[h]=Math.round(data[2][h][choice]*100)/100;
+                       myPer[h]=data[2][h][choice];
                        
                    }
                    for(var i=0;i<data[0].length;i++){  
@@ -769,8 +743,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                    if(data[1].length!=0){
                         for(var j=0;j<data[1][0].length;j++){
                             times[j]=data[1][0][j]['duration'];
-                            //per[j]=data[1][0][j][choice];
-                            per[j]=Math.round(data[1][0][j][choice]*100)/100;
+                            per[j]=data[1][0][j][choice];
                         }
                     }
                    for(var h=data[2].length;h<data[1][0].length;h++){
@@ -1054,8 +1027,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                         for(var hh=0;hh<data[3][h].length;hh++){
                             myPer[h][hh]=Array();
                              //myTimes[h][hh]=data[3][h][hh]['time'];
-                             //myPer[h][hh]=data[3][h][hh][choice];
-                             myPer[h][hh]=Math.round(data[3][h][hh][choice]*100)/100;
+                             myPer[h][hh]=data[3][h][hh][choice];
                         }
                    }
                    if(data[0]['sequence']==1){
@@ -1104,8 +1076,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    if(data[2].length!=0){
                         for(var j=0;j<data[2][0].length;j++){
                             times[j]=data[2][0][j]['duration'];
-                            //per[j]=data[2][0][j][choice];
-                            per[j]=Math.round(data[2][0][j][choice]*100)/100;
+                            per[j]=data[2][0][j][choice];
                         }
                    }
                    for(var h=0;h<data[3].length;h++){
@@ -1231,16 +1202,12 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                                  s.push(item);
                                  
                                  for(var d=0;d<myPer.length;d++){
-                                     
+                                     if(d==0)
+                                         var n='最高成绩';
+                                     else 
+                                         var n='最低成绩';
                                      if(myPer.length>=2)
-                                         if(d==0)
-                                            var n='最高成绩';
-                                         else 
-                                            var n='最低成绩';
-                                     else{
-                                         var n='学生成绩';
-                                         
-                                     }
+                                         var n='成绩';
                                      var item={
                                         name:n,
                                         type:'line',

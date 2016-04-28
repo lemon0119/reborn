@@ -80,7 +80,7 @@ onmessage = function (event) {
     var rightCount = 0;
     var lcs = new LCS(currentContent, originalContent);
     lcs.doLCS();
-    allCount = lcs.getStrOrg().length;
+    allCount = lcs.getStrOrg(1).length;
     rightCount = lcs.getSubString(3).length;
     var correct = rightCount / allCount;
     var accuracyRate = Math.round(correct * 100);
