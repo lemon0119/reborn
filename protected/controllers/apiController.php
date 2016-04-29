@@ -1545,7 +1545,7 @@ class apiController extends Controller {
                      $f9=$finishDate;
                  }
                  
-                 if($finishDate>=$ff9 && $a['studentID']==$id){
+                 if($finishDate<=$ff9 && $a['studentID']==$id){
                      $ff9=$finishDate;
                      $icon9=$i1;
                  }

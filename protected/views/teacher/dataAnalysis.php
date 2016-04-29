@@ -95,25 +95,25 @@
                             <input type="text" value="123"  id="type" style="display:none;" />
                             <input type="text" value="123"  id="choice"  style="display:none;"/>
                             <input type="text" value="123"  id="isExam"  style="display:none;"/>
-                            <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率</a>
+                            <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率(%)</a>
                         </td>  
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg2" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度</a>
+                            <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度(字/秒)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg3" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度</a>
+                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度(字/秒)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg4" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数</a>
+                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数(字/秒)</a>
                         </td>
                     </tr>
                 </table>
