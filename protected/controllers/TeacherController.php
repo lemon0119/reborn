@@ -23,7 +23,7 @@ class TeacherController extends CController {
     public $layout = '//layouts/teacherBar';
 
     public function actionVirtualClass() {
-        if(!isset(Yii::app()->session['userid_now'])){
+        if (!isset(Yii::app()->session['userid_now'])) {
             return $this->render('index');
         }
         $cou = 0;
@@ -4478,6 +4478,9 @@ class TeacherController extends CController {
     }
 
     public function ActionChangeSuiteClass() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $res = 0;
         $suiteID = $_GET['suiteID'];
         $isOpen = $_GET['isOpen'];
@@ -6180,7 +6183,7 @@ class TeacherController extends CController {
             'exerciseID' => $exerciseID,
             'title' => $result['title'],
             'content' => $result['content'],
-            'result' =>$update
+            'result' => $update
         ));
     }
 
