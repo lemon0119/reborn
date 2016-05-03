@@ -34,7 +34,7 @@
             <div class="control-group">
                 <label class="control-label" for="input03">班级名称</label>
                 <div class="controls">
-                    <select name="classID" style="width: 285px;color: #000">
+                    <select name="classID" style="width: 285px;color: #000" id="input03" onchange="chkClass()">
                         <option value="0" >以后再选</option>
                         <?php 
                             $classes = TbClass::model()->findall();
@@ -182,6 +182,23 @@ foreach ($classAll as $key => $value) {
         }
 
     });
+    
+    function chkClass(){
+        var usernameVal = document.getElementById("input03").value;
+        $.ajax({
+                    type: "POST",
+                    url: "index.php?r=admin/getNum&&classID="+usernameVal,
+                    data: {
+                        classID: '"' + usernameVal + '"',
+                    },
+                    success: function (data) {
+                        if(data=="error"){
+                            window.wxc.xcConfirm('此班级已满!', window.wxc.xcConfirm.typeEnum.info);
+                            document.getElementById("input03").value="0";
+                        }
+                    },
+                });
+    }
     
     function chkMail(){
 //        var phone_number = $("#input09")[0].value;
