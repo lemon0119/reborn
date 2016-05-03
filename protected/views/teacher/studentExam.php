@@ -39,6 +39,7 @@
                                 break;
                             }                     
                             ?>
+                    <?php if($thisExam!=NULL){?>
                     <tr>
                         <td>
                             <?php            
@@ -65,7 +66,8 @@
                             <?php }?>
 
                         </td>
-                    </tr>            
+                    </tr>      
+                    <?php }?>
                     <?php endforeach;?> 
                 </tbody>
     </table>

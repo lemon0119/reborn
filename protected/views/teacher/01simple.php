@@ -3,7 +3,7 @@ $data=Array();
 $data=$arrayDetailData;
 
 $maxData=Array();
-    $title=array('成绩','正确率','平均速度','回改字数','平均击键','完成时间','总击键数');
+    $title=array('次数','正确率','平均速度','回改字数','平均击键','完成时间','总击键数');
     $filename='report';
     header("Content-type:application/octet-stream");
     header("Accept-Ranges:bytes");

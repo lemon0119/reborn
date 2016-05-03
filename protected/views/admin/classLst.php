@@ -120,7 +120,7 @@
            }
         } 
         if(flag===0){
-           window.wxc.xcConfirm('未选中任何题目', window.wxc.xcConfirm.typeEnum.info);
+           window.wxc.xcConfirm('未选中任何班级', window.wxc.xcConfirm.typeEnum.info);
         }else{
              var option = {
 						title: "警告",
@@ -129,7 +129,7 @@
 							$('#deleForm').submit();
 						}
 					};
-					window.wxc.xcConfirm("确定删除选中的科目吗？", "custom", option);
+					window.wxc.xcConfirm("确定删除选中的班级吗？", "custom", option);
         }
        
     }
