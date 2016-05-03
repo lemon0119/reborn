@@ -173,7 +173,7 @@
             if (totalNum == currentNum) {
                 window.G_isOverFlag = 1;
                 document.getElementById("id_cost").value = getSeconds();
-                doSubmit(false);
+                //doSubmit(false);
         }
             //判断键位是否正确
         var charSet = pszStenoString.split("");

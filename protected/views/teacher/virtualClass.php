@@ -1264,64 +1264,16 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         $("#yeshu").val(cur_ppt);
         if (window.picOrppt === "pic") {
             var server_root_path = ppt_dir.split("picture")[0] + "picture/";
-            var array_fileName = new Array();
-<?php
-$dir = dir($picdir);
-$count = 0;
-while ($file = $dir->read()) {
-    if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-        $fileName4Path = iconv("gb2312", "UTF-8", $file);
-        ?>
-                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
-        <?php
-        $count++;
-    }
-}
-$dir->close();
-?>
-            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
             $("#ppt-img").attr("src", ppt_dir);
             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
             ws.send(msg);
         } else if (window.picOrppt === "pic-public") {
             var server_root_path = "./resources/public/picture/";
-            var array_fileName = new Array();
-<?php
-$dir = dir($adminPublicPicdir);
-$count = 0;
-while ($file = $dir->read()) {
-    if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-        $fileName4Path = iconv("gb2312", "UTF-8", $file);
-        ?>
-                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
-        <?php
-        $count++;
-    }
-}
-$dir->close();
-?>
-            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
             $("#ppt-img").attr("src", ppt_dir);
             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
             ws.send(msg);
         } else if (window.picOrppt === "txt") {
             var server_root_path = ppt_dir.split("txt")[0] + "txt/";
-            var array_fileName = new Array();
-<?php
-$dir = dir($txtdir);
-$count = 0;
-while ($file = $dir->read()) {
-    if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-        $fileName4Path = iconv("gb2312", "UTF-8", $file);
-        ?>
-                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
-        <?php
-        $count++;
-    }
-}
-$dir->close();
-?>
-            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
             ppt_dir = ppt_dir.split("reborn/")[1];
             $.ajax({
                 type: "POST",
@@ -1330,7 +1282,7 @@ $dir->close();
                 data: {url: ppt_dir},
                 success: function (data) {
                     $("#txt-textarea").val(data);
-                    ws.send("show_text"+data);
+                    ws.send("<?php echo $classID; ?>show_text"+data);
                 },
                 error: function (xhr, type, exception) {
                     console.log('getTxtValue error', type);
@@ -1348,7 +1300,7 @@ $dir->close();
                 data: {url: ppt_dir},
                 success: function (data) {
                     $("#txt-textarea").val(data);
-                    ws.send("show_text"+data);
+                    ws.send("<?php echo $classID;?>show_text"+data);
                 },
                 error: function (xhr, type, exception) {
                     console.log('getTxtValue error', type);
@@ -1360,22 +1312,6 @@ $dir->close();
 
         } else if (window.picOrppt === "txt-public") {
             var server_root_path = "./resources/public/txt/";
-            var array_fileName = new Array();
-<?php
-$dir = dir($adminPublicTxtdir);
-$count = 0;
-while ($file = $dir->read()) {
-    if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-        $fileName4Path = iconv("gb2312", "UTF-8", $file);
-        ?>
-                    array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
-        <?php
-        $count++;
-    }
-}
-$dir->close();
-?>
-            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
             ppt_dir = ppt_dir.split("./")[1];
             $.ajax({
                 type: "POST",
@@ -1384,7 +1320,7 @@ $dir->close();
                 data: {url: ppt_dir},
                 success: function (data) {
                     $("#txt-textarea").val(data);
-                    ws.send("show_text"+data);
+                    ws.send("<?php echo $classID;?>show_text"+data);
                 },
                 error: function (xhr, type, exception) {
                     console.log('getTxtValue error', type);
@@ -1402,7 +1338,7 @@ $dir->close();
                 data: {url: ppt_dir},
                 success: function (data) {
                     $("#txt-textarea").val(data);
-                    ws.send("show_text"+data);
+                    ws.send("<?php echo $classID;?>show_text"+data);
                 },
                 error: function (xhr, type, exception) {
                     console.log('getTxtValue error', type);

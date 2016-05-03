@@ -587,9 +587,20 @@ echo "<script>var role='$role';</script>";
             $("#ppt-container").hide();
             $("#text-show").html("");
             $("#Text-container").hide();
-        } else if (msg.substring(0, 9) === "show_text") {
-            $("#Text-container").show();
-            $("#text-show").html(msg.substring(9));
+        } 
+        else if(msg.indexOf('<?php echo $classID; ?>show_text') >= 0){
+            if (last_path == -1)
+            {
+                $("#dianbo-videos-container").hide();
+                $("#Text-container").show();
+            }
+            if (ppt_src != last_path)
+            {
+                $("#Text-container").show();
+                var ppt_src = msg.substr(msg.indexOf('show_text') + 9);
+                $("#text-show").html(ppt_src);
+                last_path=ppt_src;
+            }
         }
     }
 

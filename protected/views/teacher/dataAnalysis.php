@@ -19,7 +19,7 @@
      <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
-         <li ><div id="id_classExercise"><a href="#"><i class="icon-list"></i>练习</a></div></li>
+         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
@@ -28,7 +28,7 @@
               </ul>
         </div>
          
-         <li ><div id="id_classWork"><a href="#"><i class="icon-list"></i>作业</a></div></li>  
+         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
@@ -54,7 +54,7 @@
              </ul>
          </div>
                  
-         <li ><div id="id_classExam"><a href="#"><i class="icon-list"></i>考试</a></div></li>
+         <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
@@ -77,7 +77,7 @@
 
 <div class="span9" id="sp" style="display: none;height: 830px;">
     <div style="position: relative;top: -15px;">
-        <div  style="width:100%;overflow: auto;">
+        <div  style="width:100%;overflow: auto;height:110px;">
             <table id="ul1" class="ul1" style="margin-left: -20px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
             </table>
         </div>
@@ -95,25 +95,25 @@
                             <input type="text" value="123"  id="type" style="display:none;" />
                             <input type="text" value="123"  id="choice"  style="display:none;"/>
                             <input type="text" value="123"  id="isExam"  style="display:none;"/>
-                            <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率</a>
+                            <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率(%)</a>
                         </td>  
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg2" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度</a>
+                            <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度(字/秒)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg3" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度</a>
+                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度(字/秒)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg4" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数</a>
+                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数(字/秒)</a>
                         </td>
                     </tr>
                 </table>
@@ -633,7 +633,8 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                    if(data[1].length!=0){
                         for(var j=0;j<data[1][0].length;j++){
                             times[j]=data[1][0][j]['duration'];
-                            per[j]=data[1][0][j][choice];
+                            //per[j]=data[1][0][j][choice];
+                            per[j]=Math.round(data[1][0][j][choice]*100)/100;
                         }
                     }
                    
@@ -930,7 +931,8 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                    if(data[1].length!=0){
                         for(var j=0;j<data[1][0].length;j++){
                             times[j]=data[1][0][j]['duration'];
-                            per[j]=data[1][0][j][choice];
+                            //per[j]=data[1][0][j][choice];
+                            per[j]=Math.round(data[1][0][j][choice]*100)/100;
                         }
                    }
                    
