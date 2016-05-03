@@ -3,7 +3,7 @@
 <script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
 <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
 <body style="background-image: none;background-color: #fff">
-    <div style="overflow: hidden" id="title"><select id="selectExercise" class="selectBox" onchange="optionOnclick()"></select><button style="margin: 10px"  class="fr btn" id="back">返回上级</button><button onclick="next()" style="margin: 10px" id="next" class="fr btn btn-primary" <?php if (count($AllIsOpen) < 1) {
+    <div style="overflow: hidden" id="title"><select id="selectExercise" class="selectBox" onchange="optionOnclick()"></select><button style="margin: 10px;float:right"  class="btn btn-primary" id="back">返回上级</button><button onclick="next()" style="margin: 10px" id="next" class="fr btn btn-primary" <?php if (count($AllIsOpen) < 1) {
     echo 'disabled="disabled"';
 } ?>>下一题</button>
         <button class="fr btn btn-primary" onclick="last()" id="last" style="margin: 10px;" disabled="disabled">上一题</button>
