@@ -28,7 +28,7 @@
             <div class="control-group">
                 <label class="control-label" for="input07">年龄</label>
                 <div class="controls">
-                    <input name="age" type="text" class="input-xlarge" id="input07" value="" onblur="chkAge()" /><span id="usertips_age" style="margin-left: 5px;"></span>
+                    <input name="age" type="text" class="input-xlarge" id="input07" value="" onblur="chkAge()" /><span id="usertips_age" style="margin-left: 5px;"></span>&nbsp; &nbsp;(1-99)
                 </div>
             </div>
             <div class="control-group">

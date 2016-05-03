@@ -1288,9 +1288,11 @@ class AdminController extends CController {
                 $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
+                $sql_lesson = "DELETE FROM lesson WHERE classID = '" . $_GET ['ClassID'] . "'";
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();  
+                Yii::app()->db->createCommand($sql_lesson)->query();  
         }
         
          if (isset($_POST['checkbox'])) {

@@ -1,4 +1,6 @@
-
+<link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/accounting.js"></script>
 <?php
 
 require 'examAnsSideBar.php';
