@@ -113,7 +113,7 @@
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg4" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数(字/秒)</a>
+                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数(字)</a>
                         </td>
                     </tr>
                 </table>
