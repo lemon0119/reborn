@@ -35,7 +35,7 @@
             <div class="control-group">
                 <label class="control-label" for="input05">年龄</label>
                 <div class="controls">
-                    <input name="age" type="text" class="input-xlarge" id="input05" value="<?php echo $age ?>" onblur="chkAge()"/><span id="usertips_age" style="margin-left: 5px;"></span>
+                    <input name="age" type="text" class="input-xlarge" id="input05" value="<?php echo $age ?>" onblur="chkAge()"/><span id="usertips_age" style="margin-left: 5px;"></span>（1-99）
                 </div>
             </div>
             <div class="control-group">
