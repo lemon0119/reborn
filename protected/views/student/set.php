@@ -53,9 +53,11 @@ function long2(){
 <div class="span3">
        <div class="well" style="padding: 8px 0;height: 565px;">
            <li class="nav-header"><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人设置</h4></li> 
-           <li class="nav-header" id="two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="cont2" href="./index.php?r=student/stuInformation">个人资料</a></li>   
-           <li class="nav-header" id="one"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="cont1" href="./index.php?r=student/set">修改密码</a></li>   
-           <li class="nav-header" id="two">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="cont2" href="./index.php?r=student/headPic">修改头像</a></li>   
+           <ul class="nav nav-list">
+           <li  id="two"><a class="cont2" href="./index.php?r=student/stuInformation">个人资料</a></li>   
+           <li class="active" id="one"><a class="cont1" href="./index.php?r=student/set">修改密码</a></li>   
+           <li  id="two"><a class="cont2" href="./index.php?r=student/headPic">修改头像</a></li>   
+           </ul>
         </div>
 </div>
 <div class="span9">
