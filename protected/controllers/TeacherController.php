@@ -4522,6 +4522,9 @@ class TeacherController extends CController {
     }
 
     public function ActionChangeExamClass() {
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
         $res = 0;
         $examID = $_GET['examID'];
         $isOpen = $_GET['isOpen'];
