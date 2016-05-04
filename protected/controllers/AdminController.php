@@ -203,17 +203,35 @@ class AdminController extends CController {
 
     public function actionAddStu() {
         $result = 'no';
+
         if (isset($_POST ['userID']) && isset($_POST['sex'])) {
             $classID = $_POST ['classID'];
             $result = Student::model()->insertStu($_POST ['userID'], $_POST ['userName'], $_POST ['sex'], $_POST ['age'], '000', $_POST ['mail_address'], $_POST ['phone_number'], $classID);
+//            $num=TbClass::model()->getStuNums($classID);
+            
         }
+        
+        
+        
         $classAll = TbClass::model()->findAll("");
         $userAll = Student::model()->findAll();
         $this->render('addStu', [
+           
             'classAll' => $classAll,
             'userAll' => $userAll,
             'result' => $result
         ]);
+    }
+    public function actionGetNum(){
+        $num=0;
+        if(isset($_GET['classID'])){
+            $classID=$_GET['classID'];
+        $num=TbClass::model()->getStuNums($classID);
+        }
+        if($num>=40)
+            echo "error";
+        else
+            echo "success";
     }
 
     public function actionExlAddStu() {
@@ -1288,9 +1306,11 @@ class AdminController extends CController {
                 $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
+                $sql_lesson = "DELETE FROM lesson WHERE classID = '" . $_GET ['ClassID'] . "'";
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();  
+                Yii::app()->db->createCommand($sql_lesson)->query();  
         }
         
          if (isset($_POST['checkbox'])) {

@@ -20,7 +20,7 @@ echo "<script>var role='$role';</script>";
             <td><span style="color: #f46500">&nbsp;&nbsp;<?php echo $userID; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
         </tr>
         <tr>
-            <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;学生姓名:</span></td>
+            <td style="font-weight: bolder"><span style="font-weight: bolder">&nbsp;&nbsp;姓名:</span></td>
             <td><span style="color: #f46500">&nbsp;&nbsp;<?php echo $userName; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
         </tr>
         <tr>

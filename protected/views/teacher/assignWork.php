@@ -215,7 +215,7 @@ $this->widget('CLinkPager', array('pages' => $pages));
             }
         }
         if (flag === 0) {
-            window.wxc.xcConfirm('未选中任何试卷', window.wxc.xcConfirm.typeEnum.info);
+            window.wxc.xcConfirm('未选中任何作业', window.wxc.xcConfirm.typeEnum.info);
         } else {
             var option = {
                 title: "警告",
@@ -224,7 +224,7 @@ $this->widget('CLinkPager', array('pages' => $pages));
                     $('#deleForm').submit();
                 }
             };
-            window.wxc.xcConfirm("这将会删除此试卷，您确定这样吗？", "custom", option);
+            window.wxc.xcConfirm("这将会删除此作业，您确定这样吗？", "custom", option);
         }
     }
     function dele(suiteID, currentPage)

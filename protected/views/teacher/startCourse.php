@@ -10,13 +10,17 @@
          $courseID = 0;
      }
      $courseName=  Course::model()->find('courseID=?',array($courseID))['courseName'];
+     
+     //
+     $currentCourse=TbClass::model()->find('classID=?',array($classID))['currentCourse'];
+     $courseName2=Course::model()->find('courseID=?',array($currentCourse))['courseName'];
 ?>
 
 <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header"><i class="icon-knowlage"></i>当前科目</li>
-                <li style="margin-left:20px;"><?php echo $courseName;?></li>
+                <li style="margin-left:20px;"><?php echo $courseName2;?></li>
                 <li class="nav-header"><i class="icon-knowlage"></i>当前课时</li>
                 <?php  if($lessonsName!=null){?>
                 <li id="li-<?php echo $progress;?>">
