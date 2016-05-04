@@ -243,6 +243,7 @@ class AdminController extends CController {
                     $array_fail = array();
                     $array_success = array();
                     $flag = 0;
+                    $coun=0;
                     foreach ($res as $k => $v) {
                         // 判断第一行表格头内容
                         if ($k == 1) {
@@ -340,6 +341,7 @@ class AdminController extends CController {
                         }
                         //判断内容逻辑
                         if ($k > 1) {
+                            $array_success = array();
                             $data ['uid'] = $v [0];
                             $data ['userName'] = $v [1];
                             $data ['sex'] = $v [2];
@@ -381,10 +383,17 @@ class AdminController extends CController {
                             } else if (!Tool::excelreadClass($data ['className'])) {
                                 $result = "班级不存在";
                                 $fixed = "班级信息已置空";
-                                $data['className'] = "";
+                                //$data['className'] = "";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                                array_push($array_success, $data);
+                                //array_push($array_success, $data);
+                            }else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=40){
+                                $result = "班级人数超过40人！";
+                                $fixed = "请重新分班";
+                                //$data['className'] = "";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                //array_push($array_success, $data);
                             } else if (!Tool::checkMailAddress($data ['mail_address'])) {
                                 $result = "邮箱格式不正确";
                                 $fixed = "邮箱信息已置空";
@@ -395,12 +404,16 @@ class AdminController extends CController {
                             } else {
                                 array_push($array_success, $data);
                             }
+                            
+                            //
+                            $count_success = Tool::excelreadToDatabase($array_success);
+                            $coun+=$count_success;
                         }
                     }
                     if ($flag === 0) {
-                        $count_success = Tool::excelreadToDatabase($array_success);
+                        //$count_success = Tool::excelreadToDatabase($array_success);
                         $count_fail = $k - $count_success - 1;
-                        $this->render('exlAddStu', ['result' => $count_success, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
+                        $this->render('exlAddStu', ['result' => $coun, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
                     }
                 }
             }
