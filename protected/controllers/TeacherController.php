@@ -6629,10 +6629,11 @@ class TeacherController extends CController {
                     $ff8 = $countAllKey;
                     $icon8 = $i1;
                 }
-                $finishDate = $a['finishDate'];          //finishDate
-                if ($f9 < $finishDate) {
-                    $f9 = $finishDate;
-                }
+                $finishDate=$a['finishDate'];          //finishDate
+                 if($f9==0) $f9=$finishDate;
+                 if($f9>$finishDate){
+                     $f9=$finishDate;
+                 }
                 if ($finishDate >= $ff9 && $a['studentID'] == $id) {
                     $ff9 = $finishDate;
                     $icon9 = $i1;

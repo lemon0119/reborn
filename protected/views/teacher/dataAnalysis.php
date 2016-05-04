@@ -19,7 +19,7 @@
      <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
-         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">练习</a></div></li>
+         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
@@ -28,7 +28,7 @@
               </ul>
         </div>
          
-         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">作业</a></div></li>  
+         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
@@ -54,7 +54,7 @@
              </ul>
          </div>
                  
-         <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:5px;left:">考试</a></div></li>
+         <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
@@ -1192,7 +1192,12 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
 //                    }
                      
                      var myChart = echarts.init(document.getElementById('main'));
-
+                        var a=new Array();
+                        if(myPer.length>=2){
+                           a=['平均成绩','最高成绩','最低成绩'];
+                         }else{
+                           a=['平均成绩','学生成绩'];
+                         }
                          var option = {
                              title: {
                                  text: ''
@@ -1201,7 +1206,7 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                                  trigger: 'axis'
                              },
                              legend: {
-                                 data:['平均成绩','学生成绩']
+                                  data:a
                              },
                              grid: {
                                  left: '3%',
