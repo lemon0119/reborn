@@ -51,7 +51,6 @@ $code = mt_rand(0, 1000000);
             <tr>
                 <th class="font-center">选择</th>
                 <th class="font-center">编号</th>
-
                 <th class="font-center">内容</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>
