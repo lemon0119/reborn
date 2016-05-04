@@ -205,8 +205,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
                 <select id="choose-pic" style="width:150px;margin-top: 10px;">
                     <?php
-                    $mydir = dir($picdir);
+                    $mydir = dir($picdir);$i=0;
                     while ($file = $mydir->read()) {
+                        $i++;
                         if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
                             <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
@@ -214,7 +215,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
                             echo $num;
-                            ?>+-+tea"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            ?>+-+tea+-+<?php echo $i;?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
                                     <?php
                                 }
                             }
@@ -1043,6 +1044,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             ppt_dir = server_root_path + dirname;
             ppt_pages = file_info[1];
             $("#all-yeshu").val(ppt_pages);
+            cur_ppt=file_info[3]-2;
+            console.log(cur_ppt);
             goCurPage();
             if (timer_ppt !== null)
                 clearInterval(timer_ppt);
@@ -1264,11 +1267,43 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         $("#yeshu").val(cur_ppt);
         if (window.picOrppt === "pic") {
             var server_root_path = ppt_dir.split("picture")[0] + "picture/";
+            var array_fileName = new Array();
+            <?php
+            $dir = dir($picdir);
+            $count = 0;
+            while ($file = $dir->read()) {
+                if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                    $fileName4Path = iconv("gb2312", "UTF-8", $file);
+                    ?>
+                                array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
+                    <?php
+                    $count++;
+                }
+            }
+            $dir->close();
+            ?>
+            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
             $("#ppt-img").attr("src", ppt_dir);
             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
             ws.send(msg);
         } else if (window.picOrppt === "pic-public") {
             var server_root_path = "./resources/public/picture/";
+            var array_fileName = new Array();
+            <?php
+            $dir = dir($adminPublicPicdir);
+            $count = 0;
+            while ($file = $dir->read()) {
+                if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                    $fileName4Path = iconv("gb2312", "UTF-8", $file);
+                    ?>
+                                array_fileName[<?php echo $count; ?>] = "<?php echo $fileName4Path; ?>";
+                    <?php
+                    $count++;
+                }
+            }
+            $dir->close();
+            ?>
+            ppt_dir = server_root_path + array_fileName[cur_ppt - 1];
             $("#ppt-img").attr("src", ppt_dir);
             var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
             ws.send(msg);
