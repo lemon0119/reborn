@@ -401,10 +401,10 @@ class AdminController extends CController {
                             } else if (!Tool::excelreadClass($data ['className'])) {
                                 $result = "班级不存在";
                                 $fixed = "班级信息已置空";
-                                //$data['className'] = "";
+                                $data['className'] = "";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                                //array_push($array_success, $data);
+                                array_push($array_success, $data);
                             }else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=40){
                                 $result = "班级人数超过40人！";
                                 $fixed = "请重新分班";
@@ -430,7 +430,7 @@ class AdminController extends CController {
                     }
                     if ($flag === 0) {
                         //$count_success = Tool::excelreadToDatabase($array_success);
-                        $count_fail = $k - $count_success - 1;
+                        $count_fail = $k - $coun - 1;
                         $this->render('exlAddStu', ['result' => $coun, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
                     }
                 }
