@@ -3599,6 +3599,66 @@ class TeacherController extends CController {
             ));
         }
     }
+    
+    public function ActionToOwnTypeExercise() {
+        $on = $_GET['on'];
+        $type = $_GET['type'];
+        $classID = $_GET['classID'];
+        $this->renderOwnExercise($type,$on,$classID);
+    }
+     public function renderOwnExercise($type,$on,$classID) {
+        $result = ClassExercise::model()->getExerciseExerByTypePage($classID,$on, $type, 5);
+        $workChoice = $result['workLst'];
+        $pages = $result['pages'];
+        $this->renderPartial('toOwnTypeExercise', array(
+            'suiteWork' => $workChoice,
+            'pages' => $pages,
+            'type' => $type,
+        ));
+    }
+    
+    public function ActionModifyClassExercise(){
+        $onLesson = $_GET['on'];
+        $type = $_GET['type'];
+        $classID = $_GET['classID'];
+        if (isset($_GET['delete'])) {
+            $exerciseID = $_GET['exerciseID'];
+            ClassExercise::model()->deleteExercise($exerciseID);
+        }
+        $this->renderModifyExercise($classID,$onLesson,$type);
+    }
+    public function renderModifyExercise($classID,$onLesson,$type) {
+            $render = "modifyClassExercise";
+        $this->render($render,array('classID'=>$classID,'on'=>$onLesson,'type'=>$type));
+    }
+    
+    public function ActionAddExercise() {
+        $type = $_GET['type'];
+        $exerciseID = $_GET['exerciseID'];
+        $on = $_GET['on'];
+        $suiteID = $_GET['suiteID'];
+        $classID = $_GET['classID'];
+        $code = $_GET['code'];
+        $result = "";
+        $maniResult = "";
+        if ($code != Yii::app()->session['code']) {
+            $result = ClassExercise::model()->insertFromWork($exerciseID, $type,$classID, $on);
+            Yii::app()->session['code'] = $code;
+        }
+        $suite = Suite::model()->find("suiteID = '$suiteID'");
+        $result = $this->getLstByType($type);
+        $workLst = $result['workLst'];
+        $pages = $result['pages'];
+        $render = "allTypeWork";
+        $this->renderPartial($render, array(
+            'workLst' => $workLst,
+            'pages' => $pages,
+            'type' => $type,
+            'suite' => $suite,
+            'teacher' => Teacher::model()->findall(),
+            'maniResult' => $maniResult,
+        ));
+    }
 
     public function ActionModifyWork() {
         $res = 0;
@@ -4662,9 +4722,12 @@ class TeacherController extends CController {
     }
 
     public function ActionToAllTypeWork() {
+        $suite=null;
         $type = $_GET['type'];
-        $suiteID = $_GET['suiteID'];
-        $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+        if(isset($_GET['suiteID'])){
+            $suiteID = $_GET['suiteID'];
+            $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
+        }
         $result = $this->getLstByType($type);
         $workLst = $result['workLst'];
         $pages = $result['pages'];
