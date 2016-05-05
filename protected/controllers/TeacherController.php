@@ -62,6 +62,7 @@ class TeacherController extends CController {
 
 //add by LC 2015-10-13
     public function actionSetTimeAndScoreExam() {
+        $flag=$_GET['flag'];
         $examID = $_GET['examID'];
         $duration = $_GET['duration'];
         $beginTime = $_GET['beginTime'];
@@ -99,6 +100,8 @@ class TeacherController extends CController {
         if ($questAll)
             $questScore = $questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
+            'flag'=>$flag,
+            'array_allexam'=>$array_allexam , 
             'duration' => $duration,
             'beginTime' => $beginTime,
             'isOpen' => $isOpen,
@@ -112,6 +115,7 @@ class TeacherController extends CController {
             'listenAll' => $listenAll,
         ));
     }
+    
 
     public function actionSaveTimeAll() {
         $examID = (isset($_GET['examID'])) ? $_GET['examID'] : 0;
@@ -3557,6 +3561,7 @@ class TeacherController extends CController {
     }
 
     public function ActionAssignExam() {
+        $flag=0;
         $res = 0;
         $teacherID = Yii::app()->session['userid_now'];
         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
@@ -3585,6 +3590,7 @@ class TeacherController extends CController {
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
             $this->render('assignExam', array(
+                'flag'=>$flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
@@ -4130,6 +4136,7 @@ class TeacherController extends CController {
     }
 
     public function ActionDeleteExam() {
+        $flag=0;
         $res = 0;
         if (isset($_GET['examID'])) {
 
@@ -4155,6 +4162,7 @@ class TeacherController extends CController {
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
             $this->render('assignExam', array(
+                'flag'=>$flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
@@ -4187,6 +4195,7 @@ class TeacherController extends CController {
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
             $this->render('assignExam', array(
+                'flag'=>$flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
@@ -4297,6 +4306,7 @@ class TeacherController extends CController {
                 $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
                 $this->render('assignExam', array(
+                    'flag'=>$flag,
                     'array_class' => $array_class,
                     'array_exam' => $array_suite,
                     'array_allexam' => $array_allexam,
@@ -4522,6 +4532,7 @@ class TeacherController extends CController {
     }
 
     public function ActionChangeExamClass() {
+        $flag=0;
         $res = 0;
         $examID = $_GET['examID'];
         $isOpen = $_GET['isOpen'];
@@ -4552,6 +4563,7 @@ class TeacherController extends CController {
         $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
         $this->render('assignExam', array(
+            'flag'=>$flag,
             'array_class' => $array_class,
             'array_exam' => $array_suite,
             'array_allexam' => $array_allexam,
