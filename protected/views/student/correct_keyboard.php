@@ -49,7 +49,14 @@
         <td>&nbsp;</td>
     </tr>
 </table>
+<object id="typeOCX" type="application/x-itst-activex" 
+        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
+        width ='0' height='0'
+        event_OnStenoPress="onStenoPressKey">
+</object>
 <script>
+    var G_isKeyType = 1;
+    var yaweiOCX = document.getElementById("typeOCX");
     var isPress = 0;
     var judgementFlag = 0;
     var flag4CheckLastWord = new Array();
@@ -108,15 +115,9 @@
         return false;
     }
 
-    function onChange() {
-        document.getElementById("typeOCX").UpdateView();
-        var input = getContent(document.getElementById("typeOCX"));
-        document.getElementById("typeOCX").Locate(input.length);
-    }
 
     function onStenoPressKey(pszStenoString, device) {
         if (window.G_startFlag === 1) {
-            window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
             window.G_keyBoardBreakPause = 0;
             var myDate = new Date();
             window.G_pressTime = myDate.getTime();
@@ -127,7 +128,7 @@
 //                }
             window.G_countMomentKey++;
             window.G_countAllKey++;
-            window.G_content = document.getElementById("typeOCX").GetContent();
+            window.G_content = yaweiOCX.GetContent();
             window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
             //每击统计击键间隔时间 秒
@@ -138,11 +139,11 @@
                 var pressTime = window.G_pressTime;
                 if (pressTime - window.G_oldStartTime > 0) {
                     var IntervalTime = parseInt((pressTime - window.G_oldStartTime) / 10) / 100;
-                    IntervalTime=IntervalTime.toString();
-                     var rs=IntervalTime.indexOf('.');
-                     while(IntervalTime.length<=rs+2){
-                         IntervalTime+='0';
-                     }
+                    IntervalTime = IntervalTime.toString();
+                    var rs = IntervalTime.indexOf('.');
+                    while (IntervalTime.length <= rs + 2) {
+                        IntervalTime += '0';
+                    }
                     $("#getIntervalTime").html(IntervalTime);
                     window.GA_IntervalTime = IntervalTime;
                     window.G_oldStartTime = pressTime;
@@ -174,39 +175,39 @@
                 window.G_isOverFlag = 1;
                 document.getElementById("id_cost").value = getSeconds();
                 //doSubmit(false);
-        }
+            }
             //判断键位是否正确
-        var charSet = pszStenoString.split("");
-        var left = true;
-        storyKey(pszStenoString);
-        keyReSet();
-        
-        for(var i = 0; i < charSet.length; i++){
-            if(charSet[i] == ':'){
-                left = false;
-                continue;
+            var charSet = pszStenoString.split("");
+            var left = true;
+            storyKey(pszStenoString);
+            keyReSet();
+
+            for (var i = 0; i < charSet.length; i++) {
+                if (charSet[i] == ':') {
+                    left = false;
+                    continue;
+                }
+                var c = charSet[i].toLowerCase();
+                if (left) {
+                    if (checkChar(charSet[i], true)) {
+                        //打对择把该键显示设置true
+                        keySet("l_" + c, true);
+                    } else {
+                        keySet("l_" + c, false);
+                    }
+                } else {
+                    if (checkChar(charSet[i], false)) {
+                        keySet("r_" + c, true);
+                    } else {
+                        keySet("r_" + c, false);
+                    }
+                }
             }
-            var c = charSet[i].toLowerCase();
-            if(left){
-                if(checkChar(charSet[i],true)){
-                    //打对择把该键显示设置true
-                    keySet("l_"+ c, true);
-                }else{
-                    keySet("l_"+c , false);
-              }
-            }else{
-                if(checkChar(charSet[i],false)){
-                    keySet("r_"+c , true);
-                }else{
-                    keySet("r_"+c , false);
-              }
-            }
-        }
-        isPress = 1;
+            isPress = 1;
             changTemplet(pszStenoString);
             window.GA_RightRadio = (getCorrect() * 100).toFixed(2);
             document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
-            
+
         }
 
     }
@@ -224,7 +225,7 @@
         var content = document.getElementById("id_content").value;
         repeatNum = $("#repeatNum").html();
         var cont_array = content.split("$$");
-       for (var j = 0; j < repeatNum; j++) {
+        for (var j = 0; j < repeatNum; j++) {
             for (var i = 0; i < cont_array.length; i += 1) {
                 var yaweiCode = cont_array[i].split(":0")[0];
                 yaweiCodeArray.push(yaweiCode);
@@ -238,12 +239,12 @@
     }
 
     function setWordView(word) {
-        if (word===undefined) {
+        if (word === undefined) {
             document.getElementById("word").innerHTML = "";
-        }else{
+        } else {
             document.getElementById("word").innerHTML = word;
         }
-        
+
         $('#keyMode').fadeOut(50);
         $('#keyMode').fadeIn(50);
     }
@@ -296,34 +297,34 @@
     function getNextWord() {
         currentNum++;
         $("#isDone").html(currentNum);
-         //调整进度条
-        var currentProgress = Math.round((currentNum/totalNum)*100);
+        //调整进度条
+        var currentProgress = Math.round((currentNum / totalNum) * 100);
         add(currentProgress);
-        
-        if(wordArray[currentNum+1]!==undefined){
-                document.getElementById("wordNext").innerHTML = "<span style='font-size: 30px;'>"+wordArray[currentNum+1]+"</span>";
-            }else{
-                document.getElementById("wordNext").innerHTML = "";
-            }
+
+        if (wordArray[currentNum + 1] !== undefined) {
+            document.getElementById("wordNext").innerHTML = "<span style='font-size: 30px;'>" + wordArray[currentNum + 1] + "</span>";
+        } else {
+            document.getElementById("wordNext").innerHTML = "";
+        }
         //已击过窗口词语的正确错误判断
-        if(judgementFlag === 0){
-                if(isPress === 1){
-                    flag4CheckLastWord[currentNum] = 0;
-                }else if(isPress === 0){
-                   flag4CheckLastWord[currentNum] = 1;
-                }
-            }else if(judgementFlag ===1){
+        if (judgementFlag === 0) {
+            if (isPress === 1) {
+                flag4CheckLastWord[currentNum] = 0;
+            } else if (isPress === 0) {
                 flag4CheckLastWord[currentNum] = 1;
             }
-            isPress = 0;
-            judgementFlag = 0;
-            if(currentNum>0){
-                if(flag4CheckLastWord[currentNum]===0){
-                   document.getElementById("wordLast").innerHTML = "<span style='font-size: 30px;color:green'>"+wordArray[currentNum-1]+"</span>"; 
-                }else if(flag4CheckLastWord[currentNum]===1){
-                    document.getElementById("wordLast").innerHTML = "<span style='font-size: 30px;color:red'>"+wordArray[currentNum-1]+"</span>"; 
-                }
-        }else{
+        } else if (judgementFlag === 1) {
+            flag4CheckLastWord[currentNum] = 1;
+        }
+        isPress = 0;
+        judgementFlag = 0;
+        if (currentNum > 0) {
+            if (flag4CheckLastWord[currentNum] === 0) {
+                document.getElementById("wordLast").innerHTML = "<span style='font-size: 30px;color:green'>" + wordArray[currentNum - 1] + "</span>";
+            } else if (flag4CheckLastWord[currentNum] === 1) {
+                document.getElementById("wordLast").innerHTML = "<span style='font-size: 30px;color:red'>" + wordArray[currentNum - 1] + "</span>";
+            }
+        } else {
             document.getElementById("wordLast").innerHTML = "";
         }
         //----------
@@ -343,29 +344,32 @@
             return nextWord;
         var result = wordArray[currentNum];
         yaweiCode = yaweiCodeArray[currentNum];
-        
+
         var current = 0;
-        var correct_intenal = setInterval(function(){
-            if(current>1){
+        var correct_intenal = setInterval(function () {
+            if (current > 1) {
                 clearInterval(correct_intenal);
-            }else{
-               keyReSet(); 
+            } else {
+                keyReSet();
             }
             current++;
-        },500);
+        }, 500);
         return result;
     }
 
     function getYaweiCode() {
         return yaweiCode[currentNum];
     }
-function add(i){
-            var tiao =$(".progresstiao");
-			tiao.css("width",i+"%").html();
-		}
+    function add(i) {
+        var tiao = $(".progresstiao");
+        tiao.css("width", i + "%").html();
+    }
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        yaweiOCX.remove();
+    }
+    function onunload_handler() {
+        yaweiOCX.remove();
+    }
 </script>
-<object id="typeOCX" type="application/x-itst-activex" 
-        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-        width ='0' height='0'
-        event_OnStenoPress="onStenoPressKey">
-</object>

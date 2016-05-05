@@ -17,6 +17,8 @@
  * @param  var G_endAnalysis    = 0;
  * 
  */
+var yaweiOCX = {};
+var G_isKeyType = 0;
 var G_exerciseType = "";
 var G_isLook = 0;
 var G_keyBoardBreakPause = 0;
@@ -83,6 +85,10 @@ $(document).ready(function () {
         var countMomentKey = window.G_countMomentKey;
         var myDate = new Date();
         var nowTime = myDate.getTime();
+        if(G_isKeyType === 1){
+            yaweiOCX.PutBufferToContent();
+            window.GA_answer = yaweiOCX.GetContentWithSteno();
+        }
         //暂停开关
         if (window.G_isPause === 1) {
             if (pauseOn === 0) {
