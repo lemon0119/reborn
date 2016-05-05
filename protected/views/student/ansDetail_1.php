@@ -33,7 +33,7 @@
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
-                    <div style="text-align: left" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
+                    <div style="text-align: left;width: 100%" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
                         <font><?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?></font>
                     </div>
                 </td>
@@ -41,7 +41,7 @@
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
-                    <div style="text-align: left" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
+                    <div style="text-align: left;width: 100%" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
                         <font><?php echo $str; ?></font>
                     </div>
                 </td>

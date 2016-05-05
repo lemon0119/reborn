@@ -4533,6 +4533,11 @@ class TeacherController extends CController {
 
     public function ActionChangeExamClass() {
         $flag=0;
+
+        if (!isset(Yii::app()->session['userid_now'])) {
+            return $this->render('index');
+        }
+
         $res = 0;
         $examID = $_GET['examID'];
         $isOpen = $_GET['isOpen'];
@@ -6638,10 +6643,11 @@ class TeacherController extends CController {
                     $ff8 = $countAllKey;
                     $icon8 = $i1;
                 }
-                $finishDate = $a['finishDate'];          //finishDate
-                if ($f9 < $finishDate) {
-                    $f9 = $finishDate;
-                }
+                $finishDate=$a['finishDate'];          //finishDate
+                 if($f9==0) $f9=$finishDate;
+                 if($f9>$finishDate){
+                     $f9=$finishDate;
+                 }
                 if ($finishDate >= $ff9 && $a['studentID'] == $id) {
                     $ff9 = $finishDate;
                     $icon9 = $i1;
