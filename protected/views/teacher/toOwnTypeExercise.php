@@ -44,7 +44,7 @@
                             <?php  echo $work['create_time']?>
                         </td>           
                         <td class="font-center" style="width: 50px">            
-                            <a href="#"  onclick="dele(<?php echo $work['exerciseID'] ?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>                          
+                            <a href="#"  onclick="dele(<?php echo $work['exerciseID'] ?>,<?php if(isset($_GET['nobar'])){echo 0;}else{echo 1;}?>)"><img src="<?php echo IMG_URL; ?>delete.png"></a>                          
                         </td>
                     </tr>            
                     <?php endforeach;?> 
@@ -60,10 +60,9 @@
 <script>
     
     
-    
    
- function dele(exerciseID){
-     parent.dele(exerciseID);
+ function dele(exerciseID,bar){
+     parent.dele(exerciseID,bar);
      
   }
 </script>

@@ -3604,10 +3604,7 @@ class TeacherController extends CController {
         $on = $_GET['on'];
         $type = $_GET['type'];
         $classID = $_GET['classID'];
-        $this->renderOwnExercise($type,$on,$classID);
-    }
-     public function renderOwnExercise($type,$on,$classID) {
-        $result = ClassExercise::model()->getExerciseExerByTypePage($classID,$on, $type, 5);
+         $result = ClassExercise::model()->getExerciseExerByTypePage($classID,$on, $type, 5);
         $workChoice = $result['workLst'];
         $pages = $result['pages'];
         $this->renderPartial('toOwnTypeExercise', array(
@@ -3625,11 +3622,7 @@ class TeacherController extends CController {
             $exerciseID = $_GET['exerciseID'];
             ClassExercise::model()->deleteExercise($exerciseID);
         }
-        $this->renderModifyExercise($classID,$onLesson,$type);
-    }
-    public function renderModifyExercise($classID,$onLesson,$type) {
-            $render = "modifyClassExercise";
-        $this->render($render,array('classID'=>$classID,'on'=>$onLesson,'type'=>$type));
+        $this->render('modifyClassExercise',array('classID'=>$classID,'on'=>$onLesson,'type'=>$type));
     }
     
     public function ActionAddExercise() {
