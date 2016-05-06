@@ -16,32 +16,32 @@
     }
 </style>
 <div class="span3">
-     <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
+    <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
-         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">练习</a></div></li>
+         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" class="ahover" style="position:relative;top:6px;left:">&nbsp;练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
-                  <li><div ><a href="#" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                  
+                  <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"><i style="margin-top:-7px" class="icon-knowlage"></i>&nbsp;<?php echo $lesson['lessonName']; ?></a></div></li>                  
               <?php endforeach; ?> 
               </ul>
         </div>
          
-         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">作业</a></div></li>  
+         <li ><div id="id_classWork"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:6px;left:">&nbsp;作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
-                 <li><div ><a href="#" onclick="showClassWork(<?php echo $lesson['lessonID'];?>)"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                
+                 <li style="margin:5px"><div ><a href="#" class="ahover" onclick="showClassWork(<?php echo $lesson['lessonID'];?>)"><i style="margin-top:-7px" class="icon-knowlage"></i>&nbsp;<?php echo $lesson['lessonName']; ?></a></div></li>                
                  <div style="display: none" <?php echo "id='test".$lesson['lessonID']."'"?>>
-                     <ul>  
+                     <ul class="nav nav-list">  
                          <?php foreach ($array_work as $work){
                              if($work['lessonID'] == $lesson['lessonID']){     
                                  foreach($array_suite as $suite)
                                  {
                                      if($suite['suiteID'] == $work['suiteID']) {                                                                       
                            ?>                      
-                         <li><a href="#" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-list"></i><?php echo $suite['suiteName']; ?></a></li>                                                                                                                                               
+                         <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i style="margin-top:-4px" class="icon-navsearch"></i>&nbsp;<?php echo $suite['suiteName']; ?></a></div ></li>                                                                                                                                               
                              <?php        
                                      }
                                  }
@@ -54,7 +54,7 @@
              </ul>
          </div>
                  
-         <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">考试</a></div></li>
+         <li ><div id="id_classExam"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:6px;left:">&nbsp;考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
@@ -63,7 +63,7 @@
                          if($exam['examID'] == $examList['examID'])
                          {
                          ?>
-                 <li><div ><a href="#" onclick="getExamExercise(<?php echo $exam['examID'];?>,<?php echo $examList['workID'];?>)"><i class="icon-list"></i><?php echo $exam['examName']; ?></a></div></li>
+                 <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getExamExercise(<?php echo $exam['examID'];?>,<?php echo $examList['workID'];?>)"><i style="margin-top:-7px" class="icon-knowlage"></i>&nbsp;<?php echo $exam['examName']; ?></a></div></li>
                         <?php 
                               }
                  }
@@ -88,32 +88,32 @@
                 <h3>数据类型</h3>
                 <table>
                     <tr>
-                        <td  id="bg1" style="width:224px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                        <td  id="bg1" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;width:224px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <input type="text" value="123"  id="id" style="display:none;"/>
                             <input type="text" value="123"  id="classID" style="display:none;"/>
                             <input type="text" value="123"  id="exerciseID"  style="display:none;"/>
                             <input type="text" value="123"  id="type" style="display:none;" />
                             <input type="text" value="123"  id="choice"  style="display:none;"/>
                             <input type="text" value="123"  id="isExam"  style="display:none;"/>
-                            <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率(%)</a>
+                            <a id="correct" style="text-decoration-line: none">正确率(%)</a>
                         </td>  
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
-                        <td id="bg2" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度(字/秒)</a>
+                        <td id="bg2" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="speed" class="bl"  style="text-decoration-line: none">速度(字/秒)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
-                        <td id="bg3" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度(字/秒)</a>
+                        <td id="bg3" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="maxSpeed"  style="text-decoration-line: none">最大速度(字/秒)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
-                        <td id="bg4" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数(字)</a>
+                        <td id="bg4" onclick="getClassExerRankingBef('backDelete','bg4')"  style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="backDelete" style="text-decoration-line: none">回改字数(字)</a>
                         </td>
                     </tr>
                 </table>
@@ -288,7 +288,7 @@ function getSuiteExercise(suiteID,workID){
                       var str;
                       if(i%3==0)
                           str="";
-                      str += "<td><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                      str += "<td ><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
                       var li;
                       if(i%3==0){
                          li = document.createElement("tr");  

@@ -86,11 +86,11 @@ echo "<script>var role='$role';</script>";
     <div id="teacher-camera" style="border:0px solid #ccc; margin-left:auto;margin-right:auto;width:100%; height:280px; clear:both;">
         <iframe src="./index.php?r=webrtc/null" name="iframe_b" style="background-color:#5e5e5e;width: 100%; height: 100%; margin-top:0px; margin-left:0px;" frameborder="0" scrolling="no" allowfullscreen></iframe>
     </div>
-    <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:26px;color: white">虚 拟 键 盘</a><a class="fr" style="cursor:pointer;color:wheat;font-size: 15px;" id="sw-openAnalysis">统计>></a></h4></div>
+    <div align="center" ><h4 ><a href="#" id="sw-bulletin" style="position: relative;left:24px;color: white">虚 拟 键 盘</a><a class="fr" style="cursor:pointer;color:wheat;font-size: 15px;" id="sw-openAnalysis">统计>></a></h4></div>
     <div id="bulletin" class="bulletin" style="border: 0px;width: 100%;margin-left: -1.1px">
         <?php require Yii::app()->basePath . "\\views\\student\\keyboard_virtual_class.php"; ?>
     </div>
-    <div class="fl" align="center" id="sw-chat" ><h4 ><a style="position: relative;left:145px;color: white"  href="#">课 堂 问 答</a></h4></div>
+    <div class="fl" align="center" id="sw-chat" ><h4 ><a style="position: relative;left:147px;color: white"  href="#">课 堂 问 答</a></h4></div>
     <div id="chat-box" style="border: 0px;">
         <div id="chatroom" class="chatroom" style="background-color:#5e5e5e;border: 0px;width: 100%;height: 175px"></div>
         <div class="sendfoot" style="width: 100%;height: 100%;border: 0px;margin-left: -1.5px">
