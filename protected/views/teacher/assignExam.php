@@ -1,4 +1,4 @@
-<script src="<?php echo JS_URL; ?>/My97DatePicker"></script>
+<!--<script src="<?php //echo JS_URL; ?>/My97DatePicker"></script>-->
 
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
@@ -82,7 +82,7 @@
                             <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass']; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                         <?php } ?>
                         <?php if ($isOpen == false) { ?>
-                            <a href="#" id ="beginnow" onclick="begin_now(<?php echo $exam['examID']; ?>,<?php echo $exam['duration'] ?>, '<?php echo date("Y-m-d H:i:s", time()); ?>')"></a> 
+                            <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>&&duration=<?php echo $exam['duration'] ?>&&beginTime='<?php echo date("Y-m-d H:i:s", time()); ?>'&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>&&flag=<?php echo $flag; ?>" id ="beginnow" ></a> 
                         <?php } ?>
 <!--                        <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php// echo $exam['examID']; ?>"><img title="配置分数时间" src="<?php //echo IMG_URL; ?>../UI_tea/icon_SETUP.png"></a>-->
     <?php ?>
@@ -206,7 +206,7 @@
                             window.wxc.xcConfirm("开始时间不能小于当前时间！", window.wxc.xcConfirm.typeEnum.confirm);
                             return;
                         } else {
-                              window.location.href = "./index.php?r=teacher/setTimeAndScoreExam&&examID="+examID+ "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;  
+                              window.location.href = "./index.php?r=teacher/setTimeAndScoreExam&&examID="+examID+ "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>+"&&flag=1";  
 //                            window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + beginTime + "&&isOpen=0&&page=" +<?php //echo $pages->currentPage + 1; ?>;
                         }
                     } else {

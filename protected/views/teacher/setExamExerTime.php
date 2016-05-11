@@ -1,3 +1,4 @@
+
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">                     
@@ -113,8 +114,18 @@
             }?>
         </tbody>
     </table>
+    <table class="table table-bordered table-striped"<?php if($flag==1){ echo "style='display: none'";}?>>
+        <thead>
+            <tr>
+                <th class="font-center">请输入预定考试时长</th>
+                <td class="font-center"><input  type="text" class="input-small input_test" id="examTime" />&nbsp;分钟</td>
+<!--                <th class="font-center">配置时间</th>-->
+            </tr>
+        </thead>
+    </table>
+    
     <center>
-        <input type="button" class="btn btn-primary" onclick="savetime();" value="保存"/>
+        <input type="button" class="btn btn-primary" onclick="savetime()" value="保存"/>
         <a href="./index.php?r=teacher/assignExam" class="btn btn-primary" style="margin-left: 50px">返回</a>
     </center>
     </form>
@@ -124,7 +135,16 @@ function savetime(){
     //$('#timeForm').submit();
     $.post($('#timeForm').attr('action'),$('#timeForm').serialize(),function(data){
 //            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.info);
-        window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $examID ?>&&duration=<?php echo $duration ?>&&beginTime=<?php echo $beginTime ?>&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
+    var v=document.getElementById("examTime").value;
+    if(v!=""&&<?php echo $flag;?>==0){
+//        window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php //echo $examID ?>&&duration="+v+"&&beginTime=<?php //echo $beginTime ?>&&isOpen=0&&page=" +<?php //echo $pages->currentPage + 1; ?>;
+    begin_now();
+    }else if(<?php echo $flag;?>==1){
+        window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $examID ?>&&duration=<?php echo $duration; ?>&&beginTime=<?php echo $beginTime ?>&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
+    }else{
+        window.wxc.xcConfirm("请输入预定考试时长!", window.wxc.xcConfirm.typeEnum.info);
+    }
+
     })
         .error(function(){window.wxc.xcConfirm('不好意思，保存出错了...', window.wxc.xcConfirm.typeEnum.info);});
 }
@@ -174,4 +194,32 @@ $(document).ready(function(){
         }
     });
 });
+
+    function begin_now()
+    {
+        var v=document.getElementById("examTime").value;
+                if (!v.match(/^[0-9]+$/) || v == 0||v>720) {
+                    window.wxc.xcConfirm('非法时长！不得超出720分钟且不能为0！', window.wxc.xcConfirm.typeEnum.error);
+                    document.getElementById("examTime").value="";
+                } else {
+                    window.wxc.xcConfirm("你确定要立即开始？", window.wxc.xcConfirm.typeEnum.info, {
+                        onOk: function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "index.php?r=api/putNotice2&&class=<?php echo Yii::app()->session['currentClass'] ?>",
+                                data: {title: "考试", content: "考试时间已经到了，可以开始考试了"},
+                                success: function () {
+                                            window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $examID ?>&&duration="+v+"&&beginTime=<?php echo $beginTime ?>&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
+ //                                    window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + begin + "&&isOpen=0&&page=" +<?php// echo $pages->currentPage + 1; ?>;
+                                },
+                                error: function (xhr, type, exception) {
+                                    window.wxc.xcConfirm('出错了a...', window.wxc.xcConfirm.typeEnum.error);
+                                    console.log(xhr.responseText, "Failed");
+                                }
+                            });
+
+                        }
+                    });
+                }
+    }
 </script>

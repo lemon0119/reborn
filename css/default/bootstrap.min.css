@@ -5687,3 +5687,13 @@ font-family:Tahoma; font-size:18px; line-height:48px;}
     font-size: 15px;
     font-weight: 400;
 }
+.ahover{
+    font-family:SimHei; 
+    font-size: 17px;
+    color:#f46401 !important;
+    text-decoration:none !important;
+}
+.ahover:focus{
+    color:#696969 !important;
+    text-decoration:none !important;
+}
