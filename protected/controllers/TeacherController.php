@@ -62,7 +62,7 @@ class TeacherController extends CController {
 
 //add by LC 2015-10-13
     public function actionSetTimeAndScoreExam() {
-        $flag=$_GET['flag'];
+        $flag = $_GET['flag'];
         $examID = $_GET['examID'];
         $duration = $_GET['duration'];
         $beginTime = $_GET['beginTime'];
@@ -100,8 +100,8 @@ class TeacherController extends CController {
         if ($questAll)
             $questScore = $questAll[0]['score'];
         $this->render('setExamExerTime', array('array_class' => $array_class,
-            'flag'=>$flag,
-            'array_allexam'=>$array_allexam , 
+            'flag' => $flag,
+            'array_allexam' => $array_allexam,
             'duration' => $duration,
             'beginTime' => $beginTime,
             'isOpen' => $isOpen,
@@ -115,7 +115,6 @@ class TeacherController extends CController {
             'listenAll' => $listenAll,
         ));
     }
-    
 
     public function actionSaveTimeAll() {
         $examID = (isset($_GET['examID'])) ? $_GET['examID'] : 0;
@@ -1351,6 +1350,16 @@ class TeacherController extends CController {
 //        判断重复登录
 //        $userID = Yii::app()->session['userid_now'];
 //        Teacher::model()->isLogin($userID, 1);
+        if (isset($_GET['modify'])) {
+            $look = LookType::model()->findAll();
+            foreach ($look as $value) {
+                $content = $value['content'];
+                $newContent = Tool::filterAllSpaceAndTab($content);
+                $value->content = $newContent;
+                $value->update();
+            }
+        }
+
         $this->render('index'); //,['info'=>$info]);
     }
 
@@ -1427,7 +1436,8 @@ class TeacherController extends CController {
         if (isset($_POST['title'])) {
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
-            $result = LookType::model()->insertLook($_POST['title'], $content4000, Yii::app()->session['userid_now']);
+            $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
+            $result = LookType::model()->insertLook($_POST['title'], $contentNoSpace, Yii::app()->session['userid_now']);
         }
         $this->render('addLook', ['result' => $result]);
     }
@@ -3561,7 +3571,7 @@ class TeacherController extends CController {
     }
 
     public function ActionAssignExam() {
-        $flag=0;
+        $flag = 0;
         $res = 0;
         $teacherID = Yii::app()->session['userid_now'];
         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
@@ -3590,7 +3600,7 @@ class TeacherController extends CController {
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
             $this->render('assignExam', array(
-                'flag'=>$flag,
+                'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
@@ -3599,12 +3609,12 @@ class TeacherController extends CController {
             ));
         }
     }
-    
+
     public function ActionToOwnTypeExercise() {
         $on = $_GET['on'];
         $type = $_GET['type'];
         $classID = $_GET['classID'];
-         $result = ClassExercise::model()->getExerciseExerByTypePage($classID,$on, $type, 5);
+        $result = ClassExercise::model()->getExerciseExerByTypePage($classID, $on, $type, 5);
         $workChoice = $result['workLst'];
         $pages = $result['pages'];
         $this->renderPartial('toOwnTypeExercise', array(
@@ -3613,8 +3623,8 @@ class TeacherController extends CController {
             'type' => $type,
         ));
     }
-    
-    public function ActionModifyClassExercise(){
+
+    public function ActionModifyClassExercise() {
         $onLesson = $_GET['on'];
         $type = $_GET['type'];
         $classID = $_GET['classID'];
@@ -3622,9 +3632,9 @@ class TeacherController extends CController {
             $exerciseID = $_GET['exerciseID'];
             ClassExercise::model()->deleteExercise($exerciseID);
         }
-        $this->render('modifyClassExercise',array('classID'=>$classID,'on'=>$onLesson,'type'=>$type));
+        $this->render('modifyClassExercise', array('classID' => $classID, 'on' => $onLesson, 'type' => $type));
     }
-    
+
     public function ActionAddExercise() {
         $type = $_GET['type'];
         $exerciseID = $_GET['exerciseID'];
@@ -3635,7 +3645,7 @@ class TeacherController extends CController {
         $result = "";
         $maniResult = "";
         if ($code != Yii::app()->session['code']) {
-            $result = ClassExercise::model()->insertFromWork($exerciseID, $type,$classID, $on);
+            $result = ClassExercise::model()->insertFromWork($exerciseID, $type, $classID, $on);
             Yii::app()->session['code'] = $code;
         }
         $suite = Suite::model()->find("suiteID = '$suiteID'");
@@ -4189,7 +4199,7 @@ class TeacherController extends CController {
     }
 
     public function ActionDeleteExam() {
-        $flag=0;
+        $flag = 0;
         $res = 0;
         if (isset($_GET['examID'])) {
 
@@ -4215,7 +4225,7 @@ class TeacherController extends CController {
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
             $this->render('assignExam', array(
-                'flag'=>$flag,
+                'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
@@ -4248,7 +4258,7 @@ class TeacherController extends CController {
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
             $this->render('assignExam', array(
-                'flag'=>$flag,
+                'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
@@ -4359,7 +4369,7 @@ class TeacherController extends CController {
                 $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
                 $this->render('assignExam', array(
-                    'flag'=>$flag,
+                    'flag' => $flag,
                     'array_class' => $array_class,
                     'array_exam' => $array_suite,
                     'array_allexam' => $array_allexam,
@@ -4585,7 +4595,7 @@ class TeacherController extends CController {
     }
 
     public function ActionChangeExamClass() {
-        $flag=0;
+        $flag = 0;
 
         if (!isset(Yii::app()->session['userid_now'])) {
             return $this->render('index');
@@ -4621,7 +4631,7 @@ class TeacherController extends CController {
         $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
 
         $this->render('assignExam', array(
-            'flag'=>$flag,
+            'flag' => $flag,
             'array_class' => $array_class,
             'array_exam' => $array_suite,
             'array_allexam' => $array_allexam,
@@ -4715,9 +4725,9 @@ class TeacherController extends CController {
     }
 
     public function ActionToAllTypeWork() {
-        $suite=null;
+        $suite = null;
         $type = $_GET['type'];
-        if(isset($_GET['suiteID'])){
+        if (isset($_GET['suiteID'])) {
             $suiteID = $_GET['suiteID'];
             $suite = Suite::model()->findAll("suiteID = '$suiteID'")[0];
         }
@@ -6137,7 +6147,8 @@ class TeacherController extends CController {
             $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
-            $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], $_POST['title'], $content4000, 'look', Yii::app()->session['userid_now']);
+            $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
+            $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], $_POST['title'], $contentNoSpace, 'look', Yii::app()->session['userid_now']);
         }
         $this->render('addLook4ClassExercise', ['result' => $result]);
     }
@@ -6699,11 +6710,12 @@ class TeacherController extends CController {
                     $ff8 = $countAllKey;
                     $icon8 = $i1;
                 }
-                $finishDate=$a['finishDate'];          //finishDate
-                 if($f9==0) $f9=$finishDate;
-                 if($f9>$finishDate){
-                     $f9=$finishDate;
-                 }
+                $finishDate = $a['finishDate'];          //finishDate
+                if ($f9 == 0)
+                    $f9 = $finishDate;
+                if ($f9 > $finishDate) {
+                    $f9 = $finishDate;
+                }
                 if ($finishDate >= $ff9 && $a['studentID'] == $id) {
                     $ff9 = $finishDate;
                     $icon9 = $i1;
