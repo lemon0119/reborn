@@ -1350,16 +1350,6 @@ class TeacherController extends CController {
 //        判断重复登录
 //        $userID = Yii::app()->session['userid_now'];
 //        Teacher::model()->isLogin($userID, 1);
-        if (isset($_GET['modify'])) {
-            $look = LookType::model()->findAll();
-            foreach ($look as $value) {
-                $content = $value['content'];
-                $newContent = Tool::filterAllSpaceAndTab($content);
-                $value->content = $newContent;
-                $value->update();
-            }
-        }
-
         $this->render('index'); //,['info'=>$info]);
     }
 
