@@ -154,7 +154,7 @@ if (!$isOver) {
         <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
-            <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
+            <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#595959"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
             <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;    ?>">
                 <input id="id_content" type="hidden" value="">
                 <input id="id_speed" type="hidden" value="">
@@ -421,7 +421,7 @@ if ($isExam) {
                         wrong.push(stringText);
                     else {
                         isWrong = true;
-                        createFont("#808080", old, oldCode);
+                        createFont("#595959", old, oldCode);
                         old = new Array();
                         oldCode = new Array();
                         wrong = new Array();
@@ -432,7 +432,7 @@ if ($isExam) {
         }
 
         if (countLength !== 0) {
-            createFont("#808080", old, oldCode);
+            createFont("#595959", old, oldCode);
             createFont("#ff0000", wrong, "");
         }
         if (inputO.length < text.length) {
@@ -446,7 +446,7 @@ if ($isExam) {
         var f = document.createElement("font");
         var content = {content: ""};
         var isBrief = 0;
-        if (color == "#808080") {
+        if (color == "#595959") {
             for (var i = 0; i < text.length; i++) {
                 if (text[i].length < 3) {
                     for (var j = 0; j < briefOriginalYaweiCode.length; j++) {
