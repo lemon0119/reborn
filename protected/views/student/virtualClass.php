@@ -718,9 +718,11 @@ echo "<script>var role='$role';</script>";
     window.onbeforeunload = onbeforeunload_handler;
     window.onunload = onunload_handler;
     function onbeforeunload_handler() {
-        document.getElementById('typeOCX').remove();
+        if(document.getElementById('typeOCX'))
+            document.getElementById('typeOCX').remove();
     }
     function onunload_handler() {
-        document.getElementById('typeOCX').remove();
+        if(document.getElementById('typeOCX'))
+            document.getElementById('typeOCX').remove();
     }
 </script>

@@ -53,6 +53,9 @@
 <script>
     
     $(document).ready(function(){
+      if(!document.getElementById("typeOCX").SetTextSize){
+          return ;
+      }
       document.getElementById("typeOCX").SetTextSize(8);
       document.getElementById("typeOCX").HideToolBar();
       document.getElementById("typeOCX").HideSecondToolBar();
