@@ -41,7 +41,8 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th colspan="2" style="width: 40px"></td >
+<!--                        <th colspan="2" style="width: 40px"></td >-->
+                        <th style="width: 40px">时间</td >
                         <td style="width: 100px" ><span style="font-weight: bolder">星期一</span></td >
                         <td style="width: 100px"><span style="font-weight: bolder">星期二</span></td >
                         <td  style="width: 100px"><span style="font-weight: bolder">星期三</span></td >
@@ -55,26 +56,59 @@
                         <?php for ($s = 1; $s < 11; $s++) { ?>
                         <tr >
                             <?php
-                            switch ($s) {
-                                case 1: echo '<td  rowspan="4">';
-                                    break;
-                                case 5:echo '<td rowspan="4">';
-                                    break;
-                                case 9:echo '<td rowspan="4">';
-                                    break;
-                            }
-                            ?><?php
-                            switch ($s) {
-                                case 1: echo '<span style="font-weight: bolder">上午</span>';
-                                    break;
-                                case 5:echo '<span style="font-weight: bolder">下午</span>';
-                                    break;
-                                case 9:echo '<span style="font-weight: bolder">晚上</span>';
-                                    break;
-                            }
-                            ?></td>
-                            <td style="height: 62px" ><?php
-                                switch ($s) {
+//                            switch ($s) {
+//                                case 1: echo '<td colspan="2" rowspan="4">';
+//                                    break;
+//                                case 5:echo '<td rowspan="4">';
+//                                    break;
+//                                case 9:echo '<td rowspan="4">';
+//                                    break;
+//                            }
+//                            ?><?php
+                                $flag = 1;
+                                foreach ($result as $v) {
+                                        if (($v['sequence'] == $s) && ($v['day'] == 0)) {
+//                            switch ($s) {
+//                                case 1: echo '<span style="font-weight: bolder">上午</span>';
+//                                    break;
+//                                case 5:echo '<span style="font-weight: bolder">下午</span>';
+//                                    break;
+//                                case 9:echo '<span style="font-weight: bolder">晚上</span>';
+//                                    break;
+//                            }
+//                            ?>
+                            <td style="height: 62px;cursor:pointer" class="table_schedule" title="<?php
+                                        $array_v = explode("&&", $v['courseInfo']);
+                                        foreach ($array_v as $value) {
+                                            echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
+                                        }
+                                        ?>" <?php if (isset($_GET['teacherId'])) {
+                                       echo 'onclick="changeOne('.$s .','."0".');"';
+                                   } else {
+                                       echo 'onclick="changeClassOne('.$s.','."0".');"';
+                                   }?>>
+                                        
+                                   <span   ><?php
+                                        $array_v1 = explode("&&", $v['courseInfo']);
+                                        foreach ($array_v1 as $value) {
+                                            if (Tool::clength($value, 'utf-8')>5) {
+                                                echo Tool::csubstr($value, 0, 4, 'UTF-8') . "...<br/>";
+                                            } else {
+                                                echo $value . "<br/>";
+                                            }
+                                        }
+                                        ?></span></td>
+                                           <?php  $flag = 0;
+                                   } 
+                                   }
+                                   if ($flag == 1) {
+            ?> <td style="height: 62px;cursor:pointer" title="-" class="table_schedule" <?php if (isset($_GET['teacherId'])) {
+                                       echo 'onclick="changeOne('.$s .','."0".');"';
+                                   } else {
+                                       echo 'onclick="changeClassOne('.$s.','."0".');"';
+                                   }
+                                            ?> >
+                              <?php  switch ($s) {
                                     case 1: echo '<span>一</span>';
                                         break;
                                     case 2: echo '<span>二</span>';
@@ -96,14 +130,14 @@
                                     case 10: echo '<span>十</span>';
                                         break;
                                 }
-                                ?></td>
+                                ?></td><?php }?>
                                 <?php
                                 for ($d = 1; $d < 8; $d++) {
                                     $flag = 1;
                                     foreach ($result as $v) {
                                         if (($v['sequence'] == $s) && ($v['day'] == $d)) {
                                             ?>
-                            <td style="cursor:pointer" title="<?php
+                            <td style="height: 62px;cursor:pointer" title="<?php
                                         $array_v = explode("&&", $v['courseInfo']);
                                         foreach ($array_v as $value) {
                                             echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -130,7 +164,7 @@
         }
         if ($flag == 1) {
             ?>
-                                    <td style="cursor:pointer" title="-" class="table_schedule" <?php if (isset($_GET['teacherId'])) {
+                                    <td style="height: 62px;cursor:pointer" title="-" class="table_schedule" <?php if (isset($_GET['teacherId'])) {
                                        echo 'onclick="change('.$s .','.$d.');"';
                                    } else {
                                        echo 'onclick="changeClass('.$s.','.$d.');"';
@@ -152,5 +186,11 @@
     }
     function changeClass(s, d) {
         window.open("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['classId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    }
+    function changeOne(s,d){
+        window.open("./index.php?r=admin/editScheduleOne&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['teacherId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    }
+    function changeClassOne(s,d){
+        window.open("./index.php?r=admin/editScheduleOne&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['classId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');        
     }
 </script>
