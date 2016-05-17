@@ -93,11 +93,16 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                    </li> 
                                         <li class="dropdown">
                                             <div class="userUI">
-                                                <a href="" data-toggle="dropdown" id="userUI" >
-        <?php echo Yii::app()->session['userName']; ?><b class="user_dropdown_logo"></b>
+                                                <a href="" data-toggle="dropdown" id="userUI" title="<?php echo Yii::app()->session['userName'];?>">
+        <?php $name=Yii::app()->session['userName'];
+        if (Tool::clength($name) <= 3)
+                            echo $name;
+                        else
+                            echo Tool::csubstr($name, 0, 3) . "...";
+        ?><b class="user_dropdown_logo"></b>
                                                 </a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="./index.php?r=teacher/set">设置</a></li>
+                                                    <li><a href="./index.php?r=teacher/teaInformation">个人设置</a></li>
                                                     <li><a href="./index.php?r=user/login&exit=1&usertype=teacher">退出</a></li>
                                                 </ul>
                                             </div>

@@ -228,7 +228,7 @@ class AdminController extends CController {
             $classID=$_GET['classID'];
         $num=TbClass::model()->getStuNums($classID);
         }
-        if($num>=40)
+        if($num>=50)
             echo "error";
         else
             echo "success";
@@ -405,8 +405,8 @@ class AdminController extends CController {
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
                                 array_push($array_success, $data);
-                            }else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=40){
-                                $result = "班级人数超过40人！";
+                            }else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=50){
+                                $result = "班级人数超过50人！";
                                 $fixed = "请重新分班";
                                 //$data['className'] = "";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -1545,7 +1545,7 @@ class AdminController extends CController {
         if (isset($_GET ['action']) && isset($_POST ['checkbox'])) {
             $checkbox = $_POST ['checkbox'];
             if ($_GET ['action'] == "addStu") {
-                if($nums+count($checkbox)>40){
+                if($nums+count($checkbox)>50){
                 $act_result = "overLimites";
                 }
                 else{
@@ -3686,6 +3686,94 @@ class AdminController extends CController {
             }
         }
         return $this->renderPartial('editSchedule', ['result' => $sqlSchedule]);
+    }
+    
+    public function actionEditScheduleOne() {
+        $sequence = $_GET['sequence'];
+        $day = $_GET['day'];
+
+        if (isset($_GET['teacherID'])) {
+            $teacherID = Yii::app()->session['teacherId'];
+            $sql = "SELECT * FROM schedule_teacher WHERE userID = '$teacherID' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+
+            if ($sqlSchedule == "") {
+                //增
+                $courseInfo = "";
+                if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
+                    $courseInfo = $_POST['hour1'].":".$_POST['min1'];
+                    $courseInfo = $courseInfo . "&&至";
+                }
+                
+                if (isset($_POST['hour2']) && !$_POST['hour2'] == "" && isset($_POST['min2']) && !$_POST['min2'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['hour2'].":".$_POST['min2'];
+                }
+                if ($courseInfo != "") {
+                    $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            } else {
+                //改
+                $courseInfo = "";
+                if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
+                    $courseInfo = $_POST['hour1'].":".$_POST['min1'];
+                    $courseInfo = $courseInfo . "&&至";
+                }
+                
+                if (isset($_POST['hour2']) && !$_POST['hour2'] == "" && isset($_POST['min2']) && !$_POST['min2'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['hour2'].":".$_POST['min2'];
+                }
+                if ($courseInfo == "") {
+                    //删
+                    $sql = "DELETE FROM `schedule_teacher` WHERE userID ='$teacherID' and sequence =$sequence and day = $day";
+                    Yii::app()->db->createCommand($sql)->query();
+                } else {
+                    $sql = "UPDATE `schedule_teacher` SET courseInfo ='$courseInfo' WHERE userID ='$teacherID' and sequence =$sequence and day = $day";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            }
+        } else if (isset($_GET['classID'])) {
+            $classID = $_GET['classID'];
+            $teacherID = Yii::app()->session['classId'];
+            $sql = "SELECT * FROM schedule_class WHERE classID = '$classID' AND sequence = '$sequence' AND day = '$day'";
+            $sqlSchedule = Yii::app()->db->createCommand($sql)->query()->read();
+            if ($sqlSchedule == "") {
+                //增
+                $courseInfo = "";
+                if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
+                    $courseInfo = $_POST['hour1'].":".$_POST['min1'];
+                    $courseInfo = $courseInfo . "&&至";
+                }
+                
+                if (isset($_POST['hour2']) && !$_POST['hour2'] == "" && isset($_POST['min2']) && !$_POST['min2'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['hour2'].":".$_POST['min2'];
+                }
+                if ($courseInfo != "") {
+                    $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            } else {
+                //改
+                $courseInfo = "";
+                if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
+                    $courseInfo = $_POST['hour1'].":".$_POST['min1'];
+                    $courseInfo = $courseInfo . "&&至";
+                }
+                
+                if (isset($_POST['hour2']) && !$_POST['hour2'] == "" && isset($_POST['min2']) && !$_POST['min2'] == "") {
+                    $courseInfo = $courseInfo . "&&" . $_POST['hour2'].":".$_POST['min2'];
+                }
+                if ($courseInfo == "") {
+                    //删
+                    $sql = "DELETE FROM `schedule_class` WHERE classID ='$classID' and sequence =$sequence and day = $day";
+                    Yii::app()->db->createCommand($sql)->query();
+                } else {
+                    $sql = "UPDATE `schedule_class` SET courseInfo ='$courseInfo' WHERE classID ='$classID' and sequence =$sequence and day = $day";
+                    Yii::app()->db->createCommand($sql)->query();
+                }
+            }
+        }
+        return $this->renderPartial('editScheduleOne', ['result' => $sqlSchedule]);
     }
 
     // Uncomment the following methods and override them if needed
