@@ -312,6 +312,77 @@ class ClassExercise extends CActiveRecord
         $classExercise = $classExercise->find("exerciseID = '$exerciseID'");
         return $classExercise;
     }
+    
+    public function getExerciseExerByTypePage($classID,$on, $type, $pagesize) {
+        $classSuit = ClassLessonSuite::model()->find("classID = '$classID' and suiteID = '$on'"); 
+        $lessonID = $classSuit['lessonID'];
+        $criteria = new CDbCriteria();
+        $sql = "select * from class_exercise";
+        $order = " order by exerciseID DESC";
+        if($type=='key'){
+            $condition = "  where classID ='$classID' and lessonID ='$lessonID' and type in ('free','speed','correct')"; 
+        }else{
+           $condition = " where classID ='$classID' and lessonID ='$lessonID' and type='" . $type . "'"; 
+        }
+        $sql = $sql . $condition . $order;
+        $result = Tool::pager($sql, $pagesize);
+        $workLst = $result['list'];
+        $pages = $result['pages'];
+        return ['workLst' => $workLst, 'pages' => $pages,];
+    }
+    
+    public function insertFromWork($workExerciseID,$type,$classID,$on){
+        $resultSuite = ClassLessonSuite::model()->find("classID ='$classID' AND suiteID = '$on'");
+        $lessonID = $resultSuite['lessonID'];
+        $classExercise = new ClassExercise();
+        $work=0;
+        switch ($type){
+            case 'key':
+                $work = KeyType::model()->find("exerciseID = '$workExerciseID'");
+                if(count($work)!==0){
+                   $classExercise->classID=$classID;
+                   $classExercise->lessonID=$lessonID;
+                   $classExercise->title= $work['title'];
+                   $classExercise->content= $work['content'];
+                   $classExercise->type= $work['category'];
+                   $classExercise->create_time= $work['createTime'];
+                   $classExercise->create_person= $work['createPerson'];
+                   $classExercise->speed= $work['speed'];
+                   $classExercise->repeatNum= $work['repeatNum'];
+                   $classExercise->chosen_lib= $work['chosen_lib'];
+                }
+                break;
+                case 'look':
+                $work = LookType::model()->find("exerciseID = '$workExerciseID'");
+                if(count($work)!==0){
+                   $classExercise->classID=$classID;
+                   $classExercise->lessonID=$lessonID;
+                   $classExercise->title= $work['title'];
+                   $classExercise->content= $work['content'];
+                   $classExercise->type= 'look';
+                   $classExercise->create_time= $work['createTime'];
+                   $classExercise->create_person= $work['createPerson'];
+                }
+                break;
+                case 'listen':
+                $work = ListenType::model()->find("exerciseID = '$workExerciseID'");
+                if(count($work)!==0){
+                   $classExercise->classID=$classID;
+                   $classExercise->lessonID=$lessonID;
+                   $classExercise->title= $work['title'];
+                   $classExercise->content= $work['content'];
+                   $classExercise->type= 'listen';
+                   $classExercise->create_time= $work['createTime'];
+                   $classExercise->create_person= $work['createPerson'];
+                   $classExercise->file_name= $work['fileName'];
+                   $classExercise->file_path= $work['filePath'];
+                }
+                break;
+        }
+        $result = $classExercise->insert();
+       return $result;
+        
+    }
     /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

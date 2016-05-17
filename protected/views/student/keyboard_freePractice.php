@@ -52,6 +52,12 @@
     </tr>
 </table>
 <br/>
+<object id="typeOCX" type="application/x-itst-activex" 
+        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
+        width ='770' height='330'
+        event_OnChange="onChange"
+        event_OnStenoPress="onStenoPressKey">
+</object>
 <script>
     var yaweiOCX = null;
     $(document).ready(function(){
@@ -87,8 +93,7 @@
         yaweiOCX.Locate(input.length);
     }
     function getSteno(){
-       var str = yaweiOCX.GetContentWithSteno();
-       alert(str);
+       var str = yaweiOCX.PutBufferToContent();
     }
     
     function onStenoPressKey(pszStenoString ,device){
@@ -148,10 +153,13 @@
         }
         intervalid = setInterval("keyReSet()", 1000); 
     }
+    var typeOCX = document.getElementById("typeOCX");
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        typeOCX.remove();
+    }
+    function onunload_handler() {
+        typeOCX.remove();
+    }
 </script>
-<object id="typeOCX" type="application/x-itst-activex" 
-        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-        width ='770' height='330'
-        event_OnChange="onChange"
-        event_OnStenoPress="onStenoPressKey">
-</object>

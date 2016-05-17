@@ -22,7 +22,7 @@
                     foreach ($classExerciseLst as $model): ?>
                         <tr>
                             <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['exerciseID']; ?>" > </td>
-                            <td class="font-center" style="width: 100px"><?php
+                            <td class="font-center" style="width: 70px"><?php
                                 switch ($model['type']) {
                                     case 'look': echo '看打练习';
                                         break;
@@ -36,11 +36,11 @@
                                         break;
                                 }
                                 ?></td>
-                            <td class="font-center" title="<?php echo $model['title']; ?>"><?php
-                            if (Tool::clength($model['title']) <= 10)
+                            <td style="width: 150px" class="font-center" title="<?php echo $model['title']; ?>"><?php
+                            if (Tool::clength($model['title']) <= 7)
                                 echo $model['title'];
                             else
-                                echo Tool::csubstr($model['title'], 0, 10) . "...";
+                                echo Tool::csubstr($model['title'], 0, 7) . "...";
                             ?></td>
                             <td class="font-center" title="<?php echo Tool::filterKeyContent($model['content']); ?>"><?php
                             if (Tool::clength($model['content']) <= 10)

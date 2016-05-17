@@ -4,10 +4,10 @@
                         <li style="margin-top:10px">
                                 <?php if(isset($_GET['nobar'])){ ?>
                             <button onclick="closeWindow()" style="height: 35px;top: 1px;left: 10px" class="btn_4big">返 回</button>
-                            <button  style="height: 35px;margin-left: 10px" onclick="location.href='./index.php?r=teacher/addListen4ClassExercise&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>'" class="btn_4big">添 加</button>
+                            <button  style="height: 35px;margin-left: 10px" onclick="location.href='./index.php?r=teacher/modifyClassExercise&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>&&type=listen'" class="btn_4big">添 加</button>
                             <?php }else{ ?>
                                 <button onclick="window.location.href = './index.php?r=teacher/startCourse&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>'" style="height: 35px;top: 1px;left: 10px" class="btn_4big">返 回</button>
-                                <button style="height: 35px;margin-left: 10px" onclick="location.href='./index.php?r=teacher/addListen4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>'" class="btn_4big">添 加</button>
+                                <button style="height: 35px;margin-left: 10px" onclick="location.href='./index.php?r=teacher/modifyClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>&&type=listen'" class="btn_4big">添 加</button>
                             <?php }?>
                         </li>
                 </form>

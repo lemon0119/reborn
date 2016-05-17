@@ -270,7 +270,7 @@ $squence = $countSquence + 1;
                         wrong.push(stringText);
                     else {
                         isWrong = true;
-                        createFont("#808080", old, oldCode);
+                        createFont("#595959", old, oldCode);
                         old = new Array();
                         oldCode = new Array();
                         wrong = new Array();
@@ -281,7 +281,7 @@ $squence = $countSquence + 1;
         }
 
         if (countLength !== 0) {
-            createFont("#808080", old, oldCode);
+            createFont("#595959", old, oldCode);
             createFont("#ff0000", wrong, "");
         }
         if (inputO.length < text.length) {
@@ -327,7 +327,7 @@ $squence = $countSquence + 1;
         var f = document.createElement("font");
         var content = {content: ""};
         var isBrief = 0;
-        if (color == "#808080") {
+        if (color == "#595959") {
             for (var i = 0; i < text.length; i++) {
                 if (text[i].length < 3) {
                     for (var j = 0; j < briefOriginalYaweiCode.length; j++) {

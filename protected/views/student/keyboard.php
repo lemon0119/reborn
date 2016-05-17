@@ -49,8 +49,14 @@
         <td>&nbsp;</td>
     </tr>
 </table>
+<object id="typeOCX" type="application/x-itst-activex" 
+        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
+        width ='0' height='0'
+        event_OnStenoPress="onStenoPressKey">
+</object>
 <script>
-
+    var G_isKeyType = 1;
+    var yaweiOCX = document.getElementById("typeOCX");
     function keySet(keyID, isRight) {
         var obj = document.getElementById(keyID);
         if (isRight)
@@ -107,15 +113,8 @@
         return false;
     }
 
-    function onChange() {
-        document.getElementById("typeOCX").UpdateView();
-        var input = getContent(document.getElementById("typeOCX"));
-        document.getElementById("typeOCX").Locate(input.length);
-    }
-
     function onStenoPressKey(pszStenoString, device) {
         if (window.G_startFlag === 1) {
-            window.GA_answer = document.getElementById("typeOCX").GetContentWithSteno();
             //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
             window.G_keyBoardBreakPause = 0;
             var myDate = new Date();
@@ -127,7 +126,7 @@
 //                }
             window.G_countMomentKey++;
             window.G_countAllKey++;
-            window.G_content = document.getElementById("typeOCX").GetContent();
+            window.G_content = yaweiOCX.GetContent();
             window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
             //每击统计击键间隔时间 秒
             //@param id=getIntervalTime 请将最高平均速度统计的控件id设置为getIntervalTime 
@@ -137,11 +136,11 @@
                 var pressTime = window.G_pressTime;
                 if (pressTime - window.G_oldStartTime > 0) {
                     var IntervalTime = parseInt((pressTime - window.G_oldStartTime) / 10) / 100;
-                    IntervalTime=IntervalTime.toString();
-                     var rs=IntervalTime.indexOf('.');
-                     while(IntervalTime.length<=rs+2){
-                         IntervalTime+='0';
-                     }
+                    IntervalTime = IntervalTime.toString();
+                    var rs = IntervalTime.indexOf('.');
+                    while (IntervalTime.length <= rs + 2) {
+                        IntervalTime += '0';
+                    }
                     $("#getIntervalTime").html(IntervalTime);
                     window.GA_IntervalTime = IntervalTime;
                     window.G_oldStartTime = pressTime;
@@ -171,9 +170,9 @@
 //                return;
 //            }
             if (totalNum == currentNum) {
-                    window.G_isOverFlag = 1;
-                    document.getElementById("id_cost").value = getSeconds();
-                   // doSubmit(false);
+                window.G_isOverFlag = 1;
+                document.getElementById("id_cost").value = getSeconds();
+                // doSubmit(false);
             }
             var charSet = pszStenoString.split("");
             var left = true;
@@ -246,7 +245,7 @@
             document.getElementById("word").innerHTML = word;
         }
         if (wordArray[currentNum + 1] !== undefined) {
-            document.getElementById("wordNext").innerHTML = "<span style='font-size:30px;'>"+wordArray[currentNum+1]+"</span>";
+            document.getElementById("wordNext").innerHTML = "<span style='font-size:30px;'>" + wordArray[currentNum + 1] + "</span>";
         } else {
             document.getElementById("wordNext").innerHTML = "";
         }
@@ -256,7 +255,6 @@
     function changTemplet(pszStenoString) {
 
         if (isSameWord(pszStenoString, yaweiCode)) {
-
             nextWord = "";
             nextWord = getNextWord();
             setWordView(nextWord);
@@ -309,8 +307,8 @@
     function getNextWord() {
         keyReSet();
         currentNum++;
-         //调整进度条
-        var currentProgress = Math.round((currentNum/totalNum)*100);
+        //调整进度条
+        var currentProgress = Math.round((currentNum / totalNum) * 100);
         add(currentProgress);
         $("#isDone").html(currentNum);
 //        if (totalNum == currentNum) {
@@ -352,13 +350,16 @@
         return yaweiCode[currentNum];
     }
 
-function add(i){
-            var tiao =$(".progresstiao");
-			tiao.css("width",i+"%").html();
-		}
+    function add(i) {
+        var tiao = $(".progresstiao");
+        tiao.css("width", i + "%").html();
+    }
+    window.onbeforeunload = onbeforeunload_handler;
+    window.onunload = onunload_handler;
+    function onbeforeunload_handler() {
+        yaweiOCX.remove();
+    }
+    function onunload_handler() {
+        yaweiOCX.remove();
+    }
 </script>
-<object id="typeOCX" type="application/x-itst-activex" 
-        clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-        width ='0' height='0'
-        event_OnStenoPress="onStenoPressKey">
-</object>
