@@ -104,7 +104,7 @@
         }
         function addStuClass(nums)
         {
-            if(nums < 40)
+            if(nums <= 50)
             {
              window.location.href="./index.php?r=admin/addStuClass&&classID=<?php echo $classID;?>";}
          else{
@@ -115,7 +115,7 @@
 							$('#deleForm').submit();
 						}
 					}
-					window.wxc.xcConfirm("班级人数超过40人！请重新分班！", "custom", option);
+					window.wxc.xcConfirm("班级人数超过50人！请重新分班！", "custom", option);
         }
         }
         function addTeaClass()
@@ -143,7 +143,7 @@
    <script>
        if(result != null){
            if(result == 'overLimites'){
-               window.wxc.xcConfirm("班级人数超过40人！请重新选择！", window.wxc.xcConfirm.typeEnum.error);
+               window.wxc.xcConfirm("班级人数超过50人！请重新选择！", window.wxc.xcConfirm.typeEnum.error);
            }else{
            window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.success);
            result = null;
