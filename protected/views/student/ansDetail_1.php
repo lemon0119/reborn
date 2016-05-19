@@ -21,20 +21,20 @@
             <input id="text" type="hidden" value="<?php
             $str2 = str_replace("\n", "<br/>", $answer);
             $str2 = str_replace("\r", "", $str2);
-            $str2 = str_replace(" ", "&nbsp;", $str2);
+            $str2 = str_replace(" ", "", $str2);
             echo $str2;
             ?>"/>
             <input  id="content" type="hidden" style="height: 5px;" value="<?php
             $str = str_replace("\n", "<br/>", $exer['content']);
             $str = str_replace("\r", "", $str);
-            $str = str_replace(" ", "&nbsp;", $str);
+            $str = str_replace(" ", "", $str);
             echo $str;
             ?>">
             <tr>
                 <td colspan='3'>
                     <div class='answer-tip-text1'>作答结果：</div>
                     <div style="text-align: left;width: 100%" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
-                        <font><?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?></font>
+                        <font id="currentContent"></font>
                     </div>
                 </td>
             </tr>
@@ -42,7 +42,7 @@
                 <td colspan='3'>
                     <div class='answer-tip-text2'>正确答案：</div>
                     <div style="text-align: left;width: 100%" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
-                        <font><?php echo $str; ?></font>
+                        <font id="originalContent"></font>
                     </div>
                 </td>
             </tr>
@@ -59,6 +59,38 @@ if (isset(Yii::app()->session['type'])) {
 }
 ?>
 <script type="text/javascript">
+    var currentContent = '<?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?>';
+    var originalContent = '<?php echo $str; ?>';
+    var lcs = new LCS(currentContent, originalContent);
+    lcs.doLCS();
+    var currentFont = document.getElementById('currentContent');
+    var originalFont = document.getElementById('originalContent');
+    var currentLCS = lcs.getSubString(1);
+    var originalLCS = lcs.getSubString(2);
+    var currentInnerHTML='';
+    var originalInnerHTML='';
+    for (var i = 0; i < currentContent.length; i++) {
+        if (typeof (currentContent[i]) !== 'undefined') {
+            if (currentContent[i] !== currentLCS[i]) {
+                currentInnerHTML += '<font style="background-color:#f44336;color:#fff">' + currentContent[i] + '</font>';
+            } else {
+                currentInnerHTML += '<font style="background-color:#727272;color:#fff">' + currentContent[i] + '</font>';
+            }
+        }
+    }
+    for (var i = 0; i < originalContent.length; i++) {
+        if (typeof (originalContent[i]) !== 'undefined') {
+            if (originalContent[i] !== originalLCS[i]) {
+                originalInnerHTML += '<font style="background-color:#f44336;color:#fff">' + originalContent[i] + '</font>';
+            } else {
+                originalInnerHTML += '<font style="background-color:#727272;color:#fff">' + originalContent[i] + '</font>';
+            }
+        }
+    }
+    currentFont.innerHTML = currentInnerHTML;
+    originalFont.innerHTML = originalInnerHTML;
+
+
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     var briefType = "";
@@ -261,7 +293,7 @@ if (isset(Yii::app()->session['type'])) {
         }
 
         var right = text_old.split("");
-        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']);   ?>'.split(" ");
+        //var rightKey = '<?php //echo Tool::filterKeyContent($exer['content']);    ?>'.split(" ");
         var answer = input.split("");
         var i, j, sright;
         i = 0;
