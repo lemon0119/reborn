@@ -76,98 +76,279 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
     </div>
 
-    <div id="show-movie"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
-        <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
-        <div style="display:inline;">
-            <div  style="width:150px;position:relative;right: 200px ">
-
-                <select id="teacher-choose-file" style="width:150px;margin-top: 10px;">
+<!--    <div id="show-movie"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">-->
+<!--        <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >公 共<br/>资 源 </h4></div>-->
+<div id="show-movie" style="display: none;">
+    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
+<!--        <div style="display:inline;">-->
+<!--            <div  style="width:150px;position:relative;right: 200px ">-->
+             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
+                 <ul>
+                     <li style="padding:5px 100px 5px 75px;">
+                <select id="teacher-choose-file-public" style="width:250px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminVdir);
                     while ($file = $mydir->read()) {
                         if ((!is_dir("$$adminVdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo $adminVideoFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
-                            <?php
-                        }
-                    }
-                    $mydir->close();
-                    ?>
-                    <?php
-                    $mydir = dir($vdir);
-                    while ($file = $mydir->read()) {
-                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            <option value ="<?php echo $adminVideoFilePath . iconv("gb2312", "UTF-8", $file); ?>" title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>">
+                                
+                                <?php $file1=Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); 
+                            
+                                if(Tool::clength($file1)<=15){
+                                echo $file1;
+                            }else{
+                                echo Tool::csubstr($file1, 0, 15) . "...";
+                            }
                             ?>
-                            <option value ="<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            </option>   
                             <?php
                         }
                     }
                     $mydir->close();
                     ?>
-                </select>
-                <button id="teacher-dianbo" style="width: 150px;" class="btn btn-primary">点播视频</button>
-                
-            </div>
-            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
-            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
-                <select id="teacher-choose-file-public" style="width:150px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminPublicVdir);
                     while ($file = $mydir->read()) {
                         if ((!is_dir("$adminPublicVdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo $adminPublicVdir . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <option value ="<?php echo $adminPublicVdir . iconv("gb2312", "UTF-8", $file); ?>" title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>">
+                                <?php $publicFile= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); 
+                                if(Tool::clength($publicFile)<=15){
+                                echo $publicFile;
+                            }else{
+                                echo Tool::csubstr($publicFile, 0, 15) . "...";
+                            }
+                                ?></option>   
                             <?php
                         }
                     }
                     $mydir->close();
                     ?>
                 </select>
+<!--                <select id="teacher-choose-file" style="width:150px;margin-top: 10px;">
+                    <?php
+//                    $mydir = dir($adminVdir);
+//                    while ($file = $mydir->read()) {
+//                        if ((!is_dir("$$adminVdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option value ="<?php// echo $adminVideoFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php// echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <?php
+//                        }
+//                    }
+//                    $mydir->close();
+                    ?>
+                    <?php
+//                    $mydir = dir($vdir);
+//                    while ($file = $mydir->read()) {
+//                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option value ="<?php// echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php// echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <?php
+//                        }
+//                    }
+//                    $mydir->close();
+                    ?>
+                </select>-->
+<!--                <button id="teacher-dianbo" style="width: 150px;" class="btn btn-primary">点播视频</button>-->
+
+                                <button id="teacher-dianbo-public" style="width: 150px;margin-left:105px" class="btn btn-primary">点播视频</button>
+                     </li>
+            <!--</div>-->
+                 </ul>
+             </div>
+<!--            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
+                <select id="teacher-choose-file-public" style="width:150px;margin-top: 10px;">
+                    <?php
+//                    $mydir = dir($adminPublicVdir);
+//                    while ($file = $mydir->read()) {
+//                        if ((!is_dir("$adminPublicVdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option value ="<?php// echo $adminPublicVdir . iconv("gb2312", "UTF-8", $file); ?>"><?php //echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <?php
+//                        }
+//                    }
+//                    $mydir->close();
+                    ?>
+                </select>
                 <button id="teacher-dianbo-public" style="width: 150px;" class="btn btn-primary">点播视频</button>
+                </div>-->
+                
 <!--                <button id="teacher-addMovie" onclick="addMovie()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加视频</button>    -->
-            </div>
+            
             <!--<div  class="title_select"  onclick="addMovie()" style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;left:300px;top:-223px;"  align="center" ><h1 >+</h1></div>  -->
             
-        </div>
+<!--        </div>-->
         
-    </div>
+
     
-    <div id="show-ppt"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
-        <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
-        <div style="display:inline;width:150px;">
-            <div  style="width:150px;position:relative;right: 200px ">
-                <select id="choose-ppt" style="width:150px;margin-top: 10px;">
+<!--    新加平铺显示5/18-->
+        <div style="width:150px;position:relative;left: 20px ">
+            <div><h3>本 课 资 源 </h3></div>
+            <div id="teacher-choose-file" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+    
+    <?php
+                    $mydir = dir($vdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {?>
+                
+                            <button id="teacher-dianbo" onclick="filePath1('<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>')" style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" 
+                                    title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" 
+                                    value ="<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>">
+                                <?php 
+                            $myFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
+                            if(Tool::clength($myFile)<=8){
+                                echo $myFile;
+                            }else{
+                                echo Tool::csubstr($myFile, 0, 8) . "...";
+                            }
+                            ?> </button><?php
+                        }
+                    }
+                    $mydir->close();
+                    ?>
+            </div>
+        </div>
+    </div>
+
+<!--5/23资源平铺-->
+<div id="show-ppt" style="display: none;">
+    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
+
+             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
+                 <ul>
+                     <li style="padding:5px 100px 5px 75px;">
+                <select id="choose-ppt-public" style="width:250px;margin-top: 10px;">
                     <?php
                     $mydir = dir($adminPdir);
                     while ($file = $mydir->read()) {
                         if ((is_dir("$adminPdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt"));?>" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
                             $dir = "$adminPdir/$file";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
                             echo $num;
-                            ?>+-+admin"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?></option>   
+                            ?>+-+admin"><?php $filePptAdmin= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); 
+                            if(Tool::clength($filePptAdmin)<=15){
+                                echo $filePptAdmin;
+                            }else{
+                                echo Tool::csubstr($filePptAdmin, 0, 15) . "...";
+                            }  
+                            ?></option>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                    ?>
+                    <?php
+                    $mydir = dir($adminPublicPdir);
+                    while ($file = $mydir->read()) {
+                        if ((is_dir("$adminPublicPdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt"));?>" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$adminPublicPdir/$file";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+admin1"><?php $filePptTea= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); 
+                            if(Tool::clength($filePptTea)<=15){
+                                echo $filePptTea;
+                            }else{
+                                echo Tool::csubstr($filePptTea, 0, 15) . "...";
+                            }  
+                            ?></option>   
                                     <?php
                                 }
                             }
                             $mydir->close();
                             ?>
-                            <?php
-                            $mydir = dir($pdir);
+                </select>
+
+                                <button id="play-ppt-public" style="width: 150px;margin-left:105px" class="btn btn-primary">放映PPT</button>
+                     </li>
+
+                 </ul>
+             </div>
+
+
+        <div style="width:150px;position:relative;left: 20px ">
+            <div><h3>本 课 资 源 </h3></div>
+            <div id="choose-ppt" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+    
+    <?php
+                    $mydir = dir($pdir);
                             while ($file = $mydir->read()) {
                                 if ((is_dir("$pdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                                     ?>
-                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                
+                                    
+                
+                            <button id="play-ppt"  onclick="filePptPath('<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
                             $dir = "$pdir/$file";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
                             echo $num;
-                            ?>+-+tea"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?></option>   
+                            ?>+-+tea')" 
+                            title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?>"
+                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$pdir/$file";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea"><?php
+                            $myPptFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")),"."));
+                            if(Tool::clength($myPptFile)<=8){
+                                echo $myPptFile;
+                            }else{
+                                echo Tool::csubstr($myPptFile, 0, 8) . "...";
+                            }?></button>   
                                     <?php
                                 }
                             }
                             $mydir->close();
+                    ?>
+            </div>
+        </div>
+    </div>
+    
+<!--    <div id="show-ppt"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+        <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
+        <div style="display:inline;width:150px;">
+            <div  style="width:150px;position:relative;right: 200px ">
+                <select id="choose-ppt" style="width:150px;margin-top: 10px;">
+                    <?php
+//                    $mydir = dir($adminPdir);
+//                    while ($file = $mydir->read()) {
+//                        if ((is_dir("$adminPdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option value ="<?php// echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+//                            $dir = "$adminPdir/$file";
+//                            $num = sizeof(scandir($dir));
+//                            $num = ($num > 2) ? ($num - 2) : 0;
+//                            echo $num;
+                            ?>+-+admin"><?php //echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?></option>   
+                                    <?php
+//                                }
+//                            }
+//                            $mydir->close();
+                            ?>
+                            <?php
+//                            $mydir = dir($pdir);
+//                            while ($file = $mydir->read()) {
+//                                if ((is_dir("$pdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                    ?>
+                            <option value ="<?php// echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+//                            $dir = "$pdir/$file";
+//                            $num = sizeof(scandir($dir));
+//                            $num = ($num > 2) ? ($num - 2) : 0;
+//                            echo $num;
+                            ?>+-+tea"><?php //echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?></option>   
+                                    <?php
+//                                }
+//                            }
+//                            $mydir->close();
                             ?>
                 </select>
                 <button id="play-ppt" style="width: 150px;" class="btn btn-primary">放映PPT</button>
@@ -177,49 +358,130 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
                 <select id="choose-ppt-public" style="width:160px;margin-top: 10px;">
                     <?php
-                    $mydir = dir($adminPublicPdir);
-                    while ($file = $mydir->read()) {
-                        if ((is_dir("$adminPublicPdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+//                    $mydir = dir($adminPublicPdir);
+//                    while ($file = $mydir->read()) {
+//                        if ((is_dir("$adminPublicPdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$adminPublicPdir/$file";
+                            <option value ="<?php //echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+//                            $dir = "$adminPublicPdir/$file";
+//                            $num = sizeof(scandir($dir));
+//                            $num = ($num > 2) ? ($num - 2) : 0;
+//                            echo $num;
+                            ?>+-+admin"><?php //echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?></option>   
+                                    <?php
+//                                }
+//                            }
+//                            $mydir->close();
+                            ?>
+                </select>
+                <button id="play-ppt-public" style="width: 150px;" class="btn btn-primary">放映PPT</button>
+                <button id="teacher-addMovie" onclick="addPpt()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加PPT</button>
+            </div>
+        </div>
+    </div> -->
+                            
+<!--5/23资源平铺-->
+<div id="show-picture" style="display: none;">
+    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
+
+             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
+                 <ul>
+                     <li style="padding:5px 100px 5px 75px;">
+                <select id="choose-pic-public" style="width:250px;margin-top: 10px;">
+                    <?php
+                    $mydir = dir($adminPublicPicdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$adminPublicPicdir";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
                             echo $num;
-                            ?>+-+admin"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?></option>   
+                            ?>+-+admin"><?php $filePic= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); 
+                            if(Tool::clength($filePic)<=15){
+                                echo $filePic;
+                            }else{
+                                echo Tool::csubstr($filePic, 0, 15) . "...";
+                            }  
+                            ?></option>   
                                     <?php
                                 }
                             }
                             $mydir->close();
-                            ?>
+                    ?>
+
                 </select>
-                <button id="play-ppt-public" style="width: 150px;" class="btn btn-primary">放映PPT</button>
-<!--                <button id="teacher-addMovie" onclick="addPpt()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加PPT</button>-->
+                                <button id="play-pic-public" style="width: 150px;margin-left:105px" class="btn btn-primary">放映图片</button>
+                     </li>
+
+                 </ul>
+             </div>
+
+
+        <div style="width:150px;position:relative;left: 20px ">
+            <div><h3>本 课 资 源 </h3></div>
+            <div id="choose-pic" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+    
+    <?php
+    
+                $mydir = dir($picdir);$i=0;
+                    while ($file = $mydir->read()) {
+                        $i++;
+                        if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                
+                <button id="play-pic"  onclick="filePicPath('<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$picdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea+-+<?php echo $i;?>')" 
+                            title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
+                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$picdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea+-+<?php echo $i;?>"><?php
+                            $myPicFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
+                            if(Tool::clength($myPicFile)<=8){
+                                echo $myPicFile;
+                            }else{
+                                echo Tool::csubstr($myPicFile, 0, 8) . "...";
+                            }?></button>
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+
+                    ?>
             </div>
         </div>
-    </div> 
-    <div id="show-picture"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+    </div>                            
+                            
+<!--    <div id="show-picture"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
         <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
 
                 <select id="choose-pic" style="width:150px;margin-top: 10px;">
                     <?php
-                    $mydir = dir($picdir);$i=0;
-                    while ($file = $mydir->read()) {
-                        $i++;
-                        if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+//                    $mydir = dir($picdir);$i=0;
+//                    while ($file = $mydir->read()) {
+//                        $i++;
+//                        if ((!is_dir("$picdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$picdir";
-                            $num = sizeof(scandir($dir));
-                            $num = ($num > 2) ? ($num - 2) : 0;
-                            echo $num;
-                            ?>+-+tea+-+<?php echo $i;?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <option value ="<?php// echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+//                            $dir = "$picdir";
+//                            $num = sizeof(scandir($dir));
+//                            $num = ($num > 2) ? ($num - 2) : 0;
+//                            echo $num;
+                            ?>+-+tea+-+<?php// echo $i;?>"><?php// echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
                                     <?php
-                                }
-                            }
-                            $mydir->close();
+//                                }
+//                            }
+//                            $mydir->close();
                             ?>
                 </select>
                 <button id="play-pic" style="width: 150px;" class="btn btn-primary">放映图片</button>
@@ -229,29 +491,109 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
                 <select id="choose-pic-public" style="width:160px;margin-top: 10px;">
                     <?php
-                    $mydir = dir($adminPublicPicdir);
-                    while ($file = $mydir->read()) {
-                        if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+//                    $mydir = dir($adminPublicPicdir);
+//                    while ($file = $mydir->read()) {
+//                        if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$adminPublicPicdir";
+                            <option value ="<?php// echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+//                            $dir = "$adminPublicPicdir";
+//                            $num = sizeof(scandir($dir));
+//                            $num = ($num > 2) ? ($num - 2) : 0;
+//                            echo $num;
+                            ?>+-+admin"><?php// echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                                    <?php
+//                                }
+//                            }
+//                            $mydir->close();
+                            ?>
+                </select>
+                <button id="play-pic-public" style="width: 150px;" class="btn btn-primary">放映图片</button>
+                <button id="teacher-addMovie" onclick="addPic()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加图片</button>
+            </div>
+        </div>
+    </div>-->
+
+                            <!--5/23 text资源平铺-->
+<div id="show-text" style="display: none;">
+    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
+
+             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
+                 <ul>
+                     <li style="padding:5px 100px 5px 75px;">
+                <select id="choose-txt-public" style="width:250px;margin-top: 10px;">
+                    <?php
+                    $mydir = dir($adminPublicTxtdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                    
+                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$txtdir";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
                             echo $num;
-                            ?>+-+admin"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            ?>+-+tea"><?php $filtTxtPath= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); 
+                            if(Tool::clength($filtTxtPath)<=15){
+                                echo $filtTxtPath;
+                            }else{
+                                echo Tool::csubstr($filtTxtPath, 0, 15) . "...";
+                            }
+                            ?></option>   
                                     <?php
                                 }
                             }
                             $mydir->close();
-                            ?>
+                    ?>
+
                 </select>
-                <button id="play-pic-public" style="width: 150px;" class="btn btn-primary">放映图片</button>
-<!--                <button id="teacher-addMovie" onclick="addPic()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加图片</button>-->
+                                <button id="play-txt-public" style="width: 150px;margin-left:105px" class="btn btn-primary">阅览文本</button>
+                     </li>
+
+                 </ul>
+             </div>
+
+
+        <div style="width:150px;position:relative;left: 20px ">
+            <div><h3>本 课 资 源 </h3></div>
+            <div id="choose-txt" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+    
+    <?php
+    
+                 $mydir = dir($txtdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$txtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                
+                <button id="choose-txt"  onclick="fileTxtPath('<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$txtdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea')" 
+                            title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
+                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$txtdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea"><?php
+                            $myTxtFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
+                            if(Tool::clength($myTxtFile)<=8){
+                                echo $myTxtFile;
+                            }else{
+                                echo Tool::csubstr($myTxtFile, 0, 8) . "...";
+                            }?></button>
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+
+                    ?>
             </div>
         </div>
-    </div>
-
-    <div id="show-text"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+    </div>                            
+                            
+<!--    <div id="show-text"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
         <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
@@ -273,7 +615,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             $mydir->close();
                             ?>
                 </select>
-                <button id="play-txt" style="width: 150px;" class="btn btn-primary">阅览文本</button>
+                <button id="choose-txt" style="width: 150px;" class="btn btn-primary">阅览文本</button>
             </div>
             <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
             <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
@@ -296,25 +638,91 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             ?>
                 </select>
                 <button id="play-txt-public" style="width: 150px;" class="btn btn-primary">阅览文本</button>
-<!--                <button id="teacher-addMovie" onclick="addTxt()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加文本</button>-->
+                <button id="teacher-addMovie" onclick="addTxt()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加文本</button>
             </div>
         </div>
-    </div>
-    <div id="show-voice"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
+    </div>-->
+                            
+<!--5/23 voice资源平铺-->
+<div id="show-voice" style="display: none;">
+    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
+
+             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
+                 <ul>
+                     <li style="padding:5px 100px 5px 75px;">
+                <select id="choose-voice-public" style="width:250px;margin-top: 10px;">
+                    <?php
+                    $mydir = dir($adminPublicVoicedir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                    
+                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" value ="<?php echo $adminPublicVoicedir . iconv("gb2312", "UTF-8", $file);?>"><?php $fileVoicePath= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));  
+                            if(Tool::clength($fileVoicePath)<=15){
+                                echo $fileVoicePath;
+                            }else{
+                                echo Tool::csubstr($fileVoicePath, 0, 15) . "...";
+                            }
+                            ?></option>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                    ?>
+
+                </select>
+                                <button id="play-voice-public" style="width: 150px;margin-left:105px" class="btn btn-primary">播放音频</button>
+                     </li>
+
+                 </ul>
+             </div>
+
+
+        <div style="width:150px;position:relative;left: 20px ">
+            <div><h3>本 课 资 源 </h3></div>
+            <div id="choose-voice" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+    
+    <?php
+    
+                 $mydir = dir($voicedir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                
+                <button id="play-voice"  onclick="fileVoicePath('<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>')" 
+                            title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
+                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php
+                            $myVoiceFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
+                            if(Tool::clength($myVoiceFile)<=8){
+                                echo $myVoiceFile;
+                            }else{
+                                echo Tool::csubstr($myVoiceFile, 0, 8) . "...";
+                            }?></button>
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+
+                    ?>
+            </div>
+        </div>
+    </div>                            
+
+<!--    <div id="show-voice"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
         <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >备 课<br/>资 源 </h4></div>
         <div style="display:inline;">
             <div  style="width:150px;position:relative;right: 200px ">
                 <select id="choose-voice" style="width:150px;margin-top: 10px;">
                             <?php
-                    $mydir = dir($voicedir);
-                    while ($file = $mydir->read()) {
-                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+//                    $mydir = dir($voicedir);
+//                    while ($file = $mydir->read()) {
+//                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <option value ="<?php// echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php// echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
                             <?php
-                        }
-                    }
-                    $mydir->close();
+//                        }
+//                    }
+//                    $mydir->close();
                     ?>
                 </select>
                 <button id="play-voice" style="width: 150px;" class="btn btn-primary">播放音频</button>
@@ -323,22 +731,22 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
                 <select id="choose-voice-public" style="width:160px;margin-top: 10px;">
                              <?php
-                    $mydir = dir($adminPublicVoicedir);
-                    while ($file = $mydir->read()) {
-                        if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+//                    $mydir = dir($adminPublicVoicedir);
+//                    while ($file = $mydir->read()) {
+//                        if ((!is_dir("$adminPublicVoicedir/$file")) AND ( $file != ".") AND ( $file != "..")) {
                             ?>
-                            <option value ="<?php echo $adminPublicVoicedir . iconv("gb2312", "UTF-8", $file); ?>"><?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <option value ="<?php// echo $adminPublicVoicedir . iconv("gb2312", "UTF-8", $file); ?>"><?php// echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
                             <?php
-                        }
-                    }
-                    $mydir->close();
+//                        }
+//                    }
+//                    $mydir->close();
                     ?>
                 </select>
                 <button id="play-voice-public" style="width: 150px;" class="btn btn-primary">播放音频</button>
-<!--                <button id="teacher-addMovie" onclick="addVoice()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加音频</button>-->
+                <button id="teacher-addMovie" onclick="addVoice()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加音频</button>
             </div>
         </div>
-    </div>
+    </div>-->
     <div id="show-classExercise"  style="position: relative;display: none;border: 0px;">
         <h3 style="margin-left: 20px;">备课资源</h3>
         <div  style="margin-left: 30px;margin-right: 30px">
@@ -799,44 +1207,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         openConnect();
 
         $("#play-ppt").click(function () {
-             exitNowOn();
-            isOnLive = "play-ppt";
-            $("#voice").attr("src", "");
-            window.picOrppt = "ppt";
-            closeAllTitle();
-            if ($("#choose-ppt")[0].selectedIndex == -1)
-            {
-                return;
-            }
-            window.scrollTo(0, 130);
-            document.getElementById("close-ppt").disabled = false;
-            $("#close-ppt").attr("class", "btn btn-primary");
-            $("#ppt-container").show();
-            $("#txt-container").hide();
-            $("#voice-container").hide();
-            $("#scroll-page").show();
-            cur_ppt = 1;
-            var file_info = $("#choose-ppt option:selected").val().split("+-+");
-            var source = file_info[2];
-            var server_root_path;
-            if (source === "tea")
-            {
-                server_root_path = "<?php echo SITE_URL . 'resources/' . $pptFilePath; ?>";
-            } else {
-                server_root_path = "<?php echo SITE_URL . 'resources/' . $adminPptFilePath; ?>";
-            }
-            var dirname = file_info[0];
-            ppt_dir = server_root_path + dirname;
-            ppt_pages = file_info[1];
-            $("#all-yeshu").val(ppt_pages);
-            goCurPage();
-            if (timer_ppt !== null)
-                clearInterval(timer_ppt);
-            timer_ppt = setInterval(function () {
-                var syn_msg;
-                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                ws.send(syn_msg);
-            }, 4000);
+             
         });
         $("#play-ppt-public").click(function () {
         exitNowOn();
@@ -857,13 +1228,15 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#scroll-page").show();
             cur_ppt = 1;
             var file_info = $("#choose-ppt-public option:selected").val().split("+-+");
+            console.log(file_info);
             var source = file_info[2];
             var server_root_path;
-            if (source === "tea")
+            
+            if (source === "admin")
             {
-                server_root_path = "<?php echo $adminPublicPdir; ?>";
+                server_root_path = "<?php echo SITE_URL . 'resources/' . $adminPptFilePath; ?>";
             } else {
-                server_root_path = "<?php echo $adminPublicPdir; ?>";
+                server_root_path = "<?php echo $adminPublicPdir;; ?>";
             }
             var dirname = file_info[0];
             ppt_dir = server_root_path + dirname;
@@ -929,45 +1302,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             iframe_b.location.href = './index.php?r=webrtc/teaCam&&classID=<?php echo $classID; ?>';
         });
 
+        
+
         $("#teacher-dianbo").click(function () {
-            exitNowOn();
-            isOnLive = "teacher-dianbo";
-            $("#voice").attr("src", "");
-            closeAllTitle();
-            if ($("#teacher-choose-file")[0].selectedIndex == -1)
-            {
-                return;
-            }
-            window.scrollTo(0, 130);
-
-            $("#scroll-video").show();
-            document.getElementById("close-dianbo").disabled = false;
-            $("#close-dianbo").attr("class", "btn btn-primary");
-            var server_root_path = "<?php echo SITE_URL . 'resources/' ?>";
-            var filepath = $("#teacher-choose-file option:selected").val();
-            var absl_path = server_root_path + filepath;
-            var video_element;
-            var video_time_duration;
-
-            var video = document.getElementById('video1');
-            if (video === null) {
-                var html = "";
-                html += '<video id="video1" width="100%" controls>';
-                html += '<source src="' + absl_path + '">';
-                html += '</video>';
-                $("#dianbo-videos-container").empty();
-                $("#dianbo-videos-container").append(html);
-            } else {
-                video.setAttribute("src", absl_path);
-            }
-            $("#dianbo-videos-container").show();
-            $("#videos-container").hide();
-            video_element = document.getElementById("video1");
-            video_element.onloadedmetadata = function () {
-                video_time_duration = video_element.duration;
-                console.log("sunpy: video duration " + video_time_duration);
-            };
-            WebSocketConnect(absl_path);
+            
         });
 
         $("#teacher-dianbo-public").click(function () {
@@ -986,6 +1324,18 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#close-dianbo").attr("class", "btn btn-primary");
             var server_root_path = "<?php echo SITE_URL; ?>";
             var filepath = $("#teacher-choose-file-public option:selected").val();
+            var file_info=$("#teacher-choose-file-public option:selected").val().split("/");
+            console.log(file_info);
+            var source = file_info[0];
+            var server_root_path;
+            if (source === "admin")
+            {
+                server_root_path = "<?php echo SITE_URL . 'resources/' ; ?>";
+            } else {            
+                server_root_path = "<?php echo SITE_URL ; ?>";
+            }
+            
+            console.log(filepath);
             var absl_path = server_root_path + filepath;
             var video_element;
             var video_time_duration;
@@ -1020,40 +1370,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-pic").click(function () {
-            exitNowOn();
-            isOnLive = "play-pic";
-            $("#voice").attr("src", "");
-            window.picOrppt = "pic";
-            closeAllTitle();
-            if ($("#choose-pic")[0].selectedIndex == -1)
-            {
-                return;
-            }
-            window.scrollTo(0, 130);
-            $("#ppt-container").show();
-            $("#txt-container").hide();
-            $("#voice-container").hide();
-            $("#scroll-page").show();
-            cur_ppt = 1;
-             document.getElementById("close-ppt").disabled = false;
-            $("#close-ppt").attr("class", "btn btn-primary");
-            var file_info = $("#choose-pic option:selected").val().split("+-+");
-            var source = file_info[2];
-            var server_root_path = "<?php echo SITE_URL . 'resources/' . $picFilePath; ?>";
-            var dirname = file_info[0];
-            ppt_dir = server_root_path + dirname;
-            ppt_pages = file_info[1];
-            $("#all-yeshu").val(ppt_pages);
-            cur_ppt=file_info[3]-2;
-            console.log(cur_ppt);
-            goCurPage();
-            if (timer_ppt !== null)
-                clearInterval(timer_ppt);
-            timer_ppt = setInterval(function () {
-                var syn_msg;
-                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
-                ws.send(syn_msg);
-            }, 4000);
+           
         });
 
         $("#play-pic-public").click(function () {
@@ -1075,6 +1392,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#scroll-page").show();
             cur_ppt = 1;
             var file_info = $("#choose-pic-public option:selected").val().split("+-+");
+            console.log(file_info);
             var source = file_info[2];
             var server_root_path = "<?php echo $adminPublicPicdir; ?>";
             var dirname = file_info[0];
@@ -1092,38 +1410,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-txt").click(function () {
-            exitNowOn();
-            isOnLive = "play-txt";
-            $("#voice").attr("src", "");
-            window.picOrppt = "txt";
-            closeAllTitle();
-            if ($("#choose-txt")[0].selectedIndex == -1)
-            {
-                return;
-            }
-            $("#ppt-container").hide();
-            window.scrollTo(0, 130);
-            document.getElementById("close-ppt").disabled = false;
-            $("#close-ppt").attr("class", "btn btn-primary");
-            $("#txt-container").show();
-            $("#voice-container").hide();
-            $("#scroll-page").show();
-            $("#page-up").hide();
-            $("#yeshu").hide();
-            $("#all-yeshu").hide();
-            $("#page-go").hide();
-            $("#page-down").hide();
-            $("#full-screen-button").hide();
             
-            cur_ppt = 1;
-            var file_info = $("#choose-txt option:selected").val().split("+-+");
-            var source = file_info[2];
-            var server_root_path = "<?php echo SITE_URL . 'resources/' . $txtFilePath; ?>";
-            var dirname = file_info[0];
-            ppt_dir = server_root_path + dirname;
-            ppt_pages = file_info[1];
-            $("#all-yeshu").val(ppt_pages);
-            goCurPage();
         });
 
         $("#play-txt-public").click(function () {
@@ -1161,46 +1448,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
 
         $("#play-voice").click(function () {
-            exitNowOn();
-            isOnLive = "play-voice";
-            $("#voice").attr("src", "");
-            closeAllTitle();
-            if ($("#choose-voice")[0].selectedIndex == -1)
-            {
-                return;
-            }
-            window.scrollTo(0, 130);
-
-            $("#scroll-video").show();
-            document.getElementById("close-dianbo").disabled = false;
-            $("#close-dianbo").attr("class", "btn btn-primary");
-            var server_root_path = "<?php echo SITE_URL . 'resources/' ?>";
-            var filepath = $("#choose-voice option:selected").val();
-            var absl_path = server_root_path + filepath;
-            console.log("per"+absl_path);
-            var video_element;
-            var video_time_duration;
-
-
-            var video = document.getElementById('video1');
-            if (video === null) {
-                var html = "";
-                html += '<audio style="margin-top:100px" id="video1" width="100%" controls>';
-                html += '<source src="' + absl_path + '">';
-                html += '</audio>';
-                $("#dianbo-videos-container").empty();
-                $("#dianbo-videos-container").append(html);
-            } else {
-                video.setAttribute("src", absl_path);
-            }
-            $("#dianbo-videos-container").show();
-            $("#videos-container").hide();
-            video_element = document.getElementById("video1");
-            video_element.onloadedmetadata = function () {
-                video_time_duration = video_element.duration;
-                console.log("sunpy: video duration " + video_time_duration);
-            };
-            WebSocketConnect(absl_path);
+            
         });
 
         $("#play-voice-public").click(function () {
@@ -1263,6 +1511,207 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         var msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
         ws.send(msg);
     }
+    
+    function filePath1(path){
+           exitNowOn();
+            isOnLive = "teacher-dianbo";
+            $("#voice").attr("src", "");
+            closeAllTitle();
+            if ($("#teacher-choose-file")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            window.scrollTo(0, 130);
+
+            $("#scroll-video").show();
+            document.getElementById("close-dianbo").disabled = false;
+            $("#close-dianbo").attr("class", "btn btn-primary");
+            var server_root_path = "<?php  echo SITE_URL . 'resources/' ?>";
+   
+            var absl_path = server_root_path + path;
+            var video_element;
+            var video_time_duration;
+
+            var video = document.getElementById('video1');
+            if (video === null) {
+                var html = "";
+                html += '<video id="video1" width="100%" controls>';
+                html += '<source src="' + absl_path + '">';
+                html += '</video>';
+                $("#dianbo-videos-container").empty();
+                $("#dianbo-videos-container").append(html);
+            } else {
+                video.setAttribute("src", absl_path);
+            }
+            $("#dianbo-videos-container").show();
+            $("#videos-container").hide();
+            video_element = document.getElementById("video1");
+            video_element.onloadedmetadata = function () {
+                video_time_duration = video_element.duration;
+                console.log("sunpy: video duration " + video_time_duration);
+            };
+            WebSocketConnect(absl_path);
+        }
+        
+        function filePptPath(path){
+        exitNowOn();
+            isOnLive = "play-ppt";
+            $("#voice").attr("src", "");
+            window.picOrppt = "ppt";
+            closeAllTitle();
+            if ($("#choose-ppt")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            window.scrollTo(0, 130);
+            document.getElementById("close-ppt").disabled = false;
+            $("#close-ppt").attr("class", "btn btn-primary");
+            $("#ppt-container").show();
+            $("#txt-container").hide();
+            $("#voice-container").hide();
+            $("#scroll-page").show();
+            cur_ppt = 1;
+            var file_info = path.split("+-+");
+//            console.log(file_info);
+//            var source = file_info[2];
+            var server_root_path;
+            server_root_path = "<?php echo SITE_URL . 'resources/' . $pptFilePath; ?>";
+            console.log(file_info);
+//            if (source === "tea")
+//            {
+//                server_root_path = "<?php// echo SITE_URL . 'resources/' . $pptFilePath; ?>";
+//            } else {
+//                server_root_path = "<?php// echo SITE_URL . 'resources/' . $adminPptFilePath; ?>";
+//            }
+            var dirname = file_info[0];
+            ppt_dir = server_root_path + dirname;
+            ppt_pages = file_info[1];
+            $("#all-yeshu").val(ppt_pages);
+            goCurPage();
+            if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                var syn_msg;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                ws.send(syn_msg);
+            }, 4000);
+        }
+        
+        function filePicPath(path){
+         exitNowOn();
+            isOnLive = "play-pic";
+            $("#voice").attr("src", "");
+            window.picOrppt = "pic";
+            closeAllTitle();
+            if ($("#choose-pic")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            window.scrollTo(0, 130);
+            $("#ppt-container").show();
+            $("#txt-container").hide();
+            $("#voice-container").hide();
+            $("#scroll-page").show();
+            cur_ppt = 1;
+             document.getElementById("close-ppt").disabled = false;
+            $("#close-ppt").attr("class", "btn btn-primary");
+            var file_info = path.split("+-+");
+
+            var server_root_path = "<?php echo SITE_URL . 'resources/' . $picFilePath; ?>";
+            var dirname = file_info[0];
+            ppt_dir = server_root_path + dirname;
+            ppt_pages = file_info[1];
+            $("#all-yeshu").val(ppt_pages);
+            cur_ppt=file_info[3]-2;
+            console.log(cur_ppt);
+            goCurPage();
+            if (timer_ppt !== null)
+                clearInterval(timer_ppt);
+            timer_ppt = setInterval(function () {
+                var syn_msg;
+                syn_msg = "<?php echo $classID; ?>playppt" + $("#ppt-img")[0].src;
+                ws.send(syn_msg);
+            }, 4000);
+    }
+    
+    function fileTxtPath(path){
+    exitNowOn();
+            isOnLive = "play-txt";
+            $("#voice").attr("src", "");
+            window.picOrppt = "txt";
+            closeAllTitle();
+            if ($("#choose-txt")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            $("#ppt-container").hide();
+            window.scrollTo(0, 130);
+            document.getElementById("close-ppt").disabled = false;
+            $("#close-ppt").attr("class", "btn btn-primary");
+            $("#txt-container").show();
+            $("#voice-container").hide();
+            $("#scroll-page").show();
+            $("#page-up").hide();
+            $("#yeshu").hide();
+            $("#all-yeshu").hide();
+            $("#page-go").hide();
+            $("#page-down").hide();
+            $("#full-screen-button").hide();
+            
+            cur_ppt = 1;
+            var file_info = path.split("+-+");
+            var source = file_info[2];
+            var server_root_path = "<?php echo SITE_URL . 'resources/' . $txtFilePath; ?>";
+            var dirname = file_info[0];
+            ppt_dir = server_root_path + dirname;
+            ppt_pages = file_info[1];
+            $("#all-yeshu").val(ppt_pages);
+            goCurPage();
+    }
+    
+    function fileVoicePath(path){
+        exitNowOn();
+            isOnLive = "play-voice";
+            $("#voice").attr("src", "");
+            closeAllTitle();
+            if ($("#choose-voice")[0].selectedIndex == -1)
+            {
+                return;
+            }
+            window.scrollTo(0, 130);
+
+            $("#scroll-video").show();
+            document.getElementById("close-dianbo").disabled = false;
+            $("#close-dianbo").attr("class", "btn btn-primary");
+            var server_root_path = "<?php echo SITE_URL . 'resources/' ?>";
+            var filepath = path;
+            var absl_path = server_root_path + filepath;
+            console.log("per"+absl_path);
+            var video_element;
+            var video_time_duration;
+
+
+            var video = document.getElementById('video1');
+            if (video === null) {
+                var html = "";
+                html += '<audio style="margin-top:100px" id="video1" width="100%" controls>';
+                html += '<source src="' + absl_path + '">';
+                html += '</audio>';
+                $("#dianbo-videos-container").empty();
+                $("#dianbo-videos-container").append(html);
+            } else {
+                video.setAttribute("src", absl_path);
+            }
+            $("#dianbo-videos-container").show();
+            $("#videos-container").hide();
+            video_element = document.getElementById("video1");
+            video_element.onloadedmetadata = function () {
+                video_time_duration = video_element.duration;
+                console.log("sunpy: video duration " + video_time_duration);
+            };
+            WebSocketConnect(absl_path);
+    }
+    
     function goCurPage() {
         $("#yeshu").val(cur_ppt);
         if (window.picOrppt === "pic") {
@@ -1475,7 +1924,7 @@ $dir->close();
 
     function clearVideo() {
         var myVideo = document.getElementById("video1");
-        if (play_fun != null)
+        if (play_fun != null && myVideo != null)
         {
             myVideo.removeEventListener("play", play_fun);
             myVideo.removeEventListener("pause", pause_fun);
