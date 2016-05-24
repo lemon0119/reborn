@@ -178,9 +178,10 @@
         $num2 = ($num2 > 2) ? ($num2 - 2) : 0;
         $num2 = sizeof(scandir($adminVdir));
         $num2 = ($num2 > 2) ? ($num2 - 2) : 0;
-        $num3 = sizeof(scandir($publicVdir));
-        $num3 = ($num3 > 2) ? ($num3 - 2) : 0;
-        echo $num1 + $num2 + $num3;
+//        $num3 = sizeof(scandir($publicVdir));
+//        $num3 = ($num3 > 2) ? ($num3 - 2) : 0;
+//        echo $num1 + $num2 + $num3;
+        echo $num1 + $num2;
         ?></span > <font style="color:#000">视频</font></a>
                 </li>
                 <li >
@@ -205,15 +206,15 @@
                                 } 
                             } 
                             $mydir->close(); 
-                            $mydir = dir($publicPdir); 
-                            while($file = $mydir->read())
-                            { 
-                                if((!is_dir("$publicPdir/$file")) AND ($file!=".") AND ($file!="..")) 
-                                {   
-                                    $num = $num + 1;
-                                } 
-                            } 
-                            $mydir->close(); 
+//                            $mydir = dir($publicPdir); 
+//                            while($file = $mydir->read())
+//                            { 
+//                                if((!is_dir("$publicPdir/$file")) AND ($file!=".") AND ($file!="..")) 
+//                                {   
+//                                    $num = $num + 1;
+//                                } 
+//                            } 
+//                            $mydir->close(); 
                             echo    $num;
                             ?></span> <font style="color:#000">PPT</font></a></li>
                 <li><a  id="ppt" href="./index.php?r=teacher/txtLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
@@ -236,15 +237,15 @@
                                 } 
                             } 
                             $mytxtdir->close(); 
-                            $mytxtdir = dir($publicTxtdir); 
-                            while($file = $mytxtdir->read())
-                            { 
-                                if((!is_dir("$publicTxtdir/$file")) AND ($file!=".") AND ($file!="..")) 
-                                {   
-                                    $txtnum = $txtnum + 1;
-                                } 
-                            } 
-                            $mytxtdir->close(); 
+//                            $mytxtdir = dir($publicTxtdir); 
+//                            while($file = $mytxtdir->read())
+//                            { 
+//                                if((!is_dir("$publicTxtdir/$file")) AND ($file!=".") AND ($file!="..")) 
+//                                {   
+//                                    $txtnum = $txtnum + 1;
+//                                } 
+//                            } 
+//                            $mytxtdir->close(); 
                             echo    $txtnum;
         ?></span ><font style="color:#000">文本</font></a></li>
                 
@@ -271,15 +272,15 @@
                                 } 
                             } 
                             $myvodir->close(); 
-                            $myvodir = dir($publicVodir); 
-                            while($file = $myvodir->read())
-                            { 
-                                if((!is_dir("$publicVodir/$file")) AND ($file!=".") AND ($file!="..")) 
-                                {   
-                                    $vonum = $vonum + 1;
-                                } 
-                            } 
-                            $myvodir->close(); 
+//                            $myvodir = dir($publicVodir); 
+//                            while($file = $myvodir->read())
+//                            { 
+//                                if((!is_dir("$publicVodir/$file")) AND ($file!=".") AND ($file!="..")) 
+//                                {   
+//                                    $vonum = $vonum + 1;
+//                                } 
+//                            } 
+//                            $myvodir->close(); 
                             echo    $vonum;
         ?></span > <font style="color:#000">音频</font></a></li>              
                 <li> <a class="last"   id="ppt" href="./index.php?r=teacher/pictureLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
@@ -302,15 +303,15 @@
                                 } 
                             } 
                             $mypicdir->close(); 
-                            $mypicdir = dir($publicPicdir); 
-                            while($file = $mypicdir->read())
-                            { 
-                                if((!is_dir("$publicPicdir/$file")) AND ($file!=".") AND ($file!="..")) 
-                                {   
-                                    $picnum = $picnum + 1;
-                                } 
-                            } 
-                            $mypicdir->close(); 
+//                            $mypicdir = dir($publicPicdir); 
+//                            while($file = $mypicdir->read())
+//                            { 
+//                                if((!is_dir("$publicPicdir/$file")) AND ($file!=".") AND ($file!="..")) 
+//                                {   
+//                                    $picnum = $picnum + 1;
+//                                } 
+//                            } 
+//                            $mypicdir->close(); 
                             echo    $picnum;
         ?></span><font style="color:#000">图片</font></a></li>       
                 
