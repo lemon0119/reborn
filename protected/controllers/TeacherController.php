@@ -4330,6 +4330,7 @@ class TeacherController extends CController {
     }
 
     public function ActionAddExam() {
+        $flag=0;
         $res = 0;
         if (isset($_GET['title'])) {
             $title = $_GET['title'];
