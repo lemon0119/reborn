@@ -25,7 +25,7 @@ require 'examAnsSideBar.php';
                     <div class='answer-tip-text1'>作答结果：</div>
 <!--                    <div ><?php //echo $ansWork['answer'];?></div>-->
                     <div style="text-align: left" id ="answer" class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
-                        <font><?php echo Tool::filterKeyOfInputWithYaweiCode($ansWork['answer']); ?></font>
+                        <font id="currentContent"></font>
                     </div>
                 </td>
             </tr>
@@ -34,7 +34,7 @@ require 'examAnsSideBar.php';
                     <div class='answer-tip-text2'>正确答案：</div>
 <!--                    <div><?php //echo ($exer['content']);?></div>-->
                     <div style="text-align: left" id ="templet" class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
-                         <font><?php echo Tool::filterKeyContent($exer['content']); ?></font>
+                         <font id="originalContent"></font>
                     </div>
 
             </tr>
@@ -48,6 +48,47 @@ require 'examAnsSideBar.php';
 </div>
 
 <script>
+     var currentContent = '<?php
+            $str = str_replace("\n", "<br/>", Tool::filterKeyOfInputWithYaweiCode($ansWork['answer']));
+            $str = str_replace("\r", "", $str);
+            $str = str_replace(" ", "", $str);
+            echo $str;
+            ?>';
+    var originalContent = '<?php
+            $str2 = str_replace("\n", "<br/>", Tool::filterKeyContent($exer['content']));
+            $str2 = str_replace("\r", "", $str2);
+            $str2 = str_replace(" ", "", $str2);
+            echo $str2;
+            ?>';
+    var lcs = new LCS(currentContent, originalContent);
+    lcs.doLCS();
+    var currentFont = document.getElementById('currentContent');
+    var originalFont = document.getElementById('originalContent');
+    var currentLCS = lcs.getSubString(1);
+    var originalLCS = lcs.getSubString(2);
+    var currentInnerHTML='';
+    var originalInnerHTML='';
+    for (var i = 0; i < currentContent.length; i++) {
+        if (typeof (currentContent[i]) !== 'undefined') {
+            if (currentContent[i] !== currentLCS[i]) {
+                currentInnerHTML += '<font style="background-color:#f44336;color:#fff">' + currentContent[i] + '</font>';
+            } else {
+                currentInnerHTML += '<font style="background-color:#727272;color:#fff">' + currentContent[i] + '</font>';
+            }
+        }
+    }
+    for (var i = 0; i < originalContent.length; i++) {
+        if (typeof (originalContent[i]) !== 'undefined') {
+            if (originalContent[i] !== originalLCS[i]) {
+                originalInnerHTML += '<font style="background-color:#f44336;color:#fff">' + originalContent[i] + '</font>';
+            } else {
+                originalInnerHTML += '<font style="background-color:#727272;color:#fff">' + originalContent[i] + '</font>';
+            }
+        }
+    }
+    currentFont.innerHTML = currentInnerHTML;
+    originalFont.innerHTML = originalInnerHTML;
+    
      $(document).ready(function(){   
          $("li#li-key-<?php echo $exer['exerciseID'];?>").attr('class','active');
       $("#score").html(<?php echo $score;?>);
