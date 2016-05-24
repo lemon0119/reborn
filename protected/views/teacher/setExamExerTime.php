@@ -209,7 +209,7 @@ $(document).ready(function(){
                                 url: "index.php?r=api/putNotice2&&class=<?php echo Yii::app()->session['currentClass'] ?>",
                                 data: {title: "考试", content: "考试时间已经到了，可以开始考试了"},
                                 success: function () {
-                                            window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $examID ?>&&duration="+v+"&&beginTime=<?php echo $beginTime ?>&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
+                                            window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $examID ?>&&duration="+v+"&&beginTime=<?php echo date("Y-m-d H:i:s", time()); ?>&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
  //                                    window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=" + examID + "&&duration=" + v + "&&beginTime=" + begin + "&&isOpen=0&&page=" +<?php// echo $pages->currentPage + 1; ?>;
                                 },
                                 error: function (xhr, type, exception) {

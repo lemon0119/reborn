@@ -175,11 +175,15 @@ $squence = $countSquence + 1;
             }
         }
     }
+    
+    function onChange(){
+        yaweiOCX4Look.UpdateView();
+        var input = getContent(document.getElementById("typeOCX"));
+        yaweiOCX4Look.Locate(input.length);
+    }
 
     function onStenoPressKey(pszStenoString, device) {
-        yaweiOCX4Look.UpdateView();
         var inputO = getContent(yaweiOCX4Look);
-        yaweiOCX4Look.Locate(inputO.length);
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){
@@ -270,7 +274,7 @@ $squence = $countSquence + 1;
                         wrong.push(stringText);
                     else {
                         isWrong = true;
-                        createFont("#595959", old, oldCode);
+                        createFont("#808080", old, oldCode);
                         old = new Array();
                         oldCode = new Array();
                         wrong = new Array();
@@ -281,12 +285,12 @@ $squence = $countSquence + 1;
         }
 
         if (countLength !== 0) {
-            createFont("#595959", old, oldCode);
+            createFont("#808080", old, oldCode);
             createFont("#ff0000", wrong, "");
         }
         if (inputO.length < text.length) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
-            createFont("#000000", left, "");
+            createFont("#000000", left, "left");
         }
     }
 
@@ -322,31 +326,14 @@ $squence = $countSquence + 1;
 //        father.appendChild(p);
 //    }
 
-    function createFont(color, text, code) {
+     function createFont(color, text, code) {
         var father = document.getElementById("templet");
         var f = document.createElement("font");
         var content = {content: ""};
         var isBrief = 0;
-        if (color == "#595959") {
+        if (color === '#000000') {
             for (var i = 0; i < text.length; i++) {
-                if (text[i].length < 3) {
-                    for (var j = 0; j < briefOriginalYaweiCode.length; j++) {
-                        if (text[i] == briefCode[j]) {
-                            isBrief++;
-                            if (code[i] == briefOriginalYaweiCode[j].replace(":0", "") || (code[i] == "W:X")) {
-                                isBrief--;
-                            }
-                        }
-                    }
-                } else {
-                    isBrief++;
-                }
-                if (isBrief === 0) {
-                    content.content += text[i];
-                } else {
-                    content.content += "<span style='color:blue'>" + text[i] + "</span>";
-                    isBrief--;
-                }
+                content.content += text[i];
             }
             f.style = "color:" + color;
             content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
@@ -354,21 +341,49 @@ $squence = $countSquence + 1;
             f.innerHTML = content.content;
             father.appendChild(f);
         } else {
-            for (var i = 0; i < text.length; i++) {
-                content.content += text[i];
-            }
-            f.style = "color:" + color;
-            //var t = document.createTextNode(text);
-            //f.appendChild(t);
-            if (color === "#ff0000") {
-                content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
-                checkYaweiCode(content);
-            } else {
+            if (color == "#727272") {
+                for (var i = 0; i < text.length; i++) {
+                    if (text[i].length < 3) {
+                        for (var j = 0; j < briefOriginalYaweiCode.length; j++) {
+                            if (text[i] == briefCode[j]) {
+                                isBrief++;
+                                if (code[i] == briefOriginalYaweiCode[j].replace(":0", "") || (code[i] == "W:X")) {
+                                    isBrief--;
+                                }
+                            }
+                        }
+                    } else {
+                        isBrief++;
+                    }
+                    if (isBrief === 0) {
+                        content.content += text[i];
+                    } else {
+                        content.content += "<span style='background-color:blue;color:#fff'>" + text[i] + "</span>";
+                        isBrief--;
+                    }
+                }
+                f.style = "background-color:" + color + ";color:#fff";
                 content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
                 checkYaweiCode(content);
+                f.innerHTML = content.content;
+                father.appendChild(f);
+            } else {
+                for (var i = 0; i < text.length; i++) {
+                    content.content += text[i];
+                }
+                f.style = "background-color:" + color + ";color:#fff";
+                //var t = document.createTextNode(text);
+                //f.appendChild(t);
+                if (color === "#f44336") {
+                    content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
+                    checkYaweiCode(content);
+                } else {
+                    content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
+                    checkYaweiCode(content);
+                }
+                f.innerHTML = content.content;
+                father.appendChild(f);
             }
-            f.innerHTML = content.content;
-            father.appendChild(f);
         }
     }
     function controlScroll() {
@@ -394,10 +409,10 @@ $squence = $countSquence + 1;
     window.onunload = onunload_handler;
     function onbeforeunload_handler() {
         yaweiOCX4Look.remove();
-         
+
     }
     function onunload_handler() {
-          yaweiOCX4Look.remove();
+        yaweiOCX4Look.remove();
     }
 
 </script>

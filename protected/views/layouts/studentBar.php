@@ -53,8 +53,15 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                     </li> 
                                     <li >
                                         <div class="userUI">
-                                            <a href="#" id="userUI"  data-toggle="dropdown">
-                                                <?php echo Yii::app()->session['userName']; ?><?php echo Yii::app()->session['className']; ?><b class="user_dropdown_logo"></b>
+                                            <a href="#" id="userUI"  data-toggle="dropdown" title="<?php echo Yii::app()->session['userName']; ?>">
+                                                
+                                                    <?php $name=Yii::app()->session['userName'];
+                                                            if (Tool::clength($name) <= 3)
+                                                                echo $name;
+                                                            else
+                                                                echo Tool::csubstr($name, 0, 3) . "...";
+                                                    ?>
+                                                    <?php echo Yii::app()->session['className']; ?><b class="user_dropdown_logo"></b>
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <li>
