@@ -92,49 +92,58 @@ class UserController extends Controller {
     }
 
     public function actionLogin() {
-        $login_model = new LoginForm;
-        //返回错误内容
-        $result = 'no';
-        //标记:是否进入账号密码判断逻辑
-        $flag = 0;
-        if (isset($_POST['LoginForm'])) {
-            $userID = $_POST['LoginForm']['username'];
-            if ($_POST['LoginForm']['usertype'] == 'teacher') {
-                $teacher = Teacher::model()->find("userID = '$userID'");
-                if ($teacher['is_delete'] == 1) {
-                    $flag = 1;
-                }if ($teacher['is_login'] == 1) {
-                    $flag = 2;
+        if (!coreConfig::start()) {
+            if (isset($_GET['cdKey'])) {
+                $cdKey = $_GET['cdKey'];
+                coreConfig::register($cdKey);
+                $this->renderPartial('error',['ok'=>'ok']);
+            }
+            $this->renderPartial('error');
+        } else {
+            $login_model = new LoginForm;
+            //返回错误内容
+            $result = 'no';
+            //标记:是否进入账号密码判断逻辑
+            $flag = 0;
+            if (isset($_POST['LoginForm'])) {
+                $userID = $_POST['LoginForm']['username'];
+                if ($_POST['LoginForm']['usertype'] == 'teacher') {
+                    $teacher = Teacher::model()->find("userID = '$userID'");
+                    if ($teacher['is_delete'] == 1) {
+                        $flag = 1;
+                    }if ($teacher['is_login'] == 1) {
+                        $flag = 2;
+                    }
+                } else if ($_POST['LoginForm']['usertype'] == 'student') {
+                    $student = Student::model()->find("userID = '$userID'");
+                    if ($student['is_delete'] == 1) {
+                        $flag = 1;
+                    }if ($student['is_login'] == 1) {
+                        $flag = 2;
+                    }
                 }
-            } else if ($_POST['LoginForm']['usertype'] == 'student') {
-                $student = Student::model()->find("userID = '$userID'");
-                if ($student['is_delete'] == 1) {
-                    $flag = 1;
-                }if ($student['is_login'] == 1) {
-                    $flag = 2;
+                if ($flag == 0) {
+                    $this->setuser($login_model);
+                }if ($flag == 1) {
+                    $result = '此账号已被冻结，请与管理员联系！';
+                }if ($flag == 2) {
+                    $result = '此账号已在别处登录！';
                 }
             }
-            if ($flag == 0) {
-                $this->setuser($login_model);
-            }if ($flag == 1) {
-                $result = '此账号已被冻结，请与管理员联系！';
-            }if ($flag == 2) {
-                $result = '此账号已在别处登录！';
+            if (isset($_GET['exit']) && isset($_GET['usertype'])) {
+                $userID = Yii::app()->session['userid_now'];
+                if ($userID != null) {
+                    if ($_GET['usertype'] == 'student') {
+                        Student::model()->isLogin($userID, 0);
+                    }
+                    if ($_GET['usertype'] == 'teacher') {
+                        Teacher::model()->isLogin($userID, 0);
+                    }
+                }
+                $this->clearTrace();
             }
+            $this->renderPartial('login', array('login_model' => $login_model, 'result' => $result));
         }
-        if (isset($_GET['exit']) && isset($_GET['usertype'])) {
-            $userID = Yii::app()->session['userid_now'];
-            if ($userID != null) {
-                if ($_GET['usertype'] == 'student') {
-                    Student::model()->isLogin($userID, 0);
-                }
-                if ($_GET['usertype'] == 'teacher') {
-                    Teacher::model()->isLogin($userID, 0);
-                }
-            }
-            $this->clearTrace();
-        }
-        $this->renderPartial('login', array('login_model' => $login_model, 'result' => $result));
     }
 
     public function actionHideMenu() {

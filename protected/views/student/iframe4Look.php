@@ -175,11 +175,15 @@ $squence = $countSquence + 1;
             }
         }
     }
+    
+    function onChange(){
+        yaweiOCX4Look.UpdateView();
+        var input = getContent(document.getElementById("typeOCX"));
+        yaweiOCX4Look.Locate(input.length);
+    }
 
     function onStenoPressKey(pszStenoString, device) {
-        yaweiOCX4Look.UpdateView();
         var inputO = getContent(yaweiOCX4Look);
-        yaweiOCX4Look.Locate(inputO.length);
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){

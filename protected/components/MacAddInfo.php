@@ -7,7 +7,7 @@ class MacAddInfo {
     var $return_array = array (); // 返回带有MAC地址的字串数组   
     var $mac_addr; 
 
-    function MacAddInfo($os_type) { 
+    public function MacAddInfo($os_type) { 
         switch (strtolower ( $os_type )) { 
             case "linux" : 
                 $this->forLinux (); 

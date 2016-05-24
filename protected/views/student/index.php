@@ -3,7 +3,6 @@
 <!--    <button onclick="insert()">导入数据库</button>-->
 </div>
 <script>
-//    function insert(){
-//        window.location.href="./index.php?r=student/index&&insert=true";
+//    function insert() {
 //    }
 </script>
