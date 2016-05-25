@@ -326,11 +326,16 @@ if ($isExam) {
             }
         }
     }
-
-    function onStenoPressKey(pszStenoString, device) {
+    
+    function onChange(){
         yaweiOCX.UpdateView();
+        var input = getContent(document.getElementById("typeOCX"));
+        yaweiOCX.Locate(input.length);
+    }
+    
+    
+    function onStenoPressKey(pszStenoString, device) {
         var inputO = getContent(yaweiOCX);
-        yaweiOCX.Locate(inputO.length);
         window.GA_answer = yaweiOCX.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){

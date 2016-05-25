@@ -1350,6 +1350,10 @@ class TeacherController extends CController {
 //        判断重复登录
 //        $userID = Yii::app()->session['userid_now'];
 //        Teacher::model()->isLogin($userID, 1);
+        
+        
+        
+        
         $this->render('index'); //,['info'=>$info]);
     }
 
@@ -4326,6 +4330,7 @@ class TeacherController extends CController {
     }
 
     public function ActionAddExam() {
+        $flag=0;
         $res = 0;
         if (isset($_GET['title'])) {
             $title = $_GET['title'];
