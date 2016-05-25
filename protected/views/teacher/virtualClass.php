@@ -1206,9 +1206,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         //打开连接
         openConnect();
 
-        $("#play-ppt").click(function () {
-             
-        });
         $("#play-ppt-public").click(function () {
         exitNowOn();
             isOnLive = "play-ppt";
@@ -1226,6 +1223,14 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#txt-container").hide();
             $("#voice-container").hide();
             $("#scroll-page").show();
+            $("#scroll-page").show();
+            $("#page-up").show();
+            $("#page-go").show();
+            $("#yeshu").show();
+            $("#all-yeshu").show();
+            $("#page-down").show();
+            $("#full-screen-button").show();
+
             cur_ppt = 1;
             var file_info = $("#choose-ppt-public option:selected").val().split("+-+");
             console.log(file_info);
@@ -1278,7 +1283,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             ws.send(msg);
             this.disabled = true;
             $("#close-ppt").attr("class", "btn");
+            if(document.getElementById("play-ppt")!=null){
             document.getElementById("play-ppt").disabled = false;
+        }
             $("#ppt-container").hide();
             $("#voice-container").hide();
             $("#scroll-page").hide();
@@ -1286,8 +1293,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         });
         
 
-        $("#share-Cam").click(function () {
-        });
 
         $("#close-Cam").click(function () {
             var msg = "<?php echo $classID; ?>closeCam";
@@ -1302,11 +1307,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             iframe_b.location.href = './index.php?r=webrtc/teaCam&&classID=<?php echo $classID; ?>';
         });
 
-        
 
-        $("#teacher-dianbo").click(function () {
-            
-        });
 
         $("#teacher-dianbo-public").click(function () {
             exitNowOn();
@@ -1369,9 +1370,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#close-dianbo").attr("class", "btn");
         });
 
-        $("#play-pic").click(function () {
-           
-        });
 
         $("#play-pic-public").click(function () {
             exitNowOn();
@@ -1384,12 +1382,15 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 return;
             }
             window.scrollTo(0, 130);
+            if(document.getElementById("close-ppt")!=null){
              document.getElementById("close-ppt").disabled = false;
+         }
             $("#close-ppt").attr("class", "btn btn-primary");
             $("#ppt-container").show();
             $("#txt-container").hide();
             $("#voice-container").hide();
             $("#scroll-page").show();
+            
             cur_ppt = 1;
             var file_info = $("#choose-pic-public option:selected").val().split("+-+");
             console.log(file_info);
@@ -1409,9 +1410,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             }, 4000);
         });
 
-        $("#play-txt").click(function () {
-            
-        });
 
         $("#play-txt-public").click(function () {
             exitNowOn();
@@ -1431,9 +1429,9 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#voice-container").hide();
             $("#scroll-page").show();
             $("#page-up").hide();
+            $("#page-go").hide();
             $("#yeshu").hide();
             $("#all-yeshu").hide();
-            $("#page-go").hide();
             $("#page-down").hide();
             $("#full-screen-button").hide();
             cur_ppt = 1;
@@ -1447,9 +1445,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             goCurPage();
         });
 
-        $("#play-voice").click(function () {
-            
-        });
+
 
         $("#play-voice-public").click(function () {
            exitNowOn();
@@ -1570,6 +1566,12 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#txt-container").hide();
             $("#voice-container").hide();
             $("#scroll-page").show();
+            $("#page-up").show();
+            $("#yeshu").show();
+            $("#all-yeshu").show();
+            $("#page-go").show();
+            $("#page-down").show();
+            $("#full-screen-button").show();
             cur_ppt = 1;
             var file_info = path.split("+-+");
 //            console.log(file_info);
@@ -1612,6 +1614,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             $("#txt-container").hide();
             $("#voice-container").hide();
             $("#scroll-page").show();
+            
             cur_ppt = 1;
              document.getElementById("close-ppt").disabled = false;
             $("#close-ppt").attr("class", "btn btn-primary");
@@ -2006,7 +2009,9 @@ $dir->close();
                 ws.send(msg);
                 this.disabled = true;
                 $("#close-ppt").attr("class", "btn");
+                if(document.getElementById("play-ppt")!=null){
                 document.getElementById("play-ppt").disabled = false;
+            }
                 $("#ppt-container").hide();
                 $("#voice-container").hide();
                 $("#scroll-page").hide();
@@ -2024,7 +2029,9 @@ $dir->close();
                 ws.send(msg);
                 this.disabled = true;
                 $("#close-ppt").attr("class", "btn");
+                if(document.getElementById("play-ppt")!=null){
                 document.getElementById("play-ppt").disabled = false;
+            }
                 $("#ppt-container").hide();
                 $("#voice-container").hide();
                 $("#scroll-page").hide();
@@ -2040,7 +2047,9 @@ $dir->close();
                 ws.send(msg);
                 this.disabled = true;
                 $("#close-ppt").attr("class", "btn");
+                if(document.getElementById("play-ppt")!=null){
                 document.getElementById("play-ppt").disabled = false;
+            }
                 $("#ppt-container").hide();
                 $("#voice-container").hide();
                 $("#scroll-page").hide();
