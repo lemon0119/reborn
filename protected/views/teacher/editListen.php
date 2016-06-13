@@ -101,7 +101,7 @@ $(document).ready(function(){
     $("#wordCount").text(v);
     $("#upload").hide();
     <?php if(isset($result))
-            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>
+            echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.success);";?>
 });
 
 

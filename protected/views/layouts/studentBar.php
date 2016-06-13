@@ -40,7 +40,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                     </li>
                                     <li><a id="courseExam" href="./index.php?r=student/classExam">考 试</a></li>
 
-                                    <li><a id ="exam_statistics_stu" href="./index.php?r=student/watchData&&classID=<?php echo $classID; ?>">统 计</a></li>
+                                    <li><a id ="exam_statistics_stu" href="./index.php?r=student/watchData&&classID=<?php if($classID==0) echo ""; else echo $classID; ?>">统 计</a></li>
                                     <li><a id="suLu" href="./index.php?r=student/suLu">百 科</a></li>
                                     <li><a id="schedule_manager_stu"  href="./index.php?r=student/scheduleDetil">课程表</a></li>
                                     <li><a id="blank_stu"></a></li>

@@ -41,7 +41,7 @@
 
     var options = {  
         success: function(info){
-            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.confirm);
             $("#ppt-table").load("./index.php?r=admin/pptTable&&pdir=<?php echo $pdir;?>");
             $("#upload").hide();
         },
