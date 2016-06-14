@@ -2,6 +2,7 @@
 
 class Tool {
 
+    public static $studentNumber=60;
     public static $EXER_TYPE = [
         'choice',
         'filling',

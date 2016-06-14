@@ -29,7 +29,7 @@
 //                                    break;
 //                            }
                             ?><?php
-//                            $flag = 1;
+                            $flag = 1;
                                 foreach ($result as $v) {
                                         if (($v['sequence'] == $s) && ($v['day'] == 0)) {
 //                            switch ($s) {
