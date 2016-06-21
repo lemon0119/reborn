@@ -211,8 +211,10 @@ $squence = $countSquence + 1;
      }
      */
     var typeOCX = document.getElementById("typeOCX");
+    if(typeOCX !=null){
     window.onbeforeunload = onbeforeunload_handler;
     window.onunload = onunload_handler;
+    }
     function onbeforeunload_handler() {
         document.getElementById('typeOCX').remove();
     }

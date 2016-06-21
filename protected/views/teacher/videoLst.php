@@ -48,7 +48,7 @@ $pdir = "./resources/" . $pptFilePath;
                     <img src="./img/dformefault/upload-small.gif"  alt="正在努力上传.."/>                      
                     <div id="number">0%</div>              
                 </div>      
-                <button onclick="formSubmit()" type="button" class="btn btn-primary">上传</button>
+                <button onclick="formSubmit()" type="button" class="btn btn-primary" id="myButton">上传</button>
                 <span style="position: relative;left: 10px">
                     <input type="checkbox" name="checkbox"  value="" />
                     是否上传为公共资源
@@ -74,12 +74,14 @@ $pdir = "./resources/" . $pptFilePath;
             window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.info);
             $("#video-table").load("./index.php?r=teacher/videoTable&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>&&isnew=0");
             $("#upload").hide();
+            $('#myButton').removeAttr("disabled");
         },
         error: function (xhr, type, exception) {
             console.log('upload erroe', type);
             console.log(xhr.responseText, "Failed");
             window.wxc.xcConfirm("上传失败！", window.wxc.xcConfirm.typeEnum.error);
             $("#upload").hide();
+            $('#myButton').removeAttr("disabled");
         }
     };
 
@@ -97,6 +99,7 @@ $pdir = "./resources/" . $pptFilePath;
 
     function formSubmit() {
         var s = document.form1.file.value;
+        $('#myButton').attr('disabled',"true");
         if (s == "") {
             window.wxc.xcConfirm("请选择文件！", window.wxc.xcConfirm.typeEnum.info);
         } else {
