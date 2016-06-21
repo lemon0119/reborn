@@ -121,9 +121,9 @@ $this->widget('CLinkPager', array('pages' => $pages));
         var result = <?php if (isset($result)) echo "'$result'";
 else echo'1'; ?>;
         if (result === '1')
-            window.wxc.xcConfirm('复制填空题成功！', window.wxc.xcConfirm.typeEnum.success);
+            window.wxc.xcConfirm('复制成功！', window.wxc.xcConfirm.typeEnum.success);
         else if (result === '0')
-            window.wxc.xcConfirm('复制填空题失败！', window.wxc.xcConfirm.typeEnum.error);
+            window.wxc.xcConfirm('复制失败！', window.wxc.xcConfirm.typeEnum.error);
         result = "";
     }
     );

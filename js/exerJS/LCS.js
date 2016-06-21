@@ -104,7 +104,7 @@ function lcs4rightResult(str1, str2) {
 
 function _lcs4rightResult(str1, str2, i, j, arr, result) {
     if (i == 0 || j == 0) {
-        return;
+        return;}
         if (str1[i - 1] == str2[j - 1]) {
             _lcs4rightResult(str1, str2, i - 1, j - 1, arr, result);
             result.push(str1[i - 1]);
@@ -114,4 +114,3 @@ function _lcs4rightResult(str1, str2, i, j, arr, result) {
             _lcs4rightResult(str1, str2, i - 1, j, arr, result);
         }
     }
-}

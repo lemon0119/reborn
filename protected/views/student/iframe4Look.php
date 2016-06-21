@@ -178,7 +178,7 @@ $squence = $countSquence + 1;
     
     function onChange(){
         yaweiOCX4Look.UpdateView();
-        var input = getContent(document.getElementById("typeOCX"));
+        var input = getContent(yaweiOCX4Look);
         yaweiOCX4Look.Locate(input.length);
     }
 

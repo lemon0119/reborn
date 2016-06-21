@@ -75,8 +75,8 @@ function long2(){
                 
             </div>
              <div style="margin-top: 30px;">
-                <button class="btn btn-primary" type="button" onclick="window.location.href='./index.php?r=admin/index'">返 回</button>
-                <button class="btn btn-primary" type="button" name="submit"  onclick="judge()">提 交</button>
+                <a class="btn btn-primary"  onclick="window.location.href='./index.php?r=admin/index'">返 回</a>
+                <a class="btn btn-primary"  name="submit"  onclick="judge()">提 交</a>
             </div>
         </fieldset>
     </form>   
@@ -151,7 +151,7 @@ function judge(){
         return false;
     }
     if(email === "" ){
-       window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
+        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
     $('#myForm').submit();
