@@ -64,7 +64,7 @@ class UserController extends Controller {
     protected function setuser(&$login_model) {
         $login_model->attributes = $_POST['LoginForm'];
         if ($login_model->validate() && $login_model->login()) {  //用户名密码session持久化
-            $username_now = $login_model->username;
+            $username_now = strtoupper($login_model->username);
             $role_now = $login_model->usertype;
             if ($role_now === 'teacher') {
                 $user = (new Teacher())->find("userid='$username_now'");

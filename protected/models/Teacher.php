@@ -12,7 +12,7 @@ class Teacher extends CActiveRecord {
 
     public function insertTea($userID, $userName, $sex, $age, $pass, $phone_number, $mail_address, $department, $school) {
         $newTea = new Teacher();
-        $newTea->userID = $userID;
+        $newTea->userID = strtoupper($userID);
         $newTea->userName = $userName;
         $newTea->sex = $sex;
         $newTea->age = $age;
