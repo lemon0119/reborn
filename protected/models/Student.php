@@ -29,7 +29,7 @@ class Student extends CActiveRecord {
 
     public function insertStu($userID, $userName, $sex, $age, $pass, $mail_address, $phone_number, $classID) {
         $newStu = new Student();
-        $newStu->userID = $userID;
+        $newStu->userID = strtoupper($userID);
         $newStu->userName = $userName;
         $newStu->sex = $sex;
         $newStu->age = $age;
