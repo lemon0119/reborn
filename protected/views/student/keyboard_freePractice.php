@@ -55,7 +55,6 @@
 <object id="typeOCX" type="application/x-itst-activex" 
         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
         width ='770' height='330'
-        event_OnChange="onChange"
         event_OnStenoPress="onStenoPressKey">
 </object>
 <script>
