@@ -70,15 +70,21 @@ $code = mt_rand(0, 1000000);
                 <td class="font-center" style="width: 100px">
                     <?php if ($_GET['type'] != 'key') { ?>
                         <?php if ($allwork['createPerson'] == Yii::app()->session['userid_now']) { ?>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID']; ?>&&type=<?php echo $type ?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID'] ?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                             <?php if(!isset($_GET["isExercise"])){ ?>
+                               <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID']; ?>&&type=<?php echo $type ?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID'] ?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>  
+                             <?php }?>
                             <?php if (isset($_GET['isExercise'])) { ?>
                                 <a href="./index.php?r=teacher/AddExercise&&isExercise=1&&suiteID=<?php echo $suite['suiteID']; ?>&&classID=<?php echo $_GET['classID'];?>&&on=<?php echo $_GET['on']; ?>&&type=<?php echo $type ?>&&exerciseID=<?php echo $allwork['exerciseID'] ?>&&code=<?php echo $code ?>&&page=<?php echo $pages->currentPage + 1 ?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
                             <?php } else { ?>
                                 <a href="./index.php?r=teacher/AddWork&&suiteID=<?php echo $suite['suiteID'] ?>&&type=<?php echo $type ?>&&exerciseID=<?php echo $allwork['exerciseID'] ?>&&code=<?php echo $code ?>&&page=<?php echo $pages->currentPage + 1 ?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
                             <?php } ?>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID'] ?>&&type=<?php echo $type ?>&&exerciseID=<?php echo $allwork['exerciseID'] ?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>                            
+                                <?php if(!isset($_GET["isExercise"])){ ?>
+                               <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID'] ?>&&type=<?php echo $type ?>&&exerciseID=<?php echo $allwork['exerciseID'] ?>"><img src="<?php echo IMG_URL; ?>edit.png"></a>                            
+                             <?php }?>
                         <?php } else { ?>
-                            <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID']; ?>&&type=<?php echo $type ?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID'] ?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                            <?php if(!isset($_GET["isExercise"])){ ?>
+                                  <a target="_parent" href="./index.php?r=teacher/ModifyEditWork&&suiteID=<?php echo $suite['suiteID']; ?>&&type=<?php echo $type ?>&&action=look&&exerciseID=<?php echo $allwork['exerciseID'] ?>"><img src="<?php echo IMG_URL; ?>detail.png"></a>
+                             <?php }?>
                             <?php if (isset($_GET['isExercise'])) { ?>
                                 <a href="./index.php?r=teacher/AddExercise&&isExercise=1&&suiteID=<?php echo $suite['suiteID']; ?>&&classID=<?php echo $_GET['classID'];?>&&on=<?php echo $_GET['on']; ?>&&type=<?php echo $type ?>&&exerciseID=<?php echo $allwork['exerciseID'] ?>&&code=<?php echo $code ?>&&page=<?php echo $pages->currentPage + 1 ?>"><img src="<?php echo IMG_URL; ?>icon_add.png" title="添加"></a>
                             <?php } else { ?>
