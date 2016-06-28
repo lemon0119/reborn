@@ -4273,7 +4273,7 @@ class TeacherController extends CController {
         } else {
             $title = Yii::app()->session['title'];
         }
-        $suiteLst = Suite::model()->findAll();
+        $suiteLst = Suite::model()->findAll("createPerson='$teacherID'");
         foreach ($suiteLst as $all) {
             if ($all['suiteName'] == $title) {
                 $res = 1;
@@ -4340,11 +4340,12 @@ class TeacherController extends CController {
         } else {
             $title = Yii::app()->session['title'];
         }
-        $allExam = Exam::model()->findAll();
+        $teacherID = Yii::app()->session['userid_now'];
+        $allExam = Exam::model()->findAll("createPerson='$teacherID'");
         foreach ($allExam as $all) {
             if ($all['examName'] == $title) {
                 $res = 1;
-                $teacherID = Yii::app()->session['userid_now'];
+                
                 $array_class = array();
                 $result = TbClass::model()->getClassByTeacherID($teacherID);
                 foreach ($result as $class)
