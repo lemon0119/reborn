@@ -2,6 +2,7 @@
 
 class Tool {
 
+    public static $studentNumber=60;
     public static $EXER_TYPE = [
         'choice',
         'filling',
@@ -421,6 +422,7 @@ class Tool {
         $new = str_replace("\n", "", $content);
         $newcontent = str_replace("\r", "", $new);
         $newcontent = str_replace(" ", "", $newcontent);
+        $newcontent = str_replace("　", "", $newcontent);
         return $newcontent;
     }
 

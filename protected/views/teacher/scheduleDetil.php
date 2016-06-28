@@ -141,7 +141,7 @@ echo $courseName; ?></h3>
 //                                case 9:echo '<span style="font-weight: bolder">晚上</span>';
 //                                    break;
 //                            }
-                            ?></td>
+                            ?>
                             <td style="height: 62px" class="table_schedule" title="<?php
                                         $array_v = explode("&&", $v['courseInfo']);
                                         foreach ($array_v as $value) {

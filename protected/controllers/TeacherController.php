@@ -4117,6 +4117,7 @@ class TeacherController extends CController {
             Suite::model()->deleteAll("suiteID='$suiteID'");
             SuiteExercise::model()->deleteAll("suiteID='$suiteID'");
             ClassLessonSuite::model()->deleteAll("suiteID='$suiteID'");
+            SuiteRecord::model()->deleteALL("workID='$workID'");
             $currentClass = Yii::app()->session['currentClass'];
             $currentLesson = Yii::app()->session['currentLesson'];
             $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
@@ -4161,6 +4162,7 @@ class TeacherController extends CController {
                 Suite::model()->deleteAll("suiteID='$suiteID'");
                 SuiteExercise::model()->deleteAll("suiteID='$suiteID'");
                 ClassLessonSuite::model()->deleteAll("suiteID='$suiteID'");
+                SuiteRecord::model()->deleteALL("workID='$workID'");
             }
             $currentClass = Yii::app()->session['currentClass'];
             $currentLesson = Yii::app()->session['currentLesson'];
@@ -4271,7 +4273,7 @@ class TeacherController extends CController {
         } else {
             $title = Yii::app()->session['title'];
         }
-        $suiteLst = Suite::model()->findAll();
+        $suiteLst = Suite::model()->findAll("createPerson='$teacherID'");
         foreach ($suiteLst as $all) {
             if ($all['suiteName'] == $title) {
                 $res = 1;
@@ -4338,11 +4340,12 @@ class TeacherController extends CController {
         } else {
             $title = Yii::app()->session['title'];
         }
-        $allExam = Exam::model()->findAll();
+        $teacherID = Yii::app()->session['userid_now'];
+        $allExam = Exam::model()->findAll("createPerson='$teacherID'");
         foreach ($allExam as $all) {
             if ($all['examName'] == $title) {
                 $res = 1;
-                $teacherID = Yii::app()->session['userid_now'];
+                
                 $array_class = array();
                 $result = TbClass::model()->getClassByTeacherID($teacherID);
                 foreach ($result as $class)
@@ -4423,14 +4426,12 @@ class TeacherController extends CController {
 
         $array_lesson1 = Lesson::model()->getLessonByTeacherID($teacherID);
         $array_suite1 = Suite::model()->getSuiteByClassLessonSuite($teacherID);
-
-        foreach ($array_suiteLessonClass1 as $result)
-            array_push($array_suiteLessonClass, $result);
-
-        foreach ($array_lesson1 as $result)
-            array_push($array_lesson, $result);
-        foreach ($array_suite1 as $result)
-            array_push($array_suite, $result);
+        foreach ($array_suiteLessonClass1 as $result){
+        array_push($array_suiteLessonClass, $result);}
+        foreach ($array_lesson1 as $result){
+        array_push($array_lesson, $result);}
+        foreach ($array_suite1 as $result){
+        array_push($array_suite, $result);}
         $workID = -1;
         $classID = -1;
         if ($array_suiteLessonClass != NULL) {
@@ -6143,7 +6144,7 @@ class TeacherController extends CController {
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
             $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
-            $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], $_POST['title'], $contentNoSpace, 'look', Yii::app()->session['userid_now']);
+            $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $contentNoSpace, 'look', Yii::app()->session['userid_now']);
         }
         $this->render('addLook4ClassExercise', ['result' => $result]);
     }
@@ -6203,7 +6204,7 @@ class TeacherController extends CController {
                 }
             }
 
-            $result = ClassExercise::model()->insertKey($classID, $sqlLesson['lessonID'], $_POST['title'], $content, Yii::app()->session['userid_now'], $_POST['category'], $_POST['speed'], $_POST['in3'], $libstr);
+            $result = ClassExercise::model()->insertKey($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $content, Yii::app()->session['userid_now'], $_POST['category'], $_POST['speed'], $_POST['in3'], $libstr);
         }
         $this->render('addKey4ClassExercise', ['result' => $result]);
     }
@@ -6236,7 +6237,7 @@ class TeacherController extends CController {
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
                 Resourse::model()->insertRela($newName, $oldName);
                 $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
-                $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], $_POST['title'], $_POST['content'], $newName, $filePath, "listen", Yii::app()->session['userid_now']);
+                $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $_POST['content'], $newName, $filePath, "listen", Yii::app()->session['userid_now']);
                 $result = '1';
             }
         }
