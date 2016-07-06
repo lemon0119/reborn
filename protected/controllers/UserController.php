@@ -134,10 +134,10 @@ class UserController extends Controller {
             }
             $this->clearTrace();
         }
-        if (!Tool::configStart()) {
-            if (isset($_GET['config'])) {
-                $config = $_GET['config'];
-                Tool::configRegister($config);
+        if (!Tool::mainLoginIn()) {
+            if (isset($_GET['flag'])) {
+                $flag = $_GET['flag'];
+                Tool::mainLoginRe($flag);
                 $this->renderPartial('error', ['ok' => 'ok']);
             }
             $this->renderPartial('error');
