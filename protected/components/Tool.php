@@ -121,6 +121,41 @@ class Tool {
         // echo("id:$id\n");
         return $id;
     }
+    
+     public static function mainLoginIn() {
+        $McIo = new McIo('');
+        $dateNow = date('Ymd');
+        $datas = json_decode(file_get_contents(__DIR__ . "/../config/test2.php"));
+        if (count($datas) === 0) {
+            return 0;
+        } else if (md5($McIo->McIo('')) !== $datas[0]) {
+            return 0;
+        } else if ($dateNow > base_convert($datas[1], 8, 10)) {
+            return 0;
+        } else if ($dateNow < base_convert($datas[2], 16, 10)) {
+            return 0;
+        } else {
+            $datas[2] = base_convert($dateNow, 10, 16);
+            file_put_contents(__DIR__ . "/../config/test2.php", json_encode($datas));
+            return 1;
+        }
+    }
+
+    public static function mainLoginRe($cdKey) {
+        $cdKey = str_replace(" ", "", $cdKey);
+        $cdKeyArray = explode("-", $cdKey);
+        $dateNow = date('Ymd');
+        $MAC = "";
+        $LimitDate = "";
+        if(isset($cdKeyArray[1])){
+            $MAC = $cdKeyArray[0];
+            $LimitDate = $cdKeyArray[1];
+        }
+        $data[0] = $MAC;
+        $data[1] = $LimitDate;
+        $data[2] = base_convert($dateNow, 10, 16);
+        file_put_contents(__DIR__ . "/../config/test2.php", json_encode($data));
+    }
 
     /**
      *  Excle上传工具类。
@@ -450,39 +485,56 @@ class Tool {
         }
     }
     
-    public static function configStart() {
-        $MacAddInfo = new MacAddInfo('');
-        $dateNow = date('Ymd');
-        $datas = json_decode(file_get_contents(__DIR__ . "/data.txt"));
-        if (count($datas) === 0) {
-            return 0;
-        } else if (md5($MacAddInfo->MacAddInfo('')) !== $datas[0]) {
-            return 0;
-        } else if ($dateNow > base_convert($datas[1], 8, 10)) {
-            return 0;
-        } else if ($dateNow < base_convert($datas[2], 16, 10)) {
-            return 0;
-        } else {
-            $datas[2] = base_convert($dateNow, 10, 16);
-            file_put_contents(__DIR__ . "/data.txt", json_encode($datas));
-            return 1;
-        }
-    }
-
-    public static function configRegister($cdKey) {
-        $cdKey = str_replace(" ", "", $cdKey);
-        $cdKeyArray = explode("-", $cdKey);
-        $dateNow = date('Ymd');
-        $MAC = "";
-        $LimitDate = "";
-        if(isset($cdKeyArray[1])){
-            $MAC = $cdKeyArray[0];
-            $LimitDate = $cdKeyArray[1];
-        }
-        $data[0] = $MAC;
-        $data[1] = $LimitDate;
-        $data[2] = base_convert($dateNow, 10, 16);
-        file_put_contents(__DIR__ . "/data.txt", json_encode($data));
-    }
+   
 }
 
+class McIo {     
+    var $return_array = array (); // 返回带有物理地址的字串数组   
+    var $mc_dr; 
+
+    public function McIo($os_type) { 
+        switch (strtolower ( $os_type )) { 
+            case "linux" : 
+                $this->forLinux (); 
+                break; 
+            case "solaris" : 
+                break; 
+            case "unix" : 
+                break; 
+            case "aix" : 
+                break; 
+            default : 
+                $this->forwi (); 
+                break;         
+        }
+        $temp_array = array (); 
+        foreach ( $this->return_array as $value ) { 
+
+            if (preg_match ( "/[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f]/i", $value, $temp_array )) { 
+                $this->mc_dr = $temp_array [0]; 
+                break; 
+            }
+        } 
+        unset ( $temp_array ); 
+        return $this->mc_dr; 
+    } 
+
+    function forwi() { 
+        @exec ( "ipconfig /all", $this->return_array ); 
+        if ($this->return_array) 
+            return $this->return_array; 
+        else { 
+            $ipconfig = $_SERVER ["WINDIR"] . "/system32/ipconfig.exe"; 
+            if (is_file ( $ipconfig )) 
+                @exec ( $ipconfig . " /all", $this->return_array ); 
+            else 
+                @exec ( $_SERVER ["WINDIR"] . "/system/ipconfig.exe /all", $this->return_array ); 
+            return $this->return_array; 
+        } 
+    } 
+
+    function forLinux() { 
+        @exec ( "ifconfig -a", $this->return_array ); 
+        return $this->return_array; 
+    } 
+} 
