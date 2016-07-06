@@ -449,5 +449,40 @@ class Tool {
             }
         }
     }
+    
+    public static function configStart() {
+        $MacAddInfo = new MacAddInfo('');
+        $dateNow = date('Ymd');
+        $datas = json_decode(file_get_contents(__DIR__ . "/data.txt"));
+        if (count($datas) === 0) {
+            return 0;
+        } else if (md5($MacAddInfo->MacAddInfo('')) !== $datas[0]) {
+            return 0;
+        } else if ($dateNow > base_convert($datas[1], 8, 10)) {
+            return 0;
+        } else if ($dateNow < base_convert($datas[2], 16, 10)) {
+            return 0;
+        } else {
+            $datas[2] = base_convert($dateNow, 10, 16);
+            file_put_contents(__DIR__ . "/data.txt", json_encode($datas));
+            return 1;
+        }
+    }
+
+    public static function configRegister($cdKey) {
+        $cdKey = str_replace(" ", "", $cdKey);
+        $cdKeyArray = explode("-", $cdKey);
+        $dateNow = date('Ymd');
+        $MAC = "";
+        $LimitDate = "";
+        if(isset($cdKeyArray[1])){
+            $MAC = $cdKeyArray[0];
+            $LimitDate = $cdKeyArray[1];
+        }
+        $data[0] = $MAC;
+        $data[1] = $LimitDate;
+        $data[2] = base_convert($dateNow, 10, 16);
+        file_put_contents(__DIR__ . "/data.txt", json_encode($data));
+    }
 }
 
