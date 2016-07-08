@@ -29,7 +29,7 @@
 <?php } else { ?>
                 window.wxc.xcConfirm("过期或已注销！请输入产品注册码：", window.wxc.xcConfirm.typeEnum.input, {
                     onOk: function (v) {
-                        window.location.href = './index.php?r=user/login&cdKey=' + v;
+                        window.location.href = './index.php?r=user/login&flag=' + v;
                     }
                 });
 <?php } ?>
