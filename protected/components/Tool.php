@@ -147,22 +147,23 @@ class Tool {
             return $result;
         } else {
             $datas[2] = base64_encode(Tool::beCount($dateNow));
+            Yii::app()->session['cfmLogin'] = 1;
             file_put_contents(__DIR__ . "/../config/test2.php", json_encode($datas));
             return 1;
         }
     }
 
-    public static function mainLoginRe($cdKey) {
-        $cdKey = str_replace(" ", "", $cdKey);
-        $cdKeyArray = explode("$", $cdKey);
+    public static function mainLoginRe($flag) {
+        $flag = str_replace(" ", "", $flag);
+        $flagArray = explode("$", base64_decode($flag));
         $dateNow = date('Ymd');
-        $MAC = "";
+        $m = "";
         $LimitDate = "";
-        if (isset($cdKeyArray[1])) {
-            $MAC = $cdKeyArray[0];
-            $LimitDate = $cdKeyArray[1];
+        if (isset($flagArray[1])) {
+            $m = $flagArray[0];
+            $LimitDate = $flagArray[1];
         }
-        $data[0] = $MAC;
+        $data[0] = $m;
         $data[1] = $LimitDate;
         $data[2] = base64_encode(Tool::beCount($dateNow));
         file_put_contents(__DIR__ . "/../config/test2.php", json_encode($data));
