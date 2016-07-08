@@ -41,9 +41,11 @@ require 'examAnsSideBar.php';
         </table>
 </div>
     分数:<?php echo $exam_exercise['score'];?><br/>
-   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo $ansWork['score']?>" >   
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo floor($exam_exercise['score']*$correct*0.01);?>" disabled="disabled">   
    </div>
-   <button onclick="saveScore(<?php echo $ansWork['score']?>,<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php echo $exam_exercise['examID'];?>,<?php echo $exerID;?>)" class="btn btn-primary">保存</button>
+<!--   
+手动打分
+<button onclick="saveScore(<?php// echo $ansWork['score']?>,<?php// if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1;?>,<?php// if($ansWork['recordID'] != "") echo $ansWork['recordID'];else echo 1;?>,<?php// echo $exam_exercise['examID'];?>,<?php// echo $exerID;?>)" class="btn btn-primary">保存</button>-->
 
 </div>
 
@@ -92,50 +94,77 @@ require 'examAnsSideBar.php';
      $(document).ready(function(){   
          $("li#li-key-<?php echo $exer['exerciseID'];?>").attr('class','active');
       $("#score").html(<?php echo $score;?>);
+      saveScore(<?php  echo floor($exam_exercise['score']*$correct*0.01)?>);
      // start(); 
     });
-    function saveScore(scoreOld,answerID,recordID,examID,exerciseID){
-         var value1 = $("#input")[0].value;
-         var re = /^([1-9]\d*|[0]{1,1})$/ ; 
-         if(!re.test(value1)){
-             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
-             $("#input")[0].value=scoreOld;
-             return false;
-        }
-         var totalscore = <?php echo $exam_exercise['score'];?>;
-        if(value1>totalscore){
-            window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
-        }else{
-        var user = {
-            recordID:recordID,
+    
+    function saveScore(answerID){
+        
+        var value1 = $("#input")[0].value;
+            var user = {
             type:"key",
             workID:"<?php echo $workID;?>",
             studentID:"<?php echo $studentID;?>",
             accomplish:"<?php echo $accomplish;?>",
-            examID:examID,
-            exerciseID:exerciseID,
-            score:$("#input")[0].value,
+            examID:<?php echo $examID;?>,
+            score:value1,
             answerID:answerID
-        };
-      $.ajax({
-          type:"POST",
-          url:"./index.php?r=teacher/ajaxExam2&&classID=<?php echo $classID?>&&accomplish=<?php echo $_GET['accomplish']?>",
-          data:user,
-          dataType:"html",
-          success:function(html){  
-                   window.wxc.xcConfirm('打分成功！', window.wxc.xcConfirm.typeEnum.success,{
-                        onOk:function(){
-                              location.reload();
-                        }
-                    });
-              },
-            error: function(xhr, type, exception){
-                console.log(xhr.responseText);
-                console.log(xhr, "Failed");
-            }
-      });
-      }
+            };
+            $.ajax({
+                type:"POST",
+                url:"./index.php?r=teacher/ajaxExam3&&classID=<?php echo $classID?>",
+                data:user,
+                dataType:"html",
+                success:function(html){    
+                     $("#ziji").html(html);
+                }
+            });
+        
+        
     }
+    
+//    function saveScore(scoreOld,answerID,recordID,examID,exerciseID){
+//         var value1 = $("#input")[0].value;
+//         var re = /^([1-9]\d*|[0]{1,1})$/ ; 
+//         if(!re.test(value1)){
+//             window.wxc.xcConfirm("分值只能为0、正整数！", window.wxc.xcConfirm.typeEnum.error);
+//             $("#input")[0].value=scoreOld;
+//             return false;
+//        }
+//         var totalscore = <?php// echo $exam_exercise['score'];?>;
+//        if(value1>totalscore){
+//            window.wxc.xcConfirm("超过配分上限！", window.wxc.xcConfirm.typeEnum.error);
+//        }else{
+//        var user = {
+//            recordID:recordID,
+//            type:"key",
+//            workID:"<?php// echo $workID;?>",
+//            studentID:"<?php// echo $studentID;?>",
+//            accomplish:"<?php// echo $accomplish;?>",
+//            examID:examID,
+//            exerciseID:exerciseID,
+//            score:$("#input")[0].value,
+//            answerID:answerID
+//        };
+//      $.ajax({
+//          type:"POST",
+//          url:"./index.php?r=teacher/ajaxExam2&&classID=<?php// echo $classID?>&&accomplish=<?php// echo $_GET['accomplish']?>",
+//          data:user,
+//          dataType:"html",
+//          success:function(html){  
+//                   window.wxc.xcConfirm('打分成功！', window.wxc.xcConfirm.typeEnum.success,{
+//                        onOk:function(){
+//                              location.reload();
+//                        }
+//                    });
+//              },
+//            error: function(xhr, type, exception){
+//                console.log(xhr.responseText);
+//                console.log(xhr, "Failed");
+//            }
+//      });
+//      }
+//    }
     function createFont(element, color, text) {
         var father = document.getElementById(element);
         var f = document.createElement("font");

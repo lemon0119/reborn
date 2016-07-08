@@ -748,7 +748,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
     </div>-->
     <div id="show-classExercise"  style="position: relative;display: none;border: 0px;">
-        <h3 style="margin-left: 20px;">备课资源</h3>
+        <h3 style="margin-left: 20px;">课堂练习</h3>
         <div  style="margin-left: 30px;margin-right: 30px">
             <input style="margin-bottom: 5px;"  type="checkbox" name="all" onclick="document.getElementById('iframe_class').contentWindow.check_all(this)"  /><span class="normalfont">全选</span>
             &nbsp;<span class="normalfont">批量操作:</span>&nbsp;

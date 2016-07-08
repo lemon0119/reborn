@@ -107,7 +107,7 @@ echo $courseName; ?></h3>
                 <thead>
                     <tr>
 <!--                        <th colspan="2" style="width: 40px"></td >-->
-                        <th style="width: 40px"></th>
+                        <th style="width: 40px">时间</th>
                         <td style="width: 100px" ><span style="font-weight: bolder">星期一</span></td >
                         <td style="width: 100px"><span style="font-weight: bolder">星期二</span></td >
                         <td  style="width: 100px"><span style="font-weight: bolder">星期三</span></td >

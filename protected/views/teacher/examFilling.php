@@ -77,7 +77,7 @@
 
     });
 //    $('.value').blur(function (){ 
-//        for(var i = 0 ; i < <?php echo count($works);?>; ++i){
+//        for(var i = 0 ; i < <?php// echo count($works);?>; ++i){
 //            var limit = $(".limit:eq("+i+")").html();
 //            var input = $(".value:eq("+i+")").val();
 ////            console.log('input',parseInt(input));

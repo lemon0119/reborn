@@ -5528,6 +5528,113 @@ class TeacherController extends CController {
             'array_accomplished' => $array_accomplished,
         ));
     }
+    
+    public function ActionAjaxExam3() {
+        $classID = $_GET['classID'];
+        if (isset($_POST['workID'])) {
+            $workID = $_POST['workID'];
+            $studentID = $_POST['studentID'];
+            $accomplish = $_POST['accomplish'];
+        }
+        $ty = $_POST['type'];
+        if (isset($_POST['recordID']))
+            $recordID = $_POST['recordID'];
+        $examID = $_POST['examID'];
+        if (isset($_POST['exerciseID']))
+            $exerciseID = $_POST['exerciseID'];
+        $recordID = ExamRecord::getRecord($workID, $studentID);
+        $exam_exercise = ExamExercise::model()->findAll("examID = ? and type = ?", array($examID, $ty));
+        $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($recordID, $ty));
+        $results = Exam::model()->getExamExerByType($examID, $ty);
+        $isLast = 1;
+        $array_exercise = array();
+        foreach ($results as $result) {
+            array_push($array_exercise, $result);
+        }
+        
+        if (isset($_POST['score'])) {
+            $arr = explode(",", $_POST['score']);
+            $m = 0;
+            foreach ($array_exercise as $k => $work) {
+                if ($arr[$m] != " ") {
+                    AnswerRecord::model()->changeScore($ansWork[$k]['answerID'], $arr[$m++]);
+                }
+            }
+        }
+        $student = Student::model()->find("userID='$studentID'");
+        $class = TbClass::model()->find("classID='$classID'");
+        $array_accomplished = Array();
+        $array_unaccomplished = Array();
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        foreach ($class_student as $stu) {
+            $userID = $stu['userID'];
+            $result = ExamRecord::model()->find("workID=? and studentID=?", array($workID, $userID));
+            if ($result != NULL && $result['ratio_accomplish'] == 1) {
+                $score = $result['score'];
+                array_push($array_accomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName'],
+                    'score' => $score
+                ));
+            } else {
+                array_push($array_unaccomplished, array(
+                    'userID' => $stu['userID'],
+                    'userName' => $stu['userName'],
+                    'score' => 0
+                ));
+            }
+        }
+        switch ($ty) {
+            case "choice":
+                $render = "examChoice";
+                break;
+            case "filling":
+                $render = "examFilling";
+                break;
+            case "question":
+                $render = "examQuestion";
+                break;
+            case "key":
+                $render = "examKey";
+                break;
+            case "look":
+                $render = "examLook";
+                break;
+            case "listen":
+                $render = "examListen";
+                break;
+        }
+        $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
+        foreach (Tool::$EXER_TYPE as $type) {
+            $classwork[$type] = Exam::model()->getExamExerByType($examID, $type);
+        }
+        $work = ClassExam::model()->find("workID='$workID'");
+        $exerID = Yii::app()->session['exerID'];
+        $res = KeyType::model()->findByPK($exerID);
+        $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($recordID, $ty));
+        $this->renderPartial($render, array(
+            'type' => $ty,
+            'student' => $student,
+            'examID' => $examID,
+            'student' => $student,
+            'class' => $class,
+            'workID' => $workID,
+            'studentID' => $studentID,
+            'accomplish' => $accomplish,
+            'works' => $array_exercise,
+            'work' => $work,
+            'exer' => $res,
+            'ansWork' => $ansWork,
+
+            'exam_exercise' => $exam_exercise,
+            'isLast' => $isLast,
+            'score' => $score,
+            'exerID' => $exerID,
+            'classID' => $classID,
+            'exercise' => $classwork,
+            'array_accomplished' => $array_accomplished,
+        ));
+    }
 
     public function ActionConfigScore() {
         $type = $_GET['type'];
@@ -6447,13 +6554,14 @@ class TeacherController extends CController {
             $ratio_maxSpeed = explode("&", $recourd['ratio_maxSpeed']);
             $ratio_correct = explode("&", $recourd['ratio_correct']);
             $all_count = explode("&", $recourd['ratio_countAllKey']);
+            $squence=$recourd['squence'];
             $end = count($ratio_speed) - 1;
             $speed = (int) $ratio_speed[$end];
             $maxSpeed = (int) $ratio_maxSpeed[$end];
             $correct = round($ratio_correct[$end] * 100) / 100;
             $time = count($ratio_speed) * 5 - 5;
             $allKey = (int) $all_count[$end];
-            $arrayData = ["studentID" => $studentID, "studentName" => $studentName, "speed" => $speed, "maxSpeed" => $maxSpeed, "correct" => $correct, "time" => $time, "allKey" => $allKey, "title" => $title];
+            $arrayData = ["studentID" => $studentID, "studentName" => $studentName, "speed" => $speed, "maxSpeed" => $maxSpeed, "correct" => $correct, "time" => $time, "allKey" => $allKey, "title" => $title, "squence"=>$squence];
             array_push($data, $arrayData);
         }
         $data = Tool::quickSort($data, "correct");
