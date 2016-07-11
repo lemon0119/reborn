@@ -1609,6 +1609,7 @@ class AdminController extends CController {
     public function actionDeleteStuInClass(){
         $classID = $_GET['classID'];
         Yii::app()->session ['lastUrl'] = "infoClass";
+        $studentNumber=Tool::$studentNumber;
         $act_result="";
         if (isset($_POST['checkbox'])) {
             $userIDlist = $_POST['checkbox'];
@@ -1638,6 +1639,7 @@ class AdminController extends CController {
         $teacherOfClass = Yii::app()->db->createCommand($sql)->query();
 
         $this->render('infoCLass', array(
+            'studentNumber'=>$studentNumber,
             'pages_stu' =>$pages_stu,
             'classID' => $classID,
             'className' => $className,
