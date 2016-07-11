@@ -92,6 +92,7 @@ class UserController extends Controller {
     }
 
     public function actionLogin() {
+        Yii::app()->session['cfmLogin']=0;
         $login_model = new LoginForm;
         //返回错误内容
         $result = 'no';
