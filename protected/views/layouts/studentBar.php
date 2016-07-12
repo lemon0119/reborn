@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
 <?php
-if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] == 'student') {
+if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] == 'student' && Yii::app()->session['cfmLogin']=1) {
     ?>
     <?php
     $classID = Student::model()->findClassByStudentID(Yii::app()->session['userid_now']);
