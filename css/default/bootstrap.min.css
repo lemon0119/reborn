@@ -5697,3 +5697,8 @@ font-family:Tahoma; font-size:18px; line-height:48px;}
     color:#696969 !important;
     text-decoration:none !important;
 }
+.div_bg{
+    background-position: center;
+    background-image: url('../../img/hbg.png');
+    background-repeat:no-repeat;
+}

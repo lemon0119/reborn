@@ -6,7 +6,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width: 40px"></th >
+                        <th style="width: 40px">时间</th >
                         <td style="width: 150px" ><span style="font-weight: bolder">星期一</span></td >
                         <td style="width: 150px"><span style="font-weight: bolder">星期二</span></td >
                         <td  style="width: 150px"><span style="font-weight: bolder">星期三</span></td >

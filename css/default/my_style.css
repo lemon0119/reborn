@@ -179,3 +179,8 @@ p {
     cursor: pointer;
     color: #f46500;
 }
+.div_listen{
+    background-position: center;
+    background-image: url('../../img/listen.png');
+    background-repeat:no-repeat;
+}

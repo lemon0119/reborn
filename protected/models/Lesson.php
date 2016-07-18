@@ -60,14 +60,14 @@ class Lesson extends CActiveRecord
             return $newLesson->insert();
         }
         
-        public function getLessonLst($type,$value,$courseID){
+        public function getLessonLst($type,$value,$courseID,$classID){
             $order  =   " order by lessonID ASC";
             if($type!="")
                 $condition = " WHERE $type = '$value' AND ";
             else
                 $condition= " WHERE ";
             $select     =   "SELECT * FROM lesson";
-            $sql        =   $select.$condition."courseID = '$courseID' AND classID = '0'".$order;
+            $sql        =   $select.$condition."courseID = '$courseID' AND classID = '$classID'".$order;
             $criteria   =   new CDbCriteria();
             $result     =   Yii::app()->db->createCommand($sql)->query();
             $pages      =   new CPagination($result->rowCount);

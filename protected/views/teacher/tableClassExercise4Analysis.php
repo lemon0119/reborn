@@ -110,7 +110,10 @@
             success: function (data) {
                 for (i = 0; i < data.length; i++) {
                     $('#option' + i + '').remove();
-                    var newRow = '<tr id="option' + i + '"><td >' + (i + 1) + '</td><td >' + data[i]['studentID'] + '</td><td >' + data[i]['studentName'] + '</td><td>' + data[i]['speed'] + '</td><td>' + data[i]['maxSpeed'] + '</td><td>' + data[i]['correct'] + '%</td><td>' + data[i]['time'] + '</td><td>' + data[i]['allKey'] + '</td><td>' + data[i]['allKey'] + '</td></tr>';
+                    if(data[i]['squence']==null){
+                        data[i]['squence']=0;
+                    }
+                    var newRow = '<tr id="option' + i + '"><td >' + (i + 1) + '</td><td >' + data[i]['studentID'] + '</td><td >' + data[i]['studentName'] + '</td><td>' + data[i]['speed'] + '</td><td>' + data[i]['maxSpeed'] + '</td><td>' + data[i]['correct'] + '%</td><td>' + data[i]['time'] + '</td><td>' + data[i]['allKey'] + '</td><td>' + data[i]['squence'] + '</td></tr>';
                     $('#table_of_analysis').append(newRow);
                 }
                 if (flag === 1) {

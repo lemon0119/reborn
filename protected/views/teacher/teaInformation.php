@@ -30,7 +30,7 @@
                     <td><?php echo $age;?></td>
                 </tr>
                 <tr>
-                    <td>部门:</td>
+                    <td>院系:</td>
                     <td><?php echo $department; ?></td>
                 </tr>
                 <tr>

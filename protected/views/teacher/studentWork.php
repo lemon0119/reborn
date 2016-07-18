@@ -1,9 +1,9 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li class="nav-header"><i class="icon-knowlage"></i>班级</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>班级</li>
            <?php foreach ($array_class as $class):?>
-            <li <?php if($class['classID'] == $selectClassID) echo "class='active'";?>> <a href="./index.php?r=teacher/StuWork&&selectClassID=<?php echo $class['classID']?>"><i class="icon-list-alt"></i><?php echo $class['className']?></a></li>
+            <li <?php if($class['classID'] == $selectClassID) echo "class='active'";?>> <a href="./index.php?r=teacher/StuWork&&selectClassID=<?php echo $class['classID']?>"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i><?php echo $class['className']?></a></li>
           <?php endforeach;?>  
                         
         </ul>       
