@@ -748,7 +748,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         </div>
     </div>-->
     <div id="show-classExercise"  style="position: relative;display: none;border: 0px;">
-        <h3 style="margin-left: 20px;">备课资源</h3>
+        <h3 style="margin-left: 20px;">课堂练习</h3>
         <div  style="margin-left: 30px;margin-right: 30px">
             <input style="margin-bottom: 5px;"  type="checkbox" name="all" onclick="document.getElementById('iframe_class').contentWindow.check_all(this)"  /><span class="normalfont">全选</span>
             &nbsp;<span class="normalfont">批量操作:</span>&nbsp;
@@ -1697,7 +1697,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             var video = document.getElementById('video1');
             if (video === null) {
                 var html = "";
-                html += '<audio style="margin-top:100px" id="video1" width="100%" controls>';
+                html += '<audio style="margin-bottom:200px;height:400px" id="video1" class="div_listen" width="100%" controls>';
                 html += '<source src="' + absl_path + '">';
                 html += '</audio>';
                 $("#dianbo-videos-container").empty();

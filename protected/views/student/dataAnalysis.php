@@ -101,13 +101,13 @@
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg2" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="speed" class="bl"  style="text-decoration-line: none">速度(字/秒)</a>
+                            <a  id="speed" class="bl"  style="text-decoration-line: none">速度(字/分)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg3" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="maxSpeed"  style="text-decoration-line: none">最大速度(字/秒)</a>
+                            <a  id="maxSpeed"  style="text-decoration-line: none">最大速度(字/分)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>

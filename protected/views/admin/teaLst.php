@@ -10,7 +10,7 @@
             <th class="font-center">选择</th>
             <th class="font-center">工号</th>
             <th class="font-center">姓名</th>
-            <th class="font-center">部门</th>
+            <th class="font-center">院系</th>
             <th class="font-center">院校</th>
             <th class="font-center">操作</th>
         </tr>
