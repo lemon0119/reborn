@@ -15,7 +15,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
         <head>
             <meta charset="utf-8">
             <title>亚伟速录</title>
-            <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo CSS_URL; ?>site.css" rel="stylesheet">
             <script src="<?php echo JS_URL; ?>jquery.min.js" ></script>
             <script src="<?php echo JS_URL; ?>bootstrap.min.js" ></script>
@@ -28,7 +28,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                         <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         </head>
         <body>
-            <div class="container">
+            <div class="container" >
 
                 <?php if(!isset($_GET['nobar'])){?>
                 <div class="navbar">
@@ -63,7 +63,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="homework">作 业</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/assignWork&&progress=<?php if(isset($classProgress)) echo $classProgress[$key]; ?>">布置作业</a></li>
+                                            <li><a href="./index.php?r=teacher/assignWork&&classID=<?php if(isset($_GET['classID'])){ echo $_GET['classID'];}else{echo 1;} ?>&&on=<?php if(isset($_GET['on'])){ echo $_GET['on'];}else{echo 1;} ?>">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
                                         </ul>
                                     </li>

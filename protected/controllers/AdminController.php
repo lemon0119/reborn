@@ -3288,7 +3288,7 @@ class AdminController extends CController {
         Yii::app()->session['courseID'] = $courseID;
         Yii::app()->session['courseName'] = $courseName;
         Yii::app()->session['createPerson'] = $createPerson;
-        $result = Lesson::model()->getLessonLst("", "", $courseID);
+        $result = Lesson::model()->getLessonLst("", "", $courseID,0);
         $lessonLst = $result ['lessonLst'];
         $pages = $result ['pages'];
         
