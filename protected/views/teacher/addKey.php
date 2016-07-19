@@ -86,7 +86,7 @@
             <div class="control-group" id="div3">   
                 <label class="control-label" >练习循环次数</label>
                 <div class="controls">                                                        
-                    <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2" value="0">               
+                    <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2" value="1">               
                 </div>             
             </div>            
             <div class="control-group" style="display: none" id="div1">   
