@@ -19,19 +19,19 @@
 <div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
                 <ul class="nav nav-list">
-                <li class="nav-header"><i class="icon-knowlage"></i>当前科目</li>
+                <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>当前科目</li>
                 <li style="margin-left:20px;"><?php echo $courseName2;?></li>
-                <li class="nav-header"><i class="icon-knowlage"></i>当前课时</li>
+                <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>当前课时</li>
                 <?php  if($lessonsName!=null){?>
                 <li id="li-<?php echo $progress;?>">
                     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>">
-                        <i class="icon-list-alt"></i> 
+                        <i class="icon-list-alt"style="position:relative;bottom:6px;left:"></i> 
                         <?php if(isset($lessonsName[$progress])){echo $lessonsName[$progress];} ?>
                     </a>
                 </li>
                 <?php }?>
                 <li class="divider"></li>
-                <li class="nav-header"><i class="icon-knowlage"></i>其余课时</li>
+                <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>其余课时</li>
                 </ul>
     </div>
     <div class="well-bottomnoradius" style="padding: 8px 0;height:230px;overflow:auto;top: -20px;border-top-left-radius:0px; ">
@@ -40,7 +40,7 @@
                 <?php foreach($lessonsName as $key => $value):
                     if($key!=$progress){
                     ?>
-                    <li  id="li-<?php echo $key; ?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $key; ?>"><i class="icon-list-alt"></i> <?php echo $value; ?></a></li>
+                    <li  id="li-<?php echo $key; ?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $key; ?>"><i class="icon-list-alt" style="position:relative;bottom:6px;left:"></i> <?php echo $value; ?></a></li>
                     <?php
                 }
             endforeach;
@@ -53,11 +53,11 @@
         
                 <ul class="nav nav-list">
                 <li class="nav-header"></li>
-                <li class="nav-header"><i class="icon-knowlage"></i>学生列表</li>
+                <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>学生列表</li>
                 <div class="scroll" style="padding: 8px 0;height:150px;overflow:auto;margin-left: 20px;">
                 <?php foreach($stu as $student){
                     ?>
-                    <li><i class="icon-headphones"></i><?php echo $student['userName']?></li>
+                    <li><i class="icon-headphones" style="position:relative;bottom:6px;left:"></i><?php echo $student['userName']?></li>
                 <?php
                 }              
             ?>

@@ -2,19 +2,19 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">       
-            <li class="nav-header"><i class="icon-knowlage"></i>操作</li>
-            <li <?php if(isset($_GET['classID'])||isset($_GET['courseID'])){}else{echo "class='active'";}?>  ><a href="./index.php?r=teacher/scheduleDetil"><i class="icon-list-alt"></i> 您的课表</a></li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>操作</li>
+            <li <?php if(isset($_GET['classID'])||isset($_GET['courseID'])){}else{echo "class='active'";}?>  ><a href="./index.php?r=teacher/scheduleDetil"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 您的课表</a></li>
             <?php if($sqlcurrentClass=="none"){}else{ ?>
-            <li class="nav-header"><i class="icon-knowlage"></i>任课班级</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>任课班级</li>
             <?php foreach ($array_class as $class): ?>
-            <li <?php if(isset($_GET['classID'])){ if (Yii::app()->session['currentClass'] == $class['classID']&&(isset($_GET['classID']))) echo "class='active'";} ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
+            <li <?php if(isset($_GET['classID'])){ if (Yii::app()->session['currentClass'] == $class['classID']&&(isset($_GET['classID']))) echo "class='active'";} ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>
 
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage"></i>任课科目</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>任课科目</li>
 
             <?php foreach ($array_course as $course): ?>
-            <li <?php if(isset($_GET['courseID'])){if(Yii::app()->session['currentCourse'] == $course['courseID']) echo "class='active'"; }?>  ><a href="./index.php?r=teacher/scheduleDetil&&courseID=<?php echo $course['courseID']; ?>"><i class="icon-list"></i><?php echo $course['courseName']; ?></a></li>
+            <li <?php if(isset($_GET['courseID'])){if(Yii::app()->session['currentCourse'] == $course['courseID']) echo "class='active'"; }?>  ><a href="./index.php?r=teacher/scheduleDetil&&courseID=<?php echo $course['courseID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $course['courseName']; ?></a></li>
             <?php endforeach; ?>   
             <?php } ?>
             
@@ -107,7 +107,7 @@ echo $courseName; ?></h3>
                 <thead>
                     <tr>
 <!--                        <th colspan="2" style="width: 40px"></td >-->
-                        <th style="width: 40px"></th>
+                        <th style="width: 40px">时间</th>
                         <td style="width: 100px" ><span style="font-weight: bolder">星期一</span></td >
                         <td style="width: 100px"><span style="font-weight: bolder">星期二</span></td >
                         <td  style="width: 100px"><span style="font-weight: bolder">星期三</span></td >
