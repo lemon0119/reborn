@@ -67,7 +67,7 @@
                                    else
                                         echo Tool::csubstr($model['content'], 0,10)."...";
                                         ?></td>
-                        <td class="font-center" style="width: 70px"><?php  echo  $teachers[$model['create_person']];
+                        <td class="font-center" style="width: 70px"><?php if(isset($teachers[$model['create_person']])){ echo  $teachers[$model['create_person']];}else{echo "未知";}
                             ?></td>
                         <td class="font-center" style="width: 150px"><?php echo $model['create_time'];?></td>
                         <?php if(isset($_GET['nobar'])){ ?>

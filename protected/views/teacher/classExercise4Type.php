@@ -74,7 +74,7 @@
                                    else
                                         echo Tool::csubstr(Tool::filterKeyContent($model['content']),0,12)."...";
                                         ?></td>
-                        <td class="font-center"><?php  echo  $teachers[$model['create_person']];
+                        <td class="font-center"><?php if(isset($teachers[$model['create_person']])){ echo  $teachers[$model['create_person']];}else{echo "未知";}
                             ?></td>
                         <td class="font-center"><?php echo $model['create_time'];?></td>
                         <?php if(isset($_GET['nobar'])){ ?>
