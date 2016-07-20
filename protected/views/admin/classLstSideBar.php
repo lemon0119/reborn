@@ -1,7 +1,7 @@
 <div class="span3">
     <div <?php if(isset($allClass)){echo 'class="well-bottomnoradius"';}else{ echo'class="well"';} ?> style="padding: 8px 0;">
         <ul class="nav nav-list">
-        <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
+        <li class="nav-header"><i class="icon-navsearch" style="position:relative;bottom:5px;left:"></i>搜索</li>
         <form action="./index.php?r=admin/searchCLass" method="post">
             <li>
                 <select name="which" >
@@ -20,12 +20,12 @@
             </li>
         </form>
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage"></i>查看</li>
-            <li id="classLst"><a href="./index.php?r=admin/classLst"><i class="icon-list-alt"></i> 班级列表</a></li>
-            <li id="stuLst"><a href="./index.php?r=admin/stuDontHaveClass"><i class="icon-list-alt"></i> 未分班学生</a></li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>查看</li>
+            <li id="classLst"><a href="./index.php?r=admin/classLst"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 班级列表</a></li>
+            <li id="stuLst"><a href="./index.php?r=admin/stuDontHaveClass"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 未分班学生</a></li>
             <?php if(isset($allClass)){ ?>  
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage"></i>已有班级</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>已有班级</li>
             <?php } ?>
         </ul>
     </div>
@@ -34,7 +34,7 @@
             <ul class="nav nav-list">
             <?php foreach ($allClass as $class): ?>
                         <li style="pointer-events: none;" ><a <?php if(Yii::app()->session['insert_class']==$class['className']){
-                        echo 'style="color:#f46500"';Yii::app()->session['insert_class']="";}else{echo 'style="color: #aaa9a9"';}?>><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
+                        echo 'style="color:#f46500"';Yii::app()->session['insert_class']="";}else{echo 'style="color: #aaa9a9"';}?>><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $class['className']; ?></a></li>
                 <?php endforeach; ?>   
             </ul>
         </div>

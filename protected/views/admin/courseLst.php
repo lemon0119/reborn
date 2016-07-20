@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
+            <li class="nav-header"><i class="icon-navsearch" style="position:relative;bottom:5px;left:"></i>搜索</li>
             <form action="./index.php?r=admin/searchCourse" method="post">
                 <li>
                     <select name="type" >
@@ -19,7 +19,7 @@
                 </li>
             </form>
             <li class="divider"></li>
-            <li class="active" ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left"></i> 科目列表</a></li>
+            <li class="active" ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left" style="position:relative;bottom:5px;left:"></i> 科目列表</a></li>
         </ul>
     </div>
 </div>

@@ -1214,6 +1214,7 @@ class AdminController extends CController {
     public function actionConfirmTeaPass() {
         if (isset($_GET ['userID'])) {
             Yii::app()->session ['deleteTeaID'] = $_GET ['userID'];
+            TeacherClass::model()->deleteAll("teacherID='userID'");
         } else if (isset($_POST ['checkbox'])) {
             Yii::app()->session ['deleteTeaBox'] = $_POST ['checkbox'];
         }

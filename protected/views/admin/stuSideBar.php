@@ -1,7 +1,7 @@
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
-                <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
+                <li class="nav-header"><i class="icon-navsearch"style="position:relative;bottom:5px;left:"></i>搜索</li>
                 <form action="./index.php?r=admin/searchStu&&page=1" method="post">
                         <li>
                                 <select name="type">
@@ -18,10 +18,10 @@
                         </li>
                 </form>
                         <li class="divider"></li>
-                        <li class="nav-header"><i class="icon-knowlage"></i>管理</li>
-                        <li id="li-stuLst"><a href="./index.php?r=admin/stuLst"><i class="icon-list-alt"></i> 学生列表</a></li>
-                        <li id="li-addStu"><a href="./index.php?r=admin/addStu"><i class="icon-plus"></i> 添加学生</a></li>
-                        <li id="li-recycleStu"><a href="./index.php?r=admin/recycleStu"><i class="icon-trash"></i> 回收站</a></li>
+                        <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>管理</li>
+                        <li id="li-stuLst"><a href="./index.php?r=admin/stuLst"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 学生列表</a></li>
+                        <li id="li-addStu"><a href="./index.php?r=admin/addStu"><i class="icon-plus" style="position:relative;bottom:5px;left:"></i> 添加学生</a></li>
+                        <li id="li-recycleStu"><a href="./index.php?r=admin/recycleStu"><i class="icon-trash" style="position:relative;bottom:5px;left:"></i> 回收站</a></li>
                 </ul>
         </div>
 </div>
