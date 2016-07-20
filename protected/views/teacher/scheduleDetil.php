@@ -13,9 +13,16 @@
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>任课科目</li>
 
-            <?php foreach ($array_course as $course): ?>
-            <li <?php if(isset($_GET['courseID'])){if(Yii::app()->session['currentCourse'] == $course['courseID']) echo "class='active'"; }?>  ><a href="./index.php?r=teacher/scheduleDetil&&courseID=<?php echo $course['courseID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $course['courseName']; ?></a></li>
-            <?php endforeach; ?>   
+            <?php foreach ($array_class as $class): 
+                $array_courseID=$class['currentCourse'];
+                $array_course = Course::model()->find("courseID = '$array_courseID'");
+                ?>
+            <li <?php if(isset($_GET['classID'])&&isset($_GET['courseID'])){ if (Yii::app()->session['currentClass'] == $class['classID']&&(isset($_GET['classID']))&&Yii::app()->session['currentCourse'] == $array_course['courseID']) echo "class='active'";$classID=$_GET['classID'];} ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $class['classID']?>&&courseID=<?php echo $array_course['courseID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $array_course['courseName']; ?></a></li>
+            <?php endforeach; ?>
+            
+            <?php// foreach ($array_course as $course): ?>
+<!--            <li <?php// if(isset($_GET['courseID'])){if(Yii::app()->session['currentCourse'] == $course['courseID']) echo "class='active'"; }?>  ><a href="./index.php?r=teacher/scheduleDetil&&courseID=<?php// echo $course['courseID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php// echo $course['courseName']; ?></a></li>-->
+            <?php// endforeach; ?>   
             <?php } ?>
             
         </ul>
@@ -58,7 +65,7 @@ echo $courseName; ?></h3>
                     }
                     ?>
                     <td style="width: 50px"><?php echo $model['number']; ?></td>
-                    <td  title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule cursor_pointer" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $model['number']; ?>,<?php echo $courseID; ?>)"><?php if(Tool::clength($model['lessonName'], 'utf-8')>12){echo Tool::csubstr($model['lessonName'], 0, 11, 'UTF-8') . "..."; }else{ echo $model['lessonName'];} ?></td>
+                    <td  title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule cursor_pointer" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $model['number']; ?>,<?php echo $courseID; ?>,<?php echo $classID;?>)"><?php if(Tool::clength($model['lessonName'], 'utf-8')>12){echo Tool::csubstr($model['lessonName'], 0, 11, 'UTF-8') . "..."; }else{ echo $model['lessonName'];} ?></td>
                     <td><?php if($createPerson=="0")
                                     echo "管理员";
                          ?></td>
@@ -245,14 +252,14 @@ echo $courseName; ?></h3>
     function changeClass(s, d) {
         window.open("./index.php?r=teacher/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['currentClass']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
     }    
-    function changeCourseName(courseName,number,courseID){
+    function changeCourseName(courseName,number,courseID,classID){
         var txt=  "原课名:"+courseName;
 					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
 						onOk:function(v){
                                                     if(v==""){
                                                         window.wxc.xcConfirm('请填入新课名！', window.wxc.xcConfirm.typeEnum.warning);
                                                     }else{
-                                                    window.location.href="./index.php?r=teacher/scheduleDetil&&courseID="+courseID+"&&number="+number+"&&newName="+v;
+                                                    window.location.href="./index.php?r=teacher/scheduleDetil&&classID="+classID+"&&courseID="+courseID+"&&number="+number+"&&newName="+v;
 						}
                                             }
 					});

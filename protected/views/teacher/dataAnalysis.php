@@ -211,7 +211,7 @@ $(document).ready(function(){
     $("#sw-chat").click(function() {
         $("#chat-box").toggle(200);
     });
-        getBackTime();
+
     
 });
 function che(){
