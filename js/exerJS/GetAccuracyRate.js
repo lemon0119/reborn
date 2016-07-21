@@ -78,11 +78,16 @@ onmessage = function (event) {
     var originalContent = event.data.originalContent;
     var allCount = 0;
     var rightCount = 0;
+    var currentCount = 0;
+    var originalCount = 0;
     var lcs = new LCS(currentContent, originalContent);
     lcs.doLCS();
-    allCount = lcs.getStrOrg().length;
+    currentCount = currentContent.length;
+    originalCount = originalContent.length;
+    //allCount = lcs.getStrOrg().length;
+    var moreCount = ((currentCount - originalCount) < 0) ? 0 : currentCount - originalCount;
     rightCount = lcs.getSubString(3).length;
-    var correct = rightCount / allCount;
+    var correct = ((rightCount - moreCount) < 0 ? 0 : rightCount - moreCount) / originalCount;
     var accuracyRate = Math.round(correct * 100);
     postMessage({
         accuracyRate: accuracyRate
