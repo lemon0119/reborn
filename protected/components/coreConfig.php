@@ -11,19 +11,19 @@ class coreConfig {
     public static function start() {
         $MacAddInfo = new MacAddInfo('');
         $dateNow = date('Ymd');
-        $datas = json_decode(file_get_contents(__DIR__ . "/data.txt"));
+        $datas = jsondecode(file_getcontents(__DIR__ . "/data.txt"));
         if (count($datas) === 0) {
-            return FALSE;
+            return "off";
         } else if (md5($MacAddInfo->MacAddInfo('')) !== $datas[0]) {
-            return FALSE;
-        } else if ($dateNow > base_convert($datas[1], 8, 10)) {
-            return FALSE;
-        } else if ($dateNow < base_convert($datas[2], 16, 10)) {
-            return FALSE;
+            return "off";
+        } else if ($dateNow > CDKeyCore($datas[1])) {
+            return "off";
+        } else if ($dateNow < CDKeyCore($datas[2])) {
+            return "off";
         } else {
-            $datas[2] = base_convert($dateNow, 10, 16);
+            $datas[2] = CDKeyCore($dateNow);
             file_put_contents(__DIR__ . "/data.txt", json_encode($datas));
-            return TRUE;
+            return "on";
         }
     }
 
@@ -33,13 +33,13 @@ class coreConfig {
         $dateNow = date('Ymd');
         $MAC = "";
         $LimitDate = "";
-        if(isset($cdKeyArray[1])){
+        if (isset($cdKeyArray[1])) {
             $MAC = $cdKeyArray[0];
             $LimitDate = $cdKeyArray[1];
         }
         $data[0] = $MAC;
         $data[1] = $LimitDate;
-        $data[2] = base_convert($dateNow, 10, 16);
+        $data[2] = CDKeyCore($dateNow);
         file_put_contents(__DIR__ . "/data.txt", json_encode($data));
     }
 

@@ -20,13 +20,11 @@ $dir = "resources/admin/001/$courseID/";
     <h3><?php echo $courseID;
 echo '&nbsp; &nbsp;';
 echo $courseName; ?></h3>
-    <p>创建人：<?php echo $createPerson; ?></p>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>课号</th>
                 <th>课时名</th>
-                <th>创建人</th>
                 <th>创建时间</th>
                 <th>ppt</th>
                 <th>视频</th>
@@ -48,7 +46,6 @@ echo $courseName; ?></h3>
                     ?>
                     <td style="width: 75px"><?php echo $model['number']; ?></td>
                     <td  title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule cursor_pointer" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $courseID; ?>,<?php echo $model['number']; ?>)"><?php echo $model['lessonName']; ?></td>
-                    <td><?php echo $createPerson; ?></td>
                     <td><?php echo $model['createTime']; ?></td>
                     <td><a href="./index.php?r=admin/pptLst&&pdir=<?php echo $pdir; ?>&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><img src="<?php echo IMG_URL; ?>ppt.png"><?php
                             $num = 0;

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
 <?php
-if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] == 'student') {
+if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] == 'student' && Yii::app()->session['cfmLogin']=1) {
     ?>
     <?php
     $classID = Student::model()->findClassByStudentID(Yii::app()->session['userid_now']);
@@ -40,7 +40,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                     </li>
                                     <li><a id="courseExam" href="./index.php?r=student/classExam">考 试</a></li>
 
-                                    <li><a id ="exam_statistics_stu" href="./index.php?r=student/watchData&&classID=<?php echo $classID; ?>">统 计</a></li>
+                                    <li><a id ="exam_statistics_stu" href="./index.php?r=student/watchData&&classID=<?php if($classID==0) echo ""; else echo $classID; ?>">统 计</a></li>
                                     <li><a id="suLu" href="./index.php?r=student/suLu">百 科</a></li>
                                     <li><a id="schedule_manager_stu"  href="./index.php?r=student/scheduleDetil">课程表</a></li>
                                     <li><a id="blank_stu"></a></li>

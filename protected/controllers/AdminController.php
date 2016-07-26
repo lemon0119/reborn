@@ -223,18 +223,20 @@ class AdminController extends CController {
         ]);
     }
     public function actionGetNum(){
+        $stuNumber=Tool::$studentNumber;
         $num=0;
         if(isset($_GET['classID'])){
             $classID=$_GET['classID'];
         $num=TbClass::model()->getStuNums($classID);
         }
-        if($num>=50)
+        if($num>=$stuNumber)
             echo "error";
         else
             echo "success";
     }
 
     public function actionExlAddStu() {
+        $studentNumber=Tool::$studentNumber;
         if (!empty($_FILES ['file'] ['name'])) {
             $tmp_file = $_FILES ['file'] ['tmp_name'];
             $file_types = explode(".", $_FILES ['file'] ['type']);
@@ -405,8 +407,8 @@ class AdminController extends CController {
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
                                 array_push($array_success, $data);
-                            }else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=50){
-                                $result = "班级人数超过50人！";
+                            }else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=$studentNumber){
+                                $result = "班级人数超过"+$studentNumber+"人！";
                                 $fixed = "请重新分班";
                                 //$data['className'] = "";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -1212,6 +1214,7 @@ class AdminController extends CController {
     public function actionConfirmTeaPass() {
         if (isset($_GET ['userID'])) {
             Yii::app()->session ['deleteTeaID'] = $_GET ['userID'];
+            TeacherClass::model()->deleteAll("teacherID='userID'");
         } else if (isset($_POST ['checkbox'])) {
             Yii::app()->session ['deleteTeaBox'] = $_POST ['checkbox'];
         }
@@ -1525,7 +1528,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "infoClass";
         $act_result = "";
         $classID = $_GET ["classID"];
-        
+        $studentNumber=Tool::$studentNumber;
         // 删除某学生的班级
         if (isset($_GET ['flag'])) {
             if ($_GET ['flag'] == 'deleteStu') {
@@ -1545,7 +1548,7 @@ class AdminController extends CController {
         if (isset($_GET ['action']) && isset($_POST ['checkbox'])) {
             $checkbox = $_POST ['checkbox'];
             if ($_GET ['action'] == "addStu") {
-                if($nums+count($checkbox)>50){
+                if($nums+count($checkbox)>$studentNumber){
                 $act_result = "overLimites";
                 }
                 else{
@@ -1589,6 +1592,7 @@ class AdminController extends CController {
         $teacherOfClass = Yii::app()->db->createCommand($sql)->query();
 
         $this->render('infoCLass', array(
+            'studentNumber'=>$studentNumber,
             'pages_stu' =>$pages_stu,
             'classID' => $classID,
             'className' => $className,
@@ -1606,6 +1610,7 @@ class AdminController extends CController {
     public function actionDeleteStuInClass(){
         $classID = $_GET['classID'];
         Yii::app()->session ['lastUrl'] = "infoClass";
+        $studentNumber=Tool::$studentNumber;
         $act_result="";
         if (isset($_POST['checkbox'])) {
             $userIDlist = $_POST['checkbox'];
@@ -1635,6 +1640,7 @@ class AdminController extends CController {
         $teacherOfClass = Yii::app()->db->createCommand($sql)->query();
 
         $this->render('infoCLass', array(
+            'studentNumber'=>$studentNumber,
             'pages_stu' =>$pages_stu,
             'classID' => $classID,
             'className' => $className,
@@ -3283,7 +3289,7 @@ class AdminController extends CController {
         Yii::app()->session['courseID'] = $courseID;
         Yii::app()->session['courseName'] = $courseName;
         Yii::app()->session['createPerson'] = $createPerson;
-        $result = Lesson::model()->getLessonLst("", "", $courseID);
+        $result = Lesson::model()->getLessonLst("", "", $courseID,0);
         $lessonLst = $result ['lessonLst'];
         $pages = $result ['pages'];
         

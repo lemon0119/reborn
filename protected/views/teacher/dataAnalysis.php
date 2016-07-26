@@ -23,7 +23,7 @@
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
-                  <li><div ><a href="#" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                  
+                  <li><div ><i class="icon-list"></i><a href="#" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"style="position:relative;top:6px;left:"><?php echo $lesson['lessonName']; ?></a></div></li>                  
               <?php endforeach; ?> 
               </ul>
         </div>
@@ -32,7 +32,7 @@
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
-                 <li><div ><a href="#" onclick="showClassWork(<?php echo $lesson['lessonID'];?>)"><i class="icon-list"></i><?php echo $lesson['lessonName']; ?></a></div></li>                
+                 <li><div ><i class="icon-list"></i><a href="#" onclick="showClassWork(<?php echo $lesson['lessonID'];?>)" style="position:relative;top:6px;left:"><?php echo $lesson['lessonName']; ?></a></div></li>                
                  <div style="display: none" <?php echo "id='test".$lesson['lessonID']."'"?>>
                      <ul>  
                          <?php foreach ($array_work as $work){
@@ -63,7 +63,7 @@
                          if($exam['examID'] == $examList['examID'])
                          {
                          ?>
-                 <li><div ><a href="#" onclick="getExamExercise(<?php echo $exam['examID'];?>,<?php echo $examList['workID'];?>)"><i class="icon-list"></i><?php echo $exam['examName']; ?></a></div></li>
+                 <li><div ><i class="icon-list"></i><a href="#" onclick="getExamExercise(<?php echo $exam['examID'];?>,<?php echo $examList['workID'];?>)" style="position:relative;top:6px;left:"><?php echo $exam['examName']; ?></a></div></li>
                         <?php 
                               }
                  }
@@ -101,13 +101,13 @@
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg2" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度(字/秒)</a>
+                            <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度(字/分)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg3" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度(字/秒)</a>
+                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度(字/分)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
@@ -211,7 +211,7 @@ $(document).ready(function(){
     $("#sw-chat").click(function() {
         $("#chat-box").toggle(200);
     });
-        getBackTime();
+
     
 });
 function che(){

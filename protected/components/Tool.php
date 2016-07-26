@@ -2,6 +2,7 @@
 
 class Tool {
 
+    public static $studentNumber = 60;
     public static $EXER_TYPE = [
         'choice',
         'filling',
@@ -26,6 +27,16 @@ class Tool {
 
     public function alertInfo($info, $url) {
         return "<script type='text/javascript'>alert('$info');location.href='$url';</script>";
+    }
+
+    public static function beCount($num) {
+        $result = ($num + 12) * 1011;
+        return $result;
+    }
+
+    public static function reCount($num) {
+        $result = ($num / 1011) - 12;
+        return $result;
     }
 
     public static function printprobar($value) {
@@ -119,6 +130,43 @@ class Tool {
         $id = $id . ($cs + "");
         // echo("id:$id\n");
         return $id;
+    }
+
+    public static function mainLoginIn() {
+        $result = 0;
+        $McIo = new McIo('');
+        $dateNow = date('Ymd');
+        $datas = json_decode(file_get_contents(__DIR__ . "/../config/test2.php"));
+        if (count($datas) === 0) {
+            return $result;
+        } else if (sha1($McIo->McIo('')) !== $datas[0]) {
+            return $result;
+        } else if ($dateNow > Tool::reCount(base64_decode($datas[1]))) {
+            return $result;
+        } else if ($dateNow < Tool::reCount(base64_decode($datas[2]))) {
+            return $result;
+        } else {
+            $datas[2] = base64_encode(Tool::beCount($dateNow));
+            Yii::app()->session['cfmLogin'] = 1;
+            file_put_contents(__DIR__ . "/../config/test2.php", json_encode($datas));
+            return 1;
+        }
+    }
+
+    public static function mainLoginRe($flag) {
+        $flag = str_replace(" ", "", $flag);
+        $flagArray = explode("$", base64_decode($flag));
+        $dateNow = date('Ymd');
+        $m = "";
+        $LimitDate = "";
+        if (isset($flagArray[1])) {
+            $m = $flagArray[0];
+            $LimitDate = $flagArray[1];
+        }
+        $data[0] = $m;
+        $data[1] = $LimitDate;
+        $data[2] = base64_encode(Tool::beCount($dateNow));
+        file_put_contents(__DIR__ . "/../config/test2.php", json_encode($data));
     }
 
     /**
@@ -416,11 +464,12 @@ class Tool {
         }
         return $result;
     }
-    
-    public static function filterAllSpaceAndTab($content){
+
+    public static function filterAllSpaceAndTab($content) {
         $new = str_replace("\n", "", $content);
         $newcontent = str_replace("\r", "", $new);
         $newcontent = str_replace(" ", "", $newcontent);
+        $newcontent = str_replace("　", "", $newcontent);
         return $newcontent;
     }
 
@@ -447,5 +496,58 @@ class Tool {
             }
         }
     }
+
 }
 
+class McIo {
+
+    var $return_array = array(); // 返回带有物理地址的字串数组   
+    var $mc_dr;
+
+    public function McIo($os_type) {
+        switch (strtolower($os_type)) {
+            case "linux" :
+                $this->forLinux();
+                break;
+            case "solaris" :
+                break;
+            case "unix" :
+                break;
+            case "aix" :
+                break;
+            default :
+                $this->forwi();
+                break;
+        }
+        $temp_array = array();
+        foreach ($this->return_array as $value) {
+
+            if (preg_match("/[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f][:-]" . "[0-9a-f][0-9a-f]/i", $value, $temp_array)) {
+                $this->mc_dr = $temp_array [0];
+                break;
+            }
+        }
+        unset($temp_array);
+        return $this->mc_dr;
+    }
+
+    function forwi() {
+        @exec("ipconfig /all", $this->return_array);
+        if ($this->return_array)
+            return $this->return_array;
+        else {
+            $ipconfig = $_SERVER ["WINDIR"] . "/system32/ipconfig.exe";
+            if (is_file($ipconfig))
+                @exec($ipconfig . " /all", $this->return_array);
+            else
+                @exec($_SERVER ["WINDIR"] . "/system/ipconfig.exe /all", $this->return_array);
+            return $this->return_array;
+        }
+    }
+
+    function forLinux() {
+        @exec("ifconfig -a", $this->return_array);
+        return $this->return_array;
+    }
+
+}

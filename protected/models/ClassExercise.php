@@ -314,8 +314,7 @@ class ClassExercise extends CActiveRecord
     }
     
     public function getExerciseExerByTypePage($classID,$on, $type, $pagesize) {
-        $classSuit = ClassLessonSuite::model()->find("classID = '$classID' and suiteID = '$on'"); 
-        $lessonID = $classSuit['lessonID'];
+        $lessonID = Lesson::model()->find("classID = '$classID' AND number = '$on'")['lessonID']; 
         $criteria = new CDbCriteria();
         $sql = "select * from class_exercise";
         $order = " order by exerciseID DESC";
@@ -333,7 +332,7 @@ class ClassExercise extends CActiveRecord
     
     public function insertFromWork($workExerciseID,$type,$classID,$on){
         $resultSuite = ClassLessonSuite::model()->find("classID ='$classID' AND suiteID = '$on'");
-        $lessonID = $resultSuite['lessonID'];
+        $lessonID = Lesson::model()->find("classID = '$classID' AND number = '$on'")['lessonID']; 
         $classExercise = new ClassExercise();
         $work=0;
         switch ($type){

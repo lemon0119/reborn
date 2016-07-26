@@ -2,20 +2,27 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">       
-            <li class="nav-header"><i class="icon-knowlage"></i>操作</li>
-            <li <?php if(isset($_GET['classID'])||isset($_GET['courseID'])){}else{echo "class='active'";}?>  ><a href="./index.php?r=teacher/scheduleDetil"><i class="icon-list-alt"></i> 您的课表</a></li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>操作</li>
+            <li <?php if(isset($_GET['classID'])||isset($_GET['courseID'])){}else{echo "class='active'";}?>  ><a href="./index.php?r=teacher/scheduleDetil"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 您的课表</a></li>
             <?php if($sqlcurrentClass=="none"){}else{ ?>
-            <li class="nav-header"><i class="icon-knowlage"></i>任课班级</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>任课班级</li>
             <?php foreach ($array_class as $class): ?>
-            <li <?php if(isset($_GET['classID'])){ if (Yii::app()->session['currentClass'] == $class['classID']&&(isset($_GET['classID']))) echo "class='active'";} ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $class['classID']; ?>"><i class="icon-list"></i><?php echo $class['className']; ?></a></li>
+            <li <?php if(isset($_GET['classID'])){ if (Yii::app()->session['currentClass'] == $class['classID']&&(isset($_GET['classID']))) echo "class='active'";} ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>
 
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage"></i>任课科目</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>任课科目</li>
 
-            <?php foreach ($array_course as $course): ?>
-            <li <?php if(isset($_GET['courseID'])){if(Yii::app()->session['currentCourse'] == $course['courseID']) echo "class='active'"; }?>  ><a href="./index.php?r=teacher/scheduleDetil&&courseID=<?php echo $course['courseID']; ?>"><i class="icon-list"></i><?php echo $course['courseName']; ?></a></li>
-            <?php endforeach; ?>   
+            <?php foreach ($array_class as $class): 
+                $array_courseID=$class['currentCourse'];
+                $array_course = Course::model()->find("courseID = '$array_courseID'");
+                ?>
+            <li <?php if(isset($_GET['classID'])&&isset($_GET['courseID'])){ if (Yii::app()->session['currentClass'] == $class['classID']&&(isset($_GET['classID']))&&Yii::app()->session['currentCourse'] == $array_course['courseID']) echo "class='active'";$classID=$_GET['classID'];} ?> ><a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $class['classID']?>&&courseID=<?php echo $array_course['courseID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $array_course['courseName']; ?></a></li>
+            <?php endforeach; ?>
+            
+            <?php// foreach ($array_course as $course): ?>
+<!--            <li <?php// if(isset($_GET['courseID'])){if(Yii::app()->session['currentCourse'] == $course['courseID']) echo "class='active'"; }?>  ><a href="./index.php?r=teacher/scheduleDetil&&courseID=<?php// echo $course['courseID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php// echo $course['courseName']; ?></a></li>-->
+            <?php// endforeach; ?>   
             <?php } ?>
             
         </ul>
@@ -58,7 +65,7 @@ echo $courseName; ?></h3>
                     }
                     ?>
                     <td style="width: 50px"><?php echo $model['number']; ?></td>
-                    <td  title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule cursor_pointer" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $model['number']; ?>,<?php echo $courseID; ?>)"><?php if(Tool::clength($model['lessonName'], 'utf-8')>12){echo Tool::csubstr($model['lessonName'], 0, 11, 'UTF-8') . "..."; }else{ echo $model['lessonName'];} ?></td>
+                    <td  title="<?php echo $model['lessonName'];?>" style="width: 200px" class="table_schedule cursor_pointer" onclick="changeCourseName('<?php echo $model['lessonName']; ?>',<?php echo $model['number']; ?>,<?php echo $courseID; ?>,<?php echo $classID;?>)"><?php if(Tool::clength($model['lessonName'], 'utf-8')>12){echo Tool::csubstr($model['lessonName'], 0, 11, 'UTF-8') . "..."; }else{ echo $model['lessonName'];} ?></td>
                     <td><?php if($createPerson=="0")
                                     echo "管理员";
                          ?></td>
@@ -107,7 +114,7 @@ echo $courseName; ?></h3>
                 <thead>
                     <tr>
 <!--                        <th colspan="2" style="width: 40px"></td >-->
-                        <th style="width: 40px"></th>
+                        <th style="width: 40px">时间</th>
                         <td style="width: 100px" ><span style="font-weight: bolder">星期一</span></td >
                         <td style="width: 100px"><span style="font-weight: bolder">星期二</span></td >
                         <td  style="width: 100px"><span style="font-weight: bolder">星期三</span></td >
@@ -141,7 +148,7 @@ echo $courseName; ?></h3>
 //                                case 9:echo '<span style="font-weight: bolder">晚上</span>';
 //                                    break;
 //                            }
-                            ?></td>
+                            ?>
                             <td style="height: 62px" class="table_schedule" title="<?php
                                         $array_v = explode("&&", $v['courseInfo']);
                                         foreach ($array_v as $value) {
@@ -245,14 +252,14 @@ echo $courseName; ?></h3>
     function changeClass(s, d) {
         window.open("./index.php?r=teacher/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['currentClass']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
     }    
-    function changeCourseName(courseName,number,courseID){
+    function changeCourseName(courseName,number,courseID,classID){
         var txt=  "原课名:"+courseName;
 					window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
 						onOk:function(v){
                                                     if(v==""){
                                                         window.wxc.xcConfirm('请填入新课名！', window.wxc.xcConfirm.typeEnum.warning);
                                                     }else{
-                                                    window.location.href="./index.php?r=teacher/scheduleDetil&&courseID="+courseID+"&&number="+number+"&&newName="+v;
+                                                    window.location.href="./index.php?r=teacher/scheduleDetil&&classID="+classID+"&&courseID="+courseID+"&&number="+number+"&&newName="+v;
 						}
                                             }
 					});

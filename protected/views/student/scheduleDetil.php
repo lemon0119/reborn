@@ -6,7 +6,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th colspan="2" style="width: 40px"></td >
+                        <th style="width: 40px">时间</th >
                         <td style="width: 150px" ><span style="font-weight: bolder">星期一</span></td >
                         <td style="width: 150px"><span style="font-weight: bolder">星期二</span></td >
                         <td  style="width: 150px"><span style="font-weight: bolder">星期三</span></td >
@@ -20,48 +20,72 @@
                         <?php for ($s = 1; $s < 11; $s++) { ?>
                         <tr >
                             <?php
-                            switch ($s) {
-                                case 1: echo '<td  rowspan="4">';
-                                    break;
-                                case 5:echo '<td rowspan="4">';
-                                    break;
-                                case 9:echo '<td rowspan="4">';
-                                    break;
-                            }
+//                            switch ($s) {
+//                                case 1: echo '<td  rowspan="4">';
+//                                    break;
+//                                case 5:echo '<td rowspan="4">';
+//                                    break;
+//                                case 9:echo '<td rowspan="4">';
+//                                    break;
+//                            }
                             ?><?php
-                            switch ($s) {
-                                case 1: echo '<span style="font-weight: bolder">上午</span>';
-                                    break;
-                                case 5:echo '<span style="font-weight: bolder">下午</span>';
-                                    break;
-                                case 9:echo '<span style="font-weight: bolder">晚上</span>';
-                                    break;
-                            }
-                            ?></td>
-                            <td style="height: 62px" ><?php
+                            $flag = 1;
+                                foreach ($result as $v) {
+                                        if (($v['sequence'] == $s) && ($v['day'] == 0)) {
+//                            switch ($s) {
+//                                case 1: echo '<span style="font-weight: bolder">上午</span>';
+//                                    break;
+//                                case 5:echo '<span style="font-weight: bolder">下午</span>';
+//                                    break;
+//                                case 9:echo '<span style="font-weight: bolder">晚上</span>';
+//                                    break;
+//                            }
+                            ?>
+                            <td style="height: 62px" class="table_schedule" title="<?php
+                                        $array_v = explode("&&", $v['courseInfo']);
+                                        foreach ($array_v as $value) {
+                                            echo $value . "&nbsp;&nbsp;&nbsp;&nbsp;";
+                                        }
+                                        ?>" >
+                                       <span   ><?php
+                                        $array_v1 = explode("&&", $v['courseInfo']);
+                                        foreach ($array_v1 as $value) {
+                                            if (Tool::clength($value, 'utf-8')>5) {
+                                                echo Tool::csubstr($value, 0, 4, 'UTF-8') . "...<br/>";
+                                            } else {
+                                                echo $value . "<br/>";
+                                            }
+                                        }
+                                        ?></span></td>
+                            <?php  $flag = 0;
+                                   } 
+                                   }
+                            if ($flag == 1) {
+            ?><td style="height: 62px" title="-" class="table_schedule" >
+                                       <?php
                                 switch ($s) {
-                                    case 1: echo '<span>一</span>';
+                                    case 1: echo '<span >一</span>';
                                         break;
-                                    case 2: echo '<span>二</span>';
+                                    case 2: echo '<span >二</span>';
                                         break;
-                                    case 3: echo '<span>三</span>';
+                                    case 3: echo '<span >三</span>';
                                         break;
-                                    case 4: echo '<span>四</span>';
+                                    case 4: echo '<span >四</span>';
                                         break;
-                                    case 5: echo '<span>五</span>';
+                                    case 5: echo '<span >五</span>';
                                         break;
                                     case 6: echo '<span>六</span>';
                                         break;
-                                    case 7: echo '<span>七</span>';
+                                    case 7: echo '<span >七</span>';
                                         break;
-                                    case 8: echo '<span>八</span>';
+                                    case 8: echo '<span >八</span>';
                                         break;
                                     case 9: echo '<span>九</span>';
                                         break;
                                     case 10: echo '<span>十</span>';
                                         break;
                                 }
-                                ?></td>
+                                ?></td><?php }?>
                                 <?php
                                 for ($d = 1; $d < 8; $d++) {
                                     $flag = 1;

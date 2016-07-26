@@ -79,13 +79,12 @@
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
                 width ='660' height='300' 
-                event_OnChange="onChange"
                 event_OnStenoPress="onStenoPressKey">
         </object>
     </div>
 </body>
 <script>
-    var yaweiOCX4Look = null;
+    var yaweiOCX4Look = document.getElementById("typeOCX4Look");
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     var briefType = "";
@@ -108,7 +107,7 @@
                 console.log(exception, "exception");
             }
         });
-        yaweiOCX4Look = document.getElementById("typeOCX4Look");
+        
 //        $("#pause").click(function () {
 //            if (window.G_startFlag === 1&&window.G_isOverFlag ===0 ) {
 //                if (window.G_isPause === 0) {
@@ -178,7 +177,7 @@ $squence = $countSquence + 1;
     
     function onChange(){
         yaweiOCX4Look.UpdateView();
-        var input = getContent(document.getElementById("typeOCX"));
+        var input = getContent(yaweiOCX4Look);
         yaweiOCX4Look.Locate(input.length);
     }
 

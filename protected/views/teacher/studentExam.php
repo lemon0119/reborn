@@ -1,9 +1,9 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li class="nav-header"><i class="icon-knowlage"></i>班级</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>班级</li>
            <?php foreach ($array_class as $class):?>
-            <li <?php if($class['classID'] == $selectClassID) echo "class='active'";?>><a href="./index.php?r=teacher/StuExam&&selectClassID=<?php echo $class['classID']?>"><i class="icon-list"></i><?php echo $class['className']?></a></li>
+            <li <?php if($class['classID'] == $selectClassID) echo "class='active'";?>><a href="./index.php?r=teacher/StuExam&&selectClassID=<?php echo $class['classID']?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $class['className']?></a></li>
           <?php endforeach;?>  
                         
         </ul>       
@@ -60,9 +60,9 @@
                         </td>
                         <td>        
                             <?php if($workID==$classexam['workID']){?>
-                                <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>" style="color:#ff0000">查看</a>      
+                                <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID?>" style="color:#ff0000">查看</a>      
                             <?php }else{?>
-                                <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>" style="color:gray">查看</a> 
+                                <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID?>" style="color:gray">查看</a> 
                             <?php }?>
 
                         </td>

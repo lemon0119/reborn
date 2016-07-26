@@ -15,14 +15,14 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-        <li class="nav-header">当前科目</li>
-        <li id="li-<?php echo $progress;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>"><i class="icon-list-alt"></i> <?php echo $lessonsName[$progress];?></a></li>
+        <li class="nav-header" style="position:relative;bottom:5px;left:">当前科目</li>
+        <li id="li-<?php echo $progress;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> <?php echo $lessonsName[$progress];?></a></li>
         <li class="divider"></li>
-        <li class="nav-header">其余科目</li>
+        <li class="nav-header" style="position:relative;bottom:5px;left:">其余科目</li>
         <?php foreach($lessonsName as $key => $value):
             if($key!=$progress){
             ?>
-            <li id="li-<?php echo $key;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $key;?>"><i class="icon-list-alt"></i> <?php echo $value;?></a></li>
+            <li id="li-<?php echo $key;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $key;?>"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> <?php echo $value;?></a></li>
             <?php
             } 
             endforeach;?>
@@ -47,7 +47,7 @@
        (ppt最大100M)<img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
             <div id="number">0%</div>
        </div>
-       <button onclick="formSubmit()" type="button" class="btn btn-primary">上传</button>
+       <button onclick="formSubmit()" type="button" class="btn btn-primary" id="myButton">上传</button>
        <span style="position: relative;left: 10px">
        <input type="checkbox" name="checkbox"  value="" />
        是否上传为公共资源
@@ -75,12 +75,14 @@
             window.wxc.xcConfirm(info, window.wxc.xcConfirm.typeEnum.info);
             $("#ppt-table").load("./index.php?r=teacher/pptTable&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0");
             $("#upload").hide();
+            $('#myButton').removeAttr("disabled");
         },
         error: function(xhr, type, exception){
             console.log('upload erroe', type);
             console.log(xhr.responseText, "Failed");
             window.wxc.xcConfirm("上传失败！", window.wxc.xcConfirm.typeEnum.info);
             $("#upload").hide();
+            $('#myButton').removeAttr("disabled");
         }
         //type:'post',
         //dataType:'json',
@@ -104,6 +106,7 @@
 
     function formSubmit() {
         var s = document.form1.file.value;
+        $('#myButton').attr('disabled',"true");
         if (s == "") {
             window.wxc.xcConfirm("请选择文件！", window.wxc.xcConfirm.typeEnum.info);
         } else {
