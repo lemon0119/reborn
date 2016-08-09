@@ -63,7 +63,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="homework">作 业</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="./index.php?r=teacher/assignWork&&classID=<?php if(isset($_GET['classID'])){ echo $_GET['classID'];}else{echo 1;} ?>&&on=<?php if(isset($_GET['on'])){ echo $_GET['on'];}else{echo 1;} ?>">布置作业</a></li>
+                                            <li><a href="./index.php?r=teacher/assignWork<?php if(isset($_GET['classID'])){?>&&classID=<?php echo $_GET['classID'];if(isset($_GET['on'])){ ?>&&on=<?php  echo $_GET['on'];}} ?>">布置作业</a></li>
                                             <li><a href="./index.php?r=teacher/stuWork">学生作业</a></li>
                                         </ul>
                                     </li>

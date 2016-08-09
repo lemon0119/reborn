@@ -8,6 +8,7 @@
 $currtime = $examInfo['endtime'];
 ?>
 <script src="<?php echo JS_URL;?>exerJS/timeCounter.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <style type="text/css">
     .queTitle{}
 </style>
@@ -58,7 +59,9 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">看打练习</li>
                         <?php foreach ($exercise['look'] as $lookType) :?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
-                                    <a class="queTitle"href="./index.php?r=student/examlookType&&exerID=<?php echo $lookType['exerciseID']?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>">
+                                <?php ?>
+<!--                                    <a class="queTitle"href="./index.php?r=student/examlookType&&exerID=<?php// echo $lookType['exerciseID']?>&&cent=<?php// $arg= implode(',', $cent);echo $arg;?>">-->
+                                        <a href="#" class="queTitle"   onclick="examLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">
                                         <i class="icon-eye-open"></i>
                                         <?php echo $lookType['title']?>
                                     </a>
@@ -68,7 +71,7 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                                <a class="queTitle" href="./index.php?r=student/examlistenType&&exerID=<?php echo $listenType['exerciseID']?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>">
+                                <a href="#" class="queTitle"   onclick="examListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                            
                                     <i class="icon-headphones"></i> 
                                     <?php echo $listenType['title']?>
                                 </a>
@@ -115,5 +118,32 @@ $currtime = $examInfo['endtime'];
             submitSuite2(true);
         }
         tCounter(curtime,beginTime+60*<?php echo $examInfo['duration']?>,"sideTime", endTimer);
-    });       
+    });
+    function examLookNext(exerID,cent){
+        var option = {
+						title: "提示",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							saveToDateBaseNow();
+                                                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                    window.location.href = "index.php?r=student/examlookType&&exerID="+exerID+"&&cent="+cent;
+                });
+						}
+					};
+					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
+        }
+        
+        function examListenNext(exerID,cent){
+        var option = {
+						title: "提示",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							saveToDateBaseNow();
+                                                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                    window.location.href = "index.php?r=student/examlistenType&&exerID="+exerID+"&&cent="+cent;
+                });
+						}
+					};
+					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
+        }
 </script>

@@ -508,7 +508,7 @@ echo "<script>var role='$role';</script>";
             var video = document.getElementById('video1');
             if (video === null) {
                 var html = "";
-                html += '<video style="margin-bottom:200px;height:400px" id="video1" class="div_listen" width="100%" controls>';
+                html += '<video  id="video1" class="div_listen" width="100%" controls>';
                 html += '<source src="' + video_path + '">';
                 html += '</video>';
                 $("#dianbo-videos-container").empty();

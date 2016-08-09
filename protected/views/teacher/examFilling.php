@@ -50,7 +50,7 @@
                     $n++;?>
                     分数:<span class="limit"><?php $s=$m;echo $exam_exercise[$m++]['score'];?></span><br/>
                     得分:
-                    <input class="value" type="text" id="input" onblur="judge(<?php echo $exam_exercise[$s]['score'];?>,this)" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score'];else echo " ";?>"> 
+                    <input class="value" type="text" id="input" onblur="judge(<?php echo $exam_exercise[$s]['score'];?>,this)" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score'];else echo 0;?>" <?php if($uAns=="") {echo 'disabled="disabled"';}?>> 
                      
             <?php echo "<br/>";}?>
         </div>
