@@ -164,6 +164,7 @@ class Tool {
         $dateNow = date('Ymd');
         $m = "";
         $LimitDate = "";
+        $LimitStudent="";
         if (isset($flagArray[1])) {
             $m = $flagArray[0];
             $LimitDate = $flagArray[1];

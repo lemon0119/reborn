@@ -49,7 +49,7 @@
                     }
                 ?>                    
                 <tr>
-                    <td class="font-center" style="width: 40px"> <input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /> </td>
+                    <td class="font-center" style="width: 40px"><?php if($isOpen==false){?><input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /><?php } ?> </td>
                     <td class="font-center table_schedule" style="cursor: pointer;width: 100px" onclick="changeExameName(<?php echo $exam['examID']; ?>, '<?php echo $exam['examName'] ?>')"><?php echo $exam['examName']; ?></td>                        
                     <td class="font-center">
                         <?php

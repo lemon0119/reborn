@@ -705,7 +705,7 @@ class AdminController extends CController {
             $thisStu = new Student ();
             $thisStu = $thisStu->find("userID = '$userID'");
             $thisStu->is_delete = '1';
-            $thisStu->classID='0';
+//            $thisStu->classID='0';
             $thisStu->update();
             $result = Student::model()->getStuLst("", "");
             $stuLst = $result ['stuLst'];

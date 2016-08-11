@@ -152,13 +152,4 @@
         }
         intervalid = setInterval("keyReSet()", 1000); 
     }
-    var typeOCX = document.getElementById("typeOCX");
-    window.onbeforeunload = onbeforeunload_handler;
-    window.onunload = onunload_handler;
-    function onbeforeunload_handler() {
-        typeOCX.remove();
-    }
-    function onunload_handler() {
-        typeOCX.remove();
-    }
 </script>
