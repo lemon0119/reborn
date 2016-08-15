@@ -297,7 +297,7 @@
 
     function getCorrect(pattern, answer) {
         window.GA_RightRadio = numKeyRight / numKeyDown;
-        return numKeyRight / numKeyDown;
+        return numKeyRight / window.GA_countSpeedNumber;
     }
 
     function getNextWord() {

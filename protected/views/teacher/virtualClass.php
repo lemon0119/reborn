@@ -779,7 +779,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
     <div id="dianbo-videos-container" style="display:none;margin-top: 0px;"> 
     </div>
-    <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
+    <div id="ppt-container" align="center" style="width: 100% ; height: 560px;  margin-top:0px;display:none;overflow-x: hidden">
         <img id="ppt-img" src="" style="height: 100%;"/>
     </div>
     <div id="txt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">

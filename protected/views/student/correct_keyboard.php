@@ -292,7 +292,7 @@
     }
     function getCorrect() {
         window.GA_RightRadio = numKeyRight / numKeyDown;
-        return numKeyRight / numKeyDown;
+        return numKeyRight / window.GA_countCorrectNumber;
     }
     function getNextWord() {
         currentNum++;

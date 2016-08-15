@@ -302,7 +302,7 @@
         return true;
     }
     function getCorrect() {
-        return numKeyRight / numKeyDown;
+        return numKeyRight / window.GA_countKeyNumber;
     }
     function getNextWord() {
         keyReSet();
