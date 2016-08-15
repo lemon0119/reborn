@@ -74,7 +74,7 @@
                 }
                 ?>                    
                 <tr>
-                    <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $suite['suiteID']; ?>" /> </td>
+                    <td class="font-center" style="width: 50px"> <?php if($isOpen==false){?> <input type="checkbox" name="checkbox[]" value="<?php echo $suite['suiteID']; ?>" /><?php }?> </td>
                     <td class="font-center  table_schedule" style="cursor: pointer" onclick="changeWorkName(<?php echo $suite['suiteID']; ?>, '<?php echo $suite['suiteName'] ?>')"><?php
                         if (Tool::clength($suite['suiteName']) <= 10)
                             echo $suite['suiteName'];
