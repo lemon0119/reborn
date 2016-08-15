@@ -313,6 +313,7 @@ if ($isExam) {
             title: "提交试卷",
             btn: parseInt("0011", 4),
             onOk: function () {
+                saveToDateBaseNow();
                 //doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
                     if (<?php if ($isExam) {
@@ -347,6 +348,9 @@ if ($isExam) {
         var content = document.getElementById("id_content").value;
         var cont_array = content.split("$$");
         var repeatNum = $("#repeatNum").html();
+        window.GA_countKeyNumber=cont_array.length * repeatNum;
+        window.GA_countCorrectNumber=cont_array.length * repeatNum;
+        window.GA_countSpeedNumber=cont_array.length * repeatNum;
         $("#AllOfWord").html(cont_array.length * repeatNum);
         //document.getElementById('span').scrollIntoView();
     });

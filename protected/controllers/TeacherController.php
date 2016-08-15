@@ -4660,13 +4660,15 @@ class TeacherController extends CController {
         if(isset($_GET['flag'])){
             if($_GET['flag']==1){
                 $startTime = $_GET['beginTime'];
+                $endTime=date("Y-m-d H:i:s",strtotime("$startTime   +$duration   minute"));
             }
         }else{
             $startTime =date("Y-m-d H:i:s", time());
+            $endTime=date("Y-m-d H:i:s",strtotime("$startTime   +$duration   minute"));
         }
         if ($isOpen == 0){
             error_log($startTime);
-            Exam::model()->updateByPk($examID, array('begintime' => $startTime, 'duration' => $duration));
+            Exam::model()->updateByPk($examID, array('begintime' => $startTime, 'duration' => $duration,'endtime'=>$endTime));
         }
         $currentClass = Yii::app()->session['currentClass'];
         $result = ClassExam::model()->find("classID=? and examID=?", array($currentClass, $examID));

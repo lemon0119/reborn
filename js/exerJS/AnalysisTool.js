@@ -53,6 +53,9 @@ var GA_highIntervarlTime = 0;
 var GA_RightRadio = 0;
 var GA_CountAllKey = 0;
 var GA_pauseOn = 0;
+var GA_countKeyNumber=0;
+var GA_countCorrectNumber=0;
+var GA_countSpeedNumber=0;
 //统计逻辑
 $(document).ready(function () {
     var highstCountKey = 0;

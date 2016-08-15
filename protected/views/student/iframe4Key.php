@@ -109,6 +109,9 @@
         var content = document.getElementById("id_content").value;
         var cont_array = content.split("$$");
         var repeatNum = $("#repeatNum").html();
+        window.GA_countKeyNumber=cont_array.length * repeatNum;
+        window.GA_countCorrectNumber=cont_array.length * repeatNum;
+        window.GA_countSpeedNumber=cont_array.length * repeatNum;
         $("#AllOfWord").html(cont_array.length * repeatNum);
         document.getElementById('span').scrollIntoView();
 //  暂停功能        
@@ -210,7 +213,7 @@ $squence = $countSquence + 1;
      return cnum / tl;
      }
      */
-    var typeOCX = document.getElementById("typeOCX");
+    var typeOCX = document.getElementById("typeOCX").value;
     if(typeOCX !=null){
     window.onbeforeunload = onbeforeunload_handler;
     window.onunload = onunload_handler;
