@@ -69,7 +69,7 @@ echo "<script>var role='$role';</script>";
     </div>
 
     <div id="dianbo-videos-container" style="height:560px;display:none;">  </div>
-    <div id="Text-container" align="center" style="width: 100% ; height:560px;  margin-top:0px;display:none;overflow-x: hidden">
+    <div id="Text-container" align="center" style="width: 100% ; height:560px;  margin-top:0px;display:none">
         <textarea id="text-show" style="background:transparent;border-style:none; width: 720px;height: 550px" disabled="disable"></textarea>
     </div>
     <div id="bulletin_activex">
