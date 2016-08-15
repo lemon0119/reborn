@@ -2459,15 +2459,15 @@ class TeacherController extends CController {
                 $sourcefilePath = "resources/" . $oldListen['filePath'];
                 $fileName = $oldListen['fileName'];
 
-                if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
-                    //表示复制的文件已存在
-                    $insertresult = '2';
-                } else {
+//                if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
+//                    //表示复制的文件已存在
+//                    $insertresult = '2';
+//                } else {
                     $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
                     if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
                         copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
                     $insertresult = ListenType::model()->insertListen($oldListen['title'], $oldListen['content'], $newName, $filePath, Yii::app()->session['userid_now']);
-                }
+//                }
             }
         }
 
