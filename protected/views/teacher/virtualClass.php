@@ -1471,7 +1471,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             var video = document.getElementById('video1');
             if (video === null) {
                 var html = "";
-                html += '<audio style="margin-top:100px" id="video1" width="100%" controls>';
+                html += '<audio style="margin-bottom:200px;height:400px" id="video1" class="div_listen" width="100%" controls>';
                 html += '<source src="' + absl_path + '">';
                 html += '</audio>';
                 $("#dianbo-videos-container").empty();
