@@ -331,6 +331,7 @@ if ($isExam) {
             title: "提交试卷",
             btn: parseInt("0011", 4),
             onOk: function () {
+                saveToDateBaseNow();
                 // doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
                     if (<?php if ($isExam) {

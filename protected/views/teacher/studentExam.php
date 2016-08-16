@@ -39,7 +39,7 @@
                                 break;
                             }                     
                             ?>
-                    <?php if($thisExam!=NULL){?>
+                    <?php if(isset($thisExam)){?>
                     <tr>
                         <td>
                             <?php            
@@ -60,9 +60,9 @@
                         </td>
                         <td>        
                             <?php if($workID==$classexam['workID']){?>
-                                <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>" style="color:#ff0000">查看</a>      
+                                <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID?>" style="color:#ff0000">查看</a>      
                             <?php }else{?>
-                                <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>" style="color:gray">查看</a> 
+                                <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID?>" style="color:gray">查看</a> 
                             <?php }?>
 
                         </td>

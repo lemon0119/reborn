@@ -223,7 +223,7 @@ class AdminController extends CController {
         ]);
     }
     public function actionGetNum(){
-        $stuNumber=Tool::$studentNumber;
+        $stuNumber=Tool::getStudentLimitNumber();
         $num=0;
         if(isset($_GET['classID'])){
             $classID=$_GET['classID'];
@@ -236,7 +236,7 @@ class AdminController extends CController {
     }
 
     public function actionExlAddStu() {
-        $studentNumber=Tool::$studentNumber;
+        $studentNumber=Tool::getStudentLimitNumber();
         if (!empty($_FILES ['file'] ['name'])) {
             $tmp_file = $_FILES ['file'] ['tmp_name'];
             $file_types = explode(".", $_FILES ['file'] ['type']);
@@ -705,7 +705,7 @@ class AdminController extends CController {
             $thisStu = new Student ();
             $thisStu = $thisStu->find("userID = '$userID'");
             $thisStu->is_delete = '1';
-            $thisStu->classID='0';
+//            $thisStu->classID='0';
             $thisStu->update();
             $result = Student::model()->getStuLst("", "");
             $stuLst = $result ['stuLst'];
@@ -1214,6 +1214,7 @@ class AdminController extends CController {
     public function actionConfirmTeaPass() {
         if (isset($_GET ['userID'])) {
             Yii::app()->session ['deleteTeaID'] = $_GET ['userID'];
+            TeacherClass::model()->deleteAll("teacherID='userID'");
         } else if (isset($_POST ['checkbox'])) {
             Yii::app()->session ['deleteTeaBox'] = $_POST ['checkbox'];
         }
@@ -1527,7 +1528,7 @@ class AdminController extends CController {
         Yii::app()->session ['lastUrl'] = "infoClass";
         $act_result = "";
         $classID = $_GET ["classID"];
-        $studentNumber=Tool::$studentNumber;
+        $studentNumber=Tool::getStudentLimitNumber();
         // 删除某学生的班级
         if (isset($_GET ['flag'])) {
             if ($_GET ['flag'] == 'deleteStu') {
@@ -1609,7 +1610,7 @@ class AdminController extends CController {
     public function actionDeleteStuInClass(){
         $classID = $_GET['classID'];
         Yii::app()->session ['lastUrl'] = "infoClass";
-        $studentNumber=Tool::$studentNumber;
+        $studentNumber=Tool::getStudentLimitNumber();
         $act_result="";
         if (isset($_POST['checkbox'])) {
             $userIDlist = $_POST['checkbox'];

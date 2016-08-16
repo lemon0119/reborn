@@ -53,6 +53,9 @@ var GA_highIntervarlTime = 0;
 var GA_RightRadio = 0;
 var GA_CountAllKey = 0;
 var GA_pauseOn = 0;
+var GA_countKeyNumber=0;
+var GA_countCorrectNumber=0;
+var GA_countSpeedNumber=0;
 //统计逻辑
 $(document).ready(function () {
     var highstCountKey = 0;
@@ -85,7 +88,7 @@ $(document).ready(function () {
         var countMomentKey = window.G_countMomentKey;
         var myDate = new Date();
         var nowTime = myDate.getTime();
-        if(G_isKeyType === 1){
+        if (G_isKeyType === 1) {
             yaweiOCX.PutBufferToContent();
             window.GA_answer = yaweiOCX.GetContentWithSteno();
         }
@@ -151,9 +154,9 @@ $(document).ready(function () {
                 }
                 window.G_oldContentLength = content.length;
                 var momentSpeed = (IntervalContentLength / 2) * 60
-                if(momentSpeed>999){
-                        momentSpeed=999;
-                    }
+                if (momentSpeed > 999) {
+                    momentSpeed = 999;
+                }
                 $("#getMomentSpeed").html(momentSpeed);
                 //最高瞬时速度 字/分钟
                 if (momentSpeed > highstSpeed) {
@@ -235,7 +238,7 @@ $(document).ready(function () {
                     data: {exerciseType: window.G_exerciseType, exerciseData: window.G_exerciseData, squence: window.G_squence, answer: window.GA_answer,
                         averageKeyType: window.GA_averageKeyType, highstCountKey: window.GA_highstCountKey, highstSpeed: window.GA_highstSpeed,
                         averageSpeed: window.GA_averageSpeed, CountBackDelete: window.GA_CountBackDelete, CountAllKey: window.GA_CountAllKey,
-                        IntervalTime: window.GA_IntervalTime, highIntervarlTime: window.GA_highIntervarlTime, RightRadio: window.GA_RightRadio}, 
+                        IntervalTime: window.GA_IntervalTime, highIntervarlTime: window.GA_highIntervarlTime, RightRadio: window.GA_RightRadio},
                     success: function (data) {
                     },
                     error: function (xhr, type, exception) {
@@ -249,7 +252,8 @@ $(document).ready(function () {
         if (window.G_isLook === 1) {
             if (typeof (worker) == "undefined")
             {
-                worker  = new Worker('js/exerJS/GetAccuracyRate.js');;
+                worker = new Worker('js/exerJS/GetAccuracyRate.js');
+                ;
             }
             worker.onmessage = function (event) {
                 if (!isNaN(event.data.accuracyRate)) {
@@ -275,7 +279,152 @@ $(document).ready(function () {
     }, 5000);
 
 });
+function saveToDateBaseNow() {
+    var highstCountKey = 0;
+    var highstSpeed = 0;
+    var worker;
+    var content = window.G_content;
+    var keyContent = window.G_keyContent;
+    var startTime = window.G_startTime;
+    var countAllKey = window.G_countAllKey;
+    var countMomentKey = window.G_countMomentKey;
+    var myDate = new Date();
+    var nowTime = myDate.getTime();
+    if (G_isKeyType === 1) {
+        yaweiOCX.PutBufferToContent();
+        window.GA_answer = yaweiOCX.GetContentWithSteno();
+    }
+    window.GA_CountAllKey = countAllKey;
 
+    if (countMomentKey > 0) {
+        if ((countMomentKey / 2) > highstCountKey) {
+            highstCountKey = countMomentKey / 2;
+            window.GA_highstCountKey = highstCountKey;
+        }
+        window.G_countMomentKey = 0;
+    } else {
+    }
+    countMomentKey = 0;
+
+    if (typeof (content) !== "undefined") {
+        //瞬时速度 字/分钟
+        if (content.length > 0) {
+            var IntervalContentLength = (content.length - window.G_oldContentLength);
+            if (IntervalContentLength < 0) {
+                IntervalContentLength = 0;
+            }
+            window.G_oldContentLength = content.length;
+            var momentSpeed = (IntervalContentLength / 2) * 60
+            if (momentSpeed > 999) {
+                momentSpeed = 999;
+            }
+            //最高瞬时速度 字/分钟
+            if (momentSpeed > highstSpeed) {
+                highstSpeed = momentSpeed;
+                window.GA_highstSpeed = highstSpeed;
+            }
+        }
+
+        //平均速度 字/分钟
+        if (content.length > 0) {
+            var averageSpeed = parseInt(content.length / (nowTime - startTime) * 60000);
+            if (averageSpeed < 1 && averageSpeed >= 0) {
+                averageSpeed = 1;
+            }
+            window.GA_averageSpeed = averageSpeed;
+        }
+    }
+    //统计回改字数
+    var CountBackDelete = 0;
+    var array_keyContent = keyContent.split("&");
+    if (array_keyContent.length > 3) {
+        for (var i = 3; i < array_keyContent.length; i++) {
+            var lastHaveLeft = true;
+            var lastNo_W = true;
+            var array_singleKeyContentLast = array_keyContent[i - 1].split("");
+
+            for (var k = 0; k < array_singleKeyContentLast.length; k++) {
+                if (array_singleKeyContentLast[k] === ":") {
+                    if (k === 0) {
+                        lastHaveLeft = false;
+                    }
+                }
+                if (array_singleKeyContentLast[k] === ":") {
+                    if (k > 0) {
+                        if (array_singleKeyContentLast[k - 1] === "W") {
+                            lastNo_W = false;
+                        }
+                    }
+                }
+            }
+            var array_singleKeyContent = array_keyContent[i].split("");
+            for (var j = 0; j < array_singleKeyContent.length; j++) {
+                var left;
+                var right;
+                if (array_singleKeyContent[j] !== "W" && array_singleKeyContent[j] !== ":") {
+                    left = 0;
+                    right = 0;
+                    break;
+                }
+                if (array_singleKeyContent[j] === ":") {
+                    if (array_singleKeyContent[j - 1] === "W" && lastHaveLeft && lastNo_W) {
+                        left = 1;
+                    }
+                    if (array_singleKeyContent[j + 1] === "W") {
+                        right = 1;
+                    }
+                }
+            }
+            if (left === 1) {
+                CountBackDelete++;
+                left = 0;
+            }
+            if (right === 1) {
+                CountBackDelete++;
+                right = 0;
+            }
+        }
+        window.GA_CountBackDelete = CountBackDelete;
+    }
+
+    if (window.G_isLook === 1) {
+        if (typeof (worker) === "undefined")
+        {
+            worker = new Worker('js/exerJS/GetAccuracyRate.js');
+        }
+        worker.onmessage = function (event) {
+            if (!isNaN(event.data.accuracyRate)) {
+                window.GA_RightRadio = event.data.accuracyRate;
+            }
+            worker.terminate();
+        };
+        worker.postMessage({
+            currentContent: window.G_content,
+            originalContent: window.GA_originalContent
+        });
+    }
+
+    if (window.G_saveToDatabase === 1 && (window.G_startTime !== 0)) {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "index.php?r=api/analysisSaveToDatabase",
+            data: {exerciseType: window.G_exerciseType, exerciseData: window.G_exerciseData, squence: window.G_squence, answer: window.GA_answer,
+                averageKeyType: window.GA_averageKeyType, highstCountKey: window.GA_highstCountKey, highstSpeed: window.GA_highstSpeed,
+                averageSpeed: window.GA_averageSpeed, CountBackDelete: window.GA_CountBackDelete, CountAllKey: window.GA_CountAllKey,
+                IntervalTime: window.GA_IntervalTime, highIntervarlTime: window.GA_highIntervarlTime, RightRadio: window.GA_RightRadio},
+            success: function (data) {
+            },
+            error: function (xhr, type, exception) {
+                console.log('GetAverageSpeed error', type);
+                console.log(xhr, "Failed");
+                console.log(exception, "exception");
+            }
+        });
+    }
+
+
+}
 //拿取键码值
 
 //统计平均速度 

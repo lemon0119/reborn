@@ -119,9 +119,17 @@
         }
     var result = <?php  if(isset($result)) echo "'$result'"; else echo'1';?>;
     if(result === '1')
-        window.wxc.xcConfirm('复制成功！', window.wxc.xcConfirm.typeEnum.success);
+        window.wxc.xcConfirm('复制成功！', window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function (){
+                     window.location.href="./index.php?r=teacher/choiceLst";  
+                }
+            });
     else if(result === '0')
-        window.wxc.xcConfirm('复制失败！', window.wxc.xcConfirm.typeEnum.error);
+        window.wxc.xcConfirm('复制失败！', window.wxc.xcConfirm.typeEnum.error,{
+                onOk:function (){
+                     window.location.href="./index.php?r=teacher/choiceLst";  
+                }
+            });
     result = "";
     });
     function check_all(obj, cName)

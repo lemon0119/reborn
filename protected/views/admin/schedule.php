@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-        <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
+        <li class="nav-header"><i class="icon-navsearch" style="position:relative;bottom:5px;left:"></i>搜索</li>
         <form action="./index.php?r=admin/schedule" method="post">
             <li>
                 <select name="which" >
@@ -17,9 +17,9 @@
             </li>
         </form>
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage"></i>查看</li>
-            <li <?php if(isset($_GET['type'])){}else{    echo 'class="active"';} ?> id="stuLst"><a href="./index.php?r=admin/schedule"><i class="icon-list-alt"></i> 老师列表</a></li>
-            <li <?php if(isset($_GET['type'])){  echo 'class="active"';}else{ } ?> id="classLst"><a href="./index.php?r=admin/schedule&&type=class"><i class="icon-list-alt"></i> 班级列表</a></li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>查看</li>
+            <li <?php if(isset($_GET['type'])){}else{    echo 'class="active"';} ?> id="stuLst"><a href="./index.php?r=admin/schedule"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 老师列表</a></li>
+            <li <?php if(isset($_GET['type'])){  echo 'class="active"';}else{ } ?> id="classLst"><a href="./index.php?r=admin/schedule&&type=class"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 班级列表</a></li>
         </ul>
     </div>
 </div>

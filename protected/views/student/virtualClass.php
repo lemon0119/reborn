@@ -69,7 +69,7 @@ echo "<script>var role='$role';</script>";
     </div>
 
     <div id="dianbo-videos-container" style="height:560px;display:none;">  </div>
-    <div id="Text-container" align="center" style="width: 100% ; height:560px;  margin-top:0px;display:none;overflow-x: hidden">
+    <div id="Text-container" align="center" style="width: 100% ; height:560px;  margin-top:0px;display:none">
         <textarea id="text-show" style="background:transparent;border-style:none; width: 720px;height: 550px" disabled="disable"></textarea>
     </div>
     <div id="bulletin_activex">
@@ -508,7 +508,7 @@ echo "<script>var role='$role';</script>";
             var video = document.getElementById('video1');
             if (video === null) {
                 var html = "";
-                html += '<video style="margin-bottom:200px;height:400px" id="video1" class="div_listen" width="100%" controls>';
+                html += '<video  id="video1" class="div_listen" width="100%" controls>';
                 html += '<source src="' + video_path + '">';
                 html += '</video>';
                 $("#dianbo-videos-container").empty();
@@ -714,9 +714,11 @@ echo "<script>var role='$role';</script>";
             });
         }
     }
-    var typeOCX = document.getElementById("typeOCX");
-    window.onbeforeunload = onbeforeunload_handler;
-    window.onunload = onunload_handler;
+    var typeOCX = document.getElementById("typeOCX").value;
+    if(typeOCX!=null){
+        window.onbeforeunload = onbeforeunload_handler;
+        window.onunload = onunload_handler;
+    }
     function onbeforeunload_handler() {
         if(document.getElementById('typeOCX'))
             document.getElementById('typeOCX').remove();

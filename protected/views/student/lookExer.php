@@ -154,7 +154,7 @@ if (!$isOver) {
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#727272"></font><font id="id_wrong" style="color:#f44336"></font><font id="id_new" style="color:#000000"> </font></div>
-            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;     ?>">
+            <form name='nm_answer_form' hidden="hidden" id='id_answer_form' method="post" action="<?php //echo $host . $path . $page . $param;       ?>">
                 <input id="id_content" type="hidden" value="">
                 <input id="id_speed" type="hidden" value="">
                 <input  name="nm_answer"id="id_answer" type="hidden">
@@ -325,14 +325,14 @@ if ($isExam) {
             }
         }
     }
-    
-    function onChange(){
+
+    function onChange() {
         yaweiOCX.UpdateView();
         var input = getContent(document.getElementById("typeOCX"));
         yaweiOCX.Locate(input.length);
     }
-    
-    
+
+
     function onStenoPressKey(pszStenoString, device) {
         var inputO = getContent(yaweiOCX);
         window.GA_answer = yaweiOCX.GetContentWithSteno();
@@ -537,6 +537,7 @@ if ($isExam) {
             title: "提交试卷",
             btn: parseInt("0011", 4),
             onOk: function () {
+                saveToDateBaseNow();
                 //doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
                     if (<?php

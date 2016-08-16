@@ -2459,15 +2459,15 @@ class TeacherController extends CController {
                 $sourcefilePath = "resources/" . $oldListen['filePath'];
                 $fileName = $oldListen['fileName'];
 
-                if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
-                    //表示复制的文件已存在
-                    $insertresult = '2';
-                } else {
+//                if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
+//                    //表示复制的文件已存在
+//                    $insertresult = '2';
+//                } else {
                     $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
                     if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
                         copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
                     $insertresult = ListenType::model()->insertListen($oldListen['title'], $oldListen['content'], $newName, $filePath, Yii::app()->session['userid_now']);
-                }
+//                }
             }
         }
 
@@ -3511,6 +3511,8 @@ class TeacherController extends CController {
         $teacherID = Yii::app()->session['userid_now'];
         if(isset($_GET['on'])){
         Yii::app()->session['on']=$_GET['on'];
+        }else{
+            Yii::app()->session['on']=1;
         }
         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
         $array_lesson = array();
@@ -4655,9 +4657,19 @@ class TeacherController extends CController {
         $examID = $_GET['examID'];
         $isOpen = $_GET['isOpen'];
         $duration = $_GET['duration'];
-        $startTime = $_GET['beginTime'];
-        if ($isOpen == 0)
-            Exam::model()->updateByPk($examID, array('begintime' => $startTime, 'duration' => $duration));
+        if(isset($_GET['flag'])){
+            if($_GET['flag']==1){
+                $startTime = $_GET['beginTime'];
+                $endTime=date("Y-m-d H:i:s",strtotime("$startTime   +$duration   minute"));
+            }
+        }else{
+            $startTime =date("Y-m-d H:i:s", time());
+            $endTime=date("Y-m-d H:i:s",strtotime("$startTime   +$duration   minute"));
+        }
+        if ($isOpen == 0){
+            error_log($startTime);
+            Exam::model()->updateByPk($examID, array('begintime' => $startTime, 'duration' => $duration,'endtime'=>$endTime));
+        }
         $currentClass = Yii::app()->session['currentClass'];
         $result = ClassExam::model()->find("classID=? and examID=?", array($currentClass, $examID));
         if ($result == NULL) {
@@ -5036,7 +5048,9 @@ class TeacherController extends CController {
         $record = ExamRecord::model()->find("workID=? and studentID=?", array($work['workID'], $student['userID']));
 
         $score = AnswerRecord::model()->getAndSaveScoreByRecordID($record['recordID']);
-
+        if(!isset($score)){
+            $score=0;
+        }
         $classID = $work['classID'];
         Yii::app()->session['classID'] = $classID;
         $class = TbClass::model()->find("classID='$classID'");
@@ -5779,25 +5793,26 @@ class TeacherController extends CController {
             }
         }
 
-        if (isset($_GET['classID'])) {
+        if (!isset($_GET['courseID']) && !isset($_GET['number'])&&isset($_GET['classID'])) {
             //查询任课班级科目
             $classResult = ScheduleClass::model()->findAll("classID='$currentClass'");
             return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $classResult, 'array_class' => $array_class,
                         'array_course' => $array_course, 'sqlcurrentClass' => $sqlcurrentClass]);
             //} else if (isset($_GET['courseID']) && !isset($_GET['lessonName'])) {   
-        } else if (isset($_GET['courseID']) && !isset($_GET['number'])) {
+        } else if (isset($_GET['courseID']) && !isset($_GET['number'])&&isset($_GET['classID'])) {
             //显示课程列表逻辑
+            $classID=$_GET['classID'];
             $courseID = $_GET ['courseID'];
             $SqlclassID = TbClass::model()->findAll("currentCourse ='$courseID'");
-            foreach ($teacher_class as $classA) {
-                foreach($SqlclassID as $classB){
-                    if($classA['classID']==$classB['classID']){
-                        $classID=$classA['classID'];
-                        error_log($classID);
-                        break;
-                    }
-                }
-            }
+//            foreach ($teacher_class as $classA) {
+//                foreach($SqlclassID as $classB){
+//                    if($classA['classID']==$classB['classID']){
+//                        $classID=$classA['classID'];
+//                        error_log($classID);
+//                        break;
+//                    }
+//                }
+//            }
             $result = Lesson::model()->getLessonLst("", "", $courseID,$classID);
             $sqlCourse = Course::model()->find("courseID = '$courseID'");
             $courseName = $sqlCourse['courseName'];
@@ -5813,6 +5828,7 @@ class TeacherController extends CController {
                 'createPerson' => $createPerson,
                 'posts' => $lessonLst,
                 'pages' => $pages,
+                'teacher_class'=>$teacher_class,
             ));
             //} else if (isset($_GET['lessonName'])) {
         } else if (isset($_GET['number'])) {
@@ -5826,17 +5842,18 @@ class TeacherController extends CController {
             $number = $_GET['number'];
             $newName = $_GET['newName'];
             $courseID = $_GET ['courseID'];
-            
+            $classID=$_GET ['classID'];
+            error_log($newName);
             $SqlclassID = TbClass::model()->findAll("currentCourse ='$courseID'");
-            foreach ($teacher_class as $classA) {
-                foreach($SqlclassID as $classB){
-                    if($classA['classID']==$classB['classID']){
-                        $classID=$classA['classID'];
-                        error_log($classID);
-                        break;
-                    }
-                }
-            }
+//            foreach ($teacher_class as $classA) {
+//                foreach($SqlclassID as $classB){
+//                    if($classA['classID']==$classB['classID']){
+//                        $classID=$classA['classID'];
+//                        error_log($classID);
+//                        break;
+//                    }
+//                }
+//            }
             //$sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE lessonName= '$lessonName'";
             $sql = "UPDATE `lesson` SET `lessonName`= '$newName' WHERE number= '$number' and courseID='$courseID'and classID='$classID'";
             Yii::app()->db->createCommand($sql)->query();
@@ -5855,6 +5872,7 @@ class TeacherController extends CController {
                 'createPerson' => $createPerson,
                 'posts' => $lessonLst,
                 'pages' => $pages,
+                'teacher_class'=>$teacher_class,
             ));
         } else {
             $currentClass = Yii::app()->session['currentClass'];
@@ -5862,10 +5880,21 @@ class TeacherController extends CController {
             if (!isset($sqlcurrentClass)) {
                 $sqlcurrentClass = "none";
             }
+            if(isset($_GET['courseID'])){
+                $courseID=$_GET['courseID'];
+            }else{
+                $courseID="";
+            }
+            $result = Lesson::model()->getLessonLst("", "", $courseID,$currentClass);
+            $sqlCourse = Course::model()->find("courseID = '$courseID'");
+            $courseName = $sqlCourse['courseName'];
+            $createPerson = $sqlCourse['createPerson'];
+            $lessonLst = $result ['lessonLst'];
+            $pages = $result ['pages'];
             //查询老师课程表
             $teaResult = ScheduleTeacher::model()->findAll("userID='$teacherID'");
-            return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult, 'array_class' => $array_class,
-                        'array_course' => $array_course, 'sqlcurrentClass' => $sqlcurrentClass]);
+            return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult, 'array_class' => $array_class, 'courseID' => $courseID,
+                'courseName' => $courseName,'pages' => $pages,'createPerson' => $createPerson,'posts' => $lessonLst, 'array_course' => $array_course, 'teacher_class'=>$teacher_class,'sqlcurrentClass' => $sqlcurrentClass]);
         }
     }
 
