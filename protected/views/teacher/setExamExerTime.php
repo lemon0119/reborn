@@ -140,7 +140,7 @@ function savetime(){
 //        window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php //echo $examID ?>&&duration="+v+"&&beginTime=<?php //echo $beginTime ?>&&isOpen=0&&page=" +<?php //echo $pages->currentPage + 1; ?>;
     begin_now();
     }else if(<?php echo $flag;?>==1){
-        window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $examID ?>&&duration=<?php echo $duration; ?>&&beginTime=<?php echo $beginTime ?>&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>;
+        window.location.href = "./index.php?r=teacher/ChangeExamClass&&examID=<?php echo $examID ?>&&duration=<?php echo $duration; ?>&&beginTime=<?php echo $beginTime ?>&&isOpen=0&&page=" +<?php echo $pages->currentPage + 1; ?>+"&&flag=1";
     }else{
         window.wxc.xcConfirm("请输入预定考试时长!", window.wxc.xcConfirm.typeEnum.info);
     }

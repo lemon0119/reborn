@@ -779,7 +779,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
     <div id="dianbo-videos-container" style="display:none;margin-top: 0px;"> 
     </div>
-    <div id="ppt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
+    <div id="ppt-container" align="center" style="width: 100% ; height: 560px;  margin-top:0px;display:none;overflow-x: hidden">
         <img id="ppt-img" src="" style="height: 100%;"/>
     </div>
     <div id="txt-container" align="center" style="width: 100% ; height: 100%;  margin-top:0px;display:none">
@@ -1471,7 +1471,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             var video = document.getElementById('video1');
             if (video === null) {
                 var html = "";
-                html += '<audio style="margin-top:100px" id="video1" width="100%" controls>';
+                html += '<audio style="margin-bottom:200px;height:400px" id="video1" class="div_listen" width="100%" controls>';
                 html += '<source src="' + absl_path + '">';
                 html += '</audio>';
                 $("#dianbo-videos-container").empty();

@@ -2459,15 +2459,15 @@ class TeacherController extends CController {
                 $sourcefilePath = "resources/" . $oldListen['filePath'];
                 $fileName = $oldListen['fileName'];
 
-                if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
-                    //表示复制的文件已存在
-                    $insertresult = '2';
-                } else {
+//                if (file_exists($dir . iconv("UTF-8", "gb2312", $fileName))) {
+//                    //表示复制的文件已存在
+//                    $insertresult = '2';
+//                } else {
                     $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
                     if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
                         copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
                     $insertresult = ListenType::model()->insertListen($oldListen['title'], $oldListen['content'], $newName, $filePath, Yii::app()->session['userid_now']);
-                }
+//                }
             }
         }
 
@@ -3511,6 +3511,8 @@ class TeacherController extends CController {
         $teacherID = Yii::app()->session['userid_now'];
         if(isset($_GET['on'])){
         Yii::app()->session['on']=$_GET['on'];
+        }else{
+            Yii::app()->session['on']=1;
         }
         $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
         $array_lesson = array();
@@ -4655,9 +4657,19 @@ class TeacherController extends CController {
         $examID = $_GET['examID'];
         $isOpen = $_GET['isOpen'];
         $duration = $_GET['duration'];
-        $startTime = $_GET['beginTime'];
-        if ($isOpen == 0)
-            Exam::model()->updateByPk($examID, array('begintime' => $startTime, 'duration' => $duration));
+        if(isset($_GET['flag'])){
+            if($_GET['flag']==1){
+                $startTime = $_GET['beginTime'];
+                $endTime=date("Y-m-d H:i:s",strtotime("$startTime   +$duration   minute"));
+            }
+        }else{
+            $startTime =date("Y-m-d H:i:s", time());
+            $endTime=date("Y-m-d H:i:s",strtotime("$startTime   +$duration   minute"));
+        }
+        if ($isOpen == 0){
+            error_log($startTime);
+            Exam::model()->updateByPk($examID, array('begintime' => $startTime, 'duration' => $duration,'endtime'=>$endTime));
+        }
         $currentClass = Yii::app()->session['currentClass'];
         $result = ClassExam::model()->find("classID=? and examID=?", array($currentClass, $examID));
         if ($result == NULL) {
@@ -5036,7 +5048,9 @@ class TeacherController extends CController {
         $record = ExamRecord::model()->find("workID=? and studentID=?", array($work['workID'], $student['userID']));
 
         $score = AnswerRecord::model()->getAndSaveScoreByRecordID($record['recordID']);
-
+        if(!isset($score)){
+            $score=0;
+        }
         $classID = $work['classID'];
         Yii::app()->session['classID'] = $classID;
         $class = TbClass::model()->find("classID='$classID'");

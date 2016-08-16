@@ -39,7 +39,7 @@
                                 break;
                             }                     
                             ?>
-                    <?php if($thisExam!=NULL){?>
+                    <?php if(isset($thisExam)){?>
                     <tr>
                         <td>
                             <?php            
