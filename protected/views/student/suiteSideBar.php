@@ -72,18 +72,11 @@
                 <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) : ?>
                     <li id="li-key-<?php echo $keyType['exerciseID']; ?>">
-                        <a 
-                            <?php if (isset($_GET['lessonID'])) { ?>
-                                href="./index.php?r=student/keyType&&exerID=<?php echo $keyType['exerciseID'] ?>&&cent=<?php
-                                $arg = implode(',', $cent);
-                                echo $arg;
-                                ?>&&lessonID=<?php echo $_GET['lessonID']; ?>"
-                            <?php } else { ?>
-                                href="./index.php?r=student/keyType&&exerID=<?php echo $keyType['exerciseID'] ?>&&cent=<?php
-                    $arg = implode(',', $cent);
-                    echo $arg;
-                                ?>"
-                    <?php } ?>
+                        
+                        <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>)"
+                    <?php } else { ?>
+                               href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0)"
+        <?php } ?>
                             >
                             <i class="icon-th"></i>
         <?php echo $keyType['title'] ?>
@@ -171,6 +164,25 @@
                     }
                     else{
                         window.location.href = "index.php?r=student/lookType&&exerID="+exerID+"&&cent="+cent;}
+                });
+                    
+						}
+					};
+					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
+    }
+    
+    function suiteKeyNext(exerID,cent,lessonID){
+        var option = {
+						title: "提示",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							saveToDateBaseNow();
+                                                            $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                    if (lessonID!=0) {
+                        window.location.href = "index.php?r=student/keyType&&exerID="+exerID+"&&cent="+cent+"&&lessonID"+lessonID;
+                    }
+                    else{
+                        window.location.href = "index.php?r=student/keyType&&exerID="+exerID+"&&cent="+cent;}
                 });
                     
 						}

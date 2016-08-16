@@ -169,7 +169,7 @@
 //                currentNum = totalNum;
 //                return;
 //            }
-            if (totalNum == currentNum) {
+            if (totalNum == currentNum+1) {
                 window.G_isOverFlag = 1;
                 document.getElementById("id_cost").value = getSeconds();
                 // doSubmit(false);
@@ -302,7 +302,7 @@
         return true;
     }
     function getCorrect() {
-        return numKeyRight / numKeyDown;
+        return numKeyRight / window.GA_countKeyNumber;
     }
     function getNextWord() {
         keyReSet();
