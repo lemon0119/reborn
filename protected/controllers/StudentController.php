@@ -1447,18 +1447,18 @@ class StudentController extends CController {
         if (isset($_POST['old'])) {
             $new1 = $_POST['new1'];
             $defnew = $_POST['defnew'];
-            $email = $_POST['email'];
+//            $email = $_POST['email'];
 
             $usertype = Yii::app()->session['role_now'];
             $user = Student::model()->find('userID=?', array($userid_now));
             if ($user->password == md5($_POST['old'])) {
                 $user->password = md5($new1);
-                $user->mail_address = $email;
+//                $user->mail_address = $email;
                 if ($y == '1')
                     $user->img_address = "img/head/" . $newName;
                 $picAddress = $user->img_address;
                 $result = $user->update();
-                $mail = $email;
+//                $mail = $email;
             }else {
                 $result = 'old error';
                 $this->render('set', ['flag' => $flag, 'result' => $result, 'mail' => $mail, 'picAddress' => $picAddress]);
@@ -1498,6 +1498,10 @@ class StudentController extends CController {
     //速录百科
     public function actionSuLu() {
         return $this->render('suLu');
+    }
+    //获取帮助
+    public function actionGetHelp() {
+        return $this->renderpartial('getHelp');
     }
 
     public function actionScheduleDetil() {

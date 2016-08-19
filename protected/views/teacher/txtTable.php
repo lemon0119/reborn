@@ -12,7 +12,7 @@
                             mkdir($publicdir, 0777);
                            }
 ?>
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" >
     <thead>
         <tr>
             <th>名称</th>

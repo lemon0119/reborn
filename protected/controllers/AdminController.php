@@ -19,7 +19,7 @@ class AdminController extends CController {
         if (isset($_POST['old'])) {
             $new1 = $_POST['new1'];
             $defnew = $_POST['defnew'];
-            $email = $_POST['email'];
+//            $email = $_POST['email'];
             $usertype = Yii::app()->session['role_now'];
             $user = Admin::model()->find('userID=?', array($userid_now));
             if ($user->password != md5($_POST['old'])) {
@@ -28,9 +28,9 @@ class AdminController extends CController {
                 return;
             }
             $user->password = md5($new1);
-            $user->mail_address = $email;
+//            $user->mail_address = $email;
             $result = $user->update();
-            $mail = $email;
+//            $mail = $email;
         }
 
         $this->render('set', ['result' => $result, 'mail' => $mail]);

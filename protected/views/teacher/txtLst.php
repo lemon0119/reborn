@@ -36,23 +36,27 @@
 <div class="span9">
     <h2 style="display:inline-block;">文本列表</h2>
     <span>(仅支持txt)</span>
-    <div id ="txt-table"></div>
+    <div id ="txt-table" style="height: 500px;overflow:scroll;width: 100%;">   
+    </div>
     <form name="form1" class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addTxt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" enctype="multipart/form-data"> 
     <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" /> 
         <div class="control-group">
-       <div class="controls">
-       <input type="file" name="file" id="input02"> 
-       <div id="upload" style="display:inline;" hidden="true">
-       <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
-            <div id="number">0%</div>
-       </div>
-       <button onclick="formSubmit()" type="button" class="btn btn-primary" id="myButton">上传</button>
-       <span style="position: relative;left: 10px">
-       <input type="checkbox" name="checkbox"  value="" />
-       是否上传为公共资源
-       </span>
-       </div>
-    </div>
+            <div class="controls">
+            <input type="file" name="file" id="input02"> 
+                <div id="upload" style="display:inline;" hidden="true">
+                <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+                    <div id="number">0%
+                    </div>
+                </div>
+            
+            <button onclick="formSubmit()" type="button" class="btn btn-primary" id="myButton">上传</button>
+            <span style="position: relative;left: 10px">
+                <input type="checkbox" name="checkbox"  value="" />
+                是否上传为公共资源
+            </span>
+            
+          </div>            
+        </div>
     </form>
 </div>
 <script>

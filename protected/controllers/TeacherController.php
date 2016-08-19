@@ -115,7 +115,10 @@ class TeacherController extends CController {
             'listenAll' => $listenAll,
         ));
     }
-
+    //获取帮助
+    public function actionGetHelp() {
+        return $this->renderpartial('getHelp');
+    }
     public function actionSaveTimeAll() {
         $examID = (isset($_GET['examID'])) ? $_GET['examID'] : 0;
         $choiceScore = (isset($_POST['choiceScore'])) ? $_POST['choiceScore'] : 0;
@@ -199,7 +202,7 @@ class TeacherController extends CController {
         if (isset($_POST['old'])) {
             $new1 = $_POST['new1'];
             $defnew = $_POST['defnew'];
-            $email = $_POST['email'];
+//            $email = $_POST['email'];
 
             $usertype = Yii::app()->session['role_now'];
 
@@ -213,9 +216,9 @@ class TeacherController extends CController {
                 return;
             }
             $user->password = md5($new1);
-            $user->mail_address = $email;
+//            $user->mail_address = $email;
             $result = $user->update();
-            $mail = $email;
+//            $mail = $email;
         }
 
         $this->render('set', ['result' => $result, 'mail' => $mail]);
