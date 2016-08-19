@@ -36,7 +36,7 @@
 </div>
 <div class="span9">
     <h2 style="display:inline-block;">图片列表</h2>
-    <div id ="picture-table"></div>
+    <div id ="picture-table" style="height: 500px;overflow:scroll;width: 100%;"></div>
     <form name="form1" class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addPicture&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0" enctype="multipart/form-data"> 
     <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" /> 
         <div class="control-group">

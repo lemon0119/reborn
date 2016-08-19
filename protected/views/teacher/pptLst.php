@@ -37,7 +37,9 @@
 <div class="span9">
     <h2 style="display:inline-block;">PPT列表</h2>
     <span>(支持PPT格式,最大100M)</span>
-    <div id ="ppt-table"></div>
+    <div id ="ppt-table" style="height: 500px;overflow:scroll;width: 100%;">
+        
+    </div>
     <form name="form1" class="form-horizontal" method="post" action="./index.php?r=teacher/addPpt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 
     <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />        
         <div class="control-group">
