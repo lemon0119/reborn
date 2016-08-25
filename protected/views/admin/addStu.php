@@ -252,7 +252,7 @@ foreach ($classAll as $key => $value) {
     usertipsSpan.style.color = "red";  
     usertipsSpan.style.marginLeft="25px";
     if (!usernameVal.match( /^[A-Za-z]+[A-Za-z0-9]+$/)) {  
-        usertipsSpan.innerHTML="必须由英文或者数字组成，首字符必须是英文";  
+        usertipsSpan.innerHTML="必须由字母和数字组成";  
         document.getElementById("input01").value="";
         return false;  
     } else {  
