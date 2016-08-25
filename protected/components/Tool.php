@@ -235,6 +235,7 @@ class Tool {
         // 正式导入数据库,返回成功导入的人数
         $count = 0;
         foreach ($arry_success as $data) {
+            error_log($data ['className']);
             if ($data ['className'] == "") {
                 $classID = "0";
             } else {
@@ -255,8 +256,15 @@ class Tool {
 
         $count = 0;
         foreach ($arry_success as $data) {
-            Teacher::model()->insertTea($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'], $data['school']);
+            $teaID=strtoupper($data ['uid']);
+            Teacher::model()->insertTea($teaID, $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'], $data['school']);
             $count++;
+            if(isset($data ['class'])&&isset($teaID)&&isset($data ['userName'])){
+                $array_class=  TbClass::model()->find('className=?',array($data ['class']));
+                $classID=$array_class['classID'];
+                $sql="INSERT INTO teacher_class VALUES('". $teaID ."','". $classID ."','')";
+                Yii::app()->db->createCommand($sql)->query();
+            }
         }
         return $count;
     }
@@ -284,7 +292,7 @@ class Tool {
         $userAll = Student::model()->findAll();
         foreach ($userAll as $k => $v) {
             $Id = $v ['userID'];
-            if ($Id == $userId) {
+            if ($Id == strtoupper($userId)) {
                 return true;
             }
         }
@@ -299,7 +307,7 @@ class Tool {
         $userAll = Teacher::model()->findAll();
         foreach ($userAll as $k => $v) {
             $Id = $v ['userID'];
-            if ($Id == $userId) {
+            if ($Id == strtoupper($userId)) {
                 return true;
             }
         }
@@ -338,7 +346,7 @@ class Tool {
      * return true 正确; false 不正确
      */
     public static function checkID($ID) {
-        $regex = '/^[A-Za-z]+[A-Za-z0-9]+$/';
+        $regex = '/^(?![0-9]+$)(?![a-zA-Z]+$)[A-Za-z0-9]+$/';
         if (preg_match($regex, $ID)) {
             return TRUE;
         } else {
