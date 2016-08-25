@@ -19,7 +19,7 @@ class AdminController extends CController {
         if (isset($_POST['old'])) {
             $new1 = $_POST['new1'];
             $defnew = $_POST['defnew'];
-//            $email = $_POST['email'];
+            $email = $_POST['email'];
             $usertype = Yii::app()->session['role_now'];
             $user = Admin::model()->find('userID=?', array($userid_now));
             if ($user->password != md5($_POST['old'])) {
@@ -28,9 +28,9 @@ class AdminController extends CController {
                 return;
             }
             $user->password = md5($new1);
-//            $user->mail_address = $email;
+            $user->mail_address = $email;
             $result = $user->update();
-//            $mail = $email;
+            $mail = $email;
         }
 
         $this->render('set', ['result' => $result, 'mail' => $mail]);
@@ -3813,6 +3813,7 @@ class AdminController extends CController {
                     $array_successTea=array();
                     $array_failTea=array();
                     $stu_failTea=array();
+                    $stu_fail=array();
                     $result1="";
                     $flag=0;
                     $flagClass=0;
@@ -4242,7 +4243,7 @@ class AdminController extends CController {
                                     $result="年龄应为1-99之间的整数！";
                                     $fixed="年龄默认为99";
                                     $data['age']=99;
-                                    $stu_failTea=array($result,$data['uid'],$data['userName'],$fixed,$data);
+                                    $stu_fail=array($result,$data['uid'],$data['userName'],$fixed,$data);
                                     array_push($array_fail, $stu_fail);
                                     array_push($array_success, $data);
                                 }else if ($data ['phone_number']!="" && !preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number'])) {
