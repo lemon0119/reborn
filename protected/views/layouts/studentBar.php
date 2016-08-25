@@ -83,7 +83,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                 </div>
             </div>
             <div  class="copyright">
-                2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="#"  class="copyright">法律声明</a><a href="#"  class="copyright">联系我们</a><a href="#"  class="copyright">获得帮助</a>
+                2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="#"  class="copyright">法律声明</a><a href=""  class="copyright">联系我们</a><a href="" onclick="getHelp()" class="copyright">获得帮助</a>
             </div>
         </body>
     </html>
@@ -92,6 +92,9 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
     <script>    window.location.href = "./index.php?r=user/login";</script>
 <?php } ?>
 <script type="text/javascript">
+    function getHelp(){
+        window.open("./index.php?r=student/getHelp");
+    }
 //    window.onbeforeunload = onbeforeunload_handler;
 //    window.onunload = onunload_handler;
 //    function onbeforeunload_handler() {
