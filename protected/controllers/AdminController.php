@@ -4051,7 +4051,7 @@ class AdminController extends CController {
                                 break;
                             }
                         }
-                        if($k==2){                            
+                        if($k==2){
                             if($v[0]==""|| ctype_space($v[0])){
                                 $result="科目名不能为空！";
                                 $flag=1;
@@ -4060,6 +4060,9 @@ class AdminController extends CController {
                             }else{
                                 $courseName=$v[0];
                                 $allCourse=Course::model()->findAll();
+                                if(empty($allCourse)){
+                                    $flagTea=1;
+                                }
                                 foreach($allCourse as $a){
                                     if($a['courseName']==$courseName){
                                         $resultExl='have_same_course';
@@ -4070,7 +4073,6 @@ class AdminController extends CController {
                                     }
                                     $flagTea=1;
                                 }
-                                
                             }
                             if ($v [1]==""|| ctype_space($v [1]) || $v [1]<1 ||$v [1]>99 || !preg_match( "/^[0-9]+$/",$v [1])) {
                                     $result = "课时数不能为空且为1-99之间的整数！";
@@ -4078,6 +4080,7 @@ class AdminController extends CController {
                                     $this->render('key', ['result' => $result]);
                                     break;
                                 }else{
+                                    
                                     if($flagTea==1){
                                     $resultExl=Course::model()->insertCourse($courseName,0);
                                 }
