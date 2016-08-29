@@ -1503,7 +1503,10 @@ class StudentController extends CController {
     public function actionGetHelp() {
         return $this->renderpartial('getHelp');
     }
-
+    //联系我们
+    public function actionContact(){
+        return $this->renderpartial('contact');
+    }
     public function actionScheduleDetil() {
         //查询任课班级科目
         $userID = Yii::app()->session['userid_now'];

@@ -119,6 +119,10 @@ class TeacherController extends CController {
     public function actionGetHelp() {
         return $this->renderpartial('getHelp');
     }
+    //联系我们
+    public function actionContact(){
+        return $this->renderpartial('contact');
+    }
     public function actionSaveTimeAll() {
         $examID = (isset($_GET['examID'])) ? $_GET['examID'] : 0;
         $choiceScore = (isset($_POST['choiceScore'])) ? $_POST['choiceScore'] : 0;
@@ -318,13 +322,14 @@ class TeacherController extends CController {
         $dir = "resources/" . $pptFilePath;
         if($pptFilePath1!=""){
         $dir1 = "resources/" . $pptFilePath1;
+        if(!is_dir($dir1)) {
+           mkdir($dir1,0777);
+          }
         }
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
         }
-//        if(!is_dir($dir1)) {
-//            mkdir($dir1,0777);
-//        }
+
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
