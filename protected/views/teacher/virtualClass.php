@@ -79,7 +79,61 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 <!--    <div id="show-movie"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">-->
 <!--        <div  class="title_select"  style="border-radius: 5px;pointer-events: none;background-color: gray;position:relative;right: 300px;top: 80px"  align="center" ><h4 >公 共<br/>资 源 </h4></div>-->
 <div id="show-movie" style="display: none;">
-    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
+    
+<!--            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
+            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
+                <select id="teacher-choose-file-public" style="width:150px;margin-top: 10px;">
+                    <?php
+//                    $mydir = dir($adminPublicVdir);
+//                    while ($file = $mydir->read()) {
+//                        if ((!is_dir("$adminPublicVdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option value ="<?php// echo $adminPublicVdir . iconv("gb2312", "UTF-8", $file); ?>"><?php //echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
+                            <?php
+//                        }
+//                    }
+//                    $mydir->close();
+                    ?>
+                </select>
+                <button id="teacher-dianbo-public" style="width: 150px;" class="btn btn-primary">点播视频</button>
+                </div>-->
+                
+<!--                <button id="teacher-addMovie" onclick="addMovie()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加视频</button>    -->
+            
+            <!--<div  class="title_select"  onclick="addMovie()" style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;left:300px;top:-223px;"  align="center" ><h1 >+</h1></div>  -->
+            
+<!--        </div>-->
+        
+
+    
+<!--    新加平铺显示5/18-->
+        <div style="width:150px;position:relative;left: 20px ">
+            <div><h3>本 课 资 源 </h3></div>
+            <div id="teacher-choose-file" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+    
+    <?php
+                    $mydir = dir($vdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {?>
+                
+                            <button id="teacher-dianbo" onclick="filePath1('<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>')" style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" 
+                                    title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" 
+                                    value ="<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>">
+                                <?php 
+                            $myFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
+                            if(Tool::clength($myFile)<=8){
+                                echo $myFile;
+                            }else{
+                                echo Tool::csubstr($myFile, 0, 8) . "...";
+                            }
+                            ?> </button><?php
+                        }
+                    }
+                    $mydir->close();
+                    ?>
+            </div>
+        </div>
+<div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
 <!--        <div style="display:inline;">-->
 <!--            <div  style="width:150px;position:relative;right: 200px ">-->
              <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
@@ -157,63 +211,49 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
             <!--</div>-->
                  </ul>
              </div>
-<!--            <div  class="title_select"  style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 80px;"  align="center" ><h4 >公 共<br/>资 源 </h4></div>
-            <div  style="width:150px;position:relative;bottom: 160px;left: 100px ">
-                <select id="teacher-choose-file-public" style="width:150px;margin-top: 10px;">
-                    <?php
-//                    $mydir = dir($adminPublicVdir);
-//                    while ($file = $mydir->read()) {
-//                        if ((!is_dir("$adminPublicVdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                            ?>
-                            <option value ="<?php// echo $adminPublicVdir . iconv("gb2312", "UTF-8", $file); ?>"><?php //echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?></option>   
-                            <?php
-//                        }
-//                    }
-//                    $mydir->close();
-                    ?>
-                </select>
-                <button id="teacher-dianbo-public" style="width: 150px;" class="btn btn-primary">点播视频</button>
-                </div>-->
-                
-<!--                <button id="teacher-addMovie" onclick="addMovie()" style="width: 150px;top:5px;position: relative;" class="btn btn-primary">添加视频</button>    -->
-            
-            <!--<div  class="title_select"  onclick="addMovie()" style=" border-radius: 5px;pointer-events: none;background-color: gray;position:relative;bottom: 70px;left:300px;top:-223px;"  align="center" ><h1 >+</h1></div>  -->
-            
-<!--        </div>-->
-        
-
-    
-<!--    新加平铺显示5/18-->
-        <div style="width:150px;position:relative;left: 20px ">
-            <div><h3>本 课 资 源 </h3></div>
-            <div id="teacher-choose-file" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
-    
-    <?php
-                    $mydir = dir($vdir);
-                    while ($file = $mydir->read()) {
-                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {?>
-                
-                            <button id="teacher-dianbo" onclick="filePath1('<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>')" style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" 
-                                    title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" 
-                                    value ="<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>">
-                                <?php 
-                            $myFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
-                            if(Tool::clength($myFile)<=8){
-                                echo $myFile;
-                            }else{
-                                echo Tool::csubstr($myFile, 0, 8) . "...";
-                            }
-                            ?> </button><?php
-                        }
-                    }
-                    $mydir->close();
-                    ?>
-            </div>
-        </div>
     </div>
 
 <!--5/23资源平铺-->
 <div id="show-ppt" style="display: none;">
+
+        <div style="width:150px;position:relative;left: 20px ">
+            <div><h3>本 课 资 源 </h3></div>
+            <div id="choose-ppt" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+    
+    <?php
+                    $mydir = dir($pdir);
+                            while ($file = $mydir->read()) {
+                                if ((is_dir("$pdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                                    ?>
+                
+                                    
+                
+                            <button id="play-ppt"  onclick="filePptPath('<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$pdir/$file";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea')" 
+                            title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?>"
+                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$pdir/$file";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea"><?php
+                            $myPptFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")),"."));
+                            if(Tool::clength($myPptFile)<=8){
+                                echo $myPptFile;
+                            }else{
+                                echo Tool::csubstr($myPptFile, 0, 8) . "...";
+                            }?></button>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                    ?>
+            </div>
+        </div>
     <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
 
              <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
@@ -271,46 +311,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
                  </ul>
              </div>
-
-
-        <div style="width:150px;position:relative;left: 20px ">
-            <div><h3>本 课 资 源 </h3></div>
-            <div id="choose-ppt" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
-    
-    <?php
-                    $mydir = dir($pdir);
-                            while ($file = $mydir->read()) {
-                                if ((is_dir("$pdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                                    ?>
-                
-                                    
-                
-                            <button id="play-ppt"  onclick="filePptPath('<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$pdir/$file";
-                            $num = sizeof(scandir($dir));
-                            $num = ($num > 2) ? ($num - 2) : 0;
-                            echo $num;
-                            ?>+-+tea')" 
-                            title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?>"
-                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$pdir/$file";
-                            $num = sizeof(scandir($dir));
-                            $num = ($num > 2) ? ($num - 2) : 0;
-                            echo $num;
-                            ?>+-+tea"><?php
-                            $myPptFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")),"."));
-                            if(Tool::clength($myPptFile)<=8){
-                                echo $myPptFile;
-                            }else{
-                                echo Tool::csubstr($myPptFile, 0, 8) . "...";
-                            }?></button>   
-                                    <?php
-                                }
-                            }
-                            $mydir->close();
-                    ?>
-            </div>
-        </div>
     </div>
     
 <!--    <div id="show-ppt"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
@@ -382,43 +382,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             
 <!--5/23资源平铺-->
 <div id="show-picture" style="display: none;">
-    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
-
-             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
-                 <ul>
-                     <li style="padding:5px 100px 5px 75px;">
-                <select id="choose-pic-public" style="width:250px;margin-top: 10px;">
-                    <?php
-                    $mydir = dir($adminPublicPicdir);
-                    while ($file = $mydir->read()) {
-                        if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                            ?>
-                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$adminPublicPicdir";
-                            $num = sizeof(scandir($dir));
-                            $num = ($num > 2) ? ($num - 2) : 0;
-                            echo $num;
-                            ?>+-+admin"><?php $filePic= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); 
-                            if(Tool::clength($filePic)<=15){
-                                echo $filePic;
-                            }else{
-                                echo Tool::csubstr($filePic, 0, 15) . "...";
-                            }  
-                            ?></option>   
-                                    <?php
-                                }
-                            }
-                            $mydir->close();
-                    ?>
-
-                </select>
-                                <button id="play-pic-public" style="width: 150px;margin-left:105px" class="btn btn-primary">放映图片</button>
-                     </li>
-
-                 </ul>
-             </div>
-
-
         <div style="width:150px;position:relative;left: 20px ">
             <div><h3>本 课 资 源 </h3></div>
             <div id="choose-pic" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
@@ -458,6 +421,41 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                     ?>
             </div>
         </div>
+    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
+
+             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
+                 <ul>
+                     <li style="padding:5px 100px 5px 75px;">
+                <select id="choose-pic-public" style="width:250px;margin-top: 10px;">
+                    <?php
+                    $mydir = dir($adminPublicPicdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$adminPublicPicdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$adminPublicPicdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+admin"><?php $filePic= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); 
+                            if(Tool::clength($filePic)<=15){
+                                echo $filePic;
+                            }else{
+                                echo Tool::csubstr($filePic, 0, 15) . "...";
+                            }  
+                            ?></option>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                    ?>
+
+                </select>
+                                <button id="play-pic-public" style="width: 150px;margin-left:105px" class="btn btn-primary">放映图片</button>
+                     </li>
+
+                 </ul>
+             </div>
     </div>                            
                             
 <!--    <div id="show-picture"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
@@ -515,44 +513,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
                             <!--5/23 text资源平铺-->
 <div id="show-text" style="display: none;">
-    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
-
-             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
-                 <ul>
-                     <li style="padding:5px 100px 5px 75px;">
-                <select id="choose-txt-public" style="width:250px;margin-top: 10px;">
-                    <?php
-                    $mydir = dir($adminPublicTxtdir);
-                    while ($file = $mydir->read()) {
-                        if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                            ?>
-                    
-                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
-                            $dir = "$txtdir";
-                            $num = sizeof(scandir($dir));
-                            $num = ($num > 2) ? ($num - 2) : 0;
-                            echo $num;
-                            ?>+-+tea"><?php $filtTxtPath= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); 
-                            if(Tool::clength($filtTxtPath)<=15){
-                                echo $filtTxtPath;
-                            }else{
-                                echo Tool::csubstr($filtTxtPath, 0, 15) . "...";
-                            }
-                            ?></option>   
-                                    <?php
-                                }
-                            }
-                            $mydir->close();
-                    ?>
-
-                </select>
-                                <button id="play-txt-public" style="width: 150px;margin-left:105px" class="btn btn-primary">阅览文本</button>
-                     </li>
-
-                 </ul>
-             </div>
-
-
+    
         <div style="width:150px;position:relative;left: 20px ">
             <div><h3>本 课 资 源 </h3></div>
             <div id="choose-txt" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
@@ -591,6 +552,42 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                     ?>
             </div>
         </div>
+    <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
+
+             <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
+                 <ul>
+                     <li style="padding:5px 100px 5px 75px;">
+                <select id="choose-txt-public" style="width:250px;margin-top: 10px;">
+                    <?php
+                    $mydir = dir($adminPublicTxtdir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$adminPublicTxtdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                    
+                            <option title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            $dir = "$txtdir";
+                            $num = sizeof(scandir($dir));
+                            $num = ($num > 2) ? ($num - 2) : 0;
+                            echo $num;
+                            ?>+-+tea"><?php $filtTxtPath= Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); 
+                            if(Tool::clength($filtTxtPath)<=15){
+                                echo $filtTxtPath;
+                            }else{
+                                echo Tool::csubstr($filtTxtPath, 0, 15) . "...";
+                            }
+                            ?></option>   
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+                    ?>
+
+                </select>
+                                <button id="play-txt-public" style="width: 150px;margin-left:105px" class="btn btn-primary">阅览文本</button>
+                     </li>
+
+                 </ul>
+             </div>
     </div>                            
                             
 <!--    <div id="show-text"  style="position: relative;left: 380px;display: none;border: 0px;width:100px;">
@@ -645,6 +642,35 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             
 <!--5/23 voice资源平铺-->
 <div id="show-voice" style="display: none;">
+    
+        <div style="width:150px;position:relative;left: 20px ">
+            <div><h3>本 课 资 源 </h3></div>
+            <div id="choose-voice" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+    
+    <?php
+    
+                 $mydir = dir($voicedir);
+                    while ($file = $mydir->read()) {
+                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
+                            ?>
+                
+                <button id="play-voice"  onclick="fileVoicePath('<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>')" 
+                            title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
+                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php
+                            $myVoiceFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
+                            if(Tool::clength($myVoiceFile)<=8){
+                                echo $myVoiceFile;
+                            }else{
+                                echo Tool::csubstr($myVoiceFile, 0, 8) . "...";
+                            }?></button>
+                                    <?php
+                                }
+                            }
+                            $mydir->close();
+
+                    ?>
+            </div>
+        </div>
     <div><h3> &nbsp;&nbsp;&nbsp; 公 共 资 源 </h3></div>        
 
              <div class="table-bordered summary" style="width: 700px;margin:0 0 0 20px;padding:0;">
@@ -676,36 +702,6 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
                  </ul>
              </div>
-
-
-        <div style="width:150px;position:relative;left: 20px ">
-            <div><h3>本 课 资 源 </h3></div>
-            <div id="choose-voice" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
-    
-    <?php
-    
-                 $mydir = dir($voicedir);
-                    while ($file = $mydir->read()) {
-                        if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {
-                            ?>
-                
-                <button id="play-voice"  onclick="fileVoicePath('<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>')" 
-                            title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
-                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php
-                            $myVoiceFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
-                            if(Tool::clength($myVoiceFile)<=8){
-                                echo $myVoiceFile;
-                            }else{
-                                echo Tool::csubstr($myVoiceFile, 0, 8) . "...";
-                            }?></button>
-                                    <?php
-                                }
-                            }
-                            $mydir->close();
-
-                    ?>
-            </div>
-        </div>
     </div>                            
 
 <!--    <div id="show-voice"   style="position: relative;left: 380px;display: none;border: 0px;width:100px;">

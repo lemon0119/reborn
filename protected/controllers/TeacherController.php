@@ -115,7 +115,14 @@ class TeacherController extends CController {
             'listenAll' => $listenAll,
         ));
     }
-
+    //获取帮助
+    public function actionGetHelp() {
+        return $this->renderpartial('getHelp');
+    }
+    //联系我们
+    public function actionContact(){
+        return $this->renderpartial('contact');
+    }
     public function actionSaveTimeAll() {
         $examID = (isset($_GET['examID'])) ? $_GET['examID'] : 0;
         $choiceScore = (isset($_POST['choiceScore'])) ? $_POST['choiceScore'] : 0;
@@ -199,7 +206,7 @@ class TeacherController extends CController {
         if (isset($_POST['old'])) {
             $new1 = $_POST['new1'];
             $defnew = $_POST['defnew'];
-            $email = $_POST['email'];
+//            $email = $_POST['email'];
 
             $usertype = Yii::app()->session['role_now'];
 
@@ -213,9 +220,9 @@ class TeacherController extends CController {
                 return;
             }
             $user->password = md5($new1);
-            $user->mail_address = $email;
+//            $user->mail_address = $email;
             $result = $user->update();
-            $mail = $email;
+//            $mail = $email;
         }
 
         $this->render('set', ['result' => $result, 'mail' => $mail]);
@@ -304,15 +311,25 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        $pptFilePath1 = "";
+        $dir1 = "";
         if (isset($_POST['checkbox'])) {
-            $pptFilePath = "public/ppt/";
+           $pptFilePath = "public/ppt/";
+           $pptFilePath1 = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
         } else {
             $pptFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/ppt/";
         }
         $dir = "resources/" . $pptFilePath;
+        if($pptFilePath1!=""){
+        $dir1 = "resources/" . $pptFilePath1;
+        if(!is_dir($dir1)) {
+           mkdir($dir1,0777);
+          }
+        }
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
         }
+
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
@@ -332,11 +349,19 @@ class TeacherController extends CController {
                 if ($_FILES["file"]["error"] > 0) {
                     $result = "Return Code: " . $_FILES["file"]["error"];
                 } else {
+                    if($dir1!=""){
+                    $newName = Tool::createID() . ".ppt";
+                    $oldName = $_FILES["file"]["name"];
+                    copy($_FILES["file"]["tmp_name"], $dir1 . iconv("UTF-8", "gb2312", $newName));
+                    Resourse::model()->insertRela($newName, $oldName);
+                    $result = "上传成功！"; 
+                    }
                     $newName = Tool::createID() . ".ppt";
                     $oldName = $_FILES["file"]["name"];
                     move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
                     Resourse::model()->insertRela($newName, $oldName);
                     $result = "上传成功！";
+                   
                 }
             } else {
                 $reult = "PPT文件限定大小为30M！";
@@ -389,7 +414,7 @@ class TeacherController extends CController {
             if ($_FILES["file"]["size"] < 30000000) {
                 if ($_FILES["file"]["error"] > 0) {
                     $result = "Return Code: " . $_FILES["file"]["error"];
-                } else {
+                } else{
                     $newName = Tool::createID() . ".ppt";
                     $oldName = $_FILES["file"]["name"];
                     move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
@@ -650,12 +675,18 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        $videoFilePath1 = "";
+        $dir1 = "";
         if (isset($_POST['checkbox'])) {
             $videoFilePath = "public/video/";
+            $videoFilePath1 = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
         } else {
             $videoFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/video/";
         }
         $dir = "resources/" . $videoFilePath;
+        if($videoFilePath1!=""){
+            $dir1 = "resources/" . $videoFilePath1;
+        }
         if (!is_dir($dir)) {
             mkdir($dir, 0777);
         }
@@ -676,7 +707,13 @@ class TeacherController extends CController {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
-
+                if($dir1!=""){
+                    $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                copy($_FILES["file"]["tmp_name"], $dir1 . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaVideo($newName, $oldName);
+                $result = "上传成功!";
+                }
                 $oldName = $_FILES["file"]["name"];
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
@@ -759,12 +796,18 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        $txtFilePath1 = "";
+        $dir1 = "";
         if (isset($_POST['checkbox'])) {
             $txtFilePath = "public/txt/";
+            $txtFilePath1 =  $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
         } else {
             $txtFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/txt/";
         }
         $dir = "resources/" . $txtFilePath;
+        if($txtFilePath1!=""){
+            $dir1 ="resources/" . $txtFilePath1;
+        }
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
@@ -782,6 +825,13 @@ class TeacherController extends CController {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
+                if($dir1!=""){
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                copy($_FILES["file"]["tmp_name"], $dir1 . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaTxt($newName, $oldName);
+                $result = "上传成功!";   
+                }
                 $oldName = $_FILES["file"]["name"];
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
@@ -857,12 +907,18 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        $voiceFilePath1 = "";
+        $dir1 = "";
         if (isset($_POST['checkbox'])) {
             $voiceFilePath = "public/voice/";
+            $voiceFilePath1 =$typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
         } else {
             $voiceFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/voice/";
         }
         $dir = "resources/" . $voiceFilePath;
+        if($voiceFilePath1!=""){
+            $dir1 ="resources/" . $voiceFilePath1;
+        }
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
@@ -881,6 +937,13 @@ class TeacherController extends CController {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
+                if($dir1!=""){
+                 $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                copy($_FILES["file"]["tmp_name"], $dir1 . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaVoice($newName, $oldName);
+                $result = "上传成功!";
+                }
                 $oldName = $_FILES["file"]["name"];
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
@@ -959,12 +1022,18 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $progress = $_GET['progress'];
         $on = $_GET['on'];
+        $picFilePath1 = "";
+        $dir1= "";
         if (isset($_POST['checkbox'])) {
             $picFilePath = "public/picture/";
+            $picFilePath1 = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
         } else {
             $picFilePath = $typename . "/" . $userid . "/" . $classID . "/" . $on . "/picture/";
         }
         $dir = "resources/" . $picFilePath;
+        if($picFilePath1!=""){
+            $dir1 = "resources/" . $picFilePath1;
+        }
         $result = "上传失败!";
         $flag = 0;
         if (!isset($_FILES["file"])) {
@@ -982,6 +1051,13 @@ class TeacherController extends CController {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {
+                if($dir1!=""){
+                $oldName = $_FILES["file"]["name"];
+                $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
+                copy($_FILES["file"]["tmp_name"], $dir1 . iconv("UTF-8", "gb2312", $newName));
+                Resourse::model()->insertRelaPicture($newName, $oldName);
+                $result = "上传成功!";
+                }
                 $oldName = $_FILES["file"]["name"];
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));

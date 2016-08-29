@@ -39,10 +39,11 @@ var server = https.createServer(options, function(request, response) {
 	});
   } else {
 	//if the file was not found, set a 404 header...
+	//输出提示
 	response.writeHead(404, {'Content-Type': 'text/html'});
 	//send a custom 'file not found' message
 	//and then close the request
-	response.end('<h1>Sorry, the page you are looking for cannot be found.</h1>');
+	response.end('<h1>Port validation success</h1>');
   };
 });
 

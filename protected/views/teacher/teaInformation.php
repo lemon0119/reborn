@@ -34,7 +34,7 @@
                     <td><?php echo $department; ?></td>
                 </tr>
                 <tr>
-                    <td>院校:</td>
+                    <td>学校:</td>
                     <td><?php echo $school; ?></td>
                 </tr>
                 <tr>

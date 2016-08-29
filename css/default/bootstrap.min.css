@@ -4898,6 +4898,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     padding: 17px 20px;
     background-repeat:no-repeat;
 }
+#key_enable{
+    padding: 28px 60px;
+    background-repeat:no-repeat;
+    background-image: url("../../img/UI_adm/onekey_enable.png");
+}
+#key_enable:hover{
+    padding: 28px 60px;
+    background-repeat:no-repeat;
+    background-image: url("../../img/UI_adm/on_onekey_enable.png");
+}
 .btn_bigserch{
     border: 0px;
     padding: 18px 112px;
@@ -5162,13 +5172,13 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #blank_admin{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#6c6b6b,#fff);
-    padding: 27px 82px;
+    background:-moz-linear-gradient(left,#808080,#fff);
+    padding: 27px 22px;
 }
 #blank_teacher{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#6c6b6b,#fff);
+    background:-moz-linear-gradient(left,#808080,#fff);
     padding: 27px 47px;
 }
 #schedule{

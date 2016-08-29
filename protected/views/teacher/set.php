@@ -82,10 +82,6 @@ function long2(){
                     <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/>
                     <span id="usertips3" style="margin-left: 15px;"></span> 
                 </div>
-                    <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
-                <div class="controls">
-                    <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
-                </div>
         </div>
                 <div style="margin-top: 30px;">
                     <a class="btn btn-primary" href="./index.php?r=teacher/index">取消</a>
@@ -110,7 +106,7 @@ function judge(){
     var old = $("#input01")[0].value;
     var new1 = $("#input02")[0].value;
     var defnew=$("#input03")[0].value;
-    var email=$("#input04")[0].value;
+//    var email=$("#input04")[0].value;
     if(old!="" &&new1!=""&&old==new1){
         window.wxc.xcConfirm('新旧密码不能一样', window.wxc.xcConfirm.typeEnum.info);
         $("#input02")[0].value="";
@@ -129,10 +125,10 @@ function judge(){
         window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
-    if(email === "" ){
-        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
-        return false;
-    }
+//    if(email === "" ){
+//        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
+//        return false;
+//    }
     $('#myForm').submit();
     return false
 }
