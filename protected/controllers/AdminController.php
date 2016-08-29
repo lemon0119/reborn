@@ -7,7 +7,10 @@ class AdminController extends CController {
     public function actionIndex() {
         $this->render('index');
     }
-
+    //联系我们
+    public function actionContact(){
+        return $this->renderpartial('contact');
+    }
     public function actionSet() {       //set
         $result = 'no';
         $mail = '';

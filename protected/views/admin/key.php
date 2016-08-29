@@ -91,7 +91,7 @@
                     if($flagClass==1){
                         echo 'window.wxc.xcConfirm("科目：'.$courseName.'已存在，成功新建班级：'.$className.'，导入了'.$result.'个学生和'.$result1.'个老师,'.$count_fail.'个学生没有导入",window.wxc.xcConfirm.typeEnum.success)';                        
                     }else{
-                        echo 'window.wxc.xcConfirm("科目：'.$courseName.'和班级：'.$className.'已存在，成功导入了'.$result.'个学生和'.$result1.'个老师,'.$count_fail.'个学生没有导入",window.wxc.xcConfirm.typeEnum.success)';
+                        echo 'window.wxc.xcConfirm("科目：'.$courseName.'，班级：'.$className.'已存在，成功导入了'.$result.'个学生和'.$result1.'个老师,'.$count_fail.'个学生没有导入",window.wxc.xcConfirm.typeEnum.success)';
                     }
                 }
             }else{
