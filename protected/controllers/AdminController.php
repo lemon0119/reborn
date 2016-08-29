@@ -4155,8 +4155,8 @@ class AdminController extends CController {
                                     $fixed="需手动添加";
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                     array_push($array_failTea,$stu_failTea);
-                                }else if($dataTea['userName']=="" || ctype_space($dataTea['userName'])){
-                                    $result1="姓名不能为空！";
+                                }else if($dataTea['userName']=="" || ctype_space($dataTea['userName']) || !preg_match("/^[A-Za-z_\x80-\xff]+$/",$dataTea['userName'])){
+                                    $result1="姓名不能为空且由汉字或英文组成！";
                                     $fixed="需手动添加";
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                     array_push($array_failTea,$stu_failTea);
@@ -4166,6 +4166,27 @@ class AdminController extends CController {
                                     $dataTea['sex']="女";
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                     array_push($array_failTea,$stu_failTea);
+                                    if($dataTea['age']<1 ||$dataTea['age']>99 || !preg_match( "/^[0-9]+$/",$dataTea['age'])){
+                                        $result1="年龄应为1-99之间的整数！";
+                                        $fixed="年龄默认为99";
+                                        $dataTea['age']=99;
+                                        $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                        array_push($array_failTea,$stu_failTea);
+                                        if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])){
+                                            $result1 = "手机号码格式不正确";
+                                            $fixed = "手机号码已置空";
+                                            $dataTea['phone_number'] = "";
+                                            $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                            array_push($array_failTea,$stu_failTea);
+                                            if(!Tool::checkMailAddress($dataTea['mail_address'])){
+                                                $result1="邮箱格式不正确！";
+                                                $fixed="邮箱信息已置空";
+                                                $dataTea['mail_address']="";
+                                                $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                                array_push($array_failTea,$stu_failTea);
+                                            }
+                                        }
+                                    }
                                     array_push($array_successTea,$dataTea);
                                 }else if($dataTea['age']<1 ||$dataTea['age']>99 || !preg_match( "/^[0-9]+$/",$dataTea['age'])){
                                     $result1="年龄应为1-99之间的整数！";
@@ -4173,13 +4194,34 @@ class AdminController extends CController {
                                     $dataTea['age']=99;
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                     array_push($array_failTea,$stu_failTea);
+                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])){
+                                        $result1 = "手机号码格式不正确";
+                                        $fixed = "手机号码已置空";
+                                        $dataTea['phone_number'] = "";
+                                        $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                        array_push($array_failTea,$stu_failTea);
+                                        if(!Tool::checkMailAddress($dataTea['mail_address'])){
+                                            $result1="邮箱格式不正确！";
+                                            $fixed="邮箱信息已置空";
+                                            $dataTea['mail_address']="";
+                                            $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                            array_push($array_failTea,$stu_failTea);
+                                        }
+                                    }
                                     array_push($array_successTea,$dataTea);
-                                }else if($dataTea ['phone_number']!="" && !preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])) {
+                                }else if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])) {
                                     $result1 = "手机号码格式不正确";
                                     $fixed = "手机号码已置空";
                                     $dataTea['phone_number'] = "";
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                     array_push($array_failTea,$stu_failTea);
+                                    if(!Tool::checkMailAddress($dataTea['mail_address'])){
+                                        $result1="邮箱格式不正确！";
+                                        $fixed="邮箱信息已置空";
+                                        $dataTea['mail_address']="";
+                                        $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                        array_push($array_failTea,$stu_failTea);
+                                    }
                                     array_push($array_successTea,$dataTea);
                                 }else if(!Tool::checkMailAddress($dataTea['mail_address'])){
                                     $result1="邮箱格式不正确！";
@@ -4233,8 +4275,8 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } else if ($data ['userName'] === "" || ctype_space($data ['userName'])) {
-                                $result = "姓名不能为空";
+                            } else if ($data ['userName'] === "" || ctype_space($data ['userName']) || !preg_match("/^[A-Za-z_\x80-\xff]+$/",$data ['userName'])) {
+                                $result = "姓名不能为空且由汉字或英文组成";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
@@ -4251,14 +4293,35 @@ class AdminController extends CController {
                                     $data['age']=99;
                                     $stu_fail=array($result,$data['uid'],$data['userName'],$fixed,$data);
                                     array_push($array_fail, $stu_fail);
+                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number'])){
+                                        $result = "手机号码格式不正确";
+                                        $fixed = "手机号码已置空";
+                                        $data['phone_number'] = "";
+                                        $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                        array_push($array_fail, $stu_fail);
+                                        if(!Tool::checkMailAddress($data ['mail_address'])){
+                                            $result = "邮箱格式不正确";
+                                            $fixed = "邮箱信息已置空";
+                                            $data['mail_address'] = "";
+                                            $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                            array_push($array_fail, $stu_fail);
+                                        }
+                                    }
                                     array_push($array_success, $data);
-                                }else if ($data ['phone_number']!="" && !preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number'])) {
-                                $result = "手机号码格式不正确";
-                                $fixed = "手机号码已置空";
-                                $data['phone_number'] = "";
-                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
-                                array_push($array_fail, $stu_fail);
-                                array_push($array_success, $data);
+                                }else if (!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number'])) {
+                                    $result = "手机号码格式不正确";
+                                    $fixed = "手机号码已置空";
+                                    $data['phone_number'] = "";
+                                    $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                    array_push($array_fail, $stu_fail);
+                                    if(!Tool::checkMailAddress($data ['mail_address'])){
+                                        $result = "邮箱格式不正确";
+                                        $fixed = "邮箱信息已置空";
+                                        $data['mail_address'] = "";
+                                        $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                        array_push($array_fail, $stu_fail);
+                                    }
+                                    array_push($array_success, $data);
                             }else if (!Tool::checkMailAddress($data ['mail_address'])) {
                                 $result = "邮箱格式不正确";
                                 $fixed = "邮箱信息已置空";
