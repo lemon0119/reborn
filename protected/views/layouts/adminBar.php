@@ -54,6 +54,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                                     </li>-->
                                    <li><a id="notice_manager" href="./index.php?r=admin/noticeLst"></a></li>
                                      <li><a id="schedule_manager_adm"  href="./index.php?r=admin/schedule"></a></li>
+                                     <li><a id="key_enable" href="./index.php?r=admin/key"></a></li>
                                       <li><a id="blank_admin"></a></li>
                                     <li >
                                         <div class="userUI">
