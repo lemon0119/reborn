@@ -454,8 +454,9 @@ class TeacherController extends CController {
         if (!isset(Yii::app()->session['ppt2del']) ||
                 Yii::app()->session['ppt2del'] != $fileName) {
             Yii::app()->session['ppt2del'] = $fileName;
-            if (file_exists(iconv('utf-8', 'gb2312', $file)))
+            if (file_exists(iconv('utf-8', 'gb2312', $file))){
                 unlink(iconv('utf-8', 'gb2312', $file));
+            }
             Resourse::model()->delName($fileName);
             $result = "删除成功！";
         }
