@@ -257,7 +257,9 @@ class Tool {
         $count = 0;
         foreach ($arry_success as $data) {
             $teaID=strtoupper($data ['uid']);
-            Teacher::model()->insertTea($teaID, $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'], $data['school']);
+            if(!Tool::excelreadTeaUserID($teaID)){
+                Teacher::model()->insertTea($teaID, $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'], $data['school']);
+            }
             $count++;
             if(isset($data ['class'])&&isset($teaID)&&isset($data ['userName'])){
                 $array_class=  TbClass::model()->find('className=?',array($data ['class']));
