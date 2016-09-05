@@ -17,6 +17,7 @@ pushd "%CD%"
 CD /D "%~dp0"
 :--------------------------------------
 :StartCommand
+start C:\wamp\wampmanager.exe
 cd /d %~dp0
 cd "./protected/extensions/signaler"
 start /min node server-side.js
