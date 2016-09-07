@@ -4159,6 +4159,9 @@ class AdminController extends CController {
                                 $dataTea['mail_address']=$v[17];
                                 $dataTea['school']=$v[18];
                                 $classTeaID=TbClass::model()->findall('className=?',array($dataTea['class']));
+                                if(preg_match("/\s/", $dataTea['userName'])){
+                                 $dataTea['userName'] = str_replace(' ','',$dataTea['userName']);
+                            }
                                 if(count($classTeaID)>0){
                                     foreach($classTeaID as $tea){
                                         $teaID=$tea['classID'];
@@ -4182,7 +4185,7 @@ class AdminController extends CController {
                                     $fixed="需手动添加";
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                     array_push($array_failTea,$stu_failTea);
-                                }else if($dataTea['userName']=="" || ctype_space($dataTea['userName']) || !preg_match("/^[A-Za-z_\x80-\xff]+$/",$dataTea['userName'])){
+                                }else if($dataTea['userName']=="" || ctype_space($dataTea['userName']) || !preg_match("/^[A-Za-z_\x80-\xff\s]+$/",$dataTea['userName'])){
                                     $result1="姓名不能为空且由汉字或英文组成！";
                                     $fixed="需手动添加";
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
@@ -4274,8 +4277,14 @@ class AdminController extends CController {
                             $data ['age'] = $v[7];
                             $data ['mail_address'] = $v[8];
                             $data ['phone_number'] = $v[9];
-                            if($k>2 && $data ['uid']=="" && $data ['userName']=="" && $data ['sex']==""){
-                                break;
+                            if(preg_match("/\s/", $data['userName'])){
+                                 $data['userName'] = str_replace(' ','',$data['userName']);
+                            }
+                            if($k>=2 && $data ['uid']=="" && $data ['userName']=="" && $data ['sex']==""){
+                                $k = $k-1;
+                                if(next($data)=="" ){
+                                   break; 
+                                }  
                             }
                             if ($data ['uid'] === "" || ctype_space($data ['uid'])) {
                                 $result = "学号不能为空";
@@ -4325,7 +4334,7 @@ class AdminController extends CController {
                                     }
                                     array_push($array_success, $data);
                                 }
-                            } else if ($data ['userName'] === "" || ctype_space($data ['userName']) || !preg_match("/^[A-Za-z_\x80-\xff]+$/",$data ['userName'])) {
+                            } else if ($data ['userName'] === "" || ctype_space($data ['userName']) || !preg_match("/^[A-Za-z_\x80-\xff\s]+$/",$data ['userName'])) {
                                 $result = "姓名不能为空且由汉字或英文组成";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);

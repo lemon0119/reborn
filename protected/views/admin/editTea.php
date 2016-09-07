@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input03">部门</label>
+                <label class="control-label" for="input03">院系</label>
                 <div class="controls">
                     <input name="department" type="text" class="input-xlarge" id="input03" value="<?php echo $department ?>" />
                 </div>

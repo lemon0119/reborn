@@ -47,8 +47,8 @@
             <div id="number">0%</div>
        </div>
        <button onclick="formSubmit()" type="button" class="btn btn-primary" id="myButton">上传</button>
-        <span style="position: relative;left: 10px">
-       <input type="checkbox" name="checkbox"  value="" />
+        <span style="position: relative;left: 10px; top:4px">
+       <input type="checkbox" name="checkbox"  value="" style="position: relative;bottom: 4px"/>
        是否上传为公共资源
        </span>
        </div>

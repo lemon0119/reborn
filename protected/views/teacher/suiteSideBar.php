@@ -11,20 +11,22 @@
                 <ul class="nav nav-list">
                         <li class="nav-header">基础知识</li>
                         <li id="li-choice">
-                            <a href="./index.php?r=teacher/choice"><i class="icon-font"></i> 选 择 题</a>
+                            <a href="./index.php?r=teacher/choice"><i class="icon-font"></i> <span style="position: relative;top: 6px">选 择 题</span></a>
                         </li>
                         <li id="li-filling">
-                                <a href="./index.php?r=teacher/filling"><i class="icon-text-width"></i> 填 空 题</a>
+                            <a href="./index.php?r=teacher/filling"><i class="icon-text-width"></i><span style="position: relative;top: 6px"> 填 空 题</span></a>
                         </li>
                         <li id="li-question">
-                                <a href="./index.php?r=teacher/question"><i class="icon-align-left"></i> 简 答 题</a>
+                            <a href="./index.php?r=teacher/question"><i class="icon-align-left"></i> <span style="position: relative;top: 6px">简 答 题</span></a>
                         </li>
                         <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
                                     <a href="./index.php?r=teacher/keyType&&exerID=<?php echo $keyType['exerciseID'];?>">
                                         <i class="icon-th"></i>
+                                        <span style="position: relative;top: 6px">
                                         <?php echo $keyType['title']?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;?>
@@ -33,7 +35,9 @@
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
                                     <a href="./index.php?r=teacher/lookType&&exerID=<?php echo $lookType['exerciseID'];?>">
                                         <i class="icon-eye-open"></i>
+                                        <span style="position: relative;top: 6px">
                                         <?php echo $lookType['title']?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;?>
@@ -42,7 +46,9 @@
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
                                 <a href="./index.php?r=teacher/listenType&&exerID=<?php echo $listenType['exerciseID'];?>">
                                     <i class="icon-headphones"></i> 
+                                    <span style="position: relative;top: 6px">
                                     <?php echo $listenType['title']?>
+                                    </span>
                                 </a>
                         </li>
                         <?php endforeach;?>
