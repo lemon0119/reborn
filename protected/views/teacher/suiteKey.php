@@ -74,9 +74,9 @@ require 'workAnsSideBar.php';
     for (var i = 0; i < originalContent.length; i++) {
         if (typeof (originalContent[i]) !== 'undefined') {
             if (originalContent[i] !== originalLCS[i]) {
-                originalInnerHTML += '<font style="background-color:#f44336;color:#fff">' + originalContent[i] + '</font>';
+                originalInnerHTML += '<font style="color:#f44336">' + originalContent[i] + '</font>';
             } else {
-                originalInnerHTML += '<font style="background-color:#727272;color:#fff">' + originalContent[i] + '</font>';
+                originalInnerHTML += '<font style="color:#727272">' + originalContent[i] + '</font>';
             }
         }
     }

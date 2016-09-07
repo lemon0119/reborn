@@ -41,7 +41,7 @@
                                  {
                                      if($suite['suiteID'] == $work['suiteID']) {                                                                       
                            ?>                      
-                         <li><a href="#" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-list"></i><?php echo $suite['suiteName']; ?></a></li>                                                                                                                                               
+                         <li><a href="#" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-list"></i><span style="position: relative;top: 6px"><?php echo $suite['suiteName']; ?></span></a></li>                                                                                                                                               
                              <?php        
                                      }
                                  }
