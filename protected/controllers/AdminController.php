@@ -4202,13 +4202,13 @@ class AdminController extends CController {
                                         $dataTea['age']=99;
                                         $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                         array_push($array_failTea,$stu_failTea);
-                                        if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])){
+                                        if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number']) && $dataTea ['phone_number']!=""){
                                             $result1 = "手机号码格式不正确";
                                             $fixed = "手机号码已置空";
                                             $dataTea['phone_number'] = "";
                                             $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                             array_push($array_failTea,$stu_failTea);
-                                            if(!Tool::checkMailAddress($dataTea['mail_address'])){
+                                            if(!Tool::checkMailAddress($dataTea['mail_address']) && $dataTea['mail_address']!=""){
                                                 $result1="邮箱格式不正确！";
                                                 $fixed="邮箱信息已置空";
                                                 $dataTea['mail_address']="";
@@ -4224,13 +4224,13 @@ class AdminController extends CController {
                                     $dataTea['age']=99;
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                     array_push($array_failTea,$stu_failTea);
-                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])){
+                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])&&$dataTea ['phone_number']!=""){
                                         $result1 = "手机号码格式不正确";
                                         $fixed = "手机号码已置空";
                                         $dataTea['phone_number'] = "";
                                         $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                         array_push($array_failTea,$stu_failTea);
-                                        if(!Tool::checkMailAddress($dataTea['mail_address'])){
+                                        if(!Tool::checkMailAddress($dataTea['mail_address']) && $dataTea['mail_address']!=""){
                                             $result1="邮箱格式不正确！";
                                             $fixed="邮箱信息已置空";
                                             $dataTea['mail_address']="";
@@ -4239,13 +4239,13 @@ class AdminController extends CController {
                                         }
                                     }
                                     array_push($array_successTea,$dataTea);
-                                }else if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])) {
+                                }else if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number']) && $dataTea ['phone_number']!="") {
                                     $result1 = "手机号码格式不正确";
                                     $fixed = "手机号码已置空";
                                     $dataTea['phone_number'] = "";
                                     $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
                                     array_push($array_failTea,$stu_failTea);
-                                    if(!Tool::checkMailAddress($dataTea['mail_address'])){
+                                    if(!Tool::checkMailAddress($dataTea['mail_address'])&&$dataTea['mail_address']!=""){
                                         $result1="邮箱格式不正确！";
                                         $fixed="邮箱信息已置空";
                                         $dataTea['mail_address']="";
@@ -4253,7 +4253,7 @@ class AdminController extends CController {
                                         array_push($array_failTea,$stu_failTea);
                                     }
                                     array_push($array_successTea,$dataTea);
-                                }else if(!Tool::checkMailAddress($dataTea['mail_address'])){
+                                }else if(!Tool::checkMailAddress($dataTea['mail_address']) && $dataTea['mail_address']!=""){
                                     $result1="邮箱格式不正确！";
                                     $fixed="邮箱信息已置空";
                                     $dataTea['mail_address']="";
@@ -4318,13 +4318,13 @@ class AdminController extends CController {
                                     $data['age']=99;
                                     $stu_fail=array($result,$data['uid'],$data['userName'],$fixed,$data);
                                     array_push($array_fail, $stu_fail);
-                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number'])){
+                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number']) && $data ['phone_number']!=""){
                                         $result = "手机号码格式不正确";
                                         $fixed = "手机号码已置空";
                                         $data['phone_number'] = "";
                                         $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                         array_push($array_fail, $stu_fail);
-                                        if(!Tool::checkMailAddress($data ['mail_address'])){
+                                        if(!Tool::checkMailAddress($data ['mail_address']) && $data ['mail_address']!=""){
                                             $result = "邮箱格式不正确";
                                             $fixed = "邮箱信息已置空";
                                             $data['mail_address'] = "";
@@ -4352,13 +4352,13 @@ class AdminController extends CController {
                                     $data['age']=99;
                                     $stu_fail=array($result,$data['uid'],$data['userName'],$fixed,$data);
                                     array_push($array_fail, $stu_fail);
-                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number'])){
+                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number']) && $data ['phone_number']!=""){
                                         $result = "手机号码格式不正确";
                                         $fixed = "手机号码已置空";
                                         $data['phone_number'] = "";
                                         $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                         array_push($array_fail, $stu_fail);
-                                        if(!Tool::checkMailAddress($data ['mail_address'])){
+                                        if(!Tool::checkMailAddress($data ['mail_address']) && $data ['mail_address']!=""){
                                             $result = "邮箱格式不正确";
                                             $fixed = "邮箱信息已置空";
                                             $data['mail_address'] = "";
@@ -4367,13 +4367,13 @@ class AdminController extends CController {
                                         }
                                     }
                                     array_push($array_success, $data);
-                                }else if (!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number'])) {
+                                }else if (!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number']) &&$data ['phone_number']!="") {
                                     $result = "手机号码格式不正确";
                                     $fixed = "手机号码已置空";
                                     $data['phone_number'] = "";
                                     $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                     array_push($array_fail, $stu_fail);
-                                    if(!Tool::checkMailAddress($data ['mail_address'])){
+                                    if(!Tool::checkMailAddress($data ['mail_address'])&& $data ['mail_address']!=""){
                                         $result = "邮箱格式不正确";
                                         $fixed = "邮箱信息已置空";
                                         $data['mail_address'] = "";
@@ -4381,7 +4381,7 @@ class AdminController extends CController {
                                         array_push($array_fail, $stu_fail);
                                     }
                                     array_push($array_success, $data);
-                            }else if (!Tool::checkMailAddress($data ['mail_address'])) {
+                            }else if (!Tool::checkMailAddress($data ['mail_address'])&& $data ['mail_address']!="") {
                                 $result = "邮箱格式不正确";
                                 $fixed = "邮箱信息已置空";
                                 $data['mail_address'] = "";
