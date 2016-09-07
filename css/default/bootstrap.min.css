@@ -872,7 +872,7 @@ select,input[type="file"] {
 }
 select {
     width:225px;
-    color: #aaa9a9;
+    color: #000;
     background-color:#aaa9a9;
     border:1px solid #aaa9a9;
     appearance:none;

@@ -16,7 +16,7 @@
     <thead>
         <tr>
             <th>名称</th>
-            <th>资源类型</th>
+            <th>上传者</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -54,7 +54,7 @@
             <td>
                 <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
             </td>
-            <td>私人</td>
+            <td><?php echo Yii::app()->session['userName'];?></td>
             <td>
                 <a href="./index.php?r=teacher/looktxt&&txt=<?php echo iconv("gb2312","UTF-8",$file);?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=0&&isnew=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
                 <a href="<?php echo "$tdir".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>

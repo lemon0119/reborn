@@ -25,8 +25,9 @@
                             echo $arg;
                             ?>"
     <?php } ?>
-                        ><i class="icon-font"></i> 选 择 题<div id= "container" style="height: 5px;border:1px solid white;">
-                            <div id="progress-bar" style="width:<?php echo "$cent[0]"; ?>;background-color:springgreen;height:5px;">
+                            ><i class="icon-font"></i> <span style="position: relative;top: 6px">选 择 题</span>
+                        <div id= "container" style="height: 5px;border:1px solid white;">
+                            <div id="progress-bar" style="width:<?php echo "$cent[0]"; ?>;background-color:springgreen;height:5px">
                             </div>
                         </div> </a>                           
                 </li>
@@ -44,7 +45,7 @@
                     echo $arg;
                     ?>"
     <?php } ?>
-                        ><i class="icon-text-width"></i> 填 空 题<div id= "container" style="height: 5px;border:1px solid white;">
+                    ><i class="icon-text-width"></i><span style="position: relative;top: 6px"> 填 空 题</span><div id= "container" style="height: 5px;border:1px solid white;">
                             <div id="progress-bar" style="width:<?php echo "$cent[1]"; ?>;background-color: springgreen;height:5px;">
                             </div>
                         </div> </a>
@@ -63,7 +64,7 @@
         echo $arg;
         ?>"
                 <?php } ?>
-                        ><i class="icon-align-left"></i> 简 答 题<div id= "container" style="height: 5px;border:1px solid white;">
+        ><i class="icon-align-left"></i><span style="position: relative;top: 6px"> 简 答 题</span><div id= "container" style="height: 5px;border:1px solid white;">
                             <div id="progress-bar" style="width:<?php echo "$cent[2]"; ?>;background-color: springgreen;height:5px;">
                             </div>
                         </div> </a>
@@ -72,14 +73,23 @@
                 <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) : ?>
                     <li id="li-key-<?php echo $keyType['exerciseID']; ?>">
-                        
-                        <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>)"
+                        <a 
+                            <?php if (isset($_GET['lessonID'])) { ?>
+                                href="./index.php?r=student/keyType&&exerID=<?php echo $keyType['exerciseID'] ?>&&cent=<?php
+                                $arg = implode(',', $cent);
+                                echo $arg;
+                                ?>&&lessonID=<?php echo $_GET['lessonID']; ?>"
                     <?php } else { ?>
-                               href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0)"
+                                href="./index.php?r=student/keyType&&exerID=<?php echo $keyType['exerciseID'] ?>&&cent=<?php
+                    $arg = implode(',', $cent);
+                    echo $arg;
+                                ?>"
         <?php } ?>
                             >
                             <i class="icon-th"></i>
+                            <span style="position: relative;top: 6px">
         <?php echo $keyType['title'] ?>
+                            </span>
                         </a>
                     </li>
                        <?php
@@ -95,7 +105,9 @@
         <?php } ?>
                            >
                             <i class="icon-eye-open"></i>
+                            <span style="position: relative;top: 6px">
                             <?php echo $lookType['title'] ?>
+                            </span>
                         </a>
                     </li>
                         <?php
@@ -113,7 +125,9 @@
                            >
                         
                             <i class="icon-headphones"></i> 
+                            <span style="position: relative;top: 6px">
                 <?php echo $listenType['title'] ?>
+                            </span>
                         </a>
                     </li>                       
     <?php
@@ -164,25 +178,6 @@
                     }
                     else{
                         window.location.href = "index.php?r=student/lookType&&exerID="+exerID+"&&cent="+cent;}
-                });
-                    
-						}
-					};
-					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
-    }
-    
-    function suiteKeyNext(exerID,cent,lessonID){
-        var option = {
-						title: "提示",
-						btn: parseInt("0011",2),
-						onOk: function(){
-							saveToDateBaseNow();
-                                                            $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    if (lessonID!=0) {
-                        window.location.href = "index.php?r=student/keyType&&exerID="+exerID+"&&cent="+cent+"&&lessonID"+lessonID;
-                    }
-                    else{
-                        window.location.href = "index.php?r=student/keyType&&exerID="+exerID+"&&cent="+cent;}
                 });
                     
 						}
