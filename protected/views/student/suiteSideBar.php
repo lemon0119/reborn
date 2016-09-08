@@ -5,7 +5,9 @@
  * and open the template in the editor.
  */
 ?>
+<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
+
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
@@ -99,9 +101,17 @@
                 <li class="nav-header">看打练习</li>
                        <?php foreach ($exercise['look'] as $lookType) : ?>
                     <li id="li-look-<?php echo $lookType['exerciseID']; ?>">
-                    <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>)"
+                        <a 
+        <?php if (isset($_GET['lessonID'])) { ?>
+                               href="./index.php?r=student/lookType&&exerID=<?php echo $lookType['exerciseID'] ?>&&cent=<?php
+                                $arg = implode(',', $cent);
+                                echo $arg;
+                                ?>&&lessonID=<?php echo $_GET['lessonID']; ?>"
                     <?php } else { ?>
-                               href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0)"
+                               href="./index.php?r=student/lookType&&exerID=<?php echo $lookType['exerciseID'] ?>&&cent=<?php
+                        $arg = implode(',', $cent);
+                        echo $arg;
+                        ?>"
         <?php } ?>
                            >
                             <i class="icon-eye-open"></i>
@@ -117,10 +127,17 @@
                 <li class="nav-header">听打练习</li>
     <?php foreach ($exercise['listen'] as $listenType) : ?>
                     <li id="li-listen-<?php echo $listenType['exerciseID']; ?>">
-                        
-                        <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>)"
+                        <a 
+        <?php if (isset($_GET['lessonID'])) { ?>
+                                href="./index.php?r=student/listenType&&exerID=<?php echo $listenType['exerciseID'] ?>&&cent=<?php
+                        $arg = implode(',', $cent);
+                        echo $arg;
+                        ?>&&lessonID=<?php echo $_GET['lessonID']; ?>"
                     <?php } else { ?>
-                               href="#" onclick="suiteListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0)"
+                                href="./index.php?r=student/listenType&&exerID=<?php echo $listenType['exerciseID'] ?>&&cent=<?php
+            $arg = implode(',', $cent);
+            echo $arg;
+            ?>"
         <?php } ?>
                            >
                         
@@ -146,45 +163,6 @@
     </div>
 </div>
 <script>
-    
-    function suiteListenNext(exerID,cent,lessonID){
-        var option = {
-						title: "提示",
-						btn: parseInt("0011",2),
-						onOk: function(){
-							saveToDateBaseNow();
-                                                            $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    if (lessonID!=0) {
-                        window.location.href = "index.php?r=student/listenType&&exerID="+exerID+"&&cent="+cent+"&&lessonID"+lessonID;
-                    }
-                    else{
-                        window.location.href = "index.php?r=student/listenType&&exerID="+exerID+"&&cent="+cent;}
-                });
-                    
-						}
-					};
-					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
-    }
-    
-    function suiteLookNext(exerID,cent,lessonID){
-        var option = {
-						title: "提示",
-						btn: parseInt("0011",2),
-						onOk: function(){
-							saveToDateBaseNow();
-                                                            $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    if (lessonID!=0) {
-                        window.location.href = "index.php?r=student/lookType&&exerID="+exerID+"&&cent="+cent+"&&lessonID"+lessonID;
-                    }
-                    else{
-                        window.location.href = "index.php?r=student/lookType&&exerID="+exerID+"&&cent="+cent;}
-                });
-                    
-						}
-					};
-					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
-    }
-    
     $(document).ready(function () {
 
         $("div.span3 div.well ul li").find("a").click(function () {

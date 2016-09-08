@@ -1,3 +1,12 @@
+<style>
+    .chakan a:hover{
+        color: #f46500;
+        text-decoration: none;
+    }
+    .chakan {
+        color: gray;
+    }
+</style>
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
@@ -66,9 +75,9 @@
                         </td>
                         <td style="width:50px">     
                             <?php if($workID==$suiteLesson['workID']){?>
-                            <a  href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>&&suitName=<?php echo $thisSuite['suiteName'];?> ">查看</a>   
+                            <a class="chakan" href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>&&suitName=<?php echo $thisSuite['suiteName'];?>  " style=" color: #f46500">查看</a>   
                             <?php }else{?>
-                                <a href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>&&suitName=<?php echo $thisSuite['suiteName'];?>"  style="color:gray">查看</a> 
+                                <a class="chakan" href="./index.php?r=teacher/stuWork&&workID=<?php echo $suiteLesson['workID']?>&&classID=<?php echo $suiteLesson['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID;?>&&suitName=<?php echo $thisSuite['suiteName'];?>" >查看</a> 
                             <?php }?>
                             <!--<a href="./index.php?r=teacher/seeWork&&suiteID=<?php //echo $thisSuite['suiteID']?>"><img title="查看习题" src="<?php //echo IMG_URL;?>detail.png"/></a>   -->                   
                            
