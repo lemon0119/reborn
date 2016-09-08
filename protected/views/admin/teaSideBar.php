@@ -7,7 +7,7 @@
                                 <select name="type" >
                                         <option value="userID" selected="selected">工号</option>
                                         <option value="userName">姓名</option>
-                                        <option value="department">所属部门</option>
+                                        <option value="department">所属院系</option>
                                 </select>
                         </li>
                         <li>

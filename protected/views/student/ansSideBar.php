@@ -1,3 +1,4 @@
+
 <?php
 
 /* 
@@ -13,15 +14,15 @@
                         <li class="nav-header">基础知识</li>
                          <?php } if (count($exercise['choice']) != 0) { ?>
                         <li id="li-choice">
-                            <a href="./index.php?r=student/ansChoice"><i class="icon-font"></i> 选 择 题</a>
+                            <a href="./index.php?r=student/ansChoice"><i class="icon-font"></i><span style="position: relative;top: 6px"> 选 择 题</span></a>
                         </li>
                         <?php } if (count($exercise['filling']) != 0) { ?>
                         <li id="li-filling">
-                                <a href="./index.php?r=student/ansFilling"><i class="icon-text-width"></i> 填 空 题</a>
+                            <a href="./index.php?r=student/ansFilling"><i class="icon-text-width"></i><span style="position: relative;top: 6px"> 填 空 题</span></a>
                         </li>
                         <?php }  if (count($exercise['question']) != 0) { ?>
                         <li id="li-question">
-                                <a href="./index.php?r=student/ansQuestion"><i class="icon-align-left"></i> 简 答 题</a>
+                            <a href="./index.php?r=student/ansQuestion"><i class="icon-align-left"></i><span style="position: relative;top: 6px"> 简 答 题</span></a>
                         </li>
                          <?php }  if (count($exercise['key'])!= 0) { ?>
                         <li class="nav-header">键打练习</li>
@@ -29,7 +30,9 @@
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
                                     <a href="./index.php?r=student/ansKeyType&&exerID=<?php echo $keyType['exerciseID'];?>">
                                         <i class="icon-th"></i>
+                                        <span style="position: relative;top: 6px">
                                         <?php echo $keyType['title']?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;
@@ -39,7 +42,9 @@
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
                                     <a href="./index.php?r=student/ansLookType&&type=look&&exerID=<?php echo $lookType['exerciseID'];?>">
                                         <i class="icon-eye-open"></i>
+                                        <span style="position: relative;top: 6px">
                                         <?php echo $lookType['title']?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;
@@ -49,7 +54,9 @@
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
                                 <a href="./index.php?r=student/ansLookType&&type=listen&&exerID=<?php echo $listenType['exerciseID'];?>">
                                     <i class="icon-headphones"></i>
+                                    <span style="position: relative;top: 6px">
                                     <?php echo $listenType['title']?>
+                                    </span>
                                 </a>
                         </li>
          <?php endforeach; } ?>

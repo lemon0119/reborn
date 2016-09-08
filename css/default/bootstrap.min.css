@@ -872,7 +872,7 @@ select,input[type="file"] {
 }
 select {
     width:225px;
-    color: #aaa9a9;
+    color: #000;
     background-color:#aaa9a9;
     border:1px solid #aaa9a9;
     appearance:none;
@@ -2868,7 +2868,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
     color:#f46401;
     padding-right:15px;
     padding-left:15px;
-    margin-bottom:0
+    margin-bottom:0;
 }
 .nav-list>li>a,.nav-list .nav-header {
     margin-right:-15px;
@@ -4772,12 +4772,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .icon-navsearch{
     padding: 4px 4px;
-    background: url(../../img/icon_serch.png);
+    background: url(../../img/icon_answer.png);
     background-repeat: no-repeat;
 }
 .icon-knowlage{
     padding: 4px 4px;
-    background: url(../../img/icon_knowlage.png);
+    background: url(../../img/icon_answer.png);
     background-repeat: no-repeat;
 }
 .icon-typing{

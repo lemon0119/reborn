@@ -20,7 +20,7 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">基础知识</li>
                         <?php } if (count($exercise['choice']) != 0) { ?>
                         <li id="li-choice">
-                            <a class="queTitle" href="./index.php?r=student/examchoice&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-font"></i> 选 择 题
+                            <a class="queTitle" href="./index.php?r=student/examchoice&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-font"></i> <span style="position: relative;top: 6px">选 择 题</span>
                                 <div id= "container" style="height: 5px;border:1px solid white;">
                                     <div id="progress-bar" style="width:<?php echo "$cent[0]";?>;background-color:springgreen;height:5px;">
                                     </div>
@@ -29,7 +29,7 @@ $currtime = $examInfo['endtime'];
                         </li>
                          <?php } if (count($exercise['filling']) != 0) { ?>
                         <li id="li-filling">
-                                <a class="queTitle" href="./index.php?r=student/examfilling&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-text-width"></i> 填 空 题
+                            <a class="queTitle" href="./index.php?r=student/examfilling&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-text-width"></i><span style="position: relative;top: 6px"> 填 空 题</span>
                                     <div id= "container" style="height: 5px;border:1px solid white;">
                                         <div id="progress-bar" style="width:<?php echo "$cent[1]";?>;background-color: springgreen;height:5px;">
                                         </div>
@@ -38,7 +38,7 @@ $currtime = $examInfo['endtime'];
                         </li>
                         <?php } if (count($exercise['question']) != 0) { ?>
                         <li id="li-question">
-                                <a class="queTitle" href="./index.php?r=student/examquestion&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-align-left"></i> 简 答 题
+                            <a class="queTitle" href="./index.php?r=student/examquestion&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-align-left"></i> <span style="position: relative;top: 6px">简 答 题</span>
                                     <div id= "container" style="height: 5px;border:1px solid white;">
                                         <div id="progress-bar" style="width:<?php echo "$cent[2]";?>;background-color: springgreen;height:5px;">
                                         </div>
@@ -49,9 +49,11 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                        <a href="#" class="queTitle"   onclick="examKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                                
+                                    <a class="queTitle" href="./index.php?r=student/examkeyType&&exerID=<?php echo $keyType['exerciseID']?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>">
                                         <i class="icon-th"></i>
+                                        <span style="position: relative;top: 6px">
                                         <?php echo $keyType['title']?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;
@@ -63,7 +65,9 @@ $currtime = $examInfo['endtime'];
 <!--                                    <a class="queTitle"href="./index.php?r=student/examlookType&&exerID=<?php// echo $lookType['exerciseID']?>&&cent=<?php// $arg= implode(',', $cent);echo $arg;?>">-->
                                         <a href="#" class="queTitle"   onclick="examLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">
                                         <i class="icon-eye-open"></i>
+                                        <span style="position: relative;top: 6px">
                                         <?php echo $lookType['title']?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;
@@ -73,7 +77,10 @@ $currtime = $examInfo['endtime'];
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
                                 <a href="#" class="queTitle"   onclick="examListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                            
                                     <i class="icon-headphones"></i> 
+                                    <span style="position: relative;top: 6px">
                                     <?php echo $listenType['title']?>
+                                    </span>
+                                        
                                 </a>
                         </li>
                                     <?php endforeach; }?>
@@ -141,20 +148,6 @@ $currtime = $examInfo['endtime'];
 							saveToDateBaseNow();
                                                         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
                     window.location.href = "index.php?r=student/examlistenType&&exerID="+exerID+"&&cent="+cent;
-                });
-						}
-					};
-					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
-        }
-        
-        function examKeyNext(exerID,cent){
-        var option = {
-						title: "提示",
-						btn: parseInt("0011",2),
-						onOk: function(){
-							saveToDateBaseNow();
-                                                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
-                    window.location.href = "index.php?r=student/examkeyType&&exerID="+exerID+"&&cent="+cent;
                 });
 						}
 					};

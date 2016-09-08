@@ -25,18 +25,20 @@
     <div>
     <ul class="nav nav-list">
         <?php if(count($exercise['choice'])!=0){?>
-        <li <?php if($type == "choice") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=choice&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-font"></i> 选择</a></li>
+        <li <?php if($type == "choice") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=choice&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-font" ></i> <span style="position: relative;top: 6px">选择</span></a></li>
         <?php } if(count($exercise['filling'])!=0){ ?>
-        <li <?php if($type == "filling") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=filling&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-text-width"></i> 填空</a></li>
+        <li <?php if($type == "filling") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=filling&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-text-width"></i> <span style="position: relative;top: 6px">填空</span></a></li>
         <?php } if(count($exercise['question'])!=0){ ?>
-            <li <?php if($type == "question") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=question&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-align-left"></i> 简答</a></li>
+        <li <?php if($type == "question") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=question&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-align-left" ></i> <span style="position: relative;top: 6px">简答</span></a></li>
             <?php } if(count($exercise['key'])!=0){ ?>
             <li class="nav-header">键打练习</li>
             <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
                                     <a href="./index.php?r=teacher/ansKeyTypeWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=key&&exerID=<?php echo $keyType['exerciseID'];?>">
                                         <i class="icon-th"></i>
+                                        <span style="position: relative;top: 6px">
                                         <?php echo $keyType['title']?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;?>
@@ -46,7 +48,9 @@
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
                                     <a href="./index.php?r=teacher/ansKeyTypeWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=look&&exerID=<?php echo $lookType['exerciseID'];?>">
                                         <i class="icon-eye-open"></i>
+                                        <span style="position: relative;top: 6px">
                                         <?php echo $lookType['title']?>
+                                        </span>                   
                                     </a>
                             </li>
                         <?php endforeach;?>
@@ -56,7 +60,9 @@
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
                                 <a href="./index.php?r=teacher/ansKeyTypeWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $workID;?>&&accomplish=<?php echo $accomplish;?>&&type=listen&&exerID=<?php echo $listenType['exerciseID'];?>">
                                     <i class="icon-headphones"></i>
+                                    <span style="position: relative;top: 6px">
                                     <?php echo $listenType['title']?>
+                                    </span>
                                 </a>
                         </li>
                         <?php endforeach;?>

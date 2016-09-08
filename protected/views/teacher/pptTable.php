@@ -17,7 +17,7 @@
     <thead>
         <tr>
             <th>名称</th>
-            <th>资源类型</th>
+            <th>上传者</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -61,7 +61,7 @@
                 <td>
                     <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
                 </td>
-                <td>私人</td>
+                <td><?php echo Yii::app()->session['userName'];?></td>
                 <td>
                     <a href="./index.php?r=teacher/lookPpt&&ppt=<?php  $fileName   = iconv("gb2312","UTF-8",$file);
                                                                         $len    = strlen($fileName);

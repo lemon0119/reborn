@@ -61,12 +61,12 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
 
     <div id="title_bull" class="title_select" style="width: 185px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;" >
-        <div   align="center" id="sw-bull"><h4>本 班：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $totle ?>人<br/>在 线 学 生: <font style="color: greenyellow" id="countPeople"><?php echo $count ?></font> 人</h4></div>
-
+        <div   align="center" id="sw-bull-top"><h4>本班学生：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $totle ?>&nbsp;人</h4></div>
+        <div   align="center" id="sw-bull-bottom"><h4>在线学生：&nbsp;&nbsp;&nbsp;&nbsp; <font style="color: greenyellow" id="countPeople"><?php echo $count ?></font> 人</h4></div>
     </div>
     <button id="share-Cam" class="btn btn-primary" >直播视频</button>
-    <button id="close-Cam" class="btn" disabled="disabled">关闭直播</button>
-    <button onclick="checkforbid()" class="btn btn-primary">查看禁言</button>
+    <button id="close-Cam" class="btn" disabled="disabled">关闭视频</button>
+    
 
     <div id="showOnline"  class="online"  style="display: none;border: 0px;width:120px;">
         <div id="dd" disabled="disabled"  style="border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;overflow-y: visible; overflow-x:hidden; background-color:#5e5e5e;color:yellow;width:100%; height:570px; padding:0;">
@@ -109,14 +109,14 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 <!--    新加平铺显示5/18-->
         <div style="width:150px;position:relative;left: 20px ">
             <div><h3>本 课 资 源 </h3></div>
-            <div id="teacher-choose-file" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+            <div id="teacher-choose-file" class="table-bordered summary" style="width:645px;padding:15px 0 15px 0px ;">
     
     <?php
                     $mydir = dir($vdir);
                     while ($file = $mydir->read()) {
                         if ((!is_dir("$vdir/$file")) AND ( $file != ".") AND ( $file != "..")) {?>
                 
-                            <button id="teacher-dianbo" onclick="filePath1('<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>')" style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" 
+                            <button id="teacher-dianbo" onclick="filePath1('<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>')" style="width: 140px;height:40px;margin:10px 0 10px 15px;" class="btn btn-primary" 
                                     title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file));?>" 
                                     value ="<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>">
                                 <?php 
@@ -218,7 +218,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 
         <div style="width:150px;position:relative;left: 20px ">
             <div><h3>本 课 资 源 </h3></div>
-            <div id="choose-ppt" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+            <div id="choose-ppt" class="table-bordered summary" style="width:645px;padding:15px 0 15px 0px;">
     
     <?php
                     $mydir = dir($pdir);
@@ -235,7 +235,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             echo $num;
                             ?>+-+tea')" 
                             title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")); ?>"
-                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            style="width: 140px;height:40px;margin:10px 0 10px 15px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
                             $dir = "$pdir/$file";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
@@ -384,7 +384,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
 <div id="show-picture" style="display: none;">
         <div style="width:150px;position:relative;left: 20px ">
             <div><h3>本 课 资 源 </h3></div>
-            <div id="choose-pic" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+            <div id="choose-pic" class="table-bordered summary" style="width:645px;padding:15px 0 15px 0px ;">
     
     <?php
     
@@ -401,7 +401,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             echo $num;
                             ?>+-+tea+-+<?php echo $i;?>')" 
                             title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
-                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            style="width: 140px;height:40px;margin:10px 0 10px 15px ;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
                             $dir = "$picdir";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
@@ -516,7 +516,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     
         <div style="width:150px;position:relative;left: 20px ">
             <div><h3>本 课 资 源 </h3></div>
-            <div id="choose-txt" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+            <div id="choose-txt" class="table-bordered summary" style="width:645px;padding:15px 0 15px 0px ;">
     
     <?php
     
@@ -532,7 +532,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             echo $num;
                             ?>+-+tea')" 
                             title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
-                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
+                            style="width: 140px;height:40px;margin:10px 0 10px 15px ;" class="btn btn-primary" value ="<?php echo iconv("gb2312", "UTF-8", $file); ?>+-+<?php
                             $dir = "$txtdir";
                             $num = sizeof(scandir($dir));
                             $num = ($num > 2) ? ($num - 2) : 0;
@@ -645,7 +645,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     
         <div style="width:150px;position:relative;left: 20px ">
             <div><h3>本 课 资 源 </h3></div>
-            <div id="choose-voice" class="table-bordered summary" style="width:645px;padding:20px 0 20px 55px ;">
+            <div id="choose-voice" class="table-bordered summary" style="width:645px;padding:15px 0 15px 0px ;">
     
     <?php
     
@@ -656,7 +656,7 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 
                 <button id="play-voice"  onclick="fileVoicePath('<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>')" 
                             title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
-                            style="width: 230px;height:40px;margin:15px 25px 15px 30px;" class="btn btn-primary" value ="<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php
+                            style="width: 140px;height:40px;margin:10px 0px 10px 15px;" class="btn btn-primary" value ="<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php
                             $myVoiceFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
                             if(Tool::clength($myVoiceFile)<=8){
                                 echo $myVoiceFile;
@@ -760,12 +760,12 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     <div id="scroll-video" style="display:inline;">
         <button id="close-dianbo" class="btn" disabled="disabled">关闭点播</button> 
     </div>
-    <div id="scroll-page" style="display:inline;">
-        <button id="page-up" style="font-size: x-large" class="btn btn-primary">←</button>
-        <input id="yeshu" style="width:50px;" value="1">
-        <input id="all-yeshu" style="width:50px;" readOnly="true">
+    <div id="scroll-page" style="display:inline;width: 900px">
+        <button id="page-up" style="font-size: x-small" class="btn btn-primary">←</button>
+        <input id="yeshu" style="width:30px;position: relative;top:4px" value="1">
+        <input id="all-yeshu" style="width:30px;position: relative;top:4px" readOnly="true">
         <button id="page-go" class="btn btn-primary">跳转</button>
-        <button id="page-down" style="font-size: x-large;" class="btn btn-primary">→</button>
+        <button id="page-down" style="font-size: x-small;" class="btn btn-primary">→</button>
         <button id="full-screen-button" class="btn btn-primary">全屏</button>
         <button id="close-ppt" class="btn" disabled="disabled">停止放映</button>
     </div>
@@ -808,7 +808,15 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                 
     
                 </div>-->
-    <div align="center" id="sw-chat"><a href="#"><h4 style="color: white">课 堂 问 答</h4></a> </div>            
+    <div align="center" id="sw-chat" style="width:100%">
+        <div style="width: 50%;float: left">
+        <a href="#"><h4 style="color: white">课 堂 问 答</h4></a>
+        </div>
+        <div style="width: 50%;float: right">
+            
+            <a href="#"><h4 onclick="checkforbid()" style="color: white" >查 看 禁 言</h4></a>
+        </div>
+    </div>            
     <div id="chat-box" style="border: 0px">   
         <div id="chatroom" class="chatroom" style="height:277px;background-color:#5e5e5e;border: 0px;width: 100%">
         </div>
