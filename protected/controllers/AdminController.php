@@ -190,7 +190,11 @@ class AdminController extends CController {
             if ($type == 'classID') {
                 $className = $value;
                 $sqlClass = TbClass::model()->find("className = '$className'");
+                if(empty($sqlClass)){
+                    $value=-1;
+                }else{
                 $value = $sqlClass['classID'];
+                }
             }
             Yii::app()->session ['searchStuType'] = $type;
             Yii::app()->session ['searchStuValue'] = $value;

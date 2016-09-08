@@ -73,9 +73,9 @@ require 'examAnsSideBar.php';
     for (var i = 0; i < currentContent.length; i++) {
         if (typeof (currentContent[i]) !== 'undefined') {
             if (currentContent[i] !== currentLCS[i]) {
-                currentInnerHTML += '<font style="background-color:#f44336;color:#fff">' + currentContent[i] + '</font>';
+                currentInnerHTML += '<font style="color:#f44336">' + currentContent[i] + '</font>';
             } else {
-                currentInnerHTML += '<font style="background-color:#727272;color:#fff">' + currentContent[i] + '</font>';
+                currentInnerHTML += '<font style="color:#727272">' + currentContent[i] + '</font>';
             }
         }
     }

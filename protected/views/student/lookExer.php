@@ -481,7 +481,7 @@ if ($isExam) {
                         isBrief--;
                     }
                 }
-                f.style = "background-color:" + color + ";color:#fff";
+                f.style = "color:"+color;
                 content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
                 checkYaweiCode(content);
                 f.innerHTML = content.content;
@@ -490,7 +490,7 @@ if ($isExam) {
                 for (var i = 0; i < text.length; i++) {
                     content.content += text[i];
                 }
-                f.style = "background-color:" + color + ";color:#fff";
+                f.style = "color:"+color;
                 //var t = document.createTextNode(text);
                 //f.appendChild(t);
                 if (color === "#f44336") {
