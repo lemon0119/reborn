@@ -116,9 +116,15 @@ class Resourse extends CActiveRecord
         {
             $resource             = new Resourse();
             $thisRes              = $resource->find("resourseID = '$oldID'");
-            $thisRes->resourseID  = $newName;
-            $thisRes->name        = $oldName;
-            return $thisRes->update();
+            if(empty($thisRes)){
+                $resource->resourseID = $newName;
+                $resource->name       = $oldName;
+            }else{
+                $thisRes->resourseID  = $newName;
+                $thisRes->name        = $oldName;
+                return $thisRes->update();
+            }
+            
         }
         /**
 	 * @return string the associated database table name

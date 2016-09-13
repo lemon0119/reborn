@@ -72,9 +72,19 @@
                             break;
                         }
                 }
+                
+                $allOpen=false;
+                if ($arrayall_suite) {
+                    foreach ($arrayall_suite as $exitsuiteall)
+                        if ($suite['suiteID'] == $exitsuiteall['suiteID'] && $exitsuiteall['open'] == 1) {
+                            $allOpen = true;
+                            break;
+                        }
+                }
+                
                 ?>                    
                 <tr>
-                    <td class="font-center" style="width: 50px"> <?php if($isOpen==false){?> <input type="checkbox" name="checkbox[]" value="<?php echo $suite['suiteID']; ?>" /><?php }?> </td>
+                    <td class="font-center" style="width: 50px"> <?php if($allOpen == false){?> <input type="checkbox" name="checkbox[]" value="<?php echo $suite['suiteID']; ?>" /><?php }?> </td>
                     <td class="font-center  table_schedule" style="cursor: pointer" onclick="changeWorkName(<?php echo $suite['suiteID']; ?>, '<?php echo $suite['suiteName'] ?>')"><?php
                         if (Tool::clength($suite['suiteName']) <= 10)
                             echo $suite['suiteName'];
@@ -136,7 +146,7 @@
                         <a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $suite['suiteID']; ?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
 
 
-            <?php if ($isOpen == false) { ?>
+            <?php if ($allOpen == false) { ?>
                             <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID']; ?>&&type=choice"><img title="修改作业内容" src="<?php echo IMG_URL; ?>edit.png"></a>
                             <a href="#" onclick="dele(<?php echo $suite['suiteID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
             <?php } ?>
