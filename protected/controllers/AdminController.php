@@ -11,6 +11,10 @@ class AdminController extends CController {
     public function actionContact(){
         return $this->renderpartial('contact');
     }
+    //法律声明
+    public function actionlegalNotice() {
+        return $this->renderpartial('legalNotice');
+    }
     public function actionSet() {       //set
         $result = 'no';
         $mail = '';
@@ -2057,7 +2061,19 @@ class AdminController extends CController {
             ));
         }
     }
-
+    public function ActionGetProgress() {
+        session_start();
+        $i = ini_get('session.upload_progress.name');
+        $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
+        if (!empty($_SESSION[$key])) {
+            $current = $_SESSION[$key]["bytes_processed"];
+            $total = $_SESSION[$key]["content_length"];
+            echo $current < $total ? ceil($current / $total * 100) : 100;
+        } else {
+            echo 100;
+        }
+        
+    }
     public function actionAddKey() {
         $result = 'no';
         if (isset($_POST ['title'])) {
