@@ -33,7 +33,7 @@
                     <tr>
                         <th class="font-center">工号</th>
                         <th class="font-center">姓名</th>
-                        <th class="font-center">所属部门</th>
+                        <th class="font-center">所属院系</th>
                         <th class="font-center">操作</th>
                     </tr>
                 </thead>
@@ -118,7 +118,7 @@
                     <tr>
                         <th class="font-center">工号</th>
                         <th class="font-center">姓名</th>
-                        <th class="font-center">所属部门</th>
+                        <th class="font-center">所属院系</th>
                         <th class="font-center">操作</th>
                     </tr>
                 </thead>

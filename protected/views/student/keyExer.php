@@ -124,7 +124,7 @@ if (!$isOver) {
         <!--                             <td><span class="fl"  style="color: #000;font-weight: bolder">剩余时间：</span></td>
                         <td><span style="color: #f46500" id="time"><?php //echo $strTime  ?></span></td>-->
                         <?php //}else{ ?>
-                        <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+                        <td><span class="fl"  style="color: #000;font-weight: bolder">作答时长：</span></td>
                         <td><span style="color: #f46500" id="timej">00:00:00</span></td>
                         <?php //} ?>
                         <td></td>

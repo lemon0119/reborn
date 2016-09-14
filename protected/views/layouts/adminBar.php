@@ -89,7 +89,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
                     
                 </div>
                   <div style="float: bottom"  class="copyright">
-                      2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="#"  class="copyright">法律声明</a><a href="" onclick="contact()"  class="copyright">联系我们</a><a href="#"  class="copyright">获得帮助</a>
+                      2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<a href="" onclick="legalNotice()" class="copyright">法律声明</a><a href="" onclick="contact()"  class="copyright">联系我们</a><a href="#"  class="copyright">获得帮助</a>
 	</div>
             </div>
            
@@ -105,5 +105,8 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
   <script type="text/javascript"> 
     function contact(){
         window.open("./index.php?r=admin/contact", 'newwindow', 'height=360,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    }
+    function legalNotice() {
+        window.open("./index.php?r=admin/legalNotice");
     }
     </script>

@@ -95,10 +95,11 @@
 <?php
 foreach ($userAll as $key => $value) {
     $userID = $value['userID'];
+    
     echo "result[$key] = '$userID';";
 }
 ?>
-            return result;
+            return result.toString();
                     }
     function getclassID(){
     var result = new Array();
@@ -122,7 +123,7 @@ foreach ($classAll as $key => $value) {
     return result;
             }
     $("#form-addStu").submit(function(){
-    var userID = $("#input01")[0].value;
+    var userID = $("#input01")[0].value.toLocaleUpperCase();
             if (userID === ""){
     window.wxc.xcConfirm('学生学号不能为空', window.wxc.xcConfirm.typeEnum.info);
             return false;

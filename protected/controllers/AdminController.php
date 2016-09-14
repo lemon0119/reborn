@@ -11,6 +11,10 @@ class AdminController extends CController {
     public function actionContact(){
         return $this->renderpartial('contact');
     }
+    //法律声明
+    public function actionlegalNotice() {
+        return $this->renderpartial('legalNotice');
+    }
     public function actionSet() {       //set
         $result = 'no';
         $mail = '';
@@ -2057,7 +2061,19 @@ class AdminController extends CController {
             ));
         }
     }
-
+    public function ActionGetProgress() {
+        session_start();
+        $i = ini_get('session.upload_progress.name');
+        $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
+        if (!empty($_SESSION[$key])) {
+            $current = $_SESSION[$key]["bytes_processed"];
+            $total = $_SESSION[$key]["content_length"];
+            echo $current < $total ? ceil($current / $total * 100) : 100;
+        } else {
+            echo 100;
+        }
+        
+    }
     public function actionAddKey() {
         $result = 'no';
         if (isset($_POST ['title'])) {
@@ -3826,6 +3842,7 @@ class AdminController extends CController {
                     $array_failTea=array();
                     $stu_failTea=array();
                     $stu_fail=array();
+                    $style_flag=0;
                     $result1="";
                     $flag=0;
                     $flagClass=0;
@@ -4148,7 +4165,16 @@ class AdminController extends CController {
                                         foreach($lessons as $lesson){
                                             Lesson::model()->insertLesson($lesson['lessonName'],$lesson['courseID'],0,$classID);
                                         }
+                                    }else{
+                                        $thisClassTea=new TbClass();
+                                        $oldClassTea=$thisClassTea->findall('className=?',array($v[2]));
+                                        foreach($oldClassTea as $oldClassID){
+                                            $classID=$oldClassID['classID'];
+                                        }
                                     }
+                            }
+                            if($v[3]=="是"){
+                                $style_flag=1;
                             }
                             }
                             
@@ -4162,6 +4188,8 @@ class AdminController extends CController {
                                 $dataTea['phone_number']=$v[16];
                                 $dataTea['mail_address']=$v[17];
                                 $dataTea['school']=$v[18];
+                                    
+                            
                                 $classTeaID=TbClass::model()->findall('className=?',array($dataTea['class']));
                                 if(preg_match("/\s/", $dataTea['userName'])){
                                  $dataTea['userName'] = str_replace(' ','',$dataTea['userName']);
@@ -4267,10 +4295,42 @@ class AdminController extends CController {
                                 }else{
                                     array_push($array_successTea,$dataTea);
                                 }
+                                if($style_flag==1 && $k==2){
+                                    error_log(2);
+                                    foreach($array_successTea as $success_teaID){
+                                        error_log(3);
+                                        $successTeaID=strtoupper($success_teaID['uid']);
+                                    $styleTea="D001";
+                                    $oldExerciseTea=ClassExercise::model()->findall('create_person=?',array($styleTea));
+                                    foreach($oldExerciseTea as $exerciseTea){
+                                        error_log(4);
+                                        $style_lesson=Lesson::model()->findall('lessonID=?',array($exerciseTea['lessonID']));
+                                        foreach($style_lesson as $lesson_flag){
+                                            $class_number=$lesson_flag['number'];
+                                        }
+                                        $oldLessonTea=Lesson::model()->findall('classID=? and number=?',array($classID,$class_number));
+                                        foreach($oldLessonTea as $oldLesson){
+                                            $oldLessonID=$oldLesson['lessonID'];
+                                        }
+                                        if($exerciseTea['type']=="look"){
+                                            ClassExercise::model()->insertClassExercise($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],
+                                            $exerciseTea['type'],$successTeaID);
+                                        }else if($exerciseTea['type']=="listen"){
+                                            ClassExercise::model()->insertListen($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],$exerciseTea['file_name'],
+                                            $exerciseTea['file_path'],$exerciseTea['type'],$successTeaID);
+                                        }else{
+                                            ClassExercise::model()->insertKey($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],
+                                            $successTeaID,$exerciseTea['type'],$exerciseTea['speed'],$exerciseTea['repeatNum'],$exerciseTea['chosen_lib']);
+                                        }
+                                    }
+                                    }
+                                }
+                                
                                 $count_successTea=Tool::excelreadTeaToDatabase($array_successTea);
                             $counTea+=$count_successTea;
                             }
                             }
+                                
 
                              //判断内容逻辑
                         if ($k > 1) {
