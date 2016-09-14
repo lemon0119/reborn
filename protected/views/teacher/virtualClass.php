@@ -1,4 +1,4 @@
-`<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
+<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
 <script>
 
@@ -61,8 +61,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
 
     <div id="title_bull" class="title_select" style="width: 185px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;" >
-        <div   align="center" id="sw-bull-top"><h4>本班学生：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $totle ?>&nbsp;人</h4></div>
-        <div   align="center" id="sw-bull-bottom"><h4>在线学生：&nbsp;&nbsp;&nbsp;&nbsp; <font style="color: greenyellow" id="countPeople"><?php echo $count ?></font> 人</h4></div>
+        <div style="text-align: center" id="sw-bull"><h4>&nbsp;本 班 学 生：&nbsp;&nbsp;<?php echo $totle ?>&nbsp;人<br/>&nbsp;在 线 学 生：&nbsp;&nbsp;<font style="color: greenyellow" id="countPeople"><?php echo $count ?></font> 人</h4></div>
+
     </div>
     <button id="share-Cam" class="btn btn-primary" >直播视频</button>
     <button id="close-Cam" class="btn" disabled="disabled">关闭视频</button>

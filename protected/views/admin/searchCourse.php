@@ -19,7 +19,7 @@
                 </li>
             </form>
             <li class="divider"></li>
-            <li ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left"></i> 科目列表</a></li>
+            <li ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left"></i><span style=" position: relative;top: 7px">科目列表</span></a></li>
         </ul>
     </div>
 </div>
