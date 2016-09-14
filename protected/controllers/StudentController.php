@@ -762,7 +762,7 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($clsLesnSuite->suiteID, $type);
             $finishRecord[$type] = AnswerRecord::model()->findAll("recordID=? and type=? and createPerson=?", array($record->recordID, $type, $studentID));
         }
-        $number = AnswerRecord::model()->findAll("recordID=? and type=?", array($record->recordID, 'filling'));
+        $number = AnswerRecord::model()->findAll("recordID=? and type=?", array($record->recordID, 'question'));
         $n = 0;
         foreach (Tool::$EXER_TYPE as $type) {
             if (count($finishRecord[$type]) != 0 && count($classwork[$type]) != 0)
