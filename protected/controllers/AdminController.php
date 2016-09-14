@@ -4300,7 +4300,7 @@ class AdminController extends CController {
                                     foreach($array_successTea as $success_teaID){
                                         error_log(3);
                                         $successTeaID=strtoupper($success_teaID['uid']);
-                                    $styleTea="D001";
+                                    $styleTea="A01";
                                     $oldExerciseTea=ClassExercise::model()->findall('create_person=?',array($styleTea));
                                     foreach($oldExerciseTea as $exerciseTea){
                                         error_log(4);
