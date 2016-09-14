@@ -49,7 +49,7 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                    <a class="queTitle" href="./index.php?r=student/examkeyType&&exerID=<?php echo $keyType['exerciseID']?>&&cent=<?php $arg= implode(',', $cent);echo $arg;?>">
+                                        <a href="#" class="queTitle"   onclick="examKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                                
                                         <i class="icon-th"></i>
                                         <span style="position: relative;top: 6px">
                                         <?php echo $keyType['title']?>
@@ -132,7 +132,7 @@ $currtime = $examInfo['endtime'];
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
-                                                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                                                        $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(),function () {
                     window.location.href = "index.php?r=student/examlookType&&exerID="+exerID+"&&cent="+cent;
                 });
 						}
@@ -146,8 +146,22 @@ $currtime = $examInfo['endtime'];
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
-                                                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                                                        $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     window.location.href = "index.php?r=student/examlistenType&&exerID="+exerID+"&&cent="+cent;
+                });
+						}
+					};
+					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
+        }
+        
+        function examKeyNext(exerID,cent){
+        var option = {
+						title: "提示",
+						btn: parseInt("0011",2),
+						onOk: function(){
+							saveToDateBaseNow();
+                                                        $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
+                    window.location.href = "index.php?r=student/examkeyType&&exerID="+exerID+"&&cent="+cent;
                 });
 						}
 					};
