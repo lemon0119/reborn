@@ -64,7 +64,7 @@ if (!$isOver) {
                         <h3 ><?php echo $exerOne['title'] ?></h3>
                         <table style="width: 660px"  border = '0px'> 
                             <tr>
-                                <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+                                <td><span class="fl"  style="color: #000;font-weight: bolder">作答时长：</span></td>
                                 <td><span style="color: #f46500" id="timej">00:00:00</span></td>
                                 <td></td>
                                 <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;正确率：&nbsp;&nbsp;</span></td>
@@ -118,7 +118,7 @@ if (!$isOver) {
                         <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
                         <tr>
                             <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                            <td width = '250px'>练习计时：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
+                            <td width = '250px'>作答时长：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
                             <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                         <?php } else { ?>
             <!--                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>-->

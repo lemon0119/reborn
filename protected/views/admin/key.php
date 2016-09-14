@@ -2,7 +2,9 @@
     <h2>一键启用</h2>
     <form action="./index.php?r=admin/key" method="post"
           id="form-key" enctype="multipart/form-data">
+        <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />
         <fieldset>
+            
             <div class="controls">
                 <label class="control-label">请选择Excel文件</label><br/>
                 <div class="controls" style="text-align: center;background-color: #efefef;padding:50px;border-radius:5px;">
@@ -13,6 +15,12 @@
                 <br/>
                 <input type="submit" class="btn btn-primary" value="添加" style="float:right;"/>&nbsp;&nbsp;                    
             </div>
+            <div id="progress" class="progress" style="margin-bottom:15px;display:none;float:right;">
+<!--        <div class="bar" style="width:0%;"></div>-->
+        <div class="label">0%</div>
+</div>
+            </fieldset>
+    </form>
              <?php if(isset($array_failTea)){ ?>
                            
             <h3>异常添加列表</h3>
@@ -66,11 +74,29 @@
                 </tbody>
             </table>
             <?php }  ?>
-        </fieldset>
-    </form>
+        
 </div>
 
 <script>
+    function fetch_progress(){
+        $.get('./index.php?r=admin/getProgress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
+                var progress = parseInt(data);
+
+                $('#progress .label').html(progress + '%');
+//                $('#progress .bar').css('width', progress + '%');
+
+                if(progress < 100){
+                        setTimeout('fetch_progress()', 100);
+                }else{
+//            $('#progress .label').html('完成!');
+        }
+        }, 'html');
+}
+
+$('#form-key').submit(function(){
+        $('#progress').show();
+        setTimeout('fetch_progress()', 100);
+});
     $(document).ready(function(){
         <?php
         

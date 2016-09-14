@@ -48,11 +48,12 @@ class LoginForm extends CFormModel
 	 */
 	public function authenticate($attribute,$params)
 	{	//当没有input errors时，一个UserIdentity的对象被创建，username、password被传入构造函数。Useridentity对象的authenticate()方法被调用
-		if(!$this->hasErrors()){
+	$tag = '<span style="color:red">非法的用户名或密码</span>';	
+            if(!$this->hasErrors()){
                     $this->_identity=new UserIdentity($this->username,$this->password);
                     $this->_identity->setUserType($this->usertype);
                     if(!$this->_identity->authenticate()){
-                        $this->addError('password','非法的用户名或密码.');     //添加错误消息
+                        $this->addError('password', $tag);     //添加错误消息
                     }
 		}
 	}
