@@ -4309,6 +4309,7 @@ class AdminController extends CController {
                                             $class_number=$lesson_flag['number'];
                                         }
                                         $oldLessonTea=Lesson::model()->findall('classID=? and number=?',array($classID,$class_number));
+                                        if(!empty($oldLessonTea)){
                                         foreach($oldLessonTea as $oldLesson){
                                             $oldLessonID=$oldLesson['lessonID'];
                                         }
@@ -4321,6 +4322,7 @@ class AdminController extends CController {
                                         }else{
                                             ClassExercise::model()->insertKey($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],
                                             $successTeaID,$exerciseTea['type'],$exerciseTea['speed'],$exerciseTea['repeatNum'],$exerciseTea['chosen_lib']);
+                                        }
                                         }
                                     }
                                     }
