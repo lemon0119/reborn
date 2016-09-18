@@ -2,9 +2,9 @@
     <h2>一键启用</h2>
     <form action="./index.php?r=admin/key" method="post"
           id="form-key" enctype="multipart/form-data">
-        <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" />
+        
         <fieldset>
-            
+           <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" /> 
             <div class="controls">
                 <label class="control-label">请选择Excel文件</label><br/>
                 <div class="controls" style="text-align: center;background-color: #efefef;padding:50px;border-radius:5px;">
@@ -13,11 +13,10 @@
             </div>
             <div>
                 <br/>
-                <input type="submit" class="btn btn-primary" value="添加" style="float:right;"/>&nbsp;&nbsp;                    
+                <input type="submit" class="btn btn-primary" value="添加" style="float:right"/>&nbsp;&nbsp;                    
             </div>
-            <div id="progress" class="progress" style="margin-bottom:15px;display:none;float:right;">
-<!--        <div class="bar" style="width:0%;"></div>-->
-        <div class="label">0%</div>
+            <div id="progress" class="progress"  style="display:none;height: 60px;margin-left: auto;text-align: center;background: #FFFFFF" >
+                <img src="./img/progress.gif" style="width: 50px"/>
 </div>
             </fieldset>
     </form>
@@ -95,7 +94,10 @@
 
 $('#form-key').submit(function(){
         $('#progress').show();
-        setTimeout('fetch_progress()', 100);
+//        setTimeout('fetch_progress()', 100);
+//        $('#progress .bar').css('value', '22');
+//        $('#progress .bar').css('max', '100');
+          
 });
     $(document).ready(function(){
         <?php
@@ -105,7 +107,9 @@ $('#form-key').submit(function(){
                 echo 'window.wxc.xcConfirm("'.$result.'",window.wxc.xcConfirm.typeEnum.warning)';
             }else if($result==='上传失败'){
                 echo 'window.wxc.xcConfirm("'.$result.'",window.wxc.xcConfirm.typeEnum.error)';
-            }else if(is_numeric($result)){
+            }else if(is_numeric($result)){ ?>
+                 $('#progress').hide();
+                 <?php
                 if($flagTea==1){
                     if($flagClass==1){
                         echo 'window.wxc.xcConfirm("成功创建科目：'.$courseName.'，课时数为：'.$courseNumber.'，班级名为：'.$className.'，导入了'.$result.'个学生和'.$result1.'个老师,'.$count_fail.'个学生没有导入",window.wxc.xcConfirm.typeEnum.success)';                        
