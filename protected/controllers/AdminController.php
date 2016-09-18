@@ -4300,7 +4300,7 @@ class AdminController extends CController {
                                     foreach($array_successTea as $success_teaID){
                                         error_log(3);
                                         $successTeaID=strtoupper($success_teaID['uid']);
-                                    $styleTea="D001";
+                                    $styleTea="A01";
                                     $oldExerciseTea=ClassExercise::model()->findall('create_person=?',array($styleTea));
                                     foreach($oldExerciseTea as $exerciseTea){
                                         error_log(4);
@@ -4309,6 +4309,7 @@ class AdminController extends CController {
                                             $class_number=$lesson_flag['number'];
                                         }
                                         $oldLessonTea=Lesson::model()->findall('classID=? and number=?',array($classID,$class_number));
+                                        if(!empty($oldLessonTea)){
                                         foreach($oldLessonTea as $oldLesson){
                                             $oldLessonID=$oldLesson['lessonID'];
                                         }
@@ -4321,6 +4322,7 @@ class AdminController extends CController {
                                         }else{
                                             ClassExercise::model()->insertKey($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],
                                             $successTeaID,$exerciseTea['type'],$exerciseTea['speed'],$exerciseTea['repeatNum'],$exerciseTea['chosen_lib']);
+                                        }
                                         }
                                     }
                                     }
