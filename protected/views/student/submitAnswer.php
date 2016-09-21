@@ -37,6 +37,7 @@
             btn: parseInt("0011",2),
             onOk: function(){
                      doSubmit(true);
+                     saveToDateBaseNow();
                     $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
                         if(isExam)
                             window.location.href="index.php?r=student/classExam";
