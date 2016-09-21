@@ -9,6 +9,10 @@
                 <label class="control-label">请选择Excel文件</label><br/>
                 <div class="controls" style="text-align: center;background-color: #efefef;padding:50px;border-radius:5px;">
                     <input type="file" name="file" id="file"/>
+                    <span style="position: relative;left: 10px; top:4px">
+                 <input type="checkbox" name="checkbox"  value="" style="position: relative;bottom: 4px"/>
+               是否使用模板
+                </span>
                 </div>
             </div>
             <div>
@@ -77,27 +81,8 @@
 </div>
 
 <script>
-    function fetch_progress(){
-        $.get('./index.php?r=admin/getProgress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
-                var progress = parseInt(data);
-
-                $('#progress .label').html(progress + '%');
-//                $('#progress .bar').css('width', progress + '%');
-
-                if(progress < 100){
-                        setTimeout('fetch_progress()', 100);
-                }else{
-//            $('#progress .label').html('完成!');
-        }
-        }, 'html');
-}
-
 $('#form-key').submit(function(){
         $('#progress').show();
-//        setTimeout('fetch_progress()', 100);
-//        $('#progress .bar').css('value', '22');
-//        $('#progress .bar').css('max', '100');
-          
 });
     $(document).ready(function(){
         <?php

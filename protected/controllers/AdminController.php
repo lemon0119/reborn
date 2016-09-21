@@ -3822,6 +3822,7 @@ class AdminController extends CController {
             if(strtolower($file_type)!="sheet" && strtolower($file_type)!="ms-excel"){
                 $result="不是Excel文件";
                 $this->render('key',['result'=>$result]);
+               
             }else{
                 //解析文件并存入数据库逻辑
                 /*设置上传路径*/
@@ -3834,6 +3835,7 @@ class AdminController extends CController {
                     $this->render('key',['result'=>$result]);
                 }else{
                     $res=Tool::excelreadToArray($savePath.$file_name,$file_type);
+                    
                     //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
                     unlink($savePath.$file_name);
                     $array_fail=array();
@@ -4108,8 +4110,7 @@ class AdminController extends CController {
                                     $flag = 1;
                                     $this->render('key', ['result' => $result]);
                                     break;
-                                }else{
-                                    
+                                }else{                                
                                     if($flagTea==1){
                                     $resultExl=Course::model()->insertCourse($courseName,0);
                                 }
@@ -4126,13 +4127,13 @@ class AdminController extends CController {
                                             for($i=1;$i<($courseNumber+1);$i++){
                                                 Lesson::model()->insertLesson("第".$i."课",$courseID,0,0);
                                             }
-                                        }else{
-                                            for($i=1;$i<($courseNumber+1);$i++){
-                                                foreach($classes as $class){
-                                                    Lesson::model()->insertLesson("第".$i."课",$courseID,0,$class['classID']);
-                                                }
-                                            }
-                                        }
+                                     }//   else{
+//                                            for($i=1;$i<($courseNumber+1);$i++){
+//                                                foreach($classes as $class){
+//                                                    Lesson::model()->insertLesson("第".$i."课",$courseID,0,$class['classID']);
+//                                                }
+//                                            }
+//                                        }
                                     }
                                 }
                                 if($v[2]==""|| ctype_space($v[2])){
@@ -4173,7 +4174,7 @@ class AdminController extends CController {
                                         }
                                     }
                             }
-                            if($v[3]=="是"){
+                            if(isset($_POST['checkbox'])){
                                 $style_flag=1;
                             }
                             }
@@ -4468,8 +4469,9 @@ class AdminController extends CController {
                         $count_fail = $k - $coun - 1;
                         $this->render('key', ['className'=>$data['className'],'flagTea'=>$flagTea,'courseName'=>$courseName,'courseNumber'=>$courseNumber,'flagClass'=>$flagClass,'result' => $coun,'result1'=>$counTea, 'count_fail' => $count_fail, 'array_fail' => $array_fail,'array_failTea' => $array_failTea]);
                     }
-                }
+             
             }
+          }
         }else{
             $this->render('key');
         }

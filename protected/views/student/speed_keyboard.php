@@ -309,6 +309,7 @@
         //按每跳的最后一次击键计算正确率
         if (psz !== "") {
             changTemplet(psz);
+            psz = "";
             window.GA_RightRadio = (getCorrect() * 100).toFixed(2);
             document.getElementById("wordisRightRadio").innerHTML = window.GA_RightRadio;
         }
