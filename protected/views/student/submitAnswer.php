@@ -17,8 +17,8 @@
     }
      function submitSuite2(simple){
        var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-       setTimeout("window.wxc.xcConfirm('提交以后，不能重新进行答题，你确定提交吗？', window.wxc.xcConfirm.typeEnum.info);",100);
-       
+       setTimeout("saveToDateBaseNow();",100);
+       //saveToDateBaseNow();
         doSubmit(true);
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
             if(isExam)

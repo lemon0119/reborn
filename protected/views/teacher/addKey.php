@@ -57,20 +57,22 @@
 
             <div class="control-group" > 
                 <label class="control-label" for="input">练习词库</label>
-                <div class="controls"  >  
-                    <table id="lib"  style="align:left;">
-                    </table>    
-                    <a href="#" onclick="selectWordLib()">预置词库选择</a>
+                <div class="controls" style="padding-top:5px" >  
+<!--                    <table id="lib"  style="align:left;">
+                    </table>    -->
+                    <a href="#" onclick="selectWordLib()" style="float:left;margin-right: 10px">预置词库选择</a>
+                    <table id="lib"  style="align:left;float:left">
+                    </table>   
                 </div>
             </div>   
 
-            <div class="control-group" > 
+<!--            <div class="control-group" > 
                 <label class="control-label" for="input">所有二字词库</label>
                 <div class="controls"  > 
 
                     <input type="checkbox" onclick="checkAll()" id="all">添加所有二字词库
                 </div>
-            </div>         
+            </div>         -->
 
             <div class="control-group" > 
                 <label class="control-label" for="input">练习类型</label>
@@ -99,7 +101,7 @@
             <div class="control-group" style="display: none" id="div2">
                 <label class="control-label" >速度:</label>
                 <div class="controls">
-                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="0">         
+                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="10">         
                     词/分钟
                 </div>            
             </div>

@@ -251,9 +251,9 @@ if ($isExam) {
     });
 
     function onStenoPressKey(pszStenoString, device) {
-        yaweiOCX.UpdateView();
+//        yaweiOCX.UpdateView();
         var input = getContent(yaweiOCX);
-        yaweiOCX.Locate(input.length);
+//        yaweiOCX.Locate(input.length);
         window.GA_answer = yaweiOCX.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){

@@ -4349,9 +4349,10 @@ class AdminController extends CController {
                             }
                             if($k>=2 && $data ['uid']=="" && $data ['userName']=="" && $data ['sex']==""){
                                 $k = $k-1;
-                                if(next($data)=="" ){
-                                   break; 
-                                }  
+//                                if(next($data)=="" ){
+//                                   break; 
+//                                }  
+                                break;
                             }
                             if ($data ['uid'] === "" || ctype_space($data ['uid'])) {
                                 $result = "学号不能为空";
