@@ -119,9 +119,9 @@ $squence = $countSquence + 1;
 
 
     function onStenoPressKey(pszStenoString, device) {
-        yaweiOCX4Listen.UpdateView();
+//        yaweiOCX4Listen.UpdateView();
         var input = getContent(yaweiOCX4Listen);
-        yaweiOCX4Listen.Locate(input.length);
+//        yaweiOCX4Listen.Locate(input.length);
         window.GA_answer = yaweiOCX4Listen.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
         window.G_keyBoardBreakPause = 0;
