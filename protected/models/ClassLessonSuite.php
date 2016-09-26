@@ -130,7 +130,7 @@ public function findWorkID($classID,$lessonID,$suiteID){
             else
             $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID' and classID = '$selectClassID') and open=1 ";
 
-            $order = "order by classID ASC ,lessonID ASC";
+            $order = "order by workID DESC";
         $sql = $sql.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria   =   new CDbCriteria();
