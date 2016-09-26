@@ -62,6 +62,7 @@ if ($isExam == false) {
             title: "提交",
             btn: parseInt("0011", 4),
             onOk: function () {
+                saveToDateBaseNow();
                 $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function (result) {
                 });
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {

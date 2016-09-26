@@ -121,10 +121,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                                     value ="<?php echo $videoFilePath . iconv("gb2312", "UTF-8", $file); ?>">
                                 <?php 
                             $myFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
-                            if(Tool::clength($myFile)<=8){
+                            if(Tool::clength($myFile)<=6){
                                 echo $myFile;
                             }else{
-                                echo Tool::csubstr($myFile, 0, 8) . "...";
+                                echo Tool::csubstr($myFile, 0, 6) . "...";
                             }
                             ?> </button><?php
                         }
@@ -242,10 +242,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             echo $num;
                             ?>+-+tea"><?php
                             $myPptFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file . ".ppt")),"."));
-                            if(Tool::clength($myPptFile)<=8){
+                            if(Tool::clength($myPptFile)<=6){
                                 echo $myPptFile;
                             }else{
-                                echo Tool::csubstr($myPptFile, 0, 8) . "...";
+                                echo Tool::csubstr($myPptFile, 0, 6) . "...";
                             }?></button>   
                                     <?php
                                 }
@@ -408,10 +408,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             echo $num;
                             ?>+-+tea+-+<?php echo $i;?>"><?php
                             $myPicFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
-                            if(Tool::clength($myPicFile)<=8){
+                            if(Tool::clength($myPicFile)<=6){
                                 echo $myPicFile;
                             }else{
-                                echo Tool::csubstr($myPicFile, 0, 8) . "...";
+                                echo Tool::csubstr($myPicFile, 0, 6) . "...";
                             }?></button>
                                     <?php
                                 }
@@ -539,10 +539,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             echo $num;
                             ?>+-+tea"><?php
                             $myTxtFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
-                            if(Tool::clength($myTxtFile)<=8){
+                            if(Tool::clength($myTxtFile)<=6){
                                 echo $myTxtFile;
                             }else{
-                                echo Tool::csubstr($myTxtFile, 0, 8) . "...";
+                                echo Tool::csubstr($myTxtFile, 0, 6) . "...";
                             }?></button>
                                     <?php
                                 }
@@ -658,10 +658,10 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
                             title="<?php echo Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)); ?>"
                             style="width: 140px;height:40px;margin:10px 0px 10px 15px;" class="btn btn-primary" value ="<?php echo $voiceFilePath . iconv("gb2312", "UTF-8", $file); ?>"><?php
                             $myVoiceFile=substr(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),0,strrpos(Resourse::model()->getOriName(iconv("gb2312", "UTF-8", $file)),"."));
-                            if(Tool::clength($myVoiceFile)<=8){
+                            if(Tool::clength($myVoiceFile)<=6){
                                 echo $myVoiceFile;
                             }else{
-                                echo Tool::csubstr($myVoiceFile, 0, 8) . "...";
+                                echo Tool::csubstr($myVoiceFile, 0, 6) . "...";
                             }?></button>
                                     <?php
                                 }

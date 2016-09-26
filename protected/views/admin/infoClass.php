@@ -41,7 +41,7 @@
                         <td style="width: 120px">
                             <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['teacherID']; ?>&&name=<?php echo $teachers[$model['teacherID']]; ?>&&classID=<?php echo $classID; ?>"><img title="查看资料" src="<?php echo IMG_URL; ?>detail.png"></a>
 <!--                            <a href="./index.php?r=admin/infoClass&&flag=deleteTea&&id=<?php// echo $model['teacherID'];?>&&classID=<?php// echo $classID;?>"><img title="删除" src="<?php// echo IMG_URL; ?>delete.png"></a>-->
-                            <a href="#" onclick="deleteTea('<?php echo $model['teacherID'];?>',<?php echo $classID;?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
+                            <?php if($teachers[$model['teacherID']]!="亚伟速录" ){ ?><a href="#" onclick="deleteTea('<?php echo $model['teacherID'];?>',<?php echo $classID;?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a> <?php } ?>
                         </td>
                     </tr>            
                     <?php endforeach;?> 

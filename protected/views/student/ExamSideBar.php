@@ -97,6 +97,7 @@ $currtime = $examInfo['endtime'];
 </div>
 <script>
      function submitSuite2(){
+         saveToDateBaseNow();
         $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
                     if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
                         window.location.href = "index.php?r=student/classExam";
