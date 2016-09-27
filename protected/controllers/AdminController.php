@@ -1300,12 +1300,29 @@ class AdminController extends CController {
             if ($_GET ['flag'] == 'deleteClass') {
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($_GET ['ClassID'])); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+                $sql_student = "DELETE FROM student WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $_GET ['ClassID'] . "'";
+                ClassExam::model()->deleteAll("classID=?",array($_GET['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET['ClassID']));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
+                ScheduleClass::model()->deleteAll("classID=?",array($_GET ['ClassID']));
+                ClassExercise::model()->deleteAll("classID=?",array($_GET ['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET ['ClassID']));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();
+                Yii::app()->db->createCommand($sql_chat)->query();
             }
             unset($_GET ['flag']);
         }
@@ -1337,14 +1354,45 @@ class AdminController extends CController {
         if(isset($_GET['ClassID'])){  
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($_GET ['ClassID'])); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+                $sql_student = "DELETE FROM student WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
                 $sql_lesson = "DELETE FROM lesson WHERE classID = '" . $_GET ['ClassID'] . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $_GET ['ClassID'] . "'";
+                ClassExam::model()->deleteAll("classID=?",array($_GET['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET['ClassID']));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
+//                if(!empty($sql_class)){
+//                foreach($sql_class as $exercise_id){
+//                    $sql_exam_id=ExamExercise::model()->findAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    foreach($sql_exam_id as $exam_id){
+//                        Exam::model()->deleteAll("examID=?",array($exam_id['examID']));
+//                    }
+//                    ExamExercise::model() -> deleteAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    $sql_suite_id = SuiteExercise::model()->findAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    foreach($sql_suite_id as $suite_id){
+//                        suite::model()->deleteAll("suiteID=?",array($suite_id['suiteID']));
+//                    }
+//                    SuiteExercise::model()->deleteAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                }
+//                }
+                ScheduleClass::model()->deleteAll("classID=?",array($_GET ['ClassID']));
+                ClassExercise::model()->deleteAll("classID=?",array($_GET ['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET ['ClassID']));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();  
                 Yii::app()->db->createCommand($sql_lesson)->query();  
+                Yii::app()->db->createCommand($sql_chat)->query();
         }
         
          if (isset($_POST['checkbox'])) {
@@ -1353,9 +1401,25 @@ class AdminController extends CController {
             foreach ($userIDlist as $v) {
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $v . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $v . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($v)); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $v . "'";
+                $sql_student = "DELETE FROM student WHERE classID ='" . $v . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $v . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $v . "'";
+                ClassExam::model()->deleteAll("classID=?",array($v)); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($v));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($v));
+                ScheduleClass::model()->deleteAll("classID=?",array($v));
+                ClassExercise::model()->deleteAll("classID=?",array($v)); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($v));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();  
