@@ -1512,7 +1512,12 @@ class TeacherController extends CController {
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
             $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
-            $result = LookType::model()->insertLook($_POST['title'], $contentNoSpace, Yii::app()->session['userid_now']);
+            if(isset($_POST['checkbox'])){
+                $title=$_POST['title']."-不提示略码";
+                $result = LookType::model()->insertLook($title, $contentNoSpace, Yii::app()->session['userid_now']);
+            }else{
+                $result = LookType::model()->insertLook($_POST['title'], $contentNoSpace, Yii::app()->session['userid_now']);
+            }
         }
         $this->render('addLook', ['result' => $result]);
     }
@@ -1544,7 +1549,13 @@ class TeacherController extends CController {
         $thisLook = $thisLook->find("exerciseID = '$exerciseID'");
         $newContent = Tool::SBC_DBC($_POST['content'], 0);
         $content4000 = Tool::spliceLookContent($newContent);
-        $thisLook->title = $_POST['title'];
+        if(isset($_POST['checkbox'])){
+            $title=$_POST['title']."-不提示略码";
+            $thisLook->title = $title;
+        }else{
+            $title=str_replace("-不提示略码","",$_POST['title']);
+            $thisLook->title = $title;
+        }
         $thisLook->content = $content4000;
         $thisLook->update();
         if (Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam") {
@@ -6461,7 +6472,12 @@ class TeacherController extends CController {
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
             $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
-            $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $contentNoSpace, 'look', Yii::app()->session['userid_now']);
+            if(isset($_POST['checkbox'])){
+                $title = $_POST['title']."-不提示略码";
+                $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($title), $contentNoSpace, 'look', Yii::app()->session['userid_now']);
+            }else{
+                $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $contentNoSpace, 'look', Yii::app()->session['userid_now']);
+            }
         }
         $this->render('addLook4ClassExercise', ['result' => $result]);
     }
@@ -6569,7 +6585,12 @@ class TeacherController extends CController {
         $exerciseID = $_GET["exerciseID"];
         $update = 0;
         if (isset($_POST['title'])) {
-            $title = $_POST['title'];
+            if(isset($_POST['checkbox'])){
+                $title = $_POST['title']."-不提示略码";
+            }else{
+                $title = str_replace("-不提示略码", "", $_POST['title']);
+//                $title = $_POST['title'];
+            }
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
             $update = ClassExercise::model()->updateLook($exerciseID, $title, $content4000);
