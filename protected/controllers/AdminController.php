@@ -4433,8 +4433,8 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } else if ($data['sex'] === "") {
-                                $result = "性别不能为空";
+                            } else if ($data ['userName'] === "" || ctype_space($data ['userName']) || !preg_match("/^[A-Za-z_\x80-\xff\s]+$/",$data ['userName'])) {
+                                $result = "姓名不能为空且由汉字或英文组成";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
@@ -4466,11 +4466,6 @@ class AdminController extends CController {
                                     }
                                     array_push($array_success, $data);
                                 }
-                            } else if ($data ['userName'] === "" || ctype_space($data ['userName']) || !preg_match("/^[A-Za-z_\x80-\xff\s]+$/",$data ['userName'])) {
-                                $result = "姓名不能为空且由汉字或英文组成";
-                                $fixed = "需手动添加";
-                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
-                                array_push($array_fail, $stu_fail);
                             } else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=$studentNumber){
                                 $result = "班级人数超过".$studentNumber."人！";
                                 $fixed = "请重新分班";
