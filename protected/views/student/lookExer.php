@@ -168,6 +168,8 @@ if (!$isOver) {
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     var briefType = "";
+    <?php $titleFalse=strpos($exerOne['title'],"-不提示略码"); ?>
+    var titleFalse = "<?php echo $titleFalse; ?>";
 
     $(document).ready(function () {
         window.G_isLook = 1;
@@ -456,7 +458,9 @@ if ($isExam) {
             }
             f.style = "color:" + color;
             content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-            checkYaweiCode(content);
+            if(!titleFalse){
+                checkYaweiCode(content);
+            }
             f.innerHTML = content.content;
             father.appendChild(f);
         } else {
@@ -483,7 +487,9 @@ if ($isExam) {
                 }
                 f.style = "color:"+color;
                 content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-                checkYaweiCode(content);
+                if(!titleFalse){
+                    checkYaweiCode(content);
+                }
                 f.innerHTML = content.content;
                 father.appendChild(f);
             } else {
@@ -495,10 +501,14 @@ if ($isExam) {
                 //f.appendChild(t);
                 if (color === "#f44336") {
                     content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
-                    checkYaweiCode(content);
+                    if(!titleFalse){
+                        checkYaweiCode(content);
+                    }
                 } else {
                     content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-                    checkYaweiCode(content);
+                    if(!titleFalse){
+                        checkYaweiCode(content);
+                    }
                 }
                 f.innerHTML = content.content;
                 father.appendChild(f);

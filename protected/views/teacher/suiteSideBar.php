@@ -22,10 +22,14 @@
                         <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                    <a href="./index.php?r=teacher/keyType&&exerID=<?php echo $keyType['exerciseID'];?>">
+                                <a title="<?php echo $keyType['title']; ?>" href="./index.php?r=teacher/keyType&&exerID=<?php echo $keyType['exerciseID'];?>">
                                         <i class="icon-th"></i>
                                         <span style="position: relative;top: 6px">
-                                        <?php echo $keyType['title']?>
+                                        <?php if (Tool::clength($keyType['title']) <= 13){
+                                                    echo $keyType['title'];
+                                               }else{
+                                                    echo Tool::csubstr($keyType['title'], 0, 13) . "...";
+                                               } ?>
                                         </span>
                                     </a>
                             </li>
@@ -33,10 +37,14 @@
                         <li class="nav-header">看打练习</li>
                         <?php foreach ($exercise['look'] as $lookType) :?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
-                                    <a href="./index.php?r=teacher/lookType&&exerID=<?php echo $lookType['exerciseID'];?>">
+                                <a title="<?php echo $lookType['title'];?>" href="./index.php?r=teacher/lookType&&exerID=<?php echo $lookType['exerciseID'];?>">
                                         <i class="icon-eye-open"></i>
                                         <span style="position: relative;top: 6px">
-                                        <?php echo $lookType['title']?>
+                                        <?php if (Tool::clength($lookType['title']) <= 13){
+                                                    echo $lookType['title'];
+                                               }else{
+                                                    echo Tool::csubstr($lookType['title'], 0, 13) . "...";
+                                               } ?>
                                         </span>
                                     </a>
                             </li>
@@ -44,10 +52,14 @@
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                                <a href="./index.php?r=teacher/listenType&&exerID=<?php echo $listenType['exerciseID'];?>">
+                            <a title="<?php echo $listenType['title']; ?>" href="./index.php?r=teacher/listenType&&exerID=<?php echo $listenType['exerciseID'];?>">
                                     <i class="icon-headphones"></i> 
                                     <span style="position: relative;top: 6px">
-                                    <?php echo $listenType['title']?>
+                                    <?php if (Tool::clength($listenType['title']) <= 13){
+                                                echo $listenType['title'];
+                                           }else{
+                                                echo Tool::csubstr($listenType['title'], 0, 13) . "...";
+                                           } ?>
                                     </span>
                                 </a>
                         </li>

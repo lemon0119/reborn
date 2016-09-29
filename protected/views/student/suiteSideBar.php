@@ -80,10 +80,15 @@
                     <?php } else { ?>
                                href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
         <?php } ?>
-                            >
+                   title="<?php echo $keyType['title']; ?>"         >
                             <i class="icon-th"></i>
                             <span style="position: relative;top: 6px">
-        <?php echo $keyType['title'] ?>
+        <?php if (Tool::clength($keyType['title']) <= 13){
+                echo $keyType['title'];
+        }else{
+            echo Tool::csubstr($keyType['title'], 0, 13) . "...";
+        }
+         ?>
                             </span>
                         </a>
                     </li>
@@ -97,11 +102,15 @@
                     <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
                     <?php } else { ?>
                                href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
-        <?php } ?>
+        <?php } ?>  title="<?php echo $lookType['title']; ?>"
                            >
                             <i class="icon-eye-open"></i>
                             <span style="position: relative;top: 6px">
-                            <?php echo $lookType['title'] ?>
+                            <?php if (Tool::clength($lookType['title']) <= 13){
+                                    echo $lookType['title'];
+                                  }else{
+                                    echo Tool::csubstr($lookType['title'], 0, 13) . "...";
+                                  } ?>
                             </span>
                         </a>
                     </li>
@@ -116,12 +125,16 @@
                         <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
                     <?php } else { ?>
                                href="#" onclick="suiteListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
-        <?php } ?>
+        <?php } ?>      title="<?php echo $listenType['title']; ?>"
                            >
                         
                             <i class="icon-headphones"></i> 
                             <span style="position: relative;top: 6px">
-                <?php echo $listenType['title'] ?>
+                <?php if (Tool::clength($listenType['title']) <= 13){
+                          echo $listenType['title'];
+                       }else{
+                          echo Tool::csubstr($listenType['title'], 0, 13) . "...";
+                       } ?>
                             </span>
                         </a>
                     </li>                       

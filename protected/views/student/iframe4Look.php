@@ -88,6 +88,8 @@
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     var briefType = "";
+    <?php $titleFalse=strpos($classExercise['title'],"-不提示略码"); ?>
+    var titleFalse = "<?php echo $titleFalse; ?>";
     $(document).ready(function () {
         window.G_isLook = 1;
         document.getElementById('Analysis').scrollIntoView();
@@ -336,7 +338,10 @@ $squence = $countSquence + 1;
             }
             f.style = "color:" + color;
             content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-            checkYaweiCode(content);
+            if(titleFalse){
+            }else{
+                checkYaweiCode(content);
+            }
             f.innerHTML = content.content;
             father.appendChild(f);
         } else {
@@ -363,7 +368,10 @@ $squence = $countSquence + 1;
                 }
                 f.style = "color:"+color;
                 content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-                checkYaweiCode(content);
+                if(titleFalse){
+                }else{
+                    checkYaweiCode(content);
+                    }
                 f.innerHTML = content.content;
                 father.appendChild(f);
             } else {
@@ -375,10 +383,16 @@ $squence = $countSquence + 1;
                 //f.appendChild(t);
                 if (color === "#f44336") {
                     content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
-                    checkYaweiCode(content);
+                    if(titleFalse){
+                    }else{
+                        checkYaweiCode(content);
+                    }
                 } else {
                     content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
+                    if(titleFalse){
+                    }else{
                     checkYaweiCode(content);
+                }
                 }
                 f.innerHTML = content.content;
                 father.appendChild(f);
