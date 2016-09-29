@@ -1888,8 +1888,22 @@ class TeacherController extends CController {
                         $content = $record['yaweiCode'] . $record['words'];
                 }
             }
-
-            $result = KeyType::model()->insertKey($_POST['title'], $content, Yii::app()->session['userid_now'], $_POST['category'], $_POST['speed'], $_POST['in3'], $libstr);
+            if(isset($_POST['free'])) {
+                $title = $_POST['title'].'-自由练习';
+                $category = "free";
+                 $result = KeyType::model()->insertKey($title, $content, Yii::app()->session['userid_now'], $category, $_POST['speed1'], $_POST['in3'], $libstr);
+            }
+            if(isset($_POST['speed'])) {
+                $title = $_POST['title'].'-速度练习';
+                $category = "speed";
+                $result = KeyType::model()->insertKey($title, $content, Yii::app()->session['userid_now'], $category, $_POST['speed1'], $_POST['in3'], $libstr);
+            }
+            if(isset($_POST['correct'])) {
+                $title = $_POST['title'].'-准确率练习';
+                $category = "correct";
+                 $result = KeyType::model()->insertKey($title, $content, Yii::app()->session['userid_now'], $category, $_POST['speed1'], $_POST['in3'], $libstr);
+            }
+//            $result = KeyType::model()->insertKey($_POST['title'], $content, Yii::app()->session['userid_now'], $_POST['category'], $_POST['speed'], $_POST['in3'], $libstr);
         }
         $this->render('addKey', ['result' => $result]);
     }
@@ -6520,8 +6534,22 @@ class TeacherController extends CController {
                         $content = $v['yaweiCode'] . $v['words'];
                 }
             }
-
-            $result = ClassExercise::model()->insertKey($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $content, Yii::app()->session['userid_now'], $_POST['category'], $_POST['speed'], $_POST['in3'], $libstr);
+            if(isset($_POST['free'])) {
+                $title = Tool::filterAllSpaceAndTab($_POST['title']).'-自由练习';
+                $category = 'free';
+                $result = ClassExercise::model()->insertKey($classID, $sqlLesson['lessonID'], $title, $content, Yii::app()->session['userid_now'], $category, $_POST['speed1'], $_POST['in3'], $libstr);
+            }
+            if(isset($_POST['correct'])) {
+                $title = Tool::filterAllSpaceAndTab($_POST['title']).'-准确率练习';
+                $category = 'correct';
+                $result = ClassExercise::model()->insertKey($classID, $sqlLesson['lessonID'], $title, $content, Yii::app()->session['userid_now'], $category, $_POST['speed1'], $_POST['in3'], $libstr);
+            }
+            if(isset($_POST['speed'])) {
+                $title = Tool::filterAllSpaceAndTab($_POST['title']).'-速度练习';
+                $category = 'speed';
+                $result = ClassExercise::model()->insertKey($classID, $sqlLesson['lessonID'], $title, $content, Yii::app()->session['userid_now'], $category, $_POST['speed1'], $_POST['in3'], $libstr);
+            }
+            //$result = ClassExercise::model()->insertKey($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $content, Yii::app()->session['userid_now'], $_POST['category'], $_POST['speed'], $_POST['in3'], $libstr);
         }
         $this->render('addKey4ClassExercise', ['result' => $result]);
     }
