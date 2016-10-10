@@ -49,14 +49,14 @@
                 <legend>查看题目</legend>
             <?php } ?>
             <div class="control-group">
-                <label class="control-label" for="input">题目</label>
+                <label class="control-label" for="input">题目名称</label>
                 <div class="controls">
                     <textarea name="title" style="width:450px; height:20px;" id="input"></textarea>
                 </div>
             </div>
 
             <div class="control-group" > 
-                <label class="control-label" for="input">练习词库</label>
+                <label class="control-label" for="input">选择词库</label>
                 <div class="controls" style="padding-top:5px" >  
 <!--                    <table id="lib"  style="align:left;">
                     </table>    -->
@@ -77,16 +77,24 @@
             <div class="control-group" > 
                 <label class="control-label" for="input">练习类型</label>
                 <div class="controls">
-                    <select  name="category" id="testSelect" style="border-color: #000; color:#000" onchange="changSelect()">
+                    <input id="free" type="checkbox" value="free" name="free" />
+                    <span style=" position: relative;top: 4px">自由练习</span>
+                    <input id="speed" type="checkbox" value="speed" name="speed" onchange ="changSelect(this)"/>
+                    <span style=" position: relative;top: 4px">速度练习</span>
+                    <input id="correct" type="checkbox" value="correct" name="correct"/>
+                    <span style=" position: relative;top: 4px">准确率练习</span>
+                    
+                    
+<!--                    <select  name="category" id="testSelect" style="border-color: #000; color:#000" onchange="changSelect()">
                         <option  value="free" selected="selected">自由练习</option>
                         <option  value="speed" >速度练习</option>
                         <option  value="correct">准确率练习</option>                                        
-                    </select>
+                    </select>-->
                 </div>
             </div>
 
             <div class="control-group" id="div3">   
-                <label class="control-label" >练习循环次数</label>
+                <label class="control-label" >循环次数</label>
                 <div class="controls">                                                        
                     <input type="text" name="in3" style="width:40px; height:15px;" id="input3" maxlength="2" value="1">               
                 </div>             
@@ -99,9 +107,9 @@
             </div>
 
             <div class="control-group" style="display: none" id="div2">
-                <label class="control-label" >速度:</label>
+                <label class="control-label" >速度</label>
                 <div class="controls">
-                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="10">         
+                    <input type="text" name="speed1" style="width:40px; height:15px;" id="input2" maxlength="3"  value="10">         
                     词/分钟
                 </div>            
             </div>
@@ -168,21 +176,27 @@
             window.wxc.xcConfirm('循环次数应设为1-100', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
-
-        if ($("#testSelect").find("option:selected").val() == "speed")
-            if (!numpatrn.exec(input2))
-            {
+        var free_input = document.getElementById("free");
+        var correct_input = document.getElementById("correct");
+        var speed_input = document.getElementById("speed");
+        if(free_input.checked == false && correct_input.checked == false && speed_input.checked == false) {
+            window.wxc.xcConfirm('至少选中一种模式', window.wxc.xcConfirm.typeEnum.warning);
+            return false;
+        }
+        if (!numpatrn.exec(input2))
+        {
                 window.wxc.xcConfirm('速度应设为1-1000', window.wxc.xcConfirm.typeEnum.warning);
                 return false;
-            }
+        }
+            
     }
     );
 
-    function changSelect() {
-        if ($("#testSelect").find("option:selected").val() == "speed") {
-            document.getElementById("div2").style.display = "";
-        } else {
-            document.getElementById("div2").style.display = "none";
+    function changSelect(obj) {
+        if(obj.checked == true) {
+          document.getElementById("div2").style.display = "";
+        }else {
+          document.getElementById("div2").style.display = "none";
         }
     }
 
