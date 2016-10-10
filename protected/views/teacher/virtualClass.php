@@ -905,7 +905,8 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
         checkLeave();
          $.ajax({
                     type: "POST",
-                    url: "index.php?r=teacher/closeAllOpenExerciseNow",
+                    //消除检查离开状态
+                    //url: "index.php?r=teacher/closeAllOpenExerciseNow",
                     data: {},
                     success: function (data) {
                     },
