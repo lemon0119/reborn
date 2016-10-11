@@ -60,10 +60,11 @@
         <?php
         $listenpath = EXER_LISTEN_URL . $classExercise['file_path'] . $classExercise['file_name'];
         ?>
+        <br>
         <div style="position: relative;top: -130px" align="left">
             <br/>
             <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath; ?>"   preload = "auto"    controls=""></audio>
-        </div>
+        </div><br>
         <input id="content" type="hidden" style="height: 5px;" value="<?php
         $str = str_replace("\n", "", $classExercise['content']);
         $str = str_replace("\r", "", $str);
@@ -73,7 +74,7 @@
         <br/>
         <object id="typeOCX4Listen" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='840' height='300' 
+                width ='840' height='400' 
                 event_OnStenoPress="onStenoPressKey">
         </object>
     </div>

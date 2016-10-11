@@ -1550,8 +1550,13 @@ class TeacherController extends CController {
         $newContent = Tool::SBC_DBC($_POST['content'], 0);
         $content4000 = Tool::spliceLookContent($newContent);
         if(isset($_POST['checkbox'])){
-            $title=$_POST['title']."-不提示略码";
-            $thisLook->title = $title;
+            if(strpos($_POST['title'],"-不提示略码")){
+                $title=$_POST['title'];
+                $thisLook->title = $title;
+            }else{
+                $title=$_POST['title']."-不提示略码";
+                $thisLook->title = $title;
+            }
         }else{
             $title=str_replace("-不提示略码","",$_POST['title']);
             $thisLook->title = $title;
@@ -6614,7 +6619,11 @@ class TeacherController extends CController {
         $update = 0;
         if (isset($_POST['title'])) {
             if(isset($_POST['checkbox'])){
-                $title = $_POST['title']."-不提示略码";
+                if(strpos($_POST['title'], "-不提示略码")){
+                    $title = $_POST['title'];
+                }else{
+                    $title = $_POST['title']."-不提示略码";
+                }
             }else{
                 $title = str_replace("-不提示略码", "", $_POST['title']);
 //                $title = $_POST['title'];
