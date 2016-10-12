@@ -7,7 +7,7 @@
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <body style="background-image: none;background-color: #fff">
-    <div id="span" class="hero-unit" align="center">
+    <div id="span" class="hero-unit" align="center" style="overflow-y:visible ">
         <table style="width: 580px"  border = '0px'>
             <?php if (isset($_GET['ispractice'])) { ?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
             <!--            <button class="fl btn" id="pause">暂停统计</button>-->
@@ -63,7 +63,7 @@
         <div style="position: relative;top: -130px" align="left">
             <br/>
             <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath; ?>"   preload = "auto"    controls=""></audio>
-        </div>
+        </div><br>
         <input id="content" type="hidden" style="height: 5px;" value="<?php
         $str = str_replace("\n", "", $classExercise['content']);
         $str = str_replace("\r", "", $str);
@@ -73,7 +73,7 @@
         <br/>
         <object id="typeOCX4Listen" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='840' height='300' 
+                width ='840' height='450' 
                 event_OnStenoPress="onStenoPressKey">
         </object>
     </div>

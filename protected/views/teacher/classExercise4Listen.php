@@ -44,6 +44,7 @@
 <!--                <th class="font-center">编号</th>-->
                 <th class="font-center">题目</th>
                 <th class="font-center">内容</th>
+                <th class="font-center">速度</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>
                 <?php if(isset($_GET['nobar'])){ ?>
@@ -66,6 +67,7 @@
                                     else
                                         echo Tool::csubstr($model['content'], 0,10)."...";
                                         ?></td>
+                        <td class="font-center" style="width: 70px"><?php echo $model['speed'];?></td>
                         <td class="font-center" style="width: 70px"><?php if(isset($teachers[$model['create_person']])){echo  $teachers[$model['create_person']];}else{echo "未知";}
                             ?></td>
                         <td class="font-center" style="width: 150px"><?php echo $model['create_time'];?></td>

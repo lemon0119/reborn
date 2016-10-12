@@ -30,7 +30,11 @@ $code = mt_rand(0, 1000000);
             <th class="font-center">题号</th>
             <th class="font-center">题目</th>
 <!--                <th class="font-center">题目</th>-->
+            <?php if($type =="listen"){ ?>
+            <th class="font-center">速度</th>
+            <?php }else {?>
             <th class="font-center">内容</th>
+            <?php }?>
             <th class="font-center">创建人</th>
             <th class="font-center">创建时间</th>         
             <th class="font-center">操作</th>               
@@ -48,13 +52,18 @@ $code = mt_rand(0, 1000000);
                     else
                         echo Tool::csubstr($allwork['title'], 0, 5) . "...";
                     ?></td>
-
+                <?php if($type =="listen"){ ?>
+                <td class="font-center">
+                    <?php echo $allwork['speed'] ?>
+                </td>
+                <?php }else {?>
                 <td title="<?php echo Tool::filterKeyContent($allwork['content']); ?>" class="font-center"><?php
                     if (Tool::clength(Tool::filterKeyContent($allwork['content'])) <= 10)
                         echo Tool::filterKeyContent($allwork['content']);
                     else
                         echo Tool::csubstr(Tool::filterKeyContent($allwork['content']), 0, 10) . "...";
                     ?></td>
+                <?php }?>
                 <td class="font-center">
                     <?php
                     if ($allwork['createPerson'] == "0")
