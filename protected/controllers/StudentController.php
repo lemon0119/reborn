@@ -1579,7 +1579,6 @@ class StudentController extends CController {
         }
         return $this->render('freePractice', ['lessons' => $lessons, 'nowlesson' => $nowLesson, 'classExerciseLst' => $classExerciseLst]);
     }
-
     public function actionStartClassExercise() {
         $array_exerciseID = [];
         $array_type = [];
@@ -1630,7 +1629,11 @@ class StudentController extends CController {
         $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
         $this->renderPartial("Iframe4Look", ["classExercise" => $classExercise]);
     }
-
+    public function actionFreeIframe4Looks() {
+        $exerciseID = $_GET['exerciseID'];
+        $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);
+        $this->renderPartial("Iframe4Looks", ["classExercise" => $classExercise]);
+    }
     public function actionFreeIframe4Listen() {
         $exerciseID = $_GET['exerciseID'];
         $classExercise = ClassExercise::model()->getByExerciseID($exerciseID);

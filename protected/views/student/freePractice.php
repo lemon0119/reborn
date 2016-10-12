@@ -5,7 +5,9 @@
  * and open the template in the editor.
  */
 ?>
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js">
+</script>
+<div id="all">
 <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
@@ -33,8 +35,8 @@
     </div>
 </div>
 <?php if (isset($_GET['lessonID'])) { ?>
-    <div id="iframeDiv" style="display:none;"  class="span9">
-        <iframe id="iframe_classExercise" name="iframe_classExercise"  style="border: 0px;height: 100%;width: 95%;"></iframe>
+    <div id="iframeDiv" style="display:none;"  class="span9" >
+        <iframe id="iframe_classExercise" name="iframe_classExercise"  style="border: 0px;height: 100%;width: 100%;"></iframe>
     </div>
     <div id="exerciseDiv" class="span9">
         <h3 ><font style="color:#f46500"><?php echo $nowlesson['lessonName']; ?></font> 已  开  放  的  练  习</h3>
@@ -108,6 +110,7 @@
         </div>
     </div>
 <?php } ?>
+</div>
 <script>
 
     //获取学生信息转入统计JS 实时存入数据库
@@ -125,10 +128,28 @@
 
     function startClassExercise(exerciseID, type) {
         $("#iframeDiv").removeAttr("style");
-        $("#iframeDiv").attr("style", "height:800px;");
+        $("#iframeDiv").attr("style", "height:880px;width :840px; padding:15px;");
         $("#exerciseDiv").attr("style", "display:none");
         if (type === "look") {
-            $("#iframe_classExercise").attr("src", "index.php?r=student/freeIframe4Look&&ispractice&&exerciseID=" + exerciseID);
+            $("#iframe_classExercise").attr("src", "index.php?r=student/freeIframe4Looks&&ispractice&&exerciseID=" + exerciseID);
+            var htmltxt = '<div  class="analysisTool" id="analysis" style="position: relative;left:1190px;bottom: 200px">'+
+    '<table style="margin: 0px auto;">'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">练习计时：</span><span style="color: greenyellow" id="timej">00:00:00</span ></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">正&nbsp;确&nbsp;&nbsp率：</span><span style="color: greenyellow" id="wordisRightRadio">0</span ><span class="fr" style="color: #fff"> %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>'+                       
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">平均速度：</span><span style="color: greenyellow" id="getAverageSpee">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: #fff"> 字/分</span> </td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时速度：</span><span style="color: greenyellow" id="getMomentSpee">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高速度：</span><span style="color: greenyellow" id="getHighstSpee">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">平均击键：</span><span style="color: greenyellow" id="getAverageKeyTyp">0</span ><span class="fr" style="color: #fff"> 次/分</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时击键：</span><span style="color:greenyellow" id="getMomentKeyTyp">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高击键：</span><span style="color: greenyellow" id="getHighstCountKe">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">击键间隔：</span><span style="color: greenyellow" id="getIntervalTim">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>'+
+        '</tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高间隔：</span><span style="color: greenyellow" id="getHighIntervarlTim">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>'+
+        '</tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">总击键数：</span><span style="color: greenyellow" id="getcountAllKe">0</span ><span class="fr" style="color: #fff"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">回改字数：</span><span style="color: greenyellow" id="getBackDelet">0</span ><span class="fr" style="color: #fff"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>'+
+    '</table>'+
+'</div>';
+           var all = document.getElementById("all");
+           all.innerHTML = all.innerHTML + htmltxt;
         } else if (type === "listen") {
             $("#iframe_classExercise").attr("src", "index.php?r=student/freeIframe4Listen&&ispractice&&exerciseID=" + exerciseID);
         } else {

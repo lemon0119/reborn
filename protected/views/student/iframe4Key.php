@@ -7,7 +7,7 @@
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <body style="background-image: none;background-color: #fff">
-    <div id="span" class="hero-unit" align="center">
+    <div id="span" class="hero-unit" align="center" style="overflow-y:visible ">
         <table style="width: 580px"  border = '0px'>
             <!--            <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>-->
             <?php if (isset($_GET['ispractice'])) { ?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
