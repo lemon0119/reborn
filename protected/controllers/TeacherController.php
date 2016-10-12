@@ -5752,11 +5752,14 @@ class TeacherController extends CController {
         if (isset($_POST['score'])) {
             $arr = explode(",", $_POST['score']);
             $m = 0;
-            foreach ($array_exercise as $k => $work) {
-                if ($arr[$m] != " ") {
-                    AnswerRecord::model()->changeScore($ansWork[$k]['answerID'], $arr[$m++]);
-                }
+            if(isset($_POST['answerID'])){
+                $answerID=$_POST['answerID'];
             }
+//            foreach ($array_exercise as $k => $work) {
+//                if ($arr[$m] != " ") {
+                    AnswerRecord::model()->changeScore($answerID, $arr[$m++]);
+//                }
+            
         }
         $student = Student::model()->find("userID='$studentID'");
         $class = TbClass::model()->find("classID='$classID'");
