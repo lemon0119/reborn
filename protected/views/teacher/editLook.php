@@ -78,8 +78,8 @@ $(document).ready(function(){
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
-    if(requirements === "" || requirements.length > 26){
-        window.wxc.xcConfirm('题目内容不能为空且不超过20个字', window.wxc.xcConfirm.typeEnum.warning);
+    if(requirements === ""){
+        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;

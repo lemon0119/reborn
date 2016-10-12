@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <body style="background-image: none;background-color: #fff">
     <button id="toggle" style="position: relative;" class="btn">展开</button>
-    <div id="span" class="hero-unit" align="center" style="overflow-y: visible">
+    <div id="span" class="hero-unit" align="center">
         <!--        <div style="width: 660px">
                                 <button class="fl btn" id="pause">暂停统计</button>
                     <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>
@@ -73,12 +73,12 @@
         $str = str_replace(" ", "}", $str);
         echo $str;
         ?>">
-        <div id ="templet" style="text-align: left;height: 210px;width: 930px" class="questionBlock" front-size ="25px" onselectstart="return false">
+        <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='940' height='350' 
+                width ='840' height='300' 
                 event_OnStenoPress="onStenoPressKey">
         </object>
     </div>
@@ -130,7 +130,7 @@
                 $("#templet").css('height', '180px');
             } else {
                 $("#toggle").text("展开");
-                $("#templet").css('height', '210px');
+                $("#templet").css('height', '260px');
 
             }
             $("#allAnalysis").toggle(0);
@@ -338,7 +338,8 @@ $squence = $countSquence + 1;
             }
             f.style = "color:" + color;
             content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-            if(!titleFalse){
+            if(titleFalse){
+            }else{
                 checkYaweiCode(content);
             }
             f.innerHTML = content.content;
@@ -367,7 +368,8 @@ $squence = $countSquence + 1;
                 }
                 f.style = "color:"+color;
                 content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-                if(!titleFalse){
+                if(titleFalse){
+                }else{
                     checkYaweiCode(content);
                     }
                 f.innerHTML = content.content;
@@ -381,14 +383,16 @@ $squence = $countSquence + 1;
                 //f.appendChild(t);
                 if (color === "#f44336") {
                     content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
-                    if(!titleFalse){
-                    checkYaweiCode(content);
+                    if(titleFalse){
+                    }else{
+                        checkYaweiCode(content);
                     }
                 } else {
                     content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-                   if(!titleFalse){
+                    if(titleFalse){
+                    }else{
                     checkYaweiCode(content);
-                    }
+                }
                 }
                 f.innerHTML = content.content;
                 father.appendChild(f);

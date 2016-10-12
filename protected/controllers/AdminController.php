@@ -1315,7 +1315,7 @@ class AdminController extends CController {
                 $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $_GET ['ClassID'] . "'";
                 ClassExam::model()->deleteAll("classID=?",array($_GET['ClassID'])); 
                 ClassLessonSuite::model()->deleteAll("classID=?",array($_GET['ClassID']));
-//                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
                 ScheduleClass::model()->deleteAll("classID=?",array($_GET ['ClassID']));
                 ClassExercise::model()->deleteAll("classID=?",array($_GET ['ClassID'])); 
                 ClassLessonSuite::model()->deleteAll("classID=?",array($_GET ['ClassID']));
@@ -1370,7 +1370,7 @@ class AdminController extends CController {
                 $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $_GET ['ClassID'] . "'";
                 ClassExam::model()->deleteAll("classID=?",array($_GET['ClassID'])); 
                 ClassLessonSuite::model()->deleteAll("classID=?",array($_GET['ClassID']));
-//                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
 //                if(!empty($sql_class)){
 //                foreach($sql_class as $exercise_id){
 //                    $sql_exam_id=ExamExercise::model()->findAll("exerciseID=?",array($exercise_id['exerciseID']));
@@ -1416,7 +1416,7 @@ class AdminController extends CController {
                 $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $v . "'";
                 ClassExam::model()->deleteAll("classID=?",array($v)); 
                 ClassLessonSuite::model()->deleteAll("classID=?",array($v));
-//                $sql_class=ClassExercise::model()->findAll("classID=?",array($v));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($v));
                 ScheduleClass::model()->deleteAll("classID=?",array($v));
                 ClassExercise::model()->deleteAll("classID=?",array($v)); 
                 ClassLessonSuite::model()->deleteAll("classID=?",array($v));
