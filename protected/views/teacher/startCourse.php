@@ -54,7 +54,7 @@
                 <ul class="nav nav-list">
                 <li class="nav-header"></li>
                 <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>学生列表</li>
-                <div class="scroll" style="padding: 8px 0;height:150px;overflow:auto;margin-left: 20px;">
+                <div class="scroll" style="padding: 8px 0;height:150px;overflow:auto;">
                 <?php foreach($stu as $student){
                     ?>
                     <li><i class="icon-headphones" style="position:relative;bottom:6px;left:"></i><?php echo $student['userName']?></li>

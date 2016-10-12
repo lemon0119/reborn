@@ -1891,27 +1891,72 @@ $dir->close();
 
     }
     function pageUp() {
-        if (cur_ppt <= 1) {
-            cur_ppt = 1;
+//        if (cur_ppt <= 1) {
+//            cur_ppt = 1;
+//            window.wxc.xcConfirm("已到第一页！", window.wxc.xcConfirm.typeEnum.info);
+//        } else {
+//            cur_ppt = cur_ppt - 1;
+//            goCurPage();
+//        }
+    if (cur_ppt == 1) {
             window.wxc.xcConfirm("已到第一页！", window.wxc.xcConfirm.typeEnum.info);
+            cur_ppt = cur_ppt - 1;
         } else {
+            if(cur_ppt > 1 && cur_ppt <= ppt_pages)
+            {
             cur_ppt = cur_ppt - 1;
             goCurPage();
+            }
+            else
+            {
+                if(cur_ppt > ppt_pages)
+                {
+                   var tempD = document.getElementsByClassName('sgBtn')[0];
+                    tempD && tempD.click();
+                   cur_ppt = ppt_pages; 
+                   
+                   //window.wxc.xcConfirm(ppt_pages, window.wxc.xcConfirm.typeEnum.info);
+                   cur_ppt = cur_ppt - 1;
+                   goCurPage(); 
+                }
+            }
         }
     }
+
+//    function pageDown() {
+//        if (cur_ppt >= ppt_pages) {
+//            cur_ppt = ppt_pages;
+//            window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
+//        } else {
+//            cur_ppt = cur_ppt + 1;
+//            goCurPage();
+//        }
+//
+//    }
 
     function pageDown() {
-        if (cur_ppt >= ppt_pages) {
-            cur_ppt = ppt_pages;
+        if (cur_ppt == ppt_pages) {
             window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
+            cur_ppt = ppt_pages + 1;
         } else {
+            if(cur_ppt < ppt_pages && cur_ppt != 0)
+            {
             cur_ppt = cur_ppt + 1;
             goCurPage();
+            }
+            else
+            {
+                if(cur_ppt == 0)
+                {
+                    var tempD = document.getElementsByClassName('sgBtn')[0];
+                    tempD && tempD.click();
+                    cur_ppt = cur_ppt + 2;
+                    goCurPage();
+                }
+            }
         }
-
     }
-
-
+    
     function openConnect() {
         if (ws !== null)
             return;
