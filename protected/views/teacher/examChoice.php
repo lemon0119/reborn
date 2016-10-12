@@ -54,7 +54,7 @@
    $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
       //自动配分
-       saveScore(<?php  echo $realScore?>);
+       saveScore(<?php  if(isset($ansWork)) echo $ansWork[0]['answerID'];else echo 1;?>);
     });
      
     function saveScore(answerID){

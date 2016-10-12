@@ -1550,8 +1550,13 @@ class TeacherController extends CController {
         $newContent = Tool::SBC_DBC($_POST['content'], 0);
         $content4000 = Tool::spliceLookContent($newContent);
         if(isset($_POST['checkbox'])){
-            $title=$_POST['title']."-不提示略码";
-            $thisLook->title = $title;
+            if(strpos($_POST['title'],"-不提示略码")){
+                $title=$_POST['title'];
+                $thisLook->title = $title;
+            }else{
+                $title=$_POST['title']."-不提示略码";
+                $thisLook->title = $title;
+            }
         }else{
             $title=str_replace("-不提示略码","",$_POST['title']);
             $thisLook->title = $title;
@@ -5826,11 +5831,14 @@ class TeacherController extends CController {
         if (isset($_POST['score'])) {
             $arr = explode(",", $_POST['score']);
             $m = 0;
-            foreach ($array_exercise as $k => $work) {
-                if ($arr[$m] != " ") {
-                    AnswerRecord::model()->changeScore($ansWork[$k]['answerID'], $arr[$m++]);
-                }
+            if(isset($_POST['answerID'])){
+                $answerID=$_POST['answerID'];
             }
+//            foreach ($array_exercise as $k => $work) {
+//                if ($arr[$m] != " ") {
+                    AnswerRecord::model()->changeScore($answerID, $arr[$m++]);
+//                }
+            
         }
         $student = Student::model()->find("userID='$studentID'");
         $class = TbClass::model()->find("classID='$classID'");
@@ -6719,7 +6727,12 @@ class TeacherController extends CController {
         $update = 0;
         if (isset($_POST['title'])) {
             if(isset($_POST['checkbox'])){
-                $title = $_POST['title']."-不提示略码";
+                
+                if(strpos($_POST['title'],"-不提示略码")){
+                    $title = $_POST['title'];
+                }else{
+                    $title = $_POST['title']."-不提示略码";
+                }
             }else{
                 $title = str_replace("-不提示略码", "", $_POST['title']);
 //                $title = $_POST['title'];
