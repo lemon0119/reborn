@@ -1,3 +1,4 @@
+
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
@@ -47,7 +48,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="input02">文件</label>
+                <label class="control-label" for="input02">音频文件</label>
                 <div class="controls">
                     <input type="file" name="file" id="input02">      
                     <div id="upload" style="display:inline;" hidden="true">
@@ -58,6 +59,20 @@
                 </div>
             </div>
             <div class="control-group">
+                <label class="control-label" for="input04">上传答案</label>
+                <div class="controls">
+                    <input type="file" name="myfile" id="myfile" onchange="getImgURL(this)"  >
+                    <!--<input class="btn btn-primary"  type="button" onclick ="uplodes()" value="上传">-->
+                </div>
+            </div>
+            <div class="control-group" id="div2">
+                <label class="control-label" >速度</label>
+                <div class="controls">
+                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="100">         
+                    词/分钟
+                </div>            
+            </div>
+            <div class="control-group" style=" display: " id="answers">
                 <label class="control-label" for="input03">听打答案</label>
                 <div class="controls">               
                     <textarea name="content" style="width:450px; height:200px;" id="input03"><?php echo $content; ?></textarea>
@@ -73,9 +88,58 @@
     </form>   
 </div>
 <script>
+    function getImgURL(node) {      
+//        var file = null;  
+//        if(node.files && node.files[0] ){  
+//            file = node.files[0];   
+//        }else if(node.files && node.files.item(0)) {                                  
+//            file = node.files.item(0);     
+//        }     
+//            //Firefox8.0以上                                
+//        imgURL = window.URL.createObjectURL(file);  
+//          alert("//Firefox8.0以上"+imgRUL);
+//        alert(imgURL); 
+    document.getElementById("answers").style.display = "none";
+}  
+
+//  function uplodes(){
+//      var uploadTxt = $("#myfile")[0].value;
+//        if (uploadTxt === "")
+//        {
+//            window.wxc.xcConfirm('上传txt不能为空', window.wxc.xcConfirm.typeEnum.warning);
+//            return false;
+//        }
+//    var request=null;
+//    if(window.XMLHttpRequest){
+//        request=new XMLHttpRequest();
+//    }else if(window.ActiveXObject)
+//    {
+//        request=new ActiveXObject("Microsoft.XMLHTTP");
+//    }
+//        if(request){
+//            //var file = fso.OpenTextFile(url,1,false,-1);
+//            request.open("GET",imgURL , true);//测试读取1.txt的内容
+//           request.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+//         request.overrideMimeType("text/plain; charset = utf-8");
+//            //request.responseType="text";
+//            
+//            request.onreadystatechange = function(data){
+//            if(request.readyState===4){
+//                if (request.status === 200 || request.status === 0){
+//                    console.log(request);
+//                    document.getElementById("input03").innerHTML = request.responseText;
+//            }
+//        }
+//    }
+//    alert(request.responseText);
+//        request.send(null);
+//    }else{
+//        alert("error");
+//    }
+//  }
+  
     $(document).ready(function () {
         $("#upload").hide();
-
         var result = <?php echo "'$result'"; ?>;
         if (result === '1')
             window.wxc.xcConfirm('添加听打练习成功！', window.wxc.xcConfirm.typeEnum.success, {
@@ -89,7 +153,6 @@
         {
             window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
         }
-
     });
      function fetch_progress(){
         $.get('./index.php?r=teacher/getProgress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
@@ -116,7 +179,8 @@
         }
 
         var A = $("#input03")[0].value;
-        if (A === "") {
+        var files =  document.getElementById("myfile").value;
+        if (A === "" && files === "") {
             window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }

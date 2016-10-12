@@ -53,7 +53,7 @@ if (!$isOver) {
             <div id ="templet" hidden="hidden"></div>
         </div>
     <?php } else { ?>
-        <div class="span9"  style="height: 890px;width: 840px;padding: 15px" >
+        <div class="span9"  style="height: 800px;width: 840px;padding: 15px" >
             <?php if ($isExam) { ?>
             <?php } else { ?>
                 <div id="span" class="hero-unit" align="center">
@@ -162,7 +162,7 @@ if (!$isOver) {
                 <br/>
                 <object id="typeOCX" type="application/x-itst-activex" 
                         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                        width ='840' height='570' 
+                        width ='840' height='470' 
                         event_OnStenoPress="onStenoPressKey"
                         >
                 </object>

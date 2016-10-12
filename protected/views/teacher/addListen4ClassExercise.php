@@ -52,6 +52,20 @@
                     </div>
                 </div>
                 <div class="control-group">
+                <label class="control-label" for="input04">上传答案</label>
+                <div class="controls">
+                    <input type="file" name="myfile" id="myfile" onchange="getImgURL(this)"  >
+                    <!--<input class="btn btn-primary"  type="button" onclick ="uplodes()" value="上传">-->
+                </div>
+            </div>
+            <div class="control-group" id="div2">
+                <label class="control-label" >速度</label>
+                <div class="controls">
+                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="100">         
+                    词/分钟
+                </div>
+            </div>
+                <div class="control-group" style="display: " id="answers">
                     <label class="control-label" for="input03">听打答案</label>
                     <div class="controls">               
                         <textarea name="content" style="width:450px; height:200px;" id="input03"><?php echo $content; ?></textarea>
@@ -71,6 +85,9 @@
         </form>   
 </div>
 <script>
+    function getImgURL(node) { 
+        document.getElementById("answers").style.display = "none";
+    }
     $(document).ready(function () {
         $("#upload").hide();
 
@@ -120,7 +137,8 @@
         }
 
         var A = $("#input03")[0].value;
-        if (A === "") {
+        var files =  document.getElementById("myfile").value;
+        if (A === "" && files === "") {
             window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
             return false;
         }
