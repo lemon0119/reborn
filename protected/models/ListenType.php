@@ -130,6 +130,7 @@ class ListenType extends CActiveRecord
 			'title' => 'Title',
 			'createPerson' => 'Create Person',
 			'createTime' => 'Create Time',
+                    'speed' => 'Speed',
 		);
 	}
 
@@ -157,6 +158,7 @@ class ListenType extends CActiveRecord
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('createPerson',$this->createPerson,true);
 		$criteria->compare('createTime',$this->createTime,true);
+                $criteria->compare('speed',$this->speed,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -164,7 +166,7 @@ class ListenType extends CActiveRecord
 	}
         
         
-      public function insertListen($title,$content,$fileName,$filePath,$createPerson){
+      public function insertListen($title,$content,$fileName,$filePath,$createPerson,$speed){
         $sql        =   "select max(exerciseID) as id from listen_type";
         $max_id     =   Yii::app()->db->createCommand($sql)->query();
         $temp       =   $max_id->read();
@@ -184,6 +186,7 @@ class ListenType extends CActiveRecord
         $newListen->filePath = $filePath;
         $newListen->createPerson  =   $createPerson;
         $newListen->createTime    =   date('y-m-d H:i:s',time());
+        $newListen->speed  =   $speed;
         return $newListen->insert();
     }
     

@@ -84,8 +84,8 @@ $("#myForm").submit(function(){
             opener.iframReload();
             <?php }?>
     var requirements = $("#input01")[0].value;
-    if(requirements === ""){
-        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
+    if(requirements === "" || requirements.length >26){
+        window.wxc.xcConfirm('题目内容不能为空且除默认内容不超20个字', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;

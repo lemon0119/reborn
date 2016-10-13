@@ -54,7 +54,7 @@ $code = mt_rand(0, 1000000);
                 <th class="font-center">编号</th>
 
                 <th class="font-center">题目</th>
-                <th class="font-center">内容</th>
+                <th class="font-center">速度</th>
                 <th class="font-center">创建人</th>
                 <th class="font-center">创建时间</th>
                 <th class="font-center">操作</th>
@@ -73,11 +73,8 @@ $code = mt_rand(0, 1000000);
                         else
                             echo Tool::csubstr($model['title'], 0, 7) . "...";
                         ?></td>
-                    <td class="font-center" title="<?php echo $model['content']; ?>"><?php
-                        if (Tool::clength($model['content']) <= 10)
-                            echo $model['content'];
-                        else
-                            echo Tool::csubstr($model['content'], 0, 10) . "...";
+                    <td class="font-center" title="<?php echo $model['speed']; ?>"><?php
+                            echo $model['speed'] ;
                         ?></td>
                     <td class="font-center"><?php
                     if ($model['createPerson'] == "0")

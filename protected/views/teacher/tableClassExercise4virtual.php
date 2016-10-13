@@ -12,6 +12,7 @@
                         <th class="font-center">类型</th>
                         <!--<th class="font-center">科目号</th>-->
                         <th class="font-center">标题</th>
+                        <th class="font-center">速度</th>
                         <th class="font-center">内容</th>
                         <th class="font-center">现在开始</th>
                     </tr>
@@ -36,12 +37,14 @@
                                         break;
                                 }
                                 ?></td>
-                            <td style="width: 150px" class="font-center" title="<?php echo $model['title']; ?>"><?php
+                            <td style="width: 120px" class="font-center" title="<?php echo $model['title']; ?>"><?php
                             if (Tool::clength($model['title']) <= 7)
                                 echo $model['title'];
                             else
                                 echo Tool::csubstr($model['title'], 0, 7) . "...";
                             ?></td>
+                             <td class="font-center" style="width: 50px"><?php echo $model['speed']; ?>
+                             </td>
                             <td class="font-center" title="<?php echo Tool::filterKeyContent($model['content']); ?>"><?php
                             if (Tool::clength($model['content']) <= 10)
                                 echo Tool::filterKeyContent($model['content']);
