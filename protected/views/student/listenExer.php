@@ -53,7 +53,7 @@ if (!$isOver) {
             <div id ="templet" hidden="hidden"></div>
         </div>
     <?php } else { ?>
-        <div class="span9"  style="height: 800px" >
+        <div class="span9"  style="height: 800px;width: 840px;padding: 15px" >
             <?php if ($isExam) { ?>
             <?php } else { ?>
                 <div id="span" class="hero-unit" align="center">
@@ -129,7 +129,7 @@ if (!$isOver) {
                 $listenpath = EXER_LISTEN_URL . $exerOne['filePath'] . $exerOne['fileName'];
                 Yii::app()->session['exerID'] = $exerOne['exerciseID'];
                 ?>
-                <div align="left">
+                <div align="left" style=" margin-bottom: 15px">
                     <br/>
                     <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; <?php
                     if ($isExam) {
@@ -145,7 +145,7 @@ if (!$isOver) {
                         echo 'top:260px;';
                     }
                     ?>'></div>
-                    <audio id="audio" style='position:absolute; z-index:2; width:300px; height:28px; left:50px;  <?php
+                    <audio id="audio" style='position:absolute; z-index:2; width:300px; height:28px;<?php
             if ($isExam) {
                 echo 'top:150px;';
             } else {
@@ -162,7 +162,7 @@ if (!$isOver) {
                 <br/>
                 <object id="typeOCX" type="application/x-itst-activex" 
                         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                        width ='750' height='430' 
+                        width ='840' height='470' 
                         event_OnStenoPress="onStenoPressKey"
                         >
                 </object>
@@ -251,9 +251,9 @@ if ($isExam) {
     });
 
     function onStenoPressKey(pszStenoString, device) {
-        yaweiOCX.UpdateView();
+//        yaweiOCX.UpdateView();
         var input = getContent(yaweiOCX);
-        yaweiOCX.Locate(input.length);
+//        yaweiOCX.Locate(input.length);
         window.GA_answer = yaweiOCX.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){

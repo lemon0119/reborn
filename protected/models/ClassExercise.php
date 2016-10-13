@@ -143,7 +143,7 @@ class ClassExercise extends CActiveRecord
         return $newClassExercise->insert();
     }
     
-    public function insertListen($classID,$lessonID,$title,$content,$fileName,$filePath,$type,$createPerson){
+    public function insertListen($classID,$lessonID,$title,$content,$fileName,$filePath,$type,$createPerson,$speed){
         $newClassExercise    =   new ClassExercise();
         $newClassExercise->classID    =   $classID;
         $newClassExercise->lessonID    =   $lessonID;
@@ -153,6 +153,7 @@ class ClassExercise extends CActiveRecord
         $newClassExercise->file_path = $filePath;
         $newClassExercise->type       =   $type;
         $newClassExercise->create_person  =   $createPerson;
+        $newClassExercise->speed = $speed;
         $newClassExercise->create_time    =   date('y-m-d H:i:s',time());
         return $newClassExercise->insert();
     }

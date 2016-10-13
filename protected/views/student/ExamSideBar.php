@@ -49,10 +49,14 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                        <a href="#" class="queTitle"   onclick="examKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                                
+                                <a href="#" class="queTitle" title="<?php echo $keyType['title']; ?>"  onclick="examKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                                
                                         <i class="icon-th"></i>
                                         <span style="position: relative;top: 6px">
-                                        <?php echo $keyType['title']?>
+                                        <?php if (Tool::clength($keyType['title']) <= 13){
+                                                    echo $keyType['title'];
+                                               }else{
+                                                    echo Tool::csubstr($keyType['title'], 0, 13) . "...";
+                                               }?>
                                         </span>
                                     </a>
                             </li>
@@ -63,10 +67,14 @@ $currtime = $examInfo['endtime'];
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
                                 <?php ?>
 <!--                                    <a class="queTitle"href="./index.php?r=student/examlookType&&exerID=<?php// echo $lookType['exerciseID']?>&&cent=<?php// $arg= implode(',', $cent);echo $arg;?>">-->
-                                        <a href="#" class="queTitle"   onclick="examLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">
+                                <a href="#" class="queTitle"  title="<?php echo$lookType['title']; ?>" onclick="examLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">
                                         <i class="icon-eye-open"></i>
                                         <span style="position: relative;top: 6px">
-                                        <?php echo $lookType['title']?>
+                                        <?php if (Tool::clength($lookType['title']) <= 13){
+                                                    echo $lookType['title'];
+                                               }else{
+                                                    echo Tool::csubstr($lookType['title'], 0, 13) . "...";
+                                               } ?>
                                         </span>
                                     </a>
                             </li>
@@ -75,10 +83,14 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                                <a href="#" class="queTitle"   onclick="examListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                            
+                            <a href="#" class="queTitle"  title="<?php echo $listenType['title'];?>" onclick="examListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                            
                                     <i class="icon-headphones"></i> 
                                     <span style="position: relative;top: 6px">
-                                    <?php echo $listenType['title']?>
+                                    <?php if (Tool::clength($listenType['title']) <= 13){
+                                                echo $listenType['title'];
+                                           }else{
+                                                echo Tool::csubstr($listenType['title'], 0, 13) . "...";
+                                           } ?>
                                     </span>
                                         
                                 </a>
@@ -97,6 +109,7 @@ $currtime = $examInfo['endtime'];
 </div>
 <script>
      function submitSuite2(){
+         saveToDateBaseNow();
         $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
                     if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
                         window.location.href = "index.php?r=student/classExam";

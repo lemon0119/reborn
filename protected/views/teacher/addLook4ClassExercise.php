@@ -47,6 +47,9 @@
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
                 <textarea name="title" style="width:450px; height:20px;" id="input01"></textarea>
+            </div><br>
+            <div class="controls">
+                <input type="checkbox" name="checkbox" value="" style="position: relative;bottom:4px"/> 不提示略码
             </div>
         </div>
         <div class="control-group">
@@ -81,8 +84,8 @@ $("#myForm").submit(function(){
             opener.iframReload();
             <?php }?>
     var requirements = $("#input01")[0].value;
-    if(requirements === ""){
-        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
+    if(requirements === "" || requirements.length >26){
+        window.wxc.xcConfirm('题目内容不能为空且除默认内容不超20个字', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;

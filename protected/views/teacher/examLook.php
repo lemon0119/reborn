@@ -106,7 +106,7 @@ require 'examAnsSideBar.php';
     $(document).ready(function(){   
         $("li#li-look-<?php echo $exer['exerciseID'];?>").attr('class','active');
       $("#score").html(<?php echo $score;?>);
-            saveScore(<?php  echo floor($exam_exercise['score']*$correct*0.01)?>);
+            saveScore(<?php  if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1; ?>);
 
       //start();
        

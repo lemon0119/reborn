@@ -28,6 +28,9 @@
             <label class="control-label" for="input01">题目</label>
             <div class="controls">
                 <textarea name="title" style="width:450px; height:20px;" id="input01" <?php if(isset($_GET['action'])){ if($_GET['action']=='look'){echo 'disabled="disabled"'; } }?>><?php echo $title; ?></textarea>
+            </div><br>
+            <div class="controls">
+                <input type="checkbox" name="checkbox" value="" <?php if(strpos($title,"-不提示略码")){ ?> checked="checked" <?php } ?> style="position: relative;bottom:4px"/> 不提示略码
             </div>
         </div>
         <div class="control-group">
@@ -65,8 +68,8 @@ $(document).ready(function(){
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
-    if(requirements === ""){
-        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
+    if(requirements === "" || requirements.length > 26){
+        window.wxc.xcConfirm('题目内容不能为空且除默认内容不超过20个字', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;

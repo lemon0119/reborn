@@ -1300,12 +1300,29 @@ class AdminController extends CController {
             if ($_GET ['flag'] == 'deleteClass') {
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($_GET ['ClassID'])); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+                $sql_student = "DELETE FROM student WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $_GET ['ClassID'] . "'";
+                ClassExam::model()->deleteAll("classID=?",array($_GET['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET['ClassID']));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
+                ScheduleClass::model()->deleteAll("classID=?",array($_GET ['ClassID']));
+                ClassExercise::model()->deleteAll("classID=?",array($_GET ['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET ['ClassID']));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();
+                Yii::app()->db->createCommand($sql_chat)->query();
             }
             unset($_GET ['flag']);
         }
@@ -1337,14 +1354,45 @@ class AdminController extends CController {
         if(isset($_GET['ClassID'])){  
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($_GET ['ClassID'])); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+                $sql_student = "DELETE FROM student WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
                 $sql_lesson = "DELETE FROM lesson WHERE classID = '" . $_GET ['ClassID'] . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $_GET ['ClassID'] . "'";
+                ClassExam::model()->deleteAll("classID=?",array($_GET['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET['ClassID']));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
+//                if(!empty($sql_class)){
+//                foreach($sql_class as $exercise_id){
+//                    $sql_exam_id=ExamExercise::model()->findAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    foreach($sql_exam_id as $exam_id){
+//                        Exam::model()->deleteAll("examID=?",array($exam_id['examID']));
+//                    }
+//                    ExamExercise::model() -> deleteAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    $sql_suite_id = SuiteExercise::model()->findAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    foreach($sql_suite_id as $suite_id){
+//                        suite::model()->deleteAll("suiteID=?",array($suite_id['suiteID']));
+//                    }
+//                    SuiteExercise::model()->deleteAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                }
+//                }
+                ScheduleClass::model()->deleteAll("classID=?",array($_GET ['ClassID']));
+                ClassExercise::model()->deleteAll("classID=?",array($_GET ['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET ['ClassID']));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();  
                 Yii::app()->db->createCommand($sql_lesson)->query();  
+                Yii::app()->db->createCommand($sql_chat)->query();
         }
         
          if (isset($_POST['checkbox'])) {
@@ -1353,9 +1401,25 @@ class AdminController extends CController {
             foreach ($userIDlist as $v) {
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $v . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $v . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($v)); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $v . "'";
+                $sql_student = "DELETE FROM student WHERE classID ='" . $v . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $v . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $v . "'";
+                ClassExam::model()->deleteAll("classID=?",array($v)); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($v));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($v));
+                ScheduleClass::model()->deleteAll("classID=?",array($v));
+                ClassExercise::model()->deleteAll("classID=?",array($v)); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($v));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();  
@@ -3822,6 +3886,7 @@ class AdminController extends CController {
             if(strtolower($file_type)!="sheet" && strtolower($file_type)!="ms-excel"){
                 $result="不是Excel文件";
                 $this->render('key',['result'=>$result]);
+               
             }else{
                 //解析文件并存入数据库逻辑
                 /*设置上传路径*/
@@ -3834,6 +3899,7 @@ class AdminController extends CController {
                     $this->render('key',['result'=>$result]);
                 }else{
                     $res=Tool::excelreadToArray($savePath.$file_name,$file_type);
+                    
                     //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
                     unlink($savePath.$file_name);
                     $array_fail=array();
@@ -4108,8 +4174,7 @@ class AdminController extends CController {
                                     $flag = 1;
                                     $this->render('key', ['result' => $result]);
                                     break;
-                                }else{
-                                    
+                                }else{                                
                                     if($flagTea==1){
                                     $resultExl=Course::model()->insertCourse($courseName,0);
                                 }
@@ -4126,13 +4191,13 @@ class AdminController extends CController {
                                             for($i=1;$i<($courseNumber+1);$i++){
                                                 Lesson::model()->insertLesson("第".$i."课",$courseID,0,0);
                                             }
-                                        }else{
-                                            for($i=1;$i<($courseNumber+1);$i++){
-                                                foreach($classes as $class){
-                                                    Lesson::model()->insertLesson("第".$i."课",$courseID,0,$class['classID']);
-                                                }
-                                            }
-                                        }
+                                     }//   else{
+//                                            for($i=1;$i<($courseNumber+1);$i++){
+//                                                foreach($classes as $class){
+//                                                    Lesson::model()->insertLesson("第".$i."课",$courseID,0,$class['classID']);
+//                                                }
+//                                            }
+//                                        }
                                     }
                                 }
                                 if($v[2]==""|| ctype_space($v[2])){
@@ -4173,7 +4238,7 @@ class AdminController extends CController {
                                         }
                                     }
                             }
-                            if($v[3]=="是"){
+                            if(isset($_POST['checkbox'])){
                                 $style_flag=1;
                             }
                             }
@@ -4348,9 +4413,10 @@ class AdminController extends CController {
                             }
                             if($k>=2 && $data ['uid']=="" && $data ['userName']=="" && $data ['sex']==""){
                                 $k = $k-1;
-                                if(next($data)=="" ){
-                                   break; 
-                                }  
+//                                if(next($data)=="" ){
+//                                   break; 
+//                                }  
+                                break;
                             }
                             if ($data ['uid'] === "" || ctype_space($data ['uid'])) {
                                 $result = "学号不能为空";
@@ -4367,8 +4433,8 @@ class AdminController extends CController {
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
-                            } else if ($data['sex'] === "") {
-                                $result = "性别不能为空";
+                            } else if ($data ['userName'] === "" || ctype_space($data ['userName']) || !preg_match("/^[A-Za-z_\x80-\xff\s]+$/",$data ['userName'])) {
+                                $result = "姓名不能为空且由汉字或英文组成";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
@@ -4400,11 +4466,6 @@ class AdminController extends CController {
                                     }
                                     array_push($array_success, $data);
                                 }
-                            } else if ($data ['userName'] === "" || ctype_space($data ['userName']) || !preg_match("/^[A-Za-z_\x80-\xff\s]+$/",$data ['userName'])) {
-                                $result = "姓名不能为空且由汉字或英文组成";
-                                $fixed = "需手动添加";
-                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
-                                array_push($array_fail, $stu_fail);
                             } else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=$studentNumber){
                                 $result = "班级人数超过".$studentNumber."人！";
                                 $fixed = "请重新分班";
@@ -4468,8 +4529,9 @@ class AdminController extends CController {
                         $count_fail = $k - $coun - 1;
                         $this->render('key', ['className'=>$data['className'],'flagTea'=>$flagTea,'courseName'=>$courseName,'courseNumber'=>$courseNumber,'flagClass'=>$flagClass,'result' => $coun,'result1'=>$counTea, 'count_fail' => $count_fail, 'array_fail' => $array_fail,'array_failTea' => $array_failTea]);
                     }
-                }
+             
             }
+          }
         }else{
             $this->render('key');
         }
