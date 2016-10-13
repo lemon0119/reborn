@@ -42,14 +42,21 @@
             <?php
             foreach ($array_allexam as $exam):
                 $isOpen = false;
+                $exam_is_open=false;
                 foreach ($array_exam as $exitexam)
                     if ($exam['examID'] == $exitexam['examID']) {
                         $isOpen = true;
                         break;
                     }
+                    
+                foreach($array_exam_open as $examOpen){
+                    if($exam['examID']==$examOpen['examID']){
+                        $exam_is_open=true;
+                    }
+                }
                 ?>                    
                 <tr>
-                    <td class="font-center" style="width: 40px"><?php if($isOpen==false){?><input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /><?php } ?> </td>
+                    <td class="font-center" style="width: 40px"><?php if($exam_is_open==false){?><input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /><?php } ?> </td>
                     <td class="font-center table_schedule" style="cursor: pointer;width: 100px" onclick="changeExameName(<?php echo $exam['examID']; ?>, '<?php echo $exam['examName'] ?>')"><?php echo $exam['examName']; ?></td>                        
                     <td class="font-center">
                         <?php
@@ -77,10 +84,10 @@
     <?php } ?>  
                     </td>   
                     <td class="font-center" style="width: 170px">
-    <?php if ($isOpen == false) { ?>
+    <?php if ($exam_is_open == false) { ?>
                             <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                             <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass']; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
-                        <?php } ?>
+                            <?php } ?>
                         <?php if ($isOpen == false) { ?>
                             <a href="./index.php?r=teacher/setTimeAndScoreExam&&examID=<?php echo $exam['examID']; ?>&&duration=<?php echo $exam['duration'] ?>&&beginTime='<?php echo date("Y-m-d H:i:s", time()); ?>'&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>&&flag=<?php echo $flag; ?>" id ="beginnow" ></a> 
                         <?php } ?>

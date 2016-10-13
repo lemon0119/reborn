@@ -3742,11 +3742,14 @@ class TeacherController extends CController {
             }else{
                 $arrayall_suite=0;                
             }
+            $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+            
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
                 'array_suite' => $array_suite,
                 'array_allsuite' => $array_allsuite,
+                'array_all_suite' => $array_all_suite,
                 'arrayall_suite' => $arrayall_suite,
                 'pages' => $pages,
                 'res' => $res
@@ -3786,12 +3789,15 @@ class TeacherController extends CController {
             $currentClass = Yii::app()->session['currentClass'];
 
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            
+            $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
             $this->render('assignExam', array(
                 'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
+                'array_exam_open' => $array_exam_open,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4342,12 +4348,15 @@ class TeacherController extends CController {
             }else{
                 $arrayall_suite=0;                
             }
+            $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+            
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
                 'array_suite' => $array_suite,
                 'array_allsuite' => $array_allsuite,
                 'arrayall_suite' => $arrayall_suite,
+                'array_all_suite' => $array_all_suite,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4386,12 +4395,15 @@ class TeacherController extends CController {
             }
             $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson']));
             $arrayall_suite = ClassLessonSuite::model()->findAll('classID=? and  open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+            
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
                 'array_suite' => $array_suite,
                 'array_allsuite' => $array_allsuite,
                 'arrayall_suite' => $arrayall_suite,
+                'array_all_suite' => $array_all_suite,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4417,12 +4429,15 @@ class TeacherController extends CController {
             }
             $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson']));
             $arrayall_suite = ClassLessonSuite::model()->findAll('classID=? and  open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+            
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
                 'array_suite' => $array_suite,
                 'array_allsuite' => $array_allsuite,
-                'arrayall_suite' => arrayall_suite,
+                'arrayall_suite' => $arrayall_suite,
+                'array_all_suite' => $array_all_suite,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4454,12 +4469,14 @@ class TeacherController extends CController {
             $array_allexam = $result['examLst'];
             $pages = $result['pages'];
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
             $this->render('assignExam', array(
                 'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
+                'array_exam_open' => $array_exam_open,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4487,12 +4504,14 @@ class TeacherController extends CController {
             $array_allexam = $result['examLst'];
             $pages = $result['pages'];
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
             $this->render('assignExam', array(
                 'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
+                'array_exam_open' => $array_exam_open,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4509,12 +4528,14 @@ class TeacherController extends CController {
             $array_allexam = $result['examLst'];
             $pages = $result['pages'];
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
             $this->render('assignExam', array(
                 'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
+                'array_exam_open' => $array_exam_open,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4571,12 +4592,15 @@ class TeacherController extends CController {
                 }else{
                     $arrayall_suite=0;                    
                 }
+                $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+                
                 $this->render('assignWork', array(
                     'array_class' => $array_class,
                     'array_lesson' => $array_lesson,
                     'array_suite' => $array_suite,
                     'array_allsuite' => $array_allsuite,
                     'arrayall_suite' => $arrayall_suite,
+                    'array_all_suite' => $array_all_suite,
                     'pages' => $pages,
                     'res' => $res
                 ));
@@ -4627,12 +4651,14 @@ class TeacherController extends CController {
                 $currentClass = Yii::app()->session['currentClass'];
 
                 $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+                $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
                 $this->render('assignExam', array(
                     'flag' => $flag,
                     'array_class' => $array_class,
                     'array_exam' => $array_suite,
                     'array_allexam' => $array_allexam,
+                    'array_exam_open' => $array_exam_open,
                     'pages' => $pages,
                     'res' => $res
                 ));
@@ -4843,12 +4869,15 @@ class TeacherController extends CController {
         }
         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson'], 1));
         $arrayall_suite = ClassLessonSuite::model()->findAll('classID=? and  open=?', array(Yii::app()->session['currentClass'], 1));
+        $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+        
         $this->render('assignWork', array(
             'array_class' => $array_class,
             'array_lesson' => $array_lesson,
             'array_suite' => $array_suite,
             'array_allsuite' => $array_allsuite,
             'arrayall_suite' => $arrayall_suite,
+            'array_all_suite' => $array_all_suite,
             'pages' => $pages,
             'res' => $res
         ));
@@ -4899,12 +4928,14 @@ class TeacherController extends CController {
         $pages = $result['pages'];
 
         $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+        $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
         $this->render('assignExam', array(
             'flag' => $flag,
             'array_class' => $array_class,
             'array_exam' => $array_suite,
             'array_allexam' => $array_allexam,
+            'array_exam_open' => $array_exam_open,
             'pages' => $pages,
             'res' => $res
         ));
