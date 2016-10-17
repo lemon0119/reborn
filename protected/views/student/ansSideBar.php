@@ -9,6 +9,7 @@
 ?>
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
+            <div class="well-topnoradius" style="padding: 8px 0;height:594px;overflow:auto;top: 10px">
                 <ul class="nav nav-list">
                     <?php if (count($exercise['choice']) != 0 && count($exercise['filling']) != 0 && count($exercise['question']) != 0) { ?>
                         <li class="nav-header">基础知识</li>
@@ -73,5 +74,6 @@
                         </li>
          <?php endforeach; } ?>
                 </ul>
+            </div>
         </div>
 </div>

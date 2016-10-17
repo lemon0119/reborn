@@ -73,12 +73,12 @@
         $str = str_replace(" ", "}", $str);
         echo $str;
         ?>">
-        <div id ="templet" style="text-align: left;height: 210px;width: 900px" class="questionBlock" front-size ="25px" onselectstart="return false">
+        <div id ="templet" style="text-align: left;height: 210px;width: 830px; margin-top: 15px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='900' height='350' 
+                width ='840' height='350' 
                 event_OnStenoPress="onStenoPressKey">
         </object>
     </div>
@@ -403,7 +403,7 @@ $squence = $countSquence + 1;
         var input = getContent(yaweiOCX4Look);
         var addLine = (input.split('\n\r')).length - 1;
         var div = document.getElementById('templet');
-        var line = parseInt(input.length / 31) + addLine;
+        var line = parseInt(input.length / 32) + addLine;
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }
