@@ -216,7 +216,6 @@ class StudentController extends CController {
 
     public function actionSaveChoice() {
         //查看是否有answer，即是否是用户提交了答案。
-        error_log("yy");
         if (isset($_POST['qType']) && $_POST['qType'] == "choice") {
             if (Yii::app()->session['isExam'])
                 ExamRecord::saveExamRecord($recordID);
