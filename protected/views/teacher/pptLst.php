@@ -19,9 +19,6 @@
         <li id="li-<?php echo $progress;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> <?php echo $lessonsName[$progress];?></a></li>
         <li class="divider"></li>
         <li class="nav-header" style="position:relative;bottom:5px;left:">其余科目</li>
-        </ul>
-        <div class="well-bottomnoradius" style="padding: 8px 0;height:496px;overflow:auto;top: 0px;border-top-left-radius:0px; ">
-        <ul class="nav nav-list">
         <?php foreach($lessonsName as $key => $value):
             if($key!=$progress){
             ?>
@@ -30,7 +27,6 @@
             } 
             endforeach;?>
         </ul>
-        </div>
     </div>
     <?php if(isset($_GET['url'])){ ?>
          <a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
@@ -38,10 +34,10 @@
         <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
     <?php }?>
 </div>
-<div class="span9" style=" height: 574px">
+<div class="span9">
     <h2 style="display:inline-block;">PPT列表</h2>
     <span>(支持PPT格式,最大100M)</span>
-    <div id ="ppt-table" style="height: 495px;overflow:scroll;width: 100%;">
+    <div id ="ppt-table" style="height: 500px;overflow:scroll;width: 100%;">
         
     </div>
     <form name="form1" class="form-horizontal" method="post" action="./index.php?r=teacher/addPpt&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" id="myForm" enctype="multipart/form-data"> 

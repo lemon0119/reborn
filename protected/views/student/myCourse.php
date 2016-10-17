@@ -11,9 +11,6 @@
        <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                 <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">课 时 列 表</li>
-                </ul>
-                 <div class="well-topnoradius" style="padding: 8px 0;height:585px;overflow:auto;top: 20px">
-                     <ul class="nav nav-list">
                 <?php foreach ($lessons as $less) {?>
                         <li id="<?php echo $less['lessonID']?>" <?php 
                             if($less['lessonID'] == $currentLesn) echo 'class=\'active\'';?>>
@@ -30,10 +27,8 @@
                           <?php }?>
                 
                 </ul>
-                 </div>
         </div>
 </div>
- 
 <div class="span9">
     <h3 >课 堂 作 业</h3>
     <table class="table table-bordered table-striped">

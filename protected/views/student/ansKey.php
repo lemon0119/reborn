@@ -8,7 +8,7 @@ require 'ansSideBar.php';
 ?>
 <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div class="span9" style="height: 570px">
+<div class="span9">
     <div class="hero-unit">
         <table border = '0px' width="100%">
             <h2>键打练习</h2>

@@ -8,6 +8,7 @@
                         <option value="exerciseID" >编号</option>
                         <option value="title" selected="selected">题目名</option>
                         <option value="createPerson" >创建人</option>
+                        <option value="content">内容</option>
                     </select>
                 </li>
                 <li>

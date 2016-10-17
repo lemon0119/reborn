@@ -2620,7 +2620,7 @@ class TeacherController extends CController {
                     $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
                     if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
                         copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
-                    $insertresult = ListenType::model()->insertListen($oldListen[0]['title'], $oldListen[0]['content'], $newName, $filePath, Yii::app()->session['userid_now'],$oldListen[0]['speed']);
+                    $insertresult = ListenType::model()->insertListen($oldListen[0]['title'], $oldListen[0]['content'], $newName, $filePath, Yii::app()->session['userid_now']);
                     //$oldName = $_FILES["file"]["name"];
                     Resourse::model()->insertRela($newName, $fileName);
                 }
@@ -2649,7 +2649,7 @@ class TeacherController extends CController {
                     $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
                     if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
                         copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
-                    $insertresult = ListenType::model()->insertListen($oldListen['title'], $oldListen['content'], $newName, $filePath, Yii::app()->session['userid_now'],$oldListen['speed']);
+                    $insertresult = ListenType::model()->insertListen($oldListen['title'], $oldListen['content'], $newName, $filePath, Yii::app()->session['userid_now']);
 //                }
             }
         }

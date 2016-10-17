@@ -41,7 +41,7 @@ if (!$isOver) {
     $squence = $countSquence + 1;
     if ($sqlClassExerciseRecord != null) {
         ?>
-        <div class="span9" style="height: 838px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php } ?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" type="hidden" style="height: 5px;" value="<?php
@@ -53,7 +53,7 @@ if (!$isOver) {
             <div id ="templet" hidden="hidden"></div>
         </div>
     <?php } else { ?>
-        <div class="span9"  style="height: 838px;width: 840px;padding: 15px" >
+        <div class="span9"  style="height: 800px;width: 840px;padding: 15px" >
             <?php if ($isExam) { ?>
             <?php } else { ?>
                 <div id="span" class="hero-unit" align="center">
@@ -107,7 +107,7 @@ if (!$isOver) {
                                 <td><span style="color: #f46500" id="getcountAllKey">0</span ></td>
                                 <td><span class="fr" style="color: gray"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                             </tr>
-                                
+
                         </table>
                     </div>
                 </div>
@@ -147,9 +147,9 @@ if (!$isOver) {
                     ?>'></div>
                     <audio id="audio" style='position:absolute; z-index:2; width:300px; height:28px;<?php
             if ($isExam) {
-                echo 'top:130px;';
+                echo 'top:150px;';
             } else {
-                echo 'top:240px;';
+                echo 'top:260px;';
             }
                     ?>  '  src = "<?php echo $listenpath; ?>"   preload = "auto"  onplay="start()"  controls=""></audio>
                 </div>
@@ -175,7 +175,7 @@ if (!$isOver) {
     }
 } else {
     ?>
-    <div id="span" class="span9" style="height: 838px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+    <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
         <div id="Analysis" hidden="hidden"></div>
         <input id="content" hidden="hidden"/>  
         <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>

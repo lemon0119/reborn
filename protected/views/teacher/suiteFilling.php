@@ -1,7 +1,7 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 
 <div id="ziji">
-        <div class="hero-unit"style="height: 574px;overflow:auto">
+        <div class="hero-unit"style="height: 480px;overflow:auto">
             <?php 
             echo '<h2>填空题</h2>';
              $n=1;

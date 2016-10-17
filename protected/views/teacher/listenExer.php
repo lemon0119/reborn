@@ -8,7 +8,7 @@
 
 require 'suiteSideBar.php';
  ;?>
-<div class="span9" style="height: 574px">
+<div class="span9">
         <div class="hero-unit"  align="center">
             <table border = '0px'>
                 <tr>
@@ -19,8 +19,8 @@ require 'suiteSideBar.php';
                 $listenpath = EXER_LISTEN_URL.$exerOne['filePath'].$exerOne['fileName'];
                 Yii::app()->session['exerID'] = $exerOne['exerciseID'];
             ?>
-            <div align="center">
-                <audio src = "<?php echo $listenpath;?>" style="margin-top: 20px" preload = "auto" controls></audio>
+            <div align="left">
+                <audio src = "<?php echo $listenpath;?>" preload = "auto" controls></audio>
             </div>
             <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
             

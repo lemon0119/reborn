@@ -5,7 +5,7 @@
 
 require 'workAnsSideBar.php';
 ?>
-<div class="span9" style="height: 574px">
+<div class="span9">
 <div id="ziji">
     <div class="hero-unit">
         <h2>键打练习</h2>

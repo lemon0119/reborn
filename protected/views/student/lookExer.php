@@ -36,7 +36,7 @@ if (!$isOver) {
     $squence = $countSquence + 1;
     if ($sqlClassExerciseRecord != null) {
         ?>
-        <div class="span9" style="height: 838px;width: 840px;padding: 15px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div class="span9" style="height: 890px;width: 840px;padding: 15px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php } ?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" type="hidden" style="height: 5px;" value="<?php
@@ -48,7 +48,7 @@ if (!$isOver) {
             <div id ="templet" hidden="hidden"></div>
         </div>
     <?php } else { ?>
-        <div class="span9" style="height: 838px;width: 840px;padding: 15px">
+        <div class="span9" style="height: 880px;width: 840px;padding: 15px">
             <?php if ($isExam) { ?>
             <?php } else { ?>
                 <div  id="span" class="hero-unit" align="center">
@@ -152,7 +152,7 @@ if (!$isOver) {
         }
     } else {
         ?>
-        <div id="span" class="span9" style="height: 838px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#727272"></font><font id="id_wrong" style="color:#f44336"></font><font id="id_new" style="color:#000000"> </font></div>
@@ -166,7 +166,7 @@ if (!$isOver) {
     <?php } ?>
 </div>
  <?php if (!$isExam) { ?>
-<div  class="analysisTool" id="analysis" style="position: absolute;left:1277px;bottom: 310px">
+<div  class="analysisTool" id="analysis" style="position: relative;left:1190px;bottom: 80px">
     <table style="margin: 0px auto;">
         <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">作答时长：</span><span style="color: greenyellow" id="timej">00:00:00</span ></td></tr>
         <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">正&nbsp;确&nbsp;&nbsp率：</span><span style="color: greenyellow" id="wordisRightRadio">0</span ><span class="fr" style="color: #fff"> %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>                       

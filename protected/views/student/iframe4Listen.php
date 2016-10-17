@@ -62,7 +62,7 @@
         ?>
         <div style="position: relative;top: -130px" align="left">
             <br/>
-            <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:262px; top:160px; '  src = "<?php echo $listenpath; ?>"   preload = "auto"    controls=""></audio>
+            <audio id="music" style='position:absolute; z-index:2; width:300px; height:28px; left:50px; top:150px; '  src = "<?php echo $listenpath; ?>"   preload = "auto"    controls=""></audio>
         </div><br>
         <input id="content" type="hidden" style="height: 5px;" value="<?php
         $str = str_replace("\n", "", $classExercise['content']);

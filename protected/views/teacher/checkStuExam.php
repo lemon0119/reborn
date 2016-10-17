@@ -4,7 +4,7 @@
 require 'examAnsSideBar.php';
 ?>
 
-<div class="span9" id="work" style="height: 574px">
+<div class="span9" id="work">
 </div>
 
 

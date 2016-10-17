@@ -2,7 +2,7 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/accounting.js"></script>
-<div class="span9" style="height: 570px">
+<div class="span9">
     <div class="hero-unit">
         <table border = '0px' width="100%">
             <h2><?php

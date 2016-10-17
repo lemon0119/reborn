@@ -33,7 +33,7 @@
 
 </div>
 
-<div class="span9" style="height: 574px">
+<div class="span9">
     <h2>现有作业</h2>
     <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
     <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>

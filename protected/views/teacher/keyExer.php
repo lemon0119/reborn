@@ -1,8 +1,8 @@
 <script src="<?php echo JS_URL;?>exerJS/timep.js"></script>
 <?php require 'suiteSideBar.php'; ?>
 
-<div class="span9" style="height: 574px">
-    <div class="hero-unit"  align="center" >
+<div class="span9">
+    <div class="hero-unit"  align="center">
         <?php Yii::app()->session['exerID'] = $exerOne['exerciseID'];?>
         <table border = '0px'>
             <tr>
@@ -16,9 +16,9 @@
             <font id="id_new" style="color:#000000"> </font>
         </div>
         <br/><br/>
-<!--        <div style="width: 750px; height: 350px;">
+        <div style="width: 750px; height: 350px;">
            
-        </div>-->
+        </div>
         
     </div>
     <input id="id_content" type="hidden" value="<?php echo Tool::filterKeyContent($exerOne['content']);?>"> 

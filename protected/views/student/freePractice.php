@@ -5,10 +5,10 @@
  * and open the template in the editor.
  */
 ?>
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> 
-<script src="<?php echo JS_URL; ?>exerJS/LCS.js">
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js">
 </script>
 <div id="all">
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <br/>
@@ -16,14 +16,8 @@
             <li style="padding:0px 0px;" class="nav-header"><button style="padding:6px 60px" class="btn_4superbig" onclick="backToFreePractice()">自主练习</button></li>
         </ul>
         <br/>
-<!--        <div class="well-topnoradius" style="padding: 8px 0;">-->
-            <ul class="nav nav-list">
-               <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">课 时 列 表</li>
-            </ul>
-<!--        </div>-->
-        <div class="well-topnoradius" style="padding: 8px 0;height:492px;overflow:auto;top: 0px">
         <ul class="nav nav-list">
-            
+            <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">课 时 列 表</li>
             <?php foreach ($lessons as $less) { ?>
                 <li <?php
                 if (isset($_GET['lessonID'])) {
@@ -38,7 +32,6 @@
                 </li>
 <?php } ?>
         </ul>
-        </div>
     </div>
 </div>
 <?php if (isset($_GET['lessonID'])) { ?>
@@ -139,7 +132,7 @@
         $("#exerciseDiv").attr("style", "display:none");
         if (type === "look") {
             $("#iframe_classExercise").attr("src", "index.php?r=student/freeIframe4Looks&&ispractice&&exerciseID=" + exerciseID);
-            var htmltxt = '<div  class="analysisTool" id="analysis" style="position: absolute;left:1277px;bottom: 310px">'+
+            var htmltxt = '<div  class="analysisTool" id="analysis" style="position: relative;left:1190px;bottom: 200px">'+
     '<table style="margin: 0px auto;">'+
         '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">练习计时：</span><span style="color: greenyellow" id="timej">00:00:00</span ></td></tr>'+
         '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">正&nbsp;确&nbsp;&nbsp率：</span><span style="color: greenyellow" id="wordisRightRadio">0</span ><span class="fr" style="color: #fff"> %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>'+                       
