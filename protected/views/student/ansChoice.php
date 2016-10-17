@@ -15,7 +15,12 @@ require 'ansSideBar.php';
         $SNum = 0;
             foreach ($exercise['choice'] as $value){
                 $right = $value['answer'];
-                $uAns = $ansChoice[$value['exerciseID']];?>
+                if(isset($ansChoice[$value['exerciseID']])){
+                $uAns = $ansChoice[$value['exerciseID']];
+                }else{
+                    $uAns ="";
+                }
+?>
         
         <?php   echo ($SNum+1).'. ';
                 echo $value['requirements'];

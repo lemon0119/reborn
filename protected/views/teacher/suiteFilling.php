@@ -8,7 +8,7 @@
            foreach ($works  as $k=>$work){ 
                     $str = $work['requirements'];
                     
-                    if(isset($choiceAnsWork[$k])){
+                    if($choiceAnsWork[$k]!="no1"){
                    $answer = $choiceAnsWork[$k];
                 }else{
                     $answer="";
