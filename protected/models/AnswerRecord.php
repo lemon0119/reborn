@@ -33,7 +33,7 @@ class AnswerRecord extends CActiveRecord {
         $result = array();
         $num = Yii::app()->session['num'];
         for ($i = 1; $i <= $num; $i++) {
-            $result[$i] = "0";
+            $result[$i] = "";
         }
         foreach ($answer as $one) {
             $key = $one['exerciseID'];

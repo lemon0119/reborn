@@ -1,6 +1,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<!--<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> -->
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 
 <?php
 if ($isExam == false) {
@@ -267,18 +268,18 @@ if ($isExam) {
 
     });
 
-    $("#toggle").click(function () {
-        var flag = $("#toggle").text();
-        if (flag == '展开') {
-            $("#toggle").text("收起");
-            $("#templet").css('height', '180px');
-        } else {
-            $("#toggle").text("展开");
-            $("#templet").css('height', '260px');
-
-        }
-        $("#allAnalysis").toggle(0);
-    });
+//    $("#toggle").click(function () {
+//        var flag = $("#toggle").text();
+//        if (flag == '展开') {
+//            $("#toggle").text("收起");
+//            $("#templet").css('height', '180px');
+//        } else {
+//            $("#toggle").text("展开");
+//            $("#templet").css('height', '260px');
+//
+//        }
+//        $("#allAnalysis").toggle(0);
+//    });
 
     $(document).ready(function () {
         setInterval(function () {

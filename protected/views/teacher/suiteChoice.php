@@ -7,7 +7,7 @@
            $n=1;
            foreach ($works  as $k=>$work){ 
                 $right = $work['answer'];
-                if(isset($choiceAnsWork[$k])){
+                if($choiceAnsWork[$k]!="no1"){
                     $uAns = $choiceAnsWork[$k];
                 }else{
                     $uAns="";

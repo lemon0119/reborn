@@ -4,12 +4,14 @@
             <h2>填空题</h2>
             <?php
             $n=1;$m=0;
+            $j=0;
             foreach ($works  as $k=>$work){ 
                     $str = $work['requirements'];
-                    if(isset($choiceAnsWork[$k])){
+                    if($choiceAnsWork[$k]!="no1"){
                         $answer = $choiceAnsWork[$k];
                         $uAns = $choiceAnsWork[$k];  
                         $ansArr = explode('$$', $answer);
+                        $ii=$j++;
                      }else{
                          $uAns = "";
                      }     
@@ -50,7 +52,7 @@
                     $n++;?>
                     分数:<span class="limit"><?php $s=$m;echo $exam_exercise[$m++]['score'];?></span><br/>
                     得分:
-                    <input class="value" type="text" id="input" onblur="judge(<?php echo $exam_exercise[$s]['score'];?>,this)" style="width: 50px" value ="<?php if($uAns!="") echo $ansWork[$k]['score'];else echo 0;?>" <?php if($uAns=="") {echo 'disabled="disabled"';}?>> 
+                    <input class="value" type="text" id="input" onblur="judge(<?php echo $exam_exercise[$s]['score'];?>,this)" style="width: 50px" value ="<?php if($uAns!=""){ echo $ansWork[$ii]['score'];}else{ echo 0;}?>" <?php if($uAns=="") {echo 'disabled="disabled"';}?>> 
                      
             <?php echo "<br/>";}?>
         </div>
@@ -101,6 +103,7 @@
                 scores[n++]=$(this).val();
             });
             var s=scores.join(","); 
+            console.log(s);
         var user = {
             type:"filling",
             workID:"<?php echo $workID;?>",

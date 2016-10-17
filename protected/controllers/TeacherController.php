@@ -2262,12 +2262,15 @@ class TeacherController extends CController {
                     /* 设置上传路径 */
                     $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
                     $file_name = "-" . $_FILES ['myfile'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
                     if (!copy($tmp_file, $savePath . $file_name)) {
                         $result = '上传失败';
                     } else {
                         $file_dir = $savePath . $file_name;
                         $file_dir = str_replace("\\", "\\\\", $file_dir);
                         $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
                         if (filesize($file_dir) < 1) {
                             $result = '空文件，上传失败';
                         } else {
@@ -2537,12 +2540,15 @@ class TeacherController extends CController {
                     /* 设置上传路径 */
                     $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
                     $file_name = "-" . $_FILES ['modifytxtfile'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
                     if (!copy($tmp_file, $savePath . $file_name)) {
                         $result = '上传失败';
                     } else {
                         $file_dir = $savePath . $file_name;
                         $file_dir = str_replace("\\", "\\\\", $file_dir);
                         $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
                         if (filesize($file_dir) < 1) {
                             $result = '空文件，上传失败';
                         } else {
@@ -4904,7 +4910,6 @@ class TeacherController extends CController {
             $endTime=date("Y-m-d H:i:s",strtotime("$startTime   +$duration   minute"));
         }
         if ($isOpen == 0){
-            error_log($startTime);
             Exam::model()->updateByPk($examID, array('begintime' => $startTime, 'duration' => $duration,'endtime'=>$endTime));
         }
         $currentClass = Yii::app()->session['currentClass'];
@@ -5335,12 +5340,30 @@ class TeacherController extends CController {
             }
         }
         $suite_exercise = SuiteExercise::model()->find("exerciseID=? and suiteID=? and type=?", array($work['exerciseID'], $suiteID, $type));
+        $suite_exercise_all = SuiteExercise::model()->findAll("suiteID=? and type=? order by exerciseID", array($suiteID, $type));
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $type));
         $choiceAnsWork = array();
-        foreach ($SQLchoiceAnsWork as $v) {
-            $answer = $v['answer'];
-            array_push($choiceAnsWork, $answer);
-        }
+        $ii=0;
+        foreach($suite_exercise_all as $w){
+            $b=count($suite_exercise_all);
+            $jj=0;
+            foreach ($SQLchoiceAnsWork as $v) {
+                $c=count($SQLchoiceAnsWork);
+                if( $w['exerciseID'] == $v['exerciseID']){
+                    $jj=1;
+                    $answer = $v['answer'];
+                }
+            }
+            if($jj == 0){
+                $answer = "no1"; 
+            }
+            $choiceAnsWork[$ii]=$answer;
+            $ii=$ii+1;
+        } 
+//        foreach ($SQLchoiceAnsWork as $v) {
+//            $answer = $v['answer'];
+//            array_push($choiceAnsWork, $answer);
+//        }
 
         switch ($type) {
             case "choice":
@@ -5727,7 +5750,7 @@ class TeacherController extends CController {
         if (isset($_POST['exerciseID']))
             $exerciseID = $_POST['exerciseID'];
         $recordID = ExamRecord::getRecord($workID, $studentID);
-        $exam_exercise = ExamExercise::model()->findAll("examID = ? and type = ?", array($examID, $ty));
+        $exam_exercise = ExamExercise::model()->findAll("examID = ? and type = ? order by exerciseID", array($examID, $ty));
         $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($recordID, $ty));
         $results = Exam::model()->getExamExerByType($examID, $ty);
         $isLast = 1;
@@ -5747,20 +5770,48 @@ class TeacherController extends CController {
         if (isset($_POST['score'])) {
             $arr = explode(",", $_POST['score']);
             $m = 0;
+            $scoreAll=0;
             foreach ($array_exercise as $k => $work) {
-                if ($arr[$m] != " ") {
-                    AnswerRecord::model()->changeScore($ansWork[$k]['answerID'], $arr[$m++]);
+                if ($arr[$m] != " " && $arr[$m] !=0) {
+                    AnswerRecord::model()->changeScore($ansWork[$scoreAll++]['answerID'], $arr[$m]);
                     if ($ty == 'choice')
                         break;
                 }
+                $m++;
             }
         }
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $ty));
-        $choiceAnsWork = array();
-        foreach ($SQLchoiceAnsWork as $v) {
-            $answer = $v['answer'];
-            array_push($choiceAnsWork, $answer);
+        $choiceAnsWork = array();        
+        $ii=0;
+        foreach($exam_exercise as $w){            
+            $jj=0;
+            foreach ($SQLchoiceAnsWork as $v) {
+                if( $w['exerciseID'] == $v['exerciseID']){
+                    $jj=1;
+                    $answer = $v['answer'];
+                }
+            }
+            if($jj == 0){
+                $answer = "no1"; 
+            }
+            $choiceAnsWork[$ii]=$answer;
+            $ii=$ii+1;
         }
+//        
+//        for($i=0;$i<count($exam_exercise);$i++){
+//            $jj=0;
+//            for($j=0;$j<count($SQLchoiceAnsWork);$j++){
+//                if($exam_exercise[$i]['exerciseID']==$SQLchoiceAnsWork[$j]['exerciseID']){
+//                    $jj=1;
+//                    $answer = $SQLchoiceAnsWork[$j]['answer'];
+//                }
+//            }
+//            if($jj == 0){
+//                $answer = "no"; 
+//            }
+//            $choiceAnsWork[$i]=$answer;
+//            error_log($answer);
+//        }
         $student = Student::model()->find("userID='$studentID'");
         $class = TbClass::model()->find("classID='$classID'");
         $array_accomplished = Array();
@@ -6085,7 +6136,6 @@ class TeacherController extends CController {
             $newName = $_GET['newName'];
             $courseID = $_GET ['courseID'];
             $classID=$_GET ['classID'];
-            error_log($newName);
             $SqlclassID = TbClass::model()->findAll("currentCourse ='$courseID'");
 //            foreach ($teacher_class as $classA) {
 //                foreach($SqlclassID as $classB){
@@ -6482,12 +6532,17 @@ class TeacherController extends CController {
                     /* 设置上传路径 */
                     $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
                     $file_name = "-" . $_FILES ['file'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    
                     if (!copy($tmp_file, $savePath . $file_name)) {
                         $uploadResult = '上传失败';
                     } else {
+                        
                         $file_dir = $savePath . $file_name;
                         $file_dir = str_replace("\\", "\\\\", $file_dir);
                         $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
                         if (filesize($file_dir) < 1) {
                             $uploadResult = '空文件，上传失败';
                         } else {
@@ -6723,12 +6778,15 @@ class TeacherController extends CController {
                     /* 设置上传路径 */
                     $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
                     $file_name = "-" . $_FILES ['myfile'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
                     if (!copy($tmp_file, $savePath . $file_name)) {
                         $result = '上传失败';
                     } else {
                         $file_dir = $savePath . $file_name;
                         $file_dir = str_replace("\\", "\\\\", $file_dir);
                         $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
                         if (filesize($file_dir) < 1) {
                             $result = '空文件，上传失败';
                         } else {

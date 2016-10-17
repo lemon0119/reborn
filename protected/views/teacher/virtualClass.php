@@ -2298,7 +2298,8 @@ $dir->close();
                     url: "index.php?r=teacher/openClassExercise4lot",
                     data: {check: check},
                     success: function (data) {
-                        if (data == "开放成功！") {
+//                        if (data == "开放成功！")
+                        if (data.search('开放成功！') != -1) {
                             window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
                            // window.parent.startClassExercise(exerciseID);
                            window.parent.backToTableClassExercise4virtual();

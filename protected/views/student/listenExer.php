@@ -3,7 +3,8 @@
 <!--打字控件-->
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <!--打字计时-->
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<!--<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>-->
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 
 <?php
 //2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar

@@ -4,10 +4,12 @@
         <?php 
         $n=1;
         $m=0;
+        $j=0;
             echo "<h2>简答题</h2>"; 
             foreach ($works  as $k=>$work){ 
-                   if(isset($choiceAnsWork[$k])){
-                        $uAns = $choiceAnsWork[$k];     
+                   if($choiceAnsWork[$k]!="no1"){
+                        $uAns = $choiceAnsWork[$k];
+                        $ii=$j++;
                      }else{
                          $uAns = "";
                      }     
@@ -29,7 +31,7 @@
                 $n++;
                 ?>分数:<span class="limit"><?php  $s=$m; echo $exam_exercise[$m++]['score'];?></span><br/>
                 得分:
-                     <input class="value" type="text" id="input"  onblur="judge(<?php echo $exam_exercise[$s]['score'];?>,this)" style="width: 50px" value ="<?php if($uAns!=""){ echo $ansWork[$k]['score'];}else{ echo 0;}?>" <?php if($uAns==""){echo 'disabled="disabled"';} ?>> 
+                     <input class="value" type="text" id="input"  onblur="judge(<?php echo $exam_exercise[$s]['score'];?>,this)" style="width: 50px" value ="<?php if($uAns!=""){ echo $ansWork[$ii]['score'];}else{ echo 0;}?>" <?php if($uAns==""){echo 'disabled="disabled"';} ?>> 
                 
                     <?php echo "<br/>";}?>
                      <?php if(count($works)>0){?>
@@ -78,6 +80,7 @@
                 scores[n++]=$(this).val();
             });
             var s=scores.join(",");
+            console.log(s);
             var user = {
                 type:"question",
                 workID:"<?php echo $workID;?>",
