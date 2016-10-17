@@ -376,6 +376,7 @@ class ClassExercise extends CActiveRecord
                    $classExercise->create_person= $work['createPerson'];
                    $classExercise->file_name= $work['fileName'];
                    $classExercise->file_path= $work['filePath'];
+                   $classExercise->speed= $work['speed'];
                 }
                 break;
         }

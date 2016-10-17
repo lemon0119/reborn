@@ -355,7 +355,7 @@ echo "<script>var role='$role';</script>";
                                         $("#bulletin_activex").toggle(200);
                                     }
                                     $("#video-frameTable").hide();
-                                    $("#all-frame").css("width","1020px");
+                                    $("#all-frame").css("width","1166px");
                                     $("#all-frame").css("height","900px");
                                     $("#sw-openAnalysis").attr("disabled", "true");
                                     $("#analysis").hide();
