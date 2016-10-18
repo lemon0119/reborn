@@ -23,6 +23,7 @@
         <a style="margin-right:10px" href="./index.php?r=teacher/NextStuWork&&studentID=<?php echo $student['userID']?>&&workID=<?php echo $work['workID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>&&suiteID=<?php echo $suiteID?>">下一人</a>
         <br/>
     <div>
+        <div class="well-topnoradius" style="padding: 8px 0;height:408px;overflow:auto;top: 0px">
     <ul class="nav nav-list">
         <?php if(count($exercise['choice'])!=0){?>
         <li <?php if($type == "choice") echo "class='active'";?>><a href="./index.php?r=teacher/CheckStuWork&&workID=<?php echo $work['workID'];?>&&type=choice&&studentID=<?php echo $student['userID']?>&&accomplish=<?php echo $accomplish?>&&classID=<?php echo $class['classID']?>"><i class="icon-font" ></i> <span style="position: relative;top: 6px">选择</span></a></li>
@@ -80,6 +81,7 @@
                         <?php endforeach;?>
             <?php } ?>
     </ul>
+        </div>
    </div>
       
     </div>

@@ -8,6 +8,7 @@
 ?>
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
+            <div class="well-topnoradius" style="padding: 8px 0;height:600px;overflow:auto;top: 20px">
                 <ul class="nav nav-list">
                         <li class="nav-header">基础知识</li>
                         <li id="li-choice">
@@ -65,6 +66,7 @@
                         </li>
                         <?php endforeach;?>
                 </ul>
+            </div>
         </div>
     <a href="./index.php?r=teacher/assignWork"  class="btn btn-primary">返回</a>
 </div>

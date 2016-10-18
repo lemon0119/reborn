@@ -4,7 +4,7 @@
 <?php
 require 'examAnsSideBar.php';
 ?>
-<div class="span9">
+<div class="span9" style="height: 574px">
     <div id="ziji">
         <div class="hero-unit">
             <h2>听打练习</h2> 
