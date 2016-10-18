@@ -16,6 +16,9 @@ $currtime = $examInfo['endtime'];
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                         <li class="nav-header" id="leftTime">考试剩余：<font id = "sideTime"></font></li>
+                </ul>
+                <div class="well-topnoradius" style="padding: 8px 0;height:717px;overflow:auto;top: 0px">
+                    <ul class="nav nav-list">
                          <?php if (count($exercise['choice']) != 0 && count($exercise['filling']) != 0 && count($exercise['question']) != 0) { ?>
                         <li class="nav-header">基础知识</li>
                         <?php } if (count($exercise['choice']) != 0) { ?>
@@ -97,6 +100,7 @@ $currtime = $examInfo['endtime'];
                         </li>
                                     <?php endforeach; }?>
                 </ul>
+                </div>
             <?php if (count($exercise['choice']) == 0 && count($exercise['filling']) == 0 && count($exercise['question']) == 0 && count($exercise['key']) == 0 && count($exercise['look']) == 0 && count($exercise['listen']) == 0) { ?>
             <li class="nav-header">无内容</li>
 <?php } else { ?>

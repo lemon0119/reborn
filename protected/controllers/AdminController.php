@@ -4383,7 +4383,7 @@ class AdminController extends CController {
                                             $exerciseTea['type'],$successTeaID);
                                         }else if($exerciseTea['type']=="listen"){
                                             ClassExercise::model()->insertListen($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],$exerciseTea['file_name'],
-                                            $exerciseTea['file_path'],$exerciseTea['type'],$successTeaID);
+                                            $exerciseTea['file_path'],$exerciseTea['type'],$successTeaID,$exerciseTea['speed']);
                                         }else{
                                             ClassExercise::model()->insertKey($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],
                                             $successTeaID,$exerciseTea['type'],$exerciseTea['speed'],$exerciseTea['repeatNum'],$exerciseTea['chosen_lib']);

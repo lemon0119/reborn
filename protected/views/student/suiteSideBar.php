@@ -10,6 +10,7 @@
 
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
+        <div class="well-topnoradius" style="padding: 8px 0;height:740px;overflow:auto;top: 20px">
         <ul class="nav nav-list">
             <?php if (count($exercise['choice']) != 0 && count($exercise['filling']) != 0 && count($exercise['question']) != 0) { ?>
                 <li class="nav-header">基础知识</li>
@@ -143,6 +144,7 @@
 }
 ?>
         </ul>
+    </div>
 <?php if (count($exercise['choice']) == 0 && count($exercise['filling']) == 0 && count($exercise['question']) == 0 && count($exercise['key']) == 0 && count($exercise['look']) == 0 && count($exercise['listen']) == 0) { ?>
             <li class="nav-header">无内容</li>
 <?php } else { ?>
