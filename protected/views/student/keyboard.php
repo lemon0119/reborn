@@ -329,7 +329,7 @@
         var result = wordArray[currentNum];
         yaweiCode = yaweiCodeArray[currentNum];
         setTimeout(function () {
-            keyReSet();
+           // keyReSet();
             var left = true;
             for (var i = 0; i < yaweiCode.length; i++) {
                 if (yaweiCode[i] == ':') {
