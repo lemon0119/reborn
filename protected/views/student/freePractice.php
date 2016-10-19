@@ -21,7 +21,7 @@
                <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">课 时 列 表</li>
             </ul>
 <!--        </div>-->
-        <div class="well-topnoradius" style="padding: 8px 0;height:492px;overflow:auto;top: 0px">
+        <div class="well-topnoradius" style="padding: 8px 0;height:626px;overflow:auto;top: 0px">
         <ul class="nav nav-list">
             
             <?php foreach ($lessons as $less) { ?>
@@ -42,10 +42,10 @@
     </div>
 </div>
 <?php if (isset($_GET['lessonID'])) { ?>
-    <div id="iframeDiv" style="display:none;"  class="span9" >
+    <div id="iframeDiv" style="display:none;height: 772px"  class="span9" >
         <iframe id="iframe_classExercise" name="iframe_classExercise"  style="border: 0px;height: 100%;width: 100%;"></iframe>
     </div>
-    <div id="exerciseDiv" class="span9">
+    <div id="exerciseDiv" class="span9" style=" height: 724px">
         <h3 ><font style="color:#f46500"><?php echo $nowlesson['lessonName']; ?></font> 已  开  放  的  练  习</h3>
         <table style="width: 98%;position: relative;" class="table table-bordered table-striped">
             <thead>
@@ -135,7 +135,7 @@
 
     function startClassExercise(exerciseID, type) {
         $("#iframeDiv").removeAttr("style");
-        $("#iframeDiv").attr("style", "height:880px;width :840px; padding:15px;");
+        $("#iframeDiv").attr("style", "height:774px;width :840px; padding:15px;");
         $("#exerciseDiv").attr("style", "display:none");
         if (type === "look") {
             $("#iframe_classExercise").attr("src", "index.php?r=student/freeIframe4Looks&&ispractice&&exerciseID=" + exerciseID);

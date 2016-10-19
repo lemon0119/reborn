@@ -117,7 +117,7 @@ class ClassExam extends CActiveRecord
             else
             $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID' and classID = '$selectClassID') and open=1 ";
 
-            $order = "order by examID ASC";
+            $order = "order by examID DESC";
         $sql = $sql.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria   =   new CDbCriteria();

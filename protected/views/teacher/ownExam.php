@@ -28,6 +28,7 @@
                 <tbody>        
                     <?php 
                     $n=1;
+                     $p = $pages->currentPage+1;
                     foreach($examWork as $work):
                         
                            foreach ($examExercise as $exam)
@@ -40,7 +41,7 @@
                         ?>
                        
                     <tr>
-                        <td class="font-center" style="width: 50px"><?php echo $n++;?></td>
+                        <td class="font-center" style="width: 50px"><?php echo 5*($p-1) + $n++;?></td>
                         <td title="<?php echo $work['requirements'];?>" class="font-center">
                             <?php  if(Tool::clength($work['requirements'])<=8)
                                         echo $work['requirements'];

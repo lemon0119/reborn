@@ -42,7 +42,7 @@
 <legend><h3>查看看打练习题</h3><span style="color: red;font-size: 15px">(内容不可超出4000字，超出的部分将被屏蔽)</span></legend>
 <?php }?>
 
-    <form class="form-horizontal" method="post" action="./index.php?r=teacher/editLookInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm"> 
+    <form class="form-horizontal" method="post" action="./index.php?r=teacher/editLookInfo&&exerciseID=<?php echo $exerciseID;?>" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
         <div class="control-group">
             <label class="control-label" for="input01">题目</label>
@@ -53,6 +53,12 @@
                 <input type="checkbox" name="checkbox" value="" <?php if(strpos($title,"-不提示略码")){ ?> checked="checked" <?php } ?> style="position: relative;bottom:4px"/> 不提示略码
             </div>
         </div>
+            <div class="control-group">
+                <label class="control-label" for="input04">修改</label>
+                <div class="controls">
+                    <input type="file" name="modifyfiles" id="myfiles">
+                </div>
+            </div>
         <div class="control-group">
             <label class="control-label" for="input02">看打答案</label>
             <div class="controls">               
