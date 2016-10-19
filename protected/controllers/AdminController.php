@@ -3730,7 +3730,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['in1']) || isset($_POST['in2']) || isset($_POST['in3'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['in1']) && !$_POST['in1'] == "") {
@@ -3772,7 +3772,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['in1']) || isset($_POST['in2']) || isset($_POST['in3'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['in1']) && !$_POST['in1'] == "") {
@@ -3821,7 +3821,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['hour1']) || isset($_POST['min1']) || isset($_POST['hour2']) || isset($_POST['min2'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
@@ -3861,7 +3861,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['hour1']) || isset($_POST['min1']) || isset($_POST['hour2']) || isset($_POST['min2'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
