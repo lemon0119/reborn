@@ -6627,6 +6627,7 @@ class TeacherController extends CController {
                             $content = str_replace("\n", "\r\n", $content);
                             $content = str_replace("\r", "\r\n", $content);
                             $content = str_replace(" ", "\r\n", $content);
+                            $content = str_replace("\t", "\r\n", $content);
                             $content = rtrim($content);
                             $str = explode("\r\n", $content);
                             $name = str_replace(".txt", "", $file_name);
