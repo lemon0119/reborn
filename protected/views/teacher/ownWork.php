@@ -26,9 +26,11 @@
         </thead>
                 <tbody>        
                     <?php $n=1;
+                    $p = $pages->currentPage+1;
                     foreach($suiteWork as $work):?>
                     <tr>
-                        <td title="<?php echo $work['exerciseID'];?>" class="font-center" style="width: 50px"><?php echo $n++;?></td>
+                        
+                        <td title="<?php echo $work['exerciseID'];?>" class="font-center" style="width: 50px"><?php echo 5*($p-1) + $n++;?></td>
                         <td title="<?php echo $work['requirements'];?>" class="font-center">
                             <?php  if(Tool::clength($work['requirements'])<=8)
                                         echo $work['requirements'];
@@ -55,7 +57,6 @@
     
 <script>
     $(document).ready(function(){
-        
      parent.setCurrentPage1(<?php echo $pages->currentPage+1?>);
 });
     
