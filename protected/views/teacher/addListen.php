@@ -72,7 +72,7 @@
                     词/分钟
                 </div>            
             </div>
-            <div class="control-group" style=" display: " id="answers">
+            <div class="control-group" id="answers">
                 <label class="control-label" for="input03">听打答案</label>
                 <div class="controls">               
                     <textarea name="content" style="width:450px; height:200px;" id="input03"><?php echo $content; ?></textarea>

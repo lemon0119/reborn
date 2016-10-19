@@ -68,9 +68,15 @@
                                else
                                    echo Tool::csubstr($model['requirements'], 0, 10)."...";
                                         ?></td>
-                        <td class="font-center"><?php  if($model['createPerson']=="0")
-                                        echo "管理员";
-                                    else echo  $teachers[$model['createPerson']];
+                        <td class="font-center">
+                            <?php  
+                            if ($model['createPerson'] == "0"){
+                                echo "管理员";
+                            }else if(isset($teachers[$model['createPerson']])){
+                                echo $teachers[$model['createPerson']];
+                            }else{
+                                echo "未知";
+                            }
                             
                             ?></td>
                         <td class="font-center"><?php echo $model['createTime'];?></td>
