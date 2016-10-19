@@ -54,11 +54,10 @@
    $(document).ready(function(){   
       $("#score").html(<?php echo $score;?>);
       //自动配分
-       saveScore(<?php  if(isset($ansWork)) echo $ansWork[0]['answerID'];else echo 1;?>);
+       saveScore();
     });
      
-    function saveScore(answerID){
-        
+    function saveScore(){
         var value1 = $("#input")[0].value;
             var user = {
             type:"choice",
@@ -67,7 +66,6 @@
             accomplish:"<?php echo $accomplish;?>",
             examID:<?php echo $examID;?>,
             score:value1,
-            answerID:answerID
             };
             $.ajax({
                 type:"POST",
