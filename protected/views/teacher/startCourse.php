@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
     $lessonsName=Array();
     $lessons=Lesson::model()->findall("classID='$classID'");
     if($lessons!=null){
@@ -34,7 +34,7 @@
                 <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>其余课时</li>
                 </ul>
     </div>
-    <div class="well-bottomnoradius" style="padding: 8px 0;height:230px;overflow:auto;top: -20px;border-top-left-radius:0px; ">
+    <div class="well-bottomnoradius" style="padding:0;height:246px;overflow:auto;top: -20px;border-top-left-radius:0px; ">  
                 <ul class="nav nav-list">
                 
                 <?php foreach($lessonsName as $key => $value):
@@ -54,7 +54,7 @@
                 <ul class="nav nav-list">
                 <li class="nav-header"></li>
                 <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>学生列表</li>
-                <div class="scroll" style="padding: 8px 0;height:150px;overflow:auto;">
+       		<div class="scroll" style="margin-top:10px;width:248px;height:158px;overflow:auto;">                                  
                 <?php foreach($stu as $student){
                     ?>
                     <li><i class="icon-headphones" style="position:relative;bottom:6px;left:"></i><?php echo $student['userName']?></li>

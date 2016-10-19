@@ -30,6 +30,7 @@
                 <tbody>        
                     <?php 
                     $n=1;
+                    $p = $pages->currentPage+1;
                     foreach($examWork as $work):
                             foreach ($examExercise as $exam)
                           {
@@ -37,7 +38,7 @@
                              $thisExam = $exam;
                            }?>                   
                     <tr>
-                        <td class="font-center" style="width:50px" ><?php echo $n++;?></td>
+                        <td class="font-center" style="width:50px" ><?php echo 5*($p-1) + $n++;?></td>
                         <td title="<?php echo $work['title'];?>" class="font-center">
                             <?php  if(Tool::clength($work['title'])<=5)
                                         echo $work['title'];
