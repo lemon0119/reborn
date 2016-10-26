@@ -69,7 +69,8 @@
                  }
 ?>                                     
              </ul>                   
-         </div>                                    
+         </div>
+         <li ><div id="id_classabsence"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">签到</a></div></li>
       </ul>
      </div>
 </div>
@@ -204,7 +205,10 @@ $(document).ready(function(){
         $("#id_classExamLesson").toggle(200);
     });  
     
-    
+    $("#id_classabsence").click(function() {
+        window.open("./index.php?r=teacher/countAbsence&&classID=<?php echo $classID; ?>", 'newwindow', 'height=500,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,')   
+ 
+    }); 
     
     
     
