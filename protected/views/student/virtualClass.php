@@ -1,3 +1,4 @@
+<link href="<?php echo CSS_URL; ?>sign.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
@@ -233,7 +234,8 @@ echo "<script>var role='$role';</script>";
 
 <script>
     var isClassExercise = 0;
-
+    var issign = 0;
+    isclose = 0
     //chat and bulletin
     $(document).ready(function () {
 //        setTimeout(function () {
@@ -263,10 +265,27 @@ echo "<script>var role='$role';</script>";
             if (isClassExercise === 0) {
                 startClassExercise();
             } else {
-                clearInterval(timer4startExercise);
+          var timer4startExercise = clearInterval(timer4startExercise);
             }
         }, 2000);
-
+        // ------------------------------------------------------ 开始签到
+          var timer5startSign = setInterval(function () {
+              if (issign === 0) {
+            startSign();
+        }else{
+            var timer5startSign = clearInterval(timer5startSign)
+        }
+        }, 2000);
+//关闭签到
+//        var timer6closeSign = setInterval(function () {
+//              if (isclose === 0) {
+//              closeSign();                   
+//        }else{
+//           window.location.reload();
+//            var timer6closeSign = clearInterval(timer6closeSign)
+//        }
+//        }, 2000);
+//
     });
 
     function optionOnclick() {
@@ -730,4 +749,56 @@ echo "<script>var role='$role';</script>";
     function onunload_handler() {
         document.getElementById('typeOCX').remove();
     }
+    
+    //学生签到
+     function startSign() {
+        $.ajax({
+            type: "GET",
+            url: "index.php?r=student/startSign&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
+            success: function (data) {
+                if (data['TeacherSign_ID'].length === 0){ 
+               
+        }
+                else{
+                if (data['StudentSign_ID'].length > 0) {
+                } else {
+                   issign = 1;
+                   window.wxc.xcConfirm("上车刷卡往里走！！！", window.wxc.xcConfirm.typeEnum.info, {
+                        onOk: function () {
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=student/SaveSign&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
+            success: function(){    
+            window.wxc.xcConfirm('学生卡', window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function(){
+                //window.location.reload();
+                }
+            });
+            },
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr.responseText, "Failed");
+            }
+        });
+                        }
+                    });
+
+               }
+            }
+            }
+        });
+  }
+//   function closeSign(){
+//   $.ajax({
+//       type: "GET",
+//            url: "index.php?r=student/StartSign&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
+//            success: function (data) {
+//             if (data['TeacherSign_ID'].length === 0){
+//                 document.cookie="isclose=1"; 
+////            isclose = 1;               
+//             }   
+//            }
+//       });
+//   }
+
 </script>
