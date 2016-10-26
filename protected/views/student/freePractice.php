@@ -5,8 +5,10 @@
  * and open the template in the editor.
  */
 ?>
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
-<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> 
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js">
+</script>
+<div id="all">
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <br/>
@@ -14,8 +16,14 @@
             <li style="padding:0px 0px;" class="nav-header"><button style="padding:6px 60px" class="btn_4superbig" onclick="backToFreePractice()">自主练习</button></li>
         </ul>
         <br/>
+<!--        <div class="well-topnoradius" style="padding: 8px 0;">-->
+            <ul class="nav nav-list">
+               <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">课 时 列 表</li>
+            </ul>
+<!--        </div>-->
+        <div class="well-topnoradius" style="padding: 8px 0;height:626px;overflow:auto;top: 0px">
         <ul class="nav nav-list">
-            <li class="nav-header"><img src="<?php echo IMG_UIStu_URL; ?>keyb.png">课 时 列 表</li>
+            
             <?php foreach ($lessons as $less) { ?>
                 <li <?php
                 if (isset($_GET['lessonID'])) {
@@ -30,13 +38,14 @@
                 </li>
 <?php } ?>
         </ul>
+        </div>
     </div>
 </div>
 <?php if (isset($_GET['lessonID'])) { ?>
-    <div id="iframeDiv" style="display:none;"  class="span9">
-        <iframe id="iframe_classExercise" name="iframe_classExercise"  style="border: 0px;height: 100%;width: 95%;"></iframe>
+    <div id="iframeDiv" style="display:none;height: 772px"  class="span9" >
+        <iframe id="iframe_classExercise" name="iframe_classExercise"  style="border: 0px;height: 100%;width: 100%;"></iframe>
     </div>
-    <div id="exerciseDiv" class="span9">
+    <div id="exerciseDiv" class="span9" style=" height: 724px">
         <h3 ><font style="color:#f46500"><?php echo $nowlesson['lessonName']; ?></font> 已  开  放  的  练  习</h3>
         <table style="width: 98%;position: relative;" class="table table-bordered table-striped">
             <thead>
@@ -108,6 +117,7 @@
         </div>
     </div>
 <?php } ?>
+</div>
 <script>
 
     //获取学生信息转入统计JS 实时存入数据库
@@ -125,10 +135,28 @@
 
     function startClassExercise(exerciseID, type) {
         $("#iframeDiv").removeAttr("style");
-        $("#iframeDiv").attr("style", "height:800px;");
+        $("#iframeDiv").attr("style", "height:774px;width :840px; padding:15px;");
         $("#exerciseDiv").attr("style", "display:none");
         if (type === "look") {
-            $("#iframe_classExercise").attr("src", "index.php?r=student/freeIframe4Look&&ispractice&&exerciseID=" + exerciseID);
+            $("#iframe_classExercise").attr("src", "index.php?r=student/freeIframe4Looks&&ispractice&&exerciseID=" + exerciseID);
+            var htmltxt = '<div  class="analysisTool" id="analysis" style="position: absolute;left:1277px;bottom: 310px">'+
+    '<table style="margin: 0px auto;">'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">练习计时：</span><span style="color: greenyellow" id="timej">00:00:00</span ></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">正&nbsp;确&nbsp;&nbsp率：</span><span style="color: greenyellow" id="wordisRightRadio">0</span ><span class="fr" style="color: #fff"> %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>'+                       
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">平均速度：</span><span style="color: greenyellow" id="getAverageSpee">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: #fff"> 字/分</span> </td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时速度：</span><span style="color: greenyellow" id="getMomentSpee">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高速度：</span><span style="color: greenyellow" id="getHighstSpee">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">平均击键：</span><span style="color: greenyellow" id="getAverageKeyTyp">0</span ><span class="fr" style="color: #fff"> 次/分</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时击键：</span><span style="color:greenyellow" id="getMomentKeyTyp">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高击键：</span><span style="color: greenyellow" id="getHighstCountKe">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">击键间隔：</span><span style="color: greenyellow" id="getIntervalTim">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>'+
+        '</tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高间隔：</span><span style="color: greenyellow" id="getHighIntervarlTim">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>'+
+        '</tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">总击键数：</span><span style="color: greenyellow" id="getcountAllKe">0</span ><span class="fr" style="color: #fff"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>'+
+        '<tr><td><span class="fl"  style="color: #fff;font-weight: bolder">回改字数：</span><span style="color: greenyellow" id="getBackDelet">0</span ><span class="fr" style="color: #fff"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>'+
+    '</table>'+
+'</div>';
+           var all = document.getElementById("all");
+           all.innerHTML = all.innerHTML + htmltxt;
         } else if (type === "listen") {
             $("#iframe_classExercise").attr("src", "index.php?r=student/freeIframe4Listen&&ispractice&&exerciseID=" + exerciseID);
         } else {

@@ -32,9 +32,17 @@
            <div class="control-group">
                <label class="control-label" for="input02">修改</label>
                <div class="controls">
-               <input type="file" name="modifyfile" id="input02">      
+               (音频）<input type="file" name="modifyfile" id="input02"> 
+              （答案）<input type="file" name="modifytxtfile" id="txtfile">       
                </div>
            </div>
+        <div class="control-group" id="div2">
+                <label class="control-label" >速度</label>
+                <div class="controls">
+                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="<?php echo $speed; ?>" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>         
+                    词/分钟
+                </div>            
+            </div>
             
         <div class="control-group">
             <label class="control-label" for="input03">内容</label>
@@ -49,7 +57,7 @@
             <?php }?>
             <a href="./index.php?r=teacher/returnFromAddListen&&page=<?php echo Yii::app()->session['lastPage'];?>" class="btn btn-primary">返回</a>
         </div>
-            
+          
         </fieldset>
     </form>   
 </div>

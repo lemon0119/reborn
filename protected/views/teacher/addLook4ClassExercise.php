@@ -33,9 +33,9 @@
 <?php }?>
 
     <?php if(isset($_GET['nobar'])){ ?>
-                        <form class="form-horizontal" method="post" action="./index.php?r=teacher/addLook4ClassExercise&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>" id="myForm"> 
+                        <form class="form-horizontal" method="post" action="./index.php?r=teacher/addLook4ClassExercise&&nobar=yes&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>" id="myForm" enctype="multipart/form-data"> 
                             <?php }else{ ?>
-                              <form class="form-horizontal" method="post" action="./index.php?r=teacher/addLook4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>" id="myForm"> 
+                              <form class="form-horizontal" method="post" action="./index.php?r=teacher/addLook4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>" id="myForm" enctype="multipart/form-data"> 
                             <?php }?>
         <fieldset>
         <?php if(!isset($action)) {?>
@@ -52,10 +52,17 @@
                 <input type="checkbox" name="checkbox" value="" style="position: relative;bottom:4px"/> 不提示略码
             </div>
         </div>
-        <div class="control-group">
+            <div class="control-group">
+                <label class="control-label" for="input04">上传答案</label>
+                <div class="controls">
+                    <input type="file" name="myfiles" id="myfiles" onchange="getImgURL(this)"  >
+                    <!--<input class="btn btn-primary"  type="button" onclick ="uplodes()" value="上传">-->
+                </div>
+            </div>
+        <div class="control-group" id="answers">
             <label class="control-label" for="input02">看打答案</label>
             <div class="controls">               
-                <textarea name="content" style="width:450px; height:200px;"></textarea>
+                <textarea name="content" style="width:450px; height:200px;" id="input02"></textarea>
             </div>
         </div> 
         <div class="form-actions">
@@ -71,7 +78,10 @@
         </fieldset>
     </form>   
 </div>
-<script>     
+<script>    
+    function getImgURL(node) {
+     document.getElementById("answers").style.display = "none";
+ } 
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
@@ -84,12 +94,13 @@ $("#myForm").submit(function(){
             opener.iframReload();
             <?php }?>
     var requirements = $("#input01")[0].value;
-    if(requirements === ""){
-        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
+    if(requirements === "" || requirements.length >26){
+        window.wxc.xcConfirm('题目内容不能为空且除默认内容不超20个字', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;
-    if(A === ""){
+    var files =  document.getElementById("myfiles").value;
+    if(A == "" && files === ""){
         window.wxc.xcConfirm('答案不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }

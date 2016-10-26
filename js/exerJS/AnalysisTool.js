@@ -153,7 +153,7 @@ $(document).ready(function () {
                     IntervalContentLength = 0;
                 }
                 window.G_oldContentLength = content.length;
-                var momentSpeed = (IntervalContentLength / 2) * 60
+                var momentSpeed = (IntervalContentLength / 2) * 60;
                 if (momentSpeed > 999) {
                     momentSpeed = 999;
                 }
@@ -314,7 +314,7 @@ function saveToDateBaseNow() {
                 IntervalContentLength = 0;
             }
             window.G_oldContentLength = content.length;
-            var momentSpeed = (IntervalContentLength / 2) * 60
+            var momentSpeed = (IntervalContentLength / 2) * 60;
             if (momentSpeed > 999) {
                 momentSpeed = 999;
             }

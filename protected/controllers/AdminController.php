@@ -257,10 +257,11 @@ class AdminController extends CController {
             $file_type = $file_types [count($file_types) - 1];
 
             // 判别是不是excel文件
+            $file = $_FILES['file'];
             if (strtolower($file_type) != "sheet" && strtolower($file_type) != "ms-excel") {
                 $result = '不是Excel文件';
                 $this->render('exlAddStu', ['result' => $result]);
-            } else {
+            } else if(Tool::detectUploadFileMIME($file)){
                 // 解析文件并存入数据库逻辑
                 /* 设置上传路径 */
                 $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\excel\\';
@@ -451,7 +452,11 @@ class AdminController extends CController {
                         $this->render('exlAddStu', ['result' => $coun, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
                     }
                 }
-            }
+            }else
+              {
+                $result="检测到您上传的Excel文件存在异常，请重新编辑并上传！";
+                $this->render('exlAddStu',['result'=>$result]);
+               }
         } else {
             $this->render('exlAddStu');
         }
@@ -464,10 +469,11 @@ class AdminController extends CController {
             $file_type = $file_types [count($file_types) - 1];
 
             // 判别是不是excel文件
+            $file = $_FILES['file'];
             if (strtolower($file_type) != "sheet" && strtolower($file_type) != "ms-excel") {
                 $result = '不是Excel文件';
                 $this->render('exlAddStu', ['result' => $result]);
-            } else {
+            } else if(Tool::detectUploadFileMIME($file)){
                 // 解析文件并存入数据库逻辑
                 /* 设置上传路径 */
                 $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\excel\\';
@@ -651,7 +657,11 @@ class AdminController extends CController {
                         $this->render('exlAddTea', ['result' => $count_success, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
                     }
                 }
-            }
+            }else
+              {
+                $result="检测到您上传的Excel文件存在异常，请重新编辑并上传！";
+                $this->render('exlAddTea',['result'=>$result]);
+               }
         } else {
             $this->render('exlAddTea');
         }
@@ -3720,7 +3730,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['in1']) || isset($_POST['in2']) || isset($_POST['in3'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['in1']) && !$_POST['in1'] == "") {
@@ -3762,7 +3772,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['in1']) || isset($_POST['in2']) || isset($_POST['in3'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['in1']) && !$_POST['in1'] == "") {
@@ -3811,7 +3821,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['hour1']) || isset($_POST['min1']) || isset($_POST['hour2']) || isset($_POST['min2'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
@@ -3851,7 +3861,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['hour1']) || isset($_POST['min1']) || isset($_POST['hour2']) || isset($_POST['min2'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
@@ -3875,6 +3885,8 @@ class AdminController extends CController {
         return $this->renderPartial('editScheduleOne', ['result' => $sqlSchedule]);
     }
     
+    
+    
     public function actionKey(){
         $studentNumber=Tool::getStudentLimitNumber();
         if(!empty($_FILES['file']['name'])){
@@ -3883,11 +3895,12 @@ class AdminController extends CController {
             $file_type=$file_types[count($file_types)-1];
             
             //判别是不是excel文件
+            $file = $_FILES['file'];
             if(strtolower($file_type)!="sheet" && strtolower($file_type)!="ms-excel"){
                 $result="不是Excel文件";
                 $this->render('key',['result'=>$result]);
                
-            }else{
+            }else if(Tool::detectUploadFileMIME($file)){
                 //解析文件并存入数据库逻辑
                 /*设置上传路径*/
                 $savePath=dirname(Yii::app()->BasePath).'\\public\\upload\\excel\\';
@@ -4383,7 +4396,7 @@ class AdminController extends CController {
                                             $exerciseTea['type'],$successTeaID);
                                         }else if($exerciseTea['type']=="listen"){
                                             ClassExercise::model()->insertListen($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],$exerciseTea['file_name'],
-                                            $exerciseTea['file_path'],$exerciseTea['type'],$successTeaID);
+                                            $exerciseTea['file_path'],$exerciseTea['type'],$successTeaID,$exerciseTea['speed']);
                                         }else{
                                             ClassExercise::model()->insertKey($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],
                                             $successTeaID,$exerciseTea['type'],$exerciseTea['speed'],$exerciseTea['repeatNum'],$exerciseTea['chosen_lib']);
@@ -4531,7 +4544,11 @@ class AdminController extends CController {
                     }
              
             }
-          }
+          }else
+              {
+                $result="检测到您上传的Excel文件存在异常，请重新编辑并上传！";
+                $this->render('key',['result'=>$result]);
+               }
         }else{
             $this->render('key');
         }

@@ -6,7 +6,7 @@
 require 'examAnsSideBar.php';
 ?>
 
-<div class="span9">
+<div class="span9" style="height: 574px">
     <div id="ziji">
     <div class="hero-unit">
         <h2>键打练习</h2>
@@ -94,7 +94,7 @@ require 'examAnsSideBar.php';
      $(document).ready(function(){   
          $("li#li-key-<?php echo $exer['exerciseID'];?>").attr('class','active');
       $("#score").html(<?php echo $score;?>);
-      saveScore(<?php  echo floor($exam_exercise['score']*$correct*0.01)?>);
+      saveScore(<?php if($ansWork['answerID'] != "") echo $ansWork['answerID'];else echo 1; ?>);
      // start(); 
     });
     

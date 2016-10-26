@@ -8,7 +8,7 @@
 require 'suiteSideBar.php';
 $SNum = 0;
 ?>
-<div class="span9" style="height:480px; overflow:auto; border:1px solid #000000;">
+<div class="span9" style="height:574px; overflow:auto; border:1px solid #000000;">
         <div class="hero-unit">
             <input name ="qType" type="hidden" value="filling"/>
             <?php 

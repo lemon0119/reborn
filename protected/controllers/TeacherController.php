@@ -1512,12 +1512,51 @@ class TeacherController extends CController {
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
             $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
-            if(isset($_POST['checkbox'])){
-                $title=$_POST['title']."-不提示略码";
-                $result = LookType::model()->insertLook($title, $contentNoSpace, Yii::app()->session['userid_now']);
-            }else{
-                $result = LookType::model()->insertLook($_POST['title'], $contentNoSpace, Yii::app()->session['userid_now']);
-            }
+            if(!empty($_FILES["myfiles"]["name"])){
+                  $tmp_file = $_FILES ['myfiles'] ['tmp_name'];
+                $file_types = explode(".", $_FILES ['myfiles'] ['type']);
+                $file_type = $file_types [count($file_types) - 1];
+                // 判别是不是txt文件
+                if (strtolower($file_type) != "text/plain") {
+                    $result = '不是txt文件';
+                } else {
+                    // 解析文件并存入数据库逻辑
+                    /* 设置上传路径 */
+                    $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                    $file_name = "-" . $_FILES ['myfiles'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    if (!copy($tmp_file, $savePath . $file_name)) {
+                        $result = '上传失败';
+                    } else {
+                        $file_dir = $savePath . $file_name;
+                        $file_dir = str_replace("\\", "\\\\", $file_dir);
+                        $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
+                        if (filesize($file_dir) < 1) {
+                            $result = '空文件，上传失败';
+                        } else {
+                            $contents = fread($fp, filesize($file_dir)); //读文件 
+                            $content = iconv('GBK', 'utf-8', $contents);
+                            if(isset($_POST['checkbox'])){
+                                $title=$_POST['title']."-不提示略码";
+                                $result = LookType::model()->insertLook($title, $content, Yii::app()->session['userid_now']);
+                            }else{
+                                $result = LookType::model()->insertLook($_POST['title'], $content, Yii::app()->session['userid_now']);
+                            }
+                            $result = '1';
+                         }
+                    }
+                }
+                }else {
+                   if(isset($_POST['checkbox'])){
+                    $title=$_POST['title']."-不提示略码";
+                    $result = LookType::model()->insertLook($title, $contentNoSpace, Yii::app()->session['userid_now']);
+                   }else{
+                    $result = LookType::model()->insertLook($_POST['title'], $contentNoSpace, Yii::app()->session['userid_now']);
+                    }
+                   $result = '1'; 
+                }
         }
         $this->render('addLook', ['result' => $result]);
     }
@@ -1550,13 +1589,54 @@ class TeacherController extends CController {
         $newContent = Tool::SBC_DBC($_POST['content'], 0);
         $content4000 = Tool::spliceLookContent($newContent);
         if(isset($_POST['checkbox'])){
-            $title=$_POST['title']."-不提示略码";
-            $thisLook->title = $title;
+            if(strpos($_POST['title'],"-不提示略码")){
+                $title=$_POST['title'];
+                $thisLook->title = $title;
+            }else{
+                $title=$_POST['title']."-不提示略码";
+                $thisLook->title = $title;
+            }
         }else{
             $title=str_replace("-不提示略码","",$_POST['title']);
             $thisLook->title = $title;
         }
+        $tag = "";
+        if(!empty($_FILES['modifyfiles']['name'])){
+                $tmp_file = $_FILES ['modifyfiles'] ['tmp_name'];
+                $file_types = explode(".", $_FILES ['modifyfiles'] ['type']);
+                $file_type = $file_types [count($file_types) - 1];
+                // 判别是不是excel文件
+                if (strtolower($file_type) != "text/plain") {
+                    $result = '不是txt文件';
+                } else {
+                    // 解析文件并存入数据库逻辑
+                    /* 设置上传路径 */
+                    $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                    $file_name = "-" . $_FILES ['modifyfiles'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    if (!copy($tmp_file, $savePath . $file_name)) {
+                        $result = '上传失败';
+                    } else {
+                        $file_dir = $savePath . $file_name;
+                        $file_dir = str_replace("\\", "\\\\", $file_dir);
+                        $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
+                        if (filesize($file_dir) < 1) {
+                            $result = '空文件，上传失败';
+                        } else {
+                            $contents = fread($fp, filesize($file_dir)); //读文件 
+                            $content = iconv('GBK', 'utf-8', $contents);
+                            $tag = "成功";
+                            }
+                    }
+                }
+        }
+        if($tag == "成功"){
+            $thisLook->content = $content;
+        }else{
         $thisLook->content = $content4000;
+        }
         $thisLook->update();
         if (Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam") {
             $this->render("ModifyEditLook", array(
@@ -2245,8 +2325,41 @@ class TeacherController extends CController {
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
                 Resourse::model()->insertRela($newName, $oldName);
-                $result = ListenType::model()->insertListen($_POST['title'], $_POST['content'], $newName, $filePath, Yii::app()->session['userid_now']);
-                $result = '1';
+                if(!empty($_FILES["myfile"]['name'])){
+                  $tmp_file = $_FILES ['myfile'] ['tmp_name'];
+                $file_types = explode(".", $_FILES ['myfile'] ['type']);
+                $file_type = $file_types [count($file_types) - 1];
+                // 判别是不是excel文件
+                if (strtolower($file_type) != "text/plain") {
+                    $result = '不是txt文件';
+                } else {
+                    // 解析文件并存入数据库逻辑
+                    /* 设置上传路径 */
+                    $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                    $file_name = "-" . $_FILES ['myfile'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    if (!copy($tmp_file, $savePath . $file_name)) {
+                        $result = '上传失败';
+                    } else {
+                        $file_dir = $savePath . $file_name;
+                        $file_dir = str_replace("\\", "\\\\", $file_dir);
+                        $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
+                        if (filesize($file_dir) < 1) {
+                            $result = '空文件，上传失败';
+                        } else {
+                            $contents = fread($fp, filesize($file_dir)); //读文件 
+                            $content = iconv('GBK', 'utf-8', $contents);
+                            $result = ListenType::model()->insertListen($_POST['title'], $content, $newName, $filePath, Yii::app()->session['userid_now'],$_POST['speed']);
+                            $result = '1';
+                            }
+                    }
+                }
+                }else {
+                    $result = ListenType::model()->insertListen($_POST['title'], $_POST['content'], $newName, $filePath, Yii::app()->session['userid_now'],$_POST['speed']);
+                    $result = '1';
+                    }  
             }
         }
         $this->render('addListen', array(
@@ -2447,7 +2560,8 @@ class TeacherController extends CController {
                 'title' => $result['title'],
                 'filename' => $result['fileName'],
                 'filepath' => $result['filePath'],
-                'content' => $result['content']
+                'content' => $result['content'],
+                'speed' => $result['speed']
             ));
         } else if ($_GET['action'] = 'look') {
             $this->render("editListen", array(
@@ -2456,6 +2570,7 @@ class TeacherController extends CController {
                 'filename' => $result['fileName'],
                 'filepath' => $result['filePath'],
                 'content' => $result['content'],
+                'speed' => $result['speed'],
                 'action' => 'look'
             ));
         }
@@ -2487,11 +2602,52 @@ class TeacherController extends CController {
                 $result = "上传成功";
             }
         }
+        $tag = "";
+        if(!empty($_FILES['modifytxtfile']['name'])){
+                $tmp_file = $_FILES ['modifytxtfile'] ['tmp_name'];
+                $file_types = explode(".", $_FILES ['modifytxtfile'] ['type']);
+                $file_type = $file_types [count($file_types) - 1];
+                // 判别是不是excel文件
+                if (strtolower($file_type) != "text/plain") {
+                    $result = '不是txt文件';
+                } else {
+                    // 解析文件并存入数据库逻辑
+                    /* 设置上传路径 */
+                    $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                    $file_name = "-" . $_FILES ['modifytxtfile'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    if (!copy($tmp_file, $savePath . $file_name)) {
+                        $result = '上传失败';
+                    } else {
+                        $file_dir = $savePath . $file_name;
+                        $file_dir = str_replace("\\", "\\\\", $file_dir);
+                        $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
+                        if (filesize($file_dir) < 1) {
+                            $result = '空文件，上传失败';
+                        } else {
+                            $contents = fread($fp, filesize($file_dir)); //读文件 
+                            $content = iconv('GBK', 'utf-8', $contents);
+                            $tag = "成功";
+                            }
+                    }
+                }
+        }
         if (!isset($result) || $result == "上传成功") {
+            if($tag == "成功"){
+               $thisListen->title = $_POST ['title'];
+               $thisListen->content = $content;
+               $thisListen->speed = $_POST['speed'];
+               $thisListen->update();
+               $result = "修改成功!"; 
+            }else {
             $thisListen->title = $_POST ['title'];
             $thisListen->content = $_POST ['content'];
+            $thisListen->speed = $_POST['speed'];
             $thisListen->update();
             $result = "修改成功!";
+            }
         } else {
             $result = "修改失败!";
         }
@@ -2503,6 +2659,7 @@ class TeacherController extends CController {
                 'content' => $thisListen->content,
                 'filename' => $thisListen->fileName,
                 'filepath' => $thisListen->filePath,
+                'speed' =>$thisListen->speed, 
                 'result' => $result
             ));
         } else {
@@ -2512,6 +2669,7 @@ class TeacherController extends CController {
                 'filepath' => $thisListen->filePath,
                 'title' => $thisListen->title,
                 'content' => $thisListen->content,
+                'speed' =>$thisListen->speed,
                 'result' => $result
             ));
         }
@@ -2543,7 +2701,7 @@ class TeacherController extends CController {
                     $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
                     if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
                         copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
-                    $insertresult = ListenType::model()->insertListen($oldListen[0]['title'], $oldListen[0]['content'], $newName, $filePath, Yii::app()->session['userid_now']);
+                    $insertresult = ListenType::model()->insertListen($oldListen[0]['title'], $oldListen[0]['content'], $newName, $filePath, Yii::app()->session['userid_now'],$oldListen[0]['speed']);
                     //$oldName = $_FILES["file"]["name"];
                     Resourse::model()->insertRela($newName, $fileName);
                 }
@@ -2572,7 +2730,7 @@ class TeacherController extends CController {
                     $newName = Tool::createID() . "." . pathinfo($fileName, PATHINFO_EXTENSION);
                     if (file_exists($sourcefilePath . iconv("UTF-8", "gb2312", $fileName)))
                         copy($sourcefilePath . iconv("UTF-8", "gb2312", $fileName), $dir . iconv("UTF-8", "gb2312", $newName));
-                    $insertresult = ListenType::model()->insertListen($oldListen['title'], $oldListen['content'], $newName, $filePath, Yii::app()->session['userid_now']);
+                    $insertresult = ListenType::model()->insertListen($oldListen['title'], $oldListen['content'], $newName, $filePath, Yii::app()->session['userid_now'],$oldListen['speed']);
 //                }
             }
         }
@@ -3665,11 +3823,14 @@ class TeacherController extends CController {
             }else{
                 $arrayall_suite=0;                
             }
+            $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+            
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
                 'array_suite' => $array_suite,
                 'array_allsuite' => $array_allsuite,
+                'array_all_suite' => $array_all_suite,
                 'arrayall_suite' => $arrayall_suite,
                 'pages' => $pages,
                 'res' => $res
@@ -3709,12 +3870,15 @@ class TeacherController extends CController {
             $currentClass = Yii::app()->session['currentClass'];
 
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            
+            $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
             $this->render('assignExam', array(
                 'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
+                'array_exam_open' => $array_exam_open,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4087,7 +4251,8 @@ class TeacherController extends CController {
                 'content' => $result['content'],
                 'title' => $result['title'],
                 'filename' => $result['fileName'],
-                'filepath' => $result['filePath']
+                'filepath' => $result['filePath'],
+                'speed' =>$result['speed']
             ));
         } else if ($_GET['action'] == 'look') {
             $this->render("ModifyEditListen", array(
@@ -4097,6 +4262,7 @@ class TeacherController extends CController {
                 'title' => $result['title'],
                 'filename' => $result['fileName'],
                 'filepath' => $result['filePath'],
+                'speed' =>$result['speed'],
                 'action' => 'look',
             ));
         }
@@ -4263,12 +4429,15 @@ class TeacherController extends CController {
             }else{
                 $arrayall_suite=0;                
             }
+            $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+            
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
                 'array_suite' => $array_suite,
                 'array_allsuite' => $array_allsuite,
                 'arrayall_suite' => $arrayall_suite,
+                'array_all_suite' => $array_all_suite,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4307,12 +4476,15 @@ class TeacherController extends CController {
             }
             $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson']));
             $arrayall_suite = ClassLessonSuite::model()->findAll('classID=? and  open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+            
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
                 'array_suite' => $array_suite,
                 'array_allsuite' => $array_allsuite,
                 'arrayall_suite' => $arrayall_suite,
+                'array_all_suite' => $array_all_suite,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4338,12 +4510,15 @@ class TeacherController extends CController {
             }
             $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson']));
             $arrayall_suite = ClassLessonSuite::model()->findAll('classID=? and  open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+            
             $this->render('assignWork', array(
                 'array_class' => $array_class,
                 'array_lesson' => $array_lesson,
                 'array_suite' => $array_suite,
                 'array_allsuite' => $array_allsuite,
-                'arrayall_suite' => arrayall_suite,
+                'arrayall_suite' => $arrayall_suite,
+                'array_all_suite' => $array_all_suite,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4375,12 +4550,14 @@ class TeacherController extends CController {
             $array_allexam = $result['examLst'];
             $pages = $result['pages'];
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
             $this->render('assignExam', array(
                 'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
+                'array_exam_open' => $array_exam_open,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4408,12 +4585,14 @@ class TeacherController extends CController {
             $array_allexam = $result['examLst'];
             $pages = $result['pages'];
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
             $this->render('assignExam', array(
                 'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
+                'array_exam_open' => $array_exam_open,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4430,12 +4609,14 @@ class TeacherController extends CController {
             $array_allexam = $result['examLst'];
             $pages = $result['pages'];
             $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+            $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
             $this->render('assignExam', array(
                 'flag' => $flag,
                 'array_class' => $array_class,
                 'array_exam' => $array_suite,
                 'array_allexam' => $array_allexam,
+                'array_exam_open' => $array_exam_open,
                 'pages' => $pages,
                 'res' => $res
             ));
@@ -4492,12 +4673,15 @@ class TeacherController extends CController {
                 }else{
                     $arrayall_suite=0;                    
                 }
+                $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+                
                 $this->render('assignWork', array(
                     'array_class' => $array_class,
                     'array_lesson' => $array_lesson,
                     'array_suite' => $array_suite,
                     'array_allsuite' => $array_allsuite,
                     'arrayall_suite' => $arrayall_suite,
+                    'array_all_suite' => $array_all_suite,
                     'pages' => $pages,
                     'res' => $res
                 ));
@@ -4548,12 +4732,14 @@ class TeacherController extends CController {
                 $currentClass = Yii::app()->session['currentClass'];
 
                 $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+                $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
                 $this->render('assignExam', array(
                     'flag' => $flag,
                     'array_class' => $array_class,
                     'array_exam' => $array_suite,
                     'array_allexam' => $array_allexam,
+                    'array_exam_open' => $array_exam_open,
                     'pages' => $pages,
                     'res' => $res
                 ));
@@ -4764,12 +4950,15 @@ class TeacherController extends CController {
         }
         $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson'], 1));
         $arrayall_suite = ClassLessonSuite::model()->findAll('classID=? and  open=?', array(Yii::app()->session['currentClass'], 1));
+        $array_all_suite=ClassLessonSuite::model()->findAll('open=?', array(1));
+        
         $this->render('assignWork', array(
             'array_class' => $array_class,
             'array_lesson' => $array_lesson,
             'array_suite' => $array_suite,
             'array_allsuite' => $array_allsuite,
             'arrayall_suite' => $arrayall_suite,
+            'array_all_suite' => $array_all_suite,
             'pages' => $pages,
             'res' => $res
         ));
@@ -4796,7 +4985,6 @@ class TeacherController extends CController {
             $endTime=date("Y-m-d H:i:s",strtotime("$startTime   +$duration   minute"));
         }
         if ($isOpen == 0){
-            error_log($startTime);
             Exam::model()->updateByPk($examID, array('begintime' => $startTime, 'duration' => $duration,'endtime'=>$endTime));
         }
         $currentClass = Yii::app()->session['currentClass'];
@@ -4820,12 +5008,14 @@ class TeacherController extends CController {
         $pages = $result['pages'];
 
         $array_suite = ClassExam::model()->findAll('classID=? and open=?', array(Yii::app()->session['currentClass'], 1));
+        $array_exam_open = ClassExam::model()->findAll('open=?', array(1));
 
         $this->render('assignExam', array(
             'flag' => $flag,
             'array_class' => $array_class,
             'array_exam' => $array_suite,
             'array_allexam' => $array_allexam,
+            'array_exam_open' => $array_exam_open,
             'pages' => $pages,
             'res' => $res
         ));
@@ -5225,12 +5415,30 @@ class TeacherController extends CController {
             }
         }
         $suite_exercise = SuiteExercise::model()->find("exerciseID=? and suiteID=? and type=?", array($work['exerciseID'], $suiteID, $type));
+        $suite_exercise_all = SuiteExercise::model()->findAll("suiteID=? and type=? order by exerciseID", array($suiteID, $type));
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $type));
         $choiceAnsWork = array();
-        foreach ($SQLchoiceAnsWork as $v) {
-            $answer = $v['answer'];
-            array_push($choiceAnsWork, $answer);
-        }
+        $ii=0;
+        foreach($suite_exercise_all as $w){
+            $b=count($suite_exercise_all);
+            $jj=0;
+            foreach ($SQLchoiceAnsWork as $v) {
+                $c=count($SQLchoiceAnsWork);
+                if( $w['exerciseID'] == $v['exerciseID']){
+                    $jj=1;
+                    $answer = $v['answer'];
+                }
+            }
+            if($jj == 0){
+                $answer = "no1"; 
+            }
+            $choiceAnsWork[$ii]=$answer;
+            $ii=$ii+1;
+        } 
+//        foreach ($SQLchoiceAnsWork as $v) {
+//            $answer = $v['answer'];
+//            array_push($choiceAnsWork, $answer);
+//        }
 
         switch ($type) {
             case "choice":
@@ -5617,7 +5825,7 @@ class TeacherController extends CController {
         if (isset($_POST['exerciseID']))
             $exerciseID = $_POST['exerciseID'];
         $recordID = ExamRecord::getRecord($workID, $studentID);
-        $exam_exercise = ExamExercise::model()->findAll("examID = ? and type = ?", array($examID, $ty));
+        $exam_exercise = ExamExercise::model()->findAll("examID = ? and type = ? order by exerciseID", array($examID, $ty));
         $ansWork = AnswerRecord::model()->findAll("recordID = ? and type = ?", array($recordID, $ty));
         $results = Exam::model()->getExamExerByType($examID, $ty);
         $isLast = 1;
@@ -5637,20 +5845,48 @@ class TeacherController extends CController {
         if (isset($_POST['score'])) {
             $arr = explode(",", $_POST['score']);
             $m = 0;
+            $scoreAll=0;
             foreach ($array_exercise as $k => $work) {
-                if ($arr[$m] != " ") {
-                    AnswerRecord::model()->changeScore($ansWork[$k]['answerID'], $arr[$m++]);
+                if ($arr[$m] != " " && $arr[$m] !=0) {
+                    AnswerRecord::model()->changeScore($ansWork[$scoreAll++]['answerID'], $arr[$m]);
                     if ($ty == 'choice')
                         break;
                 }
+                $m++;
             }
         }
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $ty));
-        $choiceAnsWork = array();
-        foreach ($SQLchoiceAnsWork as $v) {
-            $answer = $v['answer'];
-            array_push($choiceAnsWork, $answer);
+        $choiceAnsWork = array();        
+        $ii=0;
+        foreach($exam_exercise as $w){            
+            $jj=0;
+            foreach ($SQLchoiceAnsWork as $v) {
+                if( $w['exerciseID'] == $v['exerciseID']){
+                    $jj=1;
+                    $answer = $v['answer'];
+                }
+            }
+            if($jj == 0){
+                $answer = "no1"; 
+            }
+            $choiceAnsWork[$ii]=$answer;
+            $ii=$ii+1;
         }
+//        
+//        for($i=0;$i<count($exam_exercise);$i++){
+//            $jj=0;
+//            for($j=0;$j<count($SQLchoiceAnsWork);$j++){
+//                if($exam_exercise[$i]['exerciseID']==$SQLchoiceAnsWork[$j]['exerciseID']){
+//                    $jj=1;
+//                    $answer = $SQLchoiceAnsWork[$j]['answer'];
+//                }
+//            }
+//            if($jj == 0){
+//                $answer = "no"; 
+//            }
+//            $choiceAnsWork[$i]=$answer;
+//            error_log($answer);
+//        }
         $student = Student::model()->find("userID='$studentID'");
         $class = TbClass::model()->find("classID='$classID'");
         $array_accomplished = Array();
@@ -5752,11 +5988,14 @@ class TeacherController extends CController {
         if (isset($_POST['score'])) {
             $arr = explode(",", $_POST['score']);
             $m = 0;
-            foreach ($array_exercise as $k => $work) {
-                if ($arr[$m] != " ") {
-                    AnswerRecord::model()->changeScore($ansWork[$k]['answerID'], $arr[$m++]);
-                }
+            if(isset($_POST['answerID'])){
+                $answerID=$_POST['answerID'];
             }
+//            foreach ($array_exercise as $k => $work) {
+//                if ($arr[$m] != " ") {
+                    AnswerRecord::model()->changeScore($answerID, $arr[$m++]);
+//                }
+            
         }
         $student = Student::model()->find("userID='$studentID'");
         $class = TbClass::model()->find("classID='$classID'");
@@ -5972,7 +6211,6 @@ class TeacherController extends CController {
             $newName = $_GET['newName'];
             $courseID = $_GET ['courseID'];
             $classID=$_GET ['classID'];
-            error_log($newName);
             $SqlclassID = TbClass::model()->findAll("currentCourse ='$courseID'");
 //            foreach ($teacher_class as $classA) {
 //                foreach($SqlclassID as $classB){
@@ -6369,12 +6607,17 @@ class TeacherController extends CController {
                     /* 设置上传路径 */
                     $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
                     $file_name = "-" . $_FILES ['file'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    
                     if (!copy($tmp_file, $savePath . $file_name)) {
                         $uploadResult = '上传失败';
                     } else {
+                        
                         $file_dir = $savePath . $file_name;
                         $file_dir = str_replace("\\", "\\\\", $file_dir);
                         $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
                         if (filesize($file_dir) < 1) {
                             $uploadResult = '空文件，上传失败';
                         } else {
@@ -6384,6 +6627,7 @@ class TeacherController extends CController {
                             $content = str_replace("\n", "\r\n", $content);
                             $content = str_replace("\r", "\r\n", $content);
                             $content = str_replace(" ", "\r\n", $content);
+                            $content = str_replace("\t", "\r\n", $content);
                             $content = rtrim($content);
                             $str = explode("\r\n", $content);
                             $name = str_replace(".txt", "", $file_name);
@@ -6486,12 +6730,52 @@ class TeacherController extends CController {
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
             $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
-            if(isset($_POST['checkbox'])){
-                $title = $_POST['title']."-不提示略码";
-                $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($title), $contentNoSpace, 'look', Yii::app()->session['userid_now']);
-            }else{
-                $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $contentNoSpace, 'look', Yii::app()->session['userid_now']);
-            }
+            if(!empty($_FILES["myfiles"]["name"])){
+                  $tmp_file = $_FILES ['myfiles'] ['tmp_name'];
+                $file_types = explode(".", $_FILES ['myfiles'] ['type']);
+                $file_type = $file_types [count($file_types) - 1];
+                // 判别是不是txt文件
+                if (strtolower($file_type) != "text/plain") {
+                    $result = '不是txt文件';
+                } else {
+                    // 解析文件并存入数据库逻辑
+                    /* 设置上传路径 */
+                    $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                    $file_name = "-" . $_FILES ['myfiles'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    if (!copy($tmp_file, $savePath . $file_name)) {
+                        $result = '上传失败';
+                    } else {
+                        $file_dir = $savePath . $file_name;
+                        $file_dir = str_replace("\\", "\\\\", $file_dir);
+                        $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
+                        if (filesize($file_dir) < 1) {
+                            $result = '空文件，上传失败';
+                        } else {
+                            $contents = fread($fp, filesize($file_dir)); //读文件 
+                            $content = iconv('GBK', 'utf-8', $contents);
+                            if(isset($_POST['checkbox'])){
+                                $title = $_POST['title']."-不提示略码";
+                                $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($title), $content, 'look', Yii::app()->session['userid_now']);
+                                }else{
+                                $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $content, 'look', Yii::app()->session['userid_now']);
+                                }
+                            $result = '1';
+                         }
+                    }
+                }
+                }else {
+                   if(isset($_POST['checkbox'])){
+                       $title = $_POST['title']."-不提示略码";
+                       $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($title), $contentNoSpace, 'look', Yii::app()->session['userid_now']);
+                    }else{
+                       $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $contentNoSpace, 'look', Yii::app()->session['userid_now']);
+                    }
+                   $result = '1'; 
+                }
+            
         }
         $this->render('addLook4ClassExercise', ['result' => $result]);
     }
@@ -6598,8 +6882,42 @@ class TeacherController extends CController {
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
                 Resourse::model()->insertRela($newName, $oldName);
                 $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
-                $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $_POST['content'], $newName, $filePath, "listen", Yii::app()->session['userid_now']);
-                $result = '1';
+                if(!empty($_FILES["myfile"]['name'])){
+                  $tmp_file = $_FILES ['myfile'] ['tmp_name'];
+                $file_types = explode(".", $_FILES ['myfile'] ['type']);
+                $file_type = $file_types [count($file_types) - 1];
+                // 判别是不是excel文件
+                if (strtolower($file_type) != "text/plain") {
+                    $result = '不是txt文件';
+                } else {
+                    // 解析文件并存入数据库逻辑
+                    /* 设置上传路径 */
+                    $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                    $file_name = "-" . $_FILES ['myfile'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    if (!copy($tmp_file, $savePath . $file_name)) {
+                        $result = '上传失败';
+                    } else {
+                        $file_dir = $savePath . $file_name;
+                        $file_dir = str_replace("\\", "\\\\", $file_dir);
+                        $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
+                        if (filesize($file_dir) < 1) {
+                            $result = '空文件，上传失败';
+                        } else {
+                            $contents = fread($fp, filesize($file_dir)); //读文件 
+                            $content = iconv('GBK', 'utf-8', $contents);
+                            $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $content, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
+                            $result = '1';
+                         }
+                    }
+                }
+                }else {
+                   $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $_POST['content'], $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
+                   $result = '1'; 
+                }
+                
             }
         }
         $this->render('addListen4ClassExercise', array(
@@ -6614,14 +6932,56 @@ class TeacherController extends CController {
         $update = 0;
         if (isset($_POST['title'])) {
             if(isset($_POST['checkbox'])){
-                $title = $_POST['title']."-不提示略码";
+                
+                if(strpos($_POST['title'],"-不提示略码")){
+                    $title = $_POST['title'];
+                }else{
+                    $title = $_POST['title']."-不提示略码";
+                }
             }else{
                 $title = str_replace("-不提示略码", "", $_POST['title']);
 //                $title = $_POST['title'];
             }
+            $tag = "";
+        if(!empty($_FILES['modifyfiles']['name'])){
+                $tmp_file = $_FILES ['modifyfiles'] ['tmp_name'];
+                $file_types = explode(".", $_FILES ['modifyfiles'] ['type']);
+                $file_type = $file_types [count($file_types) - 1];
+                // 判别是不是excel文件
+                if (strtolower($file_type) != "text/plain") {
+                    $result = '不是txt文件';
+                } else {
+                    // 解析文件并存入数据库逻辑
+                    /* 设置上传路径 */
+                    $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                    $file_name = "-" . $_FILES ['modifyfiles'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    if (!copy($tmp_file, $savePath . $file_name)) {
+                        $result = '上传失败';
+                    } else {
+                        $file_dir = $savePath . $file_name;
+                        $file_dir = str_replace("\\", "\\\\", $file_dir);
+                        $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
+                        if (filesize($file_dir) < 1) {
+                            $result = '空文件，上传失败';
+                        } else {
+                            $contents = fread($fp, filesize($file_dir)); //读文件 
+                            $content = iconv('GBK', 'utf-8', $contents);
+                            $tag = "成功";
+                            }
+                    }
+                }
+        }
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
             $content4000 = Tool::spliceLookContent($newContent);
+            if($tag == "成功"){
+            $update = ClassExercise::model()->updateLook($exerciseID, $title, $content);
+            }  else {
             $update = ClassExercise::model()->updateLook($exerciseID, $title, $content4000);
+            }
+            
         }
 
         $result = ClassExercise::model()->getExerciseByType($exerciseID, "look")->read();
@@ -6725,11 +7085,52 @@ class TeacherController extends CController {
                     $result = "上传成功";
                 }
             }
+             $tag = "";
+        if(!empty($_FILES['modifytxtfile']['name'])){
+                $tmp_file = $_FILES ['modifytxtfile'] ['tmp_name'];
+                $file_types = explode(".", $_FILES ['modifytxtfile'] ['type']);
+                $file_type = $file_types [count($file_types) - 1];
+                // 判别是不是excel文件
+                if (strtolower($file_type) != "text/plain") {
+                    $result = '不是txt文件';
+                } else {
+                    // 解析文件并存入数据库逻辑
+                    /* 设置上传路径 */
+                    $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\txt\\';
+                    $file_name = "-" . $_FILES ['modifytxtfile'] ['name'] . "-";
+                    $file_name = iconv("UTF-8","GB2312//IGNORE",$file_name);
+                    if (!copy($tmp_file, $savePath . $file_name)) {
+                        $result = '上传失败';
+                    } else {
+                        $file_dir = $savePath . $file_name;
+                        $file_dir = str_replace("\\", "\\\\", $file_dir);
+                        $fp = fopen($file_dir, "r");
+                        move_uploaded_file($file_name, $savePath);
+                        $file_name=iconv("gb2312","UTF-8", $file_name);
+                        if (filesize($file_dir) < 1) {
+                            $result = '空文件，上传失败';
+                        } else {
+                            $contents = fread($fp, filesize($file_dir)); //读文件 
+                            $content = iconv('GBK', 'utf-8', $contents);
+                            $tag = "成功";
+                            }
+                    }
+                }
+        }
             if ($result === "" || $result == "上传成功") {
-                $thisListen->title = $_POST ['title'];
-                $thisListen->content = $_POST ['content'];
-                $thisListen->update();
-                $result = "修改成功!";
+                if($tag == "成功"){
+               $thisListen->title = $_POST ['title'];
+               $thisListen->content = $content;
+               $thisListen->speed = $_POST['speed'];
+               $thisListen->update();
+               $result = "修改成功!"; 
+            }else {
+            $thisListen->title = $_POST ['title'];
+            $thisListen->content = $_POST ['content'];
+            $thisListen->speed = $_POST['speed'];
+            $thisListen->update();
+            $result = "修改成功!";
+            }
             } else {
                 $result = "修改失败!";
             }
@@ -6740,6 +7141,7 @@ class TeacherController extends CController {
             'filepath' => $thisListen->file_path,
             'title' => $thisListen->title,
             'content' => $thisListen->content,
+            'speed' => $thisListen->speed,
             'result' => $result
         ));
     }

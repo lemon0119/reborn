@@ -1,13 +1,13 @@
 
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <div id="ziji">
-<div class="hero-unit" style="height: 480px;overflow:auto">
+<div class="hero-unit" style="height: 574px;overflow:auto">
           <?php
           echo '<h2>选择题</h2>';
            $n=1;
            foreach ($works  as $k=>$work){ 
                 $right = $work['answer'];
-                if(isset($choiceAnsWork[$k])){
+                if($choiceAnsWork[$k]!="no1"){
                     $uAns = $choiceAnsWork[$k];
                 }else{
                     $uAns="";

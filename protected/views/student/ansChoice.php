@@ -8,14 +8,19 @@
 require 'ansSideBar.php';
 ?>
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div class="span9" style="height:480px; overflow:auto; border:0px;">
+<div class="span9" style="height:570px; overflow:auto; border:0px;">
     <div class="hero-unit">
         <?php 
         echo '<h2>选择题</h2>';
         $SNum = 0;
             foreach ($exercise['choice'] as $value){
                 $right = $value['answer'];
-                $uAns = $ansChoice[$value['exerciseID']];?>
+                if(isset($ansChoice[$value['exerciseID']])){
+                $uAns = $ansChoice[$value['exerciseID']];
+                }else{
+                    $uAns ="";
+                }
+?>
         
         <?php   echo ($SNum+1).'. ';
                 echo $value['requirements'];

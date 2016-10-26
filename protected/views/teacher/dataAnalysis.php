@@ -76,7 +76,7 @@
 </div>
 
 
-<div class="span9" id="sp" style="display: none;height: 830px;">
+<div class="span9" id="sp" style="display: none;height: 758px;">
     <div style="position: relative;top: -15px;">
         <div  style="width:100%;overflow: auto;height:110px;">
             <table id="ul1" class="ul1" style="margin-left: -20px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
@@ -189,7 +189,7 @@
     
     <div id="main2" style="left:15px;display: none;width: 750px;overflow: auto;height:400px;position: relative;top:20px;"></div>
 </div>
-<div class="span9" id="other" style="display: none;height: 830px;">
+<div class="span9" id="other" style="display: none;height: 758px;">
     <h3 style="alignment-adjust: center;">没有统计数据！</h3>
 </div>
 <script>

@@ -40,7 +40,7 @@
 <?php } else if($action == 'look') {?>
 <h3>查看看打练习题</h3>
 <?php }?>
-    <form class="form-horizontal" method="post" action="./index.php?r=teacher/AddLook" id="myForm"> 
+    <form class="form-horizontal" method="post" action="./index.php?r=teacher/AddLook" id="myForm" enctype="multipart/form-data"> 
         <fieldset>
         <?php if(!isset($action)) {?>
             <legend>填写题目<span style="color: red;font-size: 15px">(内容不可超出4000字，超出的部分将被屏蔽)</span></legend>
@@ -56,8 +56,14 @@
                 <input type="checkbox" name="checkbox" value="" style="position: relative;bottom:4px"/> 不提示略码
             </div>
         </div>
-            
-        <div class="control-group">
+          <div class="control-group">
+                <label class="control-label" for="input04">上传答案</label>
+                <div class="controls">
+                    <input type="file" name="myfiles" id="myfiles" onchange="getImgURL(this)"  >
+                    <!--<input class="btn btn-primary"  type="button" onclick ="uplodes()" value="上传">-->
+                </div>
+            </div>  
+        <div class="control-group" id="answers">
             <label class="control-label" for="input02">看打答案</label>
             <div class="controls">               
                 <textarea name="content" style="width:450px; height:200px;"  id="input02"></textarea>
@@ -72,22 +78,30 @@
         </fieldset>
     </form>   
 </div>
-<script>     
+<script> 
+ function getImgURL(node) {
+     document.getElementById("answers").style.display = "none";
+ }    
 $(document).ready(function(){
     var result = <?php echo "'$result'";?>;
     if(result === '1')
     window.wxc.xcConfirm('添加看打练习成功！', window.wxc.xcConfirm.typeEnum.success);
     else if(result === '0')
     window.wxc.xcConfirm('添加看打练习失败！', window.wxc.xcConfirm.typeEnum.error);
+    else if (result != 'no')
+    {
+            window.wxc.xcConfirm(result, window.wxc.xcConfirm.typeEnum.info);
+    }
 });
 $("#myForm").submit(function(){
     var requirements = $("#input01")[0].value;
-    if(requirements === ""){
-        window.wxc.xcConfirm('题目内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
+    if(requirements === "" || requirements.length > 20){
+        window.wxc.xcConfirm('题目内容不能为空且不超过20个字', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
     var A = $("#input02")[0].value;
-    if(A == ""){
+    var files =  document.getElementById("myfiles").value;
+    if(A == "" && files === ""){
         window.wxc.xcConfirm('答案不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }

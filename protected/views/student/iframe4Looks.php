@@ -7,15 +7,15 @@
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <body style="background-image: none;background-color: #fff">
-    <button id="toggle" style="position: relative;" class="btn">展开</button>
-    <div id="span" class="hero-unit" align="center" style="overflow-y:visible ">
+<!--    <button id="toggle" style="position: relative;" class="btn">展开</button>-->
+<div id="span" class="hero-unit" align="center" style="overflow-y:visible ">
+        <?php if (isset($_GET['ispractice'])) { ?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
         <!--        <div style="width: 660px">
                                 <button class="fl btn" id="pause">暂停统计</button>
                     <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>
                     
                 </div>-->
-        <div id="Analysis">
-            <?php if (isset($_GET['ispractice'])) { ?><tr><h3><?php echo $classExercise['title'] ?></h3></tr><?php } ?>
+        <div id="Analysis" style="display: none">
             <table style="width: 580px"  border = '0px'> 
                 <tr>
                     <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
@@ -73,17 +73,19 @@
         $str = str_replace(" ", "}", $str);
         echo $str;
         ?>">
-        <div id ="templet" style="text-align: left;height: 210px;width: 830px; margin-top: 15px" class="questionBlock" front-size ="25px" onselectstart="return false">
+        <div id ="templet" style="text-align: left;height: 230px;width: 830px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='840' height='350' 
+                width ='840' height='420' 
                 event_OnStenoPress="onStenoPressKey">
         </object>
     </div>
+
 </body>
 <script>
+    
     var yaweiOCX4Look = document.getElementById("typeOCX4Look");
     var briefCode = "";
     var briefOriginalYaweiCode = "";
@@ -91,6 +93,7 @@
     <?php $titleFalse=strpos($classExercise['title'],"-不提示略码"); ?>
     var titleFalse = "<?php echo $titleFalse; ?>";
     $(document).ready(function () {
+        
         window.G_isLook = 1;
         document.getElementById('Analysis').scrollIntoView();
         $.ajax({
@@ -130,7 +133,7 @@
                 $("#templet").css('height', '180px');
             } else {
                 $("#toggle").text("展开");
-                $("#templet").css('height', '260px');
+                $("#templet").css('height', '210px');
 
             }
             $("#allAnalysis").toggle(0);
@@ -184,6 +187,33 @@ $squence = $countSquence + 1;
     }
 
     function onStenoPressKey(pszStenoString, device) {
+        
+     var timej = document.getElementById('timej').innerHTML;
+    var wordisRightRadio = document.getElementById('wordisRightRadio').innerHTML;
+    var getBackDelete = document.getElementById('getBackDelete').innerHTML;
+    var getAverageSpeed = document.getElementById('getAverageSpeed').innerHTML;
+    var getAverageKeyType = document.getElementById('getAverageKeyType').innerHTML;
+    var getcountAllKey = document.getElementById('getcountAllKey').innerHTML;
+    var getMomentSpeed = document.getElementById('getMomentSpeed').innerHTML;
+    var getMomentKeyType = document.getElementById('getMomentKeyType').innerHTML;
+    var getHighstCountKey = document.getElementById('getHighstCountKey').innerHTML;
+    var getIntervalTime = document.getElementById('getIntervalTime').innerHTML;
+    var getHighIntervarlTime = document.getElementById('getHighIntervarlTime').innerHTML;
+    var getHighstSpeed = document.getElementById('getHighstSpeed').innerHTML;
+        $('#timej',window.parent.document).html(timej);
+        $('#wordisRightRadio',window.parent.document).html(wordisRightRadio);
+        $('#getBackDelet',window.parent.document).html(getBackDelete);
+        $('#getAverageSpee',window.parent.document).html(getAverageSpeed);
+        $('#getAverageKeyTyp',window.parent.document).html(getAverageKeyType);
+        $('#getMomentSpee',window.parent.document).html(getMomentSpeed);
+        $('#getcountAllKe',window.parent.document).html(getcountAllKey);
+        $('#getMomentKeyTyp',window.parent.document).html(getMomentKeyType);
+        $('#getHighstCountKe',window.parent.document).html(getHighstCountKey);
+        $('#getIntervalTim',window.parent.document).html(getIntervalTime);
+        $('#getHighIntervarlTim',window.parent.document).html(getHighIntervarlTime);
+        $('#getHighstSpee',window.parent.document).html(getHighstSpeed);
+  //      console.log(ht);
+//        console.log(getMomentSpeed);
         var inputO = getContent(yaweiOCX4Look);
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
@@ -293,6 +323,7 @@ $squence = $countSquence + 1;
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
             createFont("#000000", left, "left");
         }
+        
     }
 
 
