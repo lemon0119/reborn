@@ -1625,6 +1625,9 @@ class StudentController extends CController {
         }
         $this->renderJSON(['exerciseID'=>$array_exerciseID,'type'=>$array_type,'title'=>$array_title]);
     }
+    
+    
+    
 
     public function actionPassClassExercise() {
         $exerciseID = $_GET['exerciseID'];
@@ -1700,5 +1703,42 @@ class StudentController extends CController {
             'array_exam' => $array_exam,
         ));
     }
-    
+    //判断是否弹出签到提示框
+      public function actionStartSign() {
+        $studentID = Yii::app()->session['userid_now'];
+        $array_Sign_ID = [];
+        $array_studentSign_ID = [];
+        $classID = $_GET['classID'];
+        $lessonID = $_GET['lessonID'];
+        $TeacherSign = TeacherSign::model()->issign($classID, $lessonID);
+        $studentsign = StudentSign::model()->ismark($studentID, $lessonID);       
+        foreach ($TeacherSign as $key => $value) {
+            $array_Sign_ID[$key]=$value['Sign_ID'];
+        }
+        foreach ($studentsign as $k => $v) {
+           $array_studentSign_ID[$k]=$v['Sign_ID'];
+        }
+       $this->renderJSON(['TeacherSign_ID'=>$array_Sign_ID,'StudentSign_ID'=>$array_studentSign_ID,]);
+    }
+   public function actionSaveSign(){
+        $studentID = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $lessonID = $_GET['lessonID'];
+        $publishtime = date('y-m-d H:i:s',time());
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `student_sign` (time,mark,classID,userID,lessonID) values ('$publishtime',1,$classID,'$studentID',$lessonID)";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+   }
+   public function actionIsReleaseSign(){
+        $studentID = Yii::app()->session['userid_now'];
+        $array_Sign_ID = [];
+        $classID = $_GET['classID'];
+        $lessonID = $_GET['lessonID'];
+        $TeacherSign = TeacherSign::model()->hassign($classID, $lessonID);      
+        foreach ($TeacherSign as $key => $value) {
+            $array_Sign_ID[$key]=$value['Sign_ID'];
+        }
+       $this->renderJSON(['TeacherSign_ID'=>$array_Sign_ID,]);
+    }
 }
