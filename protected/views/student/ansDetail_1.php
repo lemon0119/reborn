@@ -11,6 +11,18 @@
                 else
                     echo '听打练习';
                 ?></h2>
+            <?php $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            echo '<div id="score" style="position: absolute;right: 79px;top: 54px">';
+               if($flag == "未批阅"){
+                   echo '未批阅';
+                }else {
+                    echo'得分：'.$score;
+                }
+                echo '</div> '; 
+         
+        }
+?>
             <tr>
                 <td width = '50%' align='center'>题目：<?php echo $exer['title'] ?></td>
                 <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php

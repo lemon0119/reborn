@@ -2321,15 +2321,13 @@ $dir->close();
     }
 
     function startNow(exerciseID) {
-        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info, {
-            onOk: function () {
                 $.ajax({
                     type: "POST",
                     url: "index.php?r=teacher/openClassExercise",
                     data: {exerciseID: exerciseID},
                     success: function (data) {
                         if (data == 1) {
-                             window.wxc.xcConfirm("开放成功！", window.wxc.xcConfirm.typeEnum.success);
+    
                              // window.parent.startClassExercise(exerciseID);
                            window.parent.backToTableClassExercise4virtual();
                         } else {
@@ -2343,8 +2341,6 @@ $dir->close();
 
                     }
                 });
-            }
-        });
     }
 
     function backToTableClassExercise4virtual() {

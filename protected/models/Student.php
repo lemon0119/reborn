@@ -84,7 +84,10 @@ class Student extends CActiveRecord {
         return ['stuLst' => $stuLst, 'pages' => $pages,];
         
     }
-
+    public function findLevelByStudentID($studentID) {
+        $student = $this->find("userid = '$studentID'");
+        return $student['level'];
+    }
     public function findClassByStudentID($studentID) {
         $student = $this->find("userid = '$studentID'");
         return $student['classID'];
