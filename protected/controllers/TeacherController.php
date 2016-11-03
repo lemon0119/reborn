@@ -1464,6 +1464,11 @@ class TeacherController extends CController {
         //get student
         $stu = Array();
         $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
+        $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
+        $stuPrimary = Student::model()->findAll("classID=? and is_delete=? and level=?", array($classID, 0,'初级'));
+        $stuIntermediate = Student::model()->findAll("classID=? and is_delete=? and level=?", array($classID, 0,'中级'));
+        $stuSenior = Student::model()->findAll("classID=? and is_delete=? and level=?", array($classID, 0,'高级'));
+        $stuUngrouped = Student::model()->findAll("classID=? and is_delete=? and level=?", array($classID, 0,'未分组'));
         return $this->render('startCourse', [
                     'classID' => $classID,
                     'keywork' => $keywork,

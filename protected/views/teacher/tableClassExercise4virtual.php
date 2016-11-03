@@ -73,7 +73,7 @@
                             ?></td>
                             <td><button id="startClassExercise"<?php if ($model['now_open'] == 1) {
                                 if ($mark === 0) $mark = $model['exerciseID'] ?> class='btn' disabled='disabled' <?php }else { ?> class='btn btn-primary'<?php } ?>   onclick="startClassExercise(<?php echo $model['exerciseID']; ?>)" >开始</button></td>
-                            <td><button id="startClassExercise" 
+                            <td><button id="startClassExercise" style="width: 68px"
                                 <?php if ($model['now_open'] == 1) {
                                 if ($mark === 0) $mark = $model['exerciseID'] ?> 
                                         class='btn' disabled='disabled' 
