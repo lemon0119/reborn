@@ -10,9 +10,20 @@ require 'ansSideBar.php';
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <div class="span9"style="height:570px; overflow:auto; border:0px;">
     <div class="hero-unit">
+        <div style="float: left">
+        <h2>简答题</h2>
+        </div>
+        <div id="score" style="position: absolute;right: 79px;top: 54px">
+            <?php if($flag == "未批阅"){
+                   echo '未批阅';
+                }else {
+                    echo "得分：".$score;
+                }
+                ?>
+        </div>
+        <br><br>
         <input name ="qType" type="hidden" value="question"/>
         <?php 
-        echo '<h2>简答题</h2>';
             $SNum = 0;
             foreach ($exercise['question'] as $value) {
                 echo ($SNum+1).'. ';

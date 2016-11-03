@@ -10,16 +10,6 @@
         <div class="well" style="padding: 8px 0;">
             <div class="well-topnoradius" style="padding: 8px 0;height:600px;overflow:auto;top: 20px">
                 <ul class="nav nav-list">
-                        <li class="nav-header">基础知识</li>
-                        <li id="li-choice">
-                            <a href="./index.php?r=teacher/choice"><i class="icon-font"></i> <span style="position: relative;top: 6px">选 择 题</span></a>
-                        </li>
-                        <li id="li-filling">
-                            <a href="./index.php?r=teacher/filling"><i class="icon-text-width"></i><span style="position: relative;top: 6px"> 填 空 题</span></a>
-                        </li>
-                        <li id="li-question">
-                            <a href="./index.php?r=teacher/question"><i class="icon-align-left"></i> <span style="position: relative;top: 6px">简 答 题</span></a>
-                        </li>
                         <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">

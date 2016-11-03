@@ -69,19 +69,25 @@ class StudentController extends CController {
         $isExam = Yii::app()->session['isExam'];
         if ($isExam) {
             $recordID = ExamRecord::getRecord($workID, $studentID);
+            $flag = $_GET['flag'];
         } else {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
+            $flag = '';
         }
 
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, $type, $exerID);
+        $score = AnswerRecord::model()->getScore($recordID, $exerID,$type);
         $correct = $answer['ratio_correct'];
         $n = strrpos($correct, "&");
         $correct = substr($correct, $n + 1);
+        
         return $this->render('ansDetail_1', ['exercise' => $classwork,
                     'exer' => $exer,
                     'answer' => $answer['answer'],
                     'correct' => $correct,
                     'type' => $type,
+                    'flag' => $flag,
+                    'score' =>$score
         ]);
     }
 
@@ -101,17 +107,24 @@ class StudentController extends CController {
         $isExam = Yii::app()->session['isExam'];
         if ($isExam) {
             $recordID = ExamRecord::getRecord($workID, $studentID);
+            $flag = $_GET['flag'];
         } else {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
+            $flag = '';
         }
         $answer = $recordID == NULL ? NULL : AnswerRecord::getAnswer($recordID, 'key', $exerID);
+        $score = AnswerRecord::model()->getScore($recordID, $exerID,'key');
         $correct = $answer['ratio_correct'];
         $n = strrpos($correct, "&");
         $correct = substr($correct, $n + 1);
+        
         return $this->render('ansKey', ['exercise' => $classwork,
                     'exer' => $result,
                     'answer' => $answer['answer'],
-                    'correct' => $correct]);
+                    'correct' => $correct,
+                    'flag' =>$flag,
+                    'score' =>$score
+            ]);
     }
 
     public function actionAnsQuestion() {
@@ -125,13 +138,16 @@ class StudentController extends CController {
         $isExam = Yii::app()->session['isExam'];
         if ($isExam) {
             $recordID = ExamRecord::getRecord($workID, $studentID);
+            $flag = $_GET['flag'];
         } else {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
+            $flag = '';
         }
-
+        
         $ansQuest = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'question');
+        $score = AnswerRecord::model()->getChoiceScore($recordID, 'question');
         $ansArr = AnswerRecord::model()->ansToArray($ansQuest);
-        return $this->render('ansQuest', ['exercise' => $classwork, 'ansQuest' => $ansArr]);
+        return $this->render('ansQuest', ['exercise' => $classwork, 'ansQuest' => $ansArr,'flag'=>$flag,'score'=>$score]);
     }
 
     public function actionAnsFilling() {
@@ -145,12 +161,15 @@ class StudentController extends CController {
         $isExam = Yii::app()->session['isExam'];
         if ($isExam) {
             $recordID = ExamRecord::getRecord($workID, $studentID);
+            $flag = $_GET['flag'];
         } else {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
+            $flag = '';
         }
+        $score = AnswerRecord::model()->getChoiceScore($recordID, 'filling');
         $ansFilling = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'filling');
         $ansArr = AnswerRecord::model()->ansToArray($ansFilling);
-        return $this->render('ansFilling', ['exercise' => $classwork, 'ansFilling' => $ansArr]);
+        return $this->render('ansFilling', ['exercise' => $classwork, 'ansFilling' => $ansArr,'flag'=>$flag,'score'=>$score]);
     }
 
     public function actionAnsChoice() {
@@ -164,13 +183,15 @@ class StudentController extends CController {
         $isExam = Yii::app()->session['isExam'];
         if ($isExam) {
             $recordID = ExamRecord::getRecord($workID, $studentID);
+            $flag = $_GET['flag'];
         } else {
             $recordID = SuiteRecord::getRecord($workID, $studentID);
+            $flag = '';
         }
-
+        $score = AnswerRecord::model()->getChoiceScore($recordID,'choice');
         $ansChoice = $recordID == NULL ? NULL : AnswerRecord::model()->getAnswerByType($recordID, 'choice');
         $ansArr = AnswerRecord::model()->ansToArray($ansChoice);
-        return $this->render('ansChoice', ['exercise' => $classwork, 'ansChoice' => $ansArr]);
+        return $this->render('ansChoice', ['exercise' => $classwork, 'ansChoice' => $ansArr,'flag' =>$flag ,'score' =>$score]);
     }
 
     public function actionViewAns() {
@@ -182,21 +203,24 @@ class StudentController extends CController {
             $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
             $suiteID = $clsLesnSuite->suiteID;
         }
+        
         Yii::app()->session['workID'] = $workID;
         Yii::app()->session['suiteID'] = $suiteID;
         $classwork = Array();
         $isExam = Yii::app()->session['isExam'];
         if (!$isExam) {
+            $flag = '';
             foreach (Tool::$EXER_TYPE as $type) {
                 $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             }
         } else {
+            $flag = $_GET['flag'];
             foreach (Tool::$EXER_TYPE as $type) {
                 $classwork[$type] = Exam::model()->getExamExerByType($suiteID, $type);
             }
         }
 
-        return $this->render('suiteAns', ['exercise' => $classwork]);
+        return $this->render('suiteAns', ['exercise' => $classwork,'flag' =>$flag]);
     }
 
     public function actionSaveQuestion() {
@@ -250,6 +274,7 @@ class StudentController extends CController {
         Yii::app()->session['isExam'] = $isExam;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
+        $level = Student::model()->findLevelByStudentID($studentID);
         if ($classID != "0") {
             $lessons = Lesson::model()->findAll("classID = '$classID'");
         } else {
@@ -257,7 +282,7 @@ class StudentController extends CController {
         }
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $currentLesn = isset($_GET['lessonID']) ? $_GET['lessonID'] : $currentLesn;
-        $myCourse = Suite::model()->getClassworkAll($currentLesn);
+        $myCourse = Suite::model()->getClassworkAll($currentLesn,$level);
         $myCourses = array();
         $n = 0;
         $ratio_accomplish = array();
@@ -1169,10 +1194,11 @@ class StudentController extends CController {
         Yii::app()->session['isExam'] = $isExam;
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
+        $level = Student::model()->findLevelByStudentID($studentID);
         $lessons = Lesson::model()->findAll("classID = '$classID'");
         $currentLesn = TbClass::model()->findlessonByClassID($classID);
         $workID = Yii::app()->session['workID'];
-        $classworks = Suite::model()->getClassworkAll($currentLesn);
+        $classworks = Suite::model()->getClassworkAll($currentLesn,$level);
         $classwork = array();
         $ratio_accomplish = '0';
         $n = 0;
@@ -1547,10 +1573,11 @@ class StudentController extends CController {
     }
 
     public function actionFreePractice() {
-        $classExerciseLst = array();
+        $classExerciseLsts = Array();
         $nowLesson = "";
         $studentID = Yii::app()->session['userid_now'];
         $classID = Student::model()->findClassByStudentID($studentID);
+        $level = Student::model()->findLevelByStudentID($studentID);
         if ($classID != "0") {
             $lessons = Lesson::model()->findAll("classID = '$classID'");
         } else {
@@ -1559,9 +1586,11 @@ class StudentController extends CController {
         if (isset($_GET['lessonID'])) {
             $lessonID = $_GET['lessonID'];
             $nowLesson = Lesson::model()->find("lessonID = '$lessonID'");
-            $classExerciseLst = ClassExercise::model()->findAll("classID = '$classID' AND lessonID = '$lessonID' AND is_open = 1");
+            $classExerciseLst = ClassExercise::model()->getClassExerciselst($lessonID, $classID, $level);
+            
             $array = Array();
             foreach ($classExerciseLst as $list) {
+                
                 if (strstr($list['content'], "$$")) {
                     $string = "";
                     $list['content'] = str_replace("$$", " ", $list['content']);
@@ -1574,18 +1603,22 @@ class StudentController extends CController {
                     }
                     $list['content'] = $string;
                 }
+                array_push($classExerciseLsts, $list);
             }
         }
-        return $this->render('freePractice', ['lessons' => $lessons, 'nowlesson' => $nowLesson, 'classExerciseLst' => $classExerciseLst]);
+        return $this->render('freePractice', ['lessons' => $lessons, 'nowlesson' => $nowLesson, 'classExerciseLst' => $classExerciseLsts]);
     }
     public function actionStartClassExercise() {
+        
         $array_exerciseID = [];
         $array_type = [];
         $array_title = [];
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
-        $classExercise = ClassExercise::model()->isHasClassExerciseOpen($classID, $lessonID);
-        foreach ($classExercise as $key => $value) {
+        $studentID = Yii::app()->session['userid_now'];
+        $level = Student::model()->findLevelByStudentID($studentID);
+        $classExercise = ClassExercise::model()->getClassExercise($lessonID, $classID, $level);
+        foreach ($classExercise as $key => $value) {           
             $array_exerciseID[$key]=$value['exerciseID'];
             $array_type[$key]=$value['type'];
             $array_title[$key]=$value['title'];
