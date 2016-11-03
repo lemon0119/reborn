@@ -756,20 +756,19 @@ echo "<script>var role='$role';</script>";
             type: "GET",
             url: "index.php?r=student/startSign&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
             success: function (data) {
-                if (data['TeacherSign_ID'].length === 0){ 
-               
+                if (data['TeacherSign_ID'].length === 0){           
         }
                 else{
                 if (data['StudentSign_ID'].length > 0) {
                 } else {
                    issign = 1;
-                   window.wxc.xcConfirm("上车刷卡往里走！！！", window.wxc.xcConfirm.typeEnum.info, {
+                   window.wxc.xcConfirm("签到！！！", window.wxc.xcConfirm.typeEnum.info, {
                         onOk: function () {
         $.ajax({
             type: "POST",
             url: "index.php?r=student/SaveSign&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
             success: function(){    
-            window.wxc.xcConfirm('学生卡', window.wxc.xcConfirm.typeEnum.success,{
+            window.wxc.xcConfirm('签到成功', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
                 //window.location.reload();
                 }

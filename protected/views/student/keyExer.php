@@ -9,6 +9,7 @@ if ($isExam == false) {
     <?php
 } else {
     Yii::app()->session['isExam'] = 1;
+    require 'OnExam.php';
     require 'examSideBar.php';
     ?>
     <?php

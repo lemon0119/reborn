@@ -1,13 +1,11 @@
-<?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
+    
+<?php
+//require 'studentBar.php';
 if ($isExam == FALSE) {
     require 'suiteSideBar.php';
 } else {
+    require 'OnExam.php';
     require 'examSideBar.php';
 }
 $host = Yii::app()->request->hostInfo;
@@ -16,8 +14,8 @@ $rout = 'student/saveChoice';
 $page = '/index.php?r=' . $rout;
 $SNum = 0;
 ?>
-
-<div class="span9"style="height:790px; overflow:auto;">
+                <div class="row" style="min-height: 700px">
+              <div class="span9"style="height:790px; overflow:auto;">
     <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host . $path . $page; ?>">
         <div class="hero-unit">
             <input name ="qType" type="hidden" value="choice"/>
@@ -53,6 +51,14 @@ $SNum = 0;
             ?>
         </div>
     </form>
+</div>
+                </div>
+            </div>
+            <div  class="copyright">
+                2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<span onclick="legalNotice()" class="copyright">法律声明</span><span  onclick="contact()" class="copyright">联系我们</span><span onclick="getHelp()" class="copyright">获得帮助</span>
+            </div>   
+            </body>
+</html>    
     <script>
 
         $(document).ready(function () {
