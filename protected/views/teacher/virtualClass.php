@@ -67,9 +67,32 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
     <button id="share-Cam" class="btn btn-primary" >直播视频</button>
     <button id="close-Cam" class="btn" disabled="disabled">关闭视频</button>
-     <button id="startsign"   class='btn btn-primary' >签到</button>
-     <button id="closesign"   class='btn btn-primary' >关闭签到</button>
-     <div id = "st"></div>
+<!--     <button id='startsign'   class='btn btn-primary' >签到</button>-->
+      <?php 
+     $teacherID = Yii::app()->session['userid_now'];
+     //echo $teacherID;
+     $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+     $lessonID = $less['lessonID'];
+     $Sign = TeacherSign::model()->Alreadysign($classID, $lessonID,$teacherID);
+     if ($Sign !=NULL){
+     foreach ($Sign as $key)
+         {
+         }
+         $mark = $key['mark'];
+         if($mark == 1){
+             echo "<button id='startsign'   class='btn btn-primary'disabled='disabled' >签到</button>";
+             echo "<button id='closesign'   class='btn btn-primary' >关闭签到</button>";
+         }else 
+             {
+             echo "<button id='startsign'   class='btn btn-primary' >签到</button>";
+             echo "<button id='closesign'   class='btn btn-primary'disabled='disabled' >关闭签到</button>";
+     }}
+ else {
+                 echo "<button id='startsign'   class='btn btn-primary' >签到</button>";
+             echo "<button id='closesign'   class='btn btn-primary'disabled='disabled' >关闭签到</button>";
+}
+     ?> 
+<!--    <button id="closesign"   class='btn btn-primary' > 关闭签到</button>-->
         <button id="Absence"   class='btn btn-primary' onclick="showAbsence()" >查看缺勤</button>
     
 
@@ -2336,6 +2359,42 @@ $dir->close();
     }
     //签到
 function startSign(){
+           $.ajax({
+            type: "GET",
+            url: "index.php?r=teacher/startSign&&classID=<?php echo $classID; ?>&&lessonID=<?php 
+            $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+            echo $less['lessonID'];?>",
+            success: function (data) {
+                if (data['TeacherSign_ID'].length === 0){           
+        }
+                else{
+                if (data['StudentSign_ID'].length > 0) {
+                } else {
+                   issign = 1;
+                   window.wxc.xcConfirm("签到！！！", window.wxc.xcConfirm.typeEnum.info, {
+                        onOk: function () {
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=student/SaveSign&&classID=<?php echo $classID; ?>&&lessonID=<?php //echo $currentLesn; ?>",
+            success: function(){    
+            window.wxc.xcConfirm('签到成功', window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function(){
+                //window.location.reload();
+                }
+            });
+            },
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr.responseText, "Failed");
+            }
+        });
+                        }
+                    });
+
+               }
+            }
+            }
+        });  
        var option = {
             title: "签到",
             btn: parseInt("0011", 2),
@@ -2344,24 +2403,32 @@ function startSign(){
             $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
             echo $less['lessonID'];?>";
             //window.location.reload();
-            sss();
             }
         }
         window.wxc.xcConfirm("签到？？？？？？", "custom", option);
+
     }
+    
+   
      $("#startsign").click(function() {
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "./index.php?r=teacher/startSign&&classID=<?php echo $classID; ?>&&lessonID=<?php 
             $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
-            echo $less['lessonID'];?>",
-            success: function(){    
-            window.wxc.xcConfirm('学生将收到签到！', window.wxc.xcConfirm.typeEnum.success,{
+            echo $less['lessonID'];?>",                                                         
+            success: function(data){
+            if (data['stime'].length != 0){
+                window.wxc.xcConfirm('10分钟内，您已签到过一次，请稍后再试', window.wxc.xcConfirm.typeEnum.error);
+            }else{
+            window.wxc.xcConfirm('学生将收到签到！并在10分钟内，不能进行再次签到', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
+                    document.getElementById("startsign").disabled = "disabled";
+                    document.getElementById("closesign").disabled = "";
                 //window.location.reload();
                 }
             });
-            },
+            }
+        },
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr.responseText, "Failed");
@@ -2376,8 +2443,10 @@ function startSign(){
             $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
             echo $less['lessonID'];?>",
             success: function(){    
-            window.wxc.xcConfirm('关闭成功签到！', window.wxc.xcConfirm.typeEnum.success,{
+            window.wxc.xcConfirm('关闭签到成功！', window.wxc.xcConfirm.typeEnum.success,{
                 onOk:function(){
+                    document.getElementById("startsign").disabled = "";
+                    document.getElementById("closesign").disabled = "disabled";
                 //window.location.reload();
                 }
             });
@@ -2510,29 +2579,5 @@ window.open("./index.php?r=teacher/showAbsence&&classID=<?php echo $classID; ?>&
 	//	查看浏览器窗口大小变化
 	window.onresize = showDialog;
 	Dialog('dialogDrag','dialogMove');
-	showDialog();
-   
+	showDialog();          
 </script>
-<div class="ui-mask" id="mask" onselectstart="return false"></div>
-<div class="ui-dialog" id="dialogMove" onselectstart='return false;'>
-	<div class="ui-dialog-title" id="dialogDrag"  onselectstart="return false;" >
-		<a class="ui-dialog-closebutton" href="javascript:hideDialog();"></a>
-缺勤表
-	</div>
-	<div class="ui-dialog-content">
-            <div style="color: red" id="queqin">
-
-                           
-                            
-                    
-		</div>
-
-		<div class="ui-dialog-l40">
-		</div>
-		<div>
-			<a class="ui-dialog-submit" href="javascript:hideDialog();" >确定</a>
-		</div>
-		<div class="ui-dialog-l40">
-		</div>
-	</div>
-</div>

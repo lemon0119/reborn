@@ -8,8 +8,9 @@
  * @property string $userID
  * @property integer $classID
  * @property integer $lessonID
- * @property string $mark
+ * @property integer $mark
  * @property string $time
+ * @property integer $times
  */
 class StudentSign extends CActiveRecord
 {
@@ -29,12 +30,12 @@ class StudentSign extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Sign_ID, userID, classID, lessonID, mark, time', 'required'),
-			array('Sign_ID, classID, lessonID', 'numerical', 'integerOnly'=>true),
+			array('userID, classID, lessonID, mark, time', 'required'),
+			array('classID, lessonID, mark, times', 'numerical', 'integerOnly'=>true),
 			array('userID', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Sign_ID, userID, classID, lessonID, mark, time', 'safe', 'on'=>'search'),
+			array('Sign_ID, userID, classID, lessonID, mark, time, times', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,6 +62,7 @@ class StudentSign extends CActiveRecord
 			'lessonID' => 'Lesson',
 			'mark' => 'Mark',
 			'time' => 'Time',
+			'times' => 'Times',
 		);
 	}
 
@@ -86,22 +88,41 @@ class StudentSign extends CActiveRecord
 		$criteria->compare('userID',$this->userID,true);
 		$criteria->compare('classID',$this->classID);
 		$criteria->compare('lessonID',$this->lessonID);
-		$criteria->compare('mark',$this->mark,true);
+		$criteria->compare('mark',$this->mark);
 		$criteria->compare('time',$this->time,true);
+		$criteria->compare('times',$this->times);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-    public function ismark($studentID,$lessonID){
+    public function ismark($studentID,$lessonID,$classID){
+        $sql = "select * FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID' AND userID = '$studentID'Order By time Desc limit 0,1 ";
+        $criteria   =   new CDbCriteria();
+        $LastSign  =   Yii::app()->db->createCommand($sql)->queryAll(); 
+        foreach ($LastSign as $key){
+        $last = $key['times'];
         $studentsign = new StudentSign();
-        $studentsign = $studentsign->findAll("userID = '$studentID' AND lessonID = '$lessonID' AND mark = 1");
-        return $studentsign;
+        $studentsign = $studentsign->findAll("userID = '$studentID' AND lessonID = '$lessonID' AND mark = 1 AND times = '$last'");
+        return $studentsign;}
     } 
-//     public function Absence($studentID,$lessonID){
-//
-//     }
-
+        public function allabsence($classID, $lessonID,$all,$times){
+            if($times != null){
+        $publishtime = date('y-m-d H:i:s',time());    
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `student_sign` (time,mark,classID,userID,lessonID,times) values ('$publishtime',0,$classID,'$all',$lessonID,$times)"; 
+        $command = $connection->createCommand($sql);
+        $command->execute();
+            }
+            else
+            {
+        $publishtime = date('y-m-d H:i:s',time());    
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `student_sign` (time,mark,classID,userID,lessonID,times) values ('$publishtime',0,$classID,'$all',$lessonID,1)"; 
+        $command = $connection->createCommand($sql);
+        $command->execute();
+            }
+    }  
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
