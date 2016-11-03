@@ -13,6 +13,7 @@ if ($isExam == false) {
     Yii::app()->session['isExam'] = 0;
 } else {
     Yii::app()->session['isExam'] = 1;
+    require 'OnExam.php';
     require 'examSideBar.php';
 }
 //add by lc 

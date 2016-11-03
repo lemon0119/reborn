@@ -7876,66 +7876,155 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
         $publishtime = date('y-m-d H:i:s',time());
+        //服务器前10分钟的时间
+        $publishtime10 = date('Y-m-d H:i:s',strtotime("-10 minute"));
+        //查到该课最大签到时间
+        $sql1 = "select * FROM teacher_sign WHERE lessonID = '$lessonID' AND classID = $classID AND teacherID= '$teacherID'Order By Sign_Time Desc limit 0,1";
+        $criteria   =   new CDbCriteria();
+        $ts  =   Yii::app()->db->createCommand($sql1)->queryAll();
+        if($ts == null){
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO `teacher_sign` (Sign_Time,mark,classID,teacherID,lessonID) values ('$publishtime',1,$classID,'$teacherID',$lessonID)";
+        $sql = "INSERT INTO `teacher_sign` (Sign_Time,mark,classID,teacherID,lessonID,times) values ('$publishtime',1,$classID,'$teacherID',$lessonID,1)";
         $command = $connection->createCommand($sql);
         $command->execute();
-        /*
-        $sql = "SELECT Sign_Time FROM teacher_sign where lessonID = '$lessonID'";
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $result = $result->read();
-        $sql = "SELECT Sign_Time FROM teacher_sign where lessonID = '$lessonID'";
-        $result = Yii::app()->db->createCommand($sql)->query();
-        $result = $result->read();
-        print_r($result);*/
-    }
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        foreach($class_student as $k)
+            {
+            $all = $k->userID;
+            //到老师点击签到时全部标记学生为缺勤
+            StudentSign::model()->allabsence($classID, $lessonID,$all,1);
+        }    
+        }else{
+        foreach($ts as $key){
+//            $stime = [];
+            $t = $key['Sign_Time'];
+            $times = $key['times'];
+            if($t > $publishtime10){ 
+            $time1 = strtotime(date('Y-m-d H:i:s',strtotime("-10 minute")));
+            $time2 = strtotime($t);
+            $n =  $time2 - $time1;
+            //转成时间戳后取整
+            $stime = ceil($n / 60);
+            $this->renderJSON(['stime'=>$stime,]);
+
+            return $stime;
+        }
+        }
+        $times = $key['times']+1;
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `teacher_sign` (Sign_Time,mark,classID,teacherID,lessonID,times) values ('$publishtime',1,$classID,'$teacherID',$lessonID,$times)";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        foreach($class_student as $k)
+            {
+            $all = $k->userID;
+            //到老师点击签到时全部标记学生为缺勤
+            StudentSign::model()->allabsence($classID, $lessonID,$all,$times);
+        }   
+            }         
+            $stime = [];
+            $this->renderJSON(['stime'=>$stime,]);
+            }
     public function actionShowAbsence(){
 //        $array_studentAbsence = [];
-        $teacherID = Yii::app()->session['userid_now'];
-        $classID = $_GET['classID'];
-        $lessonID = $_GET['lessonID'];
-        //多表联合查询
-        $sql = "SELECT * FROM student WHERE classID = '$classID' AND userID NOT in(SELECT userID FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID')";
-  //      $sqlabsence = Yii::app()->db->createCommand($sql)->queryAll();
-//        $studentAbsence = $sql;
-//        foreach ($studentAbsence as $key => $value) {
-//            $array_studentAbsence[$key]=$value['Sign_ID'];
-//        }
-//        $this->renderJSON(['studentAbsence'=>$array_studentAbsence,]);
+         $teacherID = Yii::app()->session['userid_now'];
+         $classID = $_GET['classID'];
+         $lessonID = $_GET['lessonID'];
+        //查询
+         if(isset($_GET['times'])){
+          $one =   $_GET['times'];
+          $sql = "SELECT * FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID' and mark = '0' and times = '$one'";
           $criteria   =   new CDbCriteria();
           $result     =   Yii::app()->db->createCommand($sql)->queryAll();
-//        $pages      =   new CPagination($result->rowCount);
-//        $pages->pageSize    =   10; 
-//        $pages->applyLimit($criteria); 
-//        $result     =   Yii::app()->db->createCommand($sql." LIMIT :offset,:limit"); 
-//        $result->bindValue(':offset', $pages->currentPage * $pages->pageSize); 
-//        $result->bindValue(':limit', $pages->pageSize); 
-//        $absenceLst  =   $result->query();
-        return $this->renderPartial('showabsence', ['result' => $result,'lessonID'=>$lessonID,'classID'=>$classID]);
-    }
+          $sql = "SELECT distinct (times) FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID'";
+          $criteria   =   new CDbCriteria();
+          $times     =   Yii::app()->db->createCommand($sql)->queryAll();
+        return $this->renderPartial('showabsence', ['result' => $result,'lessonID'=>$lessonID,'classID'=>$classID,'times'=>$times,'one'=>$one]);
+                          
+         }
+                          else{
+          $sql = "SELECT * FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID' and mark = '0'";
+          $criteria   =   new CDbCriteria();
+          $result     =   Yii::app()->db->createCommand($sql)->queryAll();
+          $sql = "SELECT distinct (times) FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID'";
+          $criteria   =   new CDbCriteria();
+          $times     =   Yii::app()->db->createCommand($sql)->queryAll();
+        return $this->renderPartial('showabsence', ['result' => $result,'lessonID'=>$lessonID,'classID'=>$classID,'times'=>$times]);
+    }}
     public function actionCloseSign(){
         $teacherID = Yii::app()->session['userid_now'];
+        $publishtime = date('y-m-d H:i:s',time());
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
         $connection = Yii::app()->db;
-        $sql = "UPDATE teacher_sign SET mark = 0 WHERE lessonID = '$lessonID' and classID = '$classID'";
+        $sql = "UPDATE teacher_sign SET mark = 0  WHERE lessonID = '$lessonID' and classID = '$classID'";
         $command = $connection->createCommand($sql);
         $command->execute();       
     } 
     public function actionCountAbsence(){
        $classID = $_GET['classID'];
-       $sql = "select distinct (substring(time,1,7)) FROM student_sign WHERE classID = '$classID'";
+       $sql = "select distinct (substring(time,1,7)) FROM student_sign WHERE classID = '$classID'Order By time Desc";
        $criteria   =   new CDbCriteria();
-       $result     =   Yii::app()->db->createCommand($sql)->queryAll();
-       return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID]); 
+       $result     =   Yii::app()->db->createCommand($sql)->queryAll();      
+       $sql2 = "select distinct (substring(time,1,7)) FROM student_sign WHERE classID = '$classID'Order By time Desc limit 0,1";
+       $criteria   =   new CDbCriteria();
+       $one     =   Yii::app()->db->createCommand($sql2)->queryAll();
+       if(isset($_POST['time'])){  
+       $time1 = $_POST['time'];
+       $time2 = $_POST['endtime'];
+       if($time1 == $time2){
+       $sql3 = "select * FROM student_sign WHERE time like'%$time1%'";
+       $criteria   =   new CDbCriteria();
+       $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
+        return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time1'=>$time1,'time2'=>$time2]);  
+       }
+$old = $time1;
+$arr = explode("-",$old);
+$new = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]-1,$arr[0]));
+$old2 = $time2;
+$arr = explode("-",$old2);
+$new2 = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]+1,$arr[0]));
+       $sql3 = "select * FROM student_sign WHERE time BETWEEN '$new' AND '$new2' AND mark = 0 AND classID = '$classID'";
+       $criteria   =   new CDbCriteria();
+       $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
+        return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time1'=>$time1,'time2'=>$time2]);    
+ }
+ else{                             
+foreach ($one as $v)
+{
+    if($v["(substring(time,1,7))"]  == ''){
+        echo"没有任何签到"; 
+    }else{
+       $time = $v["(substring(time,1,7))"];
+ $sql3 = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0 AND classID = '$classID'";
+ $criteria   =   new CDbCriteria();
+ $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
+ if($m == null){
+     echo "wq";
+ }else{
+ return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time'=>$time]);
+}
+    }
+}
+ }
     }
 
-        public function actionExportabsence(){
-            
-        $time = $_GET['time'];
-        $sql = "select * FROM student_sign WHERE time like '%$time%'";
+        public function actionExportabsence(){       
+        $time = $_POST['time'];
+        $endtime = $_POST['endtime'];
+        $classID = $_GET['classID'];
+        $sql = "select * FROM student_sign WHERE time BETWEEN '$time'AND '$endtime' AND mark = 0 AND classID = '$classID'";
         $criteria   =   new CDbCriteria();
         $result     =   Yii::app()->db->createCommand($sql)->queryAll();
-        return $this->renderPartial('02simple', ['result' => $result]);
+        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
+        }
+        
+        public function actionShowMonthAbsence(){     
+        $time = $_POST['time'];
+        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0";
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();
+        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
         }
         }

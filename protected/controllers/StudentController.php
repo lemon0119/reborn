@@ -409,7 +409,7 @@ class StudentController extends CController {
         //end
         if ($recordID == null) {
             ExamRecord::saveExamRecord($recordID);
-            return $this->render('listenExer', array('recordID' => $recordID, 'exercise' => $classexam, 'exerID' => $exerID, 'exercise2' => $classexam2, 'exerOne' => $result, 'cent' => $cent, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime));
+            return $this->renderpartial('listenExer', array('recordID' => $recordID, 'exercise' => $classexam, 'exerID' => $exerID, 'exercise2' => $classexam2, 'exerOne' => $result, 'cent' => $cent, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime));
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -427,7 +427,7 @@ class StudentController extends CController {
         }
 
 
-        return $this->render('listenExer', array(
+        return $this->renderpartial('listenExer', array(
                     'recordID' => $recordID,
                     'exercise' => $classexam,
                     'exercise2' => $classexam2,
@@ -553,7 +553,7 @@ class StudentController extends CController {
         //end
         if ($recordID == null) {
             ExamRecord::saveExamRecord($recordID);
-            return $this->render('lookExer', array(
+            return $this->renderpartial('lookExer', array(
                         'recordID' => $recordID,
                         'exercise' => $classexam,
                         'exercise2' => $classexam2,
@@ -582,7 +582,7 @@ class StudentController extends CController {
         }
 
 
-        return $this->render('lookExer', array(
+        return $this->renderpartial('lookExer', array(
                     'recordID' => $recordID,
                     'exercise' => $classexam,
                     'exercise2' => $classexam2,
@@ -714,7 +714,7 @@ class StudentController extends CController {
         if ($recordID == null) {
             //SuiteRecord::saveSuiteRecord($recordID);
             ExamRecord::saveExamRecord($recordID);
-            return $this->render('keyExer', array('recordID' => $recordID, 'exercise' => $classexam, 'exerID' => $exerID, 'exerOne' => $result, 'exercise2' => $classexam2, 'cent' => $cent, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'key', 'isOver' => $isOver, 'costTime' => $costTime));
+            return $this->renderpartial('keyExer', array('recordID' => $recordID, 'exercise' => $classexam, 'exerID' => $exerID, 'exerOne' => $result, 'exercise2' => $classexam2, 'cent' => $cent, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'key', 'isOver' => $isOver, 'costTime' => $costTime));
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -729,7 +729,7 @@ class StudentController extends CController {
                 $cent[$n] = '0';
             $n++;
         }
-        return $this->render('keyExer', array(
+        return $this->renderpartial('keyExer', array(
                     'recordID' => $record->recordID,
                     'exercise' => $classexam,
                     'exerOne' => $result,
@@ -829,7 +829,7 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         if ($record == null) {
-            return $this->render('questionExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansQuest' => $ansArr, 'questionLst' => $questionLst, 'pages' => $pages, 'exercise2' => $classexam2, 'exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'question']);
+            return $this->renderpartial('questionExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansQuest' => $ansArr, 'questionLst' => $questionLst, 'pages' => $pages, 'exercise2' => $classexam2, 'exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'question']);
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -846,7 +846,7 @@ class StudentController extends CController {
             $n++;
         }
 
-        return $this->render('questionExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansQuest' => $ansArr, 'questionLst' => $questionLst, 'pages' => $pages, 'exercise2' => $classexam2, 'exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'question']);
+        return $this->renderpartial('questionExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansQuest' => $ansArr, 'questionLst' => $questionLst, 'pages' => $pages, 'exercise2' => $classexam2, 'exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'question']);
     }
 
     //课堂作业选择题 
@@ -955,7 +955,7 @@ class StudentController extends CController {
             $n++;
         }
 
-        return $this->render('choiceExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansChoice' => $ansArr, 'exercise' => $classexam, 'exercise2' => $classexam2, 'choiceLst' => $choiceLst, 'pages' => $pages, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'choice']);
+        return $this->renderpartial('choiceExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansChoice' => $ansArr, 'exercise' => $classexam, 'exercise2' => $classexam2, 'choiceLst' => $choiceLst, 'pages' => $pages, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'choice']);
     }
 
     //课堂作业填空题   
@@ -1046,7 +1046,7 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         if ($recordID == null) {
-            return $this->render('fillingExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansFilling' => $ansArr, 'fillingLst' => $fillingLst, 'pages' => $pages, 'exercise' => $classexam, 'exercise2' => $classexam2, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'filling']);
+            return $this->renderpartial('fillingExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansFilling' => $ansArr, 'fillingLst' => $fillingLst, 'pages' => $pages, 'exercise' => $classexam, 'exercise2' => $classexam2, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'filling']);
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -1063,7 +1063,7 @@ class StudentController extends CController {
             $n++;
         }
 
-        return $this->render('fillingExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansFilling' => $ansArr, 'fillingLst' => $fillingLst, 'pages' => $pages, 'exercise' => $classexam, 'exercise2' => $classexam2, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'filling']);
+        return $this->renderpartial('fillingExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansFilling' => $ansArr, 'fillingLst' => $fillingLst, 'pages' => $pages, 'exercise' => $classexam, 'exercise2' => $classexam2, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'filling']);
     }
 
     //课堂作业套题  
@@ -1711,7 +1711,7 @@ class StudentController extends CController {
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
         $TeacherSign = TeacherSign::model()->issign($classID, $lessonID);
-        $studentsign = StudentSign::model()->ismark($studentID, $lessonID);       
+        $studentsign = StudentSign::model()->ismark($studentID, $lessonID,$classID);       
         foreach ($TeacherSign as $key => $value) {
             $array_Sign_ID[$key]=$value['Sign_ID'];
         }
@@ -1725,10 +1725,19 @@ class StudentController extends CController {
         $classID = $_GET['classID'];
         $lessonID = $_GET['lessonID'];
         $publishtime = date('y-m-d H:i:s',time());
+        $sql1 = "select * FROM teacher_sign WHERE lessonID = '$lessonID' AND classID = $classID Order By Sign_Time Desc limit 0,1";
+        $criteria   =   new CDbCriteria();
+        $maxtimes  =   Yii::app()->db->createCommand($sql1)->queryAll();
+        foreach ($maxtimes as $key){
+        $times = $key['times'];
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO `student_sign` (time,mark,classID,userID,lessonID) values ('$publishtime',1,$classID,'$studentID',$lessonID)";
+        $sql = "UPDATE `student_sign` SET mark = '1' , time = '$publishtime' WHERE userID = '$studentID' and lessonID= '$lessonID' and classID = '$classID'and times ='$times'";
         $command = $connection->createCommand($sql);
         $command->execute();
+
+        }   
+
+
    }
    public function actionIsReleaseSign(){
         $studentID = Yii::app()->session['userid_now'];

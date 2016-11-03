@@ -10,6 +10,7 @@
  * @property integer $lessonID
  * @property integer $mark
  * @property string $Sign_Time
+ * @property integer $times
  */
 class TeacherSign extends CActiveRecord
 {
@@ -29,12 +30,12 @@ class TeacherSign extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('classID, lessonID, mark', 'numerical', 'integerOnly'=>true),
+			array('classID, lessonID, mark, times', 'numerical', 'integerOnly'=>true),
 			array('teacherID', 'length', 'max'=>30),
 			array('Sign_Time', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Sign_ID, teacherID, classID, lessonID, mark, Sign_Time', 'safe', 'on'=>'search'),
+			array('Sign_ID, teacherID, classID, lessonID, mark, Sign_Time, times', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,6 +62,7 @@ class TeacherSign extends CActiveRecord
 			'lessonID' => 'Lesson',
 			'mark' => 'Mark',
 			'Sign_Time' => 'Sign Time',
+			'times' => 'Times',
 		);
 	}
 
@@ -88,13 +90,14 @@ class TeacherSign extends CActiveRecord
 		$criteria->compare('lessonID',$this->lessonID);
 		$criteria->compare('mark',$this->mark);
 		$criteria->compare('Sign_Time',$this->Sign_Time,true);
+		$criteria->compare('times',$this->times);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
         
-   //签到     
+           //签到     
         public function issign($classID,$lessonID){
         $TeacherSign = new TeacherSign();
         $TeacherSign = $TeacherSign->findAll("classID = '$classID' AND lessonID = '$lessonID' AND mark = 1");
@@ -105,7 +108,12 @@ class TeacherSign extends CActiveRecord
         $TeacherSign = $TeacherSign->findAll("classID = '$classID' AND lessonID = '$lessonID'");
         return $TeacherSign;
     }
-        
+    public function Alreadysign($classID, $lessonID,$teacherID){
+        $sql = "select * FROM teacher_sign WHERE classID = '$classID' AND lessonID = '$lessonID' AND teacherID = '$teacherID'";
+        $criteria   =   new CDbCriteria();
+        $Sign  =   Yii::app()->db->createCommand($sql)->queryAll(); 
+        return $Sign;
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.
