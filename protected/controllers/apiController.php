@@ -253,7 +253,19 @@ class apiController extends Controller {
         $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
         $this->renderJSON($data);
     }
-    
+    public function ActionChangeSuiteType() {
+        error_log('执行---');
+        $thisLessonId = $_POST['thisLessonId'];
+        $thisClassId = $_POST['thisClassId'];
+        $thisSuiteId = $_POST['thisSuiteId'];
+            $result = ClassLessonSuite::model()->findAll("classID=? and lessonID=? and suiteID=?", array($thisClassId, $thisLessonId ,$thisSuiteId));
+            if(count($result)>0){
+                foreach ($result as $lessonSuite) {
+                    $lessonSuite->open = 0;
+                    $lessonSuite->update();
+                }
+            }
+    }
     public function actionAnalysisSaveToDatabase(){
         $exerciseType = $_POST['exerciseType'];
         $exerciseData = $_POST['exerciseData'];
