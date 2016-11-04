@@ -7974,7 +7974,7 @@ class TeacherController extends CController {
        $time1 = $_POST['time'];
        $time2 = $_POST['endtime'];
        if($time1 == $time2){
-       $sql3 = "select * FROM student_sign WHERE time like'%$time1%' and mark = 0";
+       $sql3 = "select * FROM student_sign WHERE time like'%$time1%' and mark = 0 and classID = '$classID'";
        $criteria   =   new CDbCriteria();
        $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
         return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time1'=>$time1,'time2'=>$time2]);  
