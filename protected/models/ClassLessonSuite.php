@@ -99,7 +99,7 @@ public function findWorkID($classID,$lessonID,$suiteID){
 		));
 	}
         
-        public function insertSuite($classID,$lessonID,$suiteID)
+        public function insertSuite($classID,$lessonID,$suiteID,$level)
         {
             $sql = "select max(workID) as id from class_lesson_suite";
             $max_id = Yii::app()->db->createCommand($sql)->query();
@@ -118,10 +118,14 @@ public function findWorkID($classID,$lessonID,$suiteID){
             $newSuite->classID = $classID;           
             $newSuite->lessonID = $lessonID;
             $newSuite->suiteID = $suiteID;
+            $newSuite->level = $level;
             $newSuite->open = true;
             $newSuite->insert();           
         }
-        
+        public function getSuiteLevelByWorkID ($workID){
+            $classLessonSuite = $this->find("workID = '$workID'");
+            return $classLessonSuite['level'];
+        }
         public function getSuiteClassByTeacherID($teacherID,$selectClassID)
         {
             $sql = "select * from class_lesson_suite";
@@ -130,7 +134,7 @@ public function findWorkID($classID,$lessonID,$suiteID){
             else
             $condition = " where classID in (select classID from teacher_class where teacherID = '$teacherID' and classID = '$selectClassID') and open=1 ";
 
-            $order = "order by classID ASC ,lessonID ASC";
+            $order = "order by workID DESC";
         $sql = $sql.$condition.$order;
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria   =   new CDbCriteria();

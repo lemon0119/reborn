@@ -19,6 +19,9 @@
         <li id="li-<?php echo $progress;?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> <?php echo $lessonsName[$progress];?></a></li>
         <li class="divider"></li>
         <li class="nav-header" style="position:relative;bottom:5px;left:">其余科目</li>
+        </ul>
+        <div class="well-bottomnoradius" style="padding: 8px 0;height:496px;overflow:auto;top: 0px;border-top-left-radius:0px; ">
+        <ul class="nav nav-list">
         <?php foreach($lessonsName as $key => $value):
             if($key!=$progress){
             ?>
@@ -27,6 +30,7 @@
             } 
             endforeach;?>
         </ul>
+        </div>
     </div>
     <?php if(isset($_GET['url'])){ ?>
          <a href="./index.php?r=teacher/scheduleDetil&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
@@ -34,9 +38,9 @@
     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>" class="btn btn-primary">返回</a>
     <?php }?>
 </div>
-<div class="span9">
+<div class="span9" style=" height: 574px">
     <h2 style="display:inline-block;">图片列表</h2>
-    <div id ="picture-table"></div>
+    <div id ="picture-table" style="height: 495px;overflow:scroll;width: 100%;"></div>
     <form name="form1" class="form-horizontal" id="myForm"  method="post" action="./index.php?r=teacher/addPicture&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&isnew=0" enctype="multipart/form-data"> 
     <input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="test" /> 
         <div class="control-group">
@@ -47,8 +51,8 @@
             <div id="number">0%</div>
        </div>
        <button onclick="formSubmit()" type="button" class="btn btn-primary" id="myButton">上传</button>
-              <span style="position: relative;left: 10px">
-       <input type="checkbox" name="checkbox"  value="" />
+              <span style="position: relative;left: 10px;top: 5px">
+       <input type="checkbox" name="checkbox"  value="" style="position: relative;bottom: 4px"/>
        是否上传为公共资源
        </span>
        </div>

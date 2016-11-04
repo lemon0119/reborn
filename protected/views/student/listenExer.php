@@ -3,7 +3,8 @@
 <!--打字控件-->
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <!--打字计时-->
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<!--<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>-->
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 
 <?php
 //2015-8-3 宋杰 判断加载suitesidebar还是examsiderbar
@@ -12,6 +13,7 @@ if ($isExam == false) {
     Yii::app()->session['isExam'] = 0;
 } else {
     Yii::app()->session['isExam'] = 1;
+    require 'OnExam.php';
     require 'examSideBar.php';
 }
 //add by lc 
@@ -41,7 +43,7 @@ if (!$isOver) {
     $squence = $countSquence + 1;
     if ($sqlClassExerciseRecord != null) {
         ?>
-        <div class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div class="span9" style="height: 790px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php } ?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" type="hidden" style="height: 5px;" value="<?php
@@ -53,7 +55,7 @@ if (!$isOver) {
             <div id ="templet" hidden="hidden"></div>
         </div>
     <?php } else { ?>
-        <div class="span9"  style="height: 800px" >
+        <div class="span9"  style="height: 838px;width: 840px;padding: 15px" >
             <?php if ($isExam) { ?>
             <?php } else { ?>
                 <div id="span" class="hero-unit" align="center">
@@ -64,7 +66,7 @@ if (!$isOver) {
                         <h3 ><?php echo $exerOne['title'] ?></h3>
                         <table style="width: 660px"  border = '0px'> 
                             <tr>
-                                <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+                                <td><span class="fl"  style="color: #000;font-weight: bolder">作答时长：</span></td>
                                 <td><span style="color: #f46500" id="timej">00:00:00</span></td>
                                 <td></td>
                                 <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;正确率：&nbsp;&nbsp;</span></td>
@@ -118,7 +120,7 @@ if (!$isOver) {
                         <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
                         <tr>
                             <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                            <td width = '250px'>练习计时：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
+                            <td width = '250px'>作答时长：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
                             <td width = '250px'>速度：<span id="wordps">0</span> 字/分</td>
                         <?php } else { ?>
             <!--                    <td width = '250px'>计时：<span id="timej">00:00:00</span></td>-->
@@ -129,7 +131,7 @@ if (!$isOver) {
                 $listenpath = EXER_LISTEN_URL . $exerOne['filePath'] . $exerOne['fileName'];
                 Yii::app()->session['exerID'] = $exerOne['exerciseID'];
                 ?>
-                <div align="left">
+                <div align="left" style=" margin-bottom: 15px">
                     <br/>
                     <div  id="audio_hiden"  style='display:none ;position:absolute; z-index:3; width:50px; height:28px; left:50px; <?php
                     if ($isExam) {
@@ -145,7 +147,7 @@ if (!$isOver) {
                         echo 'top:260px;';
                     }
                     ?>'></div>
-                    <audio id="audio" style='position:absolute; z-index:2; width:300px; height:28px; left:50px;  <?php
+                    <audio id="audio" style='position:absolute; z-index:2; width:300px; height:28px;<?php
             if ($isExam) {
                 echo 'top:150px;';
             } else {
@@ -162,7 +164,7 @@ if (!$isOver) {
                 <br/>
                 <object id="typeOCX" type="application/x-itst-activex" 
                         clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                        width ='750' height='430' 
+                        width ='840' height='470' 
                         event_OnStenoPress="onStenoPressKey"
                         >
                 </object>
@@ -175,7 +177,7 @@ if (!$isOver) {
     }
 } else {
     ?>
-    <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+    <div id="span" class="span9" style="height: 838px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
         <div id="Analysis" hidden="hidden"></div>
         <input id="content" hidden="hidden"/>  
         <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>
@@ -251,9 +253,9 @@ if ($isExam) {
     });
 
     function onStenoPressKey(pszStenoString, device) {
-        yaweiOCX.UpdateView();
+//        yaweiOCX.UpdateView();
         var input = getContent(yaweiOCX);
-        yaweiOCX.Locate(input.length);
+//        yaweiOCX.Locate(input.length);
         window.GA_answer = yaweiOCX.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
 //        if(window.G_pauseFlag===1){

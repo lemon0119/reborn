@@ -16,11 +16,14 @@ $currtime = $examInfo['endtime'];
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
                         <li class="nav-header" id="leftTime">考试剩余：<font id = "sideTime"></font></li>
+                </ul>
+                <div class="well-topnoradius" style="padding: 8px 0;height:717px;overflow:auto;top: 0px">
+                    <ul class="nav nav-list">
                          <?php if (count($exercise['choice']) != 0 && count($exercise['filling']) != 0 && count($exercise['question']) != 0) { ?>
                         <li class="nav-header">基础知识</li>
                         <?php } if (count($exercise['choice']) != 0) { ?>
                         <li id="li-choice">
-                            <a class="queTitle" href="./index.php?r=student/examchoice&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-font"></i> 选 择 题
+                            <a class="queTitle" href="./index.php?r=student/examchoice&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-font"></i> <span style="position: relative;top: 6px">选 择 题</span>
                                 <div id= "container" style="height: 5px;border:1px solid white;">
                                     <div id="progress-bar" style="width:<?php echo "$cent[0]";?>;background-color:springgreen;height:5px;">
                                     </div>
@@ -29,7 +32,7 @@ $currtime = $examInfo['endtime'];
                         </li>
                          <?php } if (count($exercise['filling']) != 0) { ?>
                         <li id="li-filling">
-                                <a class="queTitle" href="./index.php?r=student/examfilling&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-text-width"></i> 填 空 题
+                            <a class="queTitle" href="./index.php?r=student/examfilling&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-text-width"></i><span style="position: relative;top: 6px"> 填 空 题</span>
                                     <div id= "container" style="height: 5px;border:1px solid white;">
                                         <div id="progress-bar" style="width:<?php echo "$cent[1]";?>;background-color: springgreen;height:5px;">
                                         </div>
@@ -38,7 +41,7 @@ $currtime = $examInfo['endtime'];
                         </li>
                         <?php } if (count($exercise['question']) != 0) { ?>
                         <li id="li-question">
-                                <a class="queTitle" href="./index.php?r=student/examquestion&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-align-left"></i> 简 答 题
+                            <a class="queTitle" href="./index.php?r=student/examquestion&&cent=<?php $arg= implode(',', $cent);echo $arg;?>"><i class="icon-align-left"></i> <span style="position: relative;top: 6px">简 答 题</span>
                                     <div id= "container" style="height: 5px;border:1px solid white;">
                                         <div id="progress-bar" style="width:<?php echo "$cent[2]";?>;background-color: springgreen;height:5px;">
                                         </div>
@@ -49,9 +52,15 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) :?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                        <a href="#" class="queTitle"   onclick="examKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                                
+                                <a href="#" class="queTitle" title="<?php echo $keyType['title']; ?>"  onclick="examKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                                
                                         <i class="icon-th"></i>
-                                        <?php echo $keyType['title']?>
+                                        <span style="position: relative;top: 6px">
+                                        <?php if (Tool::clength($keyType['title']) <= 13){
+                                                    echo $keyType['title'];
+                                               }else{
+                                                    echo Tool::csubstr($keyType['title'], 0, 13) . "...";
+                                               }?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;
@@ -61,9 +70,15 @@ $currtime = $examInfo['endtime'];
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
                                 <?php ?>
 <!--                                    <a class="queTitle"href="./index.php?r=student/examlookType&&exerID=<?php// echo $lookType['exerciseID']?>&&cent=<?php// $arg= implode(',', $cent);echo $arg;?>">-->
-                                        <a href="#" class="queTitle"   onclick="examLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">
+                                <a href="#" class="queTitle"  title="<?php echo$lookType['title']; ?>" onclick="examLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">
                                         <i class="icon-eye-open"></i>
-                                        <?php echo $lookType['title']?>
+                                        <span style="position: relative;top: 6px">
+                                        <?php if (Tool::clength($lookType['title']) <= 13){
+                                                    echo $lookType['title'];
+                                               }else{
+                                                    echo Tool::csubstr($lookType['title'], 0, 13) . "...";
+                                               } ?>
+                                        </span>
                                     </a>
                             </li>
                         <?php endforeach;
@@ -71,13 +86,21 @@ $currtime = $examInfo['endtime'];
                         <li class="nav-header">听打练习</li>
                         <?php foreach ($exercise['listen'] as $listenType) :?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                                <a href="#" class="queTitle"   onclick="examListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                            
+                            <a href="#" class="queTitle"  title="<?php echo $listenType['title'];?>" onclick="examListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                            
                                     <i class="icon-headphones"></i> 
-                                    <?php echo $listenType['title']?>
+                                    <span style="position: relative;top: 6px">
+                                    <?php if (Tool::clength($listenType['title']) <= 13){
+                                                echo $listenType['title'];
+                                           }else{
+                                                echo Tool::csubstr($listenType['title'], 0, 13) . "...";
+                                           } ?>
+                                    </span>
+                                        
                                 </a>
                         </li>
                                     <?php endforeach; }?>
                 </ul>
+                </div>
             <?php if (count($exercise['choice']) == 0 && count($exercise['filling']) == 0 && count($exercise['question']) == 0 && count($exercise['key']) == 0 && count($exercise['look']) == 0 && count($exercise['listen']) == 0) { ?>
             <li class="nav-header">无内容</li>
 <?php } else { ?>
@@ -90,6 +113,7 @@ $currtime = $examInfo['endtime'];
 </div>
 <script>
      function submitSuite2(){
+         saveToDateBaseNow();
         $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
                     if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
                         window.location.href = "index.php?r=student/classExam";
@@ -125,7 +149,7 @@ $currtime = $examInfo['endtime'];
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
-                                                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                                                        $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(),function () {
                     window.location.href = "index.php?r=student/examlookType&&exerID="+exerID+"&&cent="+cent;
                 });
 						}
@@ -139,7 +163,7 @@ $currtime = $examInfo['endtime'];
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
-                                                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                                                        $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     window.location.href = "index.php?r=student/examlistenType&&exerID="+exerID+"&&cent="+cent;
                 });
 						}
@@ -153,7 +177,7 @@ $currtime = $examInfo['endtime'];
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
-                                                        $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
+                                                        $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     window.location.href = "index.php?r=student/examkeyType&&exerID="+exerID+"&&cent="+cent;
                 });
 						}

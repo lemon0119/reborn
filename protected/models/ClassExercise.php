@@ -143,7 +143,7 @@ class ClassExercise extends CActiveRecord
         return $newClassExercise->insert();
     }
     
-    public function insertListen($classID,$lessonID,$title,$content,$fileName,$filePath,$type,$createPerson){
+    public function insertListen($classID,$lessonID,$title,$content,$fileName,$filePath,$type,$createPerson,$speed){
         $newClassExercise    =   new ClassExercise();
         $newClassExercise->classID    =   $classID;
         $newClassExercise->lessonID    =   $lessonID;
@@ -153,6 +153,7 @@ class ClassExercise extends CActiveRecord
         $newClassExercise->file_path = $filePath;
         $newClassExercise->type       =   $type;
         $newClassExercise->create_person  =   $createPerson;
+        $newClassExercise->speed = $speed;
         $newClassExercise->create_time    =   date('y-m-d H:i:s',time());
         return $newClassExercise->insert();
     }
@@ -279,6 +280,8 @@ class ClassExercise extends CActiveRecord
     public function closeAllOpenExerciseNow(){
         $classExercise = new ClassExercise();
         $classExercise = $classExercise->findAll("now_open = 1");
+        ExerciseLevel::model()->deleteAll();
+        
         if($classExercise!==""){
             foreach ($classExercise as $v){
                 $v->now_open = 0;
@@ -293,7 +296,22 @@ class ClassExercise extends CActiveRecord
         $classExercise = $classExercise->findAll("classID = '$classID' AND lessonID = '$lessonID' AND now_open = 1");
         return $classExercise;
     }
-    
+    public function getClassExerciselst($lessonID,$classID,$level) {
+        $select = 'select class_exercise.exerciseID ,class_exercise.type,class_exercise.title, class_exercise.content from class_exercise ,exercise_level';
+        $condition = " where class_exercise.exerciseID = exercise_level.exerciseID and class_exercise.now_open = 1 and exercise_level.lessonID ='$lessonID' and exercise_level.classID='$classID' and exercise_level.level in ('$level','')";
+        $order = ' order by class_exercise.exerciseID';
+        $sql = $select . $condition . $order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
+    public function getClassExercise($lessonID,$classID,$level) {
+        $select = 'select class_exercise.exerciseID ,class_exercise.type,class_exercise.title from class_exercise ,exercise_level';
+        $condition = " where class_exercise.exerciseID = exercise_level.exerciseID and class_exercise.now_open = 1 and exercise_level.lessonID ='$lessonID' and exercise_level.classID='$classID' and exercise_level.level in ('$level','')";
+        $order = ' order by class_exercise.exerciseID';
+        $sql = $select . $condition . $order;
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
     
     public function getNowOpenExercise($exerciseID){
         $classExercise = new ClassExercise();
@@ -375,6 +393,7 @@ class ClassExercise extends CActiveRecord
                    $classExercise->create_person= $work['createPerson'];
                    $classExercise->file_name= $work['fileName'];
                    $classExercise->file_path= $work['filePath'];
+                   $classExercise->speed= $work['speed'];
                 }
                 break;
         }

@@ -1,7 +1,9 @@
-<div class="span3">
+﻿<div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
-        <ul class="nav nav-list">                     
-            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>班级列表</li>
+	<li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>班级列表</li>
+	
+        <ul class="nav nav-list" style = "overflow:auto;height:93px;margin-top:10px">                     
+            
 
             <?php foreach ($array_class as $class): ?>
                 <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $class['className']; ?></a></li>
@@ -23,7 +25,7 @@
             <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>课时列表</li>
         </ul>
     </div>
-    <div class="well-topnoradius" style="padding: 8px 0;height:325px;overflow:auto; top:-40px;">
+    <div class="well-topnoradius" style="padding:0;height:303px;overflow:auto; top:-40px;">
         <ul class="nav nav-list">
             <?php foreach ($array_lesson as $lesson): ?>
                 <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $lesson['lessonName']; ?></a></li>
@@ -33,7 +35,7 @@
 
 </div>
 
-<div class="span9">
+<div class="span9" style="height: 574px">
     <h2>现有作业</h2>
     <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
     <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png"></a>
@@ -43,12 +45,10 @@
             <tr>
                 <th class="font-center">选择</th>
                 <th class="font-center">标题</th>
-                <th class="font-center">单选</th>
-                <th class="font-center">填空</th>
-                <th class="font-center">简答</th>
                 <th class="font-center">键打</th>
                 <th class="font-center">看打</th>
                 <th class="font-center">听打</th>
+                <th class="font-center">等级</th>
                 <th class="font-center">状态</th>
                 <th class="font-center">操作</th>               
             </tr>
@@ -64,80 +64,98 @@
                 }
 
                 $isOpen = false;
-
-                if ($array_suite) {
-                    foreach ($array_suite as $exitsuite)
-                        if ($suite['suiteID'] == $exitsuite['suiteID'] && $exitsuite['open'] == 1) {
-                            $isOpen = true;
+                
+                
+                
+                $allOpen=false;
+                if ($arrayall_suite) {
+                    foreach ($arrayall_suite as $exitsuiteall)
+                        if ($suite['suiteID'] == $exitsuiteall['suiteID'] && $exitsuiteall['open'] == 1) {
+                            $allOpen = true;
                             break;
                         }
                 }
+                
+                $all_suite_open=false;
+                if($array_all_suite){
+                    foreach($array_all_suite as $all_suite){
+                        if($suite['suiteID']==$all_suite['suiteID']){
+                            $all_suite_open=true;
+                        }
+                    }
+                }
+                
                 ?>                    
                 <tr>
-                    <td class="font-center" style="width: 50px"> <?php if($isOpen==false){?> <input type="checkbox" name="checkbox[]" value="<?php echo $suite['suiteID']; ?>" /><?php }?> </td>
-                    <td class="font-center  table_schedule" style="cursor: pointer" onclick="changeWorkName(<?php echo $suite['suiteID']; ?>, '<?php echo $suite['suiteName'] ?>')"><?php
+                    <td class="font-center" style="width: 25px"> <?php if($all_suite_open == false){?> <input type="checkbox" name="checkbox[]" value="<?php echo $suite['suiteID']; ?>" /><?php }?> </td>
+                    <td class="font-center  table_schedule" style="cursor: pointer;width: 100px" onclick="changeWorkName(<?php echo $suite['suiteID']; ?>, '<?php echo $suite['suiteName'] ?>')"><?php
                         if (Tool::clength($suite['suiteName']) <= 10)
                             echo $suite['suiteName'];
                         else
-                            echo Tool::csubstr($suite['suiteName'], 0, 8) . "...";
+                            echo Tool::csubstr($suite['suiteName'], 0, 6) . "...";
                         ?></td>
-                    <td class="font-center" style="width: 30px"><?php
-                        if (count($classwork['choice']) == 0) {
-                            echo '-';
-                        } else {
-                            echo count($classwork['choice']);
-                        }
-                        ?></td>
-                    <td class="font-center" style="width: 30px"><?php
-                        if (count($classwork['filling']) == 0) {
-                            echo '-';
-                        } else {
-                            echo count($classwork['filling']);
-                        }
-                        ?></td>
-                    <td class="font-center" style="width: 30px"><?php
-                    if (count($classwork['question']) == 0) {
-                        echo '-';
-                    } else {
-                        echo count($classwork['question']);
-                    }
-                        ?></td>
-                    <td class="font-center" style="width: 30px"><?php
+                    <td class="font-center" style="width: 25px"><?php
                         if (count($classwork['key']) == 0) {
                             echo '-';
                         } else {
                             echo count($classwork['key']);
                         }
                         ?></td>
-                    <td class="font-center" style="width: 30px"><?php
+                    <td class="font-center" style="width: 25px"><?php
                         if (count($classwork['look']) == 0) {
                             echo '-';
                         } else {
                             echo count($classwork['look']);
                         }
                         ?></td>
-                    <td class="font-center" style="width: 30px"><?php
+                    <td class="font-center" style="width: 25px"><?php
                         if (count($classwork['listen']) == 0) {
                             echo '-';
                         } else {
                             echo count($classwork['listen']);
                         }
                         ?></td>
-                    <td class="font-center" style="width: 80px">
+                    <td class="font-center" style="width: 104px">
+                        <?php $suiteId = $suite['suiteID'];
+                $classSuite = ClassLessonSuite::model()->findAll("suiteID = '$suiteId' and lessonID = '$thisLesson' and open='1'");
+                $suiteCount = count($classSuite);
+                $level = '';
+                        if ($array_suite) {
+                    foreach ($array_suite as $exitsuite){
+                        if ($suite['suiteID'] == $exitsuite['suiteID'] && $exitsuite['open'] == 1) {
+                            $isOpen = true;
+                            if($suiteCount>1){
+                                foreach ($classSuite as $su) {
+                                    echo $su['level'].' ';
+                                }
+                            }else {
+                                $level = $exitsuite['level'];
+                                if($level == ''){
+                                    echo '初级 中级 高级';
+                                }else {
+                                    echo $level;
+                                }
+                            }
+                            break;
+                        }
+                }
+               } ?>
+                    </td>
+                    <td class="font-center" style="width: 70px">
                         <?php if ($isOpen == false) { ?>
-                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=0&&page=<?php echo $pages->currentPage + 1; ?>" style="color:green">发布</a>
+                        <a href="#" onclick="release(<?php echo $suite['suiteID']; ?>)" style="color:green">发布</a>
                             <font style="color:grey">关闭</font>
                         <?php } else { ?>
                             <font style="color:grey">发布</font>
-                            <a href="./index.php?r=teacher/ChangeSuiteClass&&suiteID=<?php echo $suite['suiteID']; ?>&&isOpen=1&&page=<?php echo $pages->currentPage + 1; ?>" style="color:red">关闭</a>
+                            <a href="#" style="color:red" onclick="changeSuite(<?php echo $suite['suiteID']; ?>)">关闭</a>
     <?php } ?>
                     </td>             
-                    <td class="font-center" style="width: 100px">
+                    <td class="font-center" style="width: 85px">
                         <a href="./index.php?r=teacher/seeWork&&suiteID=<?php echo $suite['suiteID']; ?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
 
 
-            <?php if ($isOpen == false) { ?>
-                            <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID']; ?>&&type=choice"><img title="修改作业内容" src="<?php echo IMG_URL; ?>edit.png"></a>
+            <?php if ($all_suite_open == false) { ?>
+                            <a href="./index.php?r=teacher/modifyWork&&suiteID=<?php echo $suite['suiteID']; ?>&&type=key"><img title="修改作业内容" src="<?php echo IMG_URL; ?>edit.png"></a>
                             <a href="#" onclick="dele(<?php echo $suite['suiteID']; ?>,<?php echo $pages->currentPage + 1; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
             <?php } ?>
 
@@ -157,6 +175,28 @@ $this->widget('CLinkPager', array('pages' => $pages));
 
 
 <script>
+    function changeSuite(suiteID){
+           var thisLessonID = <?php echo $thisLesson;?>;
+           var thisClassID = <?php echo $thisClass;?>;
+           console.log(suiteID+"--"+thisLessonID+"----"+thisClassID)
+          $.ajax({
+            type: "POST",
+            url: "index.php?r=api/changeSuiteType",
+            async: false,
+            data: { thisSuiteId: suiteID , thisLessonId :thisLessonID,thisClassId : thisClassID},
+            success: function (data) {
+            },
+            error: function (xhr, type, exception) {
+                console.log('GetAverageSpeed error', type);
+                console.log(xhr, "Failed");
+                console.log(exception, "exception");
+            }
+        });
+        location.reload();
+    }
+    function release (suiteID) {
+        window.open("./index.php?r=teacher/changeSuiteClassIn&&suiteID="+suiteID+"&&page=<?php echo $pages->currentPage + 1; ?>", 'newwindow', 'height=400,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+    }
     function changeWorkName(workID, workName) {
         window.wxc.xcConfirm("原作业名为“" + workName + "”请重新命名：", window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {

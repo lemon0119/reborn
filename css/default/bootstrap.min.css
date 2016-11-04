@@ -872,7 +872,7 @@ select,input[type="file"] {
 }
 select {
     width:225px;
-    color: #aaa9a9;
+    color: #000;
     background-color:#aaa9a9;
     border:1px solid #aaa9a9;
     appearance:none;
@@ -2868,7 +2868,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini {
     color:#f46401;
     padding-right:15px;
     padding-left:15px;
-    margin-bottom:0
+    margin-bottom:0;
 }
 .nav-list>li>a,.nav-list .nav-header {
     margin-right:-15px;
@@ -4772,12 +4772,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .icon-navsearch{
     padding: 4px 4px;
-    background: url(../../img/icon_serch.png);
+    background: url(../../img/icon_answer.png);
     background-repeat: no-repeat;
 }
 .icon-knowlage{
     padding: 4px 4px;
-    background: url(../../img/icon_knowlage.png);
+    background: url(../../img/icon_answer.png);
     background-repeat: no-repeat;
 }
 .icon-typing{
@@ -4897,6 +4897,16 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
     font-size: 20px;
     padding: 17px 20px;
     background-repeat:no-repeat;
+}
+#key_enable{
+    padding: 28px 60px;
+    background-repeat:no-repeat;
+    background-image: url("../../img/UI_adm/onekey_enable.png");
+}
+#key_enable:hover{
+    padding: 28px 60px;
+    background-repeat:no-repeat;
+    background-image: url("../../img/UI_adm/on_onekey_enable.png");
 }
 .btn_bigserch{
     border: 0px;
@@ -5162,13 +5172,13 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 #blank_admin{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#6c6b6b,#fff);
-    padding: 27px 82px;
+    background:-moz-linear-gradient(left,#808080,#fff);
+    padding: 27px 22px;
 }
 #blank_teacher{
     position: relative;
     top: 1px;
-    background:-moz-linear-gradient(left,#6c6b6b,#fff);
+    background:-moz-linear-gradient(left,#808080,#fff);
     padding: 27px 47px;
 }
 #schedule{

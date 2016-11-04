@@ -1,6 +1,6 @@
 
 <div class="span3">
-       <div class="well" style="padding: 8px 0;height: 565px;">
+       <div class="well" style="padding: 8px 0;height: 636px;">
            <li class="nav-header"><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人设置</h4></li> 
             <ul class="nav nav-list">
            <li class="active" id="two"><a class="cont2" href="./index.php?r=teacher/teaInformation">个人资料</a></li>   
@@ -8,7 +8,7 @@
             </ul>
         </div>
 </div>
-<div class="span9">
+<div class="span9" style="height: 574px">
     <h3>个人信息</h3>
     <div class="hero-unit">
     <table class="table table-bordered table-striped">
@@ -34,7 +34,7 @@
                     <td><?php echo $department; ?></td>
                 </tr>
                 <tr>
-                    <td>院校:</td>
+                    <td>学校:</td>
                     <td><?php echo $school; ?></td>
                 </tr>
                 <tr>

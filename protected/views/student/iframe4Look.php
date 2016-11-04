@@ -8,7 +8,7 @@
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <body style="background-image: none;background-color: #fff">
     <button id="toggle" style="position: relative;" class="btn">展开</button>
-    <div id="span" class="hero-unit" align="center">
+    <div id="span" class="hero-unit" align="center" style="overflow-y:visible ">
         <!--        <div style="width: 660px">
                                 <button class="fl btn" id="pause">暂停统计</button>
                     <button id="finish" onclick="finish()" style="margin-left:30px;" class="fl btn btn-primary" >完成练习</button>
@@ -73,12 +73,12 @@
         $str = str_replace(" ", "}", $str);
         echo $str;
         ?>">
-        <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
+        <div id ="templet" style="text-align: left;height: 210px;width: 830px; margin-top: 15px" class="questionBlock" front-size ="25px" onselectstart="return false">
         </div>
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='660' height='300' 
+                width ='840' height='350' 
                 event_OnStenoPress="onStenoPressKey">
         </object>
     </div>
@@ -88,6 +88,8 @@
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     var briefType = "";
+    <?php $titleFalse=strpos($classExercise['title'],"-不提示略码"); ?>
+    var titleFalse = "<?php echo $titleFalse; ?>";
     $(document).ready(function () {
         window.G_isLook = 1;
         document.getElementById('Analysis').scrollIntoView();
@@ -336,7 +338,10 @@ $squence = $countSquence + 1;
             }
             f.style = "color:" + color;
             content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-            checkYaweiCode(content);
+            if(titleFalse){
+            }else{
+                checkYaweiCode(content);
+            }
             f.innerHTML = content.content;
             father.appendChild(f);
         } else {
@@ -361,24 +366,33 @@ $squence = $countSquence + 1;
                         isBrief--;
                     }
                 }
-                f.style = "background-color:" + color + ";color:#fff";
+                f.style = "color:"+color;
                 content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-                checkYaweiCode(content);
+                if(titleFalse){
+                }else{
+                    checkYaweiCode(content);
+                    }
                 f.innerHTML = content.content;
                 father.appendChild(f);
             } else {
                 for (var i = 0; i < text.length; i++) {
                     content.content += text[i];
                 }
-                f.style = "background-color:" + color + ";color:#fff";
+                f.style = "color:"+color
                 //var t = document.createTextNode(text);
                 //f.appendChild(t);
                 if (color === "#f44336") {
                     content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
-                    checkYaweiCode(content);
+                    if(titleFalse){
+                    }else{
+                        checkYaweiCode(content);
+                    }
                 } else {
                     content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
+                    if(titleFalse){
+                    }else{
                     checkYaweiCode(content);
+                }
                 }
                 f.innerHTML = content.content;
                 father.appendChild(f);
@@ -389,7 +403,7 @@ $squence = $countSquence + 1;
         var input = getContent(yaweiOCX4Look);
         var addLine = (input.split('\n\r')).length - 1;
         var div = document.getElementById('templet');
-        var line = parseInt(input.length / 23) + addLine;
+        var line = parseInt(input.length / 32) + addLine;
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }

@@ -97,7 +97,11 @@ class SuiteRecord extends CActiveRecord
                 return -1;
          }
     }
-    
+    public function getSuiteRecord($workID,$studentID) {
+        $sql = "select * from suite_record where workID= '$workID' and studentID= '$studentID' ";
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
     
 	/**
 	 * @return string the associated database table name

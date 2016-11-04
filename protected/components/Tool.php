@@ -75,6 +75,49 @@ class Tool {
         preg_match_all($re [$charset], $str, $match);
         return count($match [0]);
     }
+    
+    public static function detectUploadFileMIME($file) {  
+    // 1.through the file extension judgement 03 or 07  
+    $flag = 0;  
+    $file_array = explode ( ".", $file ["name"] );  
+    $file_extension = strtolower ( array_pop ( $file_array ) );  
+      
+    // 2.through the binary content to detect the file  
+    switch ($file_extension) {  
+        case "xls" :  
+            // 2003 excel  
+            $fh = fopen ( $file ["tmp_name"], "rb" );  
+            $bin = fread ( $fh, 8 );  
+            fclose ( $fh );  
+            $strinfo = @unpack ( "C8chars", $bin );  
+            $typecode = "";  
+            foreach ( $strinfo as $num ) {  
+                $typecode .= dechex ( $num );  
+            }  
+            if ($typecode == "d0cf11e0a1b11ae1") {  
+                $flag = 1;  
+            }  
+            break;  
+        case "xlsx" :  
+            // 2007 excel  
+            $fh = fopen ( $file ["tmp_name"], "rb" );  
+            $bin = fread ( $fh, 4 );  
+            fclose ( $fh );  
+            $strinfo = @unpack ( "C4chars", $bin );  
+            $typecode = "";  
+            foreach ( $strinfo as $num ) {  
+                $typecode .= dechex ( $num );  
+            }  
+            //echo $typecode;  
+            if ($typecode == "504b34") {  
+                $flag = 1;  
+            }  
+            break;  
+    }  
+      
+    // 3.return the flag  
+    return $flag;  
+}  
 
     public static function csubstr($str, $start = 0, $length, $charset = "utf-8") {
         /*
@@ -235,6 +278,7 @@ class Tool {
         // 正式导入数据库,返回成功导入的人数
         $count = 0;
         foreach ($arry_success as $data) {
+            error_log($data ['className']);
             if ($data ['className'] == "") {
                 $classID = "0";
             } else {
@@ -255,8 +299,17 @@ class Tool {
 
         $count = 0;
         foreach ($arry_success as $data) {
-            Teacher::model()->insertTea($data ['uid'], $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'], $data['school']);
+            $teaID=strtoupper($data ['uid']);
+            if(!Tool::excelreadTeaUserID($teaID)){
+                Teacher::model()->insertTea($teaID, $data ['userName'], $data ['sex'], $data ['age'], "000", $data ['phone_number'], $data ['mail_address'], $data['department'], $data['school']);
+            }
             $count++;
+            if(isset($data ['class'])&&isset($teaID)&&isset($data ['userName'])){
+                $array_class=  TbClass::model()->find('className=?',array($data ['class']));
+                $classID=$array_class['classID'];
+                $sql="INSERT INTO teacher_class VALUES('". $teaID ."','". $classID ."','')";
+                Yii::app()->db->createCommand($sql)->query();
+            }
         }
         return $count;
     }
@@ -284,7 +337,7 @@ class Tool {
         $userAll = Student::model()->findAll();
         foreach ($userAll as $k => $v) {
             $Id = $v ['userID'];
-            if ($Id == $userId) {
+            if ($Id == strtoupper($userId)) {
                 return true;
             }
         }
@@ -299,7 +352,7 @@ class Tool {
         $userAll = Teacher::model()->findAll();
         foreach ($userAll as $k => $v) {
             $Id = $v ['userID'];
-            if ($Id == $userId) {
+            if ($Id == strtoupper($userId)) {
                 return true;
             }
         }
@@ -338,7 +391,7 @@ class Tool {
      * return true 正确; false 不正确
      */
     public static function checkID($ID) {
-        $regex = '/^[A-Za-z]+[A-Za-z0-9]+$/';
+        $regex = '/^(?![0-9]+$)(?![a-zA-Z]+$)[A-Za-z0-9]+$/';
         if (preg_match($regex, $ID)) {
             return TRUE;
         } else {
@@ -441,7 +494,18 @@ class Tool {
             }
             return $string;
         } else {
-            return $content;
+            //判断是否存了一组答案
+            $string = "";
+            $content = substr($content, 1);
+            $content = str_replace(">,<", " ", $content);
+            $array = explode(" ", $content);
+            foreach ($array as $arr) {
+                $pos = strpos($arr, "><");
+                $arr = substr($arr, 0, $pos);
+                $string = $string . " " . $arr;
+            return $string;
+            
+            }
         }
     }
 

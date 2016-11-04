@@ -262,7 +262,7 @@
             ++numKeyRight;
         } else {
             setTimeout(function () {
-                keyReSet();
+                //keyReSet();
                 var left = true;
                 for (var i = 0; i < yaweiCode.length; i++) {
                     if (yaweiCode[i] == ':') {
@@ -305,6 +305,7 @@
         return numKeyRight / window.GA_countKeyNumber;
     }
     function getNextWord() {
+        //修改键位敲错重置
         keyReSet();
         currentNum++;
         //调整进度条
@@ -328,7 +329,7 @@
         var result = wordArray[currentNum];
         yaweiCode = yaweiCodeArray[currentNum];
         setTimeout(function () {
-            keyReSet();
+           // keyReSet();
             var left = true;
             for (var i = 0; i < yaweiCode.length; i++) {
                 if (yaweiCode[i] == ':') {

@@ -7,7 +7,14 @@ class AdminController extends CController {
     public function actionIndex() {
         $this->render('index');
     }
-
+    //联系我们
+    public function actionContact(){
+        return $this->renderpartial('contact');
+    }
+    //法律声明
+    public function actionlegalNotice() {
+        return $this->renderpartial('legalNotice');
+    }
     public function actionSet() {       //set
         $result = 'no';
         $mail = '';
@@ -37,13 +44,15 @@ class AdminController extends CController {
     }
 
     public function actionHardDeleteStu() {
-        $pass = md5($_POST ['password']);
-        $id = Yii::app()->session ['userid_now'];
-        $admin = Admin::model()->findByPK($id);
-        if ($admin->password !== $pass) {
-            return $this->render('confirmPass', [
+        if(isset($_POST ['password'])){
+            $pass = md5($_POST ['password']);
+            $id = Yii::app()->session ['userid_now'];
+            $admin = Admin::model()->findByPK($id);
+            if ($admin->password !== $pass) {
+                return $this->render('confirmPass', [
                         'wrong' => '密码错误，请重新输入。'
-            ]);
+                ]);
+            }
         }
         $rows = 0;
         if (isset(Yii::app()->session ['deleteStuID'])) {
@@ -68,10 +77,11 @@ class AdminController extends CController {
             Yii::app()->session ['lastPage'] = 1;
         }
          Yii::app()->session ['lastUrl'] = "recyclestu";
-        $sql = "SELECT * FROM teacher WHERE is_delete = '1'";
+        $sql = "SELECT * FROM student WHERE is_delete = '1'";
         $array_stuLst = Tool::pager($sql,10);
         $pages = $array_stuLst['pages'];
-        $stuLst = Student::model()->findAll("is_delete = '1'");
+        $stuLst=$array_stuLst['list'];
+//        $stuLst = Student::model()->findAll("is_delete = '1'");
         $this->render('recycleStu', array(
             'pages' => $pages,
             'stuLst' => $stuLst,
@@ -184,7 +194,11 @@ class AdminController extends CController {
             if ($type == 'classID') {
                 $className = $value;
                 $sqlClass = TbClass::model()->find("className = '$className'");
+                if(empty($sqlClass)){
+                    $value=-1;
+                }else{
                 $value = $sqlClass['classID'];
+                }
             }
             Yii::app()->session ['searchStuType'] = $type;
             Yii::app()->session ['searchStuValue'] = $value;
@@ -243,10 +257,11 @@ class AdminController extends CController {
             $file_type = $file_types [count($file_types) - 1];
 
             // 判别是不是excel文件
+            $file = $_FILES['file'];
             if (strtolower($file_type) != "sheet" && strtolower($file_type) != "ms-excel") {
                 $result = '不是Excel文件';
                 $this->render('exlAddStu', ['result' => $result]);
-            } else {
+            } else if(Tool::detectUploadFileMIME($file)){
                 // 解析文件并存入数据库逻辑
                 /* 设置上传路径 */
                 $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\excel\\';
@@ -267,7 +282,7 @@ class AdminController extends CController {
                     foreach ($res as $k => $v) {
                         // 判断第一行表格头内容
                         if ($k == 1) {
-                            if (isset($v [0])) {
+                             if (isset($v [0])) {
                                 if ($v [0] != "学号") {
                                     $result = "表格A列名应为“学号”！";
                                     $flag = 1;
@@ -286,7 +301,7 @@ class AdminController extends CController {
                                     $flag = 1;
                                     $this->render('exlAddStu', ['result' => $result]);
                                     break;
-                                }
+                                        }
                             } else {
                                 $flag = 1;
                                 $result = "表格缺少B列“姓名”";
@@ -358,7 +373,7 @@ class AdminController extends CController {
                                 $this->render('exlAddStu', ['result' => $result]);
                                 break;
                             }
-                        }
+                                }
                         //判断内容逻辑
                         if ($k > 1) {
                             $array_success = array();
@@ -381,7 +396,7 @@ class AdminController extends CController {
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
                             } else if (!Tool::checkID($data ['uid'])) {
-                                $result = "学号首字符必须为英文！";
+                                $result = "学号必须由字母和数字组成！";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
@@ -408,7 +423,8 @@ class AdminController extends CController {
                                 array_push($array_fail, $stu_fail);
                                 array_push($array_success, $data);
                             }else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=$studentNumber){
-                                $result = "班级人数超过"+$studentNumber+"人！";
+                                $result = "班级人数超过".$studentNumber."人！";
+                                error_log($result);
                                 $fixed = "请重新分班";
                                 //$data['className'] = "";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
@@ -436,7 +452,11 @@ class AdminController extends CController {
                         $this->render('exlAddStu', ['result' => $coun, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
                     }
                 }
-            }
+            }else
+              {
+                $result="检测到您上传的Excel文件存在异常，请重新编辑并上传！";
+                $this->render('exlAddStu',['result'=>$result]);
+               }
         } else {
             $this->render('exlAddStu');
         }
@@ -449,10 +469,11 @@ class AdminController extends CController {
             $file_type = $file_types [count($file_types) - 1];
 
             // 判别是不是excel文件
+            $file = $_FILES['file'];
             if (strtolower($file_type) != "sheet" && strtolower($file_type) != "ms-excel") {
                 $result = '不是Excel文件';
                 $this->render('exlAddStu', ['result' => $result]);
-            } else {
+            } else if(Tool::detectUploadFileMIME($file)){
                 // 解析文件并存入数据库逻辑
                 /* 设置上传路径 */
                 $savePath = dirname(Yii::app()->BasePath) . '\\public\\upload\\excel\\';
@@ -599,7 +620,7 @@ class AdminController extends CController {
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
                             } else if (!Tool::checkID($data ['uid'])) {
-                                $result = "工号须由首字符英文加数字、英文字母线组成！";
+                                $result = "工号必须由字母和数字组成！";
                                 $fixed = "需手动添加";
                                 $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
                                 array_push($array_fail, $stu_fail);
@@ -636,7 +657,11 @@ class AdminController extends CController {
                         $this->render('exlAddTea', ['result' => $count_success, 'count_fail' => $count_fail, 'array_fail' => $array_fail]);
                     }
                 }
-            }
+            }else
+              {
+                $result="检测到您上传的Excel文件存在异常，请重新编辑并上传！";
+                $this->render('exlAddTea',['result'=>$result]);
+               }
         } else {
             $this->render('exlAddTea');
         }
@@ -1168,13 +1193,15 @@ class AdminController extends CController {
     }
 
     public function actionHardDeleteTea() {
-        $pass = md5($_POST ['password']);
-        $id = Yii::app()->session ['userid_now'];
-        $admin = Admin::model()->findByPK($id);
-        if ($admin->password !== $pass) {
-            return $this->render('confirmTeaPass', [
+        if(isset($_POST ['password'])){
+            $pass = md5($_POST ['password']);
+            $id = Yii::app()->session ['userid_now'];
+            $admin = Admin::model()->findByPK($id);
+            if ($admin->password !== $pass) {
+                return $this->render('confirmTeaPass', [
                         'wrong' => '密码错误，请重新输入。'
-            ]);
+                ]);
+            }
         }
         $rows = 0;
         if (isset(Yii::app()->session ['deleteTeaID'])) {
@@ -1203,7 +1230,7 @@ class AdminController extends CController {
         $array_stuLst = Tool::pager($sql,10);
         $teaLst = $array_stuLst['list'];
         $pages = $array_stuLst['pages'];
-        $teaLst = Teacher::model()->findAll("is_delete = '1'");
+//        $teaLst = Teacher::model()->findAll("is_delete = '1'");
         $this->render('recycleTea', array(
             'pages' => $pages,
             'teaLst' => $teaLst,
@@ -1283,12 +1310,29 @@ class AdminController extends CController {
             if ($_GET ['flag'] == 'deleteClass') {
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($_GET ['ClassID'])); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+                $sql_student = "DELETE FROM student WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $_GET ['ClassID'] . "'";
+                ClassExam::model()->deleteAll("classID=?",array($_GET['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET['ClassID']));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
+                ScheduleClass::model()->deleteAll("classID=?",array($_GET ['ClassID']));
+                ClassExercise::model()->deleteAll("classID=?",array($_GET ['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET ['ClassID']));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();
+                Yii::app()->db->createCommand($sql_chat)->query();
             }
             unset($_GET ['flag']);
         }
@@ -1320,14 +1364,45 @@ class AdminController extends CController {
         if(isset($_GET['ClassID'])){  
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $_GET ['ClassID'] . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($_GET ['ClassID'])); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+                $sql_student = "DELETE FROM student WHERE classID ='" . $_GET ['ClassID'] . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $_GET ['ClassID'] . "'";
                 $sql_lesson = "DELETE FROM lesson WHERE classID = '" . $_GET ['ClassID'] . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $_GET ['ClassID'] . "'";
+                ClassExam::model()->deleteAll("classID=?",array($_GET['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET['ClassID']));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($_GET['ClassID']));
+//                if(!empty($sql_class)){
+//                foreach($sql_class as $exercise_id){
+//                    $sql_exam_id=ExamExercise::model()->findAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    foreach($sql_exam_id as $exam_id){
+//                        Exam::model()->deleteAll("examID=?",array($exam_id['examID']));
+//                    }
+//                    ExamExercise::model() -> deleteAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    $sql_suite_id = SuiteExercise::model()->findAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                    foreach($sql_suite_id as $suite_id){
+//                        suite::model()->deleteAll("suiteID=?",array($suite_id['suiteID']));
+//                    }
+//                    SuiteExercise::model()->deleteAll("exerciseID=?",array($exercise_id['exerciseID']));
+//                }
+//                }
+                ScheduleClass::model()->deleteAll("classID=?",array($_GET ['ClassID']));
+                ClassExercise::model()->deleteAll("classID=?",array($_GET ['ClassID'])); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($_GET ['ClassID']));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();  
                 Yii::app()->db->createCommand($sql_lesson)->query();  
+                Yii::app()->db->createCommand($sql_chat)->query();
         }
         
          if (isset($_POST['checkbox'])) {
@@ -1336,9 +1411,25 @@ class AdminController extends CController {
             foreach ($userIDlist as $v) {
                 $sql = "DELETE FROM tb_class WHERE classID ='" . $v . "'";
                 //SQL删除关联学生
-                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $v . "'";
+                $sql_student_all=  Student::model()->findAll("classID=?",array($v)); 
+                if(!empty($sql_student_all)){
+                foreach($sql_student_all as $all_flag){
+                    $sql_student_id=$all_flag['userID'];
+                    Student::model()->delStuRes($sql_student_id);
+                }
+                }
+//                $sql_student = "UPDATE student SET classID= '0' WHERE classID= '" . $v . "'";
+                $sql_student = "DELETE FROM student WHERE classID ='" . $v . "'";
                 //SQL删除关联老师
                 $sql_teacher = "DELETE FROM teacher_class WHERE classID = '" . $v . "'";
+                //SQL删除关联内容
+                $sql_chat="DELETE FROM chat_lesson_1 WHERE classID = '" . $v . "'";
+                ClassExam::model()->deleteAll("classID=?",array($v)); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($v));
+                $sql_class=ClassExercise::model()->findAll("classID=?",array($v));
+                ScheduleClass::model()->deleteAll("classID=?",array($v));
+                ClassExercise::model()->deleteAll("classID=?",array($v)); 
+                ClassLessonSuite::model()->deleteAll("classID=?",array($v));
                 Yii::app()->db->createCommand($sql)->query();
                 Yii::app()->db->createCommand($sql_teacher)->query();
                 Yii::app()->db->createCommand($sql_student)->query();  
@@ -2044,7 +2135,19 @@ class AdminController extends CController {
             ));
         }
     }
-
+    public function ActionGetProgress() {
+        session_start();
+        $i = ini_get('session.upload_progress.name');
+        $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
+        if (!empty($_SESSION[$key])) {
+            $current = $_SESSION[$key]["bytes_processed"];
+            $total = $_SESSION[$key]["content_length"];
+            echo $current < $total ? ceil($current / $total * 100) : 100;
+        } else {
+            echo 100;
+        }
+        
+    }
     public function actionAddKey() {
         $result = 'no';
         if (isset($_POST ['title'])) {
@@ -3627,7 +3730,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['in1']) || isset($_POST['in2']) || isset($_POST['in3'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['in1']) && !$_POST['in1'] == "") {
@@ -3669,7 +3772,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['in1']) || isset($_POST['in2']) || isset($_POST['in3'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['in1']) && !$_POST['in1'] == "") {
@@ -3718,7 +3821,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_teacher`(`userID`, `sequence`, `day`, `courseInfo`) VALUES ('$teacherID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['hour1']) || isset($_POST['min1']) || isset($_POST['hour2']) || isset($_POST['min2'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
@@ -3758,7 +3861,7 @@ class AdminController extends CController {
                     $sql = "INSERT INTO `schedule_class`(`classID`, `sequence`, `day`, `courseInfo`) VALUES ('$classID',$sequence,$day,'$courseInfo') ";
                     Yii::app()->db->createCommand($sql)->query();
                 }
-            } else {
+            } else if(isset($_POST['hour1']) || isset($_POST['min1']) || isset($_POST['hour2']) || isset($_POST['min2'])){
                 //改
                 $courseInfo = "";
                 if (isset($_POST['hour1']) && !$_POST['hour1'] == "" && isset($_POST['min1']) && !$_POST['min1'] == "") {
@@ -3780,6 +3883,675 @@ class AdminController extends CController {
             }
         }
         return $this->renderPartial('editScheduleOne', ['result' => $sqlSchedule]);
+    }
+    
+    
+    
+    public function actionKey(){
+        $studentNumber=Tool::getStudentLimitNumber();
+        if(!empty($_FILES['file']['name'])){
+            $tmp_file=$_FILES['file']['tmp_name'];
+            $file_types=explode(".",$_FILES['file']['type']);
+            $file_type=$file_types[count($file_types)-1];
+            
+            //判别是不是excel文件
+            $file = $_FILES['file'];
+            if(strtolower($file_type)!="sheet" && strtolower($file_type)!="ms-excel"){
+                $result="不是Excel文件";
+                $this->render('key',['result'=>$result]);
+               
+            }else if(Tool::detectUploadFileMIME($file)){
+                //解析文件并存入数据库逻辑
+                /*设置上传路径*/
+                $savePath=dirname(Yii::app()->BasePath).'\\public\\upload\\excel\\';
+                /* 以时间来命名上传的文件*/
+                $str=date('Ymdhis');
+                $file_name="Key".$str.".xls";
+                if(!copy($tmp_file,$savePath.$file_name)){
+                    $result='上传失败';
+                    $this->render('key',['result'=>$result]);
+                }else{
+                    $res=Tool::excelreadToArray($savePath.$file_name,$file_type);
+                    
+                    //判断导入逻辑 分离出导入成功array_success和导入失败array_fail
+                    unlink($savePath.$file_name);
+                    $array_fail=array();
+                    $array_success=array();
+                    $array_successTea=array();
+                    $array_failTea=array();
+                    $stu_failTea=array();
+                    $stu_fail=array();
+                    $style_flag=0;
+                    $result1="";
+                    $flag=0;
+                    $flagClass=0;
+                    $flagTea=0;
+                    $coun=0;
+                    $counTea=0;
+                    $resultExl='no';
+                    $sql="SELECT * FROM `course` ORDER BY `course`.`courseID` DESC";
+                    $aCourse=Yii::app()->db->createCommand($sql)->query();
+                    foreach($res as $k => $v){
+                        //判断第一行表格头内容
+                        if($k==1){
+                            if(isset($v[0])){
+                                if($v[0]!="科目"){
+                                    $result="表格A列名应为“科目”！";
+                                    $flag=1;
+                                    $this->render('key',['result'=>$result]);
+                                    break;
+                                }
+                            }else{
+                                $result="表格缺少A列“科目”";
+                                $flag=1;
+                                $this->render('key',['result'=>$result]);
+                                break;
+                            }
+                            if (isset($v [1])) {
+                                if ($v [1] != "课时") {
+                                    $result = "表格B列名应为“课时”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少B列“课时”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if(isset($v[2])){
+                                if($v[2]!="班级"){
+                                    $result="表格C列名应为“班级”！";
+                                    $flag=1;
+                                    $this->render('key',['result'=>$result]);
+                                    break;
+                                }
+                            }else{
+                                $result="表格缺少C列“班级”";
+                                $flag=1;
+                                $this->render('key',['result'=>$result]);
+                                break;
+                            }
+                            
+                            if(isset($v[4])){
+                                if($v[4]!="学号"){
+                                    $result="表格E列名应为“学号”！";
+                                    $flag=1;
+                                    $this->render('key',['result'=>$result]);
+                                    break;
+                                }
+                            }else{
+                                $result="表格缺少E列“学号”";
+                                $flag=1;
+                                $this->render('key',['result'=>$result]);
+                                break;
+                            }
+                            if(isset($v[5])){
+                                if($v[5]!="姓名"){
+                                    $result="表格F列名应为“姓名”！";
+                                    $flag=1;
+                                    $this->render('key',['result'=>$result]);
+                                    break;
+                                }
+                            }else{
+                                $flag=1;
+                                $result="表格缺少F列“姓名”";
+                                $this->render('key',['result'=>$result]);
+                                break;
+                            }
+                            if(isset($v[6])){
+                                if($v[6]!="性别"){
+                                    $result = "表格G列名应为“性别”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            }else {
+                                $result = "表格缺少G列“性别”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [7])) {
+                                if ($v [7] != "年龄") {
+                                    $result = "表格H列名应为“年龄”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少H列“年龄”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            
+                            if (isset($v [8])) {
+                                if ($v [8] != "联系邮箱") {
+                                    $result = "表格I列名应为“联系邮箱”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少I列“联系邮箱”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [9])) {
+                                if ($v [9] != "联系电话") {
+                                    $result = "表格J列名应为“联系电话”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少J列“联系电话”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [11])) {
+                                if ($v [11] != "老师姓名") {
+                                    $result = "表格L列名应为“老师姓名”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少L列“老师姓名”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [12])) {
+                                if ($v [12] != "工号") {
+                                    $result = "表格M列名应为“工号”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少M列“工号”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [13])) {
+                                if ($v [13] != "性别") {
+                                    $result = "表格N列名应为“性别”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少N列“性别”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [14])) {
+                                if ($v [14] != "年龄") {
+                                    $result = "表格O列名应为“年龄”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少O列“年龄”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            
+                            if (isset($v [15])) {
+                                if ($v [15] != "所属部门") {
+                                    $result = "表格P列名应为“所属部门”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少P列“所属部门”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [16])) {
+                                if ($v [16] != "联系电话") {
+                                    $result = "表格Q列名应为“联系电话”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少Q列“联系电话”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [17])) {
+                                if ($v [17] != "联系邮箱") {
+                                    $result = "表格R列名应为“联系邮箱”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少R列“联系邮箱”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                            if (isset($v [18])) {
+                                if ($v [18] != "学校") {
+                                    $result = "表格S列名应为“学校”！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }
+                            } else {
+                                $result = "表格缺少S列“学校”";
+                                $flag = 1;
+                                $this->render('key', ['result' => $result]);
+                                break;
+                            }
+                        }
+                        if($k==2){
+                            if($v[0]==""|| ctype_space($v[0])){
+                                $result="科目名不能为空！";
+                                $flag=1;
+                                $this->render('key',['result'=>$result]);
+                                break;
+                            }else{
+                                $courseName=$v[0];
+                                $allCourse=Course::model()->findAll();
+                                if(empty($allCourse)){
+                                    $flagTea=1;
+                                }
+                                foreach($allCourse as $a){
+                                    if($a['courseName']==$courseName){
+                                        $resultExl='have_same_course';
+                                        $data['courseID']=$a['courseID'];
+                                        $dataTea['courseID']=$a['courseID'];
+                                        $flagTea=0;
+                                        break;
+                                    }
+                                    $flagTea=1;
+                                }
+                            }
+                            if ($v [1]==""|| ctype_space($v [1]) || $v [1]<1 ||$v [1]>99 || !preg_match( "/^[0-9]+$/",$v [1])) {
+                                    $result = "课时数不能为空且为1-99之间的整数！";
+                                    $flag = 1;
+                                    $this->render('key', ['result' => $result]);
+                                    break;
+                                }else{                                
+                                    if($flagTea==1){
+                                    $resultExl=Course::model()->insertCourse($courseName,0);
+                                }
+                                    $courseNumber=$v [1];
+                                    if($resultExl==1){
+                                        Yii::app()->session['insert_course']=$courseName;
+                                        $sql="SELECT MAX(courseID) AS id FROM course";
+                                        $max_id=Yii::app()->db->createCommand($sql)->query()->read();
+                                        $courseID=$max_id['id'];
+                                        $data['courseID']=$courseID;
+                                        $dataTea['courseID']=$courseID;
+                                        $classes=TbClass::model()->findall("currentCourse='$courseID'");
+                                        if(empty($classes)){
+                                            for($i=1;$i<($courseNumber+1);$i++){
+                                                Lesson::model()->insertLesson("第".$i."课",$courseID,0,0);
+                                            }
+                                     }//   else{
+//                                            for($i=1;$i<($courseNumber+1);$i++){
+//                                                foreach($classes as $class){
+//                                                    Lesson::model()->insertLesson("第".$i."课",$courseID,0,$class['classID']);
+//                                                }
+//                                            }
+//                                        }
+                                    }
+                                }
+                                if($v[2]==""|| ctype_space($v[2])){
+                                $result="班级名不能为空！";
+                                $flag=1;
+                                $this->render('key',['result'=>$result]);
+                                break;
+                            }else{
+                                $dataTea['class']=$v[2];
+                                $data ['className']=$v[2];
+                                $classFlag=0;
+                                $tbClassAll=TbClass::model()->findall('className=?',array($v[2]));
+                                if(count($tbClassAll)>0){
+                                foreach($tbClassAll as $allClass){
+                                    if($allClass['currentCourse']==$dataTea['courseID']){
+                                        $classFlag=1;
+                                    }
+                                }
+                                if($classFlag==0){
+                                    $result="班级已存在并被分配到已有的科目中，请重新创建班级！";
+                                    $flag=1;
+                                    $this->render('key',['result'=>$result]);
+                                    break;
+                                }
+                                }
+                                    if(!Tool::excelreadClass($v[2])){
+                                        $flagClass=1;
+                                        $classID=TbClass::model()->insertClass($v[2],$data['courseID']);
+                                        $lessons=Lesson::model()->findall('classID=? and courseID=?',array(0,$data['courseID']));
+                                        foreach($lessons as $lesson){
+                                            Lesson::model()->insertLesson($lesson['lessonName'],$lesson['courseID'],0,$classID);
+                                        }
+                                    }else{
+                                        $thisClassTea=new TbClass();
+                                        $oldClassTea=$thisClassTea->findall('className=?',array($v[2]));
+                                        foreach($oldClassTea as $oldClassID){
+                                            $classID=$oldClassID['classID'];
+                                        }
+                                    }
+                            }
+                            if(isset($_POST['checkbox'])){
+                                $style_flag=1;
+                            }
+                            }
+                            
+                            if($k==2||$k==3){
+                                $array_successTea=array();
+                                $dataTea['userName']=$v[11];
+                                $dataTea['uid']=$v[12];
+                                $dataTea['sex']=$v[13];
+                                $dataTea['age']=$v[14];
+                                $dataTea['department']=$v[15];
+                                $dataTea['phone_number']=$v[16];
+                                $dataTea['mail_address']=$v[17];
+                                $dataTea['school']=$v[18];
+                                    
+                            
+                                $classTeaID=TbClass::model()->findall('className=?',array($dataTea['class']));
+                                if(preg_match("/\s/", $dataTea['userName'])){
+                                 $dataTea['userName'] = str_replace(' ','',$dataTea['userName']);
+                            }
+                                if(count($classTeaID)>0){
+                                    foreach($classTeaID as $tea){
+                                        $teaID=$tea['classID'];
+                                    }
+                                    $flagTeaID=  TeacherClass::model()->findall('teacherID=? and classID=?',array($dataTea['uid'],$teaID));
+                                    
+                                }
+                                if($k==2 || $dataTea ['uid']!="" || $dataTea ['userName']!="" || $dataTea ['sex']!=""){                            
+                                if($dataTea['uid']=="" || ctype_space($dataTea['uid'])){
+                                    $result1="工号不能为空";
+                                    $fixed="需手动添加";
+                                    $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                    array_push($array_failTea,$stu_failTea);
+                                }else if(count($flagTeaID)>0){
+                                    $result1="该老师已分配至相应的班级中";
+                                    $fixed="需手动添加";
+                                    $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                    array_push($array_failTea,$stu_failTea);
+                                }else if(!Tool::checkID($dataTea['uid'])){
+                                    $result1="工号必须由字母和数字组成！";
+                                    $fixed="需手动添加";
+                                    $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                    array_push($array_failTea,$stu_failTea);
+                                }else if($dataTea['userName']=="" || ctype_space($dataTea['userName']) || !preg_match("/^[A-Za-z_\x80-\xff\s]+$/",$dataTea['userName'])){
+                                    $result1="姓名不能为空且由汉字或英文组成！";
+                                    $fixed="需手动添加";
+                                    $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                    array_push($array_failTea,$stu_failTea);
+                                }else if($dataTea['sex']!="男" && $dataTea['sex']!="女"){
+                                    $result1="性别未填写或写错！";
+                                    $fixed="性别默认为“女”";
+                                    $dataTea['sex']="女";
+                                    $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                    array_push($array_failTea,$stu_failTea);
+                                    if($dataTea['age']<1 ||$dataTea['age']>99 || !preg_match( "/^[0-9]+$/",$dataTea['age'])){
+                                        $result1="年龄应为1-99之间的整数！";
+                                        $fixed="年龄默认为99";
+                                        $dataTea['age']=99;
+                                        $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                        array_push($array_failTea,$stu_failTea);
+                                        if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number']) && $dataTea ['phone_number']!=""){
+                                            $result1 = "手机号码格式不正确";
+                                            $fixed = "手机号码已置空";
+                                            $dataTea['phone_number'] = "";
+                                            $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                            array_push($array_failTea,$stu_failTea);
+                                            if(!Tool::checkMailAddress($dataTea['mail_address']) && $dataTea['mail_address']!=""){
+                                                $result1="邮箱格式不正确！";
+                                                $fixed="邮箱信息已置空";
+                                                $dataTea['mail_address']="";
+                                                $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                                array_push($array_failTea,$stu_failTea);
+                                            }
+                                        }
+                                    }
+                                    array_push($array_successTea,$dataTea);
+                                }else if($dataTea['age']<1 ||$dataTea['age']>99 || !preg_match( "/^[0-9]+$/",$dataTea['age'])){
+                                    $result1="年龄应为1-99之间的整数！";
+                                    $fixed="年龄默认为99";
+                                    $dataTea['age']=99;
+                                    $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                    array_push($array_failTea,$stu_failTea);
+                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number'])&&$dataTea ['phone_number']!=""){
+                                        $result1 = "手机号码格式不正确";
+                                        $fixed = "手机号码已置空";
+                                        $dataTea['phone_number'] = "";
+                                        $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                        array_push($array_failTea,$stu_failTea);
+                                        if(!Tool::checkMailAddress($dataTea['mail_address']) && $dataTea['mail_address']!=""){
+                                            $result1="邮箱格式不正确！";
+                                            $fixed="邮箱信息已置空";
+                                            $dataTea['mail_address']="";
+                                            $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                            array_push($array_failTea,$stu_failTea);
+                                        }
+                                    }
+                                    array_push($array_successTea,$dataTea);
+                                }else if(!preg_match("/^1[34578]{1}\d{9}$/",$dataTea ['phone_number']) && $dataTea ['phone_number']!="") {
+                                    $result1 = "手机号码格式不正确";
+                                    $fixed = "手机号码已置空";
+                                    $dataTea['phone_number'] = "";
+                                    $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                    array_push($array_failTea,$stu_failTea);
+                                    if(!Tool::checkMailAddress($dataTea['mail_address'])&&$dataTea['mail_address']!=""){
+                                        $result1="邮箱格式不正确！";
+                                        $fixed="邮箱信息已置空";
+                                        $dataTea['mail_address']="";
+                                        $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                        array_push($array_failTea,$stu_failTea);
+                                    }
+                                    array_push($array_successTea,$dataTea);
+                                }else if(!Tool::checkMailAddress($dataTea['mail_address']) && $dataTea['mail_address']!=""){
+                                    $result1="邮箱格式不正确！";
+                                    $fixed="邮箱信息已置空";
+                                    $dataTea['mail_address']="";
+                                    $stu_failTea=array($result1,$dataTea['uid'],$dataTea['userName'],$fixed,$dataTea);
+                                    array_push($array_failTea,$stu_failTea);
+                                    array_push($array_successTea,$dataTea);
+                                }else{
+                                    array_push($array_successTea,$dataTea);
+                                }
+                                if($style_flag==1 && $k==2){
+                                    error_log(2);
+                                    foreach($array_successTea as $success_teaID){
+                                        error_log(3);
+                                        $successTeaID=strtoupper($success_teaID['uid']);
+                                    $styleTea="A01";
+                                    $oldExerciseTea=ClassExercise::model()->findall('create_person=?',array($styleTea));
+                                    foreach($oldExerciseTea as $exerciseTea){
+                                        error_log(4);
+                                        $style_lesson=Lesson::model()->findall('lessonID=?',array($exerciseTea['lessonID']));
+                                        foreach($style_lesson as $lesson_flag){
+                                            $class_number=$lesson_flag['number'];
+                                        }
+                                        $oldLessonTea=Lesson::model()->findall('classID=? and number=?',array($classID,$class_number));
+                                        if(!empty($oldLessonTea)){
+                                        foreach($oldLessonTea as $oldLesson){
+                                            $oldLessonID=$oldLesson['lessonID'];
+                                        }
+                                        if($exerciseTea['type']=="look"){
+                                            ClassExercise::model()->insertClassExercise($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],
+                                            $exerciseTea['type'],$successTeaID);
+                                        }else if($exerciseTea['type']=="listen"){
+                                            ClassExercise::model()->insertListen($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],$exerciseTea['file_name'],
+                                            $exerciseTea['file_path'],$exerciseTea['type'],$successTeaID,$exerciseTea['speed']);
+                                        }else{
+                                            ClassExercise::model()->insertKey($classID,$oldLessonID,$exerciseTea['title'],$exerciseTea['content'],
+                                            $successTeaID,$exerciseTea['type'],$exerciseTea['speed'],$exerciseTea['repeatNum'],$exerciseTea['chosen_lib']);
+                                        }
+                                        }
+                                    }
+                                    }
+                                }
+                                
+                                $count_successTea=Tool::excelreadTeaToDatabase($array_successTea);
+                            $counTea+=$count_successTea;
+                            }
+                            }
+                                
+
+                             //判断内容逻辑
+                        if ($k > 1) {
+                            $array_success = array();
+                            $data ['uid'] = $v [4];
+                            $data ['userName'] = $v [5];
+                            $data ['sex'] = $v [6];
+                            $data ['age'] = $v[7];
+                            $data ['mail_address'] = $v[8];
+                            $data ['phone_number'] = $v[9];
+                            if(preg_match("/\s/", $data['userName'])){
+                                 $data['userName'] = str_replace(' ','',$data['userName']);
+                            }
+                            if($k>=2 && $data ['uid']=="" && $data ['userName']=="" && $data ['sex']==""){
+                                $k = $k-1;
+//                                if(next($data)=="" ){
+//                                   break; 
+//                                }  
+                                break;
+                            }
+                            if ($data ['uid'] === "" || ctype_space($data ['uid'])) {
+                                $result = "学号不能为空";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if (Tool::excelreadUserID($data ['uid'])) {
+                                $result = "学号已存在！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if (!Tool::checkID($data ['uid'])) {
+                                $result = "学号必须由字母和数字组成！";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data ['userName'] === "" || ctype_space($data ['userName']) || !preg_match("/^[A-Za-z_\x80-\xff\s]+$/",$data ['userName'])) {
+                                $result = "姓名不能为空且由汉字或英文组成";
+                                $fixed = "需手动添加";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                            } else if ($data['sex'] != "男" && $data['sex'] != "女") {
+                                $result = "性别输入有误！";
+                                $fixed = "性别默认为“女”";
+                                $data['sex']="女";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                if($data['age']<1 ||$data['age']>99 || !preg_match( "/^[0-9]+$/",$data['age'])){
+                                    $result="年龄应为1-99之间的整数！";
+                                    $fixed="年龄默认为99";
+                                    $data['age']=99;
+                                    $stu_fail=array($result,$data['uid'],$data['userName'],$fixed,$data);
+                                    array_push($array_fail, $stu_fail);
+                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number']) && $data ['phone_number']!=""){
+                                        $result = "手机号码格式不正确";
+                                        $fixed = "手机号码已置空";
+                                        $data['phone_number'] = "";
+                                        $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                        array_push($array_fail, $stu_fail);
+                                        if(!Tool::checkMailAddress($data ['mail_address']) && $data ['mail_address']!=""){
+                                            $result = "邮箱格式不正确";
+                                            $fixed = "邮箱信息已置空";
+                                            $data['mail_address'] = "";
+                                            $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                            array_push($array_fail, $stu_fail);
+                                        }
+                                    }
+                                    array_push($array_success, $data);
+                                }
+                            } else if((TbClass::model()->getStuNumsByClassName($data ['className']))>=$studentNumber){
+                                $result = "班级人数超过".$studentNumber."人！";
+                                $fixed = "请重新分班";
+                                //$data['className'] = "";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                //array_push($array_success, $data);
+                            }  else if($data['age']<1 ||$data['age']>99 || !preg_match( "/^[0-9]+$/",$data['age'])){
+                                    $result="年龄应为1-99之间的整数！";
+                                    $fixed="年龄默认为99";
+                                    $data['age']=99;
+                                    $stu_fail=array($result,$data['uid'],$data['userName'],$fixed,$data);
+                                    array_push($array_fail, $stu_fail);
+                                    if(!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number']) && $data ['phone_number']!=""){
+                                        $result = "手机号码格式不正确";
+                                        $fixed = "手机号码已置空";
+                                        $data['phone_number'] = "";
+                                        $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                        array_push($array_fail, $stu_fail);
+                                        if(!Tool::checkMailAddress($data ['mail_address']) && $data ['mail_address']!=""){
+                                            $result = "邮箱格式不正确";
+                                            $fixed = "邮箱信息已置空";
+                                            $data['mail_address'] = "";
+                                            $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                            array_push($array_fail, $stu_fail);
+                                        }
+                                    }
+                                    array_push($array_success, $data);
+                                }else if (!preg_match("/^1[34578]{1}\d{9}$/",$data ['phone_number']) &&$data ['phone_number']!="") {
+                                    $result = "手机号码格式不正确";
+                                    $fixed = "手机号码已置空";
+                                    $data['phone_number'] = "";
+                                    $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                    array_push($array_fail, $stu_fail);
+                                    if(!Tool::checkMailAddress($data ['mail_address'])&& $data ['mail_address']!=""){
+                                        $result = "邮箱格式不正确";
+                                        $fixed = "邮箱信息已置空";
+                                        $data['mail_address'] = "";
+                                        $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                        array_push($array_fail, $stu_fail);
+                                    }
+                                    array_push($array_success, $data);
+                            }else if (!Tool::checkMailAddress($data ['mail_address'])&& $data ['mail_address']!="") {
+                                $result = "邮箱格式不正确";
+                                $fixed = "邮箱信息已置空";
+                                $data['mail_address'] = "";
+                                $stu_fail = array($result, $data['uid'], $data['userName'], $fixed, $data);
+                                array_push($array_fail, $stu_fail);
+                                array_push($array_success, $data);
+                            } else {
+                                array_push($array_success, $data);
+                            }
+                            //
+                            $count_success = Tool::excelreadToDatabase($array_success);
+                            $coun+=$count_success;
+                            
+                        }
+                    }
+                    if ($flag === 0) {
+                        //$count_success = Tool::excelreadToDatabase($array_success);
+                        $count_fail = $k - $coun - 1;
+                        $this->render('key', ['className'=>$data['className'],'flagTea'=>$flagTea,'courseName'=>$courseName,'courseNumber'=>$courseNumber,'flagClass'=>$flagClass,'result' => $coun,'result1'=>$counTea, 'count_fail' => $count_fail, 'array_fail' => $array_fail,'array_failTea' => $array_failTea]);
+                    }
+             
+            }
+          }else
+              {
+                $result="检测到您上传的Excel文件存在异常，请重新编辑并上传！";
+                $this->render('key',['result'=>$result]);
+               }
+        }else{
+            $this->render('key');
+        }
     }
 
     // Uncomment the following methods and override them if needed

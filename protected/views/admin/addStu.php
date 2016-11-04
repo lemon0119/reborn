@@ -95,10 +95,11 @@
 <?php
 foreach ($userAll as $key => $value) {
     $userID = $value['userID'];
+    
     echo "result[$key] = '$userID';";
 }
 ?>
-            return result;
+            return result.toString();
                     }
     function getclassID(){
     var result = new Array();
@@ -122,7 +123,7 @@ foreach ($classAll as $key => $value) {
     return result;
             }
     $("#form-addStu").submit(function(){
-    var userID = $("#input01")[0].value;
+    var userID = $("#input01")[0].value.toLocaleUpperCase();
             if (userID === ""){
     window.wxc.xcConfirm('学生学号不能为空', window.wxc.xcConfirm.typeEnum.info);
             return false;
@@ -251,8 +252,8 @@ foreach ($classAll as $key => $value) {
     usertipsSpan = document.getElementById("usertips");  
     usertipsSpan.style.color = "red";  
     usertipsSpan.style.marginLeft="25px";
-    if (!usernameVal.match( /^[A-Za-z]+[A-Za-z0-9]+$/)) {  
-        usertipsSpan.innerHTML="必须由英文或者数字组成，首字符必须是英文";  
+    if (!usernameVal.match( /^(?![0-9]+$)(?![a-zA-Z]+$)[A-Za-z0-9]+$/)) {  
+        usertipsSpan.innerHTML="必须由字母和数字组成";  
         document.getElementById("input01").value="";
         return false;  
     } else {  

@@ -33,7 +33,7 @@ class AnswerRecord extends CActiveRecord {
         $result = array();
         $num = Yii::app()->session['num'];
         for ($i = 1; $i <= $num; $i++) {
-            $result[$i] = "0";
+            $result[$i] = "";
         }
         foreach ($answer as $one) {
             $key = $one['exerciseID'];
@@ -473,7 +473,28 @@ class AnswerRecord extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-
+    public function getChoiceScore ($recordID,$type){
+        $sql = "select sum(score) as totalScore from answer_record where recordID = '$recordID' and type = '$type'";
+        $result = Yii::app()->db->createCommand($sql)->query();
+        $ans = AnswerRecord::model()->findAll("recordID = '$recordID' and type = '$type'");
+        if($ans == NULL){
+                $score = "未作答";
+        }else{
+            foreach ($result as $total) {
+                $score = $total['totalScore'];
+            }
+        }
+        return $score;
+    }
+    public function getScore($recordID,$exerciseID,$type) {
+        $result= AnswerRecord::model()->find("recordID = '$recordID' and exerciseID = '$exerciseID' and type = '$type'");
+        if($result == NULL){
+           $score = "未作答";
+        }else{
+           $score =  $result['score'];
+        }
+        return $score ;
+    }
     public function getAndSaveScoreByRecordID($recordID) {
         $sql = "select sum(score) as totalScore from answer_record where recordID = '$recordID'";
         $result = Yii::app()->db->createCommand($sql)->query();

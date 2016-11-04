@@ -7,6 +7,7 @@
 if ($isExam == false) {
     require 'suiteSideBar.php';
 } else {
+    require 'OnExam.php';
     require 'examSideBar.php';
 }
 $host = Yii::app()->request->hostInfo;
@@ -15,8 +16,8 @@ $rout = 'student/saveFilling';
 $page = '/index.php?r=' . $rout;
 $SNum = 0;
 ?>
-<div class="span9"style="height:480px; overflow:auto;">
-    <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host . $path . $page; ?>">
+<div class="span9"style="height:790px; overflow:auto;">
+    <form id="klgAnswer" name="na_knlgAnswer" method="post" action = "<?php echo $host . $path . $page; ?>" onkeypress="if(event.keyCode==13){return false;}">
         <div class="hero-unit">
             <input name ="qType" type="hidden" value="filling"/>
             <?php
@@ -58,6 +59,7 @@ $SNum = 0;
                 $n++;
             }
             ?>
+                </form>
             <!-- 显示翻页标签 -->
             <div align=center>
                 <?php
@@ -66,12 +68,18 @@ $SNum = 0;
             </div>
             <!-- 翻页标签结束 -->
         </div>
+        </div>
+            </div>
+            <div  class="copyright">
+                2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<span onclick="legalNotice()" class="copyright">法律声明</span><span  onclick="contact()" class="copyright">联系我们</span><span onclick="getHelp()" class="copyright">获得帮助</span>
+            </div>   
+            </body>
 
-    </form>
+
 </div>
-<script>
-    $(document).ready(function () {
-
+<script>    
+    $(document).ready(function () {  
+        
         $("div.span9").find("a").click(function () {
             var url = $(this).attr("href");
             if (url.indexOf("index.php") > 0) {

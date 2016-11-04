@@ -78,7 +78,7 @@ else
                     <input name="mail_address" type="text" class="input-xlarge" id="input07" value="<?php echo $mail_address ?>" onblur="chkMail()"/><span id="usertips_mail" style="margin-left: 5px;"></span>
                 </div>
             </div>
-            <div style="text-align: center">
+            <div style="margin-left: 178px">
                 <button type="submit"style="top:-2px;left: -45px" class="btn btn-primary">保存</button>
                 <a  style="right: 40px" class="btn btn-primary" onclick="resetPass()">重置密码</a>
                 <?php if (Yii::app()->session['lastUrl'] == "stuDontHaveClass") { ?>

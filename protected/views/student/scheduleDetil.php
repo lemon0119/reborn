@@ -1,7 +1,7 @@
 
 <div class="span9" style="width: 1088px;height:1000px">
             <h3>课程表</h3>
-        <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（鼠标悬浮显示详细信息）</p>
+<!--        <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（鼠标悬浮显示详细信息）</p>-->
         <br/>
             <table class="table table-bordered table-striped">
                 <thead>

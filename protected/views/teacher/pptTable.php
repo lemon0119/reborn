@@ -17,7 +17,7 @@
     <thead>
         <tr>
             <th>名称</th>
-            <th>资源类型</th>
+            <th>上传者</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -61,7 +61,7 @@
                 <td>
                     <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
                 </td>
-                <td>私人</td>
+                <td><?php echo Yii::app()->session['userName'];?></td>
                 <td>
                     <a href="./index.php?r=teacher/lookPpt&&ppt=<?php  $fileName   = iconv("gb2312","UTF-8",$file);
                                                                         $len    = strlen($fileName);
@@ -76,20 +76,20 @@
             
             
             <?php     
-                        } 
-                } 
-                $mydir->close(); 
-            ?>
+//                        } 
+//                } 
+//                $mydir->close(); 
+//            ?>
                    <?php
-            $mydir = dir($publicdir); 
-            while($file = $mydir->read())
-            { 
-                    if((!is_dir("$publicdir/$file")) AND ($file!=".") AND ($file!="..")) 
-                    {
-        ?>
-        <tr>
+//            $mydir = dir($publicdir); 
+//            while($file = $mydir->read())
+//            { 
+//                    if((!is_dir("$publicdir/$file")) AND ($file!=".") AND ($file!="..")) 
+//                    {
+//        ?>
+<!--        <tr>
             <td>
-                <?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
+                //<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>
             </td>
             <td>公共</td>
             <td>
@@ -98,9 +98,9 @@
                                                                         $path   = substr($fileName,0,$len-4);
                                                                         echo $path;?>&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $on;?>&&ispublic=1&&isnew=0"><img src="<?php echo IMG_URL; ?>detail.png" title="查看"></a>
                 <a href="<?php echo "$publicdir/".iconv("gb2312","UTF-8",$file);?>" target="_blank" download="<?php echo Resourse::model()->getOriName(iconv("gb2312","UTF-8",$file));?>"><img src="<?php echo IMG_URL; ?>icon_download.png" title="下载"></a>
-<!--                <a href="#" onclick="dele('<?php// echo iconv("gb2312","UTF-8",$file);?>','<?php// echo $classID;?>','<?php// echo $progress;?>','<?php //echo $on;?>',1)" id="dele"><img src="<?php// echo IMG_URL; ?>delete.png" title="删除"></a>-->
+                <a href="#" onclick="dele('<?php// echo iconv("gb2312","UTF-8",$file);?>','<?php// echo $classID;?>','<?php// echo $progress;?>','<?php //echo $on;?>',1)" id="dele"><img src="<?php// echo IMG_URL; ?>delete.png" title="删除"></a>
             </td>
-        </tr>
+        </tr>-->
         <?php     
                     } 
             } 

@@ -25,6 +25,7 @@ class Student extends CActiveRecord {
         AnswerRecord::model()->deleteAll('createPerson = ?', array($userID));
         ExamRecord::model()->deleteAll('studentID = ?', array($userID));
         SuiteRecord::model()->deleteAll('studentID = ?', array($userID));
+        ClassexerciseRecord::model()->deleteAll('studentID = ?', array($userID));
     }
 
     public function insertStu($userID, $userName, $sex, $age, $pass, $mail_address, $phone_number, $classID) {
@@ -83,7 +84,10 @@ class Student extends CActiveRecord {
         return ['stuLst' => $stuLst, 'pages' => $pages,];
         
     }
-
+    public function findLevelByStudentID($studentID) {
+        $student = $this->find("userid = '$studentID'");
+        return $student['level'];
+    }
     public function findClassByStudentID($studentID) {
         $student = $this->find("userid = '$studentID'");
         return $student['classID'];

@@ -25,7 +25,7 @@
                     <td><?php echo $sex;?></td>
                 </tr>
                 <tr>
-                    <td>部门:</td>
+                    <td>院系:</td>
                     <td><?php if($department=="") echo "无"; else echo $department;?></td>
                 </tr>
                 <tr>

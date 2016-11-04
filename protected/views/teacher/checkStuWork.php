@@ -2,7 +2,7 @@
 require 'workAnsSideBar.php';
 ?>
 
-<div class="span9" id="work">
+<div class="span9" id="work" style="height: 574px">
 </div>
 
 <script>

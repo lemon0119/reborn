@@ -51,7 +51,7 @@ function long2(){
 </script>
 
 <div class="span3">
-       <div class="well" style="padding: 8px 0;height: 565px;">
+       <div class="well" style="padding: 8px 0;height: 636px;">
            <li class="nav-header"><h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人设置</h4></li> 
            <ul class="nav nav-list">
            <li  id="two"><a class="cont2" href="./index.php?r=student/stuInformation">个人资料</a></li>   
@@ -60,13 +60,13 @@ function long2(){
            </ul>
         </div>
 </div>
-<div class="span9">
+<div class="span9" style="height: 574px">
     
     <div class="span_set">
     <h3>设置密码</h3>
     <form id="myForm" method="post" action="./index.php?r=student/set" enctype="multipart/form-data"> 
         <fieldset>
-            <legend>填写信息</legend>
+<!--            <legend>填写信息</legend>-->
             <div class="control-group">
                 <label class="control-label" for="input01">旧密码<h style="color:red;">*</h></label>
                 <div class="controls">
@@ -80,10 +80,10 @@ function long2(){
                 <div class="controls">
                         <input name="defnew" type="password" onblur="long2()" class="input-xlarge" id="input03" style="height: 30px;"/><span id="usertips3" style="margin-left: 15px;"></span> 
                 </div>
-                <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
+<!--                <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
                 <div class="controls">
                     <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
-                </div>
+                </div>-->
                 <!--
                 <label class="control-label" for="input03">上传头像：</label>
                 <input type="hidden" name="flag" id="flag" value="1" />
@@ -115,7 +115,7 @@ function judge(){
     var old = $("#input01")[0].value;
     var new1 = $("#input02")[0].value;
     var defnew=$("#input03")[0].value;
-    var email=$("#input04")[0].value;
+//    var email=$("#input04")[0].value;
     if(old!="" &&new1!=""&&old==new1){
         window.wxc.xcConfirm('新旧密码不能一样', window.wxc.xcConfirm.typeEnum.info);
         $("#input02")[0].value="";
@@ -134,10 +134,10 @@ function judge(){
         window.wxc.xcConfirm('密码不能为空', window.wxc.xcConfirm.typeEnum.info);
         return false;
     }
-    if(email === "" ){
-        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
-        return false;
-    }
+//    if(email === "" ){
+//        window.wxc.xcConfirm('email不能为空', window.wxc.xcConfirm.typeEnum.info);
+//        return false;
+//    }
     $('#myForm').submit();
     return false
 }

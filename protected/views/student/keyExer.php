@@ -1,5 +1,6 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<!--<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> -->
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <?php
 if ($isExam == false) {
     Yii::app()->session['isExam'] = 0;
@@ -8,6 +9,7 @@ if ($isExam == false) {
     <?php
 } else {
     Yii::app()->session['isExam'] = 1;
+    require 'OnExam.php';
     require 'examSideBar.php';
     ?>
     <?php
@@ -40,7 +42,7 @@ if (!$isOver) {
     $squence = $countSquence + 1;
     if ($sqlClassExerciseRecord != null) {
         ?>
-        <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div id="span" class="span9" style="height: 790px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php } ?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
@@ -53,7 +55,7 @@ if (!$isOver) {
             </form>
         </div>
     <?php } else { ?>
-        <div class="span9"  style="height: 700px">
+        <div class="span9"  style="height: 790px">
 
             <!--    <div class="hero-unit fl"  align="center">
             <?php Yii::app()->session['exerID'] = $exerOne['exerciseID']; ?>  
@@ -124,7 +126,7 @@ if (!$isOver) {
         <!--                             <td><span class="fl"  style="color: #000;font-weight: bolder">剩余时间：</span></td>
                         <td><span style="color: #f46500" id="time"><?php //echo $strTime  ?></span></td>-->
                         <?php //}else{ ?>
-                        <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+                        <td><span class="fl"  style="color: #000;font-weight: bolder">作答时长：</span></td>
                         <td><span style="color: #f46500" id="timej">00:00:00</span></td>
                         <?php //} ?>
                         <td></td>
@@ -223,7 +225,7 @@ if (!$isOver) {
     }
 }else {
     ?>
-    <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+    <div id="span" class="span9" style="height: 790px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
         <div id="Analysis" hidden="hidden"></div>
         <input id="content" hidden="hidden"/>  
         <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#808080"></font><font id="id_wrong" style="color:#ff0000"></font><font id="id_new" style="color:#000000"> </font></div>

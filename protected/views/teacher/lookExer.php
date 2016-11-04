@@ -3,7 +3,7 @@
 <?php
 require 'suiteSideBar.php';
 ?>
-<div class="span9">
+<div class="span9" style="height: 574px">
     <div class="hero-unit" align="center">
             <?php 
                 Yii::app()->session['exerID'] = $exerOne['exerciseID'];
@@ -16,7 +16,7 @@ require 'suiteSideBar.php';
         </table>
         <br/>
         <input id="content" type="hidden" value="<?php echo $exerOne['content'];?>">
-        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false"></div>
+        <div id ="templet" class="questionBlock" front-size ="25px" onselectstart="return false" style="height: 400px;width: 770px"></div>
         <br/>
     </div>
 </div>

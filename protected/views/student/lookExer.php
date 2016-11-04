@@ -1,10 +1,13 @@
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+<!--<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> -->
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
+
 <?php
 if ($isExam == false) {
     require 'suiteSideBar.php';
 } else {
+    require 'OnExam.php';
     require 'examSideBar.php';
 }
 //add by lc 
@@ -35,7 +38,7 @@ if (!$isOver) {
     $squence = $countSquence + 1;
     if ($sqlClassExerciseRecord != null) {
         ?>
-        <div class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div class="span9" style="height: 838px;width: 840px;padding: 15px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <?php if (!$isExam) { ?><h3>点击此处&nbsp;<a id="repeat" style="cursor: pointer">重做</a></h3><?php } ?>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" type="hidden" style="height: 5px;" value="<?php
@@ -47,19 +50,20 @@ if (!$isOver) {
             <div id ="templet" hidden="hidden"></div>
         </div>
     <?php } else { ?>
-        <div class="span9" style="height: 800px">
+        <div class="span9" style="height: 838px;width: 840px;padding: 15px">
             <?php if ($isExam) { ?>
             <?php } else { ?>
                 <div  id="span" class="hero-unit" align="center">
-                    <div style="width: 660px">
-                        <!--                        <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>-->
+                    <h3 ><?php echo $exerOne['title'] ?></h3>
+<!--                    <div style="width: 660px">
+                                                <button id="finish" onclick="finish()" class="fl btn btn-primary" >完成</button>
                         <button id="toggle" style="float: right;" class="btn btn-primary">展开</button>
-                    </div>
-                    <div id="Analysis">
-                        <h3 ><?php echo $exerOne['title'] ?></h3>
+                    </div>-->
+<!--                    <div id="Analysis">
+                        <h3 ><?php //echo $exerOne['title'] ?></h3>
                         <table style="width: 660px"  border = '0px'> 
                             <tr>
-                                <td><span class="fl"  style="color: #000;font-weight: bolder">练习计时：</span></td>
+                                <td><span class="fl"  style="color: #000;font-weight: bolder">作答时长：</span></td>
                                 <td><span style="color: #f46500" id="timej">00:00:00</span></td>
                                 <td></td>
                                 <td><span class="fl"   style="color: #000;font-weight: bolder">&nbsp;&nbsp;正确率：&nbsp;&nbsp;</span></td>
@@ -108,18 +112,18 @@ if (!$isOver) {
                             </tr>
 
                         </table>
-                    </div>
+                    </div>-->
                 <?php } ?>
-                <div class="hero-unit" align="center">
+        <div class="hero-unit" align="center" >
                     <?php
                     Yii::app()->session['exerID'] = $exerOne['exerciseID'];
                     ?>
-                    <table border = '0px'>
+                    <table border = '0px' >
                         <?php if ($isExam) { ?>
                             <tr><h3><?php echo $exerOne['title'] ?></h3></tr>
                             <tr>
                                 <td width = '250px'>分数：<?php echo $exerOne['score'] ?></td>
-                                <td width = '250px'>练习计时：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
+                                <td width = '250px'>作答时长：<span id="timej">00:00:00</span><input id="timej" type="hidden"/></td>
                                 <td width = '250px'>字数：<span id="wordCount">0</span></td>
                             <?php } else { ?>
                             <?php } ?>
@@ -132,12 +136,12 @@ if (!$isOver) {
                     $str = str_replace(" ", "}", $str);
                     echo $str;
                     ?>">
-                    <div id ="templet" style="text-align: left;height: 260px;width: 660px" class="questionBlock" front-size ="25px" onselectstart="return false">
+                    <div id ="templet" style="text-align: left;height: 225px;width: 840px" class="questionBlock" front-size ="25px" onselectstart="return false">
                     </div>
                     <br/>
                     <object id="typeOCX" type="application/x-itst-activex" 
                             clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                            width ='700' height='280' 
+                            width ='840' height='435' 
                             event_OnStenoPress="onStenoPressKey">
                     </object>
                 </div>
@@ -150,7 +154,7 @@ if (!$isOver) {
         }
     } else {
         ?>
-        <div id="span" class="span9" style="height: 800px"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
+        <div id="span" class="span9" style="height: 838px;width: 840px;"><h1><span style="color:#f46500"><?php echo $exerOne['title'] ?>&nbsp;</span>这道题你已经做过了</h1><br/><br/>
             <div id="Analysis" hidden="hidden"></div>
             <input id="content" hidden="hidden"/>  
             <div id ="templet" hidden="hidden"> <font id="id_right"style="color:#727272"></font><font id="id_wrong" style="color:#f44336"></font><font id="id_new" style="color:#000000"> </font></div>
@@ -163,11 +167,33 @@ if (!$isOver) {
         </div>
     <?php } ?>
 </div>
+ <?php if (!$isExam) { ?>
+<div  class="analysisTool" id="analysis" style="position: absolute;left:1277px;bottom: 310px">
+    <table style="margin: 0px auto;">
+        <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">作答时长：</span><span style="color: greenyellow" id="timej">00:00:00</span ></td></tr>
+        <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">正&nbsp;确&nbsp;&nbsp率：</span><span style="color: greenyellow" id="wordisRightRadio">0</span ><span class="fr" style="color: #fff"> %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>                       
+        <tr>
+            <td><span class="fl"  style="color: #fff;font-weight: bolder">平均速度：</span><span style="color: greenyellow" id="getAverageSpeed">&nbsp;&nbsp;0&nbsp;&nbsp;</span><span class="fr" style="color: #fff"> 字/分</span> </td></tr>
+        <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时速度：</span><span style="color: greenyellow" id="getMomentSpeed">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>
+        <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高速度：</span><span style="color: greenyellow" id="getHighstSpeed">0</span ><span class="fr" style="color: #fff"> 字/分</span></td></tr>
+        <tr>
+            <td><span class="fl"  style="color: #fff;font-weight: bolder">平均击键：</span><span style="color: greenyellow" id="getAverageKeyType">0</span ><span class="fr" style="color: #fff"> 次/分</span></td></tr>
+        <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">瞬时击键：</span><span style="color:greenyellow" id="getMomentKeyType">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>
+        <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高击键：</span><span style="color: greenyellow" id="getHighstCountKey">0</span ><span class="fr" style="color: #fff"> 次/秒</span></td></tr>
+        <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">击键间隔：</span><span style="color: greenyellow" id="getIntervalTime">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+        </tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">最高间隔：</span><span style="color: greenyellow" id="getHighIntervarlTime">0</span ><span class="fr" style="color: #fff"> 秒&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+        </tr><tr><td><span class="fl"  style="color: #fff;font-weight: bolder">总击键数：</span><span style="color: greenyellow" id="getcountAllKey">0</span ><span class="fr" style="color: #fff"> 次&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+        <tr><td><span class="fl"  style="color: #fff;font-weight: bolder">回改字数：</span><span style="color: greenyellow" id="getBackDelete">0</span ><span class="fr" style="color: #fff"> 字&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr>
+    </table>
+</div>
+<?php } ?>
 <script>
     var yaweiOCX = null;
     var briefCode = "";
     var briefOriginalYaweiCode = "";
     var briefType = "";
+    <?php $titleFalse=strpos($exerOne['title'],"-不提示略码"); ?>
+    var titleFalse = "<?php echo $titleFalse; ?>";
 
     $(document).ready(function () {
         window.G_isLook = 1;
@@ -243,18 +269,18 @@ if ($isExam) {
 
     });
 
-    $("#toggle").click(function () {
-        var flag = $("#toggle").text();
-        if (flag == '展开') {
-            $("#toggle").text("收起");
-            $("#templet").css('height', '180px');
-        } else {
-            $("#toggle").text("展开");
-            $("#templet").css('height', '260px');
-
-        }
-        $("#allAnalysis").toggle(0);
-    });
+//    $("#toggle").click(function () {
+//        var flag = $("#toggle").text();
+//        if (flag == '展开') {
+//            $("#toggle").text("收起");
+//            $("#templet").css('height', '180px');
+//        } else {
+//            $("#toggle").text("展开");
+//            $("#templet").css('height', '260px');
+//
+//        }
+//        $("#allAnalysis").toggle(0);
+//    });
 
     $(document).ready(function () {
         setInterval(function () {
@@ -456,7 +482,9 @@ if ($isExam) {
             }
             f.style = "color:" + color;
             content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-            checkYaweiCode(content);
+            if(!titleFalse){
+                checkYaweiCode(content);
+            }
             f.innerHTML = content.content;
             father.appendChild(f);
         } else {
@@ -481,24 +509,30 @@ if ($isExam) {
                         isBrief--;
                     }
                 }
-                f.style = "background-color:" + color + ";color:#fff";
+                f.style = "color:"+color;
                 content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-                checkYaweiCode(content);
+                if(!titleFalse){
+                    checkYaweiCode(content);
+                }
                 f.innerHTML = content.content;
                 father.appendChild(f);
             } else {
                 for (var i = 0; i < text.length; i++) {
                     content.content += text[i];
                 }
-                f.style = "background-color:" + color + ";color:#fff";
+                f.style = "color:"+color;
                 //var t = document.createTextNode(text);
                 //f.appendChild(t);
                 if (color === "#f44336") {
                     content.content = content.content.replace(/`/g, "↓<br/>").replace(/}/g, "█");
-                    checkYaweiCode(content);
+                    if(!titleFalse){
+                        checkYaweiCode(content);
+                    }
                 } else {
                     content.content = content.content.replace(/`/g, "<br/>").replace(/}/g, "&nbsp;");
-                    checkYaweiCode(content);
+                    if(!titleFalse){
+                        checkYaweiCode(content);
+                    }
                 }
                 f.innerHTML = content.content;
                 father.appendChild(f);
@@ -512,7 +546,7 @@ if ($isExam) {
         var input = getContent(yaweiOCX);
         var addLine = (input.split('\n\r')).length - 1;
         var div = document.getElementById('templet');
-        var line = parseInt(input.length / 23) + addLine;
+        var line = parseInt(input.length / 30) + addLine;
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }

@@ -19,16 +19,16 @@
                 <form id="deleForm" method="post" action="./index.php?r=admin/deleteTea"> 
                 <?php foreach($teaLst as $model):?>
                 <tr>
-                    <td class="font-center" style="width: 50px"> <input type="checkbox" name="checkbox[]" value="<?php echo $model['userID'];?>" /> </td>
+                    <td class="font-center" style="width: 50px"> <?php if($model['userName']!="亚伟速录" ){ ?><input type="checkbox" name="checkbox[]" value="<?php echo $model['userID'];?>" /><?php } ?> </td>
                     <td class="font-center" style="width: 75px"><?php echo $model['userID'];?></td>
                     <td class="font-center" style="width: 75px"><?php echo $model['userName'];?></td>
                     <td class="font-center" style="width: 150px"><?php echo $model['department'];?></td>
                     <td class="font-center" style="width: 150px"><?php echo $model['school'];?></td>
                     <td class="font-center" style="width: 100px">  
                         <a href="./index.php?r=admin/infoTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>"><img title="查看" src="<?php echo IMG_URL; ?>detail.png"></a>
-                        <a href="./index.php?r=admin/editTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
+                    <?php if($model['userName']!="亚伟速录" ){ ?>    <a href="./index.php?r=admin/editTea&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                         <a href="#" onclick="dele(<?php $userID=$model['userID'];
-                                                    echo "'$userID'"; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
+                    echo "'$userID'"; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a><?php } ?>
                     </td>
                 </tr>            
                 <?php endforeach;?> 

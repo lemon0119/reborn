@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
     $lessonsName=Array();
     $lessons=Lesson::model()->findall("classID='$classID'");
     if($lessons!=null){
@@ -34,7 +34,7 @@
                 <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>其余课时</li>
                 </ul>
     </div>
-    <div class="well-bottomnoradius" style="padding: 8px 0;height:230px;overflow:auto;top: -20px;border-top-left-radius:0px; ">
+    <div class="well-bottomnoradius" style="padding:0;height:246px;overflow:auto;top: -20px;border-top-left-radius:0px; ">  
                 <ul class="nav nav-list">
                 
                 <?php foreach($lessonsName as $key => $value):
@@ -54,7 +54,7 @@
                 <ul class="nav nav-list">
                 <li class="nav-header"></li>
                 <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>学生列表</li>
-                <div class="scroll" style="padding: 8px 0;height:150px;overflow:auto;margin-left: 20px;">
+       		<div class="scroll" style="margin-top:10px;width:248px;height:291px;overflow:auto;">                                  
                 <?php foreach($stu as $student){
                     ?>
                     <li><i class="icon-headphones" style="position:relative;bottom:6px;left:"></i><?php echo $student['userName']?></li>
@@ -65,16 +65,16 @@
         </ul>
     </div>
 </div>
-<div class="span9">
+<div class="span9" style=" height: 725px">
     <?php 
         if($lessonsName!=null) {  ?>
     
-    <h1>
+    <h2>
        <?php  
        $nowOn = $_GET['on'];
          if(isset($lessonsName[$nowOn])){echo $lessonsName[$nowOn];}
             ?>
-    </h1>
+    </h2>
     <div class="hero-unit table-bordered" style="height:200px; width: 770px">
         <p class="font-startcourse">
             点击虚拟课堂开始本课.
@@ -90,9 +90,9 @@
                ?>" class="startcourse-startclass">课后作业</a>
         </div>
         </div>
-        <h1>
+        <h2>
             本课资源
-        </h1>
+        </h2>
         <?php
         $typename = Yii::app()->session['role_now'];
         $userid = Yii::app()->session['userid_now'];
@@ -318,7 +318,7 @@
                 
             </ul>
         </div>
-    <h1>课堂练习</h1>
+    <h2>课堂练习</h2>
     <div class="table-bordered summary">
                 <li>
                     <a  id="ppt" href="./index.php?r=teacher/classExercise4Type&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($keywork)){echo count($keywork);}else{echo '0';}?>
@@ -331,6 +331,26 @@
                 <li>
                     <a  id="ppt" href="./index.php?r=teacher/classExercise4Listen&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>"><span class="count"><?php  if(isset($listen)){echo count($listen);}else{echo '0';}?>
                         </span > <font style="color:#000">听打练习</font></a>
+                </li>
+     </ul>
+        </div>
+    <a href="./index.php?r=teacher/grouping&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>" style=" color: #333333"><h2>学生分组</h2></a>
+    <div class="table-bordered summary">
+                <li>
+                    <a  id="primary" href="#" style="color: #f46500;"><span class="count"><?php  if(isset($stuPrimary)){echo count($stuPrimary);}else{echo '0';}?>
+                        </span > <font style="color:#000">初级</font></a>
+                </li>
+                <li>
+                    <a  id="intermediate" style="color: #f46500;" href="#"><span class="count"><?php  if(isset($stuIntermediate)){echo count($stuIntermediate);}else{echo '0';}?>
+                        </span > <font style="color:#000">中级</font></a>
+                </li>
+                <li>
+                    <a  id="senior" style="color: #f46500;" href="#"><span class="count"><?php  if(isset($stuSenior)){echo count($stuSenior);}else{echo '0';}?>
+                        </span > <font style="color:#000">高级</font></a>
+                </li>
+                <li>
+                    <a  id="ungrouped" style="color: #f46500;" href="#"><span class="count"><?php  if(isset($stuUngrouped)){echo count($stuUngrouped);}else{echo '0';}?>
+                        </span > <font style="color:#000">未分组</font></a>
                 </li>
      </ul>
         </div>

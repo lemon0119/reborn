@@ -22,14 +22,14 @@ header('Cache-control: private, must-revalidate');
                 </li>
             </form>
             <li class="divider"></li>
-            <li  style="color: #fff"><i class="icon-knowlage"></i>科目列表</li>
+            <li  style="color: #fff"><i class="icon-knowlage"></i><span style=" position: relative;top: 6px">科目列表</span></li>
             </ul>
     </div>
             <div class="well-topnoradius" style="padding: 8px 0;height:430px;overflow:auto;top: -20px;border-top-left-radius:0px; ">
                 <ul class="nav nav-list">
              <?php foreach ($allCourse as $course): ?>
                     <li style="pointer-events: none;" ><a <?php if(Yii::app()->session['insert_course']==$course['courseName']){
-echo 'style="color:#f46500"';Yii::app()->session['insert_course']="";}else{echo 'style="color: #aaa9a9"';}?>><i class="icon-list"></i><?php echo $course['courseName']; ?></a></li>
+                        echo 'style="color:#f46500"';Yii::app()->session['insert_course']="";}else{echo 'style="color: #aaa9a9"';}?>><i class="icon-list"></i><span style=" position: relative;top: 6px"><?php echo $course['courseName']; ?></span></a></li>
             <?php endforeach; ?>   
         </ul>
     </div>

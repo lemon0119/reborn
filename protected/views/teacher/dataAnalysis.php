@@ -41,7 +41,7 @@
                                  {
                                      if($suite['suiteID'] == $work['suiteID']) {                                                                       
                            ?>                      
-                         <li><a href="#" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-list"></i><?php echo $suite['suiteName']; ?></a></li>                                                                                                                                               
+                         <li><a href="#" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-list"></i><span style="position: relative;top: 6px"><?php echo $suite['suiteName']; ?></span></a></li>                                                                                                                                               
                              <?php        
                                      }
                                  }
@@ -69,13 +69,14 @@
                  }
 ?>                                     
              </ul>                   
-         </div>                                    
+         </div>
+         <li ><div id="id_classabsence"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">签到</a></div></li>
       </ul>
      </div>
 </div>
 
 
-<div class="span9" id="sp" style="display: none;height: 830px;">
+<div class="span9" id="sp" style="display: none;height: 758px;">
     <div style="position: relative;top: -15px;">
         <div  style="width:100%;overflow: auto;height:110px;">
             <table id="ul1" class="ul1" style="margin-left: -20px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
@@ -188,7 +189,7 @@
     
     <div id="main2" style="left:15px;display: none;width: 750px;overflow: auto;height:400px;position: relative;top:20px;"></div>
 </div>
-<div class="span9" id="other" style="display: none;height: 830px;">
+<div class="span9" id="other" style="display: none;height: 758px;">
     <h3 style="alignment-adjust: center;">没有统计数据！</h3>
 </div>
 <script>
@@ -204,7 +205,10 @@ $(document).ready(function(){
         $("#id_classExamLesson").toggle(200);
     });  
     
-    
+    $("#id_classabsence").click(function() {
+        window.open("./index.php?r=teacher/countAbsence&&classID=<?php echo $classID; ?>", 'newwindow', 'height=500,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,')   
+ 
+    }); 
     
     
     

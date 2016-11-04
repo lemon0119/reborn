@@ -8,10 +8,26 @@ require 'ansSideBar.php';
 ?>
 <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
-<div class="span9">
+<div class="span9" style="height: 570px">
     <div class="hero-unit">
+        <div style="float: left">
+        <h2>键打练习</h2>
+        </div>
+        <?php $isExam = Yii::app()->session['isExam'];
+        if($isExam){
+            echo '<div id="score" style="position: absolute;right: 79px;top: 54px">';
+               if($flag == "未批阅"){
+                   echo '未批阅';
+                }else {
+                    echo'得分：'.$score;
+                }
+                echo '</div> <br><br> '; 
+         
+        }
+?>
+       
         <table border = '0px' width="100%">
-            <h2>键打练习</h2>
+            
             <tr>
                 <td width = '50%' align='center'>题目：<?php echo $exer['title'] ?></td>
                 <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f', $correct);
@@ -61,18 +77,18 @@ echo '%'; ?></span></td>
     for (var i = 0; i < currentContent.length; i++) {
         if (typeof (currentContent[i]) !== 'undefined') {
             if (currentContent[i] !== currentLCS[i]) {
-                currentInnerHTML += '<font style="background-color:#f44336;color:#fff">' + currentContent[i] + '</font>';
+                currentInnerHTML += '<font style="color:#f44336">' + currentContent[i] + '</font>';
             } else {
-                currentInnerHTML += '<font style="background-color:#727272;color:#fff">' + currentContent[i] + '</font>';
+                currentInnerHTML += '<font style="color:#727272">' + currentContent[i] + '</font>';
             }
         }
     }
     for (var i = 0; i < originalContent.length; i++) {
         if (typeof (originalContent[i]) !== 'undefined') {
             if (originalContent[i] !== originalLCS[i]) {
-                originalInnerHTML += '<font style="background-color:#f44336;color:#fff">' + originalContent[i] + '</font>';
+                originalInnerHTML += '<font style="color:#f44336">' + originalContent[i] + '</font>';
             } else {
-                originalInnerHTML += '<font style="background-color:#727272;color:#fff">' + originalContent[i] + '</font>';
+                originalInnerHTML += '<font style="color:#727272">' + originalContent[i] + '</font>';
             }
         }
     }

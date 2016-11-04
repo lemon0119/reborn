@@ -29,7 +29,7 @@
     </div>
 
 </div>
-<div class="span9" style="height: 920px">
+<div class="span9" style="height: 100%">
     <!-- 显示课程列表   -->
    
     <?php if(isset($_GET['courseID'])){ ?>
@@ -39,7 +39,6 @@ $dir = "resources/admin/001/$courseID/";
 ?>
     <h3><?php 
 echo $courseName; ?></h3>
-     <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（课名可点击修改）</p>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -90,6 +89,9 @@ echo $courseName; ?></h3>
             <?php endforeach; ?> 
         </tbody>
     </table>
+     <div id="p_tag" style="float: right;">
+     <p style="color: gray" >（课名可点击修改）</p>
+     </div>
     <!-- 课程列表结束 -->
     <!-- 显示翻页标签 -->
     <div align=center>
@@ -108,7 +110,6 @@ echo $courseName; ?></h3>
             <?php } else { ?>
             <h3><font style="color: #f46500">您</font>的课程安排</h3>
 <?php } ?>
-        <p style="color: gray">&nbsp;&nbsp;&nbsp;&nbsp;（鼠标悬浮显示详细信息）</p>
         <br/>
             <table class="table table-bordered table-striped">
                 <thead>
