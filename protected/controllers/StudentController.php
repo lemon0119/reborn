@@ -882,7 +882,7 @@ class StudentController extends CController {
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if ($record == null) {
-            return $this->render('choiceExer', ['number' => $number, 'ansChoice' => $ansArr, 'choiceLst' => $choiceLst, 'pages' => $pages, 'exercise2' => $classwork2, 'exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent, 'workID' => $wID]);
+            return $this->renderpartial('choiceExer', ['number' => $number, 'ansChoice' => $ansArr, 'choiceLst' => $choiceLst, 'pages' => $pages, 'exercise2' => $classwork2, 'exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent, 'workID' => $wID]);
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
