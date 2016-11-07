@@ -3789,8 +3789,8 @@ class TeacherController extends CController {
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-        //return $this->render('seeWork',['exercise'=>$classwork ]);
-        return $this->render('keyExer', ['exercise' => $classwork]);
+//        return $this->render('seeWork',['exercise'=>$classwork ]);
+        return $this->render('seeWork', ['exercise' => $classwork]);
     }
 
     public function ActionAssignWork() {
@@ -7296,6 +7296,7 @@ class TeacherController extends CController {
         $exerciseID = $_GET['exerciseID'];
         $ClassExercise = ClassExercise::model()->getByExerciseID($exerciseID);
         $result = ClassExercise::model()->getAllNowOpenExercise($classID);
+        
         foreach ($result as $v) {
             if ($v['exerciseID'] != $exerciseID) {
                 array_push($allIsOpen, $v);
@@ -7363,7 +7364,6 @@ class TeacherController extends CController {
          }else{
            ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
          } 
-       
        $this->render('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
        
     }
