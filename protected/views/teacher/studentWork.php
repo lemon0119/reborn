@@ -28,6 +28,7 @@
                 <th style="width:70px">班级</th>     
                 <th style="width:100px">课时</th>   
                 <th style="width:120px">作业</th>
+                <th style="width:120px">等级</th>
                 <th style="width:50px">操作</th>
             </tr>
         </thead>
@@ -72,6 +73,9 @@
                         </td>           
                         <td style="width:120px">            
                              <?php echo $thisSuite['suiteName'];?>                 
+                        </td>
+                        <td style="width:120px">            
+                             <?php echo $suiteLesson['level'];?>                 
                         </td>
                         <td style="width:50px">     
                             <?php if($workID==$suiteLesson['workID']){?>

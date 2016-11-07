@@ -1599,6 +1599,7 @@ class TeacherController extends CController {
         $thisLook = $thisLook->find("exerciseID = '$exerciseID'");
         $newContent = Tool::SBC_DBC($_POST['content'], 0);
         $content4000 = Tool::spliceLookContent($newContent);
+        $txtNoSpaces = Tool::filterAllSpaceAndTab($content4000);
         if(isset($_POST['checkbox'])){
             if(strpos($_POST['title'],"-不提示略码")){
                 $title=$_POST['title'];
@@ -1647,9 +1648,9 @@ class TeacherController extends CController {
                 }
         }
         if($tag == "成功"){
-            $thisLook->content = $txtContent;
+            $thisLook->content = $txtNoSpace;
         }else{
-        $thisLook->content = $content4000;
+        $thisLook->content = $txtNoSpaces;
         }
         $thisLook->update();
         if (Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam") {
@@ -2365,13 +2366,17 @@ class TeacherController extends CController {
                         } else {
                             $contents = fread($fp, filesize($file_dir)); //读文件 
                             $content = iconv('GBK', 'utf-8', $contents);
-                            $result = ListenType::model()->insertListen($_POST['title'], $content, $newName, $filePath, Yii::app()->session['userid_now'],$_POST['speed']);
+                            $txtContent = Tool::SBC_DBC($content, 0);
+                            $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
+                            $result = ListenType::model()->insertListen($_POST['title'], $txtNoSpace, $newName, $filePath, Yii::app()->session['userid_now'],$_POST['speed']);
                             $result = '1';
                             }
                     }
                 }
                 }else {
-                    $result = ListenType::model()->insertListen($_POST['title'], $_POST['content'], $newName, $filePath, Yii::app()->session['userid_now'],$_POST['speed']);
+                    $txtContents = Tool::SBC_DBC($_POST['content'], 0);
+                    $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
+                    $result = ListenType::model()->insertListen($_POST['title'], $txtNoSpaces, $newName, $filePath, Yii::app()->session['userid_now'],$_POST['speed']);
                     $result = '1';
                     }  
             }
@@ -2643,6 +2648,8 @@ class TeacherController extends CController {
                         } else {
                             $contents = fread($fp, filesize($file_dir)); //读文件 
                             $content = iconv('GBK', 'utf-8', $contents);
+                            $txtContent = Tool::SBC_DBC($content, 0);
+                            $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
                             $tag = "成功";
                             }
                     }
@@ -2651,13 +2658,15 @@ class TeacherController extends CController {
         if (!isset($result) || $result == "上传成功") {
             if($tag == "成功"){
                $thisListen->title = $_POST ['title'];
-               $thisListen->content = $content;
+               $thisListen->content = $txtNoSpace;
                $thisListen->speed = $_POST['speed'];
                $thisListen->update();
                $result = "修改成功!"; 
             }else {
             $thisListen->title = $_POST ['title'];
-            $thisListen->content = $_POST ['content'];
+            $txtContents = Tool::SBC_DBC($_POST ['content'], 0);
+            $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
+            $thisListen->content = $txtNoSpaces;
             $thisListen->speed = $_POST['speed'];
             $thisListen->update();
             $result = "修改成功!";
@@ -3780,8 +3789,8 @@ class TeacherController extends CController {
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-        //return $this->render('seeWork',['exercise'=>$classwork ]);
-        return $this->render('keyExer', ['exercise' => $classwork]);
+//        return $this->render('seeWork',['exercise'=>$classwork ]);
+        return $this->render('seeWork', ['exercise' => $classwork]);
     }
 
     public function ActionAssignWork() {
@@ -6737,7 +6746,7 @@ class TeacherController extends CController {
          $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
          foreach ($stu as $student) {
             $name = 'level' . $student['userID'];
-            $level = isset($_POST[$name]) ? $_POST[$name] : '';
+            $level = isset($_POST[$name]) ? $_POST[$name] : '未分组';
             if ($level !== '') {
                 $userId = $student['userID'];
                 $thisStudent = new Student();
@@ -7023,13 +7032,17 @@ class TeacherController extends CController {
                         } else {
                             $contents = fread($fp, filesize($file_dir)); //读文件 
                             $content = iconv('GBK', 'utf-8', $contents);
-                            $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $content, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
+                            $txtContent = Tool::SBC_DBC($content, 0);
+                            $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
+                            $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpace, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
                             $result = '1';
                          }
                     }
                 }
                 }else {
-                   $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $_POST['content'], $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
+                   $txtContents = Tool::SBC_DBC($_POST['content'], 0);
+                   $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
+                   $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpaces, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
                    $result = '1'; 
                 }
                 
@@ -7093,7 +7106,8 @@ class TeacherController extends CController {
                 }
         }
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
-            $content4000 = Tool::spliceLookContent($newContent);
+            $newtxt4000 = Tool::spliceLookContent($newContent);
+            $content4000 = Tool::spliceLookContent($newtxt4000);
             if($tag == "成功"){
             $update = ClassExercise::model()->updateLook($exerciseID, $title, $txtNoSpace);
             }  else {
@@ -7230,6 +7244,8 @@ class TeacherController extends CController {
                         } else {
                             $contents = fread($fp, filesize($file_dir)); //读文件 
                             $content = iconv('GBK', 'utf-8', $contents);
+                            $txtContent = Tool::SBC_DBC($content, 0);
+                            $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
                             $tag = "成功";
                             }
                     }
@@ -7238,13 +7254,15 @@ class TeacherController extends CController {
             if ($result === "" || $result == "上传成功") {
                 if($tag == "成功"){
                $thisListen->title = $_POST ['title'];
-               $thisListen->content = $content;
+               $thisListen->content = $txtNoSpace;
                $thisListen->speed = $_POST['speed'];
                $thisListen->update();
                $result = "修改成功!"; 
             }else {
             $thisListen->title = $_POST ['title'];
-            $thisListen->content = $_POST ['content'];
+            $txtContents = Tool::SBC_DBC($_POST ['content'], 0);
+            $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
+            $thisListen->content = $txtNoSpaces;
             $thisListen->speed = $_POST['speed'];
             $thisListen->update();
             $result = "修改成功!";
@@ -7278,6 +7296,7 @@ class TeacherController extends CController {
         $exerciseID = $_GET['exerciseID'];
         $ClassExercise = ClassExercise::model()->getByExerciseID($exerciseID);
         $result = ClassExercise::model()->getAllNowOpenExercise($classID);
+        
         foreach ($result as $v) {
             if ($v['exerciseID'] != $exerciseID) {
                 array_push($allIsOpen, $v);
@@ -7345,7 +7364,6 @@ class TeacherController extends CController {
          }else{
            ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
          } 
-       
        $this->render('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
        
     }

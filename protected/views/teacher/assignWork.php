@@ -131,7 +131,7 @@
                             }else {
                                 $level = $exitsuite['level'];
                                 if($level == ''){
-                                    echo '初级 中级 高级';
+                                    echo '初级 中级 高级 未分组';
                                 }else {
                                     echo $level;
                                 }
