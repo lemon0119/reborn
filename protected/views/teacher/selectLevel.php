@@ -19,7 +19,7 @@
             <input type="checkbox" name="select[]" value="中级"><span style="position: relative;top: 4px;font-size: 20px">&nbsp;&nbsp;中级</span><br><br>
             <input type="checkbox" name="select[]" value="高级"><span style="position: relative;top: 4px;font-size: 20px">&nbsp;&nbsp;高级</span><br><br>
             <input type="checkbox" name="select[]" value="未分组"><span style="position: relative;top: 4px;font-size: 20px">&nbsp;&nbsp;未分组</span><br><br><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit"  class="btn btn-primary" style="width: 120px">确定</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit"  class="btn btn-primary" style="width: 120px" onclick="openExercise(<?php echo $exerciseID ?>)">确定</button>
                     </fieldset>
                 </form>
             </div>
@@ -32,4 +32,27 @@
             window.close();
         <?php  }?>
     });
+    function openExercise(exerciseID){
+        <?php error_log("执行------1"); ?>
+        $.ajax({
+                    type: "POST",
+                    url: "index.php?r=teacher/openClassExercise",
+                    async: false,
+                    data: {exerciseID: exerciseID},
+                    success: function (data) {
+                        if (data == 1) {
+
+//                           window.parent.backToTableClassExercise4virtual();
+                        } else {
+                            alert("开放失败");
+                        }
+                    },
+                    error: function (xhr, type, exception) {
+                        console.log('GetAverageSpeed error', type);
+                        console.log(xhr, "Failed");
+                        console.log(exception, "exception");
+
+                    }
+                });
+    }
 </script>
