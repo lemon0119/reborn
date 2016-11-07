@@ -938,7 +938,7 @@ class StudentController extends CController {
             $classexam2[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
         }
         if ($record == null) {
-            return $this->render('choiceExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansChoice' => $ansArr, 'exercise' => $classexam, 'exercise2' => $classexam2, 'choiceLst' => $choiceLst, 'pages' => $pages, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'choice']);
+            return $this->renderpartial('choiceExer', ['number' => $number, 'cent' => $cent, 'workID' => $workID, 'ansChoice' => $ansArr, 'exercise' => $classexam, 'exercise2' => $classexam2, 'choiceLst' => $choiceLst, 'pages' => $pages, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'choice']);
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
