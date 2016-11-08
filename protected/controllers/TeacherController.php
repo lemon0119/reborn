@@ -1802,21 +1802,6 @@ class TeacherController extends CController {
                 }
             }
         }
-        $suiteLst = Array();
-        $suiteLst = Suite::model()->findAll();
-        foreach ($suiteLst as $suite) {
-            $suiteID = $suite['suiteID'] ;
-            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'look'");
-            if($suiteExerLst!=null){
-                foreach ($suiteExerLst as $suiteExer) {
-                    if($exerciseID == $suiteExer['exerciseID']){
-                        $flag = 1;
-                        $tip = "此题目已经被占用!";
-                        break;
-                    }
-                }
-            }
-        }
         if ($flag == 0) {
             $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
             $tip = "此题目删除成功!";
@@ -2159,21 +2144,6 @@ class TeacherController extends CController {
             if ($examExerLst != NULL) {
                 foreach ($examExerLst as $examExer) {
                     if ($exerciseID == $examExer['exerciseID']) {
-                        $flag = 1;
-                        $tip = "此题目已经被占用!";
-                        break;
-                    }
-                }
-            }
-        }
-        $suiteLst = Array();
-        $suiteLst = Suite::model()->findAll();
-        foreach ($suiteLst as $suite) {
-            $suiteID = $suite['suiteID'] ;
-            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'key'");
-            if($suiteExerLst!=null){
-                foreach ($suiteExerLst as $suiteExer) {
-                    if($exerciseID == $suiteExer['exerciseID']){
                         $flag = 1;
                         $tip = "此题目已经被占用!";
                         break;
@@ -2531,20 +2501,6 @@ class TeacherController extends CController {
                             $tip = "此题目已经被占用!";
                             break;
                         }
-                    }
-                }
-            }
-        $suiteLst = Array();
-        $suiteLst = Suite::model()->findAll();
-        foreach ($suiteLst as $suite) {
-            $suiteID = $suite['suiteID'] ;
-            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'listen'");
-            if($suiteExerLst!=null){
-                foreach ($suiteExerLst as $suiteExer) {
-                    if($exerciseID == $suiteExer['exerciseID']){
-                        $flag = 1;
-                        $tip = "此题目已经被占用!";
-                        break;
                     }
                 }
             }
@@ -7443,11 +7399,6 @@ class TeacherController extends CController {
               }
          }else{
            ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
-         } 
-       }
-       }
-        $this->render('selectLevelSome', ['check' => $check,'lessonID'=>$lessonID,'classID'=>$classID]);
-    }
     public function actionGetVirtualClassAnalysis() {
         $arrayData = Array();
         $data = Array();
