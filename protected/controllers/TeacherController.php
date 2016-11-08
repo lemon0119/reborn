@@ -2504,7 +2504,6 @@ class TeacherController extends CController {
                     }
                 }
             }
-        }
             if ($flag == 0) {
                 $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");
                 $tip = "此题目删除成功!";
@@ -3594,7 +3593,6 @@ class TeacherController extends CController {
                 }
             }
         }
-        
         if ($flag == 0) {
             $deleteResult = $thisQuestion->deleteAll("exerciseID = '$exerciseID'");
             $tip = "此题目删除成功!";
@@ -7345,12 +7343,6 @@ class TeacherController extends CController {
        $lessonID = $_GET['lessonID'];
        $this->renderPartial('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
     }
-    public function actionselectLevelSome (){
-       $check = $_GET['check']; 
-       $classID = $_GET['classID'];
-       $lessonID = $_GET['lessonID'];
-       $this->renderPartial('selectLevelSome', ['check' => $check,'lessonID'=>$lessonID,'classID'=>$classID]); 
-    }
     public function actionSelectLevelInfo(){
        $exerciseID = $_GET['exerciseID']; 
        $classID = $_GET['classID'];
@@ -7372,33 +7364,9 @@ class TeacherController extends CController {
          }else{
            ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
          } 
-         
-       $this->renderPartial('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
+       $this->render('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
        
     }
-    public function actionSelectLevelSomeInfo (){
-        $check = $_GET['check']; 
-       $classID = $_GET['classID'];
-       $lessonID = $_GET['lessonID'];
-       $exerciseLst = explode("*", $check);
-       foreach ($exerciseLst as $exerciseID) {
-          if($exerciseID != null){
-          if(isset($_POST['select'])){
-            $arraySelect = $_POST['select'];
-              if(in_array('初级', $arraySelect)){
-                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '初级');
-              } 
-              if(in_array('中级', $arraySelect)){
-                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '中级');
-              }
-              if(in_array('高级', $arraySelect)){
-                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '高级');
-              }
-              if(in_array('未分组', $arraySelect)){
-                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '未分组');
-              }
-         }else{
-           ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
     public function actionGetVirtualClassAnalysis() {
         $arrayData = Array();
         $data = Array();
