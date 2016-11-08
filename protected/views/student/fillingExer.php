@@ -44,12 +44,12 @@ $SNum = 0;
                                 echo '<input type="text" value="' . $arr[$m] . '" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
                                 $m++;
                             } else {
-                                echo '<input type="text" value="' . $str . '" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
+                                echo '<input type="text" style ="height:30px;position:relative;top:8px;" value="' . $str . '" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
                             }
                         }
                     }
                     if ($f == 0) {
-                        echo '<input type="text" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
+                        echo '<input type="text" style ="height:30px;position:relative;top:8px;" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
                     }
 
 
