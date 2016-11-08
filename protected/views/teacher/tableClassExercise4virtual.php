@@ -111,9 +111,21 @@
     }
 
     function checkBoxStartExercise() {
+    
         var checkboxs = document.getElementsByName('checkbox[]');
+        var check = "";
+        var exerciseID = "";
+        for (var i = 0; i < checkboxs.length; i++) {
+                    if (checkboxs[i].checked) {
+                        if (exerciseID === "") {
+                            exerciseID = checkboxs[i].value;
+                        }
+                        check += checkboxs[i].value+ "*" ;
+                    }
+                }
+        window.open("./index.php?r=teacher/selectLevelSome&&check="+check+"&&classID=<?php echo $classID;?>&&lessonID=<?php echo $lessonID;?>", 'newwindow', 'height=400,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
         window.parent.exitNowOn();
-        window.parent.startNow4Lot(checkboxs);
+//        window.parent.startNow4Lot(checkboxs);
     }
 
 </script>
