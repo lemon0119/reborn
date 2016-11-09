@@ -1802,6 +1802,21 @@ class TeacherController extends CController {
                 }
             }
         }
+        $suiteLst = Array();
+        $suiteLst = Suite::model()->findAll();
+        foreach ($suiteLst as $suite) {
+            $suiteID = $suite['suiteID'] ;
+            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'look'");
+            if($suiteExerLst!=null){
+                foreach ($suiteExerLst as $suiteExer) {
+                    if($exerciseID == $suiteExer['exerciseID']){
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
+                        break;
+                    }
+                }
+            }
+        }
         if ($flag == 0) {
             $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
             $tip = "此题目删除成功!";
@@ -2144,6 +2159,20 @@ class TeacherController extends CController {
             if ($examExerLst != NULL) {
                 foreach ($examExerLst as $examExer) {
                     if ($exerciseID == $examExer['exerciseID']) {
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
+                        break;
+                    }
+                }
+            }
+        }
+               $suiteLst = Suite::model()->findAll();
+        foreach ($suiteLst as $suite) {
+            $suiteID = $suite['suiteID'] ;
+            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'key'");
+            if($suiteExerLst!=null){
+                foreach ($suiteExerLst as $suiteExer) {
+                    if($exerciseID == $suiteExer['exerciseID']){
                         $flag = 1;
                         $tip = "此题目已经被占用!";
                         break;
@@ -2504,6 +2533,21 @@ class TeacherController extends CController {
                     }
                 }
             }
+            $suiteLst = Array();
+        $suiteLst = Suite::model()->findAll();
+        foreach ($suiteLst as $suite) {
+            $suiteID = $suite['suiteID'] ;
+            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'listen'");
+            if($suiteExerLst!=null){
+                foreach ($suiteExerLst as $suiteExer) {
+                    if($exerciseID == $suiteExer['exerciseID']){
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
+                        break;
+                    }
+                }
+            }
+        }
             if ($flag == 0) {
                 $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");
                 $tip = "此题目删除成功!";
@@ -7366,6 +7410,42 @@ class TeacherController extends CController {
          } 
        $this->render('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
        
+    }
+    public function actionselectLevelSome (){
+       $check = $_GET['check']; 
+       $classID = $_GET['classID'];
+       $lessonID = $_GET['lessonID'];
+       $this->renderPartial('selectLevelSome', ['check' => $check,'lessonID'=>$lessonID,'classID'=>$classID]); 
+    }
+
+
+public function actionSelectLevelSomeInfo (){
+        $check = $_GET['check']; 
+       $classID = $_GET['classID'];
+       $lessonID = $_GET['lessonID'];
+       $exerciseLst = explode("*", $check);
+       foreach ($exerciseLst as $exerciseID) {
+          if($exerciseID != null){
+          if(isset($_POST['select'])){
+            $arraySelect = $_POST['select'];
+              if(in_array('初级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '初级');
+              } 
+              if(in_array('中级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '中级');
+              }
+              if(in_array('高级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '高级');
+              }
+              if(in_array('未分组', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '未分组');
+              }
+         }else{
+           ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
+         } 
+       }
+       }
+        $this->render('selectLevelSome', ['check' => $check,'lessonID'=>$lessonID,'classID'=>$classID]);
     }
     public function actionGetVirtualClassAnalysis() {
         $arrayData = Array();
