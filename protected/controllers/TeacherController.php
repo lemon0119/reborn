@@ -7353,7 +7353,21 @@ class TeacherController extends CController {
         ClassExercise::model()->closeAllOpenExerciseNow();
         echo "关闭成功！";
     }
-
+    public function actionjudgeIsOpen() {
+        $allClassExercise = $_POST['check'];
+        $arrayClassExercise = explode("*", $allClassExercise);
+        $tip = "";
+        foreach ($arrayClassExercise as $exerciseID) {
+            if ($exerciseID !== "") {
+                $isOpen = ClassExercise::model()->find("exerciseID='$exerciseID'")['now_open'];
+                if($isOpen == 1){
+                    $tip = "选中题目中已有练习开放,请重新勾选";
+                    break;
+                }
+            }
+        }
+        echo $tip;
+    }
     public function actionOpenClassExercise4lot() {
         $allClassExercise = $_POST['check'];
         $arrayClassExercise = explode("&", $allClassExercise);

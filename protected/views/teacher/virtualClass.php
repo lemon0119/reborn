@@ -2301,6 +2301,28 @@ $dir->close();
 
 
     }
+    function judgeIsOpen(check) {
+        <?php $lessonID = Lesson::model()->find("classID = '$classID' AND number = '$on'")['lessonID'];?>
+        $.ajax({
+                    type: "POST",
+                    url: "index.php?r=teacher/judgeIsOpen",
+                    async: false,
+                    data: {check: check},
+                    success: function (data) {
+                        if (data != "选中题目中已有练习开放,请重新勾选") {
+                           document.getElementById('iframe_class').contentWindow.openLevel(check);
+                        } else {
+                            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
+                        }
+                    },
+                    error: function (xhr, type, exception) {
+                        console.log('GetAverageSpeed error', type);
+                        console.log(xhr, "Failed");
+                        console.log(exception, "exception");
+
+                    }
+                });
+    }
 
     function startNow(exerciseID) {
                 $.ajax({
