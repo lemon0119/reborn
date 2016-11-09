@@ -11,7 +11,7 @@
         </head>
         <body align = "center">
             <div class="span9" style="width: 250px;height: 270px;">
-                <form id="form-level" method="post" action="./index.php?r=teacher/selectLevelInfo&&exerciseID=<?php echo $exerciseID ?>&&classID=<?php echo $classID;?>&&lessonID=<?php echo $lessonID;?>">
+                <form id="form-level" method="post" action="./index.php?r=teacher/selectLevelSomeInfo&&check=<?php echo $check ?>&&classID=<?php echo $classID;?>&&lessonID=<?php echo $lessonID;?>">
                     <fieldset>
                     <input type="hidden" name="flag" value="1" />
                     <h3>选择等级</h3>
@@ -19,7 +19,10 @@
             <input type="checkbox" name="select[]" value="中级"><span style="position: relative;top: 4px;font-size: 20px">&nbsp;&nbsp;中级</span><br><br>
             <input type="checkbox" name="select[]" value="高级"><span style="position: relative;top: 4px;font-size: 20px">&nbsp;&nbsp;高级</span><br><br>
             <input type="checkbox" name="select[]" value="未分组"><span style="position: relative;top: 4px;font-size: 20px">&nbsp;&nbsp;未分组</span><br><br><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit"  class="btn btn-primary" style="width: 120px" onclick="openExercise(<?php echo $exerciseID ?>)">确定</button>
+            <?php $checks = str_replace("*","&",$check);
+            $checkss = substr($checks,0,strlen($checks)-1);
+            ?>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit"  class="btn btn-primary" style="width: 120px" onclick="openExercise()">确定</button>
                     </fieldset>
                 </form>
             </div>
@@ -32,19 +35,15 @@
             window.close();
         <?php  }?>
     });
-    function openExercise(exerciseID){
-        <?php error_log("执行------1"); ?>
+    function openExercise(){
         $.ajax({
                     type: "POST",
-                    url: "index.php?r=teacher/openClassExercise",
+                    url: "index.php?r=teacher/openClassExercise4lot",
                     async: false,
-                    data: {exerciseID: exerciseID},
+                    data: {check: "<?php echo $checks; ?>"},
                     success: function (data) {
-                        if (data == 1) {
-
-//                           window.parent.backToTableClassExercise4virtual();
+                        if (data == "开放成功！") {
                         } else {
-                            alert("开放失败");
                         }
                     },
                     error: function (xhr, type, exception) {
