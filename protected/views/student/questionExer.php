@@ -7,6 +7,7 @@
 if ($isExam == false) {
     require 'suiteSideBar.php';
 } else {
+    require 'OnExam.php';
     require 'examSideBar.php';
 }
 $host = Yii::app()->request->hostInfo;

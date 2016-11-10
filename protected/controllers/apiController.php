@@ -253,18 +253,7 @@ class apiController extends Controller {
         $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
         $this->renderJSON($data);
     }
-    
-    public function actionAnswerDataSave(){
-        $error_Number=$_POST['error_Number'];
-        $missing_Number=$_POST['missing_Number'];
-        $redundant_Number=$_POST['redundant_Number'];
-        $answerID=$_POST['answerID'];
-        $standard_lgnore_symbol=$_POST['standard_lgnore_symbol'];
-        $answer_lgnore_symbol=$_POST['answer_lgnore_symbol'];
-        $correct_Answer=$_POST['correct_Answer'];
-        AnswerData::model()->updataAnswerData1($answerID, $error_Number, $missing_Number, $redundant_Number,$standard_lgnore_symbol,$answer_lgnore_symbol,$correct_Answer);
-    }
-    
+
     public function actionAnalysisSaveToDatabase(){
         $exerciseType = $_POST['exerciseType'];
         $exerciseData = $_POST['exerciseData'];

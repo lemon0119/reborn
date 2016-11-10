@@ -70,7 +70,7 @@ function long2(){
                 </div>
 <!--                <label class="control-label" for="input03">邮箱<h style="color:red;">*</h></label>
                 <div class="controls">
-                    <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php echo $mail; ?>"/>
+                    <input name="email" type="text" class="input-xlarge" id="input04"  onblur="test()" style="height: 30px;" value="<?php //echo $mail; ?>"/>
                 </div>-->
                 
             </div>

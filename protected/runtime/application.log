@@ -5828,3 +5828,25 @@ REQUEST_URI=/reborn/index.php?r=teacher/openClassExercise
 in E:\php_workstation\reborn\protected\models\ClassExercise.php (270)
 in E:\php_workstation\reborn\protected\controllers\TeacherController.php (6332)
 in E:\php_workstation\reborn\index.php (32)
+2016/11/10 17:35:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "countAbsence" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('countAbsence')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('countAbsence')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/countAb...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(32): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/countAbsence&&classID=2
+HTTP_REFERER=https://192.168.0.168/reborn/index.php?r=teacher/watchData&&classID=2
+---
+2016/11/10 17:35:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message '系统无法找到请求的 "countAbsence" 动作.' in C:\wamp\www\framework\web\CController.php:483
+Stack trace:
+#0 C:\wamp\www\framework\web\CController.php(270): CController->missingAction('countAbsence')
+#1 C:\wamp\www\framework\web\CWebApplication.php(284): CController->run('countAbsence')
+#2 C:\wamp\www\framework\web\CWebApplication.php(142): CWebApplication->runController('teacher/countAb...')
+#3 C:\wamp\www\framework\base\CApplication.php(187): CWebApplication->processRequest()
+#4 C:\wamp\www\reborn\index.php(32): CApplication->run()
+#5 {main}
+REQUEST_URI=/reborn/index.php?r=teacher/countAbsence&&classID=2
+HTTP_REFERER=https://192.168.0.168/reborn/index.php?r=teacher/watchData&&classID=2
+---

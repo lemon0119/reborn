@@ -1,9 +1,9 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li <?php if($type == "choice") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=choice"><i class="icon-font"></i><span style="position: relative;top: 6px"> 选择</span></a></li>
-                        <li <?php if($type == "filling") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=filling"><i class="icon-text-width"></i> <span style="position: relative;top: 6px">填空</span></a></li>
-                        <li <?php if($type == "question") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=question"><i class="icon-align-left"></i> <span style="position: relative;top: 6px">简答</span></a></li>
+<!--            <li <?php //if($type == "choice") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php //echo $suite['suiteID']?>&&type=choice"><i class="icon-font"></i><span style="position: relative;top: 6px"> 选择</span></a></li>
+                        <li <?php //if($type == "filling") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php //echo $suite['suiteID']?>&&type=filling"><i class="icon-text-width"></i> <span style="position: relative;top: 6px">填空</span></a></li>
+                        <li <?php //if($type == "question") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php //echo $suite['suiteID']?>&&type=question"><i class="icon-align-left"></i> <span style="position: relative;top: 6px">简答</span></a></li>-->
                         <li <?php if($type == "key") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=key"><i class="icon-th"></i><span style="position: relative;top: 6px"> 键打练习</span></a></li>
                         <li <?php if($type == "look") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=look"><i class="icon-eye-open"></i> <span style="position: relative;top: 6px">看打练习</span></a></li>
                         <li <?php if($type == "listen") echo "class='active'" ?>><a href="./index.php?r=teacher/ModifyWork&&suiteID=<?php echo $suite['suiteID']?>&&type=listen"><i class="icon-headphones"></i><span style="position: relative;top: 6px"> 听打练习</span></a></li> 

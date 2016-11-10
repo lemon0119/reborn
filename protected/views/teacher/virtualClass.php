@@ -1,3 +1,4 @@
+<link href="<?php echo CSS_URL; ?>window.css" rel="stylesheet">
 <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>socketio.js"></script>
 <script>
@@ -66,6 +67,33 @@ $adminVdir = "./resources/admin/001/$courseID/$on/video/";
     </div>
     <button id="share-Cam" class="btn btn-primary" >直播视频</button>
     <button id="close-Cam" class="btn" disabled="disabled">关闭视频</button>
+<!--     <button id='startsign'   class='btn btn-primary' >签到</button>-->
+      <?php 
+     $teacherID = Yii::app()->session['userid_now'];
+     //echo $teacherID;
+     $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+     $lessonID = $less['lessonID'];
+     $Sign = TeacherSign::model()->Alreadysign($classID, $lessonID,$teacherID);
+     if ($Sign !=NULL){
+     foreach ($Sign as $key)
+         {
+         }
+         $mark = $key['mark'];
+         if($mark == 1){
+             echo "<button id='startsign'   class='btn btn-primary'disabled='disabled' >签到</button>";
+             echo "<button id='closesign'   class='btn btn-primary' >关闭签到</button>";
+         }else 
+             {
+             echo "<button id='startsign'   class='btn btn-primary' >签到</button>";
+             echo "<button id='closesign'   class='btn btn-primary'disabled='disabled' >关闭签到</button>";
+     }}
+ else {
+                 echo "<button id='startsign'   class='btn btn-primary' >签到</button>";
+             echo "<button id='closesign'   class='btn btn-primary'disabled='disabled' >关闭签到</button>";
+}
+     ?> 
+<!--    <button id="closesign"   class='btn btn-primary' > 关闭签到</button>-->
+        <button id="Absence"   class='btn btn-primary' onclick="showAbsence()" >查看缺勤</button>
     
 
     <div id="showOnline"  class="online"  style="display: none;border: 0px;width:120px;">
@@ -1911,7 +1939,7 @@ $dir->close();
             {
                 if(cur_ppt > ppt_pages)
                 {
-                   var tempD = document.getElementsByClassName('sgBtn')[0];
+                    var tempD = document.getElementsByClassName('sgBtn')[0];
                     tempD && tempD.click();
                    cur_ppt = ppt_pages; 
                    
@@ -1923,7 +1951,7 @@ $dir->close();
         }
     }
 
-//    function pageDown() {
+    function pageDown() {
 //        if (cur_ppt >= ppt_pages) {
 //            cur_ppt = ppt_pages;
 //            window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
@@ -1931,11 +1959,7 @@ $dir->close();
 //            cur_ppt = cur_ppt + 1;
 //            goCurPage();
 //        }
-//
-//    }
-
-    function pageDown() {
-        if (cur_ppt == ppt_pages) {
+    if (cur_ppt == ppt_pages) {
             window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
             cur_ppt = ppt_pages + 1;
         } else {
@@ -1955,8 +1979,10 @@ $dir->close();
                 }
             }
         }
+
     }
-    
+
+
     function openConnect() {
         if (ws !== null)
             return;
@@ -2298,8 +2324,7 @@ $dir->close();
                     url: "index.php?r=teacher/openClassExercise4lot",
                     data: {check: check},
                     success: function (data) {
-//                        if (data == "开放成功！")
-                        if (data.search('开放成功！') != -1) {
+                        if (data == "开放成功！") {
                             window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.success);
                            // window.parent.startClassExercise(exerciseID);
                            window.parent.backToTableClassExercise4virtual();
@@ -2319,17 +2344,37 @@ $dir->close();
 
 
     }
+    function judgeIsOpen(check) {
+        <?php $lessonID = Lesson::model()->find("classID = '$classID' AND number = '$on'")['lessonID'];?>
+        $.ajax({
+                    type: "POST",
+                    url: "index.php?r=teacher/judgeIsOpen",
+                    async: false,
+                    data: {check: check},
+                    success: function (data) {
+                        if (data != "选中题目中已有练习开放,请重新勾选") {
+                           document.getElementById('iframe_class').contentWindow.openLevel(check);
+                        } else {
+                            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
+                        }
+                    },
+                    error: function (xhr, type, exception) {
+                        console.log('GetAverageSpeed error', type);
+                        console.log(xhr, "Failed");
+                        console.log(exception, "exception");
+
+                    }
+                });
+    }
 
     function startNow(exerciseID) {
-        window.wxc.xcConfirm("开放？这将使学生跳转到此练习", window.wxc.xcConfirm.typeEnum.info, {
-            onOk: function () {
                 $.ajax({
                     type: "POST",
                     url: "index.php?r=teacher/openClassExercise",
                     data: {exerciseID: exerciseID},
                     success: function (data) {
                         if (data == 1) {
-                             window.wxc.xcConfirm("开放成功！", window.wxc.xcConfirm.typeEnum.success);
+    
                              // window.parent.startClassExercise(exerciseID);
                            window.parent.backToTableClassExercise4virtual();
                         } else {
@@ -2343,8 +2388,6 @@ $dir->close();
 
                     }
                 });
-            }
-        });
     }
 
     function backToTableClassExercise4virtual() {
@@ -2375,5 +2418,227 @@ $dir->close();
     function alertError(text){
         window.wxc.xcConfirm(text, window.wxc.xcConfirm.typeEnum.error);
     }
+    //签到
+function startSign(){
+           $.ajax({
+            type: "GET",
+            url: "index.php?r=teacher/startSign&&classID=<?php echo $classID; ?>&&lessonID=<?php 
+            $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+            echo $less['lessonID'];?>",
+            success: function (data) {
+                if (data['TeacherSign_ID'].length === 0){           
+        }
+                else{
+                if (data['StudentSign_ID'].length > 0) {
+                } else {
+                   issign = 1;
+                   window.wxc.xcConfirm("签到！！！", window.wxc.xcConfirm.typeEnum.info, {
+                        onOk: function () {
+        $.ajax({
+            type: "POST",
+            url: "index.php?r=student/SaveSign&&classID=<?php echo $classID; ?>&&lessonID=<?php //echo $currentLesn; ?>",
+            success: function(){    
+            window.wxc.xcConfirm('签到成功', window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function(){
+                //window.location.reload();
+                }
+            });
+            },
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr.responseText, "Failed");
+            }
+        });
+                        }
+                    });
 
+               }
+            }
+            }
+        });  
+       var option = {
+            title: "签到",
+            btn: parseInt("0011", 2),
+            onOk: function () {
+            window.location.href = "./index.php?r=teacher/startSign&&classID=<?php echo $classID; ?>&&lessonID=<?php 
+            $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+            echo $less['lessonID'];?>";
+            //window.location.reload();
+            }
+        }
+        window.wxc.xcConfirm("签到？？？？？？", "custom", option);
+
+    }
+    
+   
+     $("#startsign").click(function() {
+        $.ajax({
+            type: "GET",
+            url: "./index.php?r=teacher/startSign&&classID=<?php echo $classID; ?>&&lessonID=<?php 
+            $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+            echo $less['lessonID'];?>",                                                         
+            success: function(data){
+            if (data['stime'].length != 0){
+                window.wxc.xcConfirm('10分钟内，您已签到过一次，请稍后再试', window.wxc.xcConfirm.typeEnum.error);
+            }else{
+            window.wxc.xcConfirm('学生将收到签到！并在10分钟内，不能进行再次签到', window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function(){
+                    document.getElementById("startsign").disabled = "disabled";
+                    document.getElementById("closesign").disabled = "";
+                //window.location.reload();
+                }
+            });
+            }
+        },
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr.responseText, "Failed");
+            }
+        });
+    });
+    
+         $("#closesign").click(function() {
+        $.ajax({
+            type: "POST",
+            url: "./index.php?r=teacher/closeSign&&classID=<?php echo $classID; ?>&&lessonID=<?php 
+            $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+            echo $less['lessonID'];?>",
+            success: function(){    
+            window.wxc.xcConfirm('关闭签到成功！', window.wxc.xcConfirm.typeEnum.success,{
+                onOk:function(){
+                    document.getElementById("startsign").disabled = "";
+                    document.getElementById("closesign").disabled = "disabled";
+                //window.location.reload();
+                }
+            });
+            },
+            error: function(xhr, type, exception){
+                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
+                console.log(xhr.responseText, "Failed");
+            }
+        });
+    });
+    
+    //窗口
+    var dialogInstace , onMoveStartId , mousePos = {x:0,y:0};	//	用于记录当前可拖拽的对象
+	
+	// var zIndex = 9000;
+
+	//	获取元素对象	
+	function g(id){return document.getElementById(id);}
+
+	//	自动居中元素（el = Element）
+	function autoCenter( el ){
+		var bodyW = document.documentElement.clientWidth;
+		var bodyH = document.documentElement.clientHeight;
+
+		var elW = el.offsetWidth;
+		var elH = el.offsetHeight;
+
+		el.style.left = (bodyW-elW)/2 + 'px';
+		el.style.top = (bodyH-elH)/2 + 'px';
+		
+	}
+
+	//	自动扩展元素到全部显示区域
+	function fillToBody( el ){
+		el.style.width  = document.documentElement.clientWidth  +'px';
+		el.style.height = document.documentElement.clientHeight + 'px';
+	}
+
+	//	Dialog实例化的方法
+	function Dialog( dragId , moveId ){
+
+		var instace = {} ;
+
+		instace.dragElement  = g(dragId);	//	允许执行 拖拽操作 的元素
+		instace.moveElement  = g(moveId);	//	拖拽操作时，移动的元素
+
+		instace.mouseOffsetLeft = 0;			//	拖拽操作时，移动元素的起始 X 点
+		instace.mouseOffsetTop = 0;			//	拖拽操作时，移动元素的起始 Y 点
+
+		instace.dragElement.addEventListener('mousedown',function(e){
+
+			var e = e || window.event;
+
+			dialogInstace = instace;
+			instace.mouseOffsetLeft = e.pageX - instace.moveElement.offsetLeft ;
+			instace.mouseOffsetTop  = e.pageY - instace.moveElement.offsetTop ;
+			
+			onMoveStartId = setInterval(onMoveStart,10);
+			return false;
+			// instace.moveElement.style.zIndex = zIndex ++;
+		})
+
+		return instace;
+	}
+
+	//	在页面中坚挺鼠标弹起事件
+	document.onmouseup = function(e){
+		dialogInstace = false;
+		clearInterval(onMoveStartId);
+	}
+	document.onmousemove = function( e ){
+		var e = window.event || e;
+		mousePos.x = e.clientX;
+		mousePos.y = e.clientY;
+		
+
+		e.stopPropagation && e.stopPropagation();
+		e.cancelBubble = true;
+		e = this.originalEvent;
+        e && ( e.preventDefault ? e.preventDefault() : e.returnValue = false );
+
+        document.body.style.MozUserSelect = 'none';
+	}	
+
+	function onMoveStart(){
+
+
+		var instace = dialogInstace;
+	    if (instace) {
+	    	
+	    	var maxX = document.documentElement.clientWidth -  instace.moveElement.offsetWidth;
+	    	var maxY = document.documentElement.clientHeight - instace.moveElement.offsetHeight ;
+
+			instace.moveElement.style.left = Math.min( Math.max( ( mousePos.x - instace.mouseOffsetLeft) , 0 ) , maxX) + "px";
+			instace.moveElement.style.top  = Math.min( Math.max( ( mousePos.y - instace.mouseOffsetTop ) , 0 ) , maxY) + "px";
+
+	    }
+
+	}
+
+	//	重新调整对话框的位置和遮罩，并且展现
+	function showDialog(){
+		g('dialogMove').style.display = 'block';
+		g('mask').style.display = 'block';
+		autoCenter( g('dialogMove') );
+		fillToBody( g('mask') );
+                showAbsence();
+    }
+function showAbsence(){
+//          $.ajax({
+//            type: "GET",
+//            dataType: 'json',
+//            url: "",
+//            success: function (data) {
+//                
+//      document.getElementById("queqin"). innerHTML = data['studentAbsence'].length;         
+//            }
+//        });  
+window.open("./index.php?r=teacher/showAbsence&&classID=<?php echo $classID; ?>&&lessonID=<?php 
+            $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
+            echo $less['lessonID'];?>", 'newwindow', 'height=500,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,')   
+   
+}
+	//	关闭对话框
+	function hideDialog(){
+		g('dialogMove').style.display = 'none';
+		g('mask').style.display = 'none';
+                flag = 1;
+	}
+	//	查看浏览器窗口大小变化
+	window.onresize = showDialog;
+	Dialog('dialogDrag','dialogMove');
+	showDialog();          
 </script>

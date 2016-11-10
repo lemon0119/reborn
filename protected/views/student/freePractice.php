@@ -93,7 +93,7 @@
         </table>
     </div>
 <?php } else { ?>
-    <div class="span9">
+    <div class="span9" style=" height: 722px">
         <h3 >自 主 练 习</h3>
         <!--        <button onclick="getSteno()">测试</button>-->
         <br/>
