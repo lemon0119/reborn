@@ -5574,6 +5574,22 @@ class TeacherController extends CController {
         $correct = $answer['ratio_correct'];
         $n = strrpos($correct, "&");
         $correct = substr($correct, $n + 1);
+        if(isset($answer['answerID'])){
+            $answer_id=$answer['answerID'];
+            $answer_data=  AnswerData::model()->find("answerID=?",array($answer_id));
+        }else{
+            $answer_data=NULL;
+            $answer_id=NULL;
+        }
+        $correct_number=$answer_data['correct_Number'];
+        $n1 = strrpos($correct_number, "&");
+        $correct_Number = substr($correct_number, $n1 + 1);
+        //标准文本字数
+        $standard_Number = $answer_data['standard_Number'];
+        //作答文本字数
+        $answer_number=$answer_data['answer_Number'];
+        $n6=strrpos($answer_number,"&");
+        $answer_Number = substr($answer_number, $n6 + 1);
         return $this->render($render, ['exercise' => $classwork,
                     'student' => $student,
                     'suiteID' => $suiteID,
@@ -5592,6 +5608,10 @@ class TeacherController extends CController {
                     'array_accomplished' => $array_accomplished,
                     'exam_exercise' => $suite_exercise,
                     'answer' => $answer['answer'],
+                    'correct_Number' => $correct_Number,
+                    'answer_Number' => $answer_Number,
+                    'standard_Number' => $standard_Number,
+                    'answer_id' =>$answer_id,
                     'correct' => $correct]);
     }
 
@@ -5674,6 +5694,23 @@ class TeacherController extends CController {
         $correct = $answer['ratio_correct'];
         $n = strrpos($correct, "&");
         $correct = substr($correct, $n + 1);
+        
+        if(isset($answer['answerID'])){
+            $answer_id=$answer['answerID'];
+            $answer_data=  AnswerData::model()->find("answerID=?",array($answer_id));
+        }else{
+            $answer_data=NULL;
+            $answer_id=NULL;
+        }
+        $correct_number=$answer_data['correct_Number'];
+        $n1 = strrpos($correct_number, "&");
+        $correct_Number = substr($correct_number, $n1 + 1);
+        //标准文本字数
+        $standard_Number = $answer_data['standard_Number'];
+        //作答文本字数
+        $answer_number=$answer_data['answer_Number'];
+        $n6=strrpos($answer_number,"&");
+        $answer_Number = substr($answer_number, $n6 + 1);
         return $this->render($render, ['exercise' => $classwork,
                     'student' => $student,
                     'examID' => $examID,
@@ -5691,6 +5728,10 @@ class TeacherController extends CController {
                     'type' => $ty,
                     'exam_exercise' => $exam_exercise,
                     'answer' => $answer['answer'],
+                    'correct_Number' => $correct_Number,
+                    'answer_Number' => $answer_Number,
+                    'standard_Number' => $standard_Number,
+                    'answer_id' =>$answer_id,
                     'correct' => $correct]);
     }
 
@@ -7723,5 +7764,14 @@ class TeacherController extends CController {
         $result = Suite::model()->changeSuiteName($workID, $newName);
         echo $result;
     }
+   public function actiongetDataCorrect() {
+       $answerID =$_POST['answerID'];
+       $dataCorrect = array();
+       $answer = AnswerData::model()->find('answerID=?',array($answerID));
+       $d = $answer['correct_Answer'];
+       array_push($dataCorrect, $d); 
+       $this->renderJSON(['dataCorrect'=>$dataCorrect,]);
+    }
+    
 
 }
