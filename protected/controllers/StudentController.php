@@ -80,11 +80,16 @@ class StudentController extends CController {
         $correct = $answer['ratio_correct'];
         $n = strrpos($correct, "&");
         $correct = substr($correct, $n + 1);
+
         
         return $this->render('ansDetail_1', ['exercise' => $classwork,
                     'exer' => $exer,
                     'answer' => $answer['answer'],
                     'correct' => $correct,
+                    'correct_Number' => $correct_Number,
+                    'answer_Number' => $answer_Number,
+                    'standard_Number' => $standard_Number,
+                    'answer_id' =>$answer_id,
                     'type' => $type,
                     'flag' => $flag,
                     'score' =>$score

@@ -253,19 +253,7 @@ class apiController extends Controller {
         $data = AnalysisTool::getRight_Wrong_AccuracyRate($originalContent, $currentContent);
         $this->renderJSON($data);
     }
-    public function ActionChangeSuiteType() {
-        error_log('执行---');
-        $thisLessonId = $_POST['thisLessonId'];
-        $thisClassId = $_POST['thisClassId'];
-        $thisSuiteId = $_POST['thisSuiteId'];
-            $result = ClassLessonSuite::model()->findAll("classID=? and lessonID=? and suiteID=?", array($thisClassId, $thisLessonId ,$thisSuiteId));
-            if(count($result)>0){
-                foreach ($result as $lessonSuite) {
-                    $lessonSuite->open = 0;
-                    $lessonSuite->update();
-                }
-            }
-    }
+
     public function actionAnalysisSaveToDatabase(){
         $exerciseType = $_POST['exerciseType'];
         $exerciseData = $_POST['exerciseData'];
@@ -280,6 +268,9 @@ class apiController extends Controller {
         $ratio_countAllKey = $_POST['CountAllKey'];
         $squence = $_POST['squence'];
         $answer = $_POST['answer'];
+        $rightCount=$_POST['rightCount'];
+        $originalCount=$_POST['originalCount'];
+        $currentCount=$_POST['currentCount'];
         if($exerciseType === "classExercise"){
             $classExerciseID = $exerciseData[0];
             $studentID = $exerciseData[1];
@@ -297,10 +288,15 @@ class apiController extends Controller {
             $type = $exerciseData[1];
             $category = $exerciseData[3];
            if(Yii::app()->session['isExam']==1){
-                 AnswerRecord::model()->saveAnswer($recordID, $exerciseID, $type, $category, $ratio_correct, $answer, $createPerson, $ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence, 1, $ratio_internalTime); 
+                 AnswerRecord::model()->saveAnswer($recordID, $exerciseID, $type, $category, $ratio_correct, $answer, $createPerson, $ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence, 1, $ratio_internalTime);                  
             }else{
                  AnswerRecord::model()->saveAnswer($recordID, $exerciseID, $type, $category, $ratio_correct, $answer, $createPerson, $ratio_speed, $ratio_maxSpeed, $ratio_backDelete, $ratio_maxKeyType, $ratio_averageKeyType, $ratio_internalTime, $ratio_maxInternalTime, $ratio_countAllKey, $squence, 0, $ratio_internalTime); 
-            }   
+            }
+            $answer_record =  AnswerRecord::model()->findAll("recordID = ? AND exerciseID = ? AND type = ?",array($recordID, $exerciseID, $type));
+            foreach ($answer_record as $record){
+                     $answer_id=$record['answerID']; 
+                     AnswerData::model()->saveAnswerData($answer_id,$rightCount,0,0,0,$originalCount,$currentCount,0,0);
+                 }
         }    
         $this->renderJSON("");
     }

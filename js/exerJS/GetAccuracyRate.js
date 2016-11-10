@@ -90,7 +90,10 @@ onmessage = function (event) {
     var correct = ((rightCount - moreCount) < 0 ? 0 : rightCount - moreCount) / originalCount;
     var accuracyRate = Math.round(correct * 100);
     postMessage({
-        accuracyRate: accuracyRate
+        accuracyRate: accuracyRate,
+        rightCount: rightCount,
+        originalCount:originalCount,
+        currentCount:currentCount
     });
 };
 
