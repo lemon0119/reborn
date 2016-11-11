@@ -4992,7 +4992,8 @@ class TeacherController extends CController {
                 array_push($array_accomplished, array(
                     'userID' => $student['userID'],
                     'userName' => $student['userName'],
-                    'score' => $score
+                    'score' => $score,
+                    'recordID'=>$result['recordID']
                 ));
             } else {
                 array_push($array_unaccomplished, array(
@@ -5013,7 +5014,20 @@ class TeacherController extends CController {
             'selectClassID' => $selectClassID,
         ));
     }
-    
+    public function ActionOneMark() {
+        $recordID = $_POST['recordID'];
+        $examID = $_POST['examID'];
+        $userID = $_POST['userID'];
+        AnswerRecord::model()->updateChoiceSocre($recordID, $userID, 'choice', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'key', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'listen', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'look', $examID);
+        $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
+        if(!isset($score)){
+            $score=0;
+        }
+    }
+
     public function ActionChangeSuiteClassIn() {
         $suiteID = $_GET['suiteID'];
         $pages = $_GET['page'];

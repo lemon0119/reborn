@@ -21,7 +21,7 @@
         </div>-->
         
     </div>
-    <input id="id_content" type="hidden" value="<?php echo Tool::filterKeyContent($exerOne['content']);?>"> 
+    <input id="id_content" type="hidden" value="<?php $str2 = Tool::filterKeyContent($exerOne['content']); for($i = 0;$i<$exerOne['repeatNum'];$i++){echo $str2;}?>"> 
 </div>
 
 <script>
