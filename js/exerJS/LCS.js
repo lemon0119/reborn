@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+var G_a=[];
+
 function max(p1, p2) {
     return p1 > p2 ? p1 : p2;
 }
@@ -39,6 +42,7 @@ function LCS(str1, str2) {
         }
         i = 0;
         j = 0;
+        var k=0;
         while (i < this.substringLength1 && j < this.substringLength2) {
             if (this.x[i] === this.y[j]) {
                 this.subLCS += this.x[i];
@@ -46,12 +50,33 @@ function LCS(str1, str2) {
                 this.y_m += this.x[i];
                 i++;
                 j++;
-            } else if (this.opt[i + 1][j] >= this.opt[i][j + 1]) {
+            } else if (this.opt[i + 1][j] > this.opt[i][j + 1]) {
+                this.x_m += '`';
+                i++;
+            } else if(this.opt[i + 1][j] == this.opt[i][j + 1]){
                 this.x_m += '*';
                 i++;
-            } else {
-                this.y_m += '*';
+            }else{
+                if(this.x[i] === this.y[j+1]){
+                    this.y_m += '`';
+                    window.G_a[k++]=i;
+                }else{
+                    this.y_m += '*';
+                }
                 j++;
+            }
+            
+        }
+        if(i >= this.substringLength1 && j < this.substringLength2){
+//                    this.y_m += '`';
+//                    this.y_m += '`';
+                    window.G_a[k]=i;
+        }
+        if(i < this.substringLength1 && j >= this.substringLength2){
+            window.G_a[k]=i;
+            while(i < this.substringLength1 && j >= this.substringLength2){
+                this.x_m += '~';
+                i++;
             }
         }
     };

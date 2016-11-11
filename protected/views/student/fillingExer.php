@@ -7,6 +7,7 @@
 if ($isExam == false) {
     require 'suiteSideBar.php';
 } else {
+    require 'OnExam.php';
     require 'examSideBar.php';
 }
 $host = Yii::app()->request->hostInfo;
@@ -43,12 +44,12 @@ $SNum = 0;
                                 echo '<input type="text" value="' . $arr[$m] . '" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
                                 $m++;
                             } else {
-                                echo '<input type="text" value="' . $str . '" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
+                                echo '<input type="text" style ="height:30px;position:relative;top:8px;" value="' . $str . '" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
                             }
                         }
                     }
                     if ($f == 0) {
-                        echo '<input type="text" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
+                        echo '<input type="text" style ="height:30px;position:relative;top:8px;" name="' . $i . 'filling' . $value["exerciseID"] . '"></input><br/>';
                     }
 
 
@@ -58,6 +59,7 @@ $SNum = 0;
                 $n++;
             }
             ?>
+                </form>
             <!-- 显示翻页标签 -->
             <div align=center>
                 <?php
@@ -66,8 +68,14 @@ $SNum = 0;
             </div>
             <!-- 翻页标签结束 -->
         </div>
+        </div>
+            </div>
+            <div  class="copyright">
+                2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<span onclick="legalNotice()" class="copyright">法律声明</span><span  onclick="contact()" class="copyright">联系我们</span><span onclick="getHelp()" class="copyright">获得帮助</span>
+            </div>   
+            </body>
 
-    </form>
+
 </div>
 <script>    
     $(document).ready(function () {  

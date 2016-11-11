@@ -18,36 +18,69 @@ require 'examAnsSideBar.php';
             $str2 = str_replace("\n", "<br/>", $ansWork['answer']);
             $str2 = str_replace("\r", "", $str2);
             $str2 = str_replace(" ", "", $str2);
-            echo $str2;
+//            echo $str2;
             ?>"/>
         <input id="content" type="hidden" style="height: 5px;" value="<?php
             $str = str_replace("\n", "<br/>", $exer['content']);
             $str = str_replace("\r", "", $str);
             $str = str_replace(" ", "", $str);
-            echo $str;
+//            echo $str;
             ?>">
         <table border = '0px' width="100%">            
             <tr>
-                <td width = '50%' align='center'><?php echo $exer['title']?></td>
-                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct);echo '%';?></span></td>
+                <td width = '50%' colspan='6' align='center'><?php echo $exer['title']?></td>
+<!--                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct);echo '%';?></span></td>-->
             </tr>
             <tr>
-                <td colspan='3'>
-                    <div class='answer-tip-text1'>作答结果：</div>
+                <td align='center'>正确率(%)</td>
+                <td align='center'>正确字数</td>
+                <td align='center'>打错字数</td>
+                <td align='center'>少打字数</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><span id="correct"><?php printf('%2.1f',$correct); ?></span></td>
+                <td><?php printf($correct_Number); ?></td>
+                <td><span id="error_number"></span></td>
+                <td><span id="missing_number"></span></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td align='center' >多打字数</td>
+                <td align='center'>作答字数</td>
+                <td align='center'>标准字数</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><span id="redundant_number"></span></td>
+                <td id="answer_number"><?php printf($answer_Number); ?></td>
+                <td id="standard_number"><?php printf($standard_Number); ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+            <tr>
+                <td colspan='6'>
+                    <br><div class='answer-tip-text1'>作答结果：</div>
                     <div style="text-align: left" id ="answer"  class="answer-question" onselectstart="return false" onscroll="doScrollRight()">
                         <font id="currentContent"></font>
                     </div>
                     
                 </td>
             </tr>
-            <tr>
-                <td colspan='3'>
+<!--            <tr>
+                <td colspan='6'>
                     <div class='answer-tip-text2'>正确答案：</div>
                     <div style="text-align: left" id ="templet" style="min-width: 99%"  class="answer-question" onselectstart="return false" onscroll="doScrollLeft()">
                          <font id="originalContent"></font>
                     </div>
                 </td>
-            </tr>
+            </tr>-->
         </table>
          
         <div id ="templet" style="text-align: left;height: 260px" class="questionBlock" front-size ="25px" onselectstart="return false">
@@ -79,14 +112,51 @@ require 'examAnsSideBar.php';
     var originalFont = document.getElementById('originalContent');
     var currentLCS = lcs.getSubString(1);
     var originalLCS = lcs.getSubString(2);
+     var correct_rate=0;
+    var standard_number=originalContent.length;
+    var answer_number=currentContent.length;
+    var remove_char_correct=lcs.getSubString(3).length;
     var currentInnerHTML='';
     var originalInnerHTML='';
-    for (var i = 0; i < currentContent.length; i++) {
-        if (typeof (currentContent[i]) !== 'undefined') {
-            if (currentContent[i] !== currentLCS[i]) {
-                currentInnerHTML += '<font style="color:#f44336">' + currentContent[i] + '</font>';
-            } else {
-                currentInnerHTML += '<font style="color:#727272">' + currentContent[i] + '</font>';
+//    for (var i = 0; i < currentContent.length; i++) {
+//        if (typeof (currentContent[i]) !== 'undefined') {
+//            if (currentContent[i] !== currentLCS[i]) {
+//                currentInnerHTML += '<font style="color:#f44336">' + currentContent[i] + '</font>';
+//            } else {
+//                currentInnerHTML += '<font style="color:#727272">' + currentContent[i] + '</font>';
+//            }
+//        }
+//    }
+//    for (var i = 0; i < originalContent.length; i++) {
+//        if (typeof (originalContent[i]) !== 'undefined') {
+//            if (originalContent[i] !== originalLCS[i]) {
+//                originalInnerHTML += '<font style="color:#f44336">' + originalContent[i] + '</font>';
+//            } else {
+//                originalInnerHTML += '<font style="color:#727272">' + originalContent[i] + '</font>';
+//            }
+//        }
+//    }
+var right_content=[];
+    var flag=[];
+    var j=0;
+    var k=0;
+    var right_length=[];
+    var error_flag=[];
+    var e=0;
+    var error_number=0;
+    var missing_number=0;
+    var redundant_number=0;
+    right_length[e]=0;
+    for (var l = 0; l < currentContent.length; l++) {
+        if (typeof (currentContent[l]) !== 'undefined') {
+            if (currentContent[l] !== currentLCS[l] && currentLCS[l]!=='`') {
+                right_length[e]++;
+                if(currentContent[l-1] === currentLCS[l-1]){
+                    error_flag[e]=l;
+                }
+                if(currentContent[l+1] === currentLCS[l+1]){
+                    right_length[++e]=0;
+                }
             }
         }
     }
@@ -94,14 +164,123 @@ require 'examAnsSideBar.php';
         if (typeof (originalContent[i]) !== 'undefined') {
             if (originalContent[i] !== originalLCS[i]) {
                 originalInnerHTML += '<font style="color:#f44336">' + originalContent[i] + '</font>';
+                if(originalLCS[i+1] === "`" || originalLCS[i] === "`"){
+                    flag[j]=window.G_a[j];
+                    j++;
+                }
+                if(originalContent[i-1] === originalLCS[i-1]){
+                    right_content[k] =originalContent[i];
+                    if(originalLCS[i] === "`"){
+                        k++;
+                    }
+                }else if(originalContent[i-1] !== originalLCS[i-1] && originalContent[i+1] !== originalLCS[i+1]){
+                    right_content[k] +=originalContent[i];
+                }else{
+                    right_content[k] +=originalContent[i];
+                    k++;
+                }
             } else {
                 originalInnerHTML += '<font style="color:#727272">' + originalContent[i] + '</font>';
             }
         }
     }
+    j=0;
+    e=0;
+    var e_flag=0;
+    for (var i = 0; i < currentContent.length; i++) {
+        if (typeof (currentContent[i]) !== 'undefined') {
+            if (currentContent[i] !== currentLCS[i] && currentLCS[i]!=='`') {
+                if(currentLCS[i] === '~'){
+                    redundant_number++;
+                    currentInnerHTML += '<font style="color:blue"><s>' + currentContent[i] + '</s></font>';
+                }else if(typeof (right_content[j-1 ]) !== 'undefined' && i-right_content[j-1 ].length === error_flag[e_flag-1] ){
+                    while(currentContent[i] !== currentLCS[i]){
+                        redundant_number++;
+                        currentInnerHTML += '<font style="color:blue"><s>' + currentContent[i] + '</s></font>';
+                        i++;
+                    }
+                    i--;
+                }else{
+                    currentInnerHTML += '<font style="color:#f44336">' + currentContent[i] + '</font>';
+                }
+            } else if(currentLCS[i]==='`'){
+                redundant_number++;
+                currentInnerHTML += '<font style="color:blue"><s>' + currentContent[i] + '</s></font>';
+            }else if(flag[j]===0){
+                for(var miss=0;miss<right_content[j].length;miss++){
+                    missing_number++;
+                }
+                currentInnerHTML += '<font style="color:green"><u>' + right_content[j] +  '</u></font>';
+                currentInnerHTML += '<font style="color:#727272">' + currentContent[i] + '</font>';
+                j++;
+            }else{
+                currentInnerHTML += '<font style="color:#727272">' + currentContent[i] + '</font>';
+            }
+        }
+        if(typeof (right_content[j]) !== 'undefined'){
+        if(i+1===flag[j] && currentContent[i] !== currentLCS[i] || i-right_content[j].length+1 === error_flag[e_flag] && i-right_content[j].length+1>=0){
+            if(right_content[j].length > right_length[e]){
+                //少打
+                currentInnerHTML += '<font style="color:red">'+"("+'</font>';
+
+                for(var err=0; err < right_length[e];err++){
+                    error_number++;
+                    currentInnerHTML += '<font style="color:red">'+ right_content[j][err] +'</font>';
+                }
+                currentInnerHTML += '<font style="color:red">'+")"+'</font>';
+                while(err < right_content[j].length){
+                    missing_number++;
+                    currentInnerHTML += '<font style="color:green"><u>' + right_content[j][err++] + '</u></font>';
+                }
+            }else if(right_content[j].length < right_length[e]){
+                //多打
+                currentInnerHTML += '<font style="color:red">'+"("+'</font>';
+                for(err=0;err < right_content[j].length;err++){
+                    error_number++;
+                    currentInnerHTML += '<font style="color:#f44336">' + right_content[j][err] + '</font>';
+                }
+                currentInnerHTML += '<font style="color:red">'+")"+'</font>';
+            }else{
+                for(err=0;err<right_content[j].length;err++){
+                    error_number++;
+                }
+                currentInnerHTML += '<font style="color:red">'+"(" + right_content[j] + ")"+'</font>';
+            }
+            e++;
+            e_flag++;
+            j++;
+        }else if(i+1===flag[j] && typeof (right_content[j]) !== 'undefined'){
+            for(err=0;err<right_content[j].length;err++){
+                missing_number++;
+            }
+            currentInnerHTML += '<font style="color:green"><u>' + right_content[j] + '</u></font>';
+            j++;
+        }
+        }
+    }
+    $("#error_number").html(error_number);
+    $("#missing_number").html(missing_number);
+    $("#redundant_number").html(redundant_number);
+    standard_number=originalContent.length;
+        answer_number=currentContent.length;
+        $("#standard_number").html(standard_number);
+        $("#answer_number").html(answer_number);
+        $("#correct_Number").html(remove_char_correct);
     currentFont.innerHTML = currentInnerHTML;
-    originalFont.innerHTML = originalInnerHTML;
-    
+//
+    $(document).ready(function(){
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"index.php?r=api/answerDataSave",
+            data:{error_Number:error_number,missing_Number:missing_number,redundant_Number:redundant_number,answerID:<?php echo $answer_id;?>},
+            success:function(){
+            },
+            error: function (xhr) {
+                console.log(xhr, "Failed");
+            }
+        });
+    });    
     
     $(document).ready(function(){   
         $("li#li-look-<?php echo $exer['exerciseID'];?>").attr('class','active');

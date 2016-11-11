@@ -464,6 +464,25 @@ class Tool {
             return false;
         }
     }
+    
+    public static function removeCharacter($str){
+        $DBC = Array(
+            '：', '—','、','“','”',
+            '；',
+            '。', '，', '/', '%', '#',
+            '！', '＠', '＆', '（', '）',
+            '《', '＞', '＂', '＇', '？',
+            '【', '】', '{', '}', '\'',
+            '｜', '+', '=', '_', '＾',
+            ':', '-','》','＜','……',
+            '.', ',', '/', '%', '#',
+            '!', '@', '&', '(', ')',
+            '<', '>', '"', '\'', '?',
+            '[', ']', '{', '}', '\\',
+            '|', '+', '=', '_', '^',
+        );
+        return str_replace($DBC, "", $str);
+    }
 
     public static function filterKeyContent($content) {
         if (strstr($content, "$$")) {
@@ -494,7 +513,18 @@ class Tool {
             }
             return $string;
         } else {
-            return $content;
+            //判断是否存了一组答案
+            $string = "";
+            $content = substr($content, 1);
+            $content = str_replace(">,<", " ", $content);
+            $array = explode(" ", $content);
+            foreach ($array as $arr) {
+                $pos = strpos($arr, "><");
+                $arr = substr($arr, 0, $pos);
+                $string = $string . " " . $arr;
+            return $string;
+            
+            }
         }
     }
 
