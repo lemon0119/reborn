@@ -81,6 +81,22 @@ class StudentController extends CController {
         $n = strrpos($correct, "&");
         $correct = substr($correct, $n + 1);
 
+        if(isset($answer['answerID'])){
+            $answer_id=$answer['answerID'];
+            $answer_data=  AnswerData::model()->find("answerID=?",array($answer_id));
+        }else{
+            $answer_data=NULL;
+            $answer_id=NULL;
+        }
+        $correct_Number=$answer_data['correct_Number'];
+        $n1 = strrpos($correct_Number, "&");
+        $correct_Number = substr($correct_Number, $n1 + 1);
+        //标准文本字数
+        $standard_Number = $answer_data['standard_Number'];
+        //作答文本字数
+        $answer_number=$answer_data['answer_Number'];
+        $n6=strrpos($answer_number,"&");
+        $answer_Number = substr($answer_number, $n6 + 1);
         
         return $this->render('ansDetail_1', ['exercise' => $classwork,
                     'exer' => $exer,
