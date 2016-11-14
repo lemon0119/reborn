@@ -6092,6 +6092,9 @@ class TeacherController extends CController {
             $arr = explode(",", $_POST['score']);
             $m = 0;
             $scoreAll=0;
+            if($ty == "choice"){
+                AnswerRecord::model()->updateChoiceSocre($recordID, $studentID, $ty, $examID);
+            }else {
             foreach ($array_exercise as $k => $work) {
                 if ($arr[$m] != " " && $arr[$m] !=0) {
                     AnswerRecord::model()->changeScore($ansWork[$scoreAll++]['answerID'], $arr[$m]);
@@ -6099,6 +6102,7 @@ class TeacherController extends CController {
                         break;
                 }
                 $m++;
+            }
             }
         }
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $ty));

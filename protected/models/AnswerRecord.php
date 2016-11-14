@@ -595,6 +595,7 @@ class AnswerRecord extends CActiveRecord {
             $n = strrpos($correct, "&");
             $correct = substr($correct, $n + 1);
             $score = $totalScore *$correct*0.01;
+            $score = round($score);
             $ans['score'] = $score;
             $ans ->update();
         }

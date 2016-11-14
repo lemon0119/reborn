@@ -30,7 +30,7 @@ require 'examAnsSideBar.php';
 //            echo $str;
             ?>">
 
-            <table class="table-left" style="text-align: left;">
+            <table border = '0px' width="100%" >
                 <tr>
                     <td colspan='4'> <?php echo $exer['title'] ?></td>
 <!--                    <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php// printf('%2.1f', $correct);
@@ -59,7 +59,6 @@ require 'examAnsSideBar.php';
                 <td id="answer_number"><?php printf($answer_Number); ?></td>
                 <td align="left" id="standard_number"><div style="position:absolute;left:0px;"><?php printf($standard_Number); ?></div></td>
                 <td></td>
-
                 </tr>
                 <tr>
                 <td colspan="2">标准文本忽略符号数</td>
