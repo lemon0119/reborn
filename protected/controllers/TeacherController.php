@@ -1651,7 +1651,7 @@ class TeacherController extends CController {
         if($tag == "成功"){
             $thisLook->content = $txtNoSpace;
         }else{
-            $thisLook->content = $txtNoSpaces;
+        $thisLook->content = $txtNoSpaces;
         }
         $thisLook->update();
         if (Yii::app()->session['lastUrl'] == "modifyWork" || Yii::app()->session['lastUrl'] == "modifyExam") {
@@ -7013,7 +7013,7 @@ class TeacherController extends CController {
                                 $title = $_POST['title']."-不提示略码";
                                 $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($title), $txtNoSpace, 'look', Yii::app()->session['userid_now']);
                                 }else{
-                                    $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpace, 'look', Yii::app()->session['userid_now']);
+                                $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpace, 'look', Yii::app()->session['userid_now']);
                                 }
                             $result = '1';
                          }
@@ -7169,7 +7169,7 @@ class TeacherController extends CController {
                     }
                 }
                 }else {
-                    $txtContents = Tool::SBC_DBC($_POST['content'], 0);
+                   $txtContents = Tool::SBC_DBC($_POST['content'], 0);
                    $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
                    $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpaces, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
                    $result = '1'; 
@@ -8248,4 +8248,35 @@ foreach ($one as $v)
     }
     
 
-}
+        public function actionExportabsence(){       
+        $time = $_POST['time'];
+        $endtime = $_POST['endtime'];
+        $classID = $_GET['classID'];
+        if($time == $endtime){
+        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0 AND classID = '$classID'";  
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();  
+        }  else {
+        $old = $time;
+        $arr = explode("-",$old);
+        $new = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]-1,$arr[0]));
+        $old2 = $endtime;
+        $arr = explode("-",$old2);
+        $new2 = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]+1,$arr[0]));
+        $sql = "select * FROM student_sign WHERE time BETWEEN '$new'AND '$new2' AND mark = 0 AND classID = '$classID'";
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();   }    
+        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
+        }
+        
+        public function actionShowMonthAbsence(){     
+        $time = $_POST['time'];
+        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0";
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();
+        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
+        }
+        }
+
+
+
