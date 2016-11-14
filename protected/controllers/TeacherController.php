@@ -2944,10 +2944,20 @@ class TeacherController extends CController {
             $type = "filling";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if (Yii::app()->session['lastUrl'] == "modifyWork"){
             $type = "filling";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        } else {
+            $result = Filling::model()->getFillLst("", "");
+            $fillLst = $result['fillLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "fillLst";
+            $this->render('fillLst', array(
+                'fillLst' => $fillLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall(),
+            )); 
         }
     }
 
@@ -3225,10 +3235,20 @@ class TeacherController extends CController {
             $type = "choice";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if(Yii::app()->session['lastUrl'] == "modifyWork") {
             $type = "choice";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        }else {
+            $result = Choice::model()->getChoiceLst("", "");
+            $choiceLst = $result['choiceLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "choiceLst";
+            $this->render('choiceLst', array(
+                'choiceLst' => $choiceLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall()
+            ));
         }
     }
 
@@ -3611,10 +3631,20 @@ class TeacherController extends CController {
             $type = "question";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if (Yii::app()->session['lastUrl'] == "modifyWork") {
             $type = "question";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        } else {
+             $result = Question::model()->getQuestionLst("", "");
+            $questionLst = $result['questionLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "QuestionLst";
+            $this->render('QuestionLst', array(
+                'questionLst' => $questionLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall()
+            ));
         }
     }
 
