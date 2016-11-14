@@ -41,7 +41,7 @@ require 'examAnsSideBar.php';
         </table>
 </div>
     分数:<?php echo $exam_exercise['score'];?><br/>
-   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo floor($exam_exercise['score']*$correct*0.01);?>" disabled="disabled">   
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo round($exam_exercise['score']*$correct*0.01);?>" disabled="disabled">   
    </div>
 <!--   
 手动打分
