@@ -7663,8 +7663,35 @@ foreach ($one as $v)
     }
 }
  }
-    }            
+    }
+    public function actionExportabsence(){       
+        $time = $_POST['time'];
+        $endtime = $_POST['endtime'];
+        $classID = $_GET['classID'];
+        if($time == $endtime){
+        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0 AND classID = '$classID'";  
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();  
+        }  else {
+        $old = $time;
+        $arr = explode("-",$old);
+        $new = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]-1,$arr[0]));
+        $old2 = $endtime;
+        $arr = explode("-",$old2);
+        $new2 = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]+1,$arr[0]));
+        $sql = "select * FROM student_sign WHERE time BETWEEN '$new'AND '$new2' AND mark = 0 AND classID = '$classID'";
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();   }    
+        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
+        }
         
+        public function actionShowMonthAbsence(){     
+        $time = $_POST['time'];
+        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0";
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();
+        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
+        }
     
     public function actionTableClassExercise4Analysis() {
         $classID = $_GET['classID'];
@@ -8265,7 +8292,7 @@ foreach ($one as $v)
         $result     =   Yii::app()->db->createCommand($sql)->queryAll();   }    
         return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
         }
- 
+        
         public function actionShowMonthAbsence(){     
         $time = $_POST['time'];
         $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0";
@@ -8273,9 +8300,6 @@ foreach ($one as $v)
         $result     =   Yii::app()->db->createCommand($sql)->queryAll();
         return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
         }
-        
-        
-        
         public function actionRequestlogin(){
          Yii::app()->session['cfmLogin']=0;
          $login_model = new LoginForm;
