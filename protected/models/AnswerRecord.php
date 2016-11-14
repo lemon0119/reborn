@@ -81,14 +81,48 @@ class AnswerRecord extends CActiveRecord {
             $name = 'choice' . $record['exerciseID'];
             $answer = isset($_POST[$name]) ? $_POST[$name] : '';
             if ($answer !== '') {
-                $res = AnswerRecord::saveKnlgAnswer($recordID, $answer, "choice", $record['exerciseID']);
+                 if($answer == $record['answer']) {
+                    $ratio_correct = 100;
+                }else {
+                    $ratio_correct = 0;
+                }
+                $res = AnswerRecord::saveChoiceAnswer($recordID, $answer, "choice", $record['exerciseID'],$ratio_correct);
                 if ($res === false)
                     return false;
             }
         }
         return $res;
     }
-
+    public static function saveChoiceAnswer($recordID, $answer, $type, $exerciseID,$ratio_correct) {
+        $oldAnswer = AnswerRecord::getAnswer($recordID, $type, $exerciseID);
+        
+        if ($oldAnswer == null) {
+            $newAnswer = new AnswerRecord();
+            $newAnswer->answerID = Tool::createID();
+            $newAnswer->recordID = $recordID;
+            $newAnswer->exerciseID = $exerciseID;
+            $newAnswer->type = $type;
+            $newAnswer->category = $type;
+            $newAnswer->answer = $answer;
+            $newAnswer->ratio_correct = $ratio_correct;
+            $newAnswer->createPerson = Yii::app()->session['userid_now'];
+            $newAnswer->createTime = date("Y-m-d  H:i:s");
+            if (!($newAnswer->insert())) {
+                echo Tool::jsLog('创建答案记录失败！');
+                return false;
+            } else
+                return true;
+        }else {
+            $oldAnswer->answer = $answer;
+            $oldAnswer->category = $type;
+            $oldAnswer->createTime = date("Y-m-d  H:i:s");
+            if (!($oldAnswer->upDate())) {
+                echo Tool::jsLog('更新答案记录失败！');
+                return false;
+            } else
+                return true;
+        }
+    }
     public static function saveQuestion($recordID) {
         $res = true;
         if (Yii::app()->session['isExam'])
@@ -537,6 +571,34 @@ class AnswerRecord extends CActiveRecord {
             return false;
         } else
             return true;
+    }
+    public function updateChoiceSocre($recordID, $userID,$type,$examID){
+        $answer = AnswerRecord::model()->findAll("recordID = '$recordID' and createPerson = '$userID' and type = '$type'");
+        if($answer !=null) {
+
+        foreach ($answer as $ans) {
+            $exerciseID = $ans['exerciseID'];
+            $totalScore = ExamExercise::model()->find("exerciseID = '$exerciseID' and examID = '$examID' and type = '$type'")['score'];
+            $score = $totalScore *$ans['ratio_correct']*0.01;
+            $ans['score'] = $score;
+            $ans ->update();
+        }
+        }
+    }
+    public function updateKeySocre($recordID, $userID,$type,$examID) {
+        $answer = AnswerRecord::model()->findAll("recordID = '$recordID' and createPerson = '$userID' and type = '$type'");
+        if($answer !=null) {
+        foreach ($answer as $ans) {            
+            $exerciseID = $ans['exerciseID'];
+            $totalScore = ExamExercise::model()->find("exerciseID = '$exerciseID' and examID = '$examID' and type = '$type'")['score'];
+            $correct = $ans['ratio_correct'];
+            $n = strrpos($correct, "&");
+            $correct = substr($correct, $n + 1);
+            $score = $totalScore *$correct*0.01;
+            $ans['score'] = $score;
+            $ans ->update();
+        }
+        }
     }
 
 }

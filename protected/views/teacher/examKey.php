@@ -60,7 +60,9 @@ require 'examAnsSideBar.php';
             $str2 = str_replace("\n", "<br/>", Tool::filterKeyContent($exer['content']));
             $str2 = str_replace("\r", "", $str2);
             $str2 = str_replace(" ", "", $str2);
-            echo $str2;
+            for($i = 0;$i<$exer['repeatNum'];$i++){
+                echo $str2;
+            }
             ?>';
     var lcs = new LCS(currentContent, originalContent);
     lcs.doLCS();
