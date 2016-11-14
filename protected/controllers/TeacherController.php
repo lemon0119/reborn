@@ -2944,10 +2944,20 @@ class TeacherController extends CController {
             $type = "filling";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if (Yii::app()->session['lastUrl'] == "modifyWork"){
             $type = "filling";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        } else {
+            $result = Filling::model()->getFillLst("", "");
+            $fillLst = $result['fillLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "fillLst";
+            $this->render('fillLst', array(
+                'fillLst' => $fillLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall(),
+            )); 
         }
     }
 
@@ -3225,10 +3235,20 @@ class TeacherController extends CController {
             $type = "choice";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if(Yii::app()->session['lastUrl'] == "modifyWork") {
             $type = "choice";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        }else {
+            $result = Choice::model()->getChoiceLst("", "");
+            $choiceLst = $result['choiceLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "choiceLst";
+            $this->render('choiceLst', array(
+                'choiceLst' => $choiceLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall()
+            ));
         }
     }
 
@@ -3611,10 +3631,20 @@ class TeacherController extends CController {
             $type = "question";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if (Yii::app()->session['lastUrl'] == "modifyWork") {
             $type = "question";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        } else {
+             $result = Question::model()->getQuestionLst("", "");
+            $questionLst = $result['questionLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "QuestionLst";
+            $this->render('QuestionLst', array(
+                'questionLst' => $questionLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall()
+            ));
         }
     }
 
@@ -4992,7 +5022,8 @@ class TeacherController extends CController {
                 array_push($array_accomplished, array(
                     'userID' => $student['userID'],
                     'userName' => $student['userName'],
-                    'score' => $score
+                    'score' => $score,
+                    'recordID'=>$result['recordID']
                 ));
             } else {
                 array_push($array_unaccomplished, array(
@@ -5013,7 +5044,20 @@ class TeacherController extends CController {
             'selectClassID' => $selectClassID,
         ));
     }
-    
+    public function ActionOneMark() {
+        $recordID = $_POST['recordID'];
+        $examID = $_POST['examID'];
+        $userID = $_POST['userID'];
+        AnswerRecord::model()->updateChoiceSocre($recordID, $userID, 'choice', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'key', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'listen', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'look', $examID);
+        $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
+        if(!isset($score)){
+            $score=0;
+        }
+    }
+
     public function ActionChangeSuiteClassIn() {
         $suiteID = $_GET['suiteID'];
         $pages = $_GET['page'];
@@ -6048,6 +6092,9 @@ class TeacherController extends CController {
             $arr = explode(",", $_POST['score']);
             $m = 0;
             $scoreAll=0;
+            if($ty == "choice"){
+                AnswerRecord::model()->updateChoiceSocre($recordID, $studentID, $ty, $examID);
+            }else {
             foreach ($array_exercise as $k => $work) {
                 if ($arr[$m] != " " && $arr[$m] !=0) {
                     AnswerRecord::model()->changeScore($ansWork[$scoreAll++]['answerID'], $arr[$m]);
@@ -6055,6 +6102,7 @@ class TeacherController extends CController {
                         break;
                 }
                 $m++;
+            }
             }
         }
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $ty));

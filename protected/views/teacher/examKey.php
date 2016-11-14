@@ -41,7 +41,7 @@ require 'examAnsSideBar.php';
         </table>
 </div>
     分数:<?php echo $exam_exercise['score'];?><br/>
-   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo floor($exam_exercise['score']*$correct*0.01);?>" disabled="disabled">   
+   得分:<input type="text" id="input" style="width: 50px" value ="<?php echo round($exam_exercise['score']*$correct*0.01);?>" disabled="disabled">   
    </div>
 <!--   
 手动打分
@@ -60,7 +60,9 @@ require 'examAnsSideBar.php';
             $str2 = str_replace("\n", "<br/>", Tool::filterKeyContent($exer['content']));
             $str2 = str_replace("\r", "", $str2);
             $str2 = str_replace(" ", "", $str2);
-            echo $str2;
+            for($i = 0;$i<$exer['repeatNum'];$i++){
+                echo $str2;
+            }
             ?>';
     var lcs = new LCS(currentContent, originalContent);
     lcs.doLCS();
