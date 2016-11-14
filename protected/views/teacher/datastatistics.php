@@ -1,23 +1,23 @@
-<script src="<?php echo JS_URL; ?>/echarts.min.js"></script>
-<style>
-    .bb{
-        color:black;
-        margin-left: 20px;
-        margin-top: 10px;
-        text-decoration: none;
-        
-    }
-    .bbb{
-        color:black;
-        text-decoration: none;
-    }
-    .bb,.bbb:hover{
-        text-decoration: none;
-    }
-</style>
-<div class="span3">
-     <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
-     <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
+<html lang="zh-cn"><!--<![endif]--> 
+        <head>
+            <meta charset="utf-8">
+            <title>亚伟速录</title>
+            <link href="<?php echo CSS_URL; ?>bootstrap.min.css" rel="stylesheet">
+            <link href="<?php echo CSS_URL; ?>site.css" rel="stylesheet">
+            <script src="<?php echo JS_URL; ?>jquery.min.js"></script>
+            <script src="<?php echo JS_URL; ?>bootstrap.min.js"></script>
+            <script src="<?php echo JS_URL; ?>site.js"></script>
+            <script src="<?php echo JS_URL; ?>mydate.js"></script>
+            <script src="<?php echo JS_URL; ?>fenye.js"></script>
+<!--            <script src="<?php //echo JS_URL; ?>/echarts.min.js"></script>-->
+<!--            改变alter样式-- extensions/xcConfirm 工具包下-- --> 
+                <link rel="stylesheet" type="text/css" href="<?php echo XC_Confirm; ?>css/xcConfirm.css"/>
+		<script src="<?php echo XC_Confirm; ?>js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="<?php echo XC_Confirm; ?>js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+        </head>
+        <body>
+            <div class="span3" style="width: 25%;overflow:auto;height: 600px;">
+     <div class="well-topnoradius" style="height:490px;overflow:auto;padding-left: 0px;">
      <ul class="nav nav-list">       
 <!--         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">练习</a></div></li>-->
         <div style="display: none" id="id_classExerciseLesson">
@@ -28,7 +28,7 @@
               </ul>
         </div>
          
-<!--         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">作业</a></div></li>  -->
+<!--        <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">作业</a></div></li>  -->
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
@@ -53,10 +53,8 @@
                      <?php endforeach; ?> 
              </ul>
          </div>
-             <li ><div id="id_Diligence"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">勤奋度</a></div></li>    
 <!--         <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">考试</a></div></li>-->
-         <div style="display: none" id="id_classExamLesson">
-             <ul class="nav nav-list">    
+   
                  <?php foreach ($array_examList as $examList)
                  {
                      foreach($array_exam as $exam)
@@ -65,27 +63,25 @@
                          ?>
                  <li><div ><i class="icon-list"></i><a href="#" onclick="getExamExercise(<?php echo $exam['examID'];?>,<?php echo $examList['workID'];?>)" style="position:relative;top:6px;left:"><?php echo $exam['examName']; ?></a></div></li>
                         <?php 
-                              }
+                          }
                  }
-?>                                     
-             </ul>                   
+?>  
+            <table id="ul1" class="ul1" style="margin-left: 0px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
+            </table>
          </div>
-         <li ><div id="id_classabsence"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">签到</a></div></li>
       </ul>
      </div>
 </div>
 
 
-<div class="span9" id="sp" style="display: none;height: 758px;">
+<div class="span6" id="sp" style="display: none;height: 758px; width: 65%">
     <div style="position: relative;top: -15px;">
         <div  style="width:100%;overflow: auto;height:110px;">
-            <table id="ul1" class="ul1" style="margin-left: -20px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
+            <table id="ul" class="ul1" style="margin-left: 0px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
             </table>
         </div>
-        
-        
         <div style="width:100%;">
-            <div id="div1" style="width:30%;display:inline;float:left;overflow: auto;margin-top: 40px;" >
+            <div id="div1" style="width:100%;display:inline;float:left;overflow: auto;margin-top: -100px; display: none;" >
                 <h3>数据类型</h3>
                 <table>
                     <tr>
@@ -98,23 +94,27 @@
                             <input type="text" value="123"  id="isExam"  style="display:none;"/>
                             <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率(%)</a>
                         </td>  
-                    </tr>
-                    <tr><td style="height:10px;"></td></tr>
-                    <tr>
+                    <td style="height:10px;"></td>
                         <td id="bg2" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度(字/分)</a>
+                        </td>
+                            <td id="bg6" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">正确字数(字)</a>
                         </td>
                     </tr>
                     <tr><td style="height:10px;"></td></tr>
                     <tr>
                         <td id="bg3" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">最大速度(字/分)</a>
+                            <a  id="maxSpeed" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;">多打字数</a>
                         </td>
-                    </tr>
-                    <tr><td style="height:10px;"></td></tr>
-                    <tr>
+                    
+                    <td style="height:10px;"></td>
+                   
                         <td id="bg4" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数(字)</a>
+                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">少打字数(字)</a>
+                        </td>
+                          <td id="bg5" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">打错字数(字)</a>
                         </td>
                     </tr>
                 </table>
@@ -123,7 +123,7 @@
             
         </div>
         <div  style="width:100%;">
-            <div id="div11" style="width:30%; display:inline;float:left;overflow: auto;position: relative;top:30px;height:480px;border-radius: 5px;">
+            <div id="div11" style="width:100%; display:inline;float:left;overflow: auto;position: relative;top:-380px;height:480px;border-radius: 5px;">
                 <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -142,7 +142,7 @@
                     
                 </div>
                 <div id="title" style="width:100%;overflow: auto;margin-top: 20px">
-                    <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:480px;">
+                    <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:100px;">
                         <thead>
                                     <tr style="height:40;">
                                         <th style="min-width:35px;">次数</th>
@@ -161,19 +161,6 @@
                 <div id="de" style="display:none;width:100%;overflow: auto;height:300px;margin-top: -20px">
                     
                     <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:480px;">
-                       <!--     <thead>
-                                <tr style="height:40px;">
-                                    <th>成绩</th>
-                                    <th>正确率</th>
-                                    <th>平均速度</th>
-                                    
-                                    <th>回改字数</th>
-                                    <th>平均击键</th>
-                                    <th>完成时间</th>
-                                    <th>总击键数</th>
-
-                                </tr>
-                            </thead>  -->
                             <tbody id="detail" class="detailed">
                             </tbody>
                         </table>
@@ -182,27 +169,21 @@
             </div>
         </div>
     </div>
-    
-    
     <div id="sh" style="left:700px;display: none;width: 100px;overflow:auto;height:40px;position: relative;top:20px;">
-    </div>
-    
-    <div id="main2" style="left:15px;display: none;width: 750px;overflow: auto;height:400px;position: relative;top:20px;"></div>
+    </div>  
+<!--    <div id="main2" style="left:15px;display: none;width: 750px;overflow: auto;height:400px;position: relative;top:20px;"></div>-->
 </div>
-<div class="span9" id="other" style="display: none;height: 758px;">
+<div class="span6" id="other" style="display: none;height: 758px; width: 65%">
     <h3 style="alignment-adjust: center;">没有统计数据！</h3>
-</div>
-<div class="span9" id="Diligence" style="display: none;height: 758px;">
-    <table class="table table-bordered table-striped" id="table1">
-        <thead><th>名次</th><th>名字</th><th>学号</th><th>勤奋度（万字）</th></thead>
-    <tbody id="table1"></tbody>
-    </table>
-
-</div>
+</div>    
+        </body>
+            </html>
+            <script>
+    function submit(){
+         window.close();
+    }
     
-<script>
-    //sunpy: switch camera and bulletin
-$(document).ready(function(){
+    $(document).ready(function(){
     $("#id_classWork").click(function() {
         $("#id_classWorkLesson").toggle(200);
     });  
@@ -225,8 +206,6 @@ $(document).ready(function(){
     $("#sw-chat").click(function() {
         $("#chat-box").toggle(200);
     });
-
-    
 });
 function che(){
     document.getElementById("div11").style.display='none';
@@ -277,7 +256,7 @@ function getSuiteExercise(suiteID,workID){
                    document.getElementById("div11").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
-                   $('#ul1').children().filter('tr').remove();
+                   $('#ul1').children().filter('li').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
                    $('#bo').children().filter('tr').remove();
@@ -302,16 +281,16 @@ function getSuiteExercise(suiteID,workID){
                       var str;
                       if(i%3==0)
                           str="";
-                      str += "<td><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                      str += "<li><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></li>";       
                       var li;
                       if(i%3==0){
-                         li = document.createElement("tr");  
+                         li = document.createElement("li");  
                       }
                       li.innerHTML= str;
                       if(((i%3-1)==0 && i!=0) || i==data.length-1){
                         ul.appendChild(li);
                          }
-                   }  
+                   }
                  },     
                 error: function(xhr, type, exception){
                     window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
@@ -376,6 +355,7 @@ function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
     document.getElementById("export").style.display='none';
     var t='kk'+ii;
     document.getElementById(t).style.color="#F46401";
+    getClassExerRankingBef('correct','bg1');
 }
 var choice;
 function getClassExerRankingBef(choice2,bg){
@@ -391,7 +371,8 @@ function getClassExerRankingBef(choice2,bg){
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    
+    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg6').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById(choice2).style.color="#fff";
     document.getElementById(bg).style.backgroundColor="#F46401";
     document.getElementById("choice").value=choice2;
@@ -541,30 +522,54 @@ function getExamExercise(examID,workID){
                    var type;
                    for(var i=0;i<data.length;i++){ 
                       if(data[i]['type']==1){
-                           type='键打练习';
-                       }else if(data[i]['type']==2){
-                           type='听打练习';
-                       }else if(data[i]['type']==3){
-                           type='看打练习';
-                       }
+                           type='键打连';
                        var content=data[i][0]['title'];
                        var allType=type+": "+content;
                        if (content.length <= 10)
                             content=content;
                         else
-                            content=content.substr(0,10)+"...";
-                       type=type+": "+content;
-                       var str;
-                       if(i%3==0)
-                           str="";
-                       str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                      content=content.substr(0,10)+"...";
+                      type=type+": "+content;
+                      var str;
+                      str="";
+                      str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+");displayq();'>"+type+"</a></td>";       
                       var li ;
-                      if(i%3==0){
-                         li= document.createElement("tr");   
-                      }
+                      li= document.createElement("tr");   
                       li.innerHTML= str;
-                      if(((i%3-1)==0 && i!=0) || i==data.length-1)
-                        ul.appendChild(li);
+                      ul.appendChild(li);
+                       }else if(data[i]['type']==2){
+                           type='听打';
+                         var content=data[i][0]['title'];
+                       var allType=type+": "+content;
+                       if (content.length <= 10)
+                            content=content;
+                        else
+                      content=content.substr(0,10)+"...";
+                      type=type+": "+content;
+                      var str;
+                      str="";
+                      str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+");showq();'>"+type+"</a></td>";       
+                      var li ;
+                      li= document.createElement("tr");   
+                      li.innerHTML= str;
+                      ul.appendChild(li);
+                       }else if(data[i]['type']==3){
+                           type='看打';
+                                                  var content=data[i][0]['title'];
+                       var allType=type+": "+content;
+                       if (content.length <= 10)
+                            content=content;
+                        else
+                      content=content.substr(0,10)+"...";
+                      type=type+": "+content;
+                      var str;
+                      str="";
+                      str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                      var li ;
+                      li= document.createElement("tr");   
+                      li.innerHTML= str;
+                      ul.appendChild(li);
+                       }
                    }  
                  },     
                 error: function(xhr, type, exception){
@@ -621,8 +626,8 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                        choose='速度';
                    }else if(choice=='maxSpeed'){
                        choose='最大速度';
-                   }else if(choice=='backDelete'){
-                       choose='回改字数';
+                   }else if(choice=='correct_Number'){
+                       choose='正确字数';
                    }else if(choice=='maxInternalTime'){
                        choose='最高间隔';
                    }
@@ -747,7 +752,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                    }else if(choice=='maxSpeed'){
                        choose='最大速度';
                    }else if(choice=='backDelete'){
-                       choose='回改字数';
+                       choose='正确字数';
                    }else if(choice=='maxInternalTime'){
                        choose='最高间隔';
                    }
@@ -766,9 +771,13 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                    for(var i=0;i<data[0].length;i++){  
                       if(choice=='correct'){
                         var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"%"+"</th>";
-                      }else if(choice=='backDelete'){
+                      }else if(choice=='correct_Number'){
                           var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[0][i][choice]*100)/100)+"</th>";
-                      }else{
+                      }
+//                      else if(choice=='backDelete'){
+//                          var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[0][i][choice]*100)/100)+"</th>";
+//                      }
+                      else{
                           var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
                       }
                       var tr = document.createElement("tr");               
@@ -813,54 +822,7 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                            var tr = document.createElement("tr");    
                            tr.innerHTML= str;
                            expor.appendChild(tr);
-                    }
-                    var myChart = echarts.init(document.getElementById('main'));
-                    var option = {
-                        title: {
-                            text: ''
-                        },
-                        tooltip : {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            data:['平均成绩','学生成绩']
-                        },
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis : [
-                            {
-                                type : 'category',
-                                name:"s",
-                                boundaryGap : false,
-                                data : times
-                            }
-                        ],
-                        yAxis : [
-                            {
-                                type : 'value',
-                                name:choose
-                            }
-                        ],
-                        series : [
-                            {
-                                name:'平均成绩',
-                                type:'line',
-                                data:per
-                            },
-                            {
-                                name:'学生成绩',
-                                type:'line',
-                                data:myPer
-                            },
-
-                        ]
-                    };
-                    myChart.setOption(option);
-                    
+                    } 
                  },     
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
@@ -1187,24 +1149,12 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                    tr.innerHTML= str;
                    detail.appendChild(tr);
                     if(data[4].length!=0){
-//                       var ab=document.createElement("a");
-//                        ab.href="index.php?r=teacher/export&&ii="+ii+"seq="+seq+"classID="+classID+"exerciseID"+exerciseID+"type="+type+"id="+id;
-//                        ab.title="export";                    
-//                        expor.appendChild(ab);
                            var str = "<a style='position:relative;top:5px;left:10px;color:black;' href='index.php?r=teacher/export&&choice="+choice+"&&seq="+seq+"&&classID="+classID+"&&exerciseID="+exerciseID+"&&type="+type+"&&id="+id+"'>"+"导出"+"</a>";
                            var tr = document.createElement("tr");    
                            tr.innerHTML= str;
                            expor.appendChild(tr);
                     }
                    
-                   
-//                   if(data[4].length!=0){
-//                       var ab=document.createElement("a");
-//                       var b=data[4].join("-");
-//                       ab.title="export";                    
-//                       expor.appendChild(ab);
-//                    }
-                     
                      var myChart = echarts.init(document.getElementById('main'));
                         var a=new Array();
                         if(myPer.length>=2){
@@ -1281,38 +1231,15 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
             }
          }); 
 }
-function GetDiligence(){
-        $.ajax({
-             type: "POST",
-             dataType:"json",
-             url: "index.php?r=api/getDiligence&&classID=<?php echo $classID;?>",
-             data: {},
-             success: function(data){
-                 $("#table1").children().filter('tr').remove();
-         for(var i=0;i<data['student'].length;i++){ 
-         var tbody = document.getElementById('table1').lastChild;  
-         var tr = document.createElement('tr');           
-         var td = document.createElement("td");
-         td.innerHTML = i+1;
-         tr.appendChild(td);          
-         td = document.createElement("td");   
-         td.innerHTML = data['student'][i];
-         tr.appendChild(td);         
-         td = document.createElement("td");  /*真.js*/
-         td.innerHTML = data['SID'][i];
-         tr.appendChild(td);
-         td = document.createElement("td");  /*真.js*/
-         td.innerHTML = (data['Dili'][i]/10000).toFixed(2);
-         tr.appendChild(td);
-         table1.appendChild(tr);          
-        }
-                   
-                 document.getElementById("Diligence").style.display='block';
-             },
-                error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
-                console.log(xhr, "Failed");
-            }
-         });           
-}
-</script>
+  window.onload=function(){
+  getExamExercise(<?php  echo $examList['examID'];?>,<?php echo $examList['workID'];error_log($examList['workID']);?>);
+  }
+  function showq(){
+      document.getElementById("div1").style.display='';
+      document.getElementById("div11").style.top='-240px';
+  }
+ function displayq(){
+      document.getElementById("div1").style.display='none';
+      document.getElementById("div11").style.top='-380px';    
+ }
+    </script>
