@@ -1431,11 +1431,24 @@ class TeacherController extends CController {
 //        判断重复登录
 //        $userID = Yii::app()->session['userid_now'];
 //        Teacher::model()->isLogin($userID, 1);
-        
-        
-        
-        
-        $this->render('index'); //,['info'=>$info]);
+        if (isset($_GET['page'])) {
+            Yii::app()->session['lastPage'] = $_GET['page'];
+        } else {
+            Yii::app()->session['lastPage'] = 1;
+        }
+          Yii::app()->session['lastUrl'] = "index";
+          if(isset(Yii::app()->session['userid_now'])){
+           $userID =  Yii::app()->session['userid_now'];
+          $publishtime = date('y-m-d H:i:s',time());
+          $sn = strtotime($publishtime);
+          //Teacher::model()->isLogin($userID, $sn);
+          $isl = Teacher::model()->find("userID = '$userID'");
+          $isl = $isl['is_login'];
+          $s = Yii::app()->session['islogin']=$isl;
+          $this->render('index'); //,['info'=>$info]);
+          }else{
+              $this->render('index');
+          }
     }
 
     public function actionHello() {
@@ -6352,6 +6365,13 @@ class TeacherController extends CController {
 
     //公告信息
     public function actionteacherNotice() {
+         if (isset($_GET['page'])) {
+            Yii::app()->session['lastPage'] = $_GET['page'];
+        } else {
+            Yii::app()->session['lastPage'] = 1;
+        }
+        Yii::app()->session['lastUrl'] = "teacherNotice";
+        if(isset(Yii::app()->session['userid_now'])){
         $result = Notice::model()->findNotice();
         $noticeRecord = $result ['noticeLst'];
         $pages = $result ['pages'];
@@ -6361,6 +6381,10 @@ class TeacherController extends CController {
         $noticeS->update();
         $this->render('teacherNotice', array('noticeRecord' => $noticeRecord, 'pages' => $pages));
     }
+        else{
+        $this->render('index');
+        }
+        }
 
     public function ActionNoticeContent() {
         $result = 0;
@@ -7640,26 +7664,7 @@ foreach ($one as $v)
 }
  }
     }
-    public function actionExportabsence(){       
-        $time = $_POST['time'];
-        $endtime = $_POST['endtime'];
-        $classID = $_GET['classID'];
-        if($time == $endtime){
-        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0 AND classID = '$classID'";  
-        $criteria   =   new CDbCriteria();
-        $result     =   Yii::app()->db->createCommand($sql)->queryAll();  
-        }  else {
-        $old = $time;
-        $arr = explode("-",$old);
-        $new = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]-1,$arr[0]));
-        $old2 = $endtime;
-        $arr = explode("-",$old2);
-        $new2 = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]+1,$arr[0]));
-        $sql = "select * FROM student_sign WHERE time BETWEEN '$new'AND '$new2' AND mark = 0 AND classID = '$classID'";
-        $criteria   =   new CDbCriteria();
-        $result     =   Yii::app()->db->createCommand($sql)->queryAll();   }    
-        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
-        }
+    
         
         public function actionShowMonthAbsence(){     
         $time = $_POST['time'];
@@ -8268,14 +8273,128 @@ foreach ($one as $v)
         $result     =   Yii::app()->db->createCommand($sql)->queryAll();   }    
         return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
         }
+      
         
-        public function actionShowMonthAbsence(){     
-        $time = $_POST['time'];
-        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0";
-        $criteria   =   new CDbCriteria();
-        $result     =   Yii::app()->db->createCommand($sql)->queryAll();
-        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
+        
+         public function actionRequestlogin(){
+         Yii::app()->session['cfmLogin']=0;
+         $login_model = new LoginForm;
+          $userID = Yii::app()->session['userid_now'];
+          $isl = Teacher::model()->find("userID = '$userID'");
+          $isl = $isl['is_login'];
+          $s = Yii::app()->session['islogin'];
+          if($isl==$s){
+          }else{
+              $result="已在其他地方登陆";
+              unset(Yii::app()->session['userid_now']);
+              $tislogin = 1;
+              $teacherislogin = array();
+              array_push($teacherislogin, $tislogin);
+              $this->renderJSON(['teacherislogin'=>$teacherislogin,]);
+          }
         }
+        //获取数据统计
+        Public function actiondataStatistics(){
+          $classID = $_GET['classID'];
+          $examID  = $_GET['examID'];
+          $exam = ExamExercise::model()->findAll("examID = '$examID'");
+          $keytype = array();
+          $looktype = array();
+          $listentype = array();
+          $keyID = array();
+          $lookID = array();
+          $listenID = array();
+           foreach ($exam as $v)
+          {
+              if($v['type'] == 'key'){
+                 $exerciseID = $v['exerciseID'];
+                 $key =  KeyType::model()->findAll("exerciseID = '$exerciseID'");
+                 foreach ($key as $val){
+                   $key2 = $val['title'];
+                   $key3 = $val['exerciseID'];
+                   array_push($keytype, $key2);
+                   array_push($keyID, $key3);
+                 }
+              }
+                 if($v['type'] == 'look'){
+                 $exerciseID = $v['exerciseID'];
+                 $look =  LookType::model()->findAll("exerciseID = '$exerciseID'");
+                 foreach ($look as $valu){
+                   $look2 = $valu['title'];
+                   $look3 = $valu['exerciseID'];
+                   array_push($looktype, $look2);
+                   array_push($lookID, $look3);
+                 }
+              }
+                 if($v['type'] == 'listen'){
+                 $exerciseID = $v['exerciseID'];
+                 $listen =  ListenType::model()->findAll("exerciseID = '$exerciseID'");
+                 foreach ($listen as $val2){
+                   $listen2 = $val2['title'];
+                   $listen3 = $val2['exerciseID'];
+                   array_push($listentype, $listen2);
+                   array_push($listenID, $listen3);
+                 }
+              }
+          }         
+          $student = Student::model()->findAll("classID = '$classID'");
+          foreach ($student as $stu)
+          {
+              $stu['userID'];
+          }
+         return $this->renderPartial('datastatistics',['keytype' => $keytype,
+             'looktype'=>$looktype,
+             'listentype'=>$listentype,
+             'keyID'=>$keyID,
+             'lookID'=>$lookID,
+             'listenID'=>$listenID,
+             'examID'=>$examID,
+             'classID'=>$classID,
+             ]);   
+        }
+        public function actionshowDataStatistics(){
+            $classID = $_GET['classID'];
+            $examID = $_POST['examID'];
+            $keyID = $_POST['keyID'];
+            $sql = "SELECT * from answer_record where type='key' and exerciseID ='$keyID'  recordID in (SELECT recordID from exam_record where studentID in (SELECT userID FROM  student WHERE classID = $classID) AND workID = $examID)";  
+            $criteria   =   new CDbCriteria();
+            $result     =   Yii::app()->db->createCommand($sql)->queryAll();  
+            error_log(123); 
+//            $correct = $answer['ratio_correct'];
+//            $n = strrpos($correct, "&");
+//            $correct = substr($correct, $n + 1);
+            foreach ($result as $key){
+            $keycorrect = $key['ratio_correct'];
+            error_log($keycorrect);
+             }
+            $this->renderJSON($keyID);
+            
+        }
+        public function ActionWatchExamData() {
+        $classID = $_GET['classID'];
+        $workID = $_GET['workID'];
+        $array_lesson = Lesson::model()->findAll("classID = '$classID'");
+        if (!empty($array_lesson)) {
+            if (isset($_GET['lessonID']))
+                Yii::app()->session['currentLesson'] = $_GET['lessonID'];
+            else
+                Yii::app()->session['currentLesson'] = $array_lesson[0]['lessonID'];
+        }
+        $array_work = ClassLessonSuite::model()->findAll("classID = '$classID'and open = 1");
+        $array_suite = Suite::model()->findAll();
+        $array_examList = ClassExam::model()->findAll("classID='$classID' and open = '1' and workID = '$workID'");
+        $array_exam = Exam::model()->findAll();
+        $this->renderpartial('datastatistics', array(
+            'array_lesson' => $array_lesson,
+            'array_work' => $array_work,
+            'array_suite' => $array_suite,
+            'classID' => $classID,
+            'array_examList' => $array_examList,
+            'array_exam' => $array_exam,
+        ));
+    }
+        
+        
         }
 
 
