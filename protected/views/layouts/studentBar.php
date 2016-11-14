@@ -137,22 +137,4 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
 //
 //        });
 //    }
-$(document).ready(function () {
-        setInterval(function () {
-            islogin();
-        }, 2000);});
- function islogin() {
-        $.ajax({
-            type: "POST",
-            dataType:"json",
-            url: "index.php?r=student/Requestlogin",
-            data: {},
-            success: function (data) {
-                if(data['studentislogin'].length!=0){
-                    alert("您的账号已在在其他地方登陆，如本是本人操作请修改密码");
-                    window.location.reload();
-                }
-            }
-        });
-  }
 </script>

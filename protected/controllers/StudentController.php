@@ -1406,24 +1406,8 @@ class StudentController extends CController {
 //        判断重复登录
 //        $userID = Yii::app()->session['userid_now'];
 //        Student::model()->isLogin($userID, 1);
-if (isset($_GET['page'])) {
-            Yii::app()->session['lastPage'] = $_GET['page'];
-        } else {
-            Yii::app()->session['lastPage'] = 1;
-        }
-          Yii::app()->session['lastUrl'] = "index";
-          if(isset(Yii::app()->session['userid_now'])){
-           $userID =  Yii::app()->session['userid_now'];
-          $publishtime = date('y-m-d H:i:s',time());
-          $sn = strtotime($publishtime);
-       //   Student::model()->isLogin($userID, $sn);
-          $isl = Student::model()->find("userID = '$userID'");
-          $isl = $isl['is_login'];
-          $s = Yii::app()->session['islogin']=$isl;
-          $this->render('index'); //,['info'=>$info]);
-          }else{
-              $this->render('index');
-          }
+        
+        $this->render('index');
     }
 
     public function actionHeadPic() {
@@ -1787,21 +1771,4 @@ if (isset($_GET['page'])) {
         }
        $this->renderJSON(['TeacherSign_ID'=>$array_Sign_ID,]);
     }
-         public function actionRequestlogin(){
-         Yii::app()->session['cfmLogin']=0;
-         $login_model = new LoginForm;
-          $userID = Yii::app()->session['userid_now'];
-          $isl = Student::model()->find("userID = '$userID'");
-          $isl = $isl['is_login'];
-          $s = Yii::app()->session['islogin'];
-          if($isl==$s){
-          }else{
-              $result="已在其他地方登陆";
-              unset(Yii::app()->session['userid_now']);
-              $tislogin = 1;
-              $studentislogin = array();
-              array_push($studentislogin, $tislogin);
-              $this->renderJSON(['studentislogin'=>$studentislogin,]);
-          }
-        }
 }

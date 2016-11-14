@@ -19,7 +19,7 @@
      <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
-<!--         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">练习</a></div></li>-->
+         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
@@ -28,7 +28,7 @@
               </ul>
         </div>
          
-<!--         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">作业</a></div></li>  -->
+         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
@@ -53,8 +53,8 @@
                      <?php endforeach; ?> 
              </ul>
          </div>
-             <li ><div id="id_Diligence"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">勤奋度</a></div></li>    
-<!--         <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">考试</a></div></li>-->
+                 
+         <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
@@ -192,14 +192,6 @@
 <div class="span9" id="other" style="display: none;height: 758px;">
     <h3 style="alignment-adjust: center;">没有统计数据！</h3>
 </div>
-<div class="span9" id="Diligence" style="display: none;height: 758px;">
-    <table class="table table-bordered table-striped" id="table1">
-        <thead><th>名次</th><th>名字</th><th>学号</th><th>勤奋度（万字）</th></thead>
-    <tbody id="table1"></tbody>
-    </table>
-
-</div>
-    
 <script>
     //sunpy: switch camera and bulletin
 $(document).ready(function(){
@@ -212,9 +204,7 @@ $(document).ready(function(){
         $("#id_classExam").click(function() {
         $("#id_classExamLesson").toggle(200);
     });  
-    $("#id_Diligence").click(function() {
-        GetDiligence();
-    });  
+    
     $("#id_classabsence").click(function() {
         window.open("./index.php?r=teacher/countAbsence&&classID=<?php echo $classID; ?>", 'newwindow', 'height=500,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,')   
  
@@ -1281,38 +1271,5 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
             }
          }); 
 }
-function GetDiligence(){
-        $.ajax({
-             type: "POST",
-             dataType:"json",
-             url: "index.php?r=api/getDiligence&&classID=<?php echo $classID;?>",
-             data: {},
-             success: function(data){
-                 $("#table1").children().filter('tr').remove();
-         for(var i=0;i<data['student'].length;i++){ 
-         var tbody = document.getElementById('table1').lastChild;  
-         var tr = document.createElement('tr');           
-         var td = document.createElement("td");
-         td.innerHTML = i+1;
-         tr.appendChild(td);          
-         td = document.createElement("td");   
-         td.innerHTML = data['student'][i];
-         tr.appendChild(td);         
-         td = document.createElement("td");  /*真.js*/
-         td.innerHTML = data['SID'][i];
-         tr.appendChild(td);
-         td = document.createElement("td");  /*真.js*/
-         td.innerHTML = (data['Dili'][i]/10000).toFixed(2);
-         tr.appendChild(td);
-         table1.appendChild(tr);          
-        }
-                   
-                 document.getElementById("Diligence").style.display='block';
-             },
-                error: function(xhr, type, exception){
-                window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
-                console.log(xhr, "Failed");
-            }
-         });           
-}
+
 </script>

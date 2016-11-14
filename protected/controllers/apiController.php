@@ -463,7 +463,6 @@ class apiController extends Controller {
          $isExam=$_POST['isExam'];
          $choice=$_POST['choice'];
          $all=Array();
-         $all2=array();
          if($type==1){
              $type='key';
          }else if($type==2){
@@ -484,11 +483,6 @@ class apiController extends Controller {
              if($result){
                 array_push($all, $result);
              }
-             $answerid = $result['answerID'];
-             $result2 = AnswerData::model()->find("answerID = '$answerid'");
-             if($result2 != NULL){
-             array_push($all2, $result2);
-             }
          }
          //$all=  AnswerRecord::model()->findAll('type=? and exerciseID=? and isExam=?',array($type,$exerciseID,$isExam));
          $arrayData = Array();
@@ -498,18 +492,8 @@ class apiController extends Controller {
          $data2 = Array();
          $data3 = Array();
          $allData=Array();
-            if($all){
+         if($all){
             foreach ($all as $a) {
-            foreach ($all2 as $a2) {
-            $correctNumber=$a2['correct_Number'];
-            $correctNumber2=$a2['correct_Number'];
-                }
-                 //正确字数
-                if(strpos($correctNumber,"&") === false){     
-                $correctNumber=$correctNumber."&".$correctNumber;
-                 }
-                 $n=  strrpos($correctNumber, "&");
-                 $correctNumber= substr($correctNumber, $n+1);
                 //correct
                  $correct=$a['ratio_correct'];
                  $correct2=$a['ratio_correct'];
@@ -559,36 +543,27 @@ class apiController extends Controller {
                     $student=SuiteRecord::model()->find('recordID=?',array($a['recordID']))['studentID'];
                  }
                  $studentName=Student::model()->find('userID=?',array($student))['userName'];
-                 $arrayData = ["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$student,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime,
-                 'correctNumber'=>$correctNumber,];
-                 $arrayData2 = ["speed"=>$speed2,"maxSpeed"=>$maxSpeed2,"correct"=>$correct2,"backDelete"=>$backDelete2,'maxInternalTime'=>$maxInternalTime2
-                 ,'correctNumber'=>$correctNumber,];
+                 $arrayData = ["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$student,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime];
+                 $arrayData2 = ["speed"=>$speed2,"maxSpeed"=>$maxSpeed2,"correct"=>$correct2,"backDelete"=>$backDelete2,'maxInternalTime'=>$maxInternalTime2];
 
                  array_push($data, $arrayData);
                  array_push($data2, $arrayData2);
             }
             $data = Tool::quickSort($data,$choice);
-            $allCorrect=0;$allSpeed=0;$allMaxSpeed=0;$allDelete=0;$allMaxInternalTime=0;$correctNumber=0;
+            $allCorrect=0;$allSpeed=0;$allMaxSpeed=0;$allDelete=0;$allMaxInternalTime=0;
             $corrects=Array();
             $speeds=Array();
             $maxSpeeds=Array();
             $deletes=Array();
-            $correctNumber=array();
             $maxCorrectNum=0;
             $maxSpeedNum=0;
             $maxMaxSpeedNum=0;
             $maxDeleteNum=0;
             $maxInternalTimeNum=0;
-            $maxcorrectNumber=0;
             foreach ($data2 as $da) {
                 $correct=$da['correct'];     
                 $corrects=explode("&", $correct);
                 $maxCorrectNum=  (count($corrects)>$maxCorrectNum)?count($corrects):$maxCorrectNum;
-                
-                //正确字数
-                $correctNumber=$da['correctNumber'];     
-                $correctNumbers=explode("&", $correctNumber);
-                $maxcorrectNumber=  (count($correctNumbers)>$maxcorrectNumber)?count($correctNumbers):$correctNumber;
                 
                 $speed=$da['speed'];
                 $speeds=explode("&", $speed);
@@ -611,14 +586,12 @@ class apiController extends Controller {
             $allMaxSpeed=Array();
             $allDelete=Array();
             $allMaxInternalTime=Array();
-            $allcorrectNumber=array();
             
             $num1=Array();
             $num2=Array();
             $num3=Array();
             $num4=Array();
             $num5=Array();
-            $num6=array();
             foreach ($data2 as $d) {
                 $correct=$d['correct'];     
                 $corrects=explode("&", $correct);
@@ -628,10 +601,6 @@ class apiController extends Controller {
                 
                 $maxSpeed=$d['maxSpeed'];
                 $maxSpeeds=explode("&", $maxSpeed);
-                
-                //正确字数
-                $correctNumber = $d['correctNumber'];
-                $correctNumbers =  explode("&", $correctNumber);
                 
                 $delete=$d['backDelete'];
                 $deletes=explode("&", $delete);
@@ -679,17 +648,7 @@ class apiController extends Controller {
                             $num4[]+=1;
                         }
                     }
-                }else if($choice=='correct_Number'){
-                    foreach ($correctNumbers as $key => $value) {
-                        if(isset($allcorrectNumber[$key])){
-                            $allcorrectNumber[$key]+=$value;
-                            $num6[$key]++;
-                        }else{
-                            $allcorrectNumber[]+=$value;
-                            $num6[]+=1;
-                        }
-                    }
-                } else if($choice=='maxInternalTime'){
+                }else if($choice=='maxInternalTime'){
                     foreach ($maxInternalTimes as $key => $value) {
                         if(isset($allMaxInternalTime[$key])){
                             $allMaxInternalTime[$key]+=$value;
@@ -728,14 +687,7 @@ class apiController extends Controller {
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"backDelete"=>$allDelete[$key]];
                 }
-            }else if($choice=='correct_Number'){
-                foreach ($allcorrectNumber as $key => $value) {
-                    $allcorrectNumber[$key]=$allcorrectNumber[$key]/$num4[$key];
-                    $n=$key*2;
-                    $arrayData4[] = ["duration"=>$n,"correctNumber"=>$allcorrectNumber[$key]];
-                }
-            }
-            else if($choice=='maxInternalTime'){
+            }else if($choice=='maxInternalTime'){
                 foreach ($allMaxInternalTime as $key => $value) {
                     $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/$num4[$key];
                     $n=$key*2;
@@ -776,14 +728,6 @@ class apiController extends Controller {
                 array_push($all, $result);
              }
          }
-         foreach ($recordIDs as $id2s) {
-             $result= AnswerData::model()->find('recordID=?',array($id2s['recordID']));
-             if($result){
-                array_push($all, $result);
-             }
-         }
-         
-         
          $arrayData = Array();
          $arrayData2 = Array();
          $arrayData3 = Array();$arrayData4 = Array();
@@ -1438,6 +1382,7 @@ class apiController extends Controller {
          }else if($type==5){
              $type='free';
          }
+         
          $all= ClassexerciseRecord::model()->findAll('classExerciseID=?',array($exerciseID));
          $allStudent=  Student::model()->findAll('classID=?',array($classID));
          $all2=Array();
@@ -1447,6 +1392,7 @@ class apiController extends Controller {
          $arrayData3 = Array();$arrayData4 = Array();
          $arrayDetail=Array();
          $arrayDetailData=Array();
+        
          $data2 = Array();
          $data3 = Array();
          $allData=Array();
@@ -2066,68 +2012,6 @@ class apiController extends Controller {
         }
         echo $result;
     }
-    public function actionGetDiligence(){
-    $classID = $_GET['classID'];
-    $all=Array();
-    $sqlstudent=  Student::model()->findAll("classID= '$classID'");
-    $student = array();
-    $look = array();
-    $listen = array();
-    $tlook = array();
-    $tlisten = array();
-    $Dili =array();
-    $SID=array();
-        foreach ($sqlstudent as $v){
-            $n = $v['userName'];
-            $u = $v['userID'];
-            $look= AnswerRecord::model()->findAll("createPerson= '$u' and type ='look'");
-            if($look == null){
-                 $looktotal = 0;
-                 array_push($look, $looktotal);
-                 $c = array_sum($look);
-            }else{ 
-            foreach ($look as $k){
-                 $str1 = $k['answer'];
-                 $count = Tool::filterContentOfInputWithYaweiCode($str1);
-                 $looktotal = strlen($count);
-                 array_push($look, $looktotal);
- 
-            }
-                 $c = array_sum($look);
-            }
-            $listen = AnswerRecord::model()->findAll("createPerson= '$u' and type ='listen'");
-            if($listen == null){
-              $listentotal = 0;
-              array_push($listen, $listentotal);
-                 $b = array_sum($listen);
-
-            }else{
-             foreach ($listen as $k){
-                 $str2 = $k['answer'];
-                 $count = Tool::filterContentOfInputWithYaweiCode($str2);
-                 $listentotal = strlen($count);
-                 array_push($listen, $listentotal);
-            }
-                 $b = array_sum($listen);    
-             }
-             $diligence = ($b+$c);
-             $studentID = $v['userID'];
-        $connection = Yii::app()->db;
-        $sql = "UPDATE `student` SET diligence = '$diligence' WHERE userID = '$studentID'";
-        $command = $connection->createCommand($sql);
-        $command->execute();
-            } 
-        $sql = "select * FROM student WHERE classID = '$classID'Order By diligence Desc";
-        $criteria   =   new CDbCriteria();
-        $Dil  =   Yii::app()->db->createCommand($sql)->queryAll();
-        foreach ($Dil as $key){
-         array_push($student, $key['userName']);
-         array_push($SID, $key['userID']);
-         array_push($Dili, $key['diligence']);
-        }
-        $this->renderJSON(['student'=>$student,'SID'=>$SID,'Dili'=>$Dili,]);
-        }
-   
-    }
+}
 
 
