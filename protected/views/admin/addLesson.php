@@ -1,14 +1,14 @@
 <div class="span3">
     <div class="well-bottomnoradius" >
         <ul class="nav nav-list">
-            <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
+            <li class="nav-header" style=" margin-left: -34px"><i class="icon-knowlage" style="position:relative;bottom:7px;left:"></i>课时列表</li>
         </ul>
     </div>
     <div class="well-topnoradius" style="padding: 8px 0;height:580px;overflow:auto;top: -20px;border-top-left-radius:0px; ">
         <ul class="nav nav-list">
             <?php foreach ($allLesson as $Lesson): ?>
                     <li style="pointer-events: none;" ><a <?php if(Yii::app()->session['insert_lesson']==$Lesson['lessonName']){
-echo 'style="color:#f46500"';Yii::app()->session['insert_lesson']="";}else{echo 'style="color: #aaa9a9"';}?>><i class="icon-list"></i><?php echo $Lesson['lessonName']; ?></a></li>
+echo 'style="color:#f46500"';Yii::app()->session['insert_lesson']="";}else{echo 'style="color: #aaa9a9"';}?>><i class="icon-list" style="position:relative;bottom:7px;left:"></i><?php echo $Lesson['lessonName']; ?></a></li>
             <?php endforeach; ?>   
         </ul>
     </div>

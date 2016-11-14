@@ -1919,22 +1919,65 @@ $dir->close();
 
     }
     function pageUp() {
-        if (cur_ppt <= 1) {
-            cur_ppt = 1;
+//        if (cur_ppt <= 1) {
+//            cur_ppt = 1;
+//            window.wxc.xcConfirm("已到第一页！", window.wxc.xcConfirm.typeEnum.info);
+//        } else {
+//            cur_ppt = cur_ppt - 1;
+//            goCurPage();
+//        }
+    if (cur_ppt == 1) {
             window.wxc.xcConfirm("已到第一页！", window.wxc.xcConfirm.typeEnum.info);
+            cur_ppt = cur_ppt - 1;
         } else {
+            if(cur_ppt > 1 && cur_ppt <= ppt_pages)
+            {
             cur_ppt = cur_ppt - 1;
             goCurPage();
+            }
+            else
+            {
+                if(cur_ppt > ppt_pages)
+                {
+                    var tempD = document.getElementsByClassName('sgBtn')[0];
+                    tempD && tempD.click();
+                   cur_ppt = ppt_pages; 
+                   
+                   //window.wxc.xcConfirm(ppt_pages, window.wxc.xcConfirm.typeEnum.info);
+                   cur_ppt = cur_ppt - 1;
+                   goCurPage(); 
+                }
+            }
         }
     }
 
     function pageDown() {
-        if (cur_ppt >= ppt_pages) {
-            cur_ppt = ppt_pages;
+//        if (cur_ppt >= ppt_pages) {
+//            cur_ppt = ppt_pages;
+//            window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
+//        } else {
+//            cur_ppt = cur_ppt + 1;
+//            goCurPage();
+//        }
+    if (cur_ppt == ppt_pages) {
             window.wxc.xcConfirm("已到最后页！", window.wxc.xcConfirm.typeEnum.info);
+            cur_ppt = ppt_pages + 1;
         } else {
+            if(cur_ppt < ppt_pages && cur_ppt != 0)
+            {
             cur_ppt = cur_ppt + 1;
             goCurPage();
+            }
+            else
+            {
+                if(cur_ppt == 0)
+                {
+                    var tempD = document.getElementsByClassName('sgBtn')[0];
+                    tempD && tempD.click();
+                    cur_ppt = cur_ppt + 2;
+                    goCurPage();
+                }
+            }
         }
 
     }
@@ -2300,6 +2343,28 @@ $dir->close();
         });
 
 
+    }
+    function judgeIsOpen(check) {
+        <?php $lessonID = Lesson::model()->find("classID = '$classID' AND number = '$on'")['lessonID'];?>
+        $.ajax({
+                    type: "POST",
+                    url: "index.php?r=teacher/judgeIsOpen",
+                    async: false,
+                    data: {check: check},
+                    success: function (data) {
+                        if (data != "选中题目中已有练习开放,请重新勾选") {
+                           document.getElementById('iframe_class').contentWindow.openLevel(check);
+                        } else {
+                            window.wxc.xcConfirm(data, window.wxc.xcConfirm.typeEnum.error);
+                        }
+                    },
+                    error: function (xhr, type, exception) {
+                        console.log('GetAverageSpeed error', type);
+                        console.log(xhr, "Failed");
+                        console.log(exception, "exception");
+
+                    }
+                });
     }
 
     function startNow(exerciseID) {

@@ -81,7 +81,7 @@
     ?>
     </div>
 
-<h3>学生列表</h3>
+    <h3 style="float: left">学生列表</h3>  <div style="position:relative;right: 393px;top:8px"><button class="fr btn btn-primary" id="mark" onclick="mark()">一键判卷</button></div><br><br><br>(填空题和简答题必须手动打分)<br>
 <div style="overflow-y:auto; height:300px;">
 <table width="50%" style="float:left;" >
 <tr>
@@ -157,7 +157,30 @@
 </div>
 
 <script>
-
+function mark(){
+     <?php foreach($array_accomplished as $student):
+            $recordID = $student['recordID'];
+            $userID = $student['userID'];
+            $examID = ClassExam::model()->find("workID = '$workID'")['examID'];
+     ?>
+        var user = {
+            userID:"<?php echo $userID;?>",
+            recordID:<?php  echo $recordID;?>,
+            examID:<?php echo $examID;?>,
+        };
+        $.ajax({
+          type:"POST",
+          url:"./index.php?r=teacher/oneMark",
+          async: false,
+          data:user,
+          success:function(data){             
+          },
+          error: function(xhr, type, exception){        
+          }
+      });      
+  <?php endforeach;   ?>
+   location.reload();
+   }
 //       $("#classSelect").change(function(){
 //           var url = "./index.php?r=teacher/stuWork";
 //           var value = $(this).options[$(this).selectedIndex].value

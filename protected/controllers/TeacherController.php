@@ -5,6 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 class TeacherController extends CController {
 
     protected function renderJSON($data) {
@@ -1815,6 +1816,21 @@ class TeacherController extends CController {
                 }
             }
         }
+        $suiteLst = Array();
+        $suiteLst = Suite::model()->findAll();
+        foreach ($suiteLst as $suite) {
+            $suiteID = $suite['suiteID'] ;
+            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'look'");
+            if($suiteExerLst!=null){
+                foreach ($suiteExerLst as $suiteExer) {
+                    if($exerciseID == $suiteExer['exerciseID']){
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
+                        break;
+                    }
+                }
+            }
+        }
         if ($flag == 0) {
             $deleteResult = $thisLook->deleteAll("exerciseID = '$exerciseID'");
             $tip = "此题目删除成功!";
@@ -2157,6 +2173,20 @@ class TeacherController extends CController {
             if ($examExerLst != NULL) {
                 foreach ($examExerLst as $examExer) {
                     if ($exerciseID == $examExer['exerciseID']) {
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
+                        break;
+                    }
+                }
+            }
+        }
+         $suiteLst = Suite::model()->findAll();
+        foreach ($suiteLst as $suite) {
+            $suiteID = $suite['suiteID'] ;
+            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'key'");
+            if($suiteExerLst!=null){
+                foreach ($suiteExerLst as $suiteExer) {
+                    if($exerciseID == $suiteExer['exerciseID']){
                         $flag = 1;
                         $tip = "此题目已经被占用!";
                         break;
@@ -2517,6 +2547,21 @@ class TeacherController extends CController {
                     }
                 }
             }
+            $suiteLst = Array();
+        $suiteLst = Suite::model()->findAll();
+        foreach ($suiteLst as $suite) {
+            $suiteID = $suite['suiteID'] ;
+            $suiteExerLst = SuiteExercise::model()->findAll("suiteID = '$suiteID' and type = 'listen'");
+            if($suiteExerLst!=null){
+                foreach ($suiteExerLst as $suiteExer) {
+                    if($exerciseID == $suiteExer['exerciseID']){
+                        $flag = 1;
+                        $tip = "此题目已经被占用!";
+                        break;
+                    }
+                }
+            }
+        }
             if ($flag == 0) {
                 $deleteResult = $thisListen->deleteAll("exerciseID = '$exerciseID'");
                 $tip = "此题目删除成功!";
@@ -2912,10 +2957,20 @@ class TeacherController extends CController {
             $type = "filling";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if (Yii::app()->session['lastUrl'] == "modifyWork"){
             $type = "filling";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        } else {
+            $result = Filling::model()->getFillLst("", "");
+            $fillLst = $result['fillLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "fillLst";
+            $this->render('fillLst', array(
+                'fillLst' => $fillLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall(),
+            )); 
         }
     }
 
@@ -3193,10 +3248,20 @@ class TeacherController extends CController {
             $type = "choice";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if(Yii::app()->session['lastUrl'] == "modifyWork") {
             $type = "choice";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        }else {
+            $result = Choice::model()->getChoiceLst("", "");
+            $choiceLst = $result['choiceLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "choiceLst";
+            $this->render('choiceLst', array(
+                'choiceLst' => $choiceLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall()
+            ));
         }
     }
 
@@ -3579,10 +3644,20 @@ class TeacherController extends CController {
             $type = "question";
             $examID = Yii::app()->session['examID'];
             $this->renderModifyExam($type, $examID, "");
-        } else {
+        } else if (Yii::app()->session['lastUrl'] == "modifyWork") {
             $type = "question";
             $suiteID = Yii::app()->session['suiteID'];
             $this->renderModify($type, $suiteID, "");
+        } else {
+             $result = Question::model()->getQuestionLst("", "");
+            $questionLst = $result['questionLst'];
+            $pages = $result['pages'];
+            Yii::app()->session['lastUrl'] = "QuestionLst";
+            $this->render('QuestionLst', array(
+                'questionLst' => $questionLst,
+                'pages' => $pages,
+                'teacher' => Teacher::model()->findall()
+            ));
         }
     }
 
@@ -3802,7 +3877,7 @@ class TeacherController extends CController {
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
-//        return $this->render('seeWork',['exercise'=>$classwork ]);
+//        return $this->render('choiceExer',['exercise'=>$classwork ]);
         return $this->render('seeWork', ['exercise' => $classwork]);
     }
 
@@ -3874,7 +3949,6 @@ class TeacherController extends CController {
                 'thisLesson' => $thisLesson,
                 'thisClass'=>$thisClass,
                 'res' => $res
-                 
             ));
         } else {
             $this->render('index', array(
@@ -4464,7 +4538,6 @@ class TeacherController extends CController {
             $thisLesson = Yii::app()->session['currentLesson'];
              $thisClass = Yii::app()->session['currentClass'];
             if (isset(Yii::app()->session['currentClass']) && isset(Yii::app()->session['currentLesson'])) {
-                
                 $array_suite = ClassLessonSuite::model()->findAll('classID=? and lessonID=? and open=?', array(Yii::app()->session['currentClass'], Yii::app()->session['currentLesson'], 1));
             } else {
                 $array_suite = 0;
@@ -4879,7 +4952,7 @@ class TeacherController extends CController {
         //获取学生作业完成情况 需要currentClass currentLesson currentSuite
         $array_accomplished = array();
         $array_unaccomplished = array();
-        
+//        $class_student = Student::model()->findAll("classID = '$classID'");
         if ($workID) {
             $level = ClassLessonSuite::model()->getSuiteLevelByWorkID($workID);
             if($level == ''){
@@ -4962,7 +5035,8 @@ class TeacherController extends CController {
                 array_push($array_accomplished, array(
                     'userID' => $student['userID'],
                     'userName' => $student['userName'],
-                    'score' => $score
+                    'score' => $score,
+                    'recordID'=>$result['recordID']
                 ));
             } else {
                 array_push($array_unaccomplished, array(
@@ -4983,22 +5057,33 @@ class TeacherController extends CController {
             'selectClassID' => $selectClassID,
         ));
     }
-    public function ActionChangeSuiteClassIn() {
-        if (!isset(Yii::app()->session['userid_now'])) {
-            return $this->render('index');
+    public function ActionOneMark() {
+        $recordID = $_POST['recordID'];
+        $examID = $_POST['examID'];
+        $userID = $_POST['userID'];
+        AnswerRecord::model()->updateChoiceSocre($recordID, $userID, 'choice', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'key', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'listen', $examID);
+        AnswerRecord::model()->updateKeySocre($recordID, $userID, 'look', $examID);
+        $score = AnswerRecord::model()->getAndSaveScoreByRecordID($recordID);
+        if(!isset($score)){
+            $score=0;
         }
+    }
+
+    public function ActionChangeSuiteClassIn() {
         $suiteID = $_GET['suiteID'];
         $pages = $_GET['page'];
         return $this->renderPartial('changeSuiteClassIn',
                array('pages' => $pages,
             'suiteID' =>$suiteID
                 ));
-        
     }
-    
+
     public function ActionChangeSuiteClassInfo() {       
         $res = 0;
         $suiteID = $_GET['suiteID'];
+        $isOpen = $_GET['isOpen'];
         $currentClass = Yii::app()->session['currentClass'];
         $currentLesson = Yii::app()->session['currentLesson'];
         $result = ClassLessonSuite::model()->findAll("classID=? and lessonID=? and suiteID=?", array($currentClass, $currentLesson, $suiteID));
@@ -5017,15 +5102,14 @@ class TeacherController extends CController {
             if(!isset($_POST['primary'])&& !isset($_POST['intermediate'])&& !isset($_POST['senior'])&&!isset($_POST['ungroup'])){
             ClassLessonSuite::model()->insertSuite($currentClass, $currentLesson, $suiteID,'');
             }
-        $teacherID = Yii::app()->session['userid_now'];
-        $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
-        $array_lesson = array();
-        $array_class = array();
-        $result = Suite::model()->getAllSuiteByPage(10, $teacherID);
-        $array_allsuite = $result['suiteLst'];
-        $pages = $_GET['page'];
-
-        if (!empty($teacher_class)) {
+            $teacherID = Yii::app()->session['userid_now'];
+            $teacher_class = TeacherClass::model()->findAll("teacherID = '$teacherID'");
+            $array_lesson = array();
+            $array_class = array();
+            $result = Suite::model()->getAllSuiteByPage(10, $teacherID);
+            $array_allsuite = $result['suiteLst'];
+            $pages = $_GET['page'];
+            if (!empty($teacher_class)) {
             foreach ($teacher_class as $class) {
                 $id = $class['classID'];
                 $result = TbClass::model()->findAll("classID ='$id'");
@@ -5048,9 +5132,8 @@ class TeacherController extends CController {
             'suiteID' =>$suiteID,
             'res' => $res
         ));
-        
     }
-    
+
     public function ActionChangeExamClass() {
         $flag = 0;
 
@@ -5076,14 +5159,13 @@ class TeacherController extends CController {
         }
         $currentClass = Yii::app()->session['currentClass'];
         $result = ClassExam::model()->find("classID=? and examID=?", array($currentClass, $examID));
-         if ($result == NULL) {
+        if ($result == NULL) {
 
             ClassExam::model()->insertExam($currentClass, $examID);
         } else {
             $result->open = 1 - $isOpen;
             $result->update();
         }
-
         $teacherID = Yii::app()->session['userid_now'];
         $array_class = array();
         $result = TbClass::model()->getClassByTeacherID($teacherID);
@@ -5662,6 +5744,22 @@ class TeacherController extends CController {
         $correct = $answer['ratio_correct'];
         $n = strrpos($correct, "&");
         $correct = substr($correct, $n + 1);
+        if(isset($answer['answerID'])){
+            $answer_id=$answer['answerID'];
+            $answer_data=  AnswerData::model()->find("answerID=?",array($answer_id));
+        }else{
+            $answer_data=NULL;
+            $answer_id=NULL;
+        }
+        $correct_number=$answer_data['correct_Number'];
+        $n1 = strrpos($correct_number, "&");
+        $correct_Number = substr($correct_number, $n1 + 1);
+        //标准文本字数
+        $standard_Number = $answer_data['standard_Number'];
+        //作答文本字数
+        $answer_number=$answer_data['answer_Number'];
+        $n6=strrpos($answer_number,"&");
+        $answer_Number = substr($answer_number, $n6 + 1);
         return $this->render($render, ['exercise' => $classwork,
                     'student' => $student,
                     'suiteID' => $suiteID,
@@ -5680,6 +5778,10 @@ class TeacherController extends CController {
                     'array_accomplished' => $array_accomplished,
                     'exam_exercise' => $suite_exercise,
                     'answer' => $answer['answer'],
+                    'correct_Number' => $correct_Number,
+                    'answer_Number' => $answer_Number,
+                    'standard_Number' => $standard_Number,
+                    'answer_id' =>$answer_id,
                     'correct' => $correct]);
     }
 
@@ -5762,6 +5864,23 @@ class TeacherController extends CController {
         $correct = $answer['ratio_correct'];
         $n = strrpos($correct, "&");
         $correct = substr($correct, $n + 1);
+        
+        if(isset($answer['answerID'])){
+            $answer_id=$answer['answerID'];
+            $answer_data=  AnswerData::model()->find("answerID=?",array($answer_id));
+        }else{
+            $answer_data=NULL;
+            $answer_id=NULL;
+        }
+        $correct_number=$answer_data['correct_Number'];
+        $n1 = strrpos($correct_number, "&");
+        $correct_Number = substr($correct_number, $n1 + 1);
+        //标准文本字数
+        $standard_Number = $answer_data['standard_Number'];
+        //作答文本字数
+        $answer_number=$answer_data['answer_Number'];
+        $n6=strrpos($answer_number,"&");
+        $answer_Number = substr($answer_number, $n6 + 1);
         return $this->render($render, ['exercise' => $classwork,
                     'student' => $student,
                     'examID' => $examID,
@@ -5779,7 +5898,59 @@ class TeacherController extends CController {
                     'type' => $ty,
                     'exam_exercise' => $exam_exercise,
                     'answer' => $answer['answer'],
+                    'correct_Number' => $correct_Number,
+                    'answer_Number' => $answer_Number,
+                    'standard_Number' => $standard_Number,
+                    'answer_id' =>$answer_id,
                     'correct' => $correct]);
+    }
+    
+    public function actionGrouping(){
+        $classID = $_GET['classID'];
+        $progress = $_GET['progress'];
+        $on = $_GET['on'];
+        $stu = Array();
+        $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
+        $this->render('grouping', array(
+            'stu' => $stu,
+            'classID'=>$classID,
+            'progress'=>$progress,
+            'on' => $on,
+        )); 
+    }
+     public function actionGroupStudent(){
+         $classID = $_GET['classID'];
+         $progress = $_GET['progress'];
+         $on = $_GET['on'];
+         $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
+         foreach ($stu as $student) {
+            $name = 'level' . $student['userID'];
+            $level = isset($_POST[$name]) ? $_POST[$name] : '未分组';
+            if ($level !== '') {
+                $userId = $student['userID'];
+                $thisStudent = new Student();
+                $thisStudent = $thisStudent->find("userID = '$userId'");
+                $thisStudent->level = $level;
+                $thisStudent->update();
+            }else {
+                $userId = $student['userID'];
+                $thisStudent = new Student();
+                $thisStudent = $thisStudent->find("userID = '$userId'");
+                $thisStudent->level = '';
+                $thisStudent->update();
+            }
+        }
+        $student = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
+         $this->render('grouping', array(
+            'stu' => $student,
+            'classID'=>$classID,
+             'progress'=>$progress,
+             'on' => $on,
+             'result' => "提交成功"
+        ));
+     }       
+    public function actionPrimaryLevel(){
+        $this->renderPartial('primaryLevel');
     }
 
     //
@@ -5934,6 +6105,9 @@ class TeacherController extends CController {
             $arr = explode(",", $_POST['score']);
             $m = 0;
             $scoreAll=0;
+            if($ty == "choice"){
+                AnswerRecord::model()->updateChoiceSocre($recordID, $studentID, $ty, $examID);
+            }else {
             foreach ($array_exercise as $k => $work) {
                 if ($arr[$m] != " " && $arr[$m] !=0) {
                     AnswerRecord::model()->changeScore($ansWork[$scoreAll++]['answerID'], $arr[$m]);
@@ -5941,6 +6115,7 @@ class TeacherController extends CController {
                         break;
                 }
                 $m++;
+            }
             }
         }
         $SQLchoiceAnsWork = AnswerRecord::model()->findAll("recordID=? and type=? order by exerciseID", array($recordID, $ty));
@@ -6750,53 +6925,7 @@ class TeacherController extends CController {
             'uploadResult' => $uploadResult
         ));
     }
-    public function actionGrouping(){
-        $classID = $_GET['classID'];
-        $progress = $_GET['progress'];
-        $on = $_GET['on'];
-        $stu = Array();
-        $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
-        $this->render('grouping', array(
-            'stu' => $stu,
-            'classID'=>$classID,
-            'progress'=>$progress,
-            'on' => $on,
-        )); 
-    }
-     public function actionGroupStudent(){
-         $classID = $_GET['classID'];
-         $progress = $_GET['progress'];
-         $on = $_GET['on'];
-         $stu = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
-         foreach ($stu as $student) {
-            $name = 'level' . $student['userID'];
-            $level = isset($_POST[$name]) ? $_POST[$name] : '未分组';
-            if ($level !== '') {
-                $userId = $student['userID'];
-                $thisStudent = new Student();
-                $thisStudent = $thisStudent->find("userID = '$userId'");
-                $thisStudent->level = $level;
-                $thisStudent->update();
-            }else {
-                $userId = $student['userID'];
-                $thisStudent = new Student();
-                $thisStudent = $thisStudent->find("userID = '$userId'");
-                $thisStudent->level = '';
-                $thisStudent->update();
-            }
-        }
-        $student = Student::model()->findAll("classID=? and is_delete=?", array($classID, 0));
-         $this->render('grouping', array(
-            'stu' => $student,
-            'classID'=>$classID,
-             'progress'=>$progress,
-             'on' => $on,
-             'result' => "提交成功"
-        ));
-     }       
-    public function actionPrimaryLevel(){
-        $this->renderPartial('primaryLevel');
-    }
+
     public function actionClassExercise4Look() {
         if (isset($_GET['page'])) {
             Yii::app()->session['lastPage'] = $_GET['page'];
@@ -7069,7 +7198,6 @@ class TeacherController extends CController {
                    $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpaces, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
                    $result = '1'; 
                 }
-                
             }
         }
         $this->render('addListen4ClassExercise', array(
@@ -7311,16 +7439,266 @@ class TeacherController extends CController {
         $classID = $_GET['classID'];
         $lessonID = Lesson::model()->find("classID = '$classID' AND number = '$number'")['lessonID'];
         $classExerciseLst = ClassExercise::model()->findAll("classID = '$classID' AND lessonID = '$lessonID'");
-        $this->renderPartial("tableClassExercise4virtual", ['classExerciseLst' => $classExerciseLst,'lessonID'=>$lessonID,'classID'=>$classID]);
+    $this->renderPartial("tableClassExercise4virtual", ['classExerciseLst' => $classExerciseLst,'lessonID'=>$lessonID,'classID'=>$classID]);    
+    }
+    
+    public function actionjudgeIsOpen() {
+        $allClassExercise = $_POST['check'];
+        $arrayClassExercise = explode("*", $allClassExercise);
+        $tip = "";
+        foreach ($arrayClassExercise as $exerciseID) {
+            if ($exerciseID !== "") {
+                $isOpen = ClassExercise::model()->find("exerciseID='$exerciseID'")['now_open'];
+                if($isOpen == 1){
+                    $tip = "选中题目中已有练习开放,请重新勾选";
+                    break;
+                }
+            }
+        }
+        echo $tip;
+    }
+    
+    public function actionSelectLevel(){
+       $exerciseID = $_GET['exerciseID']; 
+       $classID = $_GET['classID'];
+       $lessonID = $_GET['lessonID'];
+       $this->renderPartial('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
+    }
+    public function actionSelectLevelInfo(){
+       $exerciseID = $_GET['exerciseID']; 
+       $classID = $_GET['classID'];
+       $lessonID = $_GET['lessonID'];     
+          if(isset($_POST['select'])){
+            $arraySelect = $_POST['select'];
+              if(in_array('初级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '初级');
+              } 
+              if(in_array('中级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '中级');
+              }
+              if(in_array('高级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '高级');
+              }
+              if(in_array('未分组', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '未分组');
+              }
+         }else{
+             ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
+         } 
+       $this->render('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
+       
+    }
+    public function actionselectLevelSome (){
+       $check = $_GET['check']; 
+       $classID = $_GET['classID'];
+       $lessonID = $_GET['lessonID'];
+       $this->renderPartial('selectLevelSome', ['check' => $check,'lessonID'=>$lessonID,'classID'=>$classID]); 
     }
 
+
+public function actionSelectLevelSomeInfo (){
+        $check = $_GET['check']; 
+       $classID = $_GET['classID'];
+       $lessonID = $_GET['lessonID'];
+       $exerciseLst = explode("*", $check);
+       foreach ($exerciseLst as $exerciseID) {
+          if($exerciseID != null){
+          if(isset($_POST['select'])){
+            $arraySelect = $_POST['select'];
+              if(in_array('初级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '初级');
+              } 
+              if(in_array('中级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '中级');
+         }
+              if(in_array('高级', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '高级');
+              }
+              if(in_array('未分组', $arraySelect)){
+                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '未分组');
+              }
+         }else{
+           ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
+         } 
+       }
+       }
+        $this->render('selectLevelSome', ['check' => $check,'lessonID'=>$lessonID,'classID'=>$classID]);
+    }
+
+    public function actionStartSign(){
+        $teacherID = Yii::app()->session['userid_now'];
+        $classID = $_GET['classID'];
+        $lessonID = $_GET['lessonID'];
+        $publishtime = date('y-m-d H:i:s',time());
+        //服务器前10分钟的时间
+        $publishtime10 = date('Y-m-d H:i:s',strtotime("-10 minute"));
+        //查到该课最大签到时间
+        $sql1 = "select * FROM teacher_sign WHERE lessonID = '$lessonID' AND classID = $classID AND teacherID= '$teacherID'Order By Sign_Time Desc limit 0,1";
+        $criteria   =   new CDbCriteria();
+        $ts  =   Yii::app()->db->createCommand($sql1)->queryAll();
+        if($ts == null){
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `teacher_sign` (Sign_Time,mark,classID,teacherID,lessonID,times) values ('$publishtime',1,$classID,'$teacherID',$lessonID,1)";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        foreach($class_student as $k)
+            {
+            $all = $k->userID;
+            //到老师点击签到时全部标记学生为缺勤
+            StudentSign::model()->allabsence($classID, $lessonID,$all,1);
+        }    
+        }else{
+        foreach($ts as $key){
+            //            $stime = [];
+            $t = $key['Sign_Time'];
+            $times = $key['times'];
+            if($t > $publishtime10){ 
+            $time1 = strtotime(date('Y-m-d H:i:s',strtotime("-10 minute")));
+            $time2 = strtotime($t);
+            $n =  $time2 - $time1;
+            //转成时间戳后取整
+            $stime = ceil($n / 60);
+            $this->renderJSON(['stime'=>$stime,]);
+
+            return $stime;
+        }
+        }
+        $times = $key['times']+1;
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `teacher_sign` (Sign_Time,mark,classID,teacherID,lessonID,times) values ('$publishtime',1,$classID,'$teacherID',$lessonID,$times)";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        $class_student = Student::model()->findAll("classID = '$classID'");
+        foreach($class_student as $k)
+            {
+            $all = $k->userID;
+            //到老师点击签到时全部标记学生为缺勤
+            StudentSign::model()->allabsence($classID, $lessonID,$all,$times);
+        }   
+            }         
+            $stime = [];
+            $this->renderJSON(['stime'=>$stime,]);
+            }
+            public function actionShowAbsence(){
+//        $array_studentAbsence = [];
+         $teacherID = Yii::app()->session['userid_now'];
+         $classID = $_GET['classID'];
+         $lessonID = $_GET['lessonID'];
+        //查询
+         if(isset($_GET['times'])){
+          $one =   $_GET['times'];
+          $sql = "SELECT * FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID' and mark = '0' and times = '$one'";
+          $criteria   =   new CDbCriteria();
+          $result     =   Yii::app()->db->createCommand($sql)->queryAll();
+          $sql = "SELECT distinct (times) FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID'";
+          $criteria   =   new CDbCriteria();
+          $times     =   Yii::app()->db->createCommand($sql)->queryAll();
+        return $this->renderPartial('showabsence', ['result' => $result,'lessonID'=>$lessonID,'classID'=>$classID,'times'=>$times,'one'=>$one]);
+                          
+         }
+                          else{
+          $sql = "SELECT * FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID' and mark = '0'";
+          $criteria   =   new CDbCriteria();
+          $result     =   Yii::app()->db->createCommand($sql)->queryAll();
+          $sql = "SELECT distinct (times) FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID'";
+          $criteria   =   new CDbCriteria();
+          $times     =   Yii::app()->db->createCommand($sql)->queryAll();
+        return $this->renderPartial('showabsence', ['result' => $result,'lessonID'=>$lessonID,'classID'=>$classID,'times'=>$times]);
+    }}
+    public function actionCloseSign(){
+        $teacherID = Yii::app()->session['userid_now'];
+        $publishtime = date('y-m-d H:i:s',time());
+        $classID = $_GET['classID'];
+        $lessonID = $_GET['lessonID'];
+        $connection = Yii::app()->db;
+        $sql = "UPDATE teacher_sign SET mark = 0  WHERE lessonID = '$lessonID' and classID = '$classID'";
+        $command = $connection->createCommand($sql);
+        $command->execute();       
+    } 
+    
+    public function actionCountAbsence(){
+       $classID = $_GET['classID'];
+       $sql = "select distinct (substring(time,1,7)) FROM student_sign WHERE classID = '$classID'Order By time Desc";
+       $criteria   =   new CDbCriteria();
+       $result     =   Yii::app()->db->createCommand($sql)->queryAll();      
+       $sql2 = "select distinct (substring(time,1,7)) FROM student_sign WHERE classID = '$classID'Order By time Desc limit 0,1";
+       $criteria   =   new CDbCriteria();
+       $one     =   Yii::app()->db->createCommand($sql2)->queryAll();
+       if(isset($_POST['time'])){  
+       $time1 = $_POST['time'];
+       $time2 = $_POST['endtime'];
+       if($time1 == $time2){
+       $sql3 = "select * FROM student_sign WHERE time like'%$time1%' and mark = 0 and classID = '$classID'";
+       $criteria   =   new CDbCriteria();
+       $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
+        return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time1'=>$time1,'time2'=>$time2]);  
+       }
+$old = $time1;
+$arr = explode("-",$old);
+$new = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]-1,$arr[0]));
+$old2 = $time2;
+$arr = explode("-",$old2);
+$new2 = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]+1,$arr[0]));
+    $sql3 = "select * FROM student_sign WHERE time BETWEEN '$new' AND '$new2' AND mark = 0 AND classID = '$classID'";
+       $criteria   =   new CDbCriteria();
+       $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
+        return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time1'=>$time1,'time2'=>$time2]);    
+ }
+ else{                             
+foreach ($one as $v)
+{
+    if($v["(substring(time,1,7))"]  == ''){
+        echo"没有任何签到"; 
+    }else{
+       $time = $v["(substring(time,1,7))"];
+ $sql3 = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0 AND classID = '$classID'";
+ $criteria   =   new CDbCriteria();
+ $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
+ if($m == null){
+     echo "wq";
+ }else{
+ return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time'=>$time]);
+}
+    }
+}
+ }
+    }
+    public function actionExportabsence(){       
+        $time = $_POST['time'];
+        $endtime = $_POST['endtime'];
+        $classID = $_GET['classID'];
+        if($time == $endtime){
+        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0 AND classID = '$classID'";  
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();  
+        }  else {
+        $old = $time;
+        $arr = explode("-",$old);
+        $new = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]-1,$arr[0]));
+        $old2 = $endtime;
+        $arr = explode("-",$old2);
+        $new2 = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]+1,$arr[0]));
+        $sql = "select * FROM student_sign WHERE time BETWEEN '$new'AND '$new2' AND mark = 0 AND classID = '$classID'";
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();   }    
+        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
+        }
+        
+        public function actionShowMonthAbsence(){     
+        $time = $_POST['time'];
+        $sql = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0";
+        $criteria   =   new CDbCriteria();
+        $result     =   Yii::app()->db->createCommand($sql)->queryAll();
+        return $this->renderPartial('02simple', ['result' => $result,'time' =>$time]);
+        }
+    
     public function actionTableClassExercise4Analysis() {
         $classID = $_GET['classID'];
         $allIsOpen = Array();
         $exerciseID = $_GET['exerciseID'];
         $ClassExercise = ClassExercise::model()->getByExerciseID($exerciseID);
         $result = ClassExercise::model()->getAllNowOpenExercise($classID);
-        
         foreach ($result as $v) {
             if ($v['exerciseID'] != $exerciseID) {
                 array_push($allIsOpen, $v);
@@ -7361,36 +7739,7 @@ class TeacherController extends CController {
         }
         echo $data;
     }
-    public function actionSelectLevel(){
-       $exerciseID = $_GET['exerciseID']; 
-       $classID = $_GET['classID'];
-       $lessonID = $_GET['lessonID'];
-       $this->renderPartial('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
-    }
-    public function actionSelectLevelInfo(){
-       $exerciseID = $_GET['exerciseID']; 
-       $classID = $_GET['classID'];
-       $lessonID = $_GET['lessonID'];     
-          if(isset($_POST['select'])){
-            $arraySelect = $_POST['select'];
-              if(in_array('初级', $arraySelect)){
-                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '初级');
-              } 
-              if(in_array('中级', $arraySelect)){
-                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '中级');
-              }
-              if(in_array('高级', $arraySelect)){
-                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '高级');
-              }
-              if(in_array('未分组', $arraySelect)){
-                  ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '未分组');
-              }
-         }else{
-           ExerciseLevel::model()->insertLevel($classID, $lessonID, $exerciseID, '');
-         } 
-       $this->render('selectLevel', ['exerciseID' => $exerciseID,'lessonID'=>$lessonID,'classID'=>$classID]);
-       
-    }
+
     public function actionGetVirtualClassAnalysis() {
         $arrayData = Array();
         $data = Array();
@@ -7913,144 +8262,15 @@ class TeacherController extends CController {
         $result = Suite::model()->changeSuiteName($workID, $newName);
         echo $result;
     }
-    public function actionStartSign(){
-        $teacherID = Yii::app()->session['userid_now'];
-        $classID = $_GET['classID'];
-        $lessonID = $_GET['lessonID'];
-        $publishtime = date('y-m-d H:i:s',time());
-        //服务器前10分钟的时间
-        $publishtime10 = date('Y-m-d H:i:s',strtotime("-10 minute"));
-        //查到该课最大签到时间
-        $sql1 = "select * FROM teacher_sign WHERE lessonID = '$lessonID' AND classID = $classID AND teacherID= '$teacherID'Order By Sign_Time Desc limit 0,1";
-        $criteria   =   new CDbCriteria();
-        $ts  =   Yii::app()->db->createCommand($sql1)->queryAll();
-        if($ts == null){
-        $connection = Yii::app()->db;
-        $sql = "INSERT INTO `teacher_sign` (Sign_Time,mark,classID,teacherID,lessonID,times) values ('$publishtime',1,$classID,'$teacherID',$lessonID,1)";
-        $command = $connection->createCommand($sql);
-        $command->execute();
-        $class_student = Student::model()->findAll("classID = '$classID'");
-        foreach($class_student as $k)
-            {
-            $all = $k->userID;
-            //到老师点击签到时全部标记学生为缺勤
-            StudentSign::model()->allabsence($classID, $lessonID,$all,1);
-        }    
-        }else{
-        foreach($ts as $key){
-//            $stime = [];
-            $t = $key['Sign_Time'];
-            $times = $key['times'];
-            if($t > $publishtime10){ 
-            $time1 = strtotime(date('Y-m-d H:i:s',strtotime("-10 minute")));
-            $time2 = strtotime($t);
-            $n =  $time2 - $time1;
-            //转成时间戳后取整
-            $stime = ceil($n / 60);
-            $this->renderJSON(['stime'=>$stime,]);
-
-            return $stime;
-        }
-        }
-        $times = $key['times']+1;
-        $connection = Yii::app()->db;
-        $sql = "INSERT INTO `teacher_sign` (Sign_Time,mark,classID,teacherID,lessonID,times) values ('$publishtime',1,$classID,'$teacherID',$lessonID,$times)";
-        $command = $connection->createCommand($sql);
-        $command->execute();
-        $class_student = Student::model()->findAll("classID = '$classID'");
-        foreach($class_student as $k)
-            {
-            $all = $k->userID;
-            //到老师点击签到时全部标记学生为缺勤
-            StudentSign::model()->allabsence($classID, $lessonID,$all,$times);
-        }   
-            }         
-            $stime = [];
-            $this->renderJSON(['stime'=>$stime,]);
-            }
-    public function actionShowAbsence(){
-//        $array_studentAbsence = [];
-         $teacherID = Yii::app()->session['userid_now'];
-         $classID = $_GET['classID'];
-         $lessonID = $_GET['lessonID'];
-        //查询
-         if(isset($_GET['times'])){
-          $one =   $_GET['times'];
-          $sql = "SELECT * FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID' and mark = '0' and times = '$one'";
-          $criteria   =   new CDbCriteria();
-          $result     =   Yii::app()->db->createCommand($sql)->queryAll();
-          $sql = "SELECT distinct (times) FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID'";
-          $criteria   =   new CDbCriteria();
-          $times     =   Yii::app()->db->createCommand($sql)->queryAll();
-        return $this->renderPartial('showabsence', ['result' => $result,'lessonID'=>$lessonID,'classID'=>$classID,'times'=>$times,'one'=>$one]);
-                          
-         }
-                          else{
-          $sql = "SELECT * FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID' and mark = '0'";
-          $criteria   =   new CDbCriteria();
-          $result     =   Yii::app()->db->createCommand($sql)->queryAll();
-          $sql = "SELECT distinct (times) FROM student_sign WHERE classID = '$classID' AND lessonID = '$lessonID'";
-          $criteria   =   new CDbCriteria();
-          $times     =   Yii::app()->db->createCommand($sql)->queryAll();
-        return $this->renderPartial('showabsence', ['result' => $result,'lessonID'=>$lessonID,'classID'=>$classID,'times'=>$times]);
-    }}
-    public function actionCloseSign(){
-        $teacherID = Yii::app()->session['userid_now'];
-        $publishtime = date('y-m-d H:i:s',time());
-        $classID = $_GET['classID'];
-        $lessonID = $_GET['lessonID'];
-        $connection = Yii::app()->db;
-        $sql = "UPDATE teacher_sign SET mark = 0  WHERE lessonID = '$lessonID' and classID = '$classID'";
-        $command = $connection->createCommand($sql);
-        $command->execute();       
-    } 
-    public function actionCountAbsence(){
-       $classID = $_GET['classID'];
-       $sql = "select distinct (substring(time,1,7)) FROM student_sign WHERE classID = '$classID'Order By time Desc";
-       $criteria   =   new CDbCriteria();
-       $result     =   Yii::app()->db->createCommand($sql)->queryAll();      
-       $sql2 = "select distinct (substring(time,1,7)) FROM student_sign WHERE classID = '$classID'Order By time Desc limit 0,1";
-       $criteria   =   new CDbCriteria();
-       $one     =   Yii::app()->db->createCommand($sql2)->queryAll();
-       if(isset($_POST['time'])){  
-       $time1 = $_POST['time'];
-       $time2 = $_POST['endtime'];
-       if($time1 == $time2){
-       $sql3 = "select * FROM student_sign WHERE time like'%$time1%' and mark = 0 and classID = '$classID'";
-       $criteria   =   new CDbCriteria();
-       $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
-        return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time1'=>$time1,'time2'=>$time2]);  
-       }
-$old = $time1;
-$arr = explode("-",$old);
-$new = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]-1,$arr[0]));
-$old2 = $time2;
-$arr = explode("-",$old2);
-$new2 = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]+1,$arr[0]));
-       $sql3 = "select * FROM student_sign WHERE time BETWEEN '$new' AND '$new2' AND mark = 0 AND classID = '$classID'";
-       $criteria   =   new CDbCriteria();
-       $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
-        return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time1'=>$time1,'time2'=>$time2]);    
- }
- else{                             
-foreach ($one as $v)
-{
-    if($v["(substring(time,1,7))"]  == ''){
-        echo"没有任何签到"; 
-    }else{
-       $time = $v["(substring(time,1,7))"];
- $sql3 = "select * FROM student_sign WHERE time like '%$time%' AND mark = 0 AND classID = '$classID'";
- $criteria   =   new CDbCriteria();
- $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
- if($m == null){
-     echo "wq";
- }else{
- return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time'=>$time]);
-}
+   public function actiongetDataCorrect() {
+       $answerID =$_POST['answerID'];
+       $dataCorrect = array();
+       $answer = AnswerData::model()->find('answerID=?',array($answerID));
+       $d = $answer['correct_Answer'];
+       array_push($dataCorrect, $d); 
+       $this->renderJSON(['dataCorrect'=>$dataCorrect,]);
     }
-}
- }
-    }
+    
 
         public function actionExportabsence(){       
         $time = $_POST['time'];
@@ -8198,3 +8418,6 @@ foreach ($one as $v)
         ));
     }
         }
+
+
+

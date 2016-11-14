@@ -248,7 +248,9 @@ if ($isExam) {
                 }, 1000);
 <?php } ?>
         }
-        var originalContent = '<?php echo $str; ?>';
+//        var originalContent = '<?php// echo $str; ?>';
+        
+        var originalContent='<?php echo Tool::removeCharacter($str) ?>';
         window.GA_originalContent = originalContent.replace(/}/g, "").replace(/`/g, "");
     });
 
@@ -273,7 +275,10 @@ if ($isExam) {
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = input.replace(/\r\n/g, "").replace(/ /g, "");
+//        /[\：|\—|\、|\“|\”|\；|\。|\，|\/|\%|\#|\！|\＠|\＆|\（|\）|\《|\＞|\＂|\＇|\？|\【|\】|\{|\}|\\|\｜|\+|\=|\_|\＾|\:|\》|\＜|\……|\.|\,|\/|\%|\#|\!|\@|\&|\(|\)|\<|\>|\"|\?|\[|\]|\{|\}]/g
+        var remove_sign=input.replace(/[\：|\—|\、|\“|\”|\；|\。|\，|\/|\%|\#|\！|\＠|\＆|\（|\）|\《|\＞|\＂|\＇|\？|\【|\】|\{|\}|\\|\｜|\+|\=|\_|\＾|\:|\》|\＜|\……|\.|\,|\/|\%|\#|\!|\@|\&|\(|\)|\<|\>|\"|\?|\[|\]|\{|\}]/g,"");
+                
+        window.G_content = remove_sign.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒

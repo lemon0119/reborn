@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><i class="icon-align-left"></i> 课时列表</a></li>
+            <li ><a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $courseID; ?>&&courseName=<?php echo $courseName; ?>&&createPerson=<?php echo $createPerson; ?>"><i class="icon-align-left" style="position:relative;bottom:7px;left:"></i> 课时列表</a></li>
         </ul>
         <br/>
         <button onclick="window.location.href='./index.php?r=admin/<?php echo Yii::app()->session['lastUrl']; ?>&&page=<?php echo Yii::app()->session['lastPage']; ?>'" style="margin-left:10px" class="btn_4big fl">返回</button>

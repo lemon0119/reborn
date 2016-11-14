@@ -56,6 +56,10 @@ var GA_pauseOn = 0;
 var GA_countKeyNumber=0;
 var GA_countCorrectNumber=0;
 var GA_countSpeedNumber=0;
+var GA_rightCount=0;
+var GA_originalCount=0;
+var GA_currentCount=0;
+
 //统计逻辑
 $(document).ready(function () {
     var highstCountKey = 0;
@@ -238,7 +242,8 @@ $(document).ready(function () {
                     data: {exerciseType: window.G_exerciseType, exerciseData: window.G_exerciseData, squence: window.G_squence, answer: window.GA_answer,
                         averageKeyType: window.GA_averageKeyType, highstCountKey: window.GA_highstCountKey, highstSpeed: window.GA_highstSpeed,
                         averageSpeed: window.GA_averageSpeed, CountBackDelete: window.GA_CountBackDelete, CountAllKey: window.GA_CountAllKey,
-                        IntervalTime: window.GA_IntervalTime, highIntervarlTime: window.GA_highIntervarlTime, RightRadio: window.GA_RightRadio},
+                        IntervalTime: window.GA_IntervalTime, highIntervarlTime: window.GA_highIntervarlTime, RightRadio: window.GA_RightRadio,
+                        rightCount:window.GA_rightCount,originalCount:window.GA_originalCount,currentCount:window.GA_currentCount},
                     success: function (data) {
                     },
                     error: function (xhr, type, exception) {
@@ -259,6 +264,15 @@ $(document).ready(function () {
                 if (!isNaN(event.data.accuracyRate)) {
                     window.GA_RightRadio = event.data.accuracyRate;
                     $("#wordisRightRadio").html(window.GA_RightRadio);
+                }
+                if (!isNaN(event.data.rightCount)) {
+                    window.GA_rightCount = event.data.rightCount;
+                }
+                if (!isNaN(event.data.originalCount)) {
+                    window.GA_originalCount = event.data.originalCount;
+                }
+                if (!isNaN(event.data.currentCount)) {
+                    window.GA_currentCount = event.data.currentCount;
                 }
                 worker.terminate();
             };
@@ -396,6 +410,15 @@ function saveToDateBaseNow() {
             if (!isNaN(event.data.accuracyRate)) {
                 window.GA_RightRadio = event.data.accuracyRate;
             }
+            if (!isNaN(event.data.rightCount)) {
+                    window.GA_rightCount = event.data.rightCount;
+                }
+            if (!isNaN(event.data.originalCount)) {
+                window.GA_originalCount = event.data.originalCount;
+            }
+            if (!isNaN(event.data.currentCount)) {
+                window.GA_currentCount = event.data.currentCount;
+            }
             worker.terminate();
         };
         worker.postMessage({
@@ -412,7 +435,8 @@ function saveToDateBaseNow() {
             data: {exerciseType: window.G_exerciseType, exerciseData: window.G_exerciseData, squence: window.G_squence, answer: window.GA_answer,
                 averageKeyType: window.GA_averageKeyType, highstCountKey: window.GA_highstCountKey, highstSpeed: window.GA_highstSpeed,
                 averageSpeed: window.GA_averageSpeed, CountBackDelete: window.GA_CountBackDelete, CountAllKey: window.GA_CountAllKey,
-                IntervalTime: window.GA_IntervalTime, highIntervarlTime: window.GA_highIntervarlTime, RightRadio: window.GA_RightRadio},
+                IntervalTime: window.GA_IntervalTime, highIntervarlTime: window.GA_highIntervarlTime, RightRadio: window.GA_RightRadio,
+                rightCount:window.GA_rightCount,originalCount:window.GA_originalCount,currentCount:window.GA_currentCount},
             success: function (data) {
             },
             error: function (xhr, type, exception) {
