@@ -104,9 +104,12 @@ require 'examAnsSideBar.php';
     }
 ?>
 <script>
-    var currentContent = '<?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?>';
-    var originalContent = '<?php echo $str; ?>';
+    <?php $remove_enter= Tool::filterContentOfInputWithYaweiCode($str2); ?>
+    var currentContent ='<?php echo Tool::removeEnter($remove_enter); ?>';
+    var originalContent = '<?php echo Tool::removeEnter($str); ?>';
     var lcs = new LCS(currentContent, originalContent);
+    var character_original=0;
+    var character_current=0;
     lcs.doLCS();
     var currentFont = document.getElementById('currentContent');
     var originalFont = document.getElementById('originalContent');
@@ -273,7 +276,8 @@ var right_content=[];
             type:"POST",
             dataType:"json",
             url:"index.php?r=api/answerDataSave",
-            data:{error_Number:error_number,missing_Number:missing_number,redundant_Number:redundant_number,answerID:<?php echo $answer_id;?>},
+            data:{error_Number:error_number,missing_Number:missing_number,redundant_Number:redundant_number,answerID:<?php echo $answer_id;?>
+            ,standard_lgnore_symbol:character_original,answer_lgnore_symbol:character_current,correct_Answer:correct_rate},
             success:function(){
             },
             error: function (xhr) {

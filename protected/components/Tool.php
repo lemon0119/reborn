@@ -465,10 +465,15 @@ class Tool {
         }
     }
     
+    public static function removeEnter($str){
+        $char_enter=Array('\n','<br/>');
+        return str_replace($char_enter, "", $str);
+    }
+    
     public static function removeCharacter($str){
         $DBC = Array(
             '：', '—','、','“','”',
-            '；',
+            '；','\n','<br/>',
             '。', '，', '/', '%', '#',
             '！', '＠', '＆', '（', '）',
             '《', '＞', '＂', '＇', '？',
@@ -557,9 +562,9 @@ class Tool {
     }
 
     public static function filterAllSpaceAndTab($content) {
-        $new = str_replace("\n", "", $content);
-        $newcontent = str_replace("\r", "", $new);
-        $newcontent = str_replace(" ", "", $newcontent);
+//        $new = str_replace("\n", "", $content);
+//        $newcontent = str_replace("\r", "", $new);
+        $newcontent = str_replace(" ", "", $content);
         $newcontent = str_replace("　", "", $newcontent);
         return $newcontent;
     }
