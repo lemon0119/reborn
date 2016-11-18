@@ -82,7 +82,7 @@
     ?>
     </div>
 
-    <h3 style="float: left">学生列表</h3>  <div style="position:relative;right: 393px;top:8px"><button class="fr btn btn-primary" id="mark" onclick="mark()">一键判卷</button></div><br><br><br>(填空题和简答题必须手动打分)<br>
+    <h3 style="float: left">学生列表</h3>  <div style="position:relative;right: 393px;top:8px"><button class="fr btn btn-primary" id="mark" onclick="mark()">一键判卷</button></div><br><br><br>
 <div style="overflow-y:auto; height:300px;">
 <table width="50%" style="float:left;" >
 <tr>

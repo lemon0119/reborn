@@ -85,7 +85,7 @@
                     </td>   
                     <td class="font-center" style="width: 170px">
     <?php if ($exam_is_open == false) { ?>
-                            <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=choice"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
+                            <a href="./index.php?r=teacher/modifyExam&&examID=<?php echo $exam['examID']; ?>&&type=key"><img title="调整试卷" src="<?php echo IMG_URL; ?>edit.png"></a>
                             <a href="#" onclick="dele(<?php echo $exam['examID']; ?>,<?php echo $pages->currentPage + 1; ?>,<?php echo Yii::app()->session['currentClass']; ?>)"><img title="删除试卷" src="<?php echo IMG_URL; ?>delete.png"></a> 
                             <?php } ?>
                         <?php if ($isOpen == false) { ?>

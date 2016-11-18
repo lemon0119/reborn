@@ -30,7 +30,7 @@
     <div style="float:left"><h2>试卷配置</h2></div>
     <div style="margin-left:300px;position: relative;top: 25px">总分：<span id="score">0</span></div>
     <div></div>
-    <table class="table table-bordered table-striped">
+<!--    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th class="font-center">题型</th> 
@@ -67,7 +67,7 @@
                 <?php }?>
             </tr>
         </tbody>
-    </table>
+    </table>-->
     <table class="table table-bordered table-striped">
         <thead>
             <tr>

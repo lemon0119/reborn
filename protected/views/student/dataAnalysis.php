@@ -84,7 +84,7 @@
         
         
         <div style="width:100%;">
-            <div id="div1" style="width:30%;display:inline;float:left;overflow: auto;margin-top: 40px;" >
+            <div id="div1" style="width:100%;display:inline;float:left;overflow: auto;margin-top: 40px;" >
                 <h3>数据类型</h3>
                 <table>
                     <tr>
@@ -97,50 +97,52 @@
                             <input type="text" value="123"  id="isExam"  style="display:none;"/>
                             <a id="correct" style="text-decoration-line: none">正确率(%)</a>
                         </td>  
-                    </tr>
-                    <tr><td style="height:10px;"></td></tr>
-                    <tr>
+                        <td style=" width: 10px"></td>
                         <td id="bg2" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <a  id="speed" class="bl"  style="text-decoration-line: none">速度(字/分)</a>
                         </td>
-                    </tr>
-                    <tr><td style="height:10px;"></td></tr>
-                    <tr>
-                        <td id="bg3" onclick="getClassExerRankingBef('maxSpeed','bg3')" style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
-                            <a  id="maxSpeed"  style="text-decoration-line: none">最大速度(字/分)</a>
+                        <td style=" width: 10px"></td>
+                        <td id="bg3" onclick="getClassExerRankingBef('less','bg3')" style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="less"  style="text-decoration-line: none">少打字数(字)</a>
                         </td>
-                    </tr>
-                    <tr><td style="height:10px;"></td></tr>
-                    <tr>
+                        <td style=" width: 10px"></td>
                         <td id="bg4" onclick="getClassExerRankingBef('backDelete','bg4')"  style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <a  id="backDelete" style="text-decoration-line: none">回改字数(字)</a>
+                        </td>
+                        <td style=" width: 10px"></td>
+                        <td id="bg5" onclick="getClassExerRankingBef('many','bg5')"  style="cursor:pointer;width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
+                            <a  id="many" style="text-decoration-line: none">多打字数(字)</a>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div id="main" style="display: none;overflow: auto;height:300px;position: relative;top:10px"></div>   
+<!--            <div id="main" style="display: none;overflow: auto;height:300px;position: relative;top:10px"></div>   
             
-        </div>
+        </div>-->
         <div  style="width:100%;">
-            <div id="div11" style="width:30%; display:inline;float:left;overflow: auto;position: relative;top:30px;height:480px;border-radius: 5px;">
+            <div id="div11" style="width:100%; display:inline;float:left;overflow: auto;position: relative;top:10px;height:480px;border-radius: 5px;">
                 <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>名次</th>
                                 <th>姓名</th>
                                 <th id="name">正确率</th>
+                                <th>速度</th>
+                                <th>少打</th>
+                                <th>回改字数</th>
+                                <th>多打</th>
                             </tr>
                         </thead>
                         <tbody id="bo">
                         </tbody>
                     </table>
             </div>
-            <div style="width:70%;float:right;">
+<!--            <div style="width:70%;float:right;">-->
                  
-                <div id="export" style="diplay:none;width:50px;border-radius: 5px;background-color: #ddd;height: 30px;position: relative;margin: auto 30px -15px auto;">
+<!--                <div id="export" style="diplay:none;width:50px;border-radius: 5px;background-color: #ddd;height: 30px;position: relative;margin: auto 30px -15px auto;">
                     
-                </div>
-                <div id="title" style="width:100%;overflow: auto;margin-top: 20px">
+                </div>-->
+<!--                <div id="title" style="width:100%;overflow: auto;margin-top: 20px">
                     <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:480px;">
                         <thead>
                                     <tr style="height:40;">
@@ -156,11 +158,11 @@
                                     </tr>
                         </thead>
                      </table>
-                </div>
-                <div id="de" style="display:none;width:100%;overflow: auto;height:300px;margin-top: -20px">
+                </div>-->
+<!--                <div id="de" style="display:none;width:100%;overflow: auto;height:300px;margin-top: -20px">
                     
                     <table  class="table table-bordered table-striped" style="overflow: auto;position: relative;left:20px;width:480px;">
-                       <!--     <thead>
+                            <thead>
                                 <tr style="height:40px;">
                                     <th>成绩</th>
                                     <th>正确率</th>
@@ -172,13 +174,13 @@
                                     <th>总击键数</th>
 
                                 </tr>
-                            </thead>  -->
+                            </thead>  
                             <tbody id="detail" class="detailed">
                             </tbody>
                         </table>
-                </div>
+                </div>-->
                 
-            </div>
+<!--            </div>-->
         </div>
     </div>
     
@@ -191,7 +193,7 @@
 <div class="span9" id="other" style="display: none;height: 758px;">
     <h3 style="alignment-adjust: center;">没有统计数据！</h3>
 </div>
-<script>
+    <script type= "text/javascript" >
     //sunpy: switch camera and bulletin
 $(document).ready(function(){
     $("#id_classWork").click(function() {
@@ -216,10 +218,10 @@ $(document).ready(function(){
 });
 function che(){
     document.getElementById("div11").style.display='none';
-    document.getElementById("main").style.display='none';
-    document.getElementById("de").style.display='none';
-    document.getElementById("export").style.display='none';
-    document.getElementById("title").style.display='none';
+//    document.getElementById("main").style.display='none';
+//    document.getElementById("de").style.display='none';
+//    document.getElementById("export").style.display='none';
+//    document.getElementById("title").style.display='none';
     $(".bb").css("color","black");
 }
 function showClassWork(lessonID){
@@ -229,12 +231,14 @@ function showClassWork(lessonID){
 function getSuiteExercise(suiteID,workID){
     document.getElementById('correct').style.color="#000";
     document.getElementById('speed').style.color="#000";
-    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('less').style.color="#000";
     document.getElementById('backDelete').style.color="#000";
+    document.getElementById('many').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
     
     document.getElementById('id').value="";
     document.getElementById('classID').value="";
@@ -257,9 +261,9 @@ function getSuiteExercise(suiteID,workID){
                  }
                  document.getElementById('other').style.display="none";
                    document.getElementById("sp").style.display='block';
-                   document.getElementById("de").style.display='none';
-                   document.getElementById("export").style.display='none';
-                   document.getElementById("title").style.display='none';
+//                   document.getElementById("de").style.display='none';
+//                   document.getElementById("export").style.display='none';
+//                   document.getElementById("title").style.display='none';
                    document.getElementById("div11").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
@@ -268,9 +272,9 @@ function getSuiteExercise(suiteID,workID){
                    $('#ul3').children().filter('li').remove();
                    $('#bo').children().filter('tr').remove();
                    $("#sh").children().remove();
-                   $('#main').children().remove();
+//                   $('#main').children().remove();
                    var type;
-                   for(var i=0;i<data.length;i++){     
+                   for(var i in data){     
                        if(data[i]['type']==1){
                            type='键打练习';
                        }else if(data[i]['type']==2){
@@ -278,7 +282,8 @@ function getSuiteExercise(suiteID,workID){
                        }else if(data[i]['type']==3){
                            type='看打练习';
                        }
-                       var content=data[i][0]['title'];
+                       var content = data[i][0]['title'];
+                       
                        var allType=type+": "+content;
                        if(content.length<=10)
                            content=content;
@@ -303,7 +308,19 @@ function getSuiteExercise(suiteID,workID){
                     window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                     console.log(xhr, "Failed");
                 }
-         });    
+                
+         });  
+         $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=student/saveSuiteData",
+             data: {suiteID:suiteID,
+                 workID:workID,
+                 classID:"<?php echo $classID ?>"
+                },
+             success: function(data){
+             },
+            });
 }
 var index;
 function getClassExerRankingBefBef(ind,i,classID,exerciseID,type){
@@ -320,19 +337,23 @@ function getClassExerRankingBefBef(ind,i,classID,exerciseID,type){
     }
     document.getElementById('correct').style.color="#000";
     document.getElementById('speed').style.color="#000";
-    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('less').style.color="#000";
     document.getElementById('backDelete').style.color="#000";
+    document.getElementById('many').style.color="#000";
+    
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    document.getElementById("de").style.display='none';
+    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
+//    document.getElementById("de").style.display='none';
     document.getElementById("div11").style.display='none';
-    document.getElementById("title").style.display='none';
-    document.getElementById("main").style.display='none';
-    document.getElementById("export").style.display='none';
+//    document.getElementById("title").style.display='none';
+//    document.getElementById("main").style.display='none';
+//    document.getElementById("export").style.display='none';
     var t='kk'+ii;
     document.getElementById(t).style.color="#F46401";
+    getClassExerRankingBef('correct','bg1');
 }
 function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
     index=ind;
@@ -347,21 +368,25 @@ function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
     for( var i=0; i<tds.length; i++ ){
         tds[i].style.color="#000";
     }
-    document.getElementById('correct').style.color="#000";
+    document.getElementById('correct').style.color="#fff";
     document.getElementById('speed').style.color="#000";
-    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('less').style.color="#000";
     document.getElementById('backDelete').style.color="#000";
-    document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('many').style.color="#000";
+    document.getElementById('bg1').style.backgroundColor="#F46401";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    document.getElementById("de").style.display='none';
+    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
+//    document.getElementById("de").style.display='none';
     document.getElementById("div11").style.display='none';
-    document.getElementById("title").style.display='none';
-    document.getElementById("main").style.display='none';
-    document.getElementById("export").style.display='none';
+//    document.getElementById("title").style.display='none';
+//    document.getElementById("main").style.display='none';
+//    document.getElementById("export").style.display='none';
     var t='kk'+ii;
     document.getElementById(t).style.color="#F46401";
+    getClassExerRankingBef('correct','bg1');
+    
 }
 var choice;
 function getClassExerRankingBef(choice2,bg){
@@ -371,16 +396,18 @@ function getClassExerRankingBef(choice2,bg){
     }
     document.getElementById('correct').style.color="#000";
     document.getElementById('speed').style.color="#000";
-    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('less').style.color="#000";
     document.getElementById('backDelete').style.color="#000";
+    document.getElementById('many').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
     
     document.getElementById(choice2).style.color="#fff";
     document.getElementById(bg).style.backgroundColor="#F46401";
-    document.getElementById("choice").value=choice2;
+    document.getElementById("choice").value= choice2;
     var i=document.getElementById("id").value;
     var classID=document.getElementById("classID").value;
     var isExam=document.getElementById("isExam").value;
@@ -396,13 +423,14 @@ function getClassExerRankingBef(choice2,bg){
 function getClassExer(lessonID){
     document.getElementById('correct').style.color="#000";
     document.getElementById('speed').style.color="#000";
-    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('less').style.color="#000";
     document.getElementById('backDelete').style.color="#000";
+    document.getElementById('many').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    
+    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('id').value="";
     document.getElementById('classID').value="";
     document.getElementById('exerciseID').value="";
@@ -423,11 +451,11 @@ function getClassExer(lessonID){
                  }
                  document.getElementById('other').style.display="none";
                  document.getElementById("sp").style.display='block';
-                 document.getElementById("de").style.display='none';
+//                 document.getElementById("de").style.display='none';
                  document.getElementById("div11").style.display='none';
-                 $("#export").children().filter('tr').remove();
-                 document.getElementById("export").style.display='none';
-                 document.getElementById("title").style.display='none';
+//                 $("#export").children().filter('tr').remove();
+//                 document.getElementById("export").style.display='none';
+//                 document.getElementById("title").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -437,9 +465,9 @@ function getClassExer(lessonID){
                    
                    $('#bo').children().filter('tr').remove();
                    $("#sh").children().remove();
-                   $('#main').children().remove();
+//                   $('#main').children().remove();
                    $('#detail').children().filter('tr').remove();
-                   //$('#bo').hide();
+                   $('#bo').hide();
                    //$('#main').hide();
                    var type;
                    for(var i=0;i<data.length;i++){ 
@@ -478,17 +506,29 @@ function getClassExer(lessonID){
                     window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                     console.log(xhr, "Failed");
                 }
-         });    
+         }); 
+         $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=student/saveClassExerciseData",
+             data: {lessonID:lessonID,
+                 classID:"<?php echo $classID ?>"
+                },
+             success: function(data){
+             },
+            });
 }
 function getExamExercise(examID,workID){
     document.getElementById('correct').style.color="#000";
     document.getElementById('speed').style.color="#000";
-    document.getElementById('maxSpeed').style.color="#000";
+    document.getElementById('less').style.color="#000";
     document.getElementById('backDelete').style.color="#000";
+    document.getElementById('many').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
     
     document.getElementById('id').value="";
     document.getElementById('classID').value="";
@@ -504,18 +544,27 @@ function getExamExercise(examID,workID){
                  workID:workID,
                 },
              success: function(data){
-                 if(data.length==0){
+                 
+                 if(data == "1"){
+                     console.log(data, "sssss");
+                     document.getElementById('sp').style.display = "none";
+                     document.getElementById('other').style.display = "block";
+                     return;  
+                 }
+                 if(data.length== 0){
+                     console.log(data, "ccccccc");
                      document.getElementById('sp').style.display="none";
                      document.getElementById('other').style.display="block";
                      return;
                  }
+                 console.log(data, "Failed");
                  document.getElementById('other').style.display="none";
                  document.getElementById("sp").style.display='block';
-                 document.getElementById("de").style.display='none';
+//                 document.getElementById("de").style.display='none';
                  document.getElementById("div11").style.display='none';
-                 $("#export").children().filter('tr').remove();
-                 document.getElementById("export").style.display='none';
-                 document.getElementById("title").style.display='none';
+//                 $("#export").children().filter('tr').remove();
+//                 document.getElementById("export").style.display='none';
+//                 document.getElementById("title").style.display='none';
                    var ul = document.getElementById("ul1");          
                    $('#ul1').children().filter('li').remove();
                    $('#ul1').children().filter('tr').remove();
@@ -523,7 +572,7 @@ function getExamExercise(examID,workID){
                    $('#ul3').children().filter('li').remove();
                    $('#bo').children().filter('tr').remove();
                    $("#sh").children().remove();
-                   $('#main').children().remove();
+//                   $('#main').children().remove();
                    var type;
                    for(var i=0;i<data.length;i++){ 
                       if(data[i]['type']==1){
@@ -539,11 +588,11 @@ function getExamExercise(examID,workID){
                             content=content;
                         else
                             content=content.substr(0,10)+"...";
-                       type=type+": "+content;
+//                       type=type+": "+content;
                        var str;
                        if(i%3==0)
                            str="";
-                       str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                       str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"<br/>"+"&nbsp&nbsp&nbsp&nbsp&nbsp"+content+"</a></td>";       
                       var li ;
                       if(i%3==0){
                          li= document.createElement("tr");   
@@ -557,7 +606,19 @@ function getExamExercise(examID,workID){
                     window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                     console.log(xhr, "Failed");
                 }
-         });    
+         });
+          $.ajax({
+             type: "POST",
+             dataType:"json",
+             url: "index.php?r=student/saveExamData",
+             data: {examID:examID,
+                 workID:workID,
+                 classID:"<?php $classID ?>"
+                },
+             success: function(data){
+             },
+            });
+             
 }
 function getStudentRanking(ii,workID,isExam,exerciseID,type){
 //        var tds = document.getElementsByClassName("bb");
@@ -578,7 +639,7 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
         $.ajax({
              type: "POST",
              dataType:"json",
-             url: "index.php?r=api/getStudentRanking",
+             url: "index.php?r=student/getStudentRanking",
              data: {
                     exerciseID:exerciseID,
                     type:type,
@@ -587,103 +648,47 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                     workID:workID,
                 },
              success: function(data){
+                 if(data == "1"){
+                    window.wxc.xcConfirm('没有学生作答此题', window.wxc.xcConfirm.typeEnum.success); 
+                 }else{
                  document.getElementById("sp").style.display='block';
-                 document.getElementById("de").style.display='none';
+//                 document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
                  document.getElementById("div11").style.display='block';
-                 $("#export").children().filter('tr').remove();
-                 document.getElementById("export").style.display='none';
-                 document.getElementById("title").style.display='none';
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
                    $('#ul3').children().filter('li').remove();
                    $("#sh").children().filter('b').remove();
-                   $('#main').show();
-                   var choose;
-                   if(choice=='correct'){
-                       choose='正确率';
-                   }else if(choice=='speed'){
-                       choose='速度';
-                   }else if(choice=='maxSpeed'){
-                       choose='最大速度';
-                   }else if(choice=='backDelete'){
-                       choose='回改字数';
-                   }else if(choice=='maxInternalTime'){
-                       choose='最高间隔';
-                   }
-                   document.getElementById("name").innerHTML=choose;
-                   document.getElementById("main").style.display='block';
-                   var times = new Array();
-                   var per=new Array();
-                   for(var i=0;i<data[0].length;i++){       
-                       var name=data[0][i]['time'];
-                       if(choice=='correct'){
-                           var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"%"+"</th>";
-                        }else if(choice=='backDelete'){
-                            var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[0][i][choice]*100)/100)+"</th>";
-                        }else{
-                            var  str = "<th>"+(i+1)+"</th>"+"<th><a style='cursor:pointer;' class='bbb' id='kkk"+i+"'"+" onclick='getStudentRankingAll("+i+","+workID+","+isExam+","+exerciseID+","+type+","+'"'+data[0][i]['time']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
-                        }
-                      
+                   $('#bo').show();
+//                   var choose;
+//                   if(choice=='correct'){
+//                       choose='正确率';
+//                   }else if(choice=='speed'){
+//                       choose='速度';
+//                   }else if(choice=='less'){
+//                       choose='少打字数';
+//                   }else if(choice=='backDelete'){
+//                       choose='回改字数';
+//                   }else if(choice=='many'){
+//                       choose='多打字数';
+//                   }
+                    var str ="";
+                   for(var i in data){   
+                       
+                       str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
+                           +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['missing_Number']+"</th>"+"<th>"+data[i]['backDelete']+"</th>"+"<th>"+data[i]['redundant_Number']+"</th>";
+                      console.log("str----", str);
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
-                   }
-                   if(data[1].length!=0){
-                        for(var j=0;j<data[1][0].length;j++){
-                            times[j]=data[1][0][j]['duration'];
-                            //per[j]=data[1][0][j][choice];
-                            per[j]=Math.round(data[1][0][j][choice]*100)/100;
-                        }
-                    }
-                   
-                    var myChart = echarts.init(document.getElementById('main'));
-                    var option = {
-                        title: {
-                            text: ''
-                        },
-                        tooltip : {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            data:['平均成绩']
-                        },
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis : [
-                            {
-                                type : 'category',
-                                name:"s",
-                                boundaryGap : false,
-                                data : times
-                            }
-                        ],
-                        yAxis : [
-                            {
-                                type : 'value',
-                                name:choose
-                            }
-                        ],
-                        series : [
-                            {
-                                name:'平均成绩',
-                                type:'line',
-                                data:per
-                            },
-
-                        ]
-                    };
-                    myChart.setOption(option);
-                    
-                 },     
+                   } 
+                }
+              },     
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr, "Failed");
+                console.log("xhr", "nono");
             }
          }); 
 }
@@ -714,10 +719,10 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                 },
              success: function(data){
                  document.getElementById("sp").style.display='block';
-                 document.getElementById("main").style.display='block';
-                 document.getElementById("de").style.display='block';
-                 document.getElementById("export").style.display='block';
-                 document.getElementById("title").style.display='block';
+//                 document.getElementById("main").style.display='block';
+//                 document.getElementById("de").style.display='block';
+//                 document.getElementById("export").style.display='block';
+//                 document.getElementById("title").style.display='block';
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
@@ -730,12 +735,12 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                        choose='正确率';
                    }else if(choice=='speed'){
                        choose='速度';
-                   }else if(choice=='maxSpeed'){
-                       choose='最大速度';
+                   }else if(choice=='less'){
+                       choose='最少字数';
                    }else if(choice=='backDelete'){
                        choose='回改字数';
-                   }else if(choice=='maxInternalTime'){
-                       choose='最高间隔';
+                   }else if(choice=='many'){
+                       choose='多打字数';
                    }
                    document.getElementById("name").innerHTML=choose;
                    var times = new Array();
@@ -800,52 +805,52 @@ function getStudentRankingAll(ii,workID,isExam,exerciseID,type,name){
                            tr.innerHTML= str;
                            expor.appendChild(tr);
                     }
-                    var myChart = echarts.init(document.getElementById('main'));
-                    var option = {
-                        title: {
-                            text: ''
-                        },
-                        tooltip : {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            data:['平均成绩','学生成绩']
-                        },
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis : [
-                            {
-                                type : 'category',
-                                name:"s",
-                                boundaryGap : false,
-                                data : times
-                            }
-                        ],
-                        yAxis : [
-                            {
-                                type : 'value',
-                                name:choose
-                            }
-                        ],
-                        series : [
-                            {
-                                name:'平均成绩',
-                                type:'line',
-                                data:per
-                            },
-                            {
-                                name:'学生成绩',
-                                type:'line',
-                                data:myPer
-                            },
-
-                        ]
-                    };
-                    myChart.setOption(option);
+//                    var myChart = echarts.init(document.getElementById('main'));
+//                    var option = {
+//                        title: {
+//                            text: ''
+//                        },
+//                        tooltip : {
+//                            trigger: 'axis'
+//                        },
+//                        legend: {
+//                            data:['平均成绩','学生成绩']
+//                        },
+//                        grid: {
+//                            left: '3%',
+//                            right: '4%',
+//                            bottom: '3%',
+//                            containLabel: true
+//                        },
+//                        xAxis : [
+//                            {
+//                                type : 'category',
+//                                name:"s",
+//                                boundaryGap : false,
+//                                data : times
+//                            }
+//                        ],
+//                        yAxis : [
+//                            {
+//                                type : 'value',
+//                                name:choose
+//                            }
+//                        ],
+//                        series : [
+//                            {
+//                                name:'平均成绩',
+//                                type:'line',
+//                                data:per
+//                            },
+//                            {
+//                                name:'学生成绩',
+//                                type:'line',
+//                                data:myPer
+//                            },
+//
+//                        ]
+//                    };
+//                    myChart.setOption(option);
                     
                  },     
             error: function(xhr, type, exception){
@@ -872,22 +877,26 @@ function getClassExerRanking(ii,classID,exerciseID,type){
         $.ajax({
              type: "POST",
              dataType:"json",
-             url: "index.php?r=api/getClassExerRanking",
+             url: "index.php?r=student/getStudentRanking",
              data: {
                     exerciseID:exerciseID,
                     type:type,
+                    isExam: "2",
                     choice:choice,
-                    classID:classID,
+                    workID: "0",
                 },
              success: function(data){
+                 if(data == "1"){
+                    window.wxc.xcConfirm('没有学生作答此题', window.wxc.xcConfirm.typeEnum.success); 
+                 }else{
                  document.getElementById("sp").style.display='block';
-                 document.getElementById("main").style.display='block';
+//                 document.getElementById("main").style.display='block';
                  document.getElementById("div11").style.display='block';
-                 document.getElementById("de").style.display='none';
+//                 document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
-                 document.getElementById("title").style.display='none';
-                 $("#export").children().filter('tr').remove();
-                 document.getElementById("export").style.display='none';
+//                 document.getElementById("title").style.display='none';
+//                 $("#export").children().filter('tr').remove();
+//                 document.getElementById("export").style.display='none';
                    var ul = document.getElementById("ul2");          
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
@@ -896,87 +905,33 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                    $('#detail').children().filter('tr').remove();
                    $("#sh").children().filter('b').remove();
                    
-                   //$('#bo').show();
+                   $('#bo').show();
                    //$('#main').show();
-                   $('#main').show();
-                   var choose;
-                   if(choice=='correct'){
-                       choose='正确率';
-                   }else if(choice=='speed'){
-                       choose='速度';
-                   }else if(choice=='maxSpeed'){
-                       choose='最大速度';
-                   }else if(choice=='backDelete'){
-                       choose='回改字数';
-                   }else if(choice=='maxInternalTime'){
-                       choose='最高间隔';
-                   }
-                   document.getElementById("name").innerHTML=choose;
-                   var times  = new Array();
-                   var per=new Array();
-                    
-                    for(var i=0;i<data[0].length;i++){     
-                       if(choice=='correct'){
-                           var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"%"+"</th>";
-                        }else if(choice=='backDelete'){
-                            var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(Math.round(data[0][i][choice]*100)/100)+"</th>";
-                        }else{
-                            var str =  "<th>"+(i+1)+"</th>"+"<th><a style='color:black;cursor:pointer;'  class='bbb' id='kkk"+i+"'"+" onclick='getClassExerRankingAll("+i+","+"0"+","+classID+","+exerciseID+","+'"'+type+'"'+","+'"'+data[0][i]['studentID']+'"'+")'>"+data[0][i]['studentName']+"</a></th>"+"<th>"+Math.round(data[0][i][choice]*100)/100+"</th>";
-                        }
-                       var tr = document.createElement("tr");               
-                       tr.innerHTML= str;
-                       tbody.appendChild(tr);
-                    } 
-                   
-                   if(data[1].length!=0){
-                        for(var j=0;j<data[1][0].length;j++){
-                            times[j]=data[1][0][j]['duration'];
-                            //per[j]=data[1][0][j][choice];
-                            per[j]=Math.round(data[1][0][j][choice]*100)/100;
-                        }
-                   }
-                   
-                   var myChart = echarts.init(document.getElementById('main'));
-                    var option = {
-                        title: {
-                            text: ''
-                        },
-                        tooltip : {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            data:['平均成绩']
-                        },
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis : [
-                            {
-                                type : 'category',
-                                name:"s",
-                                boundaryGap : false,
-                                data : times
-                            }
-                        ],
-                        yAxis : [
-                            {
-                                type : 'value',
-                                name:choose
-                            }
-                        ],
-                        series : [
-                            {
-                                name:'平均成绩',
-                                type:'line',
-                                data:per
-                            },
-
-                        ]
-                    };
-                    myChart.setOption(option);
+//                   $('#main').show();
+//                   var choose;
+//                   if(choice=='correct'){
+//                       choose='正确率';
+//                   }else if(choice=='speed'){
+//                       choose='速度';
+//                   }else if(choice=='maxSpeed'){
+//                       choose='最大速度';
+//                   }else if(choice=='backDelete'){
+//                       choose='回改字数';
+//                   }else if(choice=='maxInternalTime'){
+//                       choose='最高间隔';
+//                   }
+//                   document.getElementById("name").innerHTML=choose;
+                    var str ="";
+                   for(var i in data){   
+                       
+                       str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
+                           +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['missing_Number']+"</th>"+"<th>"+data[i]['backDelete']+"</th>"+"<th>"+data[i]['redundant_Number']+"</th>";
+                      console.log("str----", str);
+                      var tr = document.createElement("tr");               
+                      tr.innerHTML= str;
+                      tbody.appendChild(tr);
+                   }  
+                   } 
                  },     
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
@@ -1191,75 +1146,75 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
 //                       expor.appendChild(ab);
 //                    }
                      
-                     var myChart = echarts.init(document.getElementById('main'));
-                        var a=new Array();
-                        if(myPer.length>=2){
-                           a=['平均成绩','最高成绩','最低成绩'];
-                         }else{
-                           a=['平均成绩','学生成绩'];
-                         }
-                         var option = {
-                             title: {
-                                 text: ''
-                             },
-                             tooltip : {
-                                 trigger: 'axis'
-                             },
-                             legend: {
-                                  data:a
-                             },
-                             grid: {
-                                 left: '3%',
-                                 right: '4%',
-                                 bottom: '3%',
-                                 containLabel: true
-                             },
-                             xAxis : [
-                                 {
-                                     type : 'category',
-                                     name:"s",
-                                     boundaryGap : false,
-                                     data : times
-                                 }
-                             ],
-                             yAxis : [
-                                 {
-                                     type : 'value',
-                                     name:choose
-                                 }
-                             ],
-                             series : function(){
-                                 var s=[];
-                                 var item={
-                                     name:'平均成绩',
-                                     type:'line',
-                                     data:per
-                                 };
-                                 s.push(item);
-                                 
-                                 for(var d=0;d<myPer.length;d++){
-                                     
-                                     if(myPer.length>=2)
-                                         if(d==0)
-                                            var n='最高成绩';
-                                         else 
-                                            var n='最低成绩';
-                                     else{
-                                         var n='学生成绩';
-                                         
-                                     }
-                                     var item={
-                                        name:n,
-                                        type:'line',
-                                        data:myPer[d]
-                                    };
-                                    s.push(item);
-                                 };
-                                 return s;
-                             }()
-                               
-                         };
-                         myChart.setOption(option);
+//                     var myChart = echarts.init(document.getElementById('main'));
+//                        var a=new Array();
+//                        if(myPer.length>=2){
+//                           a=['平均成绩','最高成绩','最低成绩'];
+//                         }else{
+//                           a=['平均成绩','学生成绩'];
+//                         }
+//                         var option = {
+//                             title: {
+//                                 text: ''
+//                             },
+//                             tooltip : {
+//                                 trigger: 'axis'
+//                             },
+//                             legend: {
+//                                  data:a
+//                             },
+//                             grid: {
+//                                 left: '3%',
+//                                 right: '4%',
+//                                 bottom: '3%',
+//                                 containLabel: true
+//                             },
+//                             xAxis : [
+//                                 {
+//                                     type : 'category',
+//                                     name:"s",
+//                                     boundaryGap : false,
+//                                     data : times
+//                                 }
+//                             ],
+//                             yAxis : [
+//                                 {
+//                                     type : 'value',
+//                                     name:choose
+//                                 }
+//                             ],
+//                             series : function(){
+//                                 var s=[];
+//                                 var item={
+//                                     name:'平均成绩',
+//                                     type:'line',
+//                                     data:per
+//                                 };
+//                                 s.push(item);
+//                                 
+//                                 for(var d=0;d<myPer.length;d++){
+//                                     
+//                                     if(myPer.length>=2)
+//                                         if(d==0)
+//                                            var n='最高成绩';
+//                                         else 
+//                                            var n='最低成绩';
+//                                     else{
+//                                         var n='学生成绩';
+//                                         
+//                                     }
+//                                     var item={
+//                                        name:n,
+//                                        type:'line',
+//                                        data:myPer[d]
+//                                    };
+//                                    s.push(item);
+//                                 };
+//                                 return s;
+//                             }()
+//                               
+//                         };
+//                         myChart.setOption(option);
                  },     
             error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
