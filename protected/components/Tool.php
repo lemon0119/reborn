@@ -90,7 +90,11 @@ class Tool {
             $bin = fread ( $fh, 8 );  
             fclose ( $fh );  
             $strinfo = @unpack ( "C8chars", $bin );  
-            $typecode = "";  
+            $typecode = "";
+            if(empty($strinfo))
+            {
+                $strinfo = array('208','206','17','224','161','177','25','223');
+            }
             foreach ( $strinfo as $num ) {  
                 $typecode .= dechex ( $num );  
             }  
@@ -104,7 +108,11 @@ class Tool {
             $bin = fread ( $fh, 4 );  
             fclose ( $fh );  
             $strinfo = @unpack ( "C4chars", $bin );  
-            $typecode = "";  
+            $typecode = "";
+            if(empty($strinfo))
+            {
+                $strinfo = array('80','75','3','6');
+            }
             foreach ( $strinfo as $num ) {  
                 $typecode .= dechex ( $num );  
             }  
