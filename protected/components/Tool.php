@@ -90,7 +90,11 @@ class Tool {
             $bin = fread ( $fh, 8 );  
             fclose ( $fh );  
             $strinfo = @unpack ( "C8chars", $bin );  
-            $typecode = "";  
+            $typecode = "";
+            if(empty($strinfo))
+            {
+                $strinfo = array('208','206','17','224','161','177','25','223');
+            }
             foreach ( $strinfo as $num ) {  
                 $typecode .= dechex ( $num );  
             }  
@@ -104,7 +108,11 @@ class Tool {
             $bin = fread ( $fh, 4 );  
             fclose ( $fh );  
             $strinfo = @unpack ( "C4chars", $bin );  
-            $typecode = "";  
+            $typecode = "";
+            if(empty($strinfo))
+            {
+                $strinfo = array('80','75','3','6');
+            }
             foreach ( $strinfo as $num ) {  
                 $typecode .= dechex ( $num );  
             }  
@@ -465,10 +473,15 @@ class Tool {
         }
     }
     
+    public static function removeEnter($str){
+        $char_enter=Array('\n','<br/>');
+        return str_replace($char_enter, "", $str);
+    }
+    
     public static function removeCharacter($str){
         $DBC = Array(
             '：', '—','、','“','”',
-            '；',
+            '；','\n','<br/>',
             '。', '，', '/', '%', '#',
             '！', '＠', '＆', '（', '）',
             '《', '＞', '＂', '＇', '？',
@@ -557,9 +570,9 @@ class Tool {
     }
 
     public static function filterAllSpaceAndTab($content) {
-        $new = str_replace("\n", "", $content);
-        $newcontent = str_replace("\r", "", $new);
-        $newcontent = str_replace(" ", "", $newcontent);
+//        $new = str_replace("\n", "", $content);
+//        $newcontent = str_replace("\r", "", $new);
+        $newcontent = str_replace(" ", "", $content);
         $newcontent = str_replace("　", "", $newcontent);
         return $newcontent;
     }

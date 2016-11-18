@@ -69,8 +69,11 @@ function LCS(str1, str2) {
         }
         if(i >= this.substringLength1 && j < this.substringLength2){
 //                    this.y_m += '`';
-//                    this.y_m += '`';
                     window.G_a[k]=i;
+            while(i >= this.substringLength1 && j < this.substringLength2){
+                    this.y_m += '~';
+                j++;
+            }
         }
         if(i < this.substringLength1 && j >= this.substringLength2){
             window.G_a[k]=i;

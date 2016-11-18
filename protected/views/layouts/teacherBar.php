@@ -5,6 +5,8 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
     ?>
 
     <?php
+    $userid_now=Yii::app()->session['userid_now'];
+    $user = Teacher::model()->find('userID=?', array($userid_now));
     $class = Teacher::model()->getClassNow();
     foreach ($class as $key => $value) {
         $classNameInfo[$value['classID']] = $value['className'];
@@ -104,6 +106,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                                 <ul class="dropdown-menu">
                                                     <li><a href="./index.php?r=teacher/teaInformation">个人设置</a></li>
                                                     <li><a href="./index.php?r=user/login&exit=1&usertype=teacher">退出</a></li>
+                                                    <li><a href="#" onclick="shutDown()" >关机</a></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -134,6 +137,9 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
     }
     function legalNotice() {
         window.open("./index.php?r=teacher/legalNotice");
+    }
+    function shutDown(){
+        window.open("./index.php?r=teacher/shutDown", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
     }
 //    window.onbeforeunload = onbeforeunload_handler;
 //    window.onunload = onunload_handler;
@@ -171,4 +177,22 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
 //
 //        });
 //    }
+ $(document).ready(function () {
+        setInterval(function () {
+            islogin();
+        }, 2000);});
+ function islogin() {
+        $.ajax({
+            type: "POST",
+            dataType:"json",
+            url: "index.php?r=teacher/Requestlogin",
+            data: {},
+            success: function (data) {
+                if(data['teacherislogin'].length!=0){
+                    alert("您的账号已在在其他地方登陆，如本是本人操作请修改密码");
+                    window.location.reload();
+                }
+            }
+        });
+  }
 </script>

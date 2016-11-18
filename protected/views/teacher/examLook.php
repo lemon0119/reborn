@@ -1,6 +1,16 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <script src="<?php echo JS_URL;?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL;?>exerJS/accounting.js"></script>
+<style type="text/css">
+    table.answerData td{
+        width: 150px;
+        text-align:left !important;
+    }
+    table.answerData{
+    }
+    table.answerData tr{
+    }
+</style>
 <?php
 
 require 'examAnsSideBar.php';
@@ -26,44 +36,52 @@ require 'examAnsSideBar.php';
             $str = str_replace(" ", "", $str);
 //            echo $str;
             ?>">
-        <table border = '0px' width="100%">            
+        <table class="answerData">
             <tr>
-                <td width = '50%' colspan='6' align='center'><?php echo $exer['title']?></td>
+                <td colspan='6' align='center'>文本名：<?php echo $exer['title']?></td>
 <!--                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php printf('%2.1f',$correct);echo '%';?></span></td>-->
             </tr>
             <tr>
-                <td align='center'>正确率(%)</td>
-                <td align='center'>正确字数</td>
-                <td align='center'>打错字数</td>
-                <td align='center'>少打字数</td>
-                <td></td>
-                <td></td>
+                <td>正确率(%)</td>
+                <td>正确字数</td>
+                <td>打错字数</td>
+                <td>少打字数</td>
+                <td>多打字数</td>
+                <td>标准文本字数</td>
             </tr>
             <tr>
                 <td><span id="correct"><?php printf('%2.1f',$correct); ?></span></td>
                 <td><?php printf($correct_Number); ?></td>
                 <td><span id="error_number"></span></td>
                 <td><span id="missing_number"></span></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td align='center' >多打字数</td>
-                <td align='center'>作答字数</td>
-                <td align='center'>标准字数</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><span id="redundant_number"></span></td>
-                <td id="answer_number"><?php printf($answer_Number); ?></td>
+                <td id="redundant_number"></td>
                 <td id="standard_number"><?php printf($standard_Number); ?></td>
-                <td></td>
-                <td></td>
+            </tr>
+            <tr>
+                <td>比对文本字数</td>
+                <td colspan="2">标准文本字数-正确字数</td>
+                <td colspan="2">比对文本字数-正确字数</td>
                 <td></td>
             </tr>
             <tr>
+                <td id="answer_number"><?php printf($answer_Number); ?></td>
+                <?php error_log($standard_Number);?>
+                <td colspan="2" id="standard_answer"><?php printf($standard_Number-$correct_Number); ?></td>
+                <td colspan="2" id="error_answer"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">标准文本的忽略符号数</td>
+                <td colspan="2">比对文本的忽略符号数</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2" id="standard_lgnore_symbol">0</td>
+                <td colspan="2" id="answer_lgnore_symbol">0</td>
+                <td colspan="2"></td>
+            </tr>
+        </table>
+        <table border = '0px' width="100%">
             <tr>
                 <td colspan='6'>
                     <br><div class='answer-tip-text1'>作答结果：</div>
@@ -104,9 +122,12 @@ require 'examAnsSideBar.php';
     }
 ?>
 <script>
-    var currentContent = '<?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?>';
-    var originalContent = '<?php echo $str; ?>';
+    <?php $remove_enter= Tool::filterContentOfInputWithYaweiCode($str2); ?>
+    var currentContent ='<?php echo Tool::removeEnter($remove_enter); ?>';
+    var originalContent = '<?php echo Tool::removeEnter($str); ?>';
     var lcs = new LCS(currentContent, originalContent);
+    var character_original=0;
+    var character_current=0;
     lcs.doLCS();
     var currentFont = document.getElementById('currentContent');
     var originalFont = document.getElementById('originalContent');
@@ -116,6 +137,10 @@ require 'examAnsSideBar.php';
     var standard_number=originalContent.length;
     var answer_number=currentContent.length;
     var remove_char_correct=lcs.getSubString(3).length;
+    var more_count=((currentContent.length-originalContent.length)<0) ? 0 : currentContent.length-originalContent.length;
+    var correctData=((remove_char_correct-more_count)<0 ? 0 : remove_char_correct-more_count)/originalContent.length;
+    correct_rate=(correctData*100).toFixed(2);
+    $("#correct").html(correct_rate);
     var currentInnerHTML='';
     var originalInnerHTML='';
 //    for (var i = 0; i < currentContent.length; i++) {
@@ -164,7 +189,7 @@ var right_content=[];
         if (typeof (originalContent[i]) !== 'undefined') {
             if (originalContent[i] !== originalLCS[i]) {
                 originalInnerHTML += '<font style="color:#f44336">' + originalContent[i] + '</font>';
-                if(originalLCS[i+1] === "`" || originalLCS[i] === "`"){
+                if(originalLCS[i+1] === "`" || originalLCS[i] === "`" || originalLCS[i]==="~"){
                     flag[j]=window.G_a[j];
                     j++;
                 }
@@ -173,7 +198,7 @@ var right_content=[];
                     if(originalLCS[i] === "`"){
                         k++;
                     }
-                }else if(originalContent[i-1] !== originalLCS[i-1] && originalContent[i+1] !== originalLCS[i+1]){
+                }else if(originalContent[i-1] !== originalLCS[i-1] && originalContent[i+1] !== originalLCS[i+1] || originalLCS[i]==="~"){
                     right_content[k] +=originalContent[i];
                 }else{
                     right_content[k] +=originalContent[i];
@@ -187,13 +212,14 @@ var right_content=[];
     j=0;
     e=0;
     var e_flag=0;
+    var more_play="";
     for (var i = 0; i < currentContent.length; i++) {
         if (typeof (currentContent[i]) !== 'undefined') {
             if (currentContent[i] !== currentLCS[i] && currentLCS[i]!=='`') {
                 if(currentLCS[i] === '~'){
                     redundant_number++;
                     currentInnerHTML += '<font style="color:blue"><s>' + currentContent[i] + '</s></font>';
-                }else if(typeof (right_content[j-1 ]) !== 'undefined' && i-right_content[j-1 ].length === error_flag[e_flag-1] ){
+                }else if(typeof (right_content[j-1 ]) !== 'undefined' && i-right_content[j-1 ].length === more_play && more_play!==""){
                     while(currentContent[i] !== currentLCS[i]){
                         redundant_number++;
                         currentInnerHTML += '<font style="color:blue"><s>' + currentContent[i] + '</s></font>';
@@ -234,6 +260,7 @@ var right_content=[];
                 }
             }else if(right_content[j].length < right_length[e]){
                 //多打
+                more_play=error_flag[e_flag];
                 currentInnerHTML += '<font style="color:red">'+"("+'</font>';
                 for(err=0;err < right_content[j].length;err++){
                     error_number++;
@@ -266,6 +293,8 @@ var right_content=[];
         $("#standard_number").html(standard_number);
         $("#answer_number").html(answer_number);
         $("#correct_Number").html(remove_char_correct);
+        $("#error_answer").html(answer_number-<?php echo $correct_Number;?>);
+        $("#standard_answer").html(standard_number-<?php echo $correct_Number;?>);
     currentFont.innerHTML = currentInnerHTML;
 //
     $(document).ready(function(){
@@ -273,7 +302,8 @@ var right_content=[];
             type:"POST",
             dataType:"json",
             url:"index.php?r=api/answerDataSave",
-            data:{error_Number:error_number,missing_Number:missing_number,redundant_Number:redundant_number,answerID:<?php echo $answer_id;?>},
+            data:{error_Number:error_number,missing_Number:missing_number,redundant_Number:redundant_number,answerID:<?php echo $answer_id;?>
+            ,standard_lgnore_symbol:character_original,answer_lgnore_symbol:character_current,correct_Answer:correct_rate},
             success:function(){
             },
             error: function (xhr) {

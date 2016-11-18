@@ -22,7 +22,6 @@
                 <th>结束时间</th>
                 <th>时长</th>
                 <th>操作</th>
-                
             </tr>
         </thead>
                 <tbody>        
@@ -64,8 +63,8 @@
                             <?php }else{?>
                                 <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID?>" style="color:gray">查看</a> 
                             <?php }?>
-
                         </td>
+
                     </tr>      
                     <?php }?>
                     <?php endforeach;?> 
@@ -78,7 +77,7 @@
     ?>
     </div>
 
-    <h3 style="float: left">学生列表</h3>  <div style="position:relative;right: 393px;top:8px"><button class="fr btn btn-primary" id="mark" onclick="mark()">一键判卷</button></div><br><br><br>(填空题和简答题必须手动打分)<br>
+    <h3 style="float: left">学生列表</h3>  <div style="position:relative;right: 393px;top:8px"><button class="fr btn btn-primary" id="mark" onclick="mark()">一键判卷</button></div><br><br><br>
 <div style="overflow-y:auto; height:300px;">
 <table width="50%" style="float:left;" >
 <tr>
@@ -194,5 +193,9 @@ function mark(){
            url += "&&selectClassID="+ value;  
            window.location.href = url;
        }
+       function examdata(workID)
+      {
+           window.open("./index.php?r=teacher/WatchExamData&&workID="+workID+"&&classID=<?php if(isset( $classexam['classID'])){echo $classexam['classID'];}?>", 'newwindow', 'height=600,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,')      
+      }
 </script>
 

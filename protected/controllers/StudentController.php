@@ -1405,9 +1405,25 @@ class StudentController extends CController {
 //        }
 //        判断重复登录
 //        $userID = Yii::app()->session['userid_now'];
-//        Student::model()->isLogin($userID, 1);
-        
-        $this->render('index');
+//        Student::model()->isLogin($userID, 1);        
+        if (isset($_GET['page'])) {
+            Yii::app()->session['lastPage'] = $_GET['page'];
+        } else {
+            Yii::app()->session['lastPage'] = 1;
+        }
+          Yii::app()->session['lastUrl'] = "index";
+          if(isset(Yii::app()->session['userid_now'])){
+           $userID =  Yii::app()->session['userid_now'];
+          $publishtime = date('y-m-d H:i:s',time());
+          $sn = strtotime($publishtime);
+       //   Student::model()->isLogin($userID, $sn);
+          $isl = Student::model()->find("userID = '$userID'");
+          $isl = $isl['is_login'];
+          $s = Yii::app()->session['islogin']=$isl;
+          $this->render('index'); //,['info'=>$info]);
+          }else{
+              $this->render('index');
+          }
     }
 
     public function actionHeadPic() {
@@ -1724,6 +1740,187 @@ class StudentController extends CController {
             'array_exam' => $array_exam,
         ));
     }
+    //将这套试卷打的练习插入数据库
+    public function actionSaveExamData() {
+        $workID = $_POST['workID'];
+        $examID = $_POST['examID'];
+        $classID = $_POST['classID'];
+        $studentLst = Student::model()->findAll("classID = '$classID'");
+        foreach ($studentLst as $stu) {
+          $studentID = $stu['userID'];
+          $rankLst = RankAnswer::model()->findAll("workID = '$workID' and isExam = 1 and userID = '$studentID'");
+        if($rankLst == NULL){
+             $exam_recordLst = ExamRecord::model()->findAll("workID = '$workID' and studentID = '$studentID'");
+            foreach ($exam_recordLst as $exam_record) {
+                $recordID = $exam_record['recordID'];
+                $answerLst = AnswerRecord::model()->getAnswerResult($recordID);
+                foreach ($answerLst as $ans) {
+                   $answerID = $ans['answerID'];
+                   $exerciseID = $ans['exerciseID'];
+                   $userID = $ans['createPerson'];
+                   $userName = Student::model()->find("userID = '$userID'")['userName'];
+                   $correct = $ans['ratio_correct'];
+                   $n1 = strrpos($correct, "&");
+                   $correct = substr($correct, $n1 + 1);
+                   $answerData = AnswerData::model()->find("answerID = '$answerID'");
+                   $missing_Number = $answerData['missing_Number'];
+                   $redundant_Number = $answerData['redundant_Number'];
+                   $speed = $ans['ratio_speed'];
+                   $n3 = strrpos($speed, "&");
+                   $speed = substr($speed, $n3 + 1);
+                   $type = $ans['type'];
+                   $backDelete = $ans['ratio_backDelete'];
+                   $n4 = strrpos($backDelete, "&");
+                   $backDelete = substr($backDelete, $n4 + 1);
+                   RankAnswer::model()->insertData($answerID, $exerciseID, $workID, $userID, $userName, $correct, $missing_Number, $redundant_Number, $speed, $type, $backDelete, 1);
+                }
+            }
+        }
+       }
+    }
+    //将这套作业打的练习插入数据库
+    public function actionSaveSuiteData() {
+        $workID = $_POST['workID'];
+        $suiteID = $_POST['suiteID'];
+        $classID = $_POST['classID'];
+        $level = ClassLessonSuite::model()->find("workID = '$workID'")['level'];
+        if($level==''){
+         $studentLst = Student::model()->findAll("classID = '$classID'");
+        }else{
+         $studentLst = Student::model()->findAll("classID = '$classID' and level = '$level'");   
+        }
+        foreach ($studentLst as $stu) {
+          $studentID = $stu['userID'];
+          $rankLst = RankAnswer::model()->findAll("workID = '$workID' and isExam = 0 and userID = '$studentID'");
+          if($rankLst == NULL){
+             $suite_recordLst = SuiteRecord::model()->findAll("workID = '$workID' and studentID = '$studentID'");
+            foreach ($suite_recordLst as $suite_record) {
+                $recordID = $suite_record['recordID'];
+                $answerLst = AnswerRecord::model()->getAnswerResult($recordID);
+                foreach ($answerLst as $ans) {
+                   $answerID = $ans['answerID'];
+                   $exerciseID = $ans['exerciseID'];
+                   $userID = $ans['createPerson'];
+                   $userName = Student::model()->find("userID = '$userID'")['userName'];
+                   $correct = $ans['ratio_correct'];
+                   $n1 = strrpos($correct, "&");
+                   $correct = substr($correct, $n1 + 1);
+                   $answerData = AnswerData::model()->find("answerID = '$answerID'");
+                   $missing_Number = $answerData['missing_Number'];
+                   $redundant_Number = $answerData['redundant_Number'];
+                   $speed = $ans['ratio_speed'];
+                   $n3 = strrpos($speed, "&");
+                   $speed = substr($speed, $n3 + 1);
+                   $type = $ans['type'];
+                   $backDelete = $ans['ratio_backDelete'];
+                   $n4 = strrpos($backDelete, "&");
+                   $backDelete = substr($backDelete, $n4 + 1);
+                   RankAnswer::model()->insertData($answerID, $exerciseID, $workID, $userID, $userName, $correct, $missing_Number, $redundant_Number, $speed, $type, $backDelete, 0);
+                }
+            }
+        }  
+        }
+        
+    }
+    //获得学生课堂练习情况并存入数据库
+    public function actionSaveClassExerciseData(){
+        $lessonID = $_POST['lessonID'];
+        $classID = $_POST['classID'];
+        $array_exercise = ClassExercise::model()->findAll("lessonID= '$lessonID'"); 
+         $studentLst = Student::model()->findAll("classID = '$classID'");
+        foreach ($studentLst as $student) {
+        foreach ($array_exercise as $exercise) {
+            
+            $exerciseID = $exercise['exerciseID'];
+           
+            
+                $studentID = $student['userID'];
+                $rankLst = RankAnswer::model()->find("exerciseID = '$exerciseID' and isExam = 2 and userID = '$studentID' ");
+                if($rankLst == NULL){
+                   $exerciseRecord = ClassexerciseRecord::model()->getSingleRecord($studentID, $exerciseID);
+                    if($exerciseRecord == NULL) {
+                        break;
+                    }  else {
+                        $answerID = $exerciseRecord['id'];
+                        $userName = $userName = Student::model()->find("userID = '$studentID'")['userName'];
+                        $correct = $exerciseRecord['ratio_correct'];
+                        $n1 = strrpos($correct, "&");
+                        $correct = substr($correct, $n1 + 1);
+                        $speed = $exerciseRecord['ratio_speed'];
+                        $n3 = strrpos($speed, "&");
+                        $speed = substr($speed, $n3 + 1);
+                        $type = $exercise['type'];
+                        $backDelete = $exerciseRecord['ratio_backDelete'];
+                        $n4 = strrpos($backDelete, "&");
+                        $backDelete = substr($backDelete, $n4 + 1);
+                        RankAnswer::model()->insertData($answerID, $exerciseID, 0, $studentID, $userName, $correct, 0, 0, $speed, $type, $backDelete, 2); 
+                    }
+                }else {
+                   $exerciseRecord = ClassexerciseRecord::model()->getSingleRecord($studentID, $exerciseID);
+                   $rankLst['answerID'] = $exerciseRecord['id'];
+                   $correct = $exerciseRecord['ratio_correct'];
+                   $n1 = strrpos($correct, "&");
+                   $correct = substr($correct, $n1 + 1);
+                   $rankLst['correct'] = $correct;  
+                   $speed = $exerciseRecord['ratio_speed'];
+                   $n3 = strrpos($speed, "&");
+                   $speed = substr($speed, $n3 + 1);
+                   $rankLst['speed'] = $speed;
+                   $backDelete = $exerciseRecord['ratio_backDelete'];
+                   $n4 = strrpos($backDelete, "&");
+                   $backDelete = substr($backDelete, $n4 + 1);
+                   $rankLst['backDelete'] = $backDelete;
+                   $rankLst ->update();
+                }
+            }
+        }
+        
+        
+    }
+
+    public function actionGetStudentRanking(){
+        $workID = $_POST['workID'];
+        $type = $_POST['type'];
+        $exerciseID = $_POST['exerciseID'];
+        $choice = $_POST['choice'];
+        $isExam=$_POST['isExam'];
+        if($type==1){
+             $type='key';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }
+         
+        if($isExam == 1){
+            $rankAnswer = RankAnswer::model()->findAll ("workID = '$workID' and exerciseID ='$exerciseID' and isExam ='$isExam' and type = '$type'");
+           if($rankAnswer == NULL){
+               $this->renderJSON("1");
+           }else {
+            $rankLst = RankAnswer::model()->getRankResult($workID, $exerciseID, $type, $isExam, $choice);
+            $this->renderJSON($rankLst);
+            
+        }        
+    }else if($isExam == 0){
+        $rankAnswer = RankAnswer::model()->findAll("workID = '$workID' and exerciseID ='$exerciseID' and isExam ='$isExam' and type = '$type'");
+           if($rankAnswer == NULL){
+               $this->renderJSON("1");
+           }else {
+            $rankLst = RankAnswer::model()->getRankResult($workID, $exerciseID, $type, $isExam, $choice);
+            $this->renderJSON($rankLst);
+            
+        }        
+    }else if($isExam == 2){
+       $rankAnswer = RankAnswer::model()->findAll("exerciseID ='$exerciseID'");
+           if($rankAnswer == NULL){
+               $this->renderJSON("1");
+           }else {
+            
+            $rankLst = RankAnswer::model()->getRankResult($workID, $exerciseID, $type, $isExam, $choice);
+            $this->renderJSON($rankLst);           
+        }         
+    }
+   }
     //判断是否弹出签到提示框
       public function actionStartSign() {
         $studentID = Yii::app()->session['userid_now'];
@@ -1771,4 +1968,22 @@ class StudentController extends CController {
         }
        $this->renderJSON(['TeacherSign_ID'=>$array_Sign_ID,]);
     }
+    public function actionRequestlogin(){
+         Yii::app()->session['cfmLogin']=0;
+         $login_model = new LoginForm;
+          $userID = Yii::app()->session['userid_now'];
+          $isl = Student::model()->find("userID = '$userID'");
+          $isl = $isl['is_login'];
+          $s = Yii::app()->session['islogin'];
+          if($isl==$s){
+          }else{
+              $result="已在其他地方登陆";
+              unset(Yii::app()->session['userid_now']);
+              $tislogin = 1;
+              $studentislogin = array();
+              array_push($studentislogin, $tislogin);
+              $this->renderJSON(['studentislogin'=>$studentislogin,]);
+          }
+        }
+    
 }
