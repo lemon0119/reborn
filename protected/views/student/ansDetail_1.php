@@ -2,9 +2,19 @@
 <link href="<?php echo CSS_URL; ?>../answer-style.css" rel="stylesheet">
 <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/accounting.js"></script>
+<style type="text/css">
+    table.answerData td{
+        width: 150px;
+        text-align:left !important;
+    }
+    table.answerData{
+    }
+    table.answerData tr{
+    }
+</style>
 <div class="span9" style="height: 570px">
     <div class="hero-unit">
-        <table border = '0px' width="100%">
+        <table class="answerData">
             <h2><?php
                 if ($type == 'look')
                     echo '看打练习';
@@ -24,56 +34,50 @@
         }
 ?>
             <tr>
-                <td width = '50%' colspan="6" align='center'>题目：<?php echo $exer['title'] ?></td>
+                <td colspan="6" align='center'>文本名：<?php echo $exer['title'] ?></td>
 <!--                <td width = '100px' align='center'><td align='center'> 正确率：<span id="correct"><?php
                         //printf('%2.1f', $correct);
                         //echo '%';
                         ?></span></td>-->
             </tr>
             <tr>
-                <td align='center'>正确率(%)</td>
-                <td align='center'>正确字数</td>
-                <td align='center'>打错字数</td>
-                <td align='center'>少打字数</td>
-                <td></td>
-                <td></td>
+                <td>正确率(%)</td>
+                <td>正确字数</td>
+                <td>打错字数</td>
+                <td>少打字数</td>
+                <td>多打字数</td>
+                <td>标准文本字数</td>
             </tr>
             <tr>
                 <td><span id="correct"><?php printf('%2.1f',$correct); ?></span></td>
-                <td id="correct_Number"><?php printf($correct_Number); ?></td>
+                <td><?php printf($correct_Number); ?></td>
                 <td><span id="error_number"></span></td>
                 <td><span id="missing_number"></span></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td align='center' >多打字数</td>
-                <td align='center'>作答字数</td>
-                <td align='center'>标准字数</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><span id="redundant_number"></span></td>
-                <td id="answer_number"><?php printf($answer_Number); ?></td>
+                <td id="redundant_number"></td>
                 <td id="standard_number"><?php printf($standard_Number); ?></td>
-                <td></td>
-                <td></td>
+            </tr>
+            <tr>
+                <td>比对文本字数</td>
+                <td colspan="2">标准文本字数-正确字数</td>
+                <td colspan="2">比对文本字数-正确字数</td>
                 <td></td>
             </tr>
-             <?php if ($type == 'listen'){ ?>
-                 <tr>
-                <td align='center' colspan="2">标准文本忽略符号数</td>
-                <td align='center' colspan="2">比对文本忽略符号数</td>
+            <tr>
+                <td id="answer_number"><?php printf($answer_Number); ?></td>
+                <td colspan="2" id="standard_answer"><?php printf($standard_Number-$correct_Number); ?></td>
+                <td colspan="2" id="error_answer"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">标准文本的忽略符号数</td>
+                <td colspan="2">比对文本的忽略符号数</td>
                 <td colspan="2"></td>
             </tr>
             <tr>
-                <td colspan="2"><span id="standard_lgnore_symbol"></span></td>
-                <td colspan="2"><span id="answer_lgnore_symbol"></span></td>
+                <td colspan="2" id="standard_lgnore_symbol">0</td>
+                <td colspan="2" id="answer_lgnore_symbol">0</td>
                 <td colspan="2"></td>
             </tr>
-             <?php } ?>
             <input id="text" type="hidden" value="<?php
             $str2 = str_replace("\n", "<br/>", $answer);
             $str2 = str_replace("\r", "", $str2);
@@ -86,6 +90,8 @@
             $str = str_replace(" ", "", $str);
 //            echo $str;
             ?>">
+        </table>
+            <table border = '0px' width="100%">
             <tr>
                 <td colspan='6'>
                     <br>
@@ -140,13 +146,10 @@ if (isset(Yii::app()->session['type'])) {
     var standard_number=originalContent.length;
     var answer_number=currentContent.length;
     var remove_char_correct=lcs.getSubString(3).length;
-    if('<?php echo $type;?>'==="listen"){
-        
-        var more_count=((currentContent.length-originalContent.length)<0) ? 0 : currentContent.length-originalContent.length;
-        var correctData=((remove_char_correct-more_count)<0 ? 0 : remove_char_correct-more_count)/originalContent.length;
-        correct_rate=Math.round(correctData*100);
-        $("#correct").html(correct_rate);
-    }
+    var more_count=((currentContent.length-originalContent.length)<0) ? 0 : currentContent.length-originalContent.length;
+    var correctData=((remove_char_correct-more_count)<0 ? 0 : remove_char_correct-more_count)/originalContent.length;
+    correct_rate=(correctData*100).toFixed(2);
+    $("#correct").html(correct_rate);
     
     var currentInnerHTML='';
     var originalInnerHTML='';
@@ -160,7 +163,7 @@ if (isset(Yii::app()->session['type'])) {
     var error_number=0;
     var missing_number=0;
     var redundant_number=0;
-    right_length[e]=0;
+    right_length[e]=0;0
     for (var l = 0; l < currentContent.length; l++) {
         if (typeof (currentContent[l]) !== 'undefined') {
             if (currentContent[l] !== currentLCS[l] && currentLCS[l]!=='`') {
@@ -174,6 +177,8 @@ if (isset(Yii::app()->session['type'])) {
             }
         }
     }
+    console.log(originalContent);
+    console.log(currentContent);
     for (var i = 0; i < originalContent.length; i++) {
         if (typeof (originalContent[i]) !== 'undefined') {
             if (originalContent[i] !== originalLCS[i]) {
@@ -201,13 +206,14 @@ if (isset(Yii::app()->session['type'])) {
     j=0;
     e=0;
     var e_flag=0;
+    var more_play="";
     for (var i = 0; i < currentContent.length; i++) {
         if (typeof (currentContent[i]) !== 'undefined') {
             if (currentContent[i] !== currentLCS[i] && currentLCS[i]!=='`') {
                 if(currentLCS[i] === '~'){
                     redundant_number++;
                     currentInnerHTML += '<font style="color:blue"><s>' + currentContent[i] + '</s></font>';
-                }else if(typeof (right_content[j-1 ]) !== 'undefined' && i-right_content[j-1 ].length === error_flag[e_flag-1] ){
+                }else if(typeof (right_content[j-1 ]) !== 'undefined' && i-right_content[j-1 ].length === more_play && more_play!==""){
                     while(currentContent[i] !== currentLCS[i]){
                         redundant_number++;
                         currentInnerHTML += '<font style="color:blue"><s>' + currentContent[i] + '</s></font>';
@@ -232,7 +238,7 @@ if (isset(Yii::app()->session['type'])) {
             }
         }
         if(typeof (right_content[j]) !== 'undefined'){
-        if(i+1===flag[j] && currentContent[i] !== currentLCS[i] || i-right_content[j].length+1 === error_flag[e_flag] && i-right_content[j].length+1>=0){
+        if(i+1===flag[j] && currentContent[i] !== currentLCS[i] || i-right_content[j].length+1 === error_flag[e_flag] && i-right_content[j].length+1>=0){     
             if(right_content[j].length > right_length[e]){
                 //少打
                 currentInnerHTML += '<font style="color:red">'+"("+'</font>';
@@ -248,6 +254,7 @@ if (isset(Yii::app()->session['type'])) {
                 }
             }else if(right_content[j].length < right_length[e] ){
                 //多打
+                more_play=error_flag[e_flag];
                 currentInnerHTML += '<font style="color:red">'+"("+'</font>';
                 for(err=0;err < right_content[j].length;err++){
                     error_number++;
@@ -282,9 +289,11 @@ if (isset(Yii::app()->session['type'])) {
         $("#standard_number").html(standard_number);
         $("#answer_number").html(answer_number);
         $("#correct_Number").html(remove_char_correct);
-    if(i==flag[j]){
-        currentInnerHTML += '<font style="color:red">' +"(" + right_content[j] + ")" + '</font>';
-    }
+        $("#error_answer").html(answer_number-<?php echo $correct_Number;?>);
+        $("#standard_answer").html(standard_number-<?php echo $correct_Number;?>);
+//    if(i==flag[j]){
+//        currentInnerHTML += '<font style="color:red">' +"(" + right_content[j] + ")" + '</font>';
+//    }
     
 //    var maxlength=currentContent.length < originalContent.length ? currentContent.length : originalContent.length;
 //    for (var i = 0; i < maxlength; i++) {
