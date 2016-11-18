@@ -117,9 +117,9 @@ if (isset(Yii::app()->session['type'])) {
 ?>
 <script type="text/javascript">
     if('<?php echo $type;?>'==="look"){
-        var currentContent = '<?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?>';
-        var originalContent = '<?php echo $str; ?>';
-        console.log(currentContent.length);
+        <?php $remove_enter= Tool::filterContentOfInputWithYaweiCode($str2); ?>
+        var currentContent = '<?php echo Tool::removeEnter($remove_enter); ?>';
+        var originalContent = '<?php echo Tool::removeEnter($str); ?>';
     }else{
         var currentContent1 = '<?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?>';
         <?php $str1= Tool::filterContentOfInputWithYaweiCode($str2);?>
@@ -178,7 +178,7 @@ if (isset(Yii::app()->session['type'])) {
         if (typeof (originalContent[i]) !== 'undefined') {
             if (originalContent[i] !== originalLCS[i]) {
                 originalInnerHTML += '<font style="color:#f44336">' + originalContent[i] + '</font>';
-                if(originalLCS[i+1] === "`" || originalLCS[i] === "`"){
+                if(originalLCS[i+1] === "`" || originalLCS[i] === "`"|| originalLCS[i]==="~"){
                     flag[j]=window.G_a[j];
                     j++;
                 }
@@ -187,7 +187,7 @@ if (isset(Yii::app()->session['type'])) {
                     if(originalLCS[i] === "`"){
                         k++;
                     }
-                }else if(originalContent[i-1] !== originalLCS[i-1] && originalContent[i+1] !== originalLCS[i+1]){
+                }else if(originalContent[i-1] !== originalLCS[i-1] && originalContent[i+1] !== originalLCS[i+1]|| originalLCS[i]==="~"){
                     right_content[k] +=originalContent[i];
                 }else{
                     right_content[k] +=originalContent[i];
@@ -201,8 +201,6 @@ if (isset(Yii::app()->session['type'])) {
     j=0;
     e=0;
     var e_flag=0;
-    
-    console.log(currentContent);
     for (var i = 0; i < currentContent.length; i++) {
         if (typeof (currentContent[i]) !== 'undefined') {
             if (currentContent[i] !== currentLCS[i] && currentLCS[i]!=='`') {
