@@ -4772,12 +4772,12 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus {
 }
 .icon-navsearch{
     padding: 4px 4px;
-    background: url(../../img/icon_answer.png);
+    background: url(../../img/icon_job.png);
     background-repeat: no-repeat;
 }
 .icon-knowlage{
     padding: 4px 4px;
-    background: url(../../img/icon_answer.png);
+    background: url(../../img/icon_course.png);
     background-repeat: no-repeat;
 }
 .icon-typing{

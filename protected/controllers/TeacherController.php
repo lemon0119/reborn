@@ -4475,10 +4475,10 @@ class TeacherController extends CController {
     public function renderModifyExam($type, $examID) {
         $exam = Exam::model()->find("examID = '$examID'");
         $totalScore = ExamExercise::model()->getTotalScore($examID);
-        if ($type == "key" || $type == "look" || $type == "listen")
+//        if ($type == "key" || $type == "look" || $type == "listen")
             $render = "modifyTypeExam";
-        else
-            $render = "modifyExam";
+//        else
+//            $render = "modifyExam";
 
         $this->render($render, array(
             'exam' => $exam,
@@ -4889,7 +4889,7 @@ class TeacherController extends CController {
         $examID = Exam::model()->insertExam($title, $createPerson);
         Yii::app()->session['examID'] = $examID;
         Yii::app()->session['lastUrl'] = "modifyExam";
-        $this->renderModifyExam("choice", $examID, "");
+        $this->renderModifyExam("key", $examID, "");
     }
 
     public function ActionStuWork() {
@@ -5061,7 +5061,7 @@ class TeacherController extends CController {
         $recordID = $_POST['recordID'];
         $examID = $_POST['examID'];
         $userID = $_POST['userID'];
-        AnswerRecord::model()->updateChoiceSocre($recordID, $userID, 'choice', $examID);
+//        AnswerRecord::model()->updateChoiceSocre($recordID, $userID, 'choice', $examID);
         AnswerRecord::model()->updateKeySocre($recordID, $userID, 'key', $examID);
         AnswerRecord::model()->updateKeySocre($recordID, $userID, 'listen', $examID);
         AnswerRecord::model()->updateKeySocre($recordID, $userID, 'look', $examID);

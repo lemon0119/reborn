@@ -601,5 +601,11 @@ class AnswerRecord extends CActiveRecord {
         }
         }
     }
+    //获得key listen look 的作答结果
+    public function getAnswerResult($recordID) {
+        $sql = "select * from answer_record where recordID = '$recordID' and type in ('key','listen','look')";
+        $result = Yii::app()->db->createCommand($sql)->query();
+        return $result;
+    }
 
 }
