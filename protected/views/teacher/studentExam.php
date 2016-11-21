@@ -22,7 +22,6 @@
                 <th>结束时间</th>
                 <th>时长</th>
                 <th>操作</th>
-                <th>统计</th>
             </tr>
         </thead>
                 <tbody>        
@@ -64,11 +63,7 @@
                             <?php }else{?>
                                 <a href="./index.php?r=teacher/stuExam&&workID=<?php echo $classexam['workID']?>&&classID=<?php echo $classexam['classID']?>&&page=<?php echo $pages->currentPage+1?>&&selectClassID=<?php echo $selectClassID?>" style="color:gray">查看</a> 
                             <?php }?>
-
                         </td>
-                        <td>        
-         <a href="javascript:void(0);" onclick="examdata(<?php echo $classexam['workID'];?>)" style="color:#37D518">统计</a>      
- </td>
 
                     </tr>      
                     <?php }?>
@@ -200,7 +195,7 @@ function mark(){
        }
        function examdata(workID)
       {
-           window.open("./index.php?r=teacher/WatchExamData&&workID="+workID+"&&classID=<?php echo $classexam['classID']?>", 'newwindow', 'height=600,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,')      
+           window.open("./index.php?r=teacher/WatchExamData&&workID="+workID+"&&classID=<?php if(isset( $classexam['classID'])){echo $classexam['classID'];}?>", 'newwindow', 'height=600,width=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,')      
       }
 </script>
 

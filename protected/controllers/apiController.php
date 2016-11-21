@@ -484,11 +484,6 @@ class apiController extends Controller {
              if($result){
                 array_push($all, $result);  
              }
-             $answerid = $result['answerID'];
-             $result2 = AnswerData::model()->find("answerID = '$answerid'");
-             if($result2 != NULL){
-             array_push($all2, $result2);
-             }
          }
          //$all=  AnswerRecord::model()->findAll('type=? and exerciseID=? and isExam=?',array($type,$exerciseID,$isExam));
          $arrayData = Array();
@@ -500,16 +495,6 @@ class apiController extends Controller {
          $allData=Array();
          if($all){
             foreach ($all as $a) {
-            foreach ($all2 as $a2) {
-            $correctNumber=$a2['correct_Number'];
-            $correctNumber2=$a2['correct_Number'];
-                }
-                 //正确字数
-                if(strpos($correctNumber,"&") === false){     
-                $correctNumber=$correctNumber."&".$correctNumber;
-                 }
-                 $n=  strrpos($correctNumber, "&");
-                 $correctNumber= substr($correctNumber, $n+1); 
                 //correct
                  $correct=$a['ratio_correct'];
                  $correct2=$a['ratio_correct'];
@@ -560,9 +545,9 @@ class apiController extends Controller {
                  }
                  $studentName=Student::model()->find('userID=?',array($student))['userName'];
                  $arrayData = ["studentID"=>$student,"studentName"=>$studentName,"speed"=>$speed,"maxSpeed"=>$maxSpeed,"correct"=>$correct,"time"=>$student,"backDelete"=>$backDelete,'maxInternalTime'=>$maxInternalTime,
-                 'correctNumber'=>$correctNumber,];
+                 ];
                  $arrayData2 = ["speed"=>$speed2,"maxSpeed"=>$maxSpeed2,"correct"=>$correct2,"backDelete"=>$backDelete2,'maxInternalTime'=>$maxInternalTime2,
-                 'correctNumber'=>$correctNumber,];
+                 ];
 
                  array_push($data, $arrayData);
                  array_push($data2, $arrayData2);
@@ -584,12 +569,7 @@ class apiController extends Controller {
                 $correct=$da['correct'];     
                 $corrects=explode("&", $correct);
                 $maxCorrectNum=  (count($corrects)>$maxCorrectNum)?count($corrects):$maxCorrectNum;
-                
-                 //正确字数
-                $correctNumber=$da['correctNumber'];     
-                $correctNumbers=explode("&", $correctNumber);
-                $maxcorrectNumber=  (count($correctNumbers)>$maxcorrectNumber)?count($correctNumbers):$correctNumber;
-                
+              
                 $speed=$da['speed'];
                 $speeds=explode("&", $speed);
                 $maxSpeedNum=  (count($speeds)>$maxSpeedNum)?count($speeds):$maxSpeedNum;
@@ -636,9 +616,6 @@ class apiController extends Controller {
                 $maxInternalTimes=explode("&", $maxInternalTime);
                 
                 //正确字数
-                $correctNumber = $d['correctNumber'];
-                $correctNumbers =  explode("&", $correctNumber);
-                
                 if($choice=='speed'){
                     foreach ($speeds as $key => $value) {
                         if(isset($allSpeed[$key])){
@@ -679,17 +656,7 @@ class apiController extends Controller {
                             $num4[]+=1;
                         }
                     }
-                }else if($choice=='correct_Number'){
-                    foreach ($correctNumbers as $key => $value) {
-                        if(isset($allcorrectNumber[$key])){
-                            $allcorrectNumber[$key]+=$value;
-                            $num6[$key]++;
-                        }else{
-                            $allcorrectNumber[]+=$value;
-                            $num6[]+=1;
-                        }
-                    }
-                } else if($choice=='maxInternalTime'){
+                }else if($choice=='maxInternalTime'){
                     foreach ($maxInternalTimes as $key => $value) {
                         if(isset($allMaxInternalTime[$key])){
                             $allMaxInternalTime[$key]+=$value;
@@ -728,15 +695,7 @@ class apiController extends Controller {
                     $n=$key*2;
                     $arrayData4[] = ["duration"=>$n,"backDelete"=>$allDelete[$key]];
                 }
-            }
-            else if($choice=='correct_Number'){
-                foreach ($allcorrectNumber as $key => $value) {
-                    $allcorrectNumber[$key]=$allcorrectNumber[$key]/$num4[$key];
-                    $n=$key*2;
-                    $arrayData4[] = ["duration"=>$n,"correctNumber"=>$allcorrectNumber[$key]];
-                }
-            }
-            else if($choice=='maxInternalTime'){
+            }else if($choice=='maxInternalTime'){
                 foreach ($allMaxInternalTime as $key => $value) {
                     $allMaxInternalTime[$key]=$allMaxInternalTime[$key]/$num4[$key];
                     $n=$key*2;
@@ -2085,9 +2044,9 @@ class apiController extends Controller {
             foreach ($look as $k){
                  $str1 = $k['answer'];
                  $count = Tool::filterContentOfInputWithYaweiCode($str1);
-                 $looktotal = strlen($count);
+                 $looktotal = (strlen($count)/3);
+                 error_log($looktotal);
                  array_push($look, $looktotal);
- 
             }
                  $c = array_sum($look);
             }
@@ -2101,7 +2060,8 @@ class apiController extends Controller {
              foreach ($listen as $k){
                  $str2 = $k['answer'];
                  $count = Tool::filterContentOfInputWithYaweiCode($str2);
-                 $listentotal = strlen($count);
+                 $listentotal = (strlen($count)/3);
+                 error_log(strlen($count));
                  array_push($listen, $listentotal);
             }
                  $b = array_sum($listen);    
@@ -2123,7 +2083,256 @@ class apiController extends Controller {
         }
         $this->renderJSON(['student'=>$student,'SID'=>$SID,'Dili'=>$Dili,]);
         }
-    
+        
+        
+        public function actionGetClassExerciseRanking(){
+          $isexam = $_POST['isexam'];
+          $workID = $_POST['workID'];
+//          $exerciseID =$_POST['exerciseID'];
+          if($isexam==1){
+          $classwork = ExamRecord::model()->findAll("workID = '$workID'");
+          }
+          else{
+          $classwork = SuiteRecord::model()->findAll("workID = '$workID'");}
+          foreach ($classwork as $work){
+          $recordID = $work['recordID'];
+          $sql = "SELECT * FROM answer_record where recordID = '$recordID' and type in('look','listen','key')";
+          $answer = Yii::app()->db->createCommand($sql)->query();
+          foreach ($answer as $ans){
+          $answerID = $ans['answerID'];
+        //正确率
+        $correct=$ans['ratio_correct'];
+        $correct2=$ans['ratio_correct'];
+        if(strpos($correct,"&") === false){     
+        $correct=$correct."&".$correct;
+                 }
+        $n=  strrpos($correct, "&");
+        $correct= substr($correct, $n+1);
+        //回删
+        $backDelete=$ans['ratio_backDelete'];
+        $backDelete2=$ans['ratio_backDelete'];
+                 if(strpos($backDelete,"&") === false){     
+                      $backDelete=$backDelete."&".$backDelete;
+                 }
+                 $n=  strrpos($backDelete, "&");
+                 $backDelete= substr($backDelete, $n+1); 
+                 
+         //速度        
+         $speed=$ans['ratio_speed'];
+         $speed2=$ans['ratio_speed'];
+              if(strpos($speed,"&") === false){     
+                   $speed=$speed."&".$speed;
+              }
+              $n=  strrpos($speed, "&");
+              $speed= substr($speed, $n+1); 
+              //创建人
+              $userID = $ans['createPerson'];
+              //类型
+              $type = $ans['type'];
+              $exerciseID = $ans['exerciseID'];
+          
+        $sql = "SELECT * FROM rank_answer where answerID = '$answerID'";
+        $oldans= Yii::app()->db->createCommand($sql)->query();
+        $scccc = count($oldans);
+        if($scccc==1){
+        $connection = Yii::app()->db;
+        $sql = "UPDATE rank_answer SET correct = '$correct',speed='$speed',backDelete = '$backDelete',speed ='$speed' WHERE answerID = '$answerID'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        
+                  $sql = "SELECT * FROM answer_data where answerID = '$answerID'";
+          $answer2 = Yii::app()->db->createCommand($sql)->query();
+          $scc = count($answer2);
+            if($scc!=0){
+         foreach ($answer2 as $ans2){  
+         //少打字数        
+        $missing=$ans2['missing_Number'];
+        $missing2=$ans2['missing_Number'];
+        if(strpos($missing,"&") === false){     
+        $missing=$missing."&".$missing;
+                 }
+        $n=  strrpos($missing, "&");
+        $missing= substr($missing, $n+1);
+        error_log($missing);
+        //多打字数
+        $redundant=$ans2['redundant_Number'];
+        $redundant=$ans2['redundant_Number'];
+        if(strpos($redundant,"&") === false){     
+        $redundant=$redundant."&".$redundant;
+                 }
+        $n=  strrpos($redundant, "&");
+        $redundant= substr($redundant, $n+1);
+        error_log($redundant);
+        
+        $oanswerID = $ans2['answerID'];
+        $connection = Yii::app()->db;
+        $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        }
+        }
+        }
+        else{ 
+        $studentname=  Student::model()->find("userID= '$userID'"); 
+        $name = $studentname['userName'];
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID')";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+          $sql = "SELECT * FROM answer_data where answerID = '$answerID'";
+          $answer2 = Yii::app()->db->createCommand($sql)->query();
+          $scc = count($answer2);
+            if($scc!=0){
+         foreach ($answer2 as $ans2){  
+         //少打字数        
+        $missing=$ans2['missing_Number'];
+        $missing2=$ans2['missing_Number'];
+        if(strpos($missing,"&") === false){     
+        $missing=$missing."&".$missing;
+                 }
+        $n=  strrpos($missing, "&");
+        $missing= substr($missing, $n+1);
+        //多打字数
+        $redundant=$ans2['redundant_Number'];
+        $redundant=$ans2['redundant_Number'];
+        if(strpos($redundant,"&") === false){     
+        $redundant=$redundant."&".$redundant;
+                 }
+        $n=  strrpos($redundant, "&");
+        $redundant= substr($redundant, $n+1);
+        
+        $oanswerID = $ans2['answerID'];
+        $connection = Yii::app()->db;
+        $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        }
+        }
+        }
+          }
+        }
+          $student =11;
+         $this->renderJSON(['student'=>$student]);   
+        }
+        
+        public function actionShowSuiteRank(){
+         $workID = $_POST['workID'];
+         $type = $_POST['type'];
+         $exerciseID = $_POST['exerciseID'];
+         $isexam = $_POST['isexam'];
+         error_log($exerciseID);
+          if(isset($_POST['choice'])){
+          $choice =   $_POST['choice'];
+         }else{
+         $choice = 'correct';}
+            $name = array();
+            $speed = array();
+            $correct = array();
+            $missing = array();
+            $redundant = array();
+            $backDelete = array();
+         if($type==1){
+             $type='key';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }
+        $sql = "select * FROM rank_answer WHERE workID = '$workID' and type = '$type' and exerciseID ='$exerciseID' and isexam = '$isexam' Order By $choice Desc";
+        $criteria   =   new CDbCriteria();
+        $rank  =   Yii::app()->db->createCommand($sql)->queryAll();
+        foreach ($rank as $r){
+            array_push($name, $r['userName']);
+            array_push($speed, $r['speed']);
+            array_push($correct, $r['correct']);
+            array_push($missing, $r['missing_Number']);
+            array_push($redundant, $r['redundant_Number']);
+            array_push($backDelete, $r['backDelete']);
+        }   
+          $this->renderJSON(['name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
+        }
+    public function actionGetExerciseRanking(){
+        $exerciseID = $_POST['exerciseID'];
+        $isExam = $_POST['isexam']; 
+        $sql = "SELECT MAX(squence),studentID,classExerciseID,ratio_speed,ratio_correct,ratio_backDelete FROM `classexercise_record` WHERE classExerciseID = '$exerciseID' GROUP BY studentID";
+        $criteria   =   new CDbCriteria();
+        $exerciseRecord  =   Yii::app()->db->createCommand($sql)->queryAll();
+        foreach ($exerciseRecord as $Record){
+          $studentID =  $Record['studentID'];
+          //速度
+          $speed=$Record['ratio_speed'];
+         $speed2=$Record['ratio_speed'];
+          if(strpos($speed,"&") === false){     
+                   $speed=$speed."&".$speed;
+              }
+          $n=  strrpos($speed, "&");
+          $speed= substr($speed, $n+1); 
+              //正确率
+          $correct=$Record['ratio_correct'];
+          $correct2=$Record['ratio_correct'];
+          if(strpos($correct,"&") === false){     
+          $correct=$correct."&".$correct;
+           }
+          $n=  strrpos($correct, "&");
+          $correct= substr($correct, $n+1);  
+        //回删
+        $backDelete=$Record['ratio_backDelete'];
+        $backDelete2=$Record['ratio_backDelete'];
+        if(strpos($backDelete,"&") === false){     
+        $backDelete=$backDelete."&".$backDelete;
+                 }
+        $n=  strrpos($backDelete, "&");
+        $backDelete= substr($backDelete, $n+1);
+        error_log(111);
+        $sql = "SELECT * FROM `rank_answer` WHERE exerciseID = '$exerciseID' and userID ='$studentID'";
+        $criteria   =   new CDbCriteria();
+        $exer  =   Yii::app()->db->createCommand($sql)->queryAll();
+        $scccc = count($exer);
+        if($scccc==1){
+        $connection = Yii::app()->db;
+        $sql = "UPDATE rank_answer SET correct = '$correct',speed='$speed',backDelete = '$backDelete' WHERE exerciseID = '$exerciseID' and userID ='$studentID'";
+        $command = $connection->createCommand($sql);
+        $command->execute();     
+        }  else {
+        $studentname=  Student::model()->find("userID= '$studentID'"); 
+        $name = $studentname['userName'];
+        $answerID = Tool::createID();
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,userName,isExam,exerciseID) values ('$correct','$answerID','$backDelete','$speed','$studentID','$name','$isExam','$exerciseID')";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        }
+        }
+        $student =11;
+        $this->renderJSON(['student'=>$student]);  
+    }
+    public function actionShowExerciseRank(){
+         $exerciseID = $_POST['exerciseID'];
+         $isexam = $_POST['isexam'];
+          if(isset($_POST['choice'])){
+          $choice =   $_POST['choice'];
+         }else{
+         $choice = 'correct';}
+            $name = array();
+            $speed = array();
+            $correct = array();
+            $missing = array();
+            $redundant = array();
+            $backDelete = array();
+        $sql = "select * FROM rank_answer WHERE exerciseID = '$exerciseID' and isexam = '$isexam' Order By $choice Desc";
+        $criteria   =   new CDbCriteria();
+        $rank  =   Yii::app()->db->createCommand($sql)->queryAll();
+        foreach ($rank as $r){
+            array_push($name, $r['userName']);
+            array_push($speed, $r['speed']);
+            array_push($correct, $r['correct']);
+            array_push($missing, $r['missing_Number']);
+            array_push($redundant, $r['redundant_Number']);
+            array_push($backDelete, $r['backDelete']);
+        }   
+          $this->renderJSON(['name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
+    }
+        
 }
 
 
