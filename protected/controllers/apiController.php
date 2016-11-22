@@ -2254,6 +2254,19 @@ class apiController extends Controller {
     public function actionGetExerciseRanking(){
         $exerciseID = $_POST['exerciseID'];
         $isExam = $_POST['isexam']; 
+        $type = $_POST['type'];
+        error_log($type);
+         if($type==1){
+             $type='speed';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }else if($type==4){
+             $type='correct';
+         }else if($type==5){
+             $type='free';
+         }
         $sql = "SELECT MAX(squence),studentID,classExerciseID,ratio_speed,ratio_correct,ratio_backDelete FROM `classexercise_record` WHERE classExerciseID = '$exerciseID' GROUP BY studentID";
         $criteria   =   new CDbCriteria();
         $exerciseRecord  =   Yii::app()->db->createCommand($sql)->queryAll();
@@ -2298,7 +2311,7 @@ class apiController extends Controller {
         $name = $studentname['userName'];
         $answerID = Tool::createID();
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,userName,isExam,exerciseID) values ('$correct','$answerID','$backDelete','$speed','$studentID','$name','$isExam','$exerciseID')";
+        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,userName,isExam,exerciseID,type) values ('$correct','$answerID','$backDelete','$speed','$studentID','$name','$isExam','$exerciseID','$type')";
         $command = $connection->createCommand($sql);
         $command->execute();
         }
