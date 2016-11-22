@@ -126,6 +126,8 @@ if (isset(Yii::app()->session['type'])) {
         <?php $remove_enter= Tool::filterContentOfInputWithYaweiCode($str2); ?>
         var currentContent = '<?php echo Tool::removeEnter($remove_enter); ?>';
         var originalContent = '<?php echo Tool::removeEnter($str); ?>';
+        var character_current=0;
+        var character_original=0;
     }else{
         var currentContent1 = '<?php echo Tool::filterContentOfInputWithYaweiCode($str2); ?>';
         <?php $str1= Tool::filterContentOfInputWithYaweiCode($str2);?>
@@ -146,6 +148,7 @@ if (isset(Yii::app()->session['type'])) {
     var standard_number=originalContent.length;
     var answer_number=currentContent.length;
     var remove_char_correct=lcs.getSubString(3).length;
+//    console.log(lcs.getSubString(4).length);
     var more_count=((currentContent.length-originalContent.length)<0) ? 0 : currentContent.length-originalContent.length;
     var correctData=((remove_char_correct-more_count)<0 ? 0 : remove_char_correct-more_count)/originalContent.length;
     correct_rate=(correctData*100).toFixed(2);
@@ -177,8 +180,6 @@ if (isset(Yii::app()->session['type'])) {
             }
         }
     }
-    console.log(originalContent);
-    console.log(currentContent);
     for (var i = 0; i < originalContent.length; i++) {
         if (typeof (originalContent[i]) !== 'undefined') {
             if (originalContent[i] !== originalLCS[i]) {
@@ -208,6 +209,7 @@ if (isset(Yii::app()->session['type'])) {
     var e_flag=0;
     var more_play="";
     for (var i = 0; i < currentContent.length; i++) {
+        console.log(j);
         if (typeof (currentContent[i]) !== 'undefined') {
             if (currentContent[i] !== currentLCS[i] && currentLCS[i]!=='`') {
                 if(currentLCS[i] === '~'){
@@ -281,6 +283,7 @@ if (isset(Yii::app()->session['type'])) {
     }
     $("#error_number").html(error_number);
     $("#missing_number").html(missing_number);
+    console.log(missing_number);
     $("#redundant_number").html(redundant_number);
         standard_number=originalContent.length;
         answer_number=currentContent.length;
