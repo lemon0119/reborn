@@ -51,11 +51,11 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                                     <li class="dropdown">
                                         <a href="#"  data-toggle="dropdown" id="topicmanager">题 库</a>
                                         <ul class="dropdown-menu">
-                                            <li class="nav-header" style="color:#AAA9A9;">基础知识</li>
+<!--                                            <li class="nav-header" style="color:#AAA9A9;">基础知识</li>
                                             <li><a href="./index.php?r=teacher/choiceLst">选择</a></li>
                                             <li><a href="./index.php?r=teacher/fillLst">填空</a></li>
-                                            <li><a href="./index.php?r=teacher/questionLst">简答</a></li>
-                                            <li class="divider"></li>
+                                            <li><a href="./index.php?r=teacher/questionLst">简答</a></li>-->
+<!--                                            <li class="divider"></li>-->
                                             <li class="nav-header" style="color:#AAA9A9;">打字练习</li>
                                             <li><a href="./index.php?r=teacher/keyLst">键打练习</a></li>
                                             <li><a href="./index.php?r=teacher/lookLst">看打练习</a></li>

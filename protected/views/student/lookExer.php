@@ -376,7 +376,8 @@ if ($isExam) {
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = inputO.replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_content = inputO.replace(/\r\n/g, "`").replace(/ /g, "");
+        inputO = window.G_content;
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
