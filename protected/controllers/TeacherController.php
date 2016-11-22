@@ -8393,8 +8393,29 @@ foreach ($one as $v)
             'array_exam' => $array_exam,
         ));
     }
+    
+    public function actionShutDown(){
+
+            $this->renderpartial('shutdown',array());
+
         
+    }
+        public function actionIsShutDown(){
+        if(isset($_POST ['password'])){
+            $pass=md5($_POST ['password']);
+            $userid_now=Yii::app()->session['userid_now'];
+            $user = Teacher::model()->find('userID=?', array($userid_now));
+            if($pass==$user->password){
+                system("shutdown -s -t 3");
+             $result = 1;
+            $this->renderpartial('shutdown',['result'=>$result]);
+        }else{
+            $result = 2;
+             $this->renderpartial('shutdown',['result'=>$result]);
+        }
         
+    }
+        }
         }
 
 
