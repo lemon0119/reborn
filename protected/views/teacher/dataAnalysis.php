@@ -2,7 +2,7 @@
 <style>
     .bb{
         color:black;
-        margin-left: 20px;
+        
         margin-top: 10px;
         text-decoration: none;
         
@@ -12,7 +12,25 @@
         text-decoration: none;
     }
     .bb,.bbb:hover{
+        margin-top: 8px;
         text-decoration: none;
+    }
+    .Iconr{
+        width:220px;
+        background:url(<?php echo IMG_URL; ?>/btn_course_option.png);
+        background-size:100%;
+    }
+    .Iconrc{
+    margin-left: 60px;   
+    }
+    .Iconr:hover{
+        background:url(<?php echo IMG_URL; ?>/btn_course_opt.png);
+        background-size:100%; 
+    }
+    .Iconr2{
+        width:220px;
+        background:url(<?php echo IMG_URL; ?>/btn_course_opt.png);
+        background-size:100%; 
     }
 </style>
 <div class="span3">
@@ -80,7 +98,7 @@
 <div class="span9" id="sp" style="display: none;height: 758px;">
     <div style="position: relative;top: -15px;">
         <div  style="width:100%;overflow: auto;height:110px;">
-            <table id="ul1" class="ul1" style="margin-left: -20px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
+            <table id="ul1" class="ul1" style="margin-left: 0px;overflow: auto;height:100px;list-style: none;border-radius: 3px;color: gray;position: relative;float:left;overflow: auto;width:100%;color:black;height:100px;">
             </table>
         </div>
         
@@ -98,6 +116,8 @@
                             <input type="text" value="123"  id="type" style="display:none;" />
                             <input type="text" value="123"  id="choice"  style="display:none;"/>
                             <input type="text" value="123"  id="isExam"  style="display:none;"/>
+                            <input type="text" value="123456"  id="qingchu"  style="display:none;"/>
+                            <input type="text" value="123"  id="123456"  style="display:none;"/>
                             <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率(%)</a>
                         </td>  
                     
@@ -294,11 +314,12 @@ function getSuiteExercise(suiteID,workID){
                            content=content;
                        else
                            content=content.substr(0,10)+"...";
-                       type=type+": "+content;
+                       type="<font style='color:#F46401'>"+type+"</font>";
+                       type=type+"<br> "+content;
                       var str;
                       if(i%3==0)
                           str="";
-                      str += "<td><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='ShowSuiteRank("+data[i]['workID']+","+data[i][0]['exerciseID']+","+data[i]['type']+")'>"+type+"</a></td>";       
+                      str += "<td><div class='Iconr' id = '"+i+"'><div class='Iconrc'><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='ShowSuiteRank("+data[i]['workID']+","+data[i][0]['exerciseID']+","+data[i]['type']+"),changeshow("+i+")'>"+type+"</a></div></div></td>";       
                       var li;
                       if(i%3==0){
                          li = document.createElement("tr");  
@@ -424,7 +445,6 @@ function getClassExer(lessonID){
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
-    
     document.getElementById('id').value="";
     document.getElementById('classID').value="";
     document.getElementById('exerciseID').value="";
@@ -482,11 +502,12 @@ function getClassExer(lessonID){
                             content=content;
                         else
                             content=content.substr(0,10)+"...";
-                       type=type+": "+content;
+                       type="<font style='color:#F46401'>"+type+"</font>";
+                       type=type+"<br> "+content;
                       var str;
                       if(i%3==0)
                           str="";
-                      str+= "<td><a style='cursor:pointer;' class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='ShowExerciseRank("+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";   
+                      str+= "<td><div class='Iconr' id='"+i+"'><div class='Iconrc'><a style='cursor:pointer;' class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getExerciseRanking("+data[i]['exerciseID']+",2,"+ data[i]['type']+"),ShowExerciseRank("+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+"),changeshow("+i+")'>"+type+"</a></div></div></td>";   
                       var li;
                       if(i%3==0){
                          li = document.createElement("tr");      
@@ -563,11 +584,12 @@ function getExamExercise(examID,workID){
                             content=content;
                         else
                             content=content.substr(0,10)+"...";
-                       type=type+": "+content;
+                        type="<font style='color:#F46401'>"+type+"</font>";
+                       type=type+"<br> "+content;
                        var str;
                        if(i%3==0)
                            str="";
-                       str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='ShowExamRank("+data[i]['workID']+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                       str += "<td><div class='Iconr' id='"+i+"'><div class='Iconrc'><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='ShowExamRank("+data[i]['workID']+","+data[i][0]['exerciseID']+","+ data[i]['type']+"),changeshow("+i+")'>"+type+"</a></div></div></td>";       
                       var li ;
                       if(i%3==0){
                          li= document.createElement("tr");   
@@ -749,7 +771,7 @@ function ShowExamRank(workID,exerciseID,type,choice){
          });   
 }
 
-function getExerciseRanking(exerciseID,isexam){
+function getExerciseRanking(exerciseID,isexam,type){
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -757,6 +779,7 @@ function getExerciseRanking(exerciseID,isexam){
              data: {
                     exerciseID:exerciseID,
                     isexam:isexam,
+                    type:type,
              },
          success: function(data){
         document.getElementById("Diligence").style.display='none';
@@ -829,5 +852,10 @@ function ShowExerciseRank(workID,exerciseID,choice){
             }
          });   
 }
-
+function changeshow(i){
+   var clean = document.getElementById("qingchu").value;
+   document.getElementById(clean).className = 'Iconr';
+   document.getElementById(i).className = 'Iconr2';
+   document.getElementById("qingchu").value=i;
+}
 </script>

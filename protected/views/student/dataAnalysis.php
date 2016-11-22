@@ -2,7 +2,7 @@
 <style>
     .bb{
         color:black;
-        margin-left: 20px;
+        margin-left: 0px;
         margin-top: 10px;
         text-decoration: none;
         
@@ -13,6 +13,23 @@
     }
     .bb,.bbb:hover{
         text-decoration: none;
+    }
+   .Iconr{
+        width:220px;
+        background:url(<?php echo IMG_URL; ?>/btn_course_option.png);
+        background-size:100%;
+    }
+    .Iconrc{
+    margin-left: 60px;   
+    }
+    .Iconr:hover{
+        background:url(<?php echo IMG_URL; ?>/btn_course_opt.png);
+        background-size:100%; 
+    }
+    .Iconr2{
+        width:220px;
+        background:url(<?php echo IMG_URL; ?>/btn_course_opt.png);
+        background-size:100%; 
     }
 </style>
 <div class="span3">
@@ -95,6 +112,8 @@
                             <input type="text" value="123"  id="type" style="display:none;" />
                             <input type="text" value="123"  id="choice"  style="display:none;"/>
                             <input type="text" value="123"  id="isExam"  style="display:none;"/>
+                            <input type="text" value="123456"  id="qingchu"  style="display:none;"/>
+                            <input type="text" value="123"  id="123456"  style="display:none;"/>
                             <a id="correct" style="text-decoration-line: none">正确率(%)</a>
                         </td>  
                         <td style=" width: 10px"></td>
@@ -213,7 +232,7 @@ $(document).ready(function(){
     $("#sw-chat").click(function() {
         $("#chat-box").toggle(200);
     });
-        getBackTime();
+        //getBackTime();
     
 });
 function che(){
@@ -289,11 +308,12 @@ function getSuiteExercise(suiteID,workID){
                            content=content;
                        else
                            content=content.substr(0,10)+"...";
-                       type=type+": "+content;
+                       type="<font style='color:#F46401'>"+type+"</font>";
+                       type=type+"<br> "+content;
                       var str;
                       if(i%3==0)
                           str="";
-                      str += "<td ><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";       
+                      str += "<td ><div class='Iconr' id = '"+i+"'><div class='Iconrc'><a title='"+allType+"' class='bb' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"0"+","+data[i][0]['exerciseID']+","+ data[i]['type']+"),changeshow("+i+")'>"+type+"</a></div></div></td>";       
                       var li;
                       if(i%3==0){
                          li = document.createElement("tr");  
@@ -488,11 +508,12 @@ function getClassExer(lessonID){
                             content=content;
                         else
                             content=content.substr(0,10)+"...";
-                       type=type+": "+content;
+                       type="<font style='color:#F46401'>"+type+"</font>";
+                       type=type+"<br> "+content;
                       var str;
                       if(i%3==0)
                           str="";
-                      str+= "<td><a style='cursor:pointer;' class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getClassExerRankingBefBef("+"0"+","+i+","+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+")'>"+type+"</a></td>";   
+                      str+= "<td><div class='Iconr' id = '"+i+"'><div class='Iconrc'><a style='cursor:pointer;' class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getClassExerRankingBefBef("+"0"+","+i+","+<?php echo $_GET['classID']?>+","+data[i]['exerciseID']+","+ data[i]['type']+"),changeshow("+i+")'>"+type+"</a></div></div></td>";   
                       var li;
                       if(i%3==0){
                          li = document.createElement("tr");      
@@ -588,11 +609,12 @@ function getExamExercise(examID,workID){
                             content=content;
                         else
                             content=content.substr(0,10)+"...";
+                        type="<font style='color:#F46401'>"+type+"</font>";
 //                       type=type+": "+content;
                        var str;
                        if(i%3==0)
                            str="";
-                       str += "<td><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+")'>"+type+"<br/>"+"&nbsp&nbsp&nbsp&nbsp&nbsp"+content+"</a></td>";       
+                       str += "<td><div class='Iconr' id = '"+i+"'><div class='Iconrc'><a style='cursor:pointer;'class='bb' title='"+allType+"' id='kk"+i+"'"+" onclick='getStudentRankingBefBef("+"1"+","+i+","+data[i]['workID']+","+"1"+","+data[i][0]['exerciseID']+","+ data[i]['type']+"),changeshow("+i+")'>"+type+"<br/>"+content+"</a></div></div></td>";       
                       var li ;
                       if(i%3==0){
                          li= document.createElement("tr");   
@@ -1221,6 +1243,12 @@ function getClassExerRankingAll(ii,seq,classID,exerciseID,type,id){
                 console.log(xhr, "Failed");
             }
          }); 
+}
+function changeshow(i){
+   var clean = document.getElementById("qingchu").value;
+   document.getElementById(clean).className = 'Iconr';
+   document.getElementById(i).className = 'Iconr2';
+   document.getElementById("qingchu").value=i;
 }
 
 </script>

@@ -57,7 +57,7 @@
                 ?>                    
                 <tr>
                     <td class="font-center" style="width: 40px"><?php if($exam_is_open==false){?><input type="checkbox" name="checkbox[]" value="<?php echo $exam['examID']; ?>" /><?php } ?> </td>
-                    <td class="font-center table_schedule" style="cursor: pointer;width: 100px" onclick="changeExameName(<?php echo $exam['examID']; ?>, '<?php echo $exam['examName'] ?>')"><?php echo $exam['examName']; ?></td>                        
+                    <td class="font-center table_schedule" style="cursor: pointer;width: 100px" onclick="changeExameName(<?php echo $exam['examID']; ?>, '<?php echo str_replace('"',"’",str_replace("'","’",$exam['examName'])); ?>')"><?php echo $exam['examName']; ?></td>                        
                     <td class="font-center">
                         <?php
                         if ($isOpen == false) {
@@ -108,7 +108,7 @@
 
 
 <script>
-    function changeExameName(examID, examName) {
+    function changeExameName(examID,examName) {
         window.wxc.xcConfirm("原题目名为“" + examName + "”请重新命名：", window.wxc.xcConfirm.typeEnum.input, {
             onOk: function (v) {
                 $.ajax({
