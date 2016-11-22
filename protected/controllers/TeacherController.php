@@ -2200,7 +2200,7 @@ class TeacherController extends CController {
         }
 
 
-        if (Yii::app()->session['lastUrl'] == "KeyLst") {
+        if (Yii::app()->session['lastUrl'] == "keyLst") {
             $result = KeyType::model()->getKeyLst("", "");
             $keyLst = $result['keyLst'];
             $pages = $result['pages'];

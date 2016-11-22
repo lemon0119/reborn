@@ -613,7 +613,7 @@ function getExamExercise(examID,workID){
              url: "index.php?r=student/saveExamData",
              data: {examID:examID,
                  workID:workID,
-                 classID:"<?php $classID ?>"
+                 classID:"<?php echo $classID ?>"
                 },
              success: function(data){
              },
