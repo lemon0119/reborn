@@ -348,7 +348,7 @@ class TeacherController extends CController {
                 return;
             }
         }
-        if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint") {
+        if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint"||$_FILES["file"]["type"] == "application/vnd.openxmlformats-officedocument.presentationml.presentation") {
             if ($_FILES["file"]["size"] < 30000000) {
                 if ($_FILES["file"]["error"] > 0) {
                     $result = "Return Code: " . $_FILES["file"]["error"];

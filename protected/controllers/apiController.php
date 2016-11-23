@@ -2225,6 +2225,7 @@ class apiController extends Controller {
           $choice =   $_POST['choice'];
          }else{
          $choice = 'correct';}
+            $id = array();
             $name = array();
             $speed = array();
             $correct = array();
@@ -2242,6 +2243,7 @@ class apiController extends Controller {
         $criteria   =   new CDbCriteria();
         $rank  =   Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($rank as $r){
+            array_push($id, $r['userID']);
             array_push($name, $r['userName']);
             array_push($speed, $r['speed']);
             array_push($correct, $r['correct']);
@@ -2249,7 +2251,7 @@ class apiController extends Controller {
             array_push($redundant, $r['redundant_Number']);
             array_push($backDelete, $r['backDelete']);
         }   
-          $this->renderJSON(['name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
+          $this->renderJSON(['id'=>$id,'name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
         }
     public function actionGetExerciseRanking(){
         $exerciseID = $_POST['exerciseID'];
@@ -2326,6 +2328,7 @@ class apiController extends Controller {
           $choice =   $_POST['choice'];
          }else{
          $choice = 'correct';}
+            $id = array();
             $name = array();
             $speed = array();
             $correct = array();
@@ -2336,6 +2339,7 @@ class apiController extends Controller {
         $criteria   =   new CDbCriteria();
         $rank  =   Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($rank as $r){
+            array_push($id, $r['userID']);
             array_push($name, $r['userName']);
             array_push($speed, $r['speed']);
             array_push($correct, $r['correct']);
@@ -2343,7 +2347,7 @@ class apiController extends Controller {
             array_push($redundant, $r['redundant_Number']);
             array_push($backDelete, $r['backDelete']);
         }   
-          $this->renderJSON(['name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
+          $this->renderJSON(['id'=>$id,'name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
     }
         
 }

@@ -42,6 +42,9 @@ echo "<script>var role='$role';</script>";
                     ?>
                 </span></td>           
         </tr>
+        <tr>
+            <td><span class="normalfont fr" style="font-weight: bolder;color:#7c8489; margin-right: 90px">>></span><a href="#" onclick="refre()" class="normalfont fr" style="cursor: pointer">开始答题</a></td>
+        </tr>
     </div>
 
     <!-- local/remote videos container --> 
@@ -122,6 +125,7 @@ echo "<script>var role='$role';</script>";
 </div>
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script> <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <script>
+    
                 //显示全屏图像
                 var exerciseIsOpenNow = new Array();
                 var allExerciseName = new Array();
@@ -161,7 +165,10 @@ echo "<script>var role='$role';</script>";
                         docelem.msRequestFullscreen();
                     }
                 }
-
+                //开始答题
+                function refre(){
+                    location.reload();
+                }
                 function delPress() {
                     document.onkeydown = function (event) {
                         e = event ? event : (window.event ? window.event : null);

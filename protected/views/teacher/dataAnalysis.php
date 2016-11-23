@@ -38,30 +38,30 @@
      <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">   
          
-         <li ><div id="id_Diligence"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">勤奋度</a></div></li> 
-         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">练习</a></div></li>
+         <li ><div id="id_Diligence"><i class="icon-list"></i>&nbsp;<a href="#" style="position:relative;top:7px;left:" class="ahover">勤奋度</a></div></li> 
+         <li ><div id="id_classExercise"><i class="icon-list"></i>&nbsp;<a href="#" class="ahover" style="position:relative;top:7px;left:">练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
-                  <li><div ><i class="icon-list"></i><a href="#" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"style="position:relative;top:6px;left:"><?php echo $lesson['lessonName']; ?></a></div></li>                  
+                  <li><div ><i class="icon-knowlage"></i>&nbsp;<a href="#" class="ahover" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"style="position:relative;top:7px;left:"><?php echo $lesson['lessonName']; ?></a></div></li>                  
               <?php endforeach; ?> 
               </ul>
         </div>
          
-         <li ><div id="id_classWork"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">作业</a></div></li>  
+         <li ><div id="id_classWork"><i class="icon-list"></i>&nbsp;<a href="#" class="ahover" style="position:relative;top:7px;left:">作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
-                 <li><div ><i class="icon-list"></i><a href="#" onclick="showClassWork(<?php echo $lesson['lessonID'];?>)" style="position:relative;top:6px;left:"><?php echo $lesson['lessonName']; ?></a></div></li>                
+                 <li><div ><i class="icon-knowlage"></i>&nbsp;<a href="#" class="ahover" class="nav nav-list" onclick="showClassWork(<?php echo $lesson['lessonID'];?>)" style="position:relative;top:7px;left:"><?php echo $lesson['lessonName']; ?></a></div></li>                
                  <div style="display: none" <?php echo "id='test".$lesson['lessonID']."'"?>>
-                     <ul>  
+                     <ul class="nav nav-list">  
                          <?php foreach ($array_work as $work){
                              if($work['lessonID'] == $lesson['lessonID']){     
                                  foreach($array_suite as $suite)
                                  {
                                      if($suite['suiteID'] == $work['suiteID']) {                                                                       
                            ?>                      
-                         <li><a href="#" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-list"></i><span style="position: relative;top: 6px"><?php echo $suite['suiteName']; ?></span></a></li>                                                                                                                                               
+                         <li><div ><a href="#" class="ahover" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-navsearch" style="margin-top:-4px"></i>&nbsp;<?php echo $suite['suiteName']; ?></a></div></li>                                                                                                                                               
                              <?php        
                                      }
                                  }
@@ -73,7 +73,7 @@
                      <?php endforeach; ?> 
              </ul>
          </div>    
-        <li ><div id="id_classExam"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">考试</a></div></li>
+        <li ><div id="id_classExam"><i class="icon-list"></i>&nbsp;<a href="#" class="ahover" style="position:relative;top:7px;left:">考试</a></div></li>
         <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
@@ -82,14 +82,14 @@
                          if($exam['examID'] == $examList['examID'])
                          {
                          ?>
-                 <li><div ><i class="icon-list"></i><a href="#" onclick="getExamExercise(<?php echo $exam['examID'];?>,<?php echo $examList['workID'];?>)" style="position:relative;top:6px;left:"><?php echo $exam['examName']; ?></a></div></li>
+                 <li><div ><i class="icon-navsearch"></i>&nbsp;<a href="#" class="ahover" onclick="getExamExercise(<?php echo $exam['examID'];?>,<?php echo $examList['workID'];?>)" style="position:relative;top:7px;left:"><?php echo $exam['examName']; ?></a></div></li>
                         <?php 
                               }
                  }
 ?>                                     
              </ul>                   
          </div>
-         <li ><div id="id_classabsence"><i class="icon-list"></i><a href="#" style="position:relative;top:6px;left:">签到</a></div></li>
+         <li ><div id="id_classabsence"><i class="icon-list"></i>&nbsp;<a href="#" class="ahover" style="position:relative;top:7px;left:">签到</a></div></li>
       </ul>
      </div>
 </div>
@@ -120,19 +120,20 @@
                             <input type="text" value="123"  id="123456"  style="display:none;"/>
                             <a id="correct" onclick="getClassExerRankingBef('correct','bg1')" style="cursor:pointer;">正确率(%)</a>
                         </td>  
-                    
+                        <td style=" width: 10px"></td>
                     
                         <td id="bg2" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <a  id="speed" class="bl" onclick="getClassExerRankingBef('speed','bg2')" style="cursor:pointer;">速度(字/分)</a>
                         </td>
-                  
+                        <td style=" width: 10px"></td>
                         <td id="bg5" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <a  id="missing_Number" class="bl" onclick="getClassExerRankingBef('missing_Number','bg5')" style="cursor:pointer;">少打字数(字)</a>
                         </td> 
+                        <td style=" width: 10px"></td>
                         <td id="bg3" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <a  id="redundant_Number" onclick="getClassExerRankingBef('redundant_Number','bg3')" style="cursor:pointer;">多打字数(字)</a>
                         </td>
-                    
+                        <td style=" width: 10px"></td>
 
                          <td id="bg4" style="width:200px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
                             <a  id="backDelete" onclick="getClassExerRankingBef('backDelete','bg4')" style="cursor:pointer;">回改字数(字)</a>
@@ -149,6 +150,7 @@
                         <thead>
                             <tr>
                                 <th>名次</th>
+                                <th>学号</th>
                                 <th>姓名</th>
                                 <th id="name">速度</th>
                                 <th id="name">正确率</th>
@@ -680,7 +682,10 @@ function ShowSuiteRank(workID,exerciseID,type,choice){
          var tr = document.createElement('tr');           
          var td = document.createElement("td");
          td.innerHTML = i+1;
-         tr.appendChild(td);          
+         tr.appendChild(td);
+         td = document.createElement("td");   
+         td.innerHTML = data['id'][i];
+         tr.appendChild(td);
          td = document.createElement("td");   
          td.innerHTML = data['name'][i];
          tr.appendChild(td);         
@@ -688,7 +693,7 @@ function ShowSuiteRank(workID,exerciseID,type,choice){
          td.innerHTML = data['speed'][i];
          tr.appendChild(td);
          td = document.createElement("td");  /*真.js*/
-         td.innerHTML = (data['correct'][i]);
+         td.innerHTML = (data['correct'][i])+"%";
          tr.appendChild(td);
          td = document.createElement("td");  /*真.js*/
          td.innerHTML = (data['missing'][i]);
@@ -735,7 +740,10 @@ function ShowExamRank(workID,exerciseID,type,choice){
          var tr = document.createElement('tr');           
          var td = document.createElement("td");
          td.innerHTML = i+1;
-         tr.appendChild(td);          
+         tr.appendChild(td);
+         td = document.createElement("td");   
+         td.innerHTML = data['id'][i];
+         tr.appendChild(td);
          td = document.createElement("td");   
          td.innerHTML = data['name'][i];
          tr.appendChild(td);         
@@ -743,7 +751,7 @@ function ShowExamRank(workID,exerciseID,type,choice){
          td.innerHTML = data['speed'][i];
          tr.appendChild(td);
          td = document.createElement("td");  /*真.js*/
-         td.innerHTML = (data['correct'][i]);
+         td.innerHTML = (data['correct'][i])+"%";
          tr.appendChild(td);
          td = document.createElement("td");  /*真.js*/
          td.innerHTML = (data['missing'][i]);
@@ -810,7 +818,10 @@ function ShowExerciseRank(workID,exerciseID,choice){
          var tr = document.createElement('tr');           
          var td = document.createElement("td");
          td.innerHTML = i+1;
-         tr.appendChild(td);          
+         tr.appendChild(td); 
+         td = document.createElement("td");   
+         td.innerHTML = data['id'][i];
+         tr.appendChild(td); 
          td = document.createElement("td");   
          td.innerHTML = data['name'][i];
          tr.appendChild(td);         
@@ -818,7 +829,7 @@ function ShowExerciseRank(workID,exerciseID,choice){
          td.innerHTML = data['speed'][i];
          tr.appendChild(td);
          td = document.createElement("td");  /*真.js*/
-         td.innerHTML = (data['correct'][i]);
+         td.innerHTML = (data['correct'][i])+"%";
          tr.appendChild(td);
          td = document.createElement("td");  /*真.js*/
          td.innerHTML = (data['missing'][i]);
