@@ -54,13 +54,13 @@
    </div>
     <!-- 学生列表结束 -->
     <div class="form-actions"  style="margin: 0px;width: 750px;" >
-        <button class="fl btn btn-primary" onclick="clickOK()">确定</button>
+        <button class="fl btn btn-primary" onclick="clickOK()" style="margin-left: 190px">确定</button>
         
-        <button style="position: relative;left: 10px" class="fl btn btn-primary" onclick="clickQX()">返回</button>
+        <button style="position: relative;left: 43px" class="fl btn btn-primary" onclick="clickQX()">返回</button>
         
-        <div style="margin-left: 50px" class="fl"><form action="./index.php?r=teacher/SelectWordLib&&libstr=<?php echo $_GET['libstr'];?>&&upload=true" 
-          method="post" id="form-upload" enctype="multipart/form-data"><font style="color: #595959;font-family: fantasy;margin-right: 10px">添加私人词库</font><input type="file" name="file" id="file" />
-                <button class="btn btn-primary" type="submit">上传</button><button style="margin-left: 30px" class="btn btn-primary" onclick="deleteLib()">删除</button></form>
+<!--        <div style="margin-left: 50px" class="fl"><form action="./index.php?r=teacher/SelectWordLib&&libstr=<?php echo $_GET['libstr'];?>&&upload=true" 
+          method="post" id="form-upload" enctype="multipart/form-data"><font style="color: #595959;font-family: fantasy;margin-right: 10px">添加私人词库</font><input type="file" name="file" id="file" />-->
+                <button style="margin-left: 90px" class="btn btn-primary" onclick="deleteLib()">删除</button></form>
         </div>
    </div>
 </div>
