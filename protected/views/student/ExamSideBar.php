@@ -12,6 +12,7 @@ $currtime = $examInfo['endtime'];
 <style type="text/css">
     .queTitle{}
 </style>
+<div id="daojishi" style="position:absolute; z-index:2;background:#736971; width:70px;display: none;top:300px;left: 10px;border-radius:5px 5px 5px 5px;color:#F46401">考试剩余<font style="color:#F46401" id="sideTime2"></font></div>
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
@@ -111,6 +112,7 @@ $currtime = $examInfo['endtime'];
         </div>   
     <?php } ?>
 </div>
+
 <script>
      function submitSuite2(){
          saveToDateBaseNow();
@@ -142,6 +144,7 @@ $currtime = $examInfo['endtime'];
             submitSuite2(true);
         }
         tCounter(curtime,beginTime+60*<?php echo $examInfo['duration']?>,"sideTime", endTimer);
+        tCounter(curtime,beginTime+60*<?php echo $examInfo['duration']?>,"sideTime2", endTimer);
     });
     function examLookNext(exerID,cent){
         var option = {
@@ -184,4 +187,30 @@ $currtime = $examInfo['endtime'];
 					};
 					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
         }
+             $(function () {              
+                //绑定滚动条事件  
+                  //绑定滚动条事件  
+                $(window).bind("scroll", function () {  
+                    var sTop = $(window).scrollTop();  
+                    var sTop = parseInt(sTop);  
+                    if (sTop >= 130) {  
+                        if (!$("#daojishi").is(":visible")) {  
+                            try {  
+                                $("#daojishi").slideDown();  
+                            } catch (e) {  
+                                $("#daojishi").show();  
+                            }                        
+                        }  
+                    }  
+                    else {  
+                        if ($("#daojishi").is(":visible")) {  
+                            try {  
+                                $("#daojishi").slideUp();  
+                            } catch (e) {  
+                                $("#daojishi").hide();  
+                            }                         
+                        }  
+                    }   
+                });  
+            })  
 </script>
