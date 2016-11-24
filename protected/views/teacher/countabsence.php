@@ -23,27 +23,34 @@
 <!--</select>   
            <button type="submit" class="btn btn-primary">导出详情</button>           
       </form>-->
-<form method="post" name="form">  
-开始:<input type="text" name="time" onfocus="MyCalendar.SetDate(this)" value="<?php if(isset($time1)) {echo $time1;}?>" style="width: 90px;">
-截至:<input type="text" name="endtime" onfocus="MyCalendar.SetDate(this)" value="<?php if(isset($time2)) {echo $time2;}?>"style="width: 90px;">
-<input type="submit" name="" onclick="showma()" value="查询" class="btn btn-primary"style="width:60px"/>
-<input type="submit" onclick="expor()" value="导出" class="btn btn-primary" style="width:60px"/> 
+<?php  if(isset($m)){ ?>
+<form method="post" name="form" id="myform">  
+ 开始:&nbsp;<input  type="text" name="time" id="startTime" onfocus="MyCalendar.SetDate(this)" value="<?php if(isset($time1)) {echo $time1;}?>" style="width: 90px;height: 25px; position: relative;top: 2px">&nbsp;
+ 截至:&nbsp;<input type="text" name="endtime" id="overTime" onfocus="MyCalendar.SetDate(this)" value="<?php if(isset($time2)) {echo $time2;}?>"style="width: 90px;height: 25px; position: relative;top: 2px">&nbsp;
+<input type="submit" name="" onclick="showma()" value="查询" class="btn btn-primary"style="width:70px; position: relative;top: -6px"/>
+<input type="submit" onclick="expor()" value="导出" class="btn btn-primary" style="width:70px; position: relative;top: -6px"/> 
 </form>
+
+<?php }?>
 <div>
                  <?php 
 if(isset($time1)){
     echo "<h3>查询结果</h3>";
 }
-else{
+else if(isset ($time)){
     echo "<h3>$time"."月缺勤</h3>";
+}  else {
+    echo "<h3>该班没有任何签到</h3>";
 }
 ?>
+    <?php  if(isset($m)){ ?>
         <table class="table table-bordered table-striped" id="table1">
             <thead>
             <th>学号</th><th>姓名</th><th>课时</th><th>第几次点名</th></thead>
  <tbody id="group_one">
-
-            <?php                    
+    <?php } ?>
+            <?php  
+            if(isset($m)){
 foreach ($m as $v)
 {
     if($v['userID']  == ''){
@@ -78,7 +85,8 @@ foreach ($m as $v)
 
         echo "</tr>";
 }
-}
+            }
+      
 ?>
         </tbody>
         </table>
@@ -88,15 +96,15 @@ foreach ($m as $v)
     </table>-->
 	<span id="s"></span>
 	<table>
-		<tr>
-			<td><a href="#" onclick="page.firstPage();">首页</a></td>
-			<td><a href="#" onclick="page.prePage();">上一页</a></td>
-			<td>第<span id="pageindex">1</span>页</td>
-			<td><a href="#" onclick="page.nextPage();">下一页</a></td>
-			<td><a href="#" onclick="page.lastPage();">尾页</a></td>
-                        <td>共<font id='t'>2</font>页&nbsp;</td>
-                        <td>第<select id="pageselect" style="width:50px" onchange="page.changePage();"></select>页</td>
+		<td><a href="#" onclick="page.firstPage();">首页</a>&nbsp;&nbsp;</td>
+			<td><a href="#" onclick="page.prePage();">上一页</a>&nbsp;&nbsp;</td>&nbsp;&nbsp;
+			<td>第<span id="pageindex">1</span>页&nbsp;&nbsp;</td>&nbsp;&nbsp;
+			<td><a href="#" onclick="page.nextPage();">下一页</a>&nbsp;&nbsp;</td>&nbsp;&nbsp;
+			<td><a href="#" onclick="page.lastPage();">尾页</a>&nbsp;&nbsp;</td>&nbsp;&nbsp;
+                        <td>共<font id='t'>2</font>页&nbsp;&nbsp;</td>&nbsp;&nbsp;
+                        <td style="position: relative;top:1px">第&nbsp;<select id="pageselect" style="width:40px;height: 26px;position: relative;top:4px" onchange="page.changePage();"></select>&nbsp;页</td>
 		</tr>
+
 	</table>
             <button onclick="submit();"  class="btn btn-primary">确定</button>
             </body>
@@ -111,9 +119,23 @@ window.onload=showLately();
          window.close();
     }
     
-    function showma(){
-      document.form.action='./index.php?r=teacher/CountAbsence&&classID=<?php echo $classID;?>';
+      function showma(){
+        var startTime = document.getElementById('startTime').value;
+       var overTime = document.getElementById('overTime').value;
+           if(IsDate( startTime) && IsDate( overTime)){
+                document.form.action='./index.php?r=teacher/CountAbsence&&classID=<?php echo $classID;?>';
+           }else{
+              // window.wxc.xcConfirm('这不是正确的日期格式，请重新选择', window.wxc.xcConfirm.typeEnum.error); 
+              alert('这不是正确的日期格式，请重新选择');
+           }
+        
     }
+    function IsDate(num){
+      var regexp = /^([1][7-9][0-9][0-9]|[2][0][0-9][0-9])(\-)([0][1-9]|[1][0-2])(\-)([0-2][1-9]|[3][0-1])$/g;
+　    /// 日期范围：1700-01-01 ----2099-01-01 　
+　　　　 return regexp.test(num);
+}
+
    function expor(){
     document.form.action='./index.php?r=teacher/Exportabsence&&classID=<?php echo $classID;?>'; 
    }
@@ -121,3 +143,4 @@ window.onload=showLately();
 		page = new Page(5, 'table1', 'group_one');
 	}
 </script>
+            <?php }?>

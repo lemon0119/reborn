@@ -1441,7 +1441,7 @@ class TeacherController extends CController {
            $userID =  Yii::app()->session['userid_now'];
           $publishtime = date('y-m-d H:i:s',time());
           $sn = strtotime($publishtime);
-          //Teacher::model()->isLogin($userID, $sn);
+          Teacher::model()->isLogin($userID, $sn);
           $isl = Teacher::model()->find("userID = '$userID'");
           $isl = $isl['is_login'];
           $s = Yii::app()->session['islogin']=$isl;
@@ -7645,7 +7645,11 @@ $new2 = date("Y-m-d", mktime(0,0,0,$arr[1],$arr[2]+1,$arr[0]));
        $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
         return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time1'=>$time1,'time2'=>$time2]);    
  }
- else{                             
+ else{ 
+     $sccc = count($one);
+     if($sccc == 0){
+      return $this->renderPartial('CountAbsence',['classID'=>$classID,]);
+     }
 foreach ($one as $v)
 {
     if($v["(substring(time,1,7))"]  == ''){
