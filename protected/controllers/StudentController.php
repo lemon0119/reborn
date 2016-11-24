@@ -1416,7 +1416,7 @@ class StudentController extends CController {
            $userID =  Yii::app()->session['userid_now'];
           $publishtime = date('y-m-d H:i:s',time());
           $sn = strtotime($publishtime);
-       //   Student::model()->isLogin($userID, $sn);
+          Student::model()->isLogin($userID, $sn);
           $isl = Student::model()->find("userID = '$userID'");
           $isl = $isl['is_login'];
           $s = Yii::app()->session['islogin']=$isl;
