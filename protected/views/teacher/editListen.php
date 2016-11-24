@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-        <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
+            <li class="nav-header"><i class="icon-navsearch"></i><span style="position: relative;top: 6px">搜索</span></li>
         <form action="./index.php?r=teacher/searchListen" method="post">
             <li>
                 <select name="type" >
@@ -20,16 +20,16 @@
                     <button onclick="window.location.href = './index.php?r=teacher/addListen'" type="button" class="btn_4big">添 加</button>
             </li>
         </form>
-            <li class="divider"></li>
+<!--            <li class="divider"></li>
             <li class="nav-header"><i class="icon-knowlage"></i>基础知识</li>
             <li ><a href="./index.php?r=teacher/choiceLst"><i class="icon-font"></i> 选择</a></li>
             <li ><a href="./index.php?r=teacher/fillLst"><i class="icon-text-width"></i> 填空</a></li>
-            <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>
+            <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i> 简答</a></li>-->
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-typing"></i>打字练习</li>
-            <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> 键打练习</a></li>
-            <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> 看打练习</a></li>
-            <li class="active"><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> 听打练习</a></li>
+            <li class="nav-header"><i class="icon-typing"></i><span style="position: relative;top: 6px">打字练习</span></li>
+            <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i> <span style="position: relative;top: 6px">键打练习</span></a></li>
+            <li ><a href="./index.php?r=teacher/lookLst"><i class="icon-eye-open"></i> <span style="position: relative;top: 6px">看打练习</span></a></li>
+            <li class="active"><a href="./index.php?r=teacher/listenLst"><i class="icon-headphones"></i> <span style="position: relative;top: 6px">听打练习</span></a></li>
         </ul>
     </div>
 </div>

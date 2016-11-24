@@ -19,11 +19,11 @@
                     <button onclick="window.location.href = './index.php?r=teacher/AddLook'" type="button" class="btn_4big">添 加</button>
                 </li>
             </form>
-            <li class="divider"></li>
+<!--            <li class="divider"></li>
             <li class="nav-header"><i class="icon-knowlage"></i><span style="position: relative;top: 6px">基础知识</li>
             <li ><a href="./index.php?r=teacher/choiceLst"><i class="icon-font"></i> <span style="position: relative;top: 6px">选择</span></a></li>
             <li ><a href="./index.php?r=teacher/fillLst"><i class="icon-text-width"></i> <span style="position: relative;top: 6px">填空</span></a></li>
-            <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i><span style="position: relative;top: 6px"> 简答</span></a></li>
+            <li ><a href="./index.php?r=teacher/questionLst"><i class="icon-align-left"></i><span style="position: relative;top: 6px"> 简答</span></a></li>-->
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-typing"></i><span style="position: relative;top: 6px">打字练习</span></li>
             <li ><a href="./index.php?r=teacher/keyLst"><i class="icon-th"></i><span style="position: relative;top: 6px">键打练习</span></a></li>

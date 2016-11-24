@@ -1775,6 +1775,14 @@ class StudentController extends CController {
                    RankAnswer::model()->insertData($answerID, $exerciseID, $workID, $userID, $userName, $correct, $missing_Number, $redundant_Number, $speed, $type, $backDelete, 1);
                 }
             }
+        }else {
+            foreach ($rankLst as $rank) {
+                $ansID = $rank['answerID'];
+                $answerData = AnswerData::model()->find("answerID = '$ansID'");
+                $rank['missing_Number'] = $answerData['missing_Number'];
+                $rank['redundant_Number'] = $answerData['redundant_Number'];
+                $rank->update();
+            }
         }
        }
     }
@@ -1818,7 +1826,15 @@ class StudentController extends CController {
                    RankAnswer::model()->insertData($answerID, $exerciseID, $workID, $userID, $userName, $correct, $missing_Number, $redundant_Number, $speed, $type, $backDelete, 0);
                 }
             }
-        }  
+        } else {
+            foreach ($rankLst as $rank) {
+                $ansID = $rank['answerID'];
+                $answerData = AnswerData::model()->find("answerID = '$ansID'");
+                $rank['missing_Number'] = $answerData['missing_Number'];
+                $rank['redundant_Number'] = $answerData['redundant_Number'];
+                $rank->update();
+            }
+         }  
         }
         
     }
@@ -1829,19 +1845,16 @@ class StudentController extends CController {
         $array_exercise = ClassExercise::model()->findAll("lessonID= '$lessonID'"); 
          $studentLst = Student::model()->findAll("classID = '$classID'");
         foreach ($studentLst as $student) {
-        foreach ($array_exercise as $exercise) {
-            
-            $exerciseID = $exercise['exerciseID'];
-           
-            
+        foreach ($array_exercise as $exercise) {           
+            $exerciseID = $exercise['exerciseID'];            
                 $studentID = $student['userID'];
                 $rankLst = RankAnswer::model()->find("exerciseID = '$exerciseID' and isExam = 2 and userID = '$studentID' ");
                 if($rankLst == NULL){
                    $exerciseRecord = ClassexerciseRecord::model()->getSingleRecord($studentID, $exerciseID);
-                    if($exerciseRecord == NULL) {
-                        break;
-                    }  else {
-                        $answerID = $exerciseRecord['id'];
+                    if($exerciseRecord != NULL) {
+//                        break;
+//                    }  else {
+                        $answerID = Tool::createID();
                         $userName = $userName = Student::model()->find("userID = '$studentID'")['userName'];
                         $correct = $exerciseRecord['ratio_correct'];
                         $n1 = strrpos($correct, "&");
@@ -1853,11 +1866,11 @@ class StudentController extends CController {
                         $backDelete = $exerciseRecord['ratio_backDelete'];
                         $n4 = strrpos($backDelete, "&");
                         $backDelete = substr($backDelete, $n4 + 1);
-                        RankAnswer::model()->insertData($answerID, $exerciseID, 0, $studentID, $userName, $correct, 0, 0, $speed, $type, $backDelete, 2); 
+                        RankAnswer::model()->insertData($answerID, $exerciseID, $lessonID, $studentID, $userName, $correct, 0, 0, $speed, $type, $backDelete, 2); 
                     }
                 }else {
                    $exerciseRecord = ClassexerciseRecord::model()->getSingleRecord($studentID, $exerciseID);
-                   $rankLst['answerID'] = $exerciseRecord['id'];
+//                   $rankLst['answerID'] = $exerciseRecord['id'];
                    $correct = $exerciseRecord['ratio_correct'];
                    $n1 = strrpos($correct, "&");
                    $correct = substr($correct, $n1 + 1);
