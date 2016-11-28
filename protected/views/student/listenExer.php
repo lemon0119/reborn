@@ -3,7 +3,7 @@
 <!--打字控件-->
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <!--打字计时-->
-<!--<script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>-->
+<!--<script src="<?php// echo JS_URL; ?>exerJS/AnalysisTool.js"></script>-->
 <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 
 <?php
@@ -339,6 +339,7 @@ if ($isExam) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 saveToDateBaseNow();
+                saveData();
                 // doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
                     if (<?php if ($isExam) {

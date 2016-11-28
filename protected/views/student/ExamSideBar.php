@@ -8,6 +8,7 @@
 $currtime = $examInfo['endtime'];
 ?>
 <script src="<?php echo JS_URL;?>exerJS/timeCounter.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 <style type="text/css">
     .queTitle{}
@@ -114,6 +115,7 @@ $currtime = $examInfo['endtime'];
 <script>
      function submitSuite2(){
          saveToDateBaseNow();
+         saveData();
         $.post('index.php?r=student/overSuite&&isExam=<?php if($isExam){echo 'true';}else{echo 'false';} ?>', function () {
                     if (<?php if($isExam){echo 'true';}else{echo 'false';} ?>){
                         window.location.href = "index.php?r=student/classExam";
@@ -149,6 +151,7 @@ $currtime = $examInfo['endtime'];
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
+                                                        saveData();
                                                         $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(),function () {
                     window.location.href = "index.php?r=student/examlookType&&exerID="+exerID+"&&cent="+cent;
                 });
@@ -163,6 +166,7 @@ $currtime = $examInfo['endtime'];
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
+                                                        saveData();
                                                         $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     window.location.href = "index.php?r=student/examlistenType&&exerID="+exerID+"&&cent="+cent;
                 });
@@ -177,6 +181,7 @@ $currtime = $examInfo['endtime'];
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
+                                                        saveData();
                                                         $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     window.location.href = "index.php?r=student/examkeyType&&exerID="+exerID+"&&cent="+cent;
                 });

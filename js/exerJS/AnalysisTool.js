@@ -59,6 +59,11 @@ var GA_countSpeedNumber=0;
 var GA_rightCount=0;
 var GA_originalCount=0;
 var GA_currentCount=0;
+var GA_error_number=0;
+var GA_missing_Number=0;
+var GA_redundant_number=0;
+var GA_correct_rate=0;
+
 
 //统计逻辑
 $(document).ready(function () {
@@ -426,7 +431,6 @@ function saveToDateBaseNow() {
             originalContent: window.GA_originalContent
         });
     }
-
     if (window.G_saveToDatabase === 1 && (window.G_startTime !== 0)) {
         $.ajax({
             type: "POST",
@@ -516,6 +520,139 @@ function AjaxGetBackDelete(id, doneCount, keyType) {
             console.log(exception, "exception");
         }
     });
+}
+
+function saveData(){
+    //统计
+    var lcs = new LCS(window.G_content, window.GA_originalContent);
+    lcs.doLCS();
+    var currentLCS = lcs.getSubString(1);
+    var originalLCS = lcs.getSubString(2);
+    window.GA_originalCount=window.GA_originalContent.length;
+    window.GA_currentCount=window.G_content.length;
+    window.GA_rightCount=lcs.getSubString(3).length;
+    var more_count=((window.G_content.length-window.GA_originalContent.length)<0) ? 0 : window.G_content.length-window.GA_originalContent.length;
+    var correctData=((window.GA_rightCount-more_count)<0 ? 0 : window.GA_rightCount-more_count)/window.GA_originalContent.length;
+    window.GA_correct_rate=(correctData*100).toFixed(2);
+    var right_content=[];
+    var flag=[];
+    var j=0;
+    var k=0;
+    var right_length=[];
+    var error_flag=[];
+    var e=0;
+    right_length[e]=0;
+    for (var l = 0; l < window.G_content.length; l++) {
+        if (typeof (window.G_content[l]) !== 'undefined') {
+            if (window.G_content[l] !== currentLCS[l] && currentLCS[l]!=='`') {
+                right_length[e]++;
+                if(window.G_content[l-1] === currentLCS[l-1]){
+                    error_flag[e]=l;
+                }
+                if(window.G_content[l+1] === currentLCS[l+1]){
+                    right_length[++e]=0;
+                }
+            }
+        }
+    }
+    for (var i = 0; i < window.GA_originalContent.length; i++) {
+        if (typeof (window.GA_originalContent[i]) !== 'undefined') {
+            if (window.GA_originalContent[i] !== originalLCS[i]) {
+                if(originalLCS[i+1] === "`" || originalLCS[i] === "`"|| originalLCS[i]==="~"){
+                    flag[j]=window.G_a[j];
+                    j++;
+                }
+                if(window.GA_originalContent[i-1] === originalLCS[i-1]){
+                    right_content[k] =window.GA_originalContent[i];
+                    if(originalLCS[i] === "`"){
+                        k++;
+                    }
+                }else if(window.GA_originalContent[i-1] !== originalLCS[i-1] && window.GA_originalContent[i+1] !== originalLCS[i+1]|| originalLCS[i]==="~"){
+                    right_content[k] +=window.GA_originalContent[i];
+                }else{
+                    right_content[k] +=window.GA_originalContent[i];
+                    k++;
+                }
+            }
+        }
+    }
+    j=0;
+    e=0;
+    var e_flag=0;
+    var more_play="";
+    for (var i = 0; i < window.G_content.length; i++) {
+        if (typeof (window.G_content[i]) !== 'undefined') {
+            if (window.G_content[i] !== currentLCS[i] && currentLCS[i]!=='`') {
+                if(currentLCS[i] === '~'){
+                    window.GA_redundant_number++;
+                }else if(typeof (right_content[j-1 ]) !== 'undefined' && i-right_content[j-1 ].length === more_play && more_play!==""){
+                    while(window.G_content[i] !== currentLCS[i]){
+                        window.GA_redundant_number++;
+                        i++;
+                    }
+                    i--;
+                }
+            } else if(currentLCS[i]==='`'){
+                window.GA_redundant_number++;
+            }else if(flag[j]===0){
+                for(var miss=0;miss<right_content[j].length;miss++){
+                    window.GA_missing_Number++;
+                }
+                j++;
+            }
+        }
+        if(typeof (right_content[j]) !== 'undefined'){
+        if(i+1===flag[j] && window.G_content[i] !== currentLCS[i] || i-right_content[j].length+1 === error_flag[e_flag] && i-right_content[j].length+1>=0){     
+            if(right_content[j].length > right_length[e]){
+                //少打
+                for(var err=0; err < right_length[e];err++){
+                    window.GA_error_number++;
+                }
+                while(err < right_content[j].length){
+                    window.GA_missing_Number++;
+                    err++;
+                }
+            }else if(right_content[j].length < right_length[e] ){
+                //多打
+                more_play=error_flag[e_flag];
+                for(err=0;err < right_content[j].length;err++){
+                    window.GA_error_number++;
+                }
+            }else{
+                for(err=0;err<right_content[j].length;err++){
+                    window.GA_error_number++;
+                }
+            }
+            e++;
+            e_flag++;
+            j++;
+        }else if(i+1===flag[j] && typeof (right_content[j]) !== 'undefined'){
+            for(err=0;err<right_content[j].length;err++){
+                window.GA_missing_Number++;
+            }
+            j++;
+        }
+        }
+    }
+    $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "index.php?r=api/analysisSaveToDatabase",
+            async:false,
+            data: {exerciseType: window.G_exerciseType, exerciseData: window.G_exerciseData, squence: window.G_squence, answer: window.GA_answer,
+                averageKeyType: window.GA_averageKeyType, highstCountKey: window.GA_highstCountKey, highstSpeed: window.GA_highstSpeed,
+                averageSpeed: window.GA_averageSpeed, CountBackDelete: window.GA_CountBackDelete, CountAllKey: window.GA_CountAllKey,
+                IntervalTime: window.GA_IntervalTime, highIntervarlTime: window.GA_highIntervarlTime, RightRadio: window.GA_RightRadio,
+                rightCount:window.GA_rightCount,originalCount:window.GA_originalCount,currentCount:window.GA_currentCount,errorNumber:window.GA_error_number,
+                missingNumber:window.GA_missing_Number,redundantNumber:window.GA_redundant_number,correctRate:window.GA_correct_rate},
+            success: function (data) {
+            },
+            error: function (xhr, type, exception) {
+                console.log('GetAverageSpeed error', type);
+                console.log(xhr, "Failed");
+                console.log(exception, "exception");
+            }
+        });
 }
 
 //统计错误字数  已放入多线程js

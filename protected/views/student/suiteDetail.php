@@ -63,6 +63,7 @@ if ($isExam == false) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 saveToDateBaseNow();
+                saveData();
                 $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function (result) {
                 });
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
