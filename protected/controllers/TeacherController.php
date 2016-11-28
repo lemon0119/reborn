@@ -5349,9 +5349,9 @@ class TeacherController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if ($nextStudentID == -1) {
-            $this->renderStuWork($studentID, $workID, "choice", $accomplish, $classwork, $suiteID, $workID);
+            $this->renderStuWork($studentID, $workID, "key", $accomplish, $classwork, $suiteID, $workID);
         } else {
-            $this->renderStuWork($nextStudentID, $workID, "choice", $accomplish, $classwork, $suiteID, $workID);
+            $this->renderStuWork($nextStudentID, $workID, "key", $accomplish, $classwork, $suiteID, $workID);
         }
     }
 
@@ -5393,7 +5393,7 @@ class TeacherController extends CController {
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Exam::model()->getExamExerByType($examID, $type);
         }
-        $this->renderStuExam($_GET['studentID'], $workID, "choice", $accomplish, $array_accomplished, $classwork, $examID, $workID);
+        $this->renderStuExam($_GET['studentID'], $workID, "key", $accomplish, $array_accomplished, $classwork, $examID, $workID);
 
         $nextStudentID = ExamRecord::model()->getNextStudentID($workID, $studentID, $accomplish, $classID);
 

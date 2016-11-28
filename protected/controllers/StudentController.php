@@ -1759,17 +1759,19 @@ class StudentController extends CController {
                    $exerciseID = $ans['exerciseID'];
                    $userID = $ans['createPerson'];
                    $userName = Student::model()->find("userID = '$userID'")['userName'];
-                   $correct = $ans['ratio_correct'];
-                   $n1 = strrpos($correct, "&");
-                   $correct = substr($correct, $n1 + 1);
+                  
                    $answerData = AnswerData::model()->find("answerID = '$answerID'");
                    $type = $ans['type'];
                    if($type=="key"){
                        $missing_Number = 0;
                        $redundant_Number = 0;
+                       $correct = $ans['ratio_correct'];
+                       $n1 = strrpos($correct, "&");
+                       $correct = substr($correct, $n1 + 1);
                    }  else {
                        $missing_Number = $answerData['missing_Number'];
                        $redundant_Number = $answerData['redundant_Number'];
+                       $correct = $answerData['correct_Answer'];
                    }
                    $speed = $ans['ratio_speed'];
                    $n3 = strrpos($speed, "&");
@@ -1788,6 +1790,7 @@ class StudentController extends CController {
                 if($rank['type']!="key"){
                  $rank['missing_Number'] = $answerData['missing_Number'];
                  $rank['redundant_Number'] = $answerData['redundant_Number'];
+                 $rank['correct'] = $answerData['correct_Answer'];
                  $rank->update();
                 }
             }
@@ -1818,17 +1821,19 @@ class StudentController extends CController {
                    $exerciseID = $ans['exerciseID'];
                    $userID = $ans['createPerson'];
                    $userName = Student::model()->find("userID = '$userID'")['userName'];
-                   $correct = $ans['ratio_correct'];
-                   $n1 = strrpos($correct, "&");
-                   $correct = substr($correct, $n1 + 1);
+                   
                    $answerData = AnswerData::model()->find("answerID = '$answerID'");
                    $type = $ans['type'];
                    if($type=="key"){
                        $missing_Number = 0;
                        $redundant_Number = 0;
+                       $correct = $ans['ratio_correct'];
+                       $n1 = strrpos($correct, "&");
+                       $correct = substr($correct, $n1 + 1);
                    }  else {
                        $missing_Number = $answerData['missing_Number'];
                        $redundant_Number = $answerData['redundant_Number'];
+                       $correct = $answerData['correct_Answer'];
                    }
                    
                    $speed = $ans['ratio_speed'];
@@ -1848,6 +1853,7 @@ class StudentController extends CController {
                 if($rank['type']!="key"){
                  $rank['missing_Number'] = $answerData['missing_Number'];
                  $rank['redundant_Number'] = $answerData['redundant_Number'];
+                 $rank['correct'] = $answerData['correct_Answer'];
                  $rank->update();
                 }
                 
