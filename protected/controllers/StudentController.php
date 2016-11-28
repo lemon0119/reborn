@@ -380,6 +380,7 @@ class StudentController extends CController {
 
     //2015-8-3 宋杰 获取考试听打练习
     public function actionExamlistenType() {
+        if(isset(Yii::app()->session['userid_now'])){
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -462,7 +463,10 @@ class StudentController extends CController {
                     'costTime' => $costTime
         ));
     }
-
+    else {
+    $this->render('index');    
+    }
+    }
     //课堂看打练习
     public function actionlookType() {
         $suiteID = Yii::app()->session['suiteID'];
@@ -523,6 +527,7 @@ class StudentController extends CController {
 
     //2015-8-3 宋杰 获取考试看打练习
     public function actionExamlookType() {
+        if(isset(Yii::app()->session['userid_now'])){
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -617,7 +622,10 @@ class StudentController extends CController {
                     'costTime' => $costTime
         ));
     }
-
+    else{
+        $this->render('index');
+    }
+    }
     //课堂键位练习
     public function actionKeyType() {
         $suiteID = Yii::app()->session['suiteID'];
@@ -684,6 +692,7 @@ class StudentController extends CController {
 //           if(!AnswerRecord::saveExamRecord($recordID))
 //                    return false;
 //            AnswerRecord::saveAnswer($recordID,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1);
+        if(isset(Yii::app()->session['userid_now'])){
         $suiteID = Yii::app()->session['examsuiteID'];
         $workID = Yii::app()->session['examworkID'];
         $studentID = Yii::app()->session['userid_now'];
@@ -764,7 +773,8 @@ class StudentController extends CController {
                     'costTime' => $costTime,
         ));
     }
-
+    $this->render('index');
+    }
     //课堂作业简答题 
     public function actionQuestion() {
         $isExam = FALSE;
@@ -1427,6 +1437,7 @@ class StudentController extends CController {
     }
 
     public function actionHeadPic() {
+        if(isset(Yii::app()->session['userid_now'])){
         $picAddress = "";
         $result = 0;
         $userid_now = Yii::app()->session['userid_now'];
@@ -1434,7 +1445,10 @@ class StudentController extends CController {
         $picAddress = $user['img_address'];
         $this->render('headPic', ['result' => $result, 'picAddress' => $picAddress]);
     }
-
+    else{
+      $this->render('index');  
+    }
+    }
     public function actionAddHeadPic() {
         $result = "上传失败!";
         $flag = 0;
@@ -1465,6 +1479,7 @@ class StudentController extends CController {
     }
 
     public function actionSet() {       //set
+        if(isset(Yii::app()->session['userid_now'])){
         $result = 'no';
         $mail = '';
         //head img
@@ -1529,13 +1544,15 @@ class StudentController extends CController {
         }
         $this->render('set', ['flag' => $flag, 'result' => $result, 'mail' => $mail, 'picAddress' => $picAddress]);
     }
-
+    else{$this->render('index');}
+    }
     public function actionHello() {
         return $this->render('hello', array(null));
     }
 
     //公告信息
     public function actionStuNotice() {
+        if(isset(Yii::app()->session['userid_now'])){
         $result = Notice::model()->findNotice();
         $noticeRecord = $result ['noticeLst'];
         $pages = $result ['pages'];
@@ -1545,7 +1562,10 @@ class StudentController extends CController {
         $noticeS->update();
         $this->render('stuNotice', array('noticeRecord' => $noticeRecord, 'pages' => $pages));
     }
-
+    else{
+       $this->render('index'); 
+    }
+    }
     //公告内容
     public function ActionNoticeContent() {
         $result = 0;
@@ -1595,6 +1615,7 @@ class StudentController extends CController {
 
     //学生个人资料
     public function actionStuInformation() {
+        if(isset(Yii::app()->session['userid_now'])){
         $ID = Yii::app()->session['userid_now'];
         $student = Student::model()->find("userID = '$ID'");
         return $this->render('stuInformation', array(
@@ -1608,7 +1629,8 @@ class StudentController extends CController {
                     'phone_number' => $student['phone_number']
         ));
     }
-
+    else{$this->render('index');}
+    }
     public function actionFreePractice() {
         $classExerciseLsts = Array();
         $nowLesson = "";
