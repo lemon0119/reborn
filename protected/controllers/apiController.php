@@ -266,7 +266,6 @@ class apiController extends Controller {
     }
     
     public function ActionChangeSuiteType() {
-        error_log('执行---');
         $thisLessonId = $_POST['thisLessonId'];
         $thisClassId = $_POST['thisClassId'];
         $thisSuiteId = $_POST['thisSuiteId'];
@@ -296,6 +295,26 @@ class apiController extends Controller {
         $rightCount=$_POST['rightCount'];
         $originalCount=$_POST['originalCount'];
         $currentCount=$_POST['currentCount'];
+        if(isset($_POST['errorNumber'])){
+            $errorNumber=$_POST['errorNumber'];
+        }else{
+            $errorNumber=0;
+        }
+        if(isset($_POST['missingNumber'])){
+            $missingNumber=$_POST['missingNumber'];
+        }else{
+            $missingNumber=0;
+        }
+        if(isset($_POST['redundantNumber'])){
+            $redundantNumber=$_POST['redundantNumber'];
+        }else{
+            $redundantNumber=0;
+        }
+        if(isset($_POST['correctRate'])){
+            $correctRate=$_POST['correctRate'];
+        }else{
+            $correctRate=0;
+        }
         if($exerciseType === "classExercise"){
             $classExerciseID = $exerciseData[0];
             $studentID = $exerciseData[1];
@@ -320,7 +339,12 @@ class apiController extends Controller {
             $answer_record =  AnswerRecord::model()->findAll("recordID = ? AND exerciseID = ? AND type = ?",array($recordID, $exerciseID, $type));
             foreach ($answer_record as $record){
                      $answer_id=$record['answerID']; 
-                     AnswerData::model()->saveAnswerData($answer_id,$rightCount,0,0,0,$originalCount,$currentCount,0,0);
+                     if((isset($_POST['errorNumber']) || isset($_POST['redundantNumber']) || isset($_POST['missingNumber']) || isset($_POST['correctRate'])) && $record!="key"){
+                        
+                         AnswerData::model()->updataAnswerData1($answer_id,$errorNumber,$missingNumber,$redundantNumber,$originalCount,0,0,$correctRate);
+                     }else{
+                        AnswerData::model()->saveAnswerData($answer_id,$rightCount,$errorNumber,$missingNumber,$redundantNumber,$originalCount,$currentCount,0,0);
+                     }
                  }
         }    
         $this->renderJSON("");

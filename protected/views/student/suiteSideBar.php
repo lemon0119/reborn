@@ -6,6 +6,7 @@
  */
 ?>
 <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
+<script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
 
 <div class="span3">
@@ -177,6 +178,7 @@
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
+                                                        saveData();
                                                         if(flag==1 || flag==2 || flag==3){
                                                            $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     if (lessonID!=0) {
@@ -205,6 +207,7 @@
 						btn: parseInt("0011",2),
 						onOk: function(){
 							saveToDateBaseNow();
+                                                        saveData();
                                                         if(flag==1 || flag==2 || flag==3){
                                                             $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     if (lessonID!=0) {
@@ -227,12 +230,14 @@
 					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
     }
     
+    
     function suiteListenNext(exerID,cent,lessonID,flag){
         var option = {
 						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
-							saveToDateBaseNow();
+                                                	saveToDateBaseNow();
+                                                        saveData();
                                                         if(flag==1 || flag==2 || flag==3){
                                                             $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     if (lessonID!=0) {
