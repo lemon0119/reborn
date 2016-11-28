@@ -126,7 +126,9 @@ window.onload=showLately();
                 document.form.action='./index.php?r=teacher/CountAbsence&&classID=<?php echo $classID;?>';
            }else{
               // window.wxc.xcConfirm('这不是正确的日期格式，请重新选择', window.wxc.xcConfirm.typeEnum.error); 
-              alert('这不是正确的日期格式，请重新选择');
+              document.getElementById("startTime").value="";
+              document.getElementById("overTime").value="";         
+                alert('这不是正确的日期格式，请重新选择');
            }
         
     }

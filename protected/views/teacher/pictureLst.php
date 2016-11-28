@@ -98,7 +98,7 @@
 
 function formSubmit() {
         var s = document.form1.file.value;
-        $('#myButton').attr('disabled',"true");
+        //$('#myButton').attr('disabled',"true");
         if (s == "") {
             window.wxc.xcConfirm("请选择文件！", window.wxc.xcConfirm.typeEnum.info);
         } else {

@@ -1,3 +1,4 @@
+<script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/ocxJS.js"></script>
 <link href="<?php echo CSS_URL; ?>ywStyle.css" rel="stylesheet" type="text/css" />
 <!--<script src="<?php// echo JS_URL; ?>exerJS/AnalysisTool.js"></script> -->
@@ -376,8 +377,7 @@ if ($isExam) {
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = inputO.replace(/\r\n/g, "`").replace(/ /g, "");
-        inputO = window.G_content;
+        window.G_content = inputO.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
@@ -573,6 +573,7 @@ if ($isExam) {
             btn: parseInt("0011", 4),
             onOk: function () {
                 saveToDateBaseNow();
+                saveData();
                 //doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
                     if (<?php

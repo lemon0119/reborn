@@ -50,7 +50,7 @@ require 'workAnsSideBar.php';
             </tr>
             <tr>
                 <td><span id="correct"><?php printf('%2.1f',$correct); ?></span></td>
-                <td><?php printf($correct_Number); ?></td>
+                <td id="correct_number"></td>
                 <td><span id="error_number"></span></td>
                 <td><span id="missing_number"></span></td>
                 <td id="redundant_number"></td>
@@ -267,9 +267,9 @@ require 'workAnsSideBar.php';
         $("#answer_lgnore_symbol").html(character_current);
         $("#standard_number").html(standard_number);
         $("#answer_number").html(answer_number);
-        $("#correct_Number").html(remove_char_correct);
-        $("#error_answer").html(answer_number-<?php echo $correct_Number;?>);
-        $("#standard_answer").html(standard_number-<?php echo $correct_Number;?>);
+        $("#correct_number").html(remove_char_correct);
+        $("#error_answer").html(answer_number-remove_char_correct);
+        $("#standard_answer").html(standard_number-remove_char_correct);
 //    for (var i = 0; i < currentContent.length; i++) {
 //        if (typeof (currentContent[i]) !== 'undefined') {
 //            if (currentContent[i] !== currentLCS[i]) {

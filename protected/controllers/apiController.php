@@ -266,7 +266,6 @@ class apiController extends Controller {
     }
     
     public function ActionChangeSuiteType() {
-        error_log('执行---');
         $thisLessonId = $_POST['thisLessonId'];
         $thisClassId = $_POST['thisClassId'];
         $thisSuiteId = $_POST['thisSuiteId'];
@@ -296,6 +295,26 @@ class apiController extends Controller {
         $rightCount=$_POST['rightCount'];
         $originalCount=$_POST['originalCount'];
         $currentCount=$_POST['currentCount'];
+        if(isset($_POST['errorNumber'])){
+            $errorNumber=$_POST['errorNumber'];
+        }else{
+            $errorNumber=0;
+        }
+        if(isset($_POST['missingNumber'])){
+            $missingNumber=$_POST['missingNumber'];
+        }else{
+            $missingNumber=0;
+        }
+        if(isset($_POST['redundantNumber'])){
+            $redundantNumber=$_POST['redundantNumber'];
+        }else{
+            $redundantNumber=0;
+        }
+        if(isset($_POST['correctRate'])){
+            $correctRate=$_POST['correctRate'];
+        }else{
+            $correctRate=0;
+        }
         if($exerciseType === "classExercise"){
             $classExerciseID = $exerciseData[0];
             $studentID = $exerciseData[1];
@@ -320,7 +339,12 @@ class apiController extends Controller {
             $answer_record =  AnswerRecord::model()->findAll("recordID = ? AND exerciseID = ? AND type = ?",array($recordID, $exerciseID, $type));
             foreach ($answer_record as $record){
                      $answer_id=$record['answerID']; 
-                     AnswerData::model()->saveAnswerData($answer_id,$rightCount,0,0,0,$originalCount,$currentCount,0,0);
+                     if((isset($_POST['errorNumber']) || isset($_POST['redundantNumber']) || isset($_POST['missingNumber']) || isset($_POST['correctRate'])) && $record!="key"){
+                        
+                         AnswerData::model()->updataAnswerData1($answer_id,$errorNumber,$missingNumber,$redundantNumber,$originalCount,0,0,$correctRate);
+                     }else{
+                        AnswerData::model()->saveAnswerData($answer_id,$rightCount,$errorNumber,$missingNumber,$redundantNumber,$originalCount,$currentCount,0,0);
+                     }
                  }
         }    
         $this->renderJSON("");
@@ -2175,10 +2199,16 @@ class apiController extends Controller {
         else{ 
         $studentname=  Student::model()->find("userID= '$userID'"); 
         $name = $studentname['userName'];
+        if($type=='key'){
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID,redundant_Number,missing_Number) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID',0,0)";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        }else{
         $connection = Yii::app()->db;
         $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID')";
         $command = $connection->createCommand($sql);
-        $command->execute();
+        $command->execute();}
           $sql = "SELECT * FROM answer_data where answerID = '$answerID'";
           $answer2 = Yii::app()->db->createCommand($sql)->query();
           $scc = count($answer2);
@@ -2205,8 +2235,7 @@ class apiController extends Controller {
         $connection = Yii::app()->db;
         $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
         $command = $connection->createCommand($sql);
-        $command->execute();
-        }
+        $command->execute();}
         }
         }
           }
@@ -2298,7 +2327,6 @@ class apiController extends Controller {
                  }
         $n=  strrpos($backDelete, "&");
         $backDelete= substr($backDelete, $n+1);
-        error_log(111);
         $sql = "SELECT * FROM `rank_answer` WHERE exerciseID = '$exerciseID' and userID ='$studentID'";
         $criteria   =   new CDbCriteria();
         $exer  =   Yii::app()->db->createCommand($sql)->queryAll();
@@ -2313,7 +2341,7 @@ class apiController extends Controller {
         $name = $studentname['userName'];
         $answerID = Tool::createID();
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,userName,isExam,exerciseID,type) values ('$correct','$answerID','$backDelete','$speed','$studentID','$name','$isExam','$exerciseID','$type')";
+        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,userName,isExam,exerciseID,type,missing_Number,redundant_Number) values ('$correct','$answerID','$backDelete','$speed','$studentID','$name','$isExam','$exerciseID','$type',0,0)";
         $command = $connection->createCommand($sql);
         $command->execute();
         }

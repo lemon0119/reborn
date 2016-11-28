@@ -50,7 +50,7 @@
             </tr>
             <tr>
                 <td><span id="correct"><?php printf('%2.1f',$correct); ?></span></td>
-                <td><?php printf($correct_Number); ?></td>
+                <td id="correct_number"></td>
                 <td><span id="error_number"></span></td>
                 <td><span id="missing_number"></span></td>
                 <td id="redundant_number"></td>
@@ -166,7 +166,7 @@ if (isset(Yii::app()->session['type'])) {
     var error_number=0;
     var missing_number=0;
     var redundant_number=0;
-    right_length[e]=0;0
+    right_length[e]=0;
     for (var l = 0; l < currentContent.length; l++) {
         if (typeof (currentContent[l]) !== 'undefined') {
             if (currentContent[l] !== currentLCS[l] && currentLCS[l]!=='`') {
@@ -209,7 +209,6 @@ if (isset(Yii::app()->session['type'])) {
     var e_flag=0;
     var more_play="";
     for (var i = 0; i < currentContent.length; i++) {
-        console.log(j);
         if (typeof (currentContent[i]) !== 'undefined') {
             if (currentContent[i] !== currentLCS[i] && currentLCS[i]!=='`') {
                 if(currentLCS[i] === '~'){
@@ -283,7 +282,6 @@ if (isset(Yii::app()->session['type'])) {
     }
     $("#error_number").html(error_number);
     $("#missing_number").html(missing_number);
-    console.log(missing_number);
     $("#redundant_number").html(redundant_number);
         standard_number=originalContent.length;
         answer_number=currentContent.length;
@@ -291,9 +289,9 @@ if (isset(Yii::app()->session['type'])) {
         $("#answer_lgnore_symbol").html(character_current);
         $("#standard_number").html(standard_number);
         $("#answer_number").html(answer_number);
-        $("#correct_Number").html(remove_char_correct);
-        $("#error_answer").html(answer_number-<?php echo $correct_Number;?>);
-        $("#standard_answer").html(standard_number-<?php echo $correct_Number;?>);
+        $("#correct_number").html(remove_char_correct);
+        $("#error_answer").html(answer_number-remove_char_correct);
+        $("#standard_answer").html(standard_number-remove_char_correct);
 //    if(i==flag[j]){
 //        currentInnerHTML += '<font style="color:red">' +"(" + right_content[j] + ")" + '</font>';
 //    }
