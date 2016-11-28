@@ -144,6 +144,7 @@
                         <thead>
                             <tr>
                                 <th>名次</th>
+                                <th>学号</th>
                                 <th>姓名</th>
                                 <th id="name">正确率</th>
                                 <th>速度</th>
@@ -217,12 +218,19 @@
 $(document).ready(function(){
     $("#id_classWork").click(function() {
         $("#id_classWorkLesson").toggle(200);
+        $("#id_classExerciseLesson").hide();
+        $("#id_classExamLesson").hide();
     });  
     $("#id_classExercise").click(function() {
         $("#id_classExerciseLesson").toggle(200);
+        $("#id_classExamLesson").hide();
+        $("#id_classWorkLesson").hide();
+        
     });  
         $("#id_classExam").click(function() {
         $("#id_classExamLesson").toggle(200);
+        $("#id_classWorkLesson").hide();
+        $("#id_classExerciseLesson").hide();
     });  
     
     
@@ -698,7 +706,7 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
                     var str ="";
                    for(var i in data){   
                        
-                       str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
+                       str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userID']+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
                            +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['missing_Number']+"</th>"+"<th>"+data[i]['backDelete']+"</th>"+"<th>"+data[i]['redundant_Number']+"</th>";
                       console.log("str----", str);
                       var tr = document.createElement("tr");               
@@ -946,7 +954,7 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                     var str ="";
                    for(var i in data){   
                        
-                       str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
+                       str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userID']+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
                            +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['missing_Number']+"</th>"+"<th>"+data[i]['backDelete']+"</th>"+"<th>"+data[i]['redundant_Number']+"</th>";
                       console.log("str----", str);
                       var tr = document.createElement("tr");               

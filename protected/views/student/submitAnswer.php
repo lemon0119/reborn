@@ -17,7 +17,7 @@
     }
      function submitSuite2(simple){
        var isExam = <?php if($isExam){echo 1;}else {echo 0;}?>;
-       setTimeout("saveToDateBaseNow();",100);
+       setTimeout("saveToDateBaseNow(),saveData()",100);
        //saveToDateBaseNow();
         doSubmit(true);
         $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
