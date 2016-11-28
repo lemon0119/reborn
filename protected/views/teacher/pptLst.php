@@ -40,7 +40,7 @@
 </div>
 <div class="span9" style=" height: 574px">
     <h2 style="display:inline-block;">PPT列表</h2>
-    <span>(支持PPT格式,最大100M)</span>
+    <span>(支持PPT或PPTX格式,最大100M)</span>
     <div id ="ppt-table" style="height: 495px;overflow:scroll;width: 100%;">
         
     </div>
@@ -115,6 +115,7 @@
     //    $('#myButton').attr('disabled',"true");
         if (s == "") {
             window.wxc.xcConfirm("请选择文件！", window.wxc.xcConfirm.typeEnum.info);
+            
         } else {
             $("#upload").show();
                 setTimeout('fetch_progress()', 1000);
