@@ -3460,7 +3460,7 @@ class AdminController extends CController {
                 return;
             }
         }
-        if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint") {
+        if ($_FILES["file"]["type"] == "application/vnd.ms-powerpoint"||$_FILES["file"]["type"] == "application/vnd.openxmlformats-officedocument.presentationml.presentation") {
             if ($_FILES["file"]["error"] > 0) {
                 $result = "Return Code: " . $_FILES["file"]["error"];
             } else {

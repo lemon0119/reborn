@@ -137,7 +137,7 @@ if (!$isOver) {
                     $str = str_replace(" ", "}", $str);
                     echo $str;
                     ?>">
-                    <div id ="templet" style="text-align: left;height: 225px;width: 840px" class="questionBlock" front-size ="25px" onselectstart="return false">
+                    <div id ="templet" style="text-align: left;height: 225px;width: 842px" class="questionBlock" front-size ="25px" onselectstart="return false">
                     </div>
                     <br/>
                     <object id="typeOCX" type="application/x-itst-activex" 
@@ -377,8 +377,7 @@ if ($isExam) {
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = inputO.replace(/\r\n/g, "`").replace(/ /g, "");
-        inputO = window.G_content;
+        window.G_content = inputO.replace(/\r\n/g, "").replace(/ /g, "");
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
@@ -548,7 +547,7 @@ if ($isExam) {
         var input = getContent(yaweiOCX);
         var addLine = (input.split('\n\r')).length - 1;
         var div = document.getElementById('templet');
-        var line = parseInt(input.length / 30) + addLine;
+        var line = parseInt(input.length / 33) + addLine;
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }

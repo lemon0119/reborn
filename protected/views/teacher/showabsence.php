@@ -82,16 +82,16 @@ foreach ($result as $v)
 	<span id="s"></span>
 	<table>
 		<tr>
-			<td><a href="#" onclick="page.firstPage();">首页</a></td>
-			<td><a href="#" onclick="page.prePage();">上一页</a></td>
-			<td>第<span id="pageindex">1</span>页</td>
-			<td><a href="#" onclick="page.nextPage();">下一页</a></td>
-			<td><a href="#" onclick="page.lastPage();">尾页</a></td>
-                        <td>共<font id='t'>2</font>页&nbsp;</td>
-                        <td>第<select id="pageselect" style="width:50px" onchange="page.changePage();"></select>页</td>
+                    <td><a href="#" onclick="page.firstPage();">首页</a>&nbsp;&nbsp;</td>
+			<td><a href="#" onclick="page.prePage();">上一页</a>&nbsp;&nbsp;</td>
+			<td>第<span id="pageindex">1</span>页&nbsp;&nbsp;</td>
+			<td><a href="#" onclick="page.nextPage();">下一页</a>&nbsp;&nbsp;</td>
+			<td><a href="#" onclick="page.lastPage();">尾页</a>&nbsp;&nbsp;</td>
+                        <td>共<font id='t'>2</font>页&nbsp;&nbsp;</td>
+                        <td>第&nbsp;<select id="pageselect" style="width: 40px;height: 26px;position: relative;top: 4px;" onchange="page.changePage();"></select>&nbsp;页</td>
 		</tr>
 	</table>
-            <button onclick="submit();"  class="btn btn-primary">确定</button>
+        <button onclick="submit();"  class="btn btn-primary" style="float: right">确定</button>
     </form>
  </div>   
 </div>

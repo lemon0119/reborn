@@ -2199,10 +2199,16 @@ class apiController extends Controller {
         else{ 
         $studentname=  Student::model()->find("userID= '$userID'"); 
         $name = $studentname['userName'];
+        if($type=='key'){
+        $connection = Yii::app()->db;
+        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID,redundant_Number,missing_Number) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID',0,0)";
+        $command = $connection->createCommand($sql);
+        $command->execute();
+        }else{
         $connection = Yii::app()->db;
         $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID')";
         $command = $connection->createCommand($sql);
-        $command->execute();
+        $command->execute();}
           $sql = "SELECT * FROM answer_data where answerID = '$answerID'";
           $answer2 = Yii::app()->db->createCommand($sql)->query();
           $scc = count($answer2);
@@ -2229,8 +2235,7 @@ class apiController extends Controller {
         $connection = Yii::app()->db;
         $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
         $command = $connection->createCommand($sql);
-        $command->execute();
-        }
+        $command->execute();}
         }
         }
           }
@@ -2249,6 +2254,7 @@ class apiController extends Controller {
           $choice =   $_POST['choice'];
          }else{
          $choice = 'correct';}
+            $id = array();
             $name = array();
             $speed = array();
             $correct = array();
@@ -2266,6 +2272,7 @@ class apiController extends Controller {
         $criteria   =   new CDbCriteria();
         $rank  =   Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($rank as $r){
+            array_push($id, $r['userID']);
             array_push($name, $r['userName']);
             array_push($speed, $r['speed']);
             array_push($correct, $r['correct']);
@@ -2273,7 +2280,7 @@ class apiController extends Controller {
             array_push($redundant, $r['redundant_Number']);
             array_push($backDelete, $r['backDelete']);
         }   
-          $this->renderJSON(['name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
+          $this->renderJSON(['id'=>$id,'name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
         }
     public function actionGetExerciseRanking(){
         $exerciseID = $_POST['exerciseID'];
@@ -2320,7 +2327,6 @@ class apiController extends Controller {
                  }
         $n=  strrpos($backDelete, "&");
         $backDelete= substr($backDelete, $n+1);
-        error_log(111);
         $sql = "SELECT * FROM `rank_answer` WHERE exerciseID = '$exerciseID' and userID ='$studentID'";
         $criteria   =   new CDbCriteria();
         $exer  =   Yii::app()->db->createCommand($sql)->queryAll();
@@ -2335,7 +2341,7 @@ class apiController extends Controller {
         $name = $studentname['userName'];
         $answerID = Tool::createID();
         $connection = Yii::app()->db;
-        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,userName,isExam,exerciseID,type) values ('$correct','$answerID','$backDelete','$speed','$studentID','$name','$isExam','$exerciseID','$type')";
+        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,userName,isExam,exerciseID,type,missing_Number,redundant_Number) values ('$correct','$answerID','$backDelete','$speed','$studentID','$name','$isExam','$exerciseID','$type',0,0)";
         $command = $connection->createCommand($sql);
         $command->execute();
         }
@@ -2350,6 +2356,7 @@ class apiController extends Controller {
           $choice =   $_POST['choice'];
          }else{
          $choice = 'correct';}
+            $id = array();
             $name = array();
             $speed = array();
             $correct = array();
@@ -2360,6 +2367,7 @@ class apiController extends Controller {
         $criteria   =   new CDbCriteria();
         $rank  =   Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($rank as $r){
+            array_push($id, $r['userID']);
             array_push($name, $r['userName']);
             array_push($speed, $r['speed']);
             array_push($correct, $r['correct']);
@@ -2367,7 +2375,7 @@ class apiController extends Controller {
             array_push($redundant, $r['redundant_Number']);
             array_push($backDelete, $r['backDelete']);
         }   
-          $this->renderJSON(['name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
+          $this->renderJSON(['id'=>$id,'name'=>$name,'speed'=>$speed,'correct'=>$correct,'missing'=>$missing,'redundant'=>$redundant,'backDelete'=>$backDelete]);  
     }
         
 }
