@@ -200,6 +200,7 @@ class TeacherController extends CController {
 
 //end add by LC    
     public function actionSet() {       //set
+        if(isset(Yii::app()->session['userid_now'])){
         $result = 'no';
         $mail = '';
         $userid_now = Yii::app()->session['userid_now'];
@@ -231,7 +232,10 @@ class TeacherController extends CController {
 
         $this->render('set', ['result' => $result, 'mail' => $mail]);
     }
-
+    else{
+        $this->render('index');
+    }
+    }
     public function actionChangeProgress() {
         $result = '1';
         $classID = $_GET['classID'];
@@ -4893,6 +4897,7 @@ class TeacherController extends CController {
     }
 
     public function ActionStuWork() {
+        if(isset(Yii::app()->session['userid_now'])){
         $teacherID = Yii::app()->session['userid_now'];
         $array_class = array();
         $array_suiteLessonClass = array();
@@ -4981,8 +4986,8 @@ class TeacherController extends CController {
             'array_unaccomplished' => $array_unaccomplished,
             'selectClassID' => $selectClassID,
         ));
+    }else{$this->render('index');}
     }
-
     public function ActionStuExam() {
         $teacherID = Yii::app()->session['userid_now'];
         $array_class = array();
@@ -6397,6 +6402,7 @@ class TeacherController extends CController {
     }
 
     public function actionScheduleDetil() {
+        if(isset(Yii::app()->session['userid_now'])){
         $teacherID = Yii::app()->session['userid_now'];
         if (isset($_GET["progress"])) {
             Yii::app()->session['progress'] = $_GET["progress"];
@@ -6537,8 +6543,10 @@ class TeacherController extends CController {
             return $this->render('scheduleDetil', ['teacher' => $sqlTeacher, 'result' => $teaResult, 'array_class' => $array_class, 'courseID' => $courseID,
                 'courseName' => $courseName,'pages' => $pages,'createPerson' => $createPerson,'posts' => $lessonLst, 'array_course' => $array_course, 'teacher_class'=>$teacher_class,'sqlcurrentClass' => $sqlcurrentClass]);
         }
+    }else{
+        $this->render('index');
     }
-
+    }
     public function actionEditSchedule() {
         $sequence = $_GET['sequence'];
         $day = $_GET['day'];
@@ -8405,7 +8413,7 @@ foreach ($one as $v)
         
     }
         public function actionIsShutDown(){
-        if(isset($_POST ['password'])){
+        if(isset($_POST ['password'])&&isset(Yii::app()->session['userid_now'])){
             $pass=md5($_POST ['password']);
             $userid_now=Yii::app()->session['userid_now'];
             $user = Teacher::model()->find('userID=?', array($userid_now));
@@ -8418,6 +8426,8 @@ foreach ($one as $v)
              $this->renderpartial('shutdown',['result'=>$result]);
         }
         
+    }else{
+        echo'您的账号已在其他地方登陆';
     }
         }
         }

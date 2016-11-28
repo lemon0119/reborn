@@ -220,12 +220,18 @@
 $(document).ready(function(){
     $("#id_classWork").click(function() {
         $("#id_classWorkLesson").toggle(200);
+        $("#id_classExerciseLesson").hide();
+        $("#id_classExamLesson").hide();
     });  
     $("#id_classExercise").click(function() {
         $("#id_classExerciseLesson").toggle(200);
+        $("#id_classExamLesson").hide();
+        $("#id_classWorkLesson").hide();
     });  
         $("#id_classExam").click(function() {
         $("#id_classExamLesson").toggle(200);
+        $("#id_classWorkLesson").hide();
+        $("#id_classExerciseLesson").hide();
     });  
     $("#id_Diligence").click(function() {
         GetDiligence();

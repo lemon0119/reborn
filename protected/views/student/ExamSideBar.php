@@ -12,7 +12,7 @@ $currtime = $examInfo['endtime'];
 <style type="text/css">
     .queTitle{}
 </style>
-<div id="daojishi" style="position:absolute; z-index:2;background:#736971; width:70px;display: none;top:300px;left: 10px;border-radius:5px 5px 5px 5px;color:#F46401">考试剩余<font style="color:#F46401" id="sideTime2"></font></div>
+<div id="daojishi" style="position:fixed;bottom:600; z-index:2;background:#736971; width:70px;display: none;left: 10px;border-radius:5px 5px 5px 5px;color:#F46401">考试剩余<font style="color:#F46401" id="sideTime2"></font></div>
 <div class="span3">
         <div class="well" style="padding: 8px 0;">
                 <ul class="nav nav-list">
@@ -193,7 +193,7 @@ $currtime = $examInfo['endtime'];
                 $(window).bind("scroll", function () {  
                     var sTop = $(window).scrollTop();  
                     var sTop = parseInt(sTop);  
-                    if (sTop >= 130) {  
+                    if (sTop >= 115) {  
                         if (!$("#daojishi").is(":visible")) {  
                             try {  
                                 $("#daojishi").slideDown();  
