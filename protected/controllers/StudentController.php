@@ -340,6 +340,16 @@ class StudentController extends CController {
             $exerciseID = $result['exerciseID'];
             $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'listen' AND createPerson LIKE '$studentID'");
             if ($sqlClassExerciseRecord !== null) {
+                
+                $answerID = $sqlClassExerciseRecord['answerID'];
+                $answerData = AnswerData::model()->find("answerID = '$answerID'");
+                $rankAnswer = RankAnswer::model()->find("answerID = '$answerID'");
+                if($answerData != NULL) {
+                 $answerData->delete();
+                }
+                if($rankAnswer!=NULL){
+                    $rankAnswer ->delete();
+                }
                 $sqlClassExerciseRecord->delete();
             }
         }
@@ -488,6 +498,15 @@ class StudentController extends CController {
             $exerciseID = $result['exerciseID'];
             $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'look' AND createPerson LIKE '$studentID'");
             if ($sqlClassExerciseRecord !== null) {
+                $answerID = $sqlClassExerciseRecord['answerID'];
+                $answerData = AnswerData::model()->find("answerID = '$answerID'");
+                $rankAnswer = RankAnswer::model()->find("answerID = '$answerID'");
+                if($answerData != NULL) {
+                 $answerData->delete();
+                }
+                if($rankAnswer!=NULL){
+                    $rankAnswer ->delete();
+                }
                 $sqlClassExerciseRecord->delete();
             }
         }
@@ -647,9 +666,20 @@ class StudentController extends CController {
             $recordID = $record['recordID'];
             $exerciseID = $result['exerciseID'];
             $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = $recordID AND exerciseID = '$exerciseID' AND type = 'key' AND createPerson LIKE '$studentID'");
+            
             if ($sqlClassExerciseRecord !== null) {
+                $answerID = $sqlClassExerciseRecord['answerID'];
+                $answerData = AnswerData::model()->find("answerID = '$answerID'");
+                $rankAnswer = RankAnswer::model()->find("answerID = '$answerID'");
+                if($answerData != NULL) {
+                 $answerData->delete();
+                }
+                if($rankAnswer!=NULL){
+                    $rankAnswer ->delete();
+                }
                 $sqlClassExerciseRecord->delete();
-            }
+             }
+             
         }
         $finishRecord = Array();
         foreach (Tool::$EXER_TYPE as $type) {
@@ -1805,18 +1835,19 @@ class StudentController extends CController {
                    RankAnswer::model()->insertData($answerID, $exerciseID, $workID, $userID, $userName, $correct, $missing_Number, $redundant_Number, $speed, $type, $backDelete, 1);
                 }
             }
-        }else {
-            foreach ($rankLst as $rank) {
-                $ansID = $rank['answerID'];
-                $answerData = AnswerData::model()->find("answerID = '$ansID'");
-                if($rank['type']!="key"){
-                 $rank['missing_Number'] = $answerData['missing_Number'];
-                 $rank['redundant_Number'] = $answerData['redundant_Number'];
-                 $rank['correct'] = $answerData['correct_Answer'];
-                 $rank->update();
-                }
-            }
         }
+//        else {
+//            foreach ($rankLst as $rank) {
+//                $ansID = $rank['answerID'];
+//                $answerData = AnswerData::model()->find("answerID = '$ansID'");
+//                if($rank['type']!="key"){
+//                 $rank['missing_Number'] = $answerData['missing_Number'];
+//                 $rank['redundant_Number'] = $answerData['redundant_Number'];
+//                 $rank['correct'] = $answerData['correct_Answer'];
+//                 $rank->update();
+//                }
+//            }
+//        }
        }
     }
     //将这套作业打的练习插入数据库
@@ -1868,19 +1899,20 @@ class StudentController extends CController {
                    RankAnswer::model()->insertData($answerID, $exerciseID, $workID, $userID, $userName, $correct, $missing_Number, $redundant_Number, $speed, $type, $backDelete, 0);
                 }
             }
-        } else {
-            foreach ($rankLst as $rank) {
-                $ansID = $rank['answerID'];
-                $answerData = AnswerData::model()->find("answerID = '$ansID'");
-                if($rank['type']!="key"){
-                 $rank['missing_Number'] = $answerData['missing_Number'];
-                 $rank['redundant_Number'] = $answerData['redundant_Number'];
-                 $rank['correct'] = $answerData['correct_Answer'];
-                 $rank->update();
-                }
-                
-            }
-         }  
+        } 
+//        else {
+//            foreach ($rankLst as $rank) {
+//                $ansID = $rank['answerID'];
+//                $answerData = AnswerData::model()->find("answerID = '$ansID'");
+//                if($rank['type']!="key"){
+//                 $rank['missing_Number'] = $answerData['missing_Number'];
+//                 $rank['redundant_Number'] = $answerData['redundant_Number'];
+//                 $rank['correct'] = $answerData['correct_Answer'];
+//                 $rank->update();
+//                }
+//                
+//            }
+//         }  
         }
         
     }
