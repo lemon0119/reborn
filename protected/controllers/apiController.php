@@ -266,7 +266,6 @@ class apiController extends Controller {
     }
     
     public function ActionChangeSuiteType() {
-        error_log('执行---');
         $thisLessonId = $_POST['thisLessonId'];
         $thisClassId = $_POST['thisClassId'];
         $thisSuiteId = $_POST['thisSuiteId'];
@@ -296,6 +295,26 @@ class apiController extends Controller {
         $rightCount=$_POST['rightCount'];
         $originalCount=$_POST['originalCount'];
         $currentCount=$_POST['currentCount'];
+        if(isset($_POST['errorNumber'])){
+            $errorNumber=$_POST['errorNumber'];
+        }else{
+            $errorNumber=0;
+        }
+        if(isset($_POST['missingNumber'])){
+            $missingNumber=$_POST['missingNumber'];
+        }else{
+            $missingNumber=0;
+        }
+        if(isset($_POST['redundantNumber'])){
+            $redundantNumber=$_POST['redundantNumber'];
+        }else{
+            $redundantNumber=0;
+        }
+        if(isset($_POST['correctRate'])){
+            $correctRate=$_POST['correctRate'];
+        }else{
+            $correctRate=0;
+        }
         if($exerciseType === "classExercise"){
             $classExerciseID = $exerciseData[0];
             $studentID = $exerciseData[1];
@@ -320,7 +339,12 @@ class apiController extends Controller {
             $answer_record =  AnswerRecord::model()->findAll("recordID = ? AND exerciseID = ? AND type = ?",array($recordID, $exerciseID, $type));
             foreach ($answer_record as $record){
                      $answer_id=$record['answerID']; 
-                     AnswerData::model()->saveAnswerData($answer_id,$rightCount,0,0,0,$originalCount,$currentCount,0,0);
+                     if((isset($_POST['errorNumber']) || isset($_POST['redundantNumber']) || isset($_POST['missingNumber']) || isset($_POST['correctRate'])) && $record!="key"){
+                        
+                         AnswerData::model()->updataAnswerData1($answer_id,$errorNumber,$missingNumber,$redundantNumber,$originalCount,0,0,$correctRate);
+                     }else{
+                        AnswerData::model()->saveAnswerData($answer_id,$rightCount,$errorNumber,$missingNumber,$redundantNumber,$originalCount,$currentCount,0,0);
+                     }
                  }
         }    
         $this->renderJSON("");
@@ -1724,7 +1748,6 @@ class apiController extends Controller {
                     $s2+=intval($value);
                 }
                 $s2=$s2/($key+1);
-                error_log($s2);
                 if($n2==0){
                    $min=$s2;
                    $max=$s2;
@@ -1760,8 +1783,7 @@ class apiController extends Controller {
                     $max=$s3;
                     $maxN=$n3;
                 }
-                error_log($minN);
-                error_log($maxN);
+
             }else if($choice=='backDelete'){
                 $n4++;
                 $s4=0;
@@ -2133,6 +2155,8 @@ class apiController extends Controller {
           
         $sql = "SELECT * FROM rank_answer where answerID = '$answerID'";
         $oldans= Yii::app()->db->createCommand($sql)->query();
+        foreach ($oldans as $oldrank){
+        $oldtype = $oldrank['type'];}
         $scccc = count($oldans);
         if($scccc==1){
         $connection = Yii::app()->db;
@@ -2153,7 +2177,6 @@ class apiController extends Controller {
                  }
         $n=  strrpos($missing, "&");
         $missing= substr($missing, $n+1);
-        error_log($missing);
         //多打字数
         $redundant=$ans2['redundant_Number'];
         $redundant=$ans2['redundant_Number'];
@@ -2162,56 +2185,62 @@ class apiController extends Controller {
                  }
         $n=  strrpos($redundant, "&");
         $redundant= substr($redundant, $n+1);
-        error_log($redundant);
         
         $oanswerID = $ans2['answerID'];
-        $connection = Yii::app()->db;
-        $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
-        $command = $connection->createCommand($sql);
-        $command->execute();
+        if($oldtype=='key'){
+
+            $sql = "UPDATE rank_answer SET redundant_Number = '0', missing_Number = '0' where answerID = '$oanswerID'";    
+            $command = $connection->createCommand($sql);
+            $command->execute(); 
+        }else{
+            $connection = Yii::app()->db;
+            $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
+            $command = $connection->createCommand($sql);
+            $command->execute(); 
+        }
         }
         }
         }
         else{ 
-        $studentname=  Student::model()->find("userID= '$userID'"); 
-        $name = $studentname['userName'];
+            $studentname=  Student::model()->find("userID= '$userID'"); 
+            $name = $studentname['userName'];
         if($type=='key'){
-        $connection = Yii::app()->db;
-        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID,redundant_Number,missing_Number) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID',0,0)";
-        $command = $connection->createCommand($sql);
-        $command->execute();
+            $connection = Yii::app()->db;
+            $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID,redundant_Number,missing_Number) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID',0,0)";
+            $command = $connection->createCommand($sql);
+            $command->execute();
         }else{
-        $connection = Yii::app()->db;
-        $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID')";
-        $command = $connection->createCommand($sql);
-        $command->execute();}
-          $sql = "SELECT * FROM answer_data where answerID = '$answerID'";
-          $answer2 = Yii::app()->db->createCommand($sql)->query();
-          $scc = count($answer2);
+            $connection = Yii::app()->db;
+            $sql = "INSERT INTO `rank_answer` (correct,answerID,backDelete,speed,userID,type,userName,isExam,workID,exerciseID) values ('$correct','$answerID','$backDelete','$speed','$userID','$type','$name','$isexam','$workID','$exerciseID')";
+            $command = $connection->createCommand($sql);
+            $command->execute();}
+            $sql = "SELECT * FROM answer_data where answerID = '$answerID'";
+            $answer2 = Yii::app()->db->createCommand($sql)->query();
+            $scc = count($answer2);
             if($scc!=0){
          foreach ($answer2 as $ans2){  
          //少打字数        
-        $missing=$ans2['missing_Number'];
-        $missing2=$ans2['missing_Number'];
+            $missing=$ans2['missing_Number'];
+            $missing2=$ans2['missing_Number'];
         if(strpos($missing,"&") === false){     
-        $missing=$missing."&".$missing;
+            $missing=$missing."&".$missing;
                  }
-        $n=  strrpos($missing, "&");
-        $missing= substr($missing, $n+1);
+            $n=  strrpos($missing, "&");
+            $missing= substr($missing, $n+1);
         //多打字数
-        $redundant=$ans2['redundant_Number'];
-        $redundant=$ans2['redundant_Number'];
+            $redundant=$ans2['redundant_Number'];
+            $redundant=$ans2['redundant_Number'];
         if(strpos($redundant,"&") === false){     
-        $redundant=$redundant."&".$redundant;
+            $redundant=$redundant."&".$redundant;
                  }
-        $n=  strrpos($redundant, "&");
-        $redundant= substr($redundant, $n+1);
+            $n=  strrpos($redundant, "&");
+            $redundant= substr($redundant, $n+1);
         
-        $oanswerID = $ans2['answerID'];
-        $connection = Yii::app()->db;
-        $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
-        $command = $connection->createCommand($sql);
-        $command->execute();}
+            $oanswerID = $ans2['answerID'];
+            $connection = Yii::app()->db;
+            $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
+            $command = $connection->createCommand($sql);
+            $command->execute();}
         }
         }
           }

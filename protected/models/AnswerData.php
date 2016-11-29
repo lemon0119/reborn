@@ -24,9 +24,9 @@ class AnswerData extends CActiveRecord
 		return 'answer_data';
 	}
         
-        public static function updataAnswerData1($answerID,$error_Number,$missing_Number,$redundant_Number,$standard_lgnore_symbol,$answer_lgnore_symbol,$correct_Answer){
+        public static function updataAnswerData1($answerID,$error_Number,$missing_Number,$redundant_Number,$standard_Number,$standard_lgnore_symbol,$answer_lgnore_symbol,$correct_Answer){
             $connection = Yii::app()->db;    
-            $sql = "UPDATE `answer_data` SET error_Number = '$error_Number' , missing_Number = '$missing_Number',redundant_Number = '$redundant_Number',standard_Ignore_symbol='$standard_lgnore_symbol',answer_Ignore_symbol='$answer_lgnore_symbol',correct_Answer='$correct_Answer' where answerID = $answerID";
+            $sql = "UPDATE `answer_data` SET error_Number = '$error_Number' , missing_Number = '$missing_Number', standard_Number = '$standard_Number',redundant_Number = '$redundant_Number',standard_Ignore_symbol='$standard_lgnore_symbol',answer_Ignore_symbol='$answer_lgnore_symbol',correct_Answer='$correct_Answer' where answerID = $answerID";
             $command = $connection->createCommand($sql);
             $command->execute();
         }
@@ -37,9 +37,6 @@ class AnswerData extends CActiveRecord
                 $newAnswer = new AnswerData();
                 $newAnswer->answerID = $answerID;
                 $newAnswer->correct_Number = $correct_Number;
-                $newAnswer->error_Number = $error_Number;
-                $newAnswer->missing_Number = $missing_Number;
-                $newAnswer->redundant_Number = $redundant_Number;
                 $newAnswer->standard_Number = $standard_Number;
                 $newAnswer->answer_Number = $answer_Number;
                 $newAnswer->standard_Ignore_symbol = $standard_Ignore_symbol;
@@ -71,12 +68,10 @@ class AnswerData extends CActiveRecord
 //                return "";
                 
         $oldcn_1 = $oldAnswer['correct_Number'] . "&" .$correct_Number;
-        $olden_2 = $oldAnswer['error_Number'] . "&" . $error_Number;
+//        $olden_2 = $oldAnswer['error_Number'] . "&" . $error_Number;
         $olden_6 = $oldAnswer['answer_Number'] . "&" . $answer_Number;
-        //error_log($oldcn);
-        error_log(213);
         $connection = Yii::app()->db;    
-        $sql = "UPDATE `answer_data` SET correct_Number = '$oldcn_1' , error_Number = '$olden_2',answer_Number = '$olden_6' where answerID = $answerID";
+        $sql = "UPDATE `answer_data` SET correct_Number = '$oldcn_1' , answer_Number = '$olden_6' where answerID = $answerID";
         $command = $connection->createCommand($sql);
         $command->execute();
             }
