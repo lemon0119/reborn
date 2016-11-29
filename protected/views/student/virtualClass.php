@@ -43,7 +43,7 @@ echo "<script>var role='$role';</script>";
                 </span></td>           
         </tr>
         <tr>
-            <td><span class="normalfont fr" style="font-weight: bolder;color:#7c8489; margin-right: 90px">>></span><a href="#" onclick="refre()" class="normalfont fr" style="cursor: pointer">开始答题</a></td>
+            <td><span class="normalfont fr" id="pic" style="font-weight: bolder;color:#7c8489; margin-right: 90px">>></span><a href="#" onclick="refre()" id="doExercise" class="normalfont fr" style="cursor: pointer">开始答题</a></td>
         </tr>
     </div>
 
@@ -61,6 +61,7 @@ echo "<script>var role='$role';</script>";
             <button id="exercise_again" onclick="reExercise()" style="margin-left: 10px;margin-right: 10px" class="fl btn btn-primary" >再来一遍</button>
             <button id="exercise_last" onclick="lastExercise()" disabled="disabled" style="margin-left: 10px;margin-right: 10px" class="fl btn btn-primary" >上一题</button>
             <select id="selectExercise" class="selectBox" onchange="optionOnclick()" style="width: 270px !important"></select>
+            <!--<span class="normalfont fr" id="pic" style="font-weight: bolder;color:#7c8489; margin-right: 90px">>></span><a href="#" onclick="refre()" id="doExercise" class="normalfont fr" style="cursor: pointer">刷新新题</a>-->
             <button id="close_exercise" class="fr btn" onclick="closeClassExercise()">关闭</button>
             <button id="exercise_next" onclick="nextExercise()" <?php
             if (count($exerciseIsOpenNow) < 2) {
@@ -168,6 +169,9 @@ echo "<script>var role='$role';</script>";
                 //开始答题
                 function refre(){
                     location.reload();
+                }
+                function refres(){
+                    
                 }
                 function delPress() {
                     document.onkeydown = function (event) {
@@ -338,6 +342,7 @@ echo "<script>var role='$role';</script>";
     }
 
     function startClassExercise() {
+        
         $.ajax({
             type: "GET",
             url: "index.php?r=student/startClassExercise&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
@@ -347,6 +352,7 @@ echo "<script>var role='$role';</script>";
                     isClassExercise = 1;
                     window.wxc.xcConfirm("有新练习发布，点击开始！", window.wxc.xcConfirm.typeEnum.info, {
                         onOk: function () {
+                            
                             $.ajax({
                                 type: "GET",
                                 url: "index.php?r=student/startClassExercise&&classID=<?php echo $classID; ?>&&lessonID=<?php echo $currentLesn; ?>",
@@ -388,7 +394,10 @@ echo "<script>var role='$role';</script>";
                                     selectBoxCheck(0);
                                 }
                             });
+                            $("#doExercise").hide();
+                            $("#pic").hide();
                         }
+                        
                     });
 
                 }
@@ -652,6 +661,8 @@ echo "<script>var role='$role';</script>";
     function closeClassExercise() {
         $("#video-frameTable").css("display","block");
         $("#all-frame").css("width","780px");
+        $("#doExercise").show();
+        $("#pic").show();
         exerciseIsOpenNow = new Array();
         allExerciseName = new Array();
         isfinish = new Array();
