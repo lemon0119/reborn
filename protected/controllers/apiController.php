@@ -2220,9 +2220,16 @@ class apiController extends Controller {
             $answer2 = Yii::app()->db->createCommand($sql)->query();
             $scc = count($answer2);
             if($scc!=0){
-         foreach ($answer2 as $ans2){  
-         //少打字数        
-            $missing=$ans2['missing_Number'];
+         foreach ($answer2 as $ans2){ 
+             $oanswerID = $ans2['answerID'];
+             $ranks = RankAnswer::model()->find("answerID = '$oanswerID'");
+             $type = $ranks['type'];
+         //少打字数   
+            if($type == "key"){
+               $missing = 0;
+               $recordID = 0;
+            }else {
+               $missing=$ans2['missing_Number'];
             $missing2=$ans2['missing_Number'];
         if(strpos($missing,"&") === false){     
             $missing=$missing."&".$missing;
@@ -2236,9 +2243,11 @@ class apiController extends Controller {
             $redundant=$redundant."&".$redundant;
                  }
             $n=  strrpos($redundant, "&");
-            $redundant= substr($redundant, $n+1);
+            $redundant= substr($redundant, $n+1);  
+            }
+           
         
-            $oanswerID = $ans2['answerID'];
+            
             $connection = Yii::app()->db;
             $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
             $command = $connection->createCommand($sql);
