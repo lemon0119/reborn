@@ -1146,7 +1146,7 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if ($record == null) {
-            return $this->render('suiteDetail', ['exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent]);
+            return $this->render('suiteDetail', ['exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent,'recordID'=>$record['recordID']]);
         }
         $finishRecord = Array();
         foreach (Tool::$EXER_TYPE as $type) {
@@ -1166,7 +1166,7 @@ class StudentController extends CController {
                 $cent[$n] = '0';
             $n++;
         }
-        return $this->render('suiteDetail', ['exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent]);
+        return $this->render('suiteDetail', ['exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent,'recordID'=>$record['recordID']]);
     }
 
     //获取考试套题
@@ -1193,7 +1193,7 @@ class StudentController extends CController {
 
         $examInfo = Exam::model()->findByPK($suiteID);
         if ($record == null) {
-            return $this->render('suiteDetail', ['exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'cent' => $cent]);
+            return $this->render('suiteDetail', ['exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'cent' => $cent,'recordID'=>$record['recordID']]);
         }
         $finishRecord = Array();
         foreach (Tool::$EXER_TYPE as $type) {
@@ -1216,7 +1216,7 @@ class StudentController extends CController {
             }
             $n++;
         }
-        return $this->render('suiteDetail', ['exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'cent' => $cent]);
+        return $this->render('suiteDetail', ['exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'cent' => $cent,'recordID'=>$record['recordID']]);
     }
 
     public function actionWebrtc() {
