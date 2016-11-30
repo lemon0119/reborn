@@ -56,9 +56,26 @@
                              if($work['lessonID'] == $lesson['lessonID']){     
                                  foreach($array_suite as $suite)
                                  {
-                                     if($suite['suiteID'] == $work['suiteID']) {                                                                       
+                                     if($suite['suiteID'] == $work['suiteID']) {  
+                                          $level = $work['level'];
+                                         $le = "";
+                                         if($level == "初级"){
+                                             $le = "(初)";
+                                         }
+                                         if($level == "中级"){
+                                             $le = "(中)";
+                                         }
+                                         if($level == "高级"){
+                                             $le = "(高)";
+                                         }
+                                         if($level == "未分组"){
+                                             $le = "(未)";
+                                         }
+                                         if($level == ""){
+                                             $le = "(全)";
+                                         }
                            ?>                      
-                         <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i style="margin-top:-4px" class="icon-navsearch"></i>&nbsp;<?php echo $suite['suiteName']; ?></a></div ></li>                                                                                                                                               
+                         <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i style="margin-top:-4px" class="icon-navsearch"></i>&nbsp;<?php echo $suite['suiteName'].$le; ?></a></div ></li>                                                                                                                                               
                              <?php        
                                      }
                                  }

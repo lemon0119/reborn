@@ -262,7 +262,8 @@ class apiController extends Controller {
         $standard_lgnore_symbol=$_POST['standard_lgnore_symbol'];
         $answer_lgnore_symbol=$_POST['answer_lgnore_symbol'];
         $correct_Answer=$_POST['correct_Answer'];
-        AnswerData::model()->updataAnswerData1($answerID, $error_Number, $missing_Number, $redundant_Number,$standard_lgnore_symbol,$answer_lgnore_symbol,$correct_Answer);
+        $standard_Number=$_POST['standard_Number'];
+        AnswerData::model()->updataAnswerData1($answerID, $error_Number, $missing_Number, $redundant_Number,$standard_Number,$standard_lgnore_symbol,$answer_lgnore_symbol,$correct_Answer);
     }
     
     public function ActionChangeSuiteType() {
