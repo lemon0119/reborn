@@ -2305,7 +2305,17 @@ class apiController extends Controller {
          }else if($type==5){
              $type='free';
          }
-        $sql = "SELECT MAX(squence),studentID,classExerciseID,ratio_speed,ratio_correct,ratio_backDelete FROM `classexercise_record` WHERE classExerciseID = '$exerciseID' GROUP BY studentID";
+        $sql = "SELECT studentID FROM `classexercise_record` WHERE classExerciseID ='$exerciseID' GROUP BY studentID";
+        $criteria   =   new CDbCriteria();
+        $exercisestudent  =   Yii::app()->db->createCommand($sql)->queryAll();
+        foreach($exercisestudent as $studentkey){
+        $studentID = $studentkey['studentID'];
+        $sql = "SELECT MAX(squence) FROM `classexercise_record` WHERE classExerciseID = '$exerciseID' and studentID = '$studentID'";
+        $criteria   =   new CDbCriteria();
+        $squencekey  =   Yii::app()->db->createCommand($sql)->queryAll();
+        foreach ($squencekey as $squencek){
+        $squence = $squencek['MAX(squence)'];
+        $sql = "SELECT MAX(squence),studentID,classExerciseID,ratio_speed,ratio_correct,ratio_backDelete FROM `classexercise_record` WHERE classExerciseID = '$exerciseID' and studentID = '$studentID' and squence ='$squence'";
         $criteria   =   new CDbCriteria();
         $exerciseRecord  =   Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($exerciseRecord as $Record){
@@ -2354,6 +2364,7 @@ class apiController extends Controller {
         $command->execute();
         }
         }
+        }}
         $student =11;
         $this->renderJSON(['student'=>$student]);  
     }
