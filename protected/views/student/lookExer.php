@@ -377,7 +377,8 @@ if ($isExam) {
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = inputO.replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_content = inputO.replace(/\r\n/g, "`").replace(/ /g, "");
+        inputO = window.G_content;
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
@@ -437,7 +438,7 @@ if ($isExam) {
                 if (content == stringText) {
                     if (isWrong == true) {
                         isWrong = false;
-                        createFont("#000000", wrong, "");
+                        createFont("#f44336", wrong, "");
                         wrong = new Array();
                         old = new Array();
                         old.push(stringText);
@@ -452,7 +453,7 @@ if ($isExam) {
                         wrong.push(stringText);
                     else {
                         isWrong = true;
-                        createFont("#000000", old, oldCode);
+                        createFont("#727272", old, oldCode);
                         old = new Array();
                         oldCode = new Array();
                         wrong = new Array();
@@ -463,8 +464,8 @@ if ($isExam) {
         }
 
         if (countLength !== 0) {
-            createFont("#000000", old, oldCode);
-            createFont("#000000", wrong, "");
+            createFont("#727272", old, oldCode);
+            createFont("#f44336", wrong, "");
         }
         if (inputO.length < text.length) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
@@ -572,8 +573,10 @@ if ($isExam) {
             title: "提交试卷",
             btn: parseInt("0011", 4),
             onOk: function () {
+                <?php if( $sqlClassExerciseRecord ===null){?>
                 saveToDateBaseNow();
                 saveData();
+            <?php } ?>
                 //doSubmit(true);
                 $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam; ?>', function () {
                     if (<?php
