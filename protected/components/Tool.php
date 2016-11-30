@@ -561,8 +561,8 @@ class Tool {
     public static function spliceLookContent($content) {
         $result = '';
         $length = mb_strlen($content);
-        if ($length > 4000) {
-            $result = Tool::utf8_substr($content, 0, 4000);
+        if ($length > 3000) {
+            $result = Tool::utf8_substr($content, 0, 3000);
         } else {
             $result = $content;
         }
