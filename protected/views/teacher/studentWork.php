@@ -75,7 +75,12 @@
                              <?php echo $thisSuite['suiteName'];?>                 
                         </td>
                         <td style="width:120px">            
-                             <?php echo $suiteLesson['level'];?>                 
+                             <?php if($suiteLesson['level'] == ""){
+                                    echo '全部';
+                             }  else {
+                                 echo $suiteLesson['level']; 
+                             }
+                            ?>                 
                         </td>
                         <td style="width:50px">     
                             <?php if($workID==$suiteLesson['workID']){?>
