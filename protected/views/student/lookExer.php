@@ -143,7 +143,7 @@ if (!$isOver) {
                     <object id="typeOCX" type="application/x-itst-activex" 
                             clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
                             width ='840' height='435' 
-                            event_OnStenoPress="onStenoPressKey">
+                            event_OnChange="onStenoPressKey">
                     </object>
                 </div>
                 <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
@@ -377,7 +377,8 @@ if ($isExam) {
         }
         window.G_countMomentKey++;
         window.G_countAllKey++;
-        window.G_content = inputO.replace(/\r\n/g, "").replace(/ /g, "");
+        window.G_content = inputO.replace(/\r\n/g, "`").replace(/ /g, "");
+        inputO = window.G_content;
         window.G_keyContent = window.G_keyContent + "&" + pszStenoString;
 
         //每击统计击键间隔时间 秒
@@ -437,7 +438,7 @@ if ($isExam) {
                 if (content == stringText) {
                     if (isWrong == true) {
                         isWrong = false;
-                        createFont("#000000", wrong, "");
+                        createFont("#f44336", wrong, "");
                         wrong = new Array();
                         old = new Array();
                         old.push(stringText);
@@ -452,7 +453,7 @@ if ($isExam) {
                         wrong.push(stringText);
                     else {
                         isWrong = true;
-                        createFont("#000000", old, oldCode);
+                        createFont("#727272", old, oldCode);
                         old = new Array();
                         oldCode = new Array();
                         wrong = new Array();
@@ -463,8 +464,8 @@ if ($isExam) {
         }
 
         if (countLength !== 0) {
-            createFont("#000000", old, oldCode);
-            createFont("#000000", wrong, "");
+            createFont("#727272", old, oldCode);
+            createFont("#f44336", wrong, "");
         }
         if (inputO.length < text.length) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
@@ -607,5 +608,4 @@ if ($isExam) {
             window.location.href = "./index.php?r=student/lookType&&repeat=repeat&&exerID=<?php echo $_GET['exerID']; ?>&&cent=<?php echo $_GET['cent']; ?>";
         };
     }
-
 </script>
