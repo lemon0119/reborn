@@ -6,6 +6,8 @@
  * and open the template in the editor.
  */
 $currtime = $examInfo['endtime'];
+$sqlClassExerciseRecord = null;
+$studentID = Yii::app()->session['userid_now']; 
 ?>
 <script src="<?php echo JS_URL;?>exerJS/timeCounter.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
@@ -52,9 +54,12 @@ $currtime = $examInfo['endtime'];
                         </li>
                          <?php } if (count($exercise['key']) != 0) { ?>
                         <li class="nav-header">键打练习</li>
-                        <?php foreach ($exercise['key'] as $keyType) :?>
+                        <?php foreach ($exercise['key'] as $keyType) :
+                             $exer_id=$keyType['exerciseID'];
+                            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'key' AND createPerson LIKE '$studentID'");
+                            ?>
                             <li id="li-key-<?php echo $keyType['exerciseID'];?>">
-                                <a href="#" class="queTitle" title="<?php echo $keyType['title']; ?>"  onclick="examKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                                
+                                <a href="#" class="queTitle" title="<?php echo $keyType['title']; ?>"  onclick="examKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)">                                
                                         <i class="icon-th"></i>
                                         <span style="position: relative;top: 6px">
                                         <?php if (Tool::clength($keyType['title']) <= 13){
@@ -68,11 +73,14 @@ $currtime = $examInfo['endtime'];
                         <?php endforeach;
 } if (count($exercise['look']) != 0) { ?>
                         <li class="nav-header">看打练习</li>
-                        <?php foreach ($exercise['look'] as $lookType) :?>
+                        <?php foreach ($exercise['look'] as $lookType) :
+                            $exer_id=$lookType['exerciseID'];
+                           $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'look' AND createPerson LIKE '$studentID'");
+                            ?>
                             <li id="li-look-<?php echo $lookType['exerciseID'];?>">
                                 <?php ?>
 <!--                                    <a class="queTitle"href="./index.php?r=student/examlookType&&exerID=<?php// echo $lookType['exerciseID']?>&&cent=<?php// $arg= implode(',', $cent);echo $arg;?>">-->
-                                <a href="#" class="queTitle"  title="<?php echo$lookType['title']; ?>" onclick="examLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">
+                                <a href="#" class="queTitle"  title="<?php echo$lookType['title']; ?>" onclick="examLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)">
                                         <i class="icon-eye-open"></i>
                                         <span style="position: relative;top: 6px">
                                         <?php if (Tool::clength($lookType['title']) <= 13){
@@ -86,9 +94,12 @@ $currtime = $examInfo['endtime'];
                         <?php endforeach;
                                     } if (count($exercise['listen']) != 0) { ?>
                         <li class="nav-header">听打练习</li>
-                        <?php foreach ($exercise['listen'] as $listenType) :?>
+                        <?php foreach ($exercise['listen'] as $listenType) :
+                            $exer_id=$listenType['exerciseID'];
+        $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'listen' AND createPerson LIKE '$studentID'");
+                            ?>
                         <li id="li-listen-<?php echo $listenType['exerciseID'];?>">
-                            <a href="#" class="queTitle"  title="<?php echo $listenType['title'];?>" onclick="examListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>')">                            
+                            <a href="#" class="queTitle"  title="<?php echo $listenType['title'];?>" onclick="examListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)">                            
                                     <i class="icon-headphones"></i> 
                                     <span style="position: relative;top: 6px">
                                     <?php if (Tool::clength($listenType['title']) <= 13){
@@ -148,13 +159,15 @@ $currtime = $examInfo['endtime'];
         tCounter(curtime,beginTime+60*<?php echo $examInfo['duration']?>,"sideTime", endTimer);
         tCounter(curtime,beginTime+60*<?php echo $examInfo['duration']?>,"sideTime2", endTimer);
     });
-    function examLookNext(exerID,cent){
+    function examLookNext(exerID,cent,sqlClassExerciseRecord){
         var option = {
 						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
+                                                    if(sqlClassExerciseRecord===1){
 							saveToDateBaseNow();
                                                         saveData();
+                                                    }
                                                         $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(),function () {
                     window.location.href = "index.php?r=student/examlookType&&exerID="+exerID+"&&cent="+cent;
                 });
@@ -163,13 +176,15 @@ $currtime = $examInfo['endtime'];
 					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
         }
         
-        function examListenNext(exerID,cent){
+        function examListenNext(exerID,cent,sqlClassExerciseRecord){
         var option = {
 						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
+                                                    if(sqlClassExerciseRecord===1){
 							saveToDateBaseNow();
                                                         saveData();
+                                                    }
                                                         $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     window.location.href = "index.php?r=student/examlistenType&&exerID="+exerID+"&&cent="+cent;
                 });
@@ -178,13 +193,15 @@ $currtime = $examInfo['endtime'];
 					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
         }
         
-        function examKeyNext(exerID,cent){
+        function examKeyNext(exerID,cent,sqlClassExerciseRecord){
         var option = {
 						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
+                                                    if(sqlClassExerciseRecord===1){
 							saveToDateBaseNow();
                                                         saveData();
+                                                    }
                                                         $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     window.location.href = "index.php?r=student/examkeyType&&exerID="+exerID+"&&cent="+cent;
                 });

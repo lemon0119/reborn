@@ -5,6 +5,10 @@
  * and open the template in the editor.
  */
 ?>
+<?php
+$sqlClassExerciseRecord = null;
+$studentID = Yii::app()->session['userid_now']; 
+?>
 <script src="<?php echo JS_URL; ?>jquery-2.1.3.min.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/LCS.js"></script>
 <script src="<?php echo JS_URL; ?>exerJS/AnalysisTool.js"></script>
@@ -75,12 +79,15 @@
                 </li>
                     <?php } if (count($exercise['key']) != 0) { ?>
                 <li class="nav-header">键打练习</li>
-                        <?php foreach ($exercise['key'] as $keyType) : ?>
+                        <?php foreach ($exercise['key'] as $keyType) : 
+                            $exer_id=$keyType['exerciseID'];
+                            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'key' AND createPerson LIKE '$studentID'");
+                            ?>
                     <li id="li-key-<?php echo $keyType['exerciseID']; ?>">
                         
-                        <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
+                        <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>,<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)"
                     <?php } else { ?>
-                               href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
+                               href="#" onclick="suiteKeyNext(<?php echo $keyType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>,<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)"
         <?php } ?>
                    title="<?php echo $keyType['title']; ?>"         >
                             <i class="icon-th"></i>
@@ -99,11 +106,14 @@
                    } if (count($exercise['look']) != 0) {
                        ?>
                 <li class="nav-header">看打练习</li>
-                       <?php foreach ($exercise['look'] as $lookType) : ?>
+                       <?php foreach ($exercise['look'] as $lookType) : 
+                           $exer_id=$lookType['exerciseID'];
+                           $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'look' AND createPerson LIKE '$studentID'");
+                           ?>
                     <li id="li-look-<?php echo $lookType['exerciseID']; ?>">
-                    <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
+                    <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>,<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)"
                     <?php } else { ?>
-                               href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
+                               href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>,<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)"
         <?php } ?>  title="<?php echo $lookType['title']; ?>"
                            >
                             <i class="icon-eye-open"></i>
@@ -121,12 +131,15 @@
                     } if (count($exercise['listen']) != 0) {
                         ?>
                 <li class="nav-header">听打练习</li>
-    <?php foreach ($exercise['listen'] as $listenType) : ?>
+    <?php foreach ($exercise['listen'] as $listenType) : 
+        $exer_id=$listenType['exerciseID'];
+        $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'listen' AND createPerson LIKE '$studentID'");
+        ?>
                     <li id="li-listen-<?php echo $listenType['exerciseID']; ?>">
                         
-                        <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
+                        <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>,<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)"
                     <?php } else { ?>
-                               href="#" onclick="suiteListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>)"
+                               href="#" onclick="suiteListenNext(<?php echo $listenType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',0,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>,<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)"
         <?php } ?>      title="<?php echo $listenType['title']; ?>"
                            >
                         
@@ -172,13 +185,15 @@
         });
     });
     
-    function suiteKeyNext(exerID,cent,lessonID,flag){
+    function suiteKeyNext(exerID,cent,lessonID,flag,sqlClassExerciseRecord){
         var option = {
 						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
+                                                    if(sqlClassExerciseRecord===1){
 							saveToDateBaseNow();
                                                         saveData();
+                                                    }
                                                         if(flag==1 || flag==2 || flag==3){
                                                            $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     if (lessonID!=0) {
@@ -201,13 +216,15 @@
 					window.wxc.xcConfirm("您确定跳转至这题吗？", "custom", option);
     }
     
-    function suiteLookNext(exerID,cent,lessonID,flag){
+    function suiteLookNext(exerID,cent,lessonID,flag,sqlClassExerciseRecord){
         var option = {
 						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
+                                                    if(sqlClassExerciseRecord===1){
 							saveToDateBaseNow();
                                                         saveData();
+                                                    }
                                                         if(flag==1 || flag==2 || flag==3){
                                                             $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     if (lessonID!=0) {
@@ -231,13 +248,15 @@
     }
     
     
-    function suiteListenNext(exerID,cent,lessonID,flag){
+    function suiteListenNext(exerID,cent,lessonID,flag,sqlClassExerciseRecord){
         var option = {
 						title: "提示",
 						btn: parseInt("0011",2),
 						onOk: function(){
+                                                    if(sqlClassExerciseRecord===1){
                                                 	saveToDateBaseNow();
                                                         saveData();
+                                                    }
                                                         if(flag==1 || flag==2 || flag==3){
                                                             $.post($('#klgAnswer').attr('action'), $('#klgAnswer').serialize(), function () {
                     if (lessonID!=0) {
