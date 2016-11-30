@@ -2130,6 +2130,7 @@ class apiController extends Controller {
                  }
         $n=  strrpos($correct, "&");
         $correct= substr($correct, $n+1);
+        $correct = round($correct,1);
         //回删
         $backDelete=$ans['ratio_backDelete'];
         $backDelete2=$ans['ratio_backDelete'];
@@ -2323,7 +2324,8 @@ class apiController extends Controller {
           $correct=$correct."&".$correct;
            }
           $n=  strrpos($correct, "&");
-          $correct= substr($correct, $n+1);  
+          $correct= substr($correct, $n+1); 
+          $correct = round($correct,1);
         //回删
         $backDelete=$Record['ratio_backDelete'];
         $backDelete2=$Record['ratio_backDelete'];
