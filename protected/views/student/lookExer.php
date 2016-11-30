@@ -437,7 +437,7 @@ if ($isExam) {
                 if (content == stringText) {
                     if (isWrong == true) {
                         isWrong = false;
-                        createFont("#f44336", wrong, "");
+                        createFont("#000000", wrong, "");
                         wrong = new Array();
                         old = new Array();
                         old.push(stringText);
@@ -452,7 +452,7 @@ if ($isExam) {
                         wrong.push(stringText);
                     else {
                         isWrong = true;
-                        createFont("#727272", old, oldCode);
+                        createFont("#000000", old, oldCode);
                         old = new Array();
                         oldCode = new Array();
                         wrong = new Array();
@@ -463,8 +463,8 @@ if ($isExam) {
         }
 
         if (countLength !== 0) {
-            createFont("#727272", old, oldCode);
-            createFont("#f44336", wrong, "");
+            createFont("#000000", old, oldCode);
+            createFont("#000000", wrong, "");
         }
         if (inputO.length < text.length) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));

@@ -1820,10 +1820,12 @@ class StudentController extends CController {
                        $correct = $ans['ratio_correct'];
                        $n1 = strrpos($correct, "&");
                        $correct = substr($correct, $n1 + 1);
+                       $correct = round($correct,1);
                    }  else {
                         if($answerData['missing_Number']==""){
-                            $missing_Number=0;}
-                        else{
+                            $missing_Number=0;
+                            
+                        } else{
                             $missing_Number = $answerData['missing_Number'];
                             }
                         if($answerData['redundant_Number']==""){
@@ -1834,6 +1836,7 @@ class StudentController extends CController {
                            $correct=0;
                        }else{
                        $correct = $answerData['correct_Answer'];
+                       $correct = round($correct,1);
                        }
                    }
                    $speed = $ans['ratio_speed'];
@@ -1847,18 +1850,23 @@ class StudentController extends CController {
                 }
             }
         }
-//        else {
-//            foreach ($rankLst as $rank) {
-//                $ansID = $rank['answerID'];
-//                $answerData = AnswerData::model()->find("answerID = '$ansID'");
-//                if($rank['type']!="key"){
-//                 $rank['missing_Number'] = $answerData['missing_Number'];
-//                 $rank['redundant_Number'] = $answerData['redundant_Number'];
-//                 $rank['correct'] = $answerData['correct_Answer'];
-//                 $rank->update();
-//                }
-//            }
-//        }
+        else {
+            foreach ($rankLst as $rank) {
+                $ansID = $rank['answerID'];
+                $answerData = AnswerData::model()->find("answerID = '$ansID'");
+                if($answerData!=NULL){
+                 if($rank['type']!="key"){
+                 $rank['missing_Number'] = $answerData['missing_Number'];
+                 $rank['redundant_Number'] = $answerData['redundant_Number'];
+                 $correct = $answerData['correct_Answer'];
+                 $correct = round($correct,1);
+                 $rank['correct'] = $correct;
+                 
+                 $rank->update();
+                }
+             }
+            }
+        }
        }
     }
     //将这套作业打的练习插入数据库
@@ -1894,6 +1902,7 @@ class StudentController extends CController {
                        $correct = $ans['ratio_correct'];
                        $n1 = strrpos($correct, "&");
                        $correct = substr($correct, $n1 + 1);
+                       $correct = round($correct,1);
                    }  else {
                         if($answerData['missing_Number']==""){
                             $missing_Number=0;}
@@ -1908,6 +1917,7 @@ class StudentController extends CController {
                            $correct=0;
                        }else{
                        $correct = $answerData['correct_Answer'];
+                       $correct = round($correct,1);
                        }
                    }
                    
@@ -1922,19 +1932,23 @@ class StudentController extends CController {
                 }
             }
         } 
-//        else {
-//            foreach ($rankLst as $rank) {
-//                $ansID = $rank['answerID'];
-//                $answerData = AnswerData::model()->find("answerID = '$ansID'");
-//                if($rank['type']!="key"){
-//                 $rank['missing_Number'] = $answerData['missing_Number'];
-//                 $rank['redundant_Number'] = $answerData['redundant_Number'];
-//                 $rank['correct'] = $answerData['correct_Answer'];
-//                 $rank->update();
-//                }
-//                
-//            }
-//         }  
+        else {
+            foreach ($rankLst as $rank) {
+                $ansID = $rank['answerID'];
+                $answerData = AnswerData::model()->find("answerID = '$ansID'");
+                if($answerData!=NULL){
+                if($rank['type']!="key"){
+                 $rank['missing_Number'] = $answerData['missing_Number'];
+                 $rank['redundant_Number'] = $answerData['redundant_Number'];
+                 $correct = $answerData['correct_Answer'];
+                 $correct = round($correct,1);
+                 $rank['correct'] = $correct;
+                 
+                 $rank->update();
+                }
+               }  
+            }
+         }  
         }
         
     }
@@ -1959,6 +1973,7 @@ class StudentController extends CController {
                         $correct = $exerciseRecord['ratio_correct'];
                         $n1 = strrpos($correct, "&");
                         $correct = substr($correct, $n1 + 1);
+                        $correct = round($correct,1);
                         $speed = $exerciseRecord['ratio_speed'];
                         $n3 = strrpos($speed, "&");
                         $speed = substr($speed, $n3 + 1);
@@ -1974,6 +1989,7 @@ class StudentController extends CController {
                    $correct = $exerciseRecord['ratio_correct'];
                    $n1 = strrpos($correct, "&");
                    $correct = substr($correct, $n1 + 1);
+                   $correct = round($correct,1);
                    $rankLst['correct'] = $correct;  
                    $speed = $exerciseRecord['ratio_speed'];
                    $n3 = strrpos($speed, "&");
