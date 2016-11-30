@@ -79,7 +79,7 @@
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
                 width ='840' height='350' 
-                event_OnStenoPress="onStenoPressKey">
+                event_OnChange="onStenoPressKey">
         </object>
     </div>
 </body>
@@ -260,7 +260,7 @@ $squence = $countSquence + 1;
                 if (content == stringText) {
                     if (isWrong == true) {
                         isWrong = false;
-                        createFont("#000000", wrong, "");
+                        createFont("#ff0000", wrong, "");
                         wrong = new Array();
                         old = new Array();
                         old.push(stringText);
@@ -275,7 +275,7 @@ $squence = $countSquence + 1;
                         wrong.push(stringText);
                     else {
                         isWrong = true;
-                        createFont("#000000", old, oldCode);
+                        createFont("#808080", old, oldCode);
                         old = new Array();
                         oldCode = new Array();
                         wrong = new Array();
@@ -286,8 +286,8 @@ $squence = $countSquence + 1;
         }
 
         if (countLength !== 0) {
-            createFont("#000000", old, oldCode);
-            createFont("#000000", wrong, "");
+            createFont("#808080", old, oldCode);
+            createFont("#ff0000", wrong, "");
         }
         if (inputO.length < text.length) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
