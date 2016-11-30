@@ -22,6 +22,12 @@ class Student extends CActiveRecord {
      * @param type $userID 要删除的学生的ID
      */
     public function delStuRes($userID) {
+        $studentData=AnswerRecord::model()->findAll('createPerson = ?', array($userID));
+        foreach($studentData as $answer_id){
+            AnswerData::model()->deleteAll('answerID=?',array($answer_id['answerID']));
+        }
+        RankAnswer::model()->deleteAll('userID=?',array($userID));
+        StudentSign::model()->deleteAll('userID=?',array($userID));
         AnswerRecord::model()->deleteAll('createPerson = ?', array($userID));
         ExamRecord::model()->deleteAll('studentID = ?', array($userID));
         SuiteRecord::model()->deleteAll('studentID = ?', array($userID));

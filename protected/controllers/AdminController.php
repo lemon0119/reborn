@@ -1208,6 +1208,7 @@ class AdminController extends CController {
             $userID = Yii::app()->session ['deleteTeaID'];
             unset(Yii::app()->session ['deleteTeaID']);
             TeacherClass::model()->deleteAll("teacherID = '$userID'");
+            TeacherSign::model()->deleteAll("teacherID='$userID'");
             $rows = Teacher::model()->deleteByPK("$userID");
         } else if (isset(Yii::app()->session ['deleteTeaBox'])) {
             $ids = Yii::app()->session ['deleteTeaBox'];
@@ -1242,6 +1243,7 @@ class AdminController extends CController {
         if (isset($_GET ['userID'])) {
             Yii::app()->session ['deleteTeaID'] = $_GET ['userID'];
             TeacherClass::model()->deleteAll("teacherID='userID'");
+            TeacherSign::model()->deleteAll("teacherID='userID'");
         } else if (isset($_POST ['checkbox'])) {
             Yii::app()->session ['deleteTeaBox'] = $_POST ['checkbox'];
         }
@@ -1627,6 +1629,7 @@ class AdminController extends CController {
                 Yii::app()->db->createCommand($sql)->query();
                 $act_result = "删除成功！";
             } else if ($_GET ['flag'] == 'deleteTea') {
+                TeacherSign::model()->deleteAll('teacherID=?',array($_GET ['id']));
                 $sql = "DELETE FROM teacher_class WHERE teacherID = '" . $_GET ['id'] . "' AND classID = '" . $classID . "'";
                 Yii::app()->db->createCommand($sql)->query();
                 $act_result = "删除成功！";
