@@ -1821,9 +1821,20 @@ class StudentController extends CController {
                        $n1 = strrpos($correct, "&");
                        $correct = substr($correct, $n1 + 1);
                    }  else {
-                       $missing_Number = $answerData['missing_Number'];
-                       $redundant_Number = $answerData['redundant_Number'];
+                        if($answerData['missing_Number']==""){
+                            $missing_Number=0;}
+                        else{
+                            $missing_Number = $answerData['missing_Number'];
+                            }
+                        if($answerData['redundant_Number']==""){
+                            $redundant_Number=0;}
+                       else{
+                           $redundant_Number = $answerData['redundant_Number'];}
+                       if($answerData['correct_Answer']==""){
+                           $correct=0;
+                       }else{
                        $correct = $answerData['correct_Answer'];
+                       }
                    }
                    $speed = $ans['ratio_speed'];
                    $n3 = strrpos($speed, "&");
@@ -1884,9 +1895,20 @@ class StudentController extends CController {
                        $n1 = strrpos($correct, "&");
                        $correct = substr($correct, $n1 + 1);
                    }  else {
-                       $missing_Number = $answerData['missing_Number'];
-                       $redundant_Number = $answerData['redundant_Number'];
+                        if($answerData['missing_Number']==""){
+                            $missing_Number=0;}
+                        else{
+                            $missing_Number = $answerData['missing_Number'];
+                            }
+                        if($answerData['redundant_Number']==""){
+                            $redundant_Number=0;}
+                       else{
+                           $redundant_Number = $answerData['redundant_Number'];}
+                       if($answerData['correct_Answer']==""){
+                           $correct=0;
+                       }else{
                        $correct = $answerData['correct_Answer'];
+                       }
                    }
                    
                    $speed = $ans['ratio_speed'];

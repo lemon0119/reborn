@@ -88,6 +88,7 @@ $(document).ready(function () {
     //2s内统计回改字数     字
     //@param id=getBackDelete 请将最高平均速度统计的控件id设置为getBackDelete  
     var interval = setInterval(function () {
+        window.GA_answer = yaweiOCX.GetContentWithSteno();
         var worker;
         var content = window.G_content;
         var keyContent = window.G_keyContent;
