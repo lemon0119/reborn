@@ -796,13 +796,14 @@ function getExerciseRanking(exerciseID,isexam,type){
                     type:type,
              },
          success: function(data){
+        ShowExerciseRank("+<?php echo $_GET['classID']?>+",exerciseID,type);     
         document.getElementById("Diligence").style.display='none';
              },
                 error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr, "Failed");
             }
-         });   
+         });
 }
 
 function ShowExerciseRank(workID,exerciseID,choice){

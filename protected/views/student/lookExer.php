@@ -143,7 +143,7 @@ if (!$isOver) {
                     <object id="typeOCX" type="application/x-itst-activex" 
                             clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
                             width ='840' height='435' 
-                            event_OnStenoPress="onStenoPressKey">
+                            event_OnChange="onStenoPressKey">
                     </object>
                 </div>
                 <?php require Yii::app()->basePath . "\\views\\student\\submitAnswer.php"; ?>
@@ -607,5 +607,4 @@ if ($isExam) {
             window.location.href = "./index.php?r=student/lookType&&repeat=repeat&&exerID=<?php echo $_GET['exerID']; ?>&&cent=<?php echo $_GET['cent']; ?>";
         };
     }
-
 </script>
