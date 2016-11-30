@@ -59,9 +59,26 @@
                              if($work['lessonID'] == $lesson['lessonID']){     
                                  foreach($array_suite as $suite)
                                  {
-                                     if($suite['suiteID'] == $work['suiteID']) {                                                                       
+                                     if($suite['suiteID'] == $work['suiteID']) {
+                                         $level = $work['level'];
+                                         $le = "";
+                                         if($level == "初级"){
+                                             $le = "(初)";
+                                         }
+                                         if($level == "中级"){
+                                             $le = "(中)";
+                                         }
+                                         if($level == "高级"){
+                                             $le = "(高)";
+                                         }
+                                         if($level == "未分组"){
+                                             $le = "(未)";
+                                         }
+                                         if($level == ""){
+                                             $le = "(全)";
+                                         }
                            ?>                      
-                         <li><div ><a href="#" class="ahover" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-navsearch" style="margin-top:-4px"></i>&nbsp;<?php echo $suite['suiteName']; ?></a></div></li>                                                                                                                                               
+                         <li><div ><a href="#" class="ahover" onclick="getSuiteExercise(<?php echo $work['suiteID'];?>,<?php echo $work['workID'];?>)"><i class="icon-navsearch" style="margin-top:-4px"></i>&nbsp;<?php echo $suite['suiteName'].$le; ?></a></div></li>                                                                                                                                               
                              <?php        
                                      }
                                  }
@@ -796,13 +813,14 @@ function getExerciseRanking(exerciseID,isexam,type){
                     type:type,
              },
          success: function(data){
+        ShowExerciseRank("+<?php echo $_GET['classID']?>+",exerciseID,type);     
         document.getElementById("Diligence").style.display='none';
              },
                 error: function(xhr, type, exception){
                 window.wxc.xcConfirm('出错了...请重新刷新页面', window.wxc.xcConfirm.typeEnum.error);
                 console.log(xhr, "Failed");
             }
-         });   
+         });
 }
 
 function ShowExerciseRank(workID,exerciseID,choice){

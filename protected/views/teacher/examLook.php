@@ -302,7 +302,7 @@ var right_content=[];
             dataType:"json",
             url:"index.php?r=api/answerDataSave",
             data:{error_Number:error_number,missing_Number:missing_number,redundant_Number:redundant_number,answerID:<?php echo $answer_id;?>
-            ,standard_lgnore_symbol:character_original,answer_lgnore_symbol:character_current,correct_Answer:correct_rate},
+            ,standard_lgnore_symbol:character_original,answer_lgnore_symbol:character_current,correct_Answer:correct_rate,standard_Number:standard_number},
             success:function(){
             },
             error: function (xhr) {
