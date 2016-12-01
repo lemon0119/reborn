@@ -78,7 +78,8 @@
         <br/>
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
-                width ='840' height='350' 
+                width ='840' height='350'
+                event_OnStenoPress="onStenoPressKey"
                 event_OnChange="onStenoPressKey">
         </object>
     </div>
