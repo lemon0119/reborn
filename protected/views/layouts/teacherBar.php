@@ -121,7 +121,7 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
                 </div>
             </div> 
             <div  class="copyright">
-                2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<span onclick="legalNotice()" class="copyright">法律声明</span><span onclick="contact()"  class="copyright">联系我们</span><span  class="copyright" onclick="getHelp()">获得帮助</span>
+                2015 &copy;南京兜秘网络科技有限公司.&nbsp;&nbsp;&nbsp;<span class="copyright" onclick="legalNotice()">法律声明</span><span onclick="contact()"  class="copyright">联系我们</span><span  class="copyright">获得帮助</span>
             </div>
         </body>
     </html>
