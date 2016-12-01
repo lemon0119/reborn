@@ -80,8 +80,10 @@ $studentID = Yii::app()->session['userid_now'];
                     <?php } if (count($exercise['key']) != 0) { ?>
                 <li class="nav-header">键打练习</li>
                         <?php foreach ($exercise['key'] as $keyType) : 
-                            $exer_id=$keyType['exerciseID'];
-                            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'key' AND createPerson LIKE '$studentID'");
+                        if($type_name==""){
+                            $type_name="key";
+                        }
+                            $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = '$type_name' AND createPerson LIKE '$studentID'");
                             ?>
                     <li id="li-key-<?php echo $keyType['exerciseID']; ?>">
                         
@@ -107,8 +109,11 @@ $studentID = Yii::app()->session['userid_now'];
                        ?>
                 <li class="nav-header">看打练习</li>
                        <?php foreach ($exercise['look'] as $lookType) : 
-                           $exer_id=$lookType['exerciseID'];
-                           $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'look' AND createPerson LIKE '$studentID'");
+                           if($type_name==""){
+                            $type_name="look";
+                            }
+
+                           $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = '$type_name' AND createPerson LIKE '$studentID'");
                            ?>
                     <li id="li-look-<?php echo $lookType['exerciseID']; ?>">
                     <a <?php if (isset($_GET['lessonID'])) { ?> href="#" onclick="suiteLookNext(<?php echo $lookType['exerciseID']?>,'<?php $arg= implode(',', $cent);echo $arg;?>',<?php echo $_GET['lessonID']; ?>,<?php if(isset($_GET['type'])){echo $_GET['type'];}else{echo 0;} ?>,<?php if($sqlClassExerciseRecord==null){echo 1;}else{echo 0;}?>)"
@@ -132,8 +137,11 @@ $studentID = Yii::app()->session['userid_now'];
                         ?>
                 <li class="nav-header">听打练习</li>
     <?php foreach ($exercise['listen'] as $listenType) : 
-        $exer_id=$listenType['exerciseID'];
-        $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = 'listen' AND createPerson LIKE '$studentID'");
+        if($type_name==""){
+            $type_name="listen";
+        }
+
+        $sqlClassExerciseRecord = AnswerRecord::model()->find("recordID = '$recordID' AND exerciseID = '$exer_id' AND type = '$type_name' AND createPerson LIKE '$studentID'");
         ?>
                     <li id="li-listen-<?php echo $listenType['exerciseID']; ?>">
                         
