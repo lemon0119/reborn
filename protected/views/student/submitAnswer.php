@@ -38,6 +38,7 @@
             onOk: function(){
                      doSubmit(true);
                      saveToDateBaseNow();
+                     saveData();
                     $.post('index.php?r=student/overSuite&&isExam=<?php echo $isExam;?>',function(){
                         if(isExam)
                             window.location.href="index.php?r=student/classExam";
