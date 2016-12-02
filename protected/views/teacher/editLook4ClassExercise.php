@@ -17,9 +17,9 @@
     
 <div class="span9">        
 <?php  if(!isset($_GET['action'])) {?>
-<legend><h3>编辑看打练习题</h3><span style="color: red;font-size: 15px">(内容不可超出4000字，超出的部分将被屏蔽)</span></legend>
+<legend><h3>编辑看打练习题</h3><span style="color: red;font-size: 15px">(内容不可超出3000字，超出的部分将被屏蔽)</span></legend>
 <?php } else if($_GET['action'] == 'look') {?>
-<legend><h3>查看看打练习题</h3><span style="color: red;font-size: 15px">(内容不可超出4000字，超出的部分将被屏蔽)</span></legend>
+<legend><h3>查看看打练习题</h3><span style="color: red;font-size: 15px">(内容不可超出3000字，超出的部分将被屏蔽)</span></legend>
 <?php }?>
 
     <form class="form-horizontal" method="post" action="./index.php?r=teacher/editLook4ClassExercise&&classID=<?php echo $_GET['classID'];?>&&progress=<?php echo $_GET['progress'];?>&&on=<?php echo $_GET['on'];?>&&exerciseID=<?php echo $exerciseID;?>" id="myForm" enctype="multipart/form-data"> 
