@@ -2227,14 +2227,14 @@ class apiController extends Controller {
          //少打字数   
             if($type == "key"){
                $missing = 0;
-               $recordID = 0;
+               $redundant = 0;
             }else {
                $missing=$ans2['missing_Number'];
-            $missing2=$ans2['missing_Number'];
-        if(strpos($missing,"&") === false){     
-            $missing=$missing."&".$missing;
+               $missing2=$ans2['missing_Number'];
+               if(strpos($missing,"&") === false){     
+                  $missing=$missing."&".$missing;
                  }
-            $n=  strrpos($missing, "&");
+               $n=  strrpos($missing, "&");
             $missing= substr($missing, $n+1);
         //多打字数
             $redundant=$ans2['redundant_Number'];
