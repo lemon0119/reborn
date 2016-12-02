@@ -38,9 +38,11 @@
         </thead>
                 <tbody>        
                     <form id="deleForm" method="post" action="./index.php?r=admin/deleteClass">
-                    <?php foreach($posts as $model):?>
+                    <?php foreach($posts as $model):
+                        if($model['className']!="速录一班"){ 
+                        ?>
                     <tr>
-                        <td class="font-center" style="width: 50px"> <?php if($model['className']!="速录一班"){ ?> <input type="checkbox" name="checkbox[]" value="<?php echo $model['classID']; ?>" /> <?php } ?></td>
+                        <td class="font-center" style="width: 50px"><input type="checkbox" name="checkbox[]" value="<?php echo $model['classID']; ?>" /></td>
                         <td class="font-center" style="width: 75px"><?php echo $model['classID'];?></td>
                         <td class="font-center"><?php echo $model['className'];?></td>
                         <td class="font-center"><?php 
@@ -65,10 +67,12 @@
                         <td class="font-center"><?php $couID = $model['currentCourse']; echo $courseName[$couID];?></td>
                         <td class="font-center" style="width: 100px">  
                             <a href="./index.php?r=admin/infoClass&&classID=<?php echo $model['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
-                            <?php if($model['className']!="速录一班"){ ?> <a href="#"  <?php if(isset($model['classID'])){?>onclick="deleteClass(<?php echo $model['classID']; ?>)" <?php }?>><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a> <?php } ?>
+                            <a href="#"  <?php if(isset($model['classID'])){?>onclick="deleteClass(<?php echo $model['classID']; ?>)" <?php }?>><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                         </td>
                     </tr>            
-                    <?php endforeach;?> 
+                    <?php 
+                        }
+                    endforeach;?> 
                     </form>
                 </tbody>
     </table>
