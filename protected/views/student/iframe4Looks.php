@@ -80,7 +80,7 @@
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
                 width ='840' height='420' 
                 event_OnStenoPress="onStenoPressKey"
-                event_OnChange="onStenoPressKey">
+                >
         </object>
     </div>
 
@@ -291,7 +291,7 @@ $squence = $countSquence + 1;
                 if (content == stringText) {
                     if (isWrong == true) {
                         isWrong = false;
-                        createFont("#ff0000", wrong, "");
+                        createFont("#000000", wrong, "");
                         wrong = new Array();
                         old = new Array();
                         old.push(stringText);
@@ -306,7 +306,7 @@ $squence = $countSquence + 1;
                         wrong.push(stringText);
                     else {
                         isWrong = true;
-                        createFont("#808080", old, oldCode);
+                        createFont("#000000", old, oldCode);
                         old = new Array();
                         oldCode = new Array();
                         wrong = new Array();
@@ -317,8 +317,8 @@ $squence = $countSquence + 1;
         }
 
         if (countLength !== 0) {
-            createFont("#808080", old, oldCode);
-            createFont("#ff0000", wrong, "");
+            createFont("#000000", old, oldCode);
+            createFont("#000000", wrong, "");
         }
         if (inputO.length < text.length) {
             var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
@@ -433,9 +433,10 @@ $squence = $countSquence + 1;
     }
     function controlScroll() {
         var input = getContent(yaweiOCX4Look);
-        var addLine = (input.split('\n\r')).length - 1;
+        var addLine = (input.split('\n\r')).length;
         var div = document.getElementById('templet');
-        var line = parseInt(input.length / 32) + addLine;
+        var length = input.length - addLine;
+        var line = parseInt(length / 32);
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }
