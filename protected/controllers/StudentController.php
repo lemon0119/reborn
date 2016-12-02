@@ -1875,16 +1875,16 @@ class StudentController extends CController {
                             
                         } else{
                             $missing_Number = $answerData['missing_Number'];
-                            }
+                        }
                         if($answerData['redundant_Number']==""){
                             $redundant_Number=0;}
-                       else{
+                        else{
                            $redundant_Number = $answerData['redundant_Number'];}
-                       if($answerData['correct_Answer']==""){
+                        if($answerData['correct_Answer']==""){
                            $correct=0;
-                       }else{
-                       $correct = $answerData['correct_Answer'];
-                       $correct = round($correct,1);
+                        }else{
+                          $correct = $answerData['correct_Answer'];
+                          $correct = round($correct,1);
                        }
                    }
                    $speed = $ans['ratio_speed'];
@@ -1904,13 +1904,13 @@ class StudentController extends CController {
                 $answerData = AnswerData::model()->find("answerID = '$ansID'");
                 if($answerData!=NULL){
                  if($rank['type']!="key"){
-                 $rank['missing_Number'] = $answerData['missing_Number'];
-                 $rank['redundant_Number'] = $answerData['redundant_Number'];
-                 $correct = $answerData['correct_Answer'];
-                 $correct = round($correct,1);
-                 $rank['correct'] = $correct;
+                   $rank['missing_Number'] = $answerData['missing_Number'];
+                   $rank['redundant_Number'] = $answerData['redundant_Number'];
+                   $correct = $answerData['correct_Answer'];
+                   $correct = round($correct,1);
+                   $rank['correct'] = $correct;
                  
-                 $rank->update();
+                   $rank->update();
                 }
              }
             }
