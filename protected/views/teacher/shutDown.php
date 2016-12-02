@@ -15,6 +15,7 @@
     <body>
         <div class="span9" style="width: 450px; height: 280px">
             <h3><font color="#ff0000">关闭服务器</font></h3>
+            <input type="hidden" name="flag" value="1" />
         <form action="./index.php?r=teacher/ISshutDown" class="form-horizontal" method="post" id="form-addStu">
         <fieldset>
             <div>
@@ -22,7 +23,7 @@
                     <span style="font-size: 18px">密码：</span> <input name="password" type="password" style="width:280px; height:30px;" id="password" value="" />
             </div><br><br>
             <button  class="btn btn-primary" onclick="closeServer()">确认</button>　　　　　　　　
-                <button class="btn btn-primary" onclick="closeWindow()">取消</button>
+            <a class="btn btn-primary" onclick="closeWindow()" href="#">取消</a>
         </fieldset>
     </form>
         </div>
@@ -30,8 +31,10 @@
 </html>
 
 <script>
+
     function closeWindow(){
-        window.close();
+            window.opener.location.reload();
+            window.close();
     }
     window.onload=function(){
         closeServer(<?php if(isset($result)){echo $result;}?>);
