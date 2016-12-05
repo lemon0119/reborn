@@ -27,13 +27,15 @@ $corr=$posts->read();
             {
                
                 if(empty($corr)|| ($teacher['userID']<$corr['teacherID'])){
-                    echo "<tr>";
-                    echo  "<td style=\"width: 75px\"> <input type=\"checkbox\" name=\"checkbox[]\" value= " . $teacher['userID'] ."  /> </td>";                     
-                    echo  "<td style=width: 75px>". $teacher['userID'] ."</td>";
-                    echo  "<td>" .  $teacher['userName']  . "</td>";
-                    echo  "<td>" .  $teacher['department']  . "</td>";
-                    echo  "</tr> ";
+                    if($teacher['userID']!=="A01"){
+                        echo "<tr>";
+                        echo  "<td style=\"width: 75px\"> <input type=\"checkbox\" name=\"checkbox[]\" value= " . $teacher['userID'] ."  /> </td>";                     
+                        echo  "<td style=width: 75px>". $teacher['userID'] ."</td>";
+                        echo  "<td>" .  $teacher['userName']  . "</td>";
+                        echo  "<td>" .  $teacher['department']  . "</td>";
+                        echo  "</tr> ";
                      $i++;
+                    }
                  $teacher=$teachers->read();   
                 }else if($teacher['userID']==$corr['teacherID']) {
                      $teacher=$teachers->read();
