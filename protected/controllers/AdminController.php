@@ -956,6 +956,15 @@ class AdminController extends CController {
             $type = Yii::app()->session ['searchTeaType'];
             $value = Yii::app()->session ['searchTeaValue'];
         }
+        if($type==="userID" && $value==="a01" || $value==="A01"){
+            $value="";
+        }
+        if($type==="userName" && $value=="亚伟速录"){
+            $value="";
+        }
+        if($type==="department" && $value=="模板"){
+            $value="";
+        }
         $result = Teacher::model()->getTeaLst($type, $value);
         $teaLst = $result ['teaLst'];
         $pages = $result ['pages'];
@@ -1535,10 +1544,18 @@ class AdminController extends CController {
             $value = Yii::app()->session ['searchValue'];
         }
         $ex_sq = "";
+        error_log($type);
+        error_log($value);
         if (isset($type)) {
             if ($type == "classID" || $type == "className") {
+                if($type == "classID" && $value==="1" || $type == "className" && $value==="速录一班"){
+                    $value="";
+                }
                 $ex_sq = " WHERE " . $type . " = '" . $value . "'";
             } else if ($type == "courseName") {
+                if($value==="速录教学"){
+                    $value="";
+                }
                 $course = Course::model()->find("courseName = ?", array($value));
                 if(isset($course)){
                     $ex_sq = " WHERE currentCourse = '" . $course->courseID . "'";
@@ -1546,6 +1563,9 @@ class AdminController extends CController {
                     $ex_sq = " WHERE currentCourse = ''";
                 }
             } else if ($type == "teaName") {
+                if($value==="亚伟速录"){
+                    $value="";
+                }
                 $sql = "SELECT * FROM teacher WHERE userName ='" . $value . "'";
                 $an = Yii::app()->db->createCommand($sql)->query();
                 $temp = $an->read();
@@ -3294,6 +3314,12 @@ class AdminController extends CController {
             $value = Yii::app()->session ['searchValue'];
         }
         Yii::app()->session ['lastUrl'] = "searchCourse";
+        if($type=='courseID'&& $value=='1'){
+            $value="";
+        }
+        if($type=='courseName'&& $value=='速录教学'){
+            $value="";
+        }
         if ($type == 'createPerson') {
             if ($value == "管理员") {
                 $value = 0;
