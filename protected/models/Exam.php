@@ -96,7 +96,7 @@ class Exam extends CActiveRecord {
         $classID = Student::model()->findClassByStudentID($userid);
         $select = 'select begintime , endtime ,duration, exam.examID as examID, examName, class_exam.workID, class_exam.open as open from exam , class_exam';
         $condition = " where exam.examID = class_exam.examID and classId = '$classID'and open=1";
-        $order = ' order by exam.examID';
+        $order = ' order by exam.examID desc';
         $sql = $select . $condition . $order;
         $result = Yii::app()->db->createCommand($sql)->query();
         return $result;
