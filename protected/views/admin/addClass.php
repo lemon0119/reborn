@@ -21,9 +21,13 @@ header('Cache-control: private, must-revalidate');
                         <select name="courseID"  id="input02">
                             <option value="" selected="selected">请选择科目</option>
                             <?php 
-                                foreach ($courses as $key => $value) {?>
+                                foreach ($courses as $key => $value) {
+                                    if($value['courseName']!=="速录教学"){
+                                    ?>
                             <option  style="color:#000;" value="<?php echo $value['courseID']; ?>"><?php echo $value['courseName']; ?></option>     
-                            <?php  }?>
+                            <?php  }
+                                }
+                            ?>
                         </select>
                     </div>
             </div>

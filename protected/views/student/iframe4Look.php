@@ -79,8 +79,9 @@
         <object id="typeOCX4Look" type="application/x-itst-activex" 
                 clsid="{ED848B16-B8D3-46c3-8516-E22371CCBC4B}" 
                 width ='840' height='350'
-                event_OnStenoPress="onStenoPressKey"
-                event_OnChange="onStenoPressKey">
+                event_OnStenoPress="firstblood"
+                event_OnChange="onStenoPressKey"
+               >
         </object>
     </div>
 </body>
@@ -184,7 +185,8 @@ $squence = $countSquence + 1;
         yaweiOCX4Look.Locate(input.length);
     }
 
-    function onStenoPressKey(pszStenoString, device) {
+    function onStenoPressKey() {
+        pszStenoString = window.GA_pszStenoString;
         var inputO = getContent(yaweiOCX4Look);
         window.GA_answer = yaweiOCX4Look.GetContentWithSteno();
         //使用统计JS必须在绑定的此onStenoPressKey事件中写入如下代码
@@ -224,76 +226,76 @@ $squence = $countSquence + 1;
         }
         //--------------------------------------------------
         controlScroll();
-        changWordPS();
-        var text_old = '<?php echo $str; ?>';
-        var text = text_old.split("");
-        var allInput2 = yaweiOCX4Look.GetContentWithSteno().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");
-        var longIsAgo = 0;
-        var old = new Array();
-        var oldCode = new Array();
-        var isWrong = false;
-        var wrong = new Array();
-        var div = document.getElementById("templet");
-        while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
-            div.removeChild(div.firstChild);
-        }
-        var length = allInput2.length;
-        var countLength = 0;
-        for (var i = 0; i < length; i++) {
-            if (allInput2[i] !== undefined) {
-                var num = allInput2[i].indexOf(">");
-                var content = allInput2[i].substring(1, num);
-                var yaweiCode = allInput2[i].substring(num + 2, allInput2[i].length).replace(">", "");
-                var long = content.length;
-                countLength += content.length;
-                if (countLength >= text.length) {
-                    length = i;
-                }
-                longIsAgo += long;
-                if (text[longIsAgo - long] != undefined) {
-                    var stringText = text[longIsAgo - long];
-                }
-                for (var j = 1; j < long; j++) {
-                    if (text[longIsAgo - long + j] != undefined) {
-                        stringText += text[longIsAgo - long + j];
-                    }
-                }
-                if (content == stringText) {
-                    if (isWrong == true) {
-                        isWrong = false;
-                        createFont("#ff0000", wrong, "");
-                        wrong = new Array();
-                        old = new Array();
-                        old.push(stringText);
-                        oldCode = new Array();
-                        oldCode.push(yaweiCode);
-                    } else {
-                        old.push(stringText);
-                        oldCode.push(yaweiCode);
-                    }
-                } else {
-                    if (isWrong == true)
-                        wrong.push(stringText);
-                    else {
-                        isWrong = true;
-                        createFont("#808080", old, oldCode);
-                        old = new Array();
-                        oldCode = new Array();
-                        wrong = new Array();
-                        wrong.push(stringText);
-                    }
-                }
-            }
-        }
-
-        if (countLength !== 0) {
-            createFont("#808080", old, oldCode);
-            createFont("#ff0000", wrong, "");
-        }
-        if (inputO.length < text.length) {
-            var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
-            createFont("#000000", left, "left");
-        }
+//        changWordPS();
+//        var text_old = '<?php echo $str; ?>';
+//        var text = text_old.split("");
+//        var allInput2 = yaweiOCX4Look.GetContentWithSteno().replace(/\r\n/g, "`").replace(/ /g, "}").split(">,");
+//        var longIsAgo = 0;
+//        var old = new Array();
+//        var oldCode = new Array();
+//        var isWrong = false;
+//        var wrong = new Array();
+//        var div = document.getElementById("templet");
+//        while (div.hasChildNodes()) {//当div下还存在子节点时 循环继续
+//            div.removeChild(div.firstChild);
+//        }
+//        var length = allInput2.length;
+//        var countLength = 0;
+//        for (var i = 0; i < length; i++) {
+//            if (allInput2[i] !== undefined) {
+//                var num = allInput2[i].indexOf(">");
+//                var content = allInput2[i].substring(1, num);
+//                var yaweiCode = allInput2[i].substring(num + 2, allInput2[i].length).replace(">", "");
+//                var long = content.length;
+//                countLength += content.length;
+//                if (countLength >= text.length) {
+//                    length = i;
+//                }
+//                longIsAgo += long;
+//                if (text[longIsAgo - long] != undefined) {
+//                    var stringText = text[longIsAgo - long];
+//                }
+//                for (var j = 1; j < long; j++) {
+//                    if (text[longIsAgo - long + j] != undefined) {
+//                        stringText += text[longIsAgo - long + j];
+//                    }
+//                }
+//                if (content == stringText) {
+//                    if (isWrong == true) {
+//                        isWrong = false;
+//                        createFont("#000000", wrong, "");
+//                        wrong = new Array();
+//                        old = new Array();
+//                        old.push(stringText);
+//                        oldCode = new Array();
+//                        oldCode.push(yaweiCode);
+//                    } else {
+//                        old.push(stringText);
+//                        oldCode.push(yaweiCode);
+//                    }
+//                } else {
+//                    if (isWrong == true)
+//                        wrong.push(stringText);
+//                    else {
+//                        isWrong = true;
+//                        createFont("#000000", old, oldCode);
+//                        old = new Array();
+//                        oldCode = new Array();
+//                        wrong = new Array();
+//                        wrong.push(stringText);
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (countLength !== 0) {
+//            createFont("#000000", old, oldCode);
+//            createFont("#000000", wrong, "");
+//        }
+//        if (inputO.length < text.length) {
+//            var left = document.getElementById("content").value.substr(0 - (text.length - longIsAgo));
+//            createFont("#000000", left, "left");
+//        }
     }
 
 
@@ -402,9 +404,10 @@ $squence = $countSquence + 1;
     }
     function controlScroll() {
         var input = getContent(yaweiOCX4Look);
-        var addLine = (input.split('\n\r')).length - 1;
+        var addLine = (input.split('\n\r')).length;
         var div = document.getElementById('templet');
-        var line = parseInt(input.length / 32) + addLine;
+        var length = input.length - addLine;
+        var line = parseInt(length / 32);
         if (line > 3) {
             div.scrollTop = (line - 3) * 30;
         }
@@ -428,5 +431,7 @@ $squence = $countSquence + 1;
     function onunload_handler() {
         yaweiOCX4Look.remove();
     }
-
+    function firstblood(pszStenoString){
+    window.GA_pszStenoString = pszStenoString
+    }
 </script>

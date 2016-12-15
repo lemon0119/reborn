@@ -50,9 +50,11 @@ endforeach;
     </thead>
             <tbody>        
                 <form id="deleForm" method="post" action="./index.php?r=admin/deleteCourse">
-                <?php   foreach($courseLst as $k=>$model):?>
+                <?php   foreach($courseLst as $k=>$model):
+                    if($model['courseName']!="速录教学"){ 
+                    ?>
                 <tr>
-                    <td class="font-center" style="width: 50px"> <?php if($model['courseName']!="速录教学"){ ?> <input type="checkbox" name="checkbox[]" value="<?php echo $model['courseID']; ?>" /> <?php } ?></td>
+                    <td class="font-center" style="width: 50px"><input type="checkbox" name="checkbox[]" value="<?php echo $model['courseID']; ?>" /></td>
                     <td class="font-center" style="width: 75px"><?php echo $model['courseID'];?></td>
                     <td class="font-center"><?php echo $model['courseName'];?></td>
                     <td class="font-center"><?php if($model['createPerson']=="0")
@@ -63,10 +65,12 @@ endforeach;
                     <td class="font-center"><?php echo $model['createTime'];?></td>
                     <td class="font-center" style="width: 100px">  
                         <a href="./index.php?r=admin/infoCourse&&courseID=<?php echo $model['courseID'];?>&&courseName=<?php echo $model['courseName'];?>&&createPerson=<?php if($model['createPerson']=="0")                                                                                                                                                                  ?>"><img title="编辑课程" src="<?php echo IMG_URL; ?>edit.png"></a>
-                     <?php if($model['courseName']!="速录教学"){ ?>   <a href="#"  onclick="deleteCourse(<?php echo $model['courseID'];?>,'<?php echo $model['courseName'];?>')" ><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a><?php } ?>
+                     <a href="#"  onclick="deleteCourse(<?php echo $model['courseID'];?>,'<?php echo $model['courseName'];?>')" ><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>            
-                <?php endforeach;?> 
+                <?php 
+                    }
+                endforeach;?> 
                 </form>
             </tbody>
 </table>

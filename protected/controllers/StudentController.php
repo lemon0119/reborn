@@ -354,13 +354,15 @@ class StudentController extends CController {
             }
         }
         $finishRecord = Array();
+        $exerciseID = $result['exerciseID'];
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if ($record == null) {
             SuiteRecord::saveSuiteRecord($recordID);
-            return $this->render('listenExer', array('recordID' => $recordID, 'exercise' => $classwork, 'exercise2' => $classwork2, 'exerOne' => $result, 'isExam' => $isExam, 'cent' => $cent, 'workId' => $wID, 'isOver' => $isOver));
+            return $this->render('listenExer', array('recordID' => $recordID, 'exercise' => $classwork, 'exercise2' => $classwork2, 'exerOne' => $result, 'isExam' => $isExam, 'cent' => $cent, 'workId' => $wID, 'isOver' => $isOver,'type_name' => "key",
+                        'exer_id'=>$exerciseID));
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -375,7 +377,7 @@ class StudentController extends CController {
                 $cent[$n] = '0';
             $n++;
         }
-
+        
 
         return $this->render('listenExer', array(
                     'recordID' => $record['recordID'],
@@ -384,7 +386,9 @@ class StudentController extends CController {
                     'exerOne' => $result,
                     'isExam' => $isExam,
                     'cent' => $cent,
-                    'workId' => $wID, 'isOver' => $isOver
+                    'workId' => $wID, 'isOver' => $isOver,
+                    'type_name' => "look",
+                    'exer_id'=>$exerciseID
         ));
     }
 
@@ -441,7 +445,7 @@ class StudentController extends CController {
         //end
         if ($recordID == null) {
             ExamRecord::saveExamRecord($recordID);
-            return $this->renderpartial('listenExer', array('recordID' => $recordID, 'exercise' => $classexam, 'exerID' => $exerID, 'exercise2' => $classexam2, 'exerOne' => $result, 'cent' => $cent, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime));
+            return $this->renderpartial('listenExer', array('recordID' => $recordID, 'exercise' => $classexam, 'exerID' => $exerID, 'exercise2' => $classexam2, 'exerOne' => $result, 'cent' => $cent, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'listen', 'isOver' => $isOver, 'costTime' => $costTime,'exer_id'=>$exerID,'type_name'=>"listen"));
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -470,7 +474,9 @@ class StudentController extends CController {
                     'exerID' => $exerID,
                     'typeNow' => 'listen',
                     'isOver' => $isOver, //edit by LC
-                    'costTime' => $costTime
+                    'costTime' => $costTime,
+                    'exer_id'=>$exerID,
+                    'type_name'=>"listen"
         ));
     }
     else {
@@ -511,13 +517,15 @@ class StudentController extends CController {
             }
         }
         $finishRecord = Array();
+        $exerciseID = $result['exerciseID'];
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if ($record == null) {
             SuiteRecord::saveSuiteRecord($recordID);
-            return $this->render('lookExer', array('recordID' => $recordID, 'exercise' => $classwork, 'exercise2' => $classwork2, 'exerOne' => $result, 'isExam' => $isExam, 'cent' => $cent, 'workID' => $wID, 'isOver' => $isOver));
+            return $this->render('lookExer', array('recordID' => $recordID, 'exercise' => $classwork, 'exercise2' => $classwork2, 'exerOne' => $result, 'isExam' => $isExam, 'cent' => $cent, 'workID' => $wID, 'isOver' => $isOver,'type_name' => "key",
+                        'exer_id'=>$exerciseID));
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -532,7 +540,7 @@ class StudentController extends CController {
                 $cent[$n] = '0';
             $n++;
         }
-
+        
         return $this->render('lookExer', array(
                     'recordID' => $record['recordID'],
                     'exercise' => $classwork,
@@ -540,7 +548,9 @@ class StudentController extends CController {
                     'exerOne' => $result,
                     'isExam' => $isExam,
                     'cent' => $cent,
-                    'workID' => $wID, 'isOver' => $isOver
+                    'workID' => $wID, 'isOver' => $isOver,
+                    'type_name' => "look",
+                    'exer_id'=>$exerciseID
         ));
     }
 
@@ -609,7 +619,9 @@ class StudentController extends CController {
                         'examInfo' => $examInfo,
                         'typeNow' => 'look',
                         'isOver' => $isOver, //edit by LC
-                        'costTime' => $costTime));
+                        'costTime' => $costTime,
+                        'exer_id'=>$exerID,
+                        'type_name'=>"look"));
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -638,7 +650,9 @@ class StudentController extends CController {
                     'exerID' => $exerID,
                     'typeNow' => 'look',
                     'isOver' => $isOver, //edit by LC
-                    'costTime' => $costTime
+                    'costTime' => $costTime,
+                    'exer_id'=>$exerID,
+                    'type_name'=>"look"
         ));
     }
     else{
@@ -686,9 +700,11 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
             $classwork2[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
+        $exerciseID = $result['exerciseID'];
         if ($record == null) {
             SuiteRecord::saveSuiteRecord($recordID);
-            return $this->render('keyExer', array('recordID' => $recordID, 'exercise' => $classwork, 'exercise2' => $classwork2, 'exerOne' => $result, 'isExam' => $isExam, 'cent' => $cent, 'workId' => $wID, 'isOver' => $isOver));
+            return $this->render('keyExer', array('recordID' => $recordID, 'exercise' => $classwork, 'exercise2' => $classwork2, 'exerOne' => $result, 'isExam' => $isExam, 'cent' => $cent, 'workId' => $wID, 'isOver' => $isOver,'type_name' => "key",
+                        'exer_id'=>$exerciseID));
         } else {
             foreach (Tool::$EXER_TYPE as $type) {
                 $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
@@ -703,7 +719,6 @@ class StudentController extends CController {
                     $cent[$n] = '0';
                 $n++;
             }
-            $exerciseID = $result['exerciseID'];
 
             return $this->render('keyExer', array(
                         'recordID' => $record->recordID,
@@ -713,7 +728,9 @@ class StudentController extends CController {
                         'isExam' => $isExam,
                         'cent' => $cent,
                         'workId' => $wID,
-                        'isOver' => $isOver
+                        'isOver' => $isOver,
+                        'type_name' => "key",
+                        'exer_id'=>$exerciseID
             ));
         }
     }
@@ -774,7 +791,7 @@ class StudentController extends CController {
         if ($recordID == null) {
             //SuiteRecord::saveSuiteRecord($recordID);
             ExamRecord::saveExamRecord($recordID);
-            return $this->renderpartial('keyExer', array('recordID' => $recordID, 'exercise' => $classexam, 'exerID' => $exerID, 'exerOne' => $result, 'exercise2' => $classexam2, 'cent' => $cent, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'key', 'isOver' => $isOver, 'costTime' => $costTime));
+            return $this->renderpartial('keyExer', array('recordID' => $recordID, 'exercise' => $classexam, 'exerID' => $exerID, 'exerOne' => $result, 'exercise2' => $classexam2, 'cent' => $cent, 'isExam' => $isExam, 'examInfo' => $examInfo, 'typeNow' => 'key', 'isOver' => $isOver, 'costTime' => $costTime,'exer_id'=>$exerID,'type_name'=>"key"));
         }
         foreach (Tool::$EXER_TYPE as $type) {
             $classexam[$type] = ExamExercise::model()->getExamExerByType($suiteID, $type);
@@ -801,6 +818,8 @@ class StudentController extends CController {
                     'exerID' => $exerID,
                     'isOver' => $isOver, //edit by LC
                     'costTime' => $costTime,
+                    'exer_id'=>$exerID,
+                    'type_name'=>"key"
         ));
     }
     $this->render('index');
@@ -1134,6 +1153,21 @@ class StudentController extends CController {
         }
         $workID = $_GET['suiteID'];
         $isExam = false;
+        $type_name="";
+        $exer_id="";
+        if(isset($_GET['exerID'])){
+            $exer_id=$_GET['exerID'];
+        }
+        if(isset($_GET['type'])){
+            error_log(1111);
+            if($_GET['type']===4){
+                $type_name="key";
+            }else if($_GET['type']===5){
+                $type_name="look";
+            }else if($_GET['type']===6){
+                $type_name="listen";
+            }
+        }
         Yii::app()->session['isExam'] = $isExam;
         Yii::app()->session['workID'] = $workID;
         $clsLesnSuite = ClassLessonSuite::model()->findByPK($workID);
@@ -1146,7 +1180,7 @@ class StudentController extends CController {
             $classwork[$type] = Suite::model()->getSuiteExerByType($suiteID, $type);
         }
         if ($record == null) {
-            return $this->render('suiteDetail', ['exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent,'recordID'=>$record['recordID']]);
+            return $this->render('suiteDetail', ['exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent,'recordID'=>$record['recordID'],'exer_id'=>$exer_id,'type_name'=>$type_name]);
         }
         $finishRecord = Array();
         foreach (Tool::$EXER_TYPE as $type) {
@@ -1166,7 +1200,7 @@ class StudentController extends CController {
                 $cent[$n] = '0';
             $n++;
         }
-        return $this->render('suiteDetail', ['exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent,'recordID'=>$record['recordID']]);
+        return $this->render('suiteDetail', ['exercise' => $classwork, 'isExam' => $isExam, 'cent' => $cent,'recordID'=>$record['recordID'],'exer_id'=>$exer_id,'type_name'=>$type_name]);
     }
 
     //获取考试套题
@@ -1174,6 +1208,8 @@ class StudentController extends CController {
         if (!isset(Yii::app()->session['userid_now'])) {
             return $this->render('index');
         }
+        $type_name="";
+        $exer_id="";
         $isExam = true;
         $suiteID = $_GET['suiteID'];
         $workID = $_GET['workID'];
@@ -1182,6 +1218,18 @@ class StudentController extends CController {
         Yii::app()->session['examsuiteID'] = $suiteID;
         Yii::app()->session['examworkID'] = $_GET['workID'];
         Yii::app()->session['suiteID'] = $suiteID;
+        if(isset($_GET['exerID'])){
+            $exer_id=$_GET['exerID'];
+        }
+        if(isset($_GET['type'])){
+            if($_GET['type']===4){
+                $type_name="key";
+            }else if($_GET['type']===5){
+                $type_name="look";
+            }else if($_GET['type']===6){
+                $type_name="listen";
+            }
+        }
         //Yii::app()->session['examID'] = $suiteID;
         $classexam = Array();
         $record = ExamRecord::model()->find("workID=? and studentID=?", array($workID, $studentID,));
@@ -1193,7 +1241,7 @@ class StudentController extends CController {
 
         $examInfo = Exam::model()->findByPK($suiteID);
         if ($record == null) {
-            return $this->render('suiteDetail', ['exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'cent' => $cent,'recordID'=>$record['recordID']]);
+            return $this->render('suiteDetail', ['exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'cent' => $cent,'recordID'=>$record['recordID'],'exer_id'=>$exer_id,'type_name'=>$type_name]);
         }
         $finishRecord = Array();
         foreach (Tool::$EXER_TYPE as $type) {
@@ -1216,7 +1264,7 @@ class StudentController extends CController {
             }
             $n++;
         }
-        return $this->render('suiteDetail', ['exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'cent' => $cent,'recordID'=>$record['recordID']]);
+        return $this->render('suiteDetail', ['exercise' => $classexam, 'isExam' => $isExam, 'examInfo' => $examInfo, 'cent' => $cent,'recordID'=>$record['recordID'],'exer_id'=>$exer_id,'type_name'=>$type_name]);
     }
 
     public function actionWebrtc() {
@@ -1827,16 +1875,16 @@ class StudentController extends CController {
                             
                         } else{
                             $missing_Number = $answerData['missing_Number'];
-                            }
+                        }
                         if($answerData['redundant_Number']==""){
                             $redundant_Number=0;}
-                       else{
+                        else{
                            $redundant_Number = $answerData['redundant_Number'];}
-                       if($answerData['correct_Answer']==""){
+                        if($answerData['correct_Answer']==""){
                            $correct=0;
-                       }else{
-                       $correct = $answerData['correct_Answer'];
-                       $correct = round($correct,1);
+                        }else{
+                          $correct = $answerData['correct_Answer'];
+                          $correct = round($correct,1);
                        }
                    }
                    $speed = $ans['ratio_speed'];
@@ -1856,13 +1904,13 @@ class StudentController extends CController {
                 $answerData = AnswerData::model()->find("answerID = '$ansID'");
                 if($answerData!=NULL){
                  if($rank['type']!="key"){
-                 $rank['missing_Number'] = $answerData['missing_Number'];
-                 $rank['redundant_Number'] = $answerData['redundant_Number'];
-                 $correct = $answerData['correct_Answer'];
-                 $correct = round($correct,1);
-                 $rank['correct'] = $correct;
+                   $rank['missing_Number'] = $answerData['missing_Number'];
+                   $rank['redundant_Number'] = $answerData['redundant_Number'];
+                   $correct = $answerData['correct_Answer'];
+                   $correct = round($correct,1);
+                   $rank['correct'] = $correct;
                  
-                 $rank->update();
+                   $rank->update();
                 }
              }
             }

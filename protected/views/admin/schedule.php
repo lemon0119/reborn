@@ -38,7 +38,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($teacher_search as $t_value){ ?>    
+                    <?php foreach ($teacher_search as $t_value){
+                        error_log($t_value['userID']);
+                        if($t_value['userID']!=="A01"){
+                        ?>    
                         <tr>
                             <td class="font-center" ><?php echo $t_value['userID'];?></td>
                             <td class="font-center" ><?php echo $t_value['userName'];?></td>
@@ -47,7 +50,9 @@
                                 <a href="./index.php?r=admin/scheduleDetil&&teacherId=<?php echo $t_value['userID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
-                   <?php }?>
+                   <?php }
+                    }
+                   ?>
                 </tbody>
             </table>
         </form>
@@ -64,7 +69,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($class_search as $c_value){ ?>    
+                    <?php foreach ($class_search as $c_value){ 
+                        if($c_value['className']!="速录一班"){
+                        ?>    
                         <tr>
                             <td class="font-center" ><?php echo $c_value['classID'];?></td>
                             <td class="font-center" ><?php echo $c_value['className'];?></td>
@@ -73,7 +80,9 @@
                                  <a href="./index.php?r=admin/scheduleDetil&&classId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
-                   <?php }?>
+                   <?php }
+                    }
+                   ?>
                 </tbody>
             </table>
         </form>
@@ -92,7 +101,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($class as $c_value){ ?>    
+                    <?php foreach ($class as $c_value){ 
+                        if($c_value['className']!="速录一班"){
+                        ?>    
                         <tr>
                             <td class="font-center" ><?php echo $c_value['classID'];?></td>
                             <td class="font-center" ><?php echo $c_value['className'];?></td>
@@ -101,7 +112,9 @@
                                  <a href="./index.php?r=admin/scheduleDetil&&classId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
-                   <?php }?>
+                   <?php }
+                    }
+                   ?>
                 </tbody>
             </table>
             <div align=center>
@@ -123,7 +136,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($teacher as $t_value){ ?>    
+                    <?php foreach ($teacher as $t_value){ 
+                        if($t_value['userID']!=="A01"){
+                        ?>    
                         <tr>
                             <td class="font-center" ><?php echo $t_value['userID'];?></td>
                             <td class="font-center" ><?php echo $t_value['userName'];?></td>
@@ -132,7 +147,9 @@
                                  <a href="./index.php?r=admin/scheduleDetil&&teacherId=<?php echo $t_value['userID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
-                   <?php }?>
+                   <?php }
+                    }
+                   ?>
                 </tbody>
             </table>
             <div align=center>

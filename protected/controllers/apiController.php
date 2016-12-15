@@ -2123,15 +2123,21 @@ class apiController extends Controller {
           $answer = Yii::app()->db->createCommand($sql)->query();
           foreach ($answer as $ans){
           $answerID = $ans['answerID'];
+          $ansData = AnswerData::model()->find("answerID = '$answerID'");
         //正确率
-        $correct=$ans['ratio_correct'];
-        $correct2=$ans['ratio_correct'];
-        if(strpos($correct,"&") === false){     
-        $correct=$correct."&".$correct;
-                 }
-        $n=  strrpos($correct, "&");
-        $correct= substr($correct, $n+1);
-        $correct = round($correct,1);
+          if($ans['type'] == "key") {
+             $correct=$ans['ratio_correct'];
+             $correct2=$ans['ratio_correct'];
+             if(strpos($correct,"&") === false){     
+                $correct=$correct."&".$correct;
+             }
+             $n=  strrpos($correct, "&");
+             $correct= substr($correct, $n+1);
+             $correct = round($correct,1);
+          }else {
+             $correct = $ansData['correct_Answer'] ;
+             $correct = round($correct,1);
+          }
         //回删
         $backDelete=$ans['ratio_backDelete'];
         $backDelete2=$ans['ratio_backDelete'];
@@ -2227,14 +2233,14 @@ class apiController extends Controller {
          //少打字数   
             if($type == "key"){
                $missing = 0;
-               $recordID = 0;
+               $redundant = 0;
             }else {
                $missing=$ans2['missing_Number'];
-            $missing2=$ans2['missing_Number'];
-        if(strpos($missing,"&") === false){     
-            $missing=$missing."&".$missing;
+               $missing2=$ans2['missing_Number'];
+               if(strpos($missing,"&") === false){     
+                  $missing=$missing."&".$missing;
                  }
-            $n=  strrpos($missing, "&");
+               $n=  strrpos($missing, "&");
             $missing= substr($missing, $n+1);
         //多打字数
             $redundant=$ans2['redundant_Number'];
@@ -2243,22 +2249,21 @@ class apiController extends Controller {
             $redundant=$redundant."&".$redundant;
                  }
             $n=  strrpos($redundant, "&");
-            $redundant= substr($redundant, $n+1);  
-            }
-           
-        
-            
+            $redundant= substr($redundant, $n+1);
+            $corrects = $ans2['correct_Answer'];
             $connection = Yii::app()->db;
-            $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' where answerID = '$oanswerID'";
+            $sql = "UPDATE rank_answer SET redundant_Number = '$redundant', missing_Number = '$missing' ,correct = '$corrects' where answerID = '$oanswerID'";
             $command = $connection->createCommand($sql);
-            $command->execute();}
+            $command->execute();
+            }          
         }
-        }
-          }
-        }
-          $student =11;
-         $this->renderJSON(['student'=>$student]);   
-        }
+      }
+    }
+   }
+  }
+        $student =11;
+        $this->renderJSON(['student'=>$student]);   
+}
         
         public function actionShowSuiteRank(){
          $workID = $_POST['workID'];

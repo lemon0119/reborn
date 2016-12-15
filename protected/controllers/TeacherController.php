@@ -1536,8 +1536,8 @@ class TeacherController extends CController {
         $result = 'no';
         if (isset($_POST['title'])) {
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
-            $content4000 = Tool::spliceLookContent($newContent);
-            $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
+            $content4000 = Tool::filterAllSpaceAndTab($newContent);
+            $contentNoSpace = Tool::spliceLookContent($content4000);
             if(!empty($_FILES["myfiles"]["name"])){
                   $tmp_file = $_FILES ['myfiles'] ['tmp_name'];
                 $file_types = explode(".", $_FILES ['myfiles'] ['type']);
@@ -1565,8 +1565,8 @@ class TeacherController extends CController {
                             $contents = fread($fp, filesize($file_dir)); //读文件 
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
-                            $txt4000 = Tool::spliceLookContent($txtContent);
-                            $txtNoSpace = Tool::filterAllSpaceAndTab($txt4000);
+                            $txt4000 = Tool::filterAllSpaceAndTab($txtContent);
+                            $txtNoSpace = Tool::spliceLookContent($txt4000);
                             if(isset($_POST['checkbox'])){
                                 $title=$_POST['title']."-不提示略码";
                                 $result = LookType::model()->insertLook($title, $txtNoSpace, Yii::app()->session['userid_now']);
@@ -1616,8 +1616,8 @@ class TeacherController extends CController {
         $thisLook = new LookType();
         $thisLook = $thisLook->find("exerciseID = '$exerciseID'");
         $newContent = Tool::SBC_DBC($_POST['content'], 0);
-        $content4000 = Tool::spliceLookContent($newContent);
-        $txtNoSpaces = Tool::filterAllSpaceAndTab($content4000);
+        $content4000 = Tool::filterAllSpaceAndTab($newContent);
+        $txtNoSpaces = Tool::spliceLookContent($content4000);
         if(isset($_POST['checkbox'])){
             if(strpos($_POST['title'],"-不提示略码")){
                 $title=$_POST['title'];
@@ -1658,8 +1658,8 @@ class TeacherController extends CController {
                             $contents = fread($fp, filesize($file_dir)); //读文件 
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
-                            $txt4000 = Tool::spliceLookContent($txtContent);
-                            $txtNoSpace = Tool::filterAllSpaceAndTab($txt4000);
+                            $txt4000 = Tool::filterAllSpaceAndTab($txtContent);
+                            $txtNoSpace = Tool::spliceLookContent($txt4000);
                             $tag = "成功";
                             }
                     }
@@ -7010,8 +7010,8 @@ class TeacherController extends CController {
         if (isset($_POST['title'])) {
             $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
-            $content4000 = Tool::spliceLookContent($newContent);
-            $contentNoSpace = Tool::filterAllSpaceAndTab($content4000);
+            $content4000 = Tool::filterAllSpaceAndTab($newContent);
+            $contentNoSpace = Tool::spliceLookContent($content4000);
             if(!empty($_FILES["myfiles"]["name"])){
                   $tmp_file = $_FILES ['myfiles'] ['tmp_name'];
                 $file_types = explode(".", $_FILES ['myfiles'] ['type']);
@@ -7039,8 +7039,8 @@ class TeacherController extends CController {
                             $contents = fread($fp, filesize($file_dir)); //读文件 
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
-                            $txt4000 = Tool::spliceLookContent($txtContent);
-                            $txtNoSpace = Tool::filterAllSpaceAndTab($txt4000);
+                            $txt4000 = Tool::filterAllSpaceAndTab($txtContent);
+                            $txtNoSpace = Tool::spliceLookContent($txt4000);
                             if(isset($_POST['checkbox'])){
                                 $title = $_POST['title']."-不提示略码";
                                 $result = ClassExercise::model()->insertClassExercise($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($title), $txtNoSpace, 'look', Yii::app()->session['userid_now']);
@@ -7258,15 +7258,15 @@ class TeacherController extends CController {
                             $contents = fread($fp, filesize($file_dir)); //读文件 
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
-                            $txt4000 = Tool::spliceLookContent($txtContent);
-                            $txtNoSpace = Tool::filterAllSpaceAndTab($txt4000);
+                            $txt4000 = Tool::filterAllSpaceAndTab($txtContent);
+                            $txtNoSpace = Tool::spliceLookContent($txt4000);
                             $tag = "成功";
                             }
                     }
                 }
         }
             $newContent = Tool::SBC_DBC($_POST['content'], 0);
-            $newtxt4000 = Tool::spliceLookContent($newContent);
+            $newtxt4000 = Tool::filterAllSpaceAndTab($newContent);
             $content4000 = Tool::spliceLookContent($newtxt4000);
             if($tag == "成功"){
             $update = ClassExercise::model()->updateLook($exerciseID, $title, $txtNoSpace);
