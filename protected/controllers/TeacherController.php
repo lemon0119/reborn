@@ -2385,10 +2385,11 @@ class TeacherController extends CController {
             } else {
                 $oldName = $_FILES["file"]["name"];
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
-                $player=new COM("WMPlayer.OCX");
-                $media=$player->newMedia($_FILES["file"]["tmp_name"]);
-                $time=round($media->duration);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                $oldDir="C:/wamp/www/reborn/resources/" . $filePath .$newName;
+                $player=new COM("WMPlayer.OCX");
+                $media=$player->newMedia($oldDir);
+                $time=round($media->duration);
                 Resourse::model()->insertRela($newName, $oldName);
                 if(!empty($_FILES["myfile"]['name'])){
                   $tmp_file = $_FILES ['myfile'] ['tmp_name'];
@@ -2418,8 +2419,12 @@ class TeacherController extends CController {
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
                             $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
-                            $numOfWords=Tool::clength($_POST ['content']);
-                            $speed=round(($numOfWords/$time)*60);
+                            $numOfWords=Tool::clength($content);
+                            if($time!==0){
+                                $speed=round(($numOfWords/$time)*60);
+                            }else{
+                                $speed=0;
+                            }
                             $result = ListenType::model()->insertListen($_POST['title'], $txtNoSpace, $newName, $filePath, Yii::app()->session['userid_now'],$speed);
                             $result = '1';
                             }
@@ -2674,6 +2679,7 @@ class TeacherController extends CController {
         $thisListen = new ListenType ();
         $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
         $oldFile=$thisListen['fileName'];
+        $newDir="C:/wamp/www/reborn/resources/" . $filePath .$oldFile;
         $filename = $_GET['oldfilename'];
         if ($_FILES['modifyfile']['tmp_name']) {
             if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
@@ -2684,10 +2690,11 @@ class TeacherController extends CController {
                 $result = '文件上传失败';
             } else {
                 $newName = Tool::createID() . "." . pathinfo($_FILES["modifyfile"]["name"], PATHINFO_EXTENSION);
-                $player=new COM("WMPlayer.OCX");
-                $media=$player->newMedia($_FILES["modifyfile"]["tmp_name"]);
-                $time=round($media->duration);
                 move_uploaded_file($_FILES["modifyfile"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                $oldDir="C:/wamp/www/reborn/resources/" . $filePath .$newName;
+                $player=new COM("WMPlayer.OCX");
+                $media=$player->newMedia($oldDir);
+                $time=round($media->duration);
                 if (file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
                     unlink($dir . iconv("UTF-8", "gb2312", $filename));
                 Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
@@ -2724,9 +2731,17 @@ class TeacherController extends CController {
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
                             $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
-                            $numOfWords=Tool::clength($_POST ['content']);
-                            $speed=round(($numOfWords/$time)*60);
-                            error_log($speed);
+                            $numOfWords=Tool::clength($content);
+                            if($time===-1){
+                                $player=new COM("WMPlayer.OCX");
+                                $media=$player->newMedia($newDir);
+                                $time=round($media->duration);
+                            }
+                            if($time!==0){
+                                $speed=round(($numOfWords/$time)*60);
+                            }else{
+                                $speed=0;
+                            }
                             $tag = "成功";
                             }
                     }
@@ -2743,11 +2758,18 @@ class TeacherController extends CController {
             $thisListen->title = $_POST ['title'];
             $txtContents = Tool::SBC_DBC($_POST ['content'], 0);
             $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
-            if($time!==-1){
-                $numOfWords=Tool::clength($_POST ['content']);
-                $speed=round(($numOfWords/$time)*60);
-                $thisListen->speed = $speed;
+            if($time===-1){
+                $player=new COM("WMPlayer.OCX");
+                $media=$player->newMedia($newDir);
+                $time=round($media->duration);
             }
+            $numOfWords=Tool::clength($_POST ['content']);
+            if($time!==0){
+                $speed=round(($numOfWords/$time)*60);
+            }else{
+                $speed=0;
+            }
+            $thisListen->speed = $speed;
             $thisListen->content = $txtNoSpaces;
             $thisListen->update();
             $result = "修改成功!";
@@ -7184,6 +7206,10 @@ class TeacherController extends CController {
                 $oldName = $_FILES["file"]["name"];
                 $newName = Tool::createID() . "." . pathinfo($oldName, PATHINFO_EXTENSION);
                 move_uploaded_file($_FILES["file"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                $oldDir="C:/wamp/www/reborn/resources/" . $filePath .$newName;
+                $player=new COM("WMPlayer.OCX");
+                $media=$player->newMedia($oldDir);
+                $time=round($media->duration);
                 Resourse::model()->insertRela($newName, $oldName);
                 $sqlLesson = Lesson::model()->find("classID = '$classID' and number = '$on'");
                 if(!empty($_FILES["myfile"]['name'])){
@@ -7214,7 +7240,13 @@ class TeacherController extends CController {
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
                             $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
-                            $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpace, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
+                            $numOfWords=Tool::clength($content);
+                            if($time!==0){
+                                $speed=round(($numOfWords/$time)*60);
+                            }else{
+                                $speed=0;
+                            }
+                            $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpace, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$speed);
                             $result = '1';
                          }
                     }
@@ -7222,7 +7254,9 @@ class TeacherController extends CController {
                 }else {
                    $txtContents = Tool::SBC_DBC($_POST['content'], 0);
                    $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
-                   $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpaces, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$_POST['speed']);
+                   $numOfWords=Tool::clength($_POST ['content']);
+                   $speed=round(($numOfWords/$time)*60);
+                   $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpaces, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$speed);
                    $result = '1'; 
                 }
             }
@@ -7367,6 +7401,7 @@ class TeacherController extends CController {
     }
 
     public function actionEditListen4ClassExercise() {
+        $time=-1;
         $result = "";
         $typename = Yii::app()->session['role_now'];
         $userid = Yii::app()->session['userid_now'];
@@ -7375,6 +7410,8 @@ class TeacherController extends CController {
         $exerciseID = $_GET['exerciseID'];
         $thisListen = new ClassExercise ();
         $thisListen = $thisListen->find("exerciseID = '$exerciseID' and type = 'listen'");
+        $oldFile=$thisListen['file_name'];
+        $newDir="C:/wamp/www/reborn/resources/" . $filePath .$oldFile;
         if (isset($_GET['oldfilename'])) {
             $filename = $_GET['oldfilename'];
 
@@ -7388,6 +7425,10 @@ class TeacherController extends CController {
                 } else {
                     $newName = Tool::createID() . "." . pathinfo($_FILES["modifyfile"]["name"], PATHINFO_EXTENSION);
                     move_uploaded_file($_FILES["modifyfile"]["tmp_name"], $dir . iconv("UTF-8", "gb2312", $newName));
+                    $oldDir="C:/wamp/www/reborn/resources/" . $filePath .$newName;
+                    $player=new COM("WMPlayer.OCX");
+                    $media=$player->newMedia($oldDir);
+                    $time=round($media->duration);
                     if (file_exists($dir . iconv("UTF-8", "gb2312", $filename)))
                         unlink($dir . iconv("UTF-8", "gb2312", $filename));
                     Resourse::model()->replaceRela($filename, $newName, $_FILES ["modifyfile"] ["name"]);
@@ -7425,6 +7466,17 @@ class TeacherController extends CController {
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
                             $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
+                            $numOfWords=Tool::clength($content);
+                            if($time===-1){
+                                $player=new COM("WMPlayer.OCX");
+                                $media=$player->newMedia($newDir);
+                                $time=round($media->duration);
+                            }
+                            if($time!==0){
+                                $speed=round(($numOfWords/$time)*60);
+                            }else{
+                                $speed=0;
+                            }
                             $tag = "成功";
                             }
                     }
@@ -7434,7 +7486,7 @@ class TeacherController extends CController {
                 if($tag == "成功"){
                $thisListen->title = $_POST ['title'];
                $thisListen->content = $txtNoSpace;
-               $thisListen->speed = $_POST['speed'];
+               $thisListen->speed = $speed;
                $thisListen->update();
                $result = "修改成功!"; 
             }else {
@@ -7442,7 +7494,18 @@ class TeacherController extends CController {
             $txtContents = Tool::SBC_DBC($_POST ['content'], 0);
             $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
             $thisListen->content = $txtNoSpaces;
-            $thisListen->speed = $_POST['speed'];
+            if($time===-1){
+                $player=new COM("WMPlayer.OCX");
+                $media=$player->newMedia($newDir);
+                $time=round($media->duration);
+            }
+            $numOfWords=Tool::clength($_POST ['content']);
+            if($time!==0){
+                $speed=round(($numOfWords/$time)*60);
+            }else{
+                $speed=0;
+            }
+            $thisListen->speed = $speed;
             $thisListen->update();
             $result = "修改成功!";
             }
