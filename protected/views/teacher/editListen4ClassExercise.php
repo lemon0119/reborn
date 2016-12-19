@@ -50,15 +50,23 @@
                    （答案）<input type="file" name="modifytxtfile" id="txtfile"> 
                 </div>
             </div>
+            <div class="control-group" id="upload" >
+                <div class="controls">
+                        <img src="./img/default/upload-small.gif"  alt="正在努力上传。。"/>
+                        正在上传，请稍等...
+                        <div id="number">0%</div>
+                </div>
+
+            </div>
         <?php } else if($_GET['action'] == 'look') {?>
         <?php }?>     
-         <div class="control-group" id="div2">
+<!--         <div class="control-group" id="div2">
                 <label class="control-label" >速度</label>
                 <div class="controls">
-                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="<?php echo $speed; ?>" <?php if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>         
+                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="<?php// echo $speed; ?>" <?php// if(isset($action)){ if($action=='look'){echo 'disabled="disabled"'; } }?>>         
                     词/分钟
                 </div>            
-            </div>   
+            </div>   -->
         <div class="control-group">
             <label class="control-label" for="input03">听打答案</label>
             <div class="controls">               
@@ -90,10 +98,19 @@ $(document).ready(function(){
             echo " window.wxc.xcConfirm('$result', window.wxc.xcConfirm.typeEnum.info);";?>
 });
 
+function fetch_progress(){
+        $.get('./index.php?r=teacher/getProgress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
+                var progress = parseInt(data);   
+                $('#number').html(progress + '%');
+                if(progress < 100){
+                        setTimeout('fetch_progress()', 100);
+                }else{           
+        }
+        }, 'html');
+    }
 
 
 $("#myForm").submit(function(){
-    $("#upload").show();
     var requirements = $("#input01")[0].value;
     if(requirements === ""){
         window.wxc.xcConfirm('题目不能为空', window.wxc.xcConfirm.typeEnum.warning);
@@ -104,5 +121,10 @@ $("#myForm").submit(function(){
         window.wxc.xcConfirm('内容不能为空', window.wxc.xcConfirm.typeEnum.warning);
         return false;
     }
+    var uploadFile = $("#input02")[0].value;
+    if(uploadFile != ""){
+       $("#upload").show();
+       setTimeout('fetch_progress()', 1000);
+     }
 });
 </script>

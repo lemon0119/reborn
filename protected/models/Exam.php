@@ -96,7 +96,7 @@ class Exam extends CActiveRecord {
         $classID = Student::model()->findClassByStudentID($userid);
         $select = 'select begintime , endtime ,duration, exam.examID as examID, examName, class_exam.workID, class_exam.open as open from exam , class_exam';
         $condition = " where exam.examID = class_exam.examID and classId = '$classID'and open=1";
-        $order = ' order by exam.examID';
+        $order = ' order by begintime desc';
         $sql = $select . $condition . $order;
         $result = Yii::app()->db->createCommand($sql)->query();
         return $result;
@@ -104,7 +104,7 @@ class Exam extends CActiveRecord {
 
     public function getAllExamByPage($pagesize) {
         $id = Yii::app()->session['userid_now'];
-        $sql = "select * from exam where createPerson='$id' order by createTime desc";
+        $sql = "select * from exam where createPerson='$id' order by begintime desc";
         $result = Yii::app()->db->createCommand($sql)->query();
         $criteria = new CDbCriteria();
         $pages = new CPagination($result->rowCount);
@@ -377,7 +377,7 @@ class Exam extends CActiveRecord {
 
     public function getExamByClassExam($teacherID) {
         $sql = "select * from exam";
-        $condition = " where examID in(select examID from class_exam where classID in (select classID from teacher_class where teacherID = '$teacherID'))";
+        $condition = " where examID in(select examID from class_exam where classID in (select classID from teacher_class where teacherID = '$teacherID')) ";
         $sql = $sql . $condition;
         return Yii::app()->db->createCommand($sql)->query();
     }
