@@ -2419,7 +2419,7 @@ class TeacherController extends CController {
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
                             $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
-                            $numOfWords=Tool::clength($content);
+                            $numOfWords=Tool::clength($txtNoSpace);
                             if($time!==0){
                                 $speed=round(($numOfWords/$time)*60);
                             }else{
@@ -2433,7 +2433,7 @@ class TeacherController extends CController {
                 }else {
                     $txtContents = Tool::SBC_DBC($_POST['content'], 0);
                     $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
-                    $numOfWords=Tool::clength($_POST ['content']);
+                    $numOfWords=Tool::clength($txtNoSpaces);
                     $speed=round(($numOfWords/$time)*60);
                     $result = ListenType::model()->insertListen($_POST['title'], $txtNoSpaces, $newName, $filePath, Yii::app()->session['userid_now'],$speed);
                     $result = '1';
@@ -2731,7 +2731,7 @@ class TeacherController extends CController {
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
                             $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
-                            $numOfWords=Tool::clength($content);
+                            $numOfWords=Tool::clength($txtNoSpace);
                             if($time===-1){
                                 $player=new COM("WMPlayer.OCX");
                                 $media=$player->newMedia($newDir);
@@ -2763,7 +2763,7 @@ class TeacherController extends CController {
                 $media=$player->newMedia($newDir);
                 $time=round($media->duration);
             }
-            $numOfWords=Tool::clength($_POST ['content']);
+            $numOfWords=Tool::clength($txtNoSpaces);
             if($time!==0){
                 $speed=round(($numOfWords/$time)*60);
             }else{
@@ -7240,7 +7240,7 @@ class TeacherController extends CController {
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
                             $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
-                            $numOfWords=Tool::clength($content);
+                            $numOfWords=Tool::clength($txtNoSpace);
                             if($time!==0){
                                 $speed=round(($numOfWords/$time)*60);
                             }else{
@@ -7254,7 +7254,7 @@ class TeacherController extends CController {
                 }else {
                    $txtContents = Tool::SBC_DBC($_POST['content'], 0);
                    $txtNoSpaces = Tool::filterAllSpaceAndTab($txtContents);
-                   $numOfWords=Tool::clength($_POST ['content']);
+                   $numOfWords=Tool::clength($txtNoSpaces);
                    $speed=round(($numOfWords/$time)*60);
                    $result = ClassExercise::model()->insertListen($classID, $sqlLesson['lessonID'], Tool::filterAllSpaceAndTab($_POST['title']), $txtNoSpaces, $newName, $filePath, "listen", Yii::app()->session['userid_now'],$speed);
                    $result = '1'; 
@@ -7466,7 +7466,7 @@ class TeacherController extends CController {
                             $content = iconv('GBK', 'utf-8', $contents);
                             $txtContent = Tool::SBC_DBC($content, 0);
                             $txtNoSpace = Tool::filterAllSpaceAndTab($txtContent);
-                            $numOfWords=Tool::clength($content);
+                            $numOfWords=Tool::clength($txtNoSpace);
                             if($time===-1){
                                 $player=new COM("WMPlayer.OCX");
                                 $media=$player->newMedia($newDir);
@@ -7499,7 +7499,7 @@ class TeacherController extends CController {
                 $media=$player->newMedia($newDir);
                 $time=round($media->duration);
             }
-            $numOfWords=Tool::clength($_POST ['content']);
+            $numOfWords=Tool::clength($txtNoSpaces);
             if($time!==0){
                 $speed=round(($numOfWords/$time)*60);
             }else{
