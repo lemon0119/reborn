@@ -65,13 +65,13 @@
                     <!--<input class="btn btn-primary"  type="button" onclick ="uplodes()" value="上传">-->
                 </div>
             </div>
-            <div class="control-group" id="div2">
+<!--            <div class="control-group" id="div2">
                 <label class="control-label" >速度</label>
                 <div class="controls">
-                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="100">         
+                    <input type="text" name="speed" style="width:40px; height:15px;" id="input2" maxlength="3"  value="">         
                     词/分钟
                 </div>            
-            </div>
+            </div>-->
             <div class="control-group" id="answers">
                 <label class="control-label" for="input03">听打答案</label>
                 <div class="controls">               
