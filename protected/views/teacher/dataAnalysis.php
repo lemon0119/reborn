@@ -122,7 +122,8 @@
         
         <div style="width:100%;">
             <div id="div1" style="width:100%;display:inline;float:left;overflow: auto;margin-top: 20px;" >
-                <h3>数据类型</h3>
+                <div ><h3 style="">数据类型 <a onclick="daochuexc()">导出excel</a></h3></div>
+                <div>
                 <table>
                     <tr>
                         <td  id="bg1" style="width:224px;border-radius: 5px;background-color:rgb(218, 225, 218);height: 36px;color:black;">
@@ -157,6 +158,7 @@
                         </td>
                     </tr>
                 </table>
+                </div>
             </div>
            <div id="main" style="display: none;overflow: auto;height:300px;position: relative;top:10px"></div>   
             
@@ -225,13 +227,13 @@
     <h3 style="alignment-adjust: center;">没有统计数据！</h3>
 </div>
 <div class="span9" id="Diligence" style="display: none;height: 758px;">
+    <div><h3>导出EXCEL : <a href="./index.php?r=teacher/exportDiligence&&classID=<?php echo $classID; ?>"><img src="<?php echo IMG_URL;?>/daochu.jpg" style="width:40px; "></a></h3></div>
     <table class="table table-bordered table-striped" id="table1">
         <thead><th>名次</th><th>名字</th><th>学号</th><th>勤奋度（万字）</th></thead>
     <tbody id="table1"></tbody>
     </table>
 
 </div>
-    
 <script>
     //sunpy: switch camera and bulletin
 $(document).ready(function(){
@@ -686,7 +688,7 @@ function getClassExerciseRanking(workID,isexam){
          });   
 }
 function ShowSuiteRank(workID,exerciseID,type,choice){
-        isexam = 0;   
+        var isexam = 0;   
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -732,6 +734,7 @@ function ShowSuiteRank(workID,exerciseID,type,choice){
     document.getElementById("exerciseID").value=exerciseID;
     document.getElementById("workID").value=workID;
     document.getElementById("type").value=type;
+    document.getElementById("isExam").value=isexam;
 //    document.getElementById("type").value=choice;
     document.getElementById("div11").style.display='block';
 //                 document.getElementById("Diligence").style.display='block';;
@@ -744,7 +747,7 @@ function ShowSuiteRank(workID,exerciseID,type,choice){
          });   
 }
 function ShowExamRank(workID,exerciseID,type,choice){
-        isexam = 1;   
+        var isexam = 1;   
         $.ajax({
              type: "POST",
              dataType:"json",
@@ -821,6 +824,7 @@ function getExerciseRanking(exerciseID,isexam,type){
                 console.log(xhr, "Failed");
             }
          });
+    document.getElementById("type").value=type;
 }
 
 function ShowExerciseRank(workID,exerciseID,choice){
@@ -868,7 +872,6 @@ function ShowExerciseRank(workID,exerciseID,choice){
         } 
     document.getElementById("exerciseID").value=exerciseID;
     document.getElementById("workID").value=workID;
-    document.getElementById("type").value=type;
      document.getElementById("isExam").value=isexam;
 //    document.getElementById("type").value=choice;
     document.getElementById("div11").style.display='block';
@@ -892,5 +895,19 @@ function changeshow(i){
    document.getElementById(clean).className = 'Iconr';
    document.getElementById(i).className = 'Iconr2';
    document.getElementById("qingchu").value=i;
+}
+function daochuexc(){
+    var exerciseID = document.getElementById("exerciseID").value;
+    var isExam = document.getElementById("isExam").value;
+    var type = document.getElementById("type").value;
+    if (isExam==2){
+    window.location.href="./index.php?r=teacher/Guidetable&&workID=<?php echo $work['workID'];?>&&isExam="+isExam+"&&type="+type+"&&exerciseID="+exerciseID;}
+    else if(isExam==""){
+        window.wxc.xcConfirm("请选择题目！", window.wxc.xcConfirm.typeEnum.confirm);
+    }
+    else{
+    var workID = document.getElementById("workID").value;
+    window.location.href="./index.php?r=teacher/Guidetable2&&workID="+workID+"&&isExam="+isExam+"&&type="+type+"&&exerciseID="+exerciseID;    
+    }
 }
 </script>
