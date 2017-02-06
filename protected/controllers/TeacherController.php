@@ -2679,7 +2679,8 @@ class TeacherController extends CController {
         $thisListen = new ListenType ();
         $thisListen = $thisListen->find("exerciseID = '$exerciseID'");
         $oldFile=$thisListen['fileName'];
-        $newDir="C:/wamp/www/reborn/resources/" . $filePath .$oldFile;
+        $oldPath=$thisListen['filePath'];
+        $newDir="C:/wamp/www/reborn/resources/" . $oldPath .$oldFile;
         $filename = $_GET['oldfilename'];
         if ($_FILES['modifyfile']['tmp_name']) {
             if ($_FILES ['modifyfile'] ['type'] != "audio/mpeg" &&
@@ -7639,7 +7640,8 @@ class TeacherController extends CController {
         $thisListen = new ClassExercise ();
         $thisListen = $thisListen->find("exerciseID = '$exerciseID' and type = 'listen'");
         $oldFile=$thisListen['file_name'];
-        $newDir="C:/wamp/www/reborn/resources/" . $filePath .$oldFile;
+        $oldPath=$thisListen['file_path'];
+        $newDir="C:/wamp/www/reborn/resources/" . $oldPath .$oldFile;
         if (isset($_GET['oldfilename'])) {
             $filename = $_GET['oldfilename'];
 
