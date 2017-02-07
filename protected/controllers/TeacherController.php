@@ -8806,6 +8806,10 @@ foreach ($one as $v)
         $objWriter->save('php://output');
         exit;
      }
+     
+     public function actionFree(){
+		echo disk_free_space("C:")/1024/1024/1024;
+	}
         
         }
 
