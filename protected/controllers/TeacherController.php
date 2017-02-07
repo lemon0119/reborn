@@ -6758,6 +6758,234 @@ class TeacherController extends CController {
             'array_exam' => $array_exam,
         ));
     }
+    public function ActionGuidetable(){
+         $workID = $_GET['workID'];
+         $type = $_GET['type'];
+         $exerciseID = $_GET['exerciseID'];
+         $isexam = $_GET['isExam'];
+            $id = array();
+            $name = array();
+            $speed = array();
+            $correct = array();
+            $missing = array();
+            $redundant = array();
+            $backDelete = array();
+            $data = array();
+         if($type==1){
+             $type='speed';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }else if($type==4){
+             $type='correct';
+         }else if($type==5){
+             $type='free';
+         }
+        $sql = "select * FROM rank_answer WHERE type = '$type' and exerciseID ='$exerciseID' and isexam = '$isexam' Order By correct Desc";
+        $criteria   =   new CDbCriteria();
+        $rank  =   Yii::app()->db->createCommand($sql)->queryAll();
+        foreach ($rank as $r){
+            $id = $r['userID'];
+            $name = $r['userName'];
+            $speed = $r['speed'];
+            $correct = $r['correct'];
+            $missing = $r['missing_Number'];
+            $redundant = $r['redundant_Number'];
+            $backDelete = $r['backDelete'];
+            $arrayData=["id"=>$id,"name"=>$name,"speed"=>$speed,
+            "correct"=>$correct,"missing"=>$missing,
+            "redundant"=>$redundant,"backDelete"=>$backDelete];
+            array_push($data, $arrayData);
+        } 
+        $filename="导出结果";
+        /* 把引入PHPExcel.php文件 */
+        Yii::$enableIncludePath = false;
+        Yii::import('application.extensions.PHPExcel.PHPExcel', 1);
+        $styleArray1 = array(
+            'font' => array(
+            'bold' => true,
+            'size'=>14,
+            'color'=>array(
+            'argb' => '00000000',),
+        ));
+        $objectPHPExcel = new PHPExcel();
+        $objectPHPExcel->setActiveSheetIndex(0);
+        $objActSheet = $objectPHPExcel->getActiveSheet();
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:G1')->applyFromArray($styleArray1);
+        $objectPHPExcel->getActiveSheet()->setCellValue('A1','学号');
+        $objectPHPExcel->getActiveSheet()->setCellValue('B1','姓名');
+        $objectPHPExcel->getActiveSheet()->setCellValue('C1','正确率%');
+        $objectPHPExcel->getActiveSheet()->setCellValue('D1','速度（字/分）');
+        $objectPHPExcel->getActiveSheet()->setCellValue('E1','少打字数');
+        $objectPHPExcel->getActiveSheet()->setCellValue('F1','多打字数');
+        $objectPHPExcel->getActiveSheet()->setCellValue('G1','回改字数');
+        //设置字体居中
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:G101')
+        ->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:G101')
+        ->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:G1')
+        ->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('ccffff');
+        //设置视频纠错自动换行和宽度
+        $objActSheet->getColumnDimension('A')->setWidth(14);
+        $objActSheet->getColumnDimension('B')->setWidth(14);
+        $objActSheet->getColumnDimension('C')->setWidth(14);
+        $objActSheet->getColumnDimension('D')->setWidth(18);
+        $objActSheet->getColumnDimension('E')->setWidth(14);
+        $objActSheet->getColumnDimension('F')->setWidth(14);
+        $objActSheet->getColumnDimension('G')->setWidth(14);
+        $objectPHPExcel->getActiveSheet()->getStyle('F1:F101')->getAlignment()->setWrapText(true);
+        $one = 2;$two = 2;$tree = 2;$four =2;$five = 2;$six = 2;$seven=2;
+        //导出考生成绩信息
+        if (!empty($data)){
+              foreach ($data as $k => $model):
+              $objectPHPExcel->getActiveSheet()->setCellValue('A'.($one++) ,$model['id']);
+              $objectPHPExcel->getActiveSheet()->setCellValue('B'.($two++) ,$model['name']);
+              if($model['correct']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('C'.($tree++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('C'.($tree++) ,$model['correct']."%");}
+              if($model['speed']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,$model['speed']);}
+              if($model['missing']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('E'.($five++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('E'.($five++) ,$model['missing']);}
+              if($model['redundant']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('F'.($six++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('F'.($six++) ,$model['redundant']);}
+              if($model['backDelete']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('G'.($seven++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('G'.($seven++) ,$model['backDelete']);} 
+              endforeach;
+      }
+        ob_end_clean();
+        ob_start();
+        header('Content-Type : application/vnd.ms-excel');
+        header('Content-Disposition:attachment;filename="'."$filename".'.xls"');
+        $objWriter= PHPExcel_IOFactory::createWriter($objectPHPExcel,'Excel5');
+        $objWriter->save('php://output');
+        exit;
+    }
+    public function ActionGuidetable2(){
+         $workID = $_GET['workID'];
+         error_log($workID);
+         $type = $_GET['type'];
+         error_log($type);
+         $exerciseID = $_GET['exerciseID'];
+         error_log($exerciseID);
+         $isexam = $_GET['isExam'];
+         error_log($isexam);
+            $data = array();
+            $id = array();
+            $name = array();
+            $speed = array();
+            $correct = array();
+            $missing = array();
+            $redundant = array();
+            $backDelete = array();
+         if($type==1){
+             $type='key';
+         }else if($type==2){
+             $type='listen';
+         }else if($type==3){
+             $type='look';
+         }
+        $sql = "select * FROM rank_answer WHERE workID = '$workID' and type = '$type' and exerciseID ='$exerciseID' and isexam = '$isexam'";
+        $criteria   =   new CDbCriteria();
+        $rank  =   Yii::app()->db->createCommand($sql)->queryAll();
+        foreach ($rank as $r){
+            $id = $r['userID'];
+            $name = $r['userName'];
+            $speed = $r['speed'];
+            $correct = $r['correct'];
+            $missing = $r['missing_Number'];
+            $redundant = $r['redundant_Number'];
+            $backDelete = $r['backDelete'];
+            $arrayData=["id"=>$id,"name"=>$name,"speed"=>$speed,
+            "correct"=>$correct,"missing"=>$missing,
+            "redundant"=>$redundant,"backDelete"=>$backDelete];
+            array_push($data, $arrayData);
+        } 
+        $filename="导出结果";
+        /* 把引入PHPExcel.php文件 */
+        Yii::$enableIncludePath = false;
+        Yii::import('application.extensions.PHPExcel.PHPExcel', 1);
+        $styleArray1 = array(
+            'font' => array(
+            'bold' => true,
+            'size'=>14,
+            'color'=>array(
+            'argb' => '00000000',),
+        ));
+        $objectPHPExcel = new PHPExcel();
+        $objectPHPExcel->setActiveSheetIndex(0);
+        $objActSheet = $objectPHPExcel->getActiveSheet();
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:G1')->applyFromArray($styleArray1);
+        $objectPHPExcel->getActiveSheet()->setCellValue('A1','学号');
+        $objectPHPExcel->getActiveSheet()->setCellValue('B1','姓名');
+        $objectPHPExcel->getActiveSheet()->setCellValue('C1','正确率%');
+        $objectPHPExcel->getActiveSheet()->setCellValue('D1','速度（字/分）');
+        $objectPHPExcel->getActiveSheet()->setCellValue('E1','少打字数');
+        $objectPHPExcel->getActiveSheet()->setCellValue('F1','多打字数');
+        $objectPHPExcel->getActiveSheet()->setCellValue('G1','回改字数');
+        //设置字体居中
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:G101')
+        ->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:G101')
+        ->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:G1')
+        ->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('ccffff');
+        //设置视频纠错自动换行和宽度
+        $objActSheet->getColumnDimension('A')->setWidth(14);
+        $objActSheet->getColumnDimension('B')->setWidth(14);
+        $objActSheet->getColumnDimension('C')->setWidth(14);
+        $objActSheet->getColumnDimension('D')->setWidth(18);
+        $objActSheet->getColumnDimension('E')->setWidth(14);
+        $objActSheet->getColumnDimension('F')->setWidth(14);
+        $objActSheet->getColumnDimension('G')->setWidth(14);
+        $objectPHPExcel->getActiveSheet()->getStyle('F1:F101')->getAlignment()->setWrapText(true);
+        $one = 2;$two = 2;$tree = 2;$four =2;$five = 2;$six = 2;$seven=2;
+        //导出考生成绩信息
+        if (!empty($data)){
+              foreach ($data as $k => $model):
+              $objectPHPExcel->getActiveSheet()->setCellValue('A'.($one++) ,$model['id']);
+              $objectPHPExcel->getActiveSheet()->setCellValue('B'.($two++) ,$model['name']);
+              if($model['correct']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('C'.($tree++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('C'.($tree++) ,$model['correct']."%");}
+              if($model['speed']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,$model['speed']);}
+              if($model['missing']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('E'.($five++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('E'.($five++) ,$model['missing']);}
+              if($model['redundant']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('F'.($six++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('F'.($six++) ,$model['redundant']);}
+              if($model['backDelete']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('G'.($seven++) ,"未作答");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('G'.($seven++) ,$model['backDelete']);} 
+              endforeach;
+      }
+        ob_end_clean();
+        ob_start();
+        header('Content-Type : application/vnd.ms-excel');
+        header('Content-Disposition:attachment;filename="'."$filename".'.xls"');
+        $objWriter= PHPExcel_IOFactory::createWriter($objectPHPExcel,'Excel5');
+        $objWriter->save('php://output');
+        exit;
+    }
 
     public function ActionAddFreePractice() {
         $res = 0;
@@ -8514,12 +8742,72 @@ foreach ($one as $v)
         echo'您的账号已在其他地方登陆';
     }
         }
-        
-        public function actionFree(){
-		echo disk_free_space("C:")/1024/1024/1024;
-	}
 
-}
+    public function actionExportDiligence(){
+         $data = array();
+         $classID = $_GET['classID'];
+         $sql = "select * FROM student WHERE classID = '$classID'Order By diligence Desc"; 
+         $criteria   =   new CDbCriteria();
+         $Dil  =   Yii::app()->db->createCommand($sql)->queryAll();
+         foreach ($Dil as $key){
+         $arrayData =[
+         "userName"=>$key['userName'],
+         "userID"=>$key['userID'],
+         "diligence"=>$key['diligence']];
+         array_push($data, $arrayData);
+         }
+         $filename="导出结果";
+        /* 把引入PHPExcel.php文件 */
+        Yii::$enableIncludePath = false;
+        Yii::import('application.extensions.PHPExcel.PHPExcel', 1);
+        $styleArray1 = array(
+            'font' => array(
+            'bold' => true,
+            'size'=>14,
+            'color'=>array(
+            'argb' => '00000000',),
+        ));
+        $objectPHPExcel = new PHPExcel();
+        $objectPHPExcel->setActiveSheetIndex(0);
+        $objActSheet = $objectPHPExcel->getActiveSheet();
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:D1')->applyFromArray($styleArray1);
+        $objectPHPExcel->getActiveSheet()->setCellValue('A1','名次');
+        $objectPHPExcel->getActiveSheet()->setCellValue('B1','姓名');
+        $objectPHPExcel->getActiveSheet()->setCellValue('C1','学号');
+        $objectPHPExcel->getActiveSheet()->setCellValue('D1','勤奋度（万字）');
+        //设置字体居中
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:D101')
+        ->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:D101')
+        ->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $objectPHPExcel->getActiveSheet()->getStyle('A1:D1')
+        ->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('ccffff');
+        //设置视频纠错自动换行和宽度
+        $objActSheet->getColumnDimension('D')->setWidth(23);
+        $objectPHPExcel->getActiveSheet()->getStyle('F1:D101')->getAlignment()->setWrapText(true);
+        $one = 2;$two = 2;$tree = 2;$four =2;$five = 2;$six = 2;$PAIMING = 1;
+        //导出考生成绩信息
+        if (!empty($data)){
+              foreach ($data as $k => $model):
+              $objectPHPExcel->getActiveSheet()->setCellValue('A'.($one++) ,$PAIMING++);
+              $objectPHPExcel->getActiveSheet()->setCellValue('B'.($two++) ,$model['userName']);
+              $objectPHPExcel->getActiveSheet()->setCellValue('C'.($tree++) ,$model['userID']);
+              if($model['diligence']==null){
+              $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,"0");}
+              else{
+              $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,$model['diligence']);} 
+              endforeach;
+      }
+        ob_end_clean();
+        ob_start();
+        header('Content-Type : application/vnd.ms-excel');
+        header('Content-Disposition:attachment;filename="'."$filename".'.xls"');
+        $objWriter= PHPExcel_IOFactory::createWriter($objectPHPExcel,'Excel5');
+        $objWriter->save('php://output');
+        exit;
+     }
+        
+        }
 
 
 
