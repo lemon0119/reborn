@@ -8514,7 +8514,12 @@ foreach ($one as $v)
         echo'您的账号已在其他地方登陆';
     }
         }
-        }
+        
+        public function actionFree(){
+		echo disk_free_space("C:")/1024/1024/1024;
+	}
+
+}
 
 
 
