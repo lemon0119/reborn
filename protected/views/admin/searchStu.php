@@ -27,8 +27,6 @@
                     <td class="font-center" style="width: 100px">  
                         <a href="./index.php?r=admin/infoStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>&&flag=search"><img title="资料" src="<?php echo IMG_URL; ?>detail.png"></a>
                         <a href="./index.php?r=admin/editStu&&id=<?php echo $model['userID'];?>&&name=<?php echo $model['userName'];?>&&class=<?php echo $model['classID'];?>&&flag=search"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
-                        <a href="#" onclick="dele(<?php $userID=$model['userID'];
-                        echo "'$userID'"; ?>)"><img title="删除" src="<?php echo IMG_URL; ?>delete.png"></a>
                     </td>
                 </tr>            
                 <?php endforeach;?> 
@@ -48,15 +46,5 @@
 <?php }?>
 </div>
 <script>
-    function dele(stuID){
-        var option = {
-						title: "警告",
-						btn: parseInt("0011",2),
-						onOk: function(){
-							 window.location.href = "./index.php?r=admin/deleteStuSearch&&id="+stuID+"&&page=<?php echo Yii::app()->session['lastPage'];?>";
-						}
-					};
-					window.wxc.xcConfirm("这将会移动该学生至回收站，您确定这样吗？", "custom", option);
-    }  
 </script>
 

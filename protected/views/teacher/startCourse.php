@@ -171,7 +171,7 @@
         <div class="table-bordered summary">
             <ul>
                 <li>
-                    <a  id="ppt" href="./index.php?r=teacher/videoLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
+                    <a  id="ppt" href="#"><span class="count"><?php
         $num1 = sizeof(scandir($vdir));
         $num1 = ($num1 > 2) ? ($num1 - 2) : 0;
         $num2 = sizeof(scandir($adminVdir));
@@ -185,7 +185,7 @@
         ?></span > <font style="color:#000">视频</font></a>
                 </li>
                 <li >
-                    <a href="./index.php?r=teacher/pptLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>" id="ppt">
+                    <a href="#" id="ppt">
                         <span class="count"><?php
                             $num    = 0;                                                    
                             $mydir = dir($pdir); 
@@ -217,7 +217,7 @@
 //                            $mydir->close(); 
                             echo    $num;
                             ?></span> <font style="color:#000">PPT</font></a></li>
-                <li><a  id="ppt" href="./index.php?r=teacher/txtLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
+                <li><a  id="ppt" href="#"><span class="count"><?php
                                    $txtnum    = 0;                                                    
                             $mytxtdir = dir($txtdir); 
                             while($file = $mytxtdir->read())
@@ -252,7 +252,7 @@
                 
                 
                 
-                <li>  <a  id="ppt" href="./index.php?r=teacher/voiceLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
+                <li>  <a  id="ppt" href="#"><span class="count"><?php
                          $vonum    = 0;                                                    
                             $myvodir = dir($vodir); 
                             while($file = $myvodir->read())
@@ -283,7 +283,7 @@
 //                            $myvodir->close(); 
                             echo    $vonum;
         ?></span > <font style="color:#000">音频</font></a></li>              
-                <li> <a class="last"   id="ppt" href="./index.php?r=teacher/pictureLst&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $on; ?>"><span class="count"><?php
+                <li> <a class="last"   id="ppt" href="#"><span class="count"><?php
                                  $picnum    = 0;                                                    
                             $mypicdir = dir($picdir); 
                             while($file = $mypicdir->read())
