@@ -227,7 +227,7 @@
     <h3 style="alignment-adjust: center;">没有统计数据！</h3>
 </div>
 <div class="span9" id="Diligence" style="display: none;height: 758px;">
-    <div><h3>导出EXCEL : <a href="./index.php?r=teacher/exportDiligence&&classID=<?php echo $classID; ?>"><img src="<?php echo IMG_URL;?>/daochu.jpg" style="width:40px; "></a></h3></div>
+    <div><h3>导出EXCEL : <a href="./index.php?r=teacher/exportDiligence&&classID=<?php echo $classID; ?>"><img src="<?php echo IMG_URL;?>/daochu.jpg" style="width:25px;margin-top: -7px "></a></h3></div>
     <table class="table table-bordered table-striped" id="table1">
         <thead><th>名次</th><th>名字</th><th>学号</th><th>勤奋度（万字）</th></thead>
     <tbody id="table1"></tbody>
