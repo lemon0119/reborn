@@ -8742,6 +8742,7 @@ foreach ($one as $v)
         echo'您的账号已在其他地方登陆';
     }
         }
+
     public function actionExportDiligence(){
          $data = array();
          $classID = $_GET['classID'];
@@ -8805,6 +8806,10 @@ foreach ($one as $v)
         $objWriter->save('php://output');
         exit;
      }
+     
+     public function actionFree(){
+		echo disk_free_space("C:")/1024/1024/1024;
+	}
         
         }
 
