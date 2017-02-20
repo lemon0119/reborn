@@ -899,14 +899,14 @@ function changeshow(i){
 function daochuexc(){
     var exerciseID = document.getElementById("exerciseID").value;
     var isExam = document.getElementById("isExam").value;
+    var workID = document.getElementById("workID").value
     var type = document.getElementById("type").value;
     if (isExam==2){
-    window.location.href="./index.php?r=teacher/Guidetable&&workID=<?php echo $work['workID'];?>&&isExam="+isExam+"&&type="+type+"&&exerciseID="+exerciseID;}
+    window.location.href="./index.php?r=teacher/Guidetable&&workID="+workID+"&&isExam="+isExam+"&&type="+type+"&&exerciseID="+exerciseID;}
     else if(isExam==""){
         window.wxc.xcConfirm("请选择题目！", window.wxc.xcConfirm.typeEnum.confirm);
     }
     else{
-    var workID = document.getElementById("workID").value;
     window.location.href="./index.php?r=teacher/Guidetable2&&workID="+workID+"&&isExam="+isExam+"&&type="+type+"&&exerciseID="+exerciseID;    
     }
 }
