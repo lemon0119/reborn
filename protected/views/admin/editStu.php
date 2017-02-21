@@ -56,10 +56,10 @@ else
                         <?php
                         $classes = TbClass::model()->findall();
                         foreach ($classes as $value) {
-                            if ($value['classID'] == $classID && $value['className'] !== "速录一班") {
+                            if ($value['classID'] == $classID) {
                                 ?>
                                 <option value="<?php echo $value['classID']; ?>" selected="selected"><?php echo $value['className']; ?></option>
-    <?php } else if($value['className'] !== "速录一班"){ ?>
+    <?php } else { ?>
                                 <option value="<?php echo $value['classID']; ?>" ><?php echo $value['className']; ?></option>
     <?php }
 } ?>
