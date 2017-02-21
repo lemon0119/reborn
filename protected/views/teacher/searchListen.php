@@ -1,7 +1,7 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
-            <li class="nav-header"><i class="icon-navsearch"></i>搜索</li>
+            <li class="nav-header"><i class="icon-navsearch" style="position: relative;top: -5px"></i>搜索</li>
             <form action="./index.php?r=teacher/searchListen" method="post">
                 <li>
                     <select name="type" >
