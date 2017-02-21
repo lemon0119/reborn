@@ -7980,7 +7980,7 @@ foreach ($one as $v)
  $criteria   =   new CDbCriteria();
  $m  =   Yii::app()->db->createCommand($sql3)->queryAll();
  if($m == null){
-     echo "wq";
+     echo "没有人缺勤";
  }else{
  return $this->renderPartial('CountAbsence',['result' => $result,'classID'=>$classID,'m'=>$m,'time'=>$time]);
 }
