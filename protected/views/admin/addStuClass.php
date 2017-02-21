@@ -33,8 +33,7 @@
     </div>
 <br/>
 <div style="text-align: center">
-    <?php if($i==0){ ?>
-    <a  class="btn btn-primary" href="./index.php?r=admin/addStu" >添加</a><?php }else{ ?>
+    <?php if($i==0){ ?><?php }else{ ?>
     <button type="submit" class="btn btn-primary" >添加</button><?php } ?>
         <a  class="btn btn-primary" href="./index.php?r=admin/infoClass&&classID=<?php echo $classID;?>" >返回</a>
     </div>
