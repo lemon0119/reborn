@@ -20,9 +20,9 @@
             </li>
         </form>
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>查看</li>
-            <li id="classLst"><a href="./index.php?r=admin/classLst"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 班级列表</a></li>
-            <li id="stuLst"><a href="./index.php?r=admin/stuDontHaveClass"><i class="icon-list-alt" style="position:relative;bottom:5px;left:"></i> 未分班学生</a></li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:7px;left:"></i>查看</li>
+            <li id="classLst"><a href="./index.php?r=admin/classLst"><i class="icon-list-alt" style="position:relative;bottom:7px;left:"></i> 班级列表</a></li>
+            <li id="stuLst"><a href="./index.php?r=admin/stuDontHaveClass"><i class="icon-list-alt" style="position:relative;bottom:7px;left:"></i> 未分班学生</a></li>
             <?php if(isset($allClass)){ ?>  
             <li class="divider"></li>
             <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>已有班级</li>
