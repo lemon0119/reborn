@@ -9,7 +9,6 @@
  * @param sTBodyId
  *            分页表格TBODY的属性ID值,为String,此项为要分页的主体内容
  * @Version 1.0.0
- * @author 辛现宝 2007-01-15 created var __variable__; private function
  *         __method__(){};private
  */
 window.document.onkeydown = disableRefresh;
@@ -165,8 +164,12 @@ Page.prototype.__cloneRows__ = function() {
 };
 //add by youngtang 16/11/3
 Page.prototype.__LoadPages__ = function() {
+         if(!isNaN(this.pageCount)){
          document.getElementById('t').innerText=this.pageCount;
-	//alert(this.pageCount);
+         }else{
+         document.getElementById('t').innerText=0;
+         }
+//	alert(this.pageCount);
 	document.getElementById("pageselect").options.length = 0;
 	for ( var i = 1; i <= this.pageCount; i++) {
 		document.getElementById("pageselect").options.add(new Option(i, i));
