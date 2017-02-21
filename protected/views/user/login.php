@@ -57,7 +57,7 @@
             <p style="position: relative;right: 90px;top: 15px;">记住用户名和身份</p>
         </label>
         <button id="submit" type="submit">登录</button>
-<!--        <button id="toRace" style="background:#A2b4ba;" >国赛系统</button>-->
+        <button id="toRace" style="background:#A2b4ba;" >国赛系统</button>
         <div class="forget-password">
 <!--            <p>
                 <a href="./index.php?r=user/forgetpassword" class="" id="forget-password" style="position: relative;top: 30px;left: 95px;">忘记密码?</a>
