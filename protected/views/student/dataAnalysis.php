@@ -36,17 +36,17 @@
     <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
-         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" class="ahover" style="position:relative;top:9px;left:">&nbsp;练习</a></div></li>
+         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" class="ahover" style="position:relative;top:8px;left:">&nbsp;练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
-                  <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>,1)"><i style="margin-top:-7px" class="icon-knowlage"></i>&nbsp;<?php echo $lesson['lessonName']; ?></a></div></li>                  
+                  <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>,1)"><i style="margin-top:-4px" class="icon-knowlage"></i>&nbsp;<?php echo $lesson['lessonName']; ?></a></div></li>                  
               <?php endforeach; ?> 
               </ul>
         </div>
          
 
-         <li ><div id="id_classWork"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:9px;left:">&nbsp;作业</a></div></li>  
+         <li ><div id="id_classWork"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:8px;left:">&nbsp;作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
@@ -90,7 +90,7 @@
          </div>
                  
 
-         <li ><div id="id_classExam"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:9px;left:">&nbsp;考试</a></div></li>
+         <li ><div id="id_classExam"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:8px;left:">&nbsp;考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
