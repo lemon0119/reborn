@@ -36,16 +36,16 @@
     <li class="nav-header"><i class="icon-knowlage"></i>课时列表</li>
      <div class="well-topnoradius" style="padding: 8px 0;height:830px;overflow:auto; top:-40px;">
      <ul class="nav nav-list">       
-         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" class="ahover" style="position:relative;top:6px;left:">&nbsp;练习</a></div></li>
+         <li ><div id="id_classExercise"><i class="icon-list"></i><a href="#" class="ahover" style="position:relative;top:9px;left:">&nbsp;练习</a></div></li>
         <div style="display: none" id="id_classExerciseLesson">
               <ul class="nav nav-list"> 
                 <?php foreach ($array_lesson as $lesson): ?>
-                  <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>)"><i style="margin-top:-7px" class="icon-knowlage"></i>&nbsp;<?php echo $lesson['lessonName']; ?></a></div></li>                  
+                  <li style="margin:5px"><div ><a href="#" class="ahover" onclick="getClassExer(<?php echo $lesson['lessonID']; ?>,1)"><i style="margin-top:-7px" class="icon-knowlage"></i>&nbsp;<?php echo $lesson['lessonName']; ?></a></div></li>                  
               <?php endforeach; ?> 
               </ul>
         </div>
          
-         <li ><div id="id_classWork"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:6px;left:">&nbsp;作业</a></div></li>  
+         <li ><div id="id_classWork"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:9px;left:">&nbsp;作业</a></div></li>  
          <div style="display: none" id="id_classWorkLesson">
              <ul class="nav nav-list"> 
                <?php foreach ($array_lesson as $lesson): ?>
@@ -88,7 +88,7 @@
              </ul>
          </div>
                  
-         <li ><div id="id_classExam"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:6px;left:">&nbsp;考试</a></div></li>
+         <li ><div id="id_classExam"><i class="icon-list"></i><a class="ahover" href="#" style="position:relative;top:9px;left:">&nbsp;考试</a></div></li>
          <div style="display: none" id="id_classExamLesson">
              <ul class="nav nav-list">    
                  <?php foreach ($array_examList as $examList)
@@ -164,10 +164,10 @@
                                 <th>学号</th>
                                 <th>姓名</th>
                                 <th id="name">正确率</th>
-                                <th>速度</th>
-                                <th>少打</th>
+                                <th >速度</th>
+                                <th id="lessWord">少打</th>
                                 <th>回改字数</th>
-                                <th>多打</th>
+                                <th id="moreWord">多打</th>
                             </tr>
                         </thead>
                         <tbody id="bo">
@@ -280,8 +280,10 @@ function getSuiteExercise(suiteID,workID){
     document.getElementById('many').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg3").show();
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg5").show();
     document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
     
     document.getElementById('id').value="";
@@ -413,6 +415,13 @@ function getStudentRankingBefBef(ind,i,workID,isExam,exerciseID,type){
     for( var i=0; i<tds.length; i++ ){
         tds[i].style.color="#000";
     }
+    if(type === 1) {
+       $("#bg3").hide(); 
+       $("#bg5").hide();
+    }else{
+        $("#bg3").show();
+        $("#bg5").show();
+    }
     document.getElementById('correct').style.color="#fff";
     document.getElementById('speed').style.color="#000";
     document.getElementById('less').style.color="#000";
@@ -473,9 +482,9 @@ function getClassExer(lessonID){
     document.getElementById('many').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
-    document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById("bg3").style.display='none';
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
+    document.getElementById("bg5").style.display='none';
     document.getElementById('id').value="";
     document.getElementById('classID').value="";
     document.getElementById('exerciseID').value="";
@@ -572,8 +581,10 @@ function getExamExercise(examID,workID){
     document.getElementById('many').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg3").show();
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg5").show();
     document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
     
     document.getElementById('id').value="";
@@ -702,6 +713,7 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
 //                 document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
                  document.getElementById("div11").style.display='block';
+                
                    var tbody = document.getElementById("bo");      
                    $('#bo').children().filter('tr').remove();
                    $('#ul2').children().filter('li').remove();
@@ -721,15 +733,29 @@ function getStudentRanking(ii,workID,isExam,exerciseID,type){
 //                       choose='多打字数';
 //                   }
                     var str ="";
-                   for(var i in data){   
+                     if(type === "1") {
+                     $("#lessWord").hide();
+                     $("#moreWord").hide();
+                     for(var i in data){   
                        
                        str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userID']+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
-                           +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['missing_Number']+"</th>"+"<th>"+data[i]['backDelete']+"</th>"+"<th>"+data[i]['redundant_Number']+"</th>";
-                      console.log("str----", str);
+                           +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['backDelete']+"</th>";
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
                    } 
+                     }else{
+                     $("#lessWord").show();
+                     $("#moreWord").show();
+                       for(var i in data){   
+                       
+                       str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userID']+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
+                           +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['missing_Number']+"</th>"+"<th>"+data[i]['backDelete']+"</th>"+"<th>"+data[i]['redundant_Number']+"</th>";
+                      var tr = document.createElement("tr");               
+                      tr.innerHTML= str;
+                      tbody.appendChild(tr);
+                      } 
+                     }
                 }
               },     
             error: function(xhr, type, exception){
@@ -939,6 +965,8 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                  document.getElementById("sp").style.display='block';
 //                 document.getElementById("main").style.display='block';
                  document.getElementById("div11").style.display='block';
+                 $("#lessWord").hide();
+                 $("#moreWord").hide();
 //                 document.getElementById("de").style.display='none';
                  document.getElementById("sh").style.display='none';
 //                 document.getElementById("title").style.display='none';
@@ -972,8 +1000,7 @@ function getClassExerRanking(ii,classID,exerciseID,type){
                    for(var i in data){   
                        
                        str = "<th>"+(i*1+1)+"</th>"+"<th>"+data[i]['userID']+"<th>"+data[i]['userName']+"</th>"+"<th>"+data[i]['correct']+"%"+"</th>"
-                           +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['missing_Number']+"</th>"+"<th>"+data[i]['backDelete']+"</th>"+"<th>"+data[i]['redundant_Number']+"</th>";
-                      console.log("str----", str);
+                           +"<th>"+data[i]['speed']+"</th>"+"<th>"+data[i]['backDelete']+"</th>";
                       var tr = document.createElement("tr");               
                       tr.innerHTML= str;
                       tbody.appendChild(tr);
