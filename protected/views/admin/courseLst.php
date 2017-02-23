@@ -1,8 +1,25 @@
 <div class="span3">
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
+            <li class="nav-header"><i class="icon-navsearch" style="position:relative;bottom:5px;left:"></i>搜索</li>
+            <form action="./index.php?r=admin/searchCourse" method="post">
+                <li>
+                    <select name="type" >
+                        <option value="courseID" selected="selected">编号</option>
+                        <option value="courseName">科目名</option>
+                        <option value="createPerson">创建人</option>
+                    </select>
+                </li>
+                <li>
+                    <input name="value" type="text" class="search-query span2" placeholder="Search" />
+                </li>
+                <li style="margin-top:10px">
+                    <button type="submit" class="btn_4big">搜 索</button>
+                    <button onclick="window.location.href = './index.php?r=admin/addCourse'" type="button" class="btn_4big">添 加</button>
+                </li>
+            </form>
             <li class="divider"></li>
-            <li class="active" ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left" style="position:relative;bottom:5px;left:"></i> 科目列表</a></li>
+            <li class="active" ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left" style="position:relative;bottom:7px;left:"></i> 科目列表</a></li>
         </ul>
     </div>
 </div>
@@ -17,6 +34,8 @@ endforeach;
 ?>
 <h2>科目列表</h2>
 <!-- 科目列表-->
+   <input type="checkbox" name="all" onclick="check_all(this, 'checkbox[]')" style="margin-bottom: 3px"> 全选　　批量操作：
+   <a href="#" onclick="deleCheck()"><img title="批量删除" src="<?php echo IMG_URL; ?>delete.png" style="position:relative;bottom:3px;left:"></a>
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
