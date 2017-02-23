@@ -2,7 +2,7 @@
     <div class="well" style="padding: 8px 0;">
         <ul class="nav nav-list">
             <li class="divider"></li>
-            <li class="active" ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left" style="position:relative;bottom:5px;left:"></i> 科目列表</a></li>
+            <li class="active" ><a href="./index.php?r=admin/courseLst"><i class="icon-align-left" style="position:relative;bottom:7px;left:"></i> 科目列表</a></li>
         </ul>
     </div>
 </div>

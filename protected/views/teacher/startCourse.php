@@ -25,7 +25,7 @@
                 <?php  if($lessonsName!=null){?>
                 <li id="li-<?php echo $progress;?>">
                     <a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID;?>&&progress=<?php echo $progress;?>&&on=<?php echo $progress;?>">
-                        <i class="icon-list-alt"style="position:relative;bottom:6px;left:"></i> 
+                        <i class="icon-list-alt"style="position:relative;bottom:7px;left:"></i> 
                         <?php if(isset($lessonsName[$progress])){echo $lessonsName[$progress];} ?>
                     </a>
                 </li>
@@ -40,7 +40,7 @@
                 <?php foreach($lessonsName as $key => $value):
                     if($key!=$progress){
                     ?>
-                    <li  id="li-<?php echo $key; ?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $key; ?>"><i class="icon-list-alt" style="position:relative;bottom:6px;left:"></i> <?php echo $value; ?></a></li>
+                    <li  id="li-<?php echo $key; ?>"><a href="./index.php?r=teacher/startCourse&&classID=<?php echo $classID; ?>&&progress=<?php echo $progress; ?>&&on=<?php echo $key; ?>"><i class="icon-list-alt" style="position:relative;bottom:7px;left:"></i> <?php echo $value; ?></a></li>
                     <?php
                 }
             endforeach;

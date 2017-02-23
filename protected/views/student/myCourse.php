@@ -19,11 +19,11 @@
                             if($less['lessonID'] == $currentLesn) echo 'class=\'active\'';?>>
                             <?php if($less['lessonID'] == $currentLesn){?>
                                 <a href="./index.php?r=student/myCourse&&lessonID=<?php echo $less['lessonID']?>">
-                                    <img class="act" src="<?php echo IMG_UIStu_URL?>listOfH.png"><?php echo $less['lessonName']?>
+                                    <img class="act" style="margin-top: -4px;" src="<?php echo IMG_UIStu_URL?>listOfH.png"><?php echo $less['lessonName']?>
                                 </a>
                             <?php }else{?>
                             <a href="./index.php?r=student/myCourse&&lessonID=<?php echo $less['lessonID']?>">
-                                <img class="act" src="<?php echo IMG_UIStu_URL?>listOf.png"><?php echo $less['lessonName']?>
+                                <img class="act" style="margin-top: -4px;" src="<?php echo IMG_UIStu_URL?>listOf.png"><?php echo $less['lessonName']?>
                             </a>
                             <?php }?>
                         </li>

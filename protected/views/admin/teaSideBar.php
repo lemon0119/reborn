@@ -18,7 +18,7 @@
                         </li>
                 </form>
                         <li class="divider"></li>
-                        <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>管理</li>
+                        <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:7px;left:"></i>管理</li>
                         <li id="li-stuLst"><a href="./index.php?r=admin/teaLst"><i class="icon-list-alt" style="position:relative;bottom:7px;left:"></i> 老师列表</a></li>
                         <li id="li-addTea"><a href="./index.php?r=admin/addTea"><i class="icon-plus" style="position:relative;bottom:7px;left:"></i> 添加老师</a></li>
                         <li id="li-recycleStu"><a href="./index.php?r=admin/recycleTea"><i class="icon-trash" style="position:relative;bottom:6px;left:"></i> 回收站</a></li>

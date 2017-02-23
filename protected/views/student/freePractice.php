@@ -33,7 +33,7 @@
                 }
                 ?> id="<?php echo $less['lessonID'] ?>">
                     <a href="./index.php?r=student/freePractice&&lessonID=<?php echo $less['lessonID'] ?>">
-                        <img class="act" src="<?php echo IMG_UIStu_URL ?>listOf.png"><?php echo $less['lessonName'] ?>
+                        <img class="act" style="margin-top: -4px;" src="<?php echo IMG_UIStu_URL ?>listOf.png"><?php echo $less['lessonName'] ?>
                     </a>
                 </li>
 <?php } ?>

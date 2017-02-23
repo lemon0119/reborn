@@ -6,11 +6,11 @@
             <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>班级列表</li>
 
             <?php foreach ($array_class as $class): ?>
-                <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $class['className']; ?></a></li>
+                <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignExam&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:7px;left:"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>  
 
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>试卷标题</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>试卷标题</li>
             <li style="margin-top:10px">
                 <input name= "title" id="title" type="text" class="search-query span2"  placeholder="试卷标题" value=""/>
             </li>

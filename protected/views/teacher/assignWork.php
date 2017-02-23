@@ -6,7 +6,7 @@
             
 
             <?php foreach ($array_class as $class): ?>
-                <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:6px;left:"></i><?php echo $class['className']; ?></a></li>
+                <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:7px;left:"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>
 
         </ul></div>
@@ -28,7 +28,7 @@
     <div class="well-topnoradius" style="padding:0;height:303px;overflow:auto; top:-40px;">
         <ul class="nav nav-list">
             <?php foreach ($array_lesson as $lesson): ?>
-                <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list" style="position:relative;bottom:6px;left:"></i><?php echo $lesson['lessonName']; ?></a></li>
+                <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list" style="position:relative;bottom:7px;left:"></i><?php echo $lesson['lessonName']; ?></a></li>
             <?php endforeach; ?> 
     </div>
 
