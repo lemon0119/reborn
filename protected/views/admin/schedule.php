@@ -70,7 +70,6 @@
                 </thead>
                 <tbody>
                     <?php foreach ($class_search as $c_value){ 
-                        if($c_value['className']!="速录一班"){
                         ?>    
                         <tr>
                             <td class="font-center" ><?php echo $c_value['classID'];?></td>
@@ -80,7 +79,7 @@
                                  <a href="./index.php?r=admin/scheduleDetil&&classId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
-                   <?php }
+                   <?php 
                     }
                    ?>
                 </tbody>
@@ -102,7 +101,6 @@
                 </thead>
                 <tbody>
                     <?php foreach ($class as $c_value){ 
-                        if($c_value['className']!="速录一班"){
                         ?>    
                         <tr>
                             <td class="font-center" ><?php echo $c_value['classID'];?></td>
@@ -112,7 +110,7 @@
                                  <a href="./index.php?r=admin/scheduleDetil&&classId=<?php echo $c_value['classID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
-                   <?php }
+                   <?php
                     }
                    ?>
                 </tbody>
@@ -136,8 +134,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($teacher as $t_value){ 
-                        if($t_value['userID']!=="A01"){
+                    <?php foreach ($teacher as $t_value){
                         ?>    
                         <tr>
                             <td class="font-center" ><?php echo $t_value['userID'];?></td>
@@ -147,7 +144,7 @@
                                  <a href="./index.php?r=admin/scheduleDetil&&teacherId=<?php echo $t_value['userID']; ?>"><img title="编辑" src="<?php echo IMG_URL; ?>edit.png"></a>
                             </td>
                         </tr>
-                   <?php }
+                   <?php
                     }
                    ?>
                 </tbody>
