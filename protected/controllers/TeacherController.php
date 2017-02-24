@@ -6798,7 +6798,29 @@ class TeacherController extends CController {
             "redundant"=>$redundant,"backDelete"=>$backDelete];
             array_push($data, $arrayData);
         } 
+        if($type == "look"){
+            $title = ClassExercise::model()->find("exerciseID ='$exerciseID' and type = '$type'")['title'];
+            $filename = $title."-看打练习";
+        }else if ($type == "listen") {
+            $title = ClassExercise::model()->find("exerciseID ='$exerciseID' and type = '$type'")['title'];
+            $filename = $title."-听打练习";
+        }else if($type == "free") {
+            $title = ClassExercise::model()->find("exerciseID ='$exerciseID'  and type = '$type'")['title'];
+            $filename = $title;
+        }else if($type == "correct") {
+            $title = ClassExercise::model()->find("exerciseID ='$exerciseID' and type = '$type'")['title'];
+            $filename = $title;
+        }else if($type == "speed") {
+            $title = ClassExercise::model()->find("exerciseID ='$exerciseID' and type = '$type'")['title'];
+            $filename = $title;
+        }else {
         $filename="导出结果";
+        }
+        $filename = Tool::filterAllSpaceAndTab($filename);
+        if (Tool::clength($filename) <= 11){
+        }else{
+            $filename = Tool::csubstr($filename, 0, 11) . "...";
+        }
         /* 把引入PHPExcel.php文件 */
         Yii::$enableIncludePath = false;
         Yii::import('application.extensions.PHPExcel.PHPExcel', 1);
@@ -6817,9 +6839,7 @@ class TeacherController extends CController {
         $objectPHPExcel->getActiveSheet()->setCellValue('B1','姓名');
         $objectPHPExcel->getActiveSheet()->setCellValue('C1','正确率%');
         $objectPHPExcel->getActiveSheet()->setCellValue('D1','速度（字/分）');
-        $objectPHPExcel->getActiveSheet()->setCellValue('E1','少打字数');
-        $objectPHPExcel->getActiveSheet()->setCellValue('F1','多打字数');
-        $objectPHPExcel->getActiveSheet()->setCellValue('G1','回改字数');
+        $objectPHPExcel->getActiveSheet()->setCellValue('E1','回改字数');
         //设置字体居中
         $objectPHPExcel->getActiveSheet()->getStyle('A1:G101')
         ->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -6850,18 +6870,10 @@ class TeacherController extends CController {
               $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,"未作答");}
               else{
               $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,$model['speed']);}
-              if($model['missing']==null){
-              $objectPHPExcel->getActiveSheet()->setCellValue('E'.($five++) ,"未作答");}
-              else{
-              $objectPHPExcel->getActiveSheet()->setCellValue('E'.($five++) ,$model['missing']);}
-              if($model['redundant']==null){
-              $objectPHPExcel->getActiveSheet()->setCellValue('F'.($six++) ,"未作答");}
-              else{
-              $objectPHPExcel->getActiveSheet()->setCellValue('F'.($six++) ,$model['redundant']);}
               if($model['backDelete']==null){
-              $objectPHPExcel->getActiveSheet()->setCellValue('G'.($seven++) ,"未作答");}
+              $objectPHPExcel->getActiveSheet()->setCellValue('E'.($seven++) ,"未作答");}
               else{
-              $objectPHPExcel->getActiveSheet()->setCellValue('G'.($seven++) ,$model['backDelete']);} 
+              $objectPHPExcel->getActiveSheet()->setCellValue('E'.($seven++) ,$model['backDelete']);} 
               endforeach;
       }
         ob_end_clean();
@@ -6874,13 +6886,9 @@ class TeacherController extends CController {
     }
     public function ActionGuidetable2(){
          $workID = $_GET['workID'];
-         error_log($workID);
          $type = $_GET['type'];
-         error_log($type);
          $exerciseID = $_GET['exerciseID'];
-         error_log($exerciseID);
          $isexam = $_GET['isExam'];
-         error_log($isexam);
             $data = array();
             $id = array();
             $name = array();
@@ -6912,7 +6920,23 @@ class TeacherController extends CController {
             "redundant"=>$redundant,"backDelete"=>$backDelete];
             array_push($data, $arrayData);
         } 
+        if($type == "look"){
+            $title = LookType::model()->find("exerciseID ='$exerciseID'")['title'];
+            $filename = $title."-看打练习";
+        }else if ($type == "listen") {
+            $title = ListenType::model()->find("exerciseID ='$exerciseID'")['title'];
+            $filename = $title."-听打练习";
+        }else if($type == "key") {
+            $title = KeyType::model()->find("exerciseID ='$exerciseID'")['title'];
+            $filename = $title;
+        }else {
         $filename="导出结果";
+        }
+        $filename = Tool::filterAllSpaceAndTab($filename);
+        if (Tool::clength($filename) <= 11){
+        }else{
+            $filename = Tool::csubstr($filename, 0, 11) . ".";
+        }
         /* 把引入PHPExcel.php文件 */
         Yii::$enableIncludePath = false;
         Yii::import('application.extensions.PHPExcel.PHPExcel', 1);
@@ -6931,9 +6955,13 @@ class TeacherController extends CController {
         $objectPHPExcel->getActiveSheet()->setCellValue('B1','姓名');
         $objectPHPExcel->getActiveSheet()->setCellValue('C1','正确率%');
         $objectPHPExcel->getActiveSheet()->setCellValue('D1','速度（字/分）');
+        if($type == "key"){
+          $objectPHPExcel->getActiveSheet()->setCellValue('E1','回改字数');  
+        }else{
         $objectPHPExcel->getActiveSheet()->setCellValue('E1','少打字数');
         $objectPHPExcel->getActiveSheet()->setCellValue('F1','多打字数');
         $objectPHPExcel->getActiveSheet()->setCellValue('G1','回改字数');
+        }
         //设置字体居中
         $objectPHPExcel->getActiveSheet()->getStyle('A1:G101')
         ->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -6964,6 +6992,12 @@ class TeacherController extends CController {
               $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,"未作答");}
               else{
               $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,$model['speed']);}
+              if($type=="key"){
+                if($model['backDelete']==null){
+                 $objectPHPExcel->getActiveSheet()->setCellValue('E'.($seven++) ,"未作答");}
+                else{
+                 $objectPHPExcel->getActiveSheet()->setCellValue('E'.($seven++) ,$model['backDelete']);}   
+              }else {
               if($model['missing']==null){
               $objectPHPExcel->getActiveSheet()->setCellValue('E'.($five++) ,"未作答");}
               else{
@@ -6976,6 +7010,7 @@ class TeacherController extends CController {
               $objectPHPExcel->getActiveSheet()->setCellValue('G'.($seven++) ,"未作答");}
               else{
               $objectPHPExcel->getActiveSheet()->setCellValue('G'.($seven++) ,$model['backDelete']);} 
+              }
               endforeach;
       }
         ob_end_clean();
@@ -8795,7 +8830,7 @@ foreach ($one as $v)
               if($model['diligence']==null){
               $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,"0");}
               else{
-              $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,$model['diligence']);} 
+              $objectPHPExcel->getActiveSheet()->setCellValue('D'.($four++) ,round($model['diligence']/10000, 2));} 
               endforeach;
       }
         ob_end_clean();
