@@ -38,10 +38,11 @@
                         <option value="0" >以后再选</option>
                         <?php 
                             $classes = TbClass::model()->findall();
-                            foreach ($classes as $value) {                               
+                            foreach ($classes as $value) {
+                                if($value['className']!="速录一班"){
                         ?>
                             <option value="<?php echo $value['classID']; ?>" ><?php echo $value['className']; ?></option>
-                        <?php   
+                                <?php }  
                             }
                         ?>
                     </select>

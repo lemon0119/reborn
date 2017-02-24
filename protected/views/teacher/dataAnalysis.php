@@ -971,7 +971,7 @@ function changeshow(i){
 function daochuexc(){
     var exerciseID = document.getElementById("exerciseID").value;
     var isExam = document.getElementById("isExam").value;
-    var workID = document.getElementById("workID").value
+    var workID = document.getElementById("workID").value;
     var type = document.getElementById("type").value;
     if (isExam==2){
     window.location.href="./index.php?r=teacher/Guidetable&&workID="+workID+"&&isExam="+isExam+"&&type="+type+"&&exerciseID="+exerciseID;}
