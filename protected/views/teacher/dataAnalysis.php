@@ -173,8 +173,8 @@
                                 <th>姓名</th>
                                 <th id="name">速度</th>
                                 <th id="name">正确率</th>
-                                <th id="name">少打字数</th>
-                                <th id="name">多打字数</th>
+                                <th id="lessWord">少打字数</th>
+                                <th id="moreWord">多打字数</th>
                                 <th id="name">回改字数</th>
                                 
                             </tr>
@@ -289,8 +289,10 @@ function getSuiteExercise(suiteID,workID){
     document.getElementById('redundant_Number').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg3").show();
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg5").show();
     document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
     
     document.getElementById('id').value="";
@@ -469,9 +471,9 @@ function getClassExer(lessonID){
     document.getElementById('redundant_Number').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
-    document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg3").hide();
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
-    document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg5").hide();
     document.getElementById('id').value="";
     document.getElementById('classID').value="";
     document.getElementById('exerciseID').value="";
@@ -558,8 +560,10 @@ function getExamExercise(examID,workID){
     document.getElementById('redundant_Number').style.color="#000";
     document.getElementById('bg1').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg2').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg3").show();
     document.getElementById('bg3').style.backgroundColor="rgb(218, 225, 218)";
     document.getElementById('bg4').style.backgroundColor="rgb(218, 225, 218)";
+    $("#bg5").show();
     document.getElementById('bg5').style.backgroundColor="rgb(218, 225, 218)";
     
     document.getElementById('id').value="";
@@ -702,7 +706,41 @@ function ShowSuiteRank(workID,exerciseID,type,choice){
              },
          success: function(data){
          $("#bo").children().filter('tr').remove();
-         for(var i=0;i<data['name'].length;i++){ 
+         if(type === 1 || type === "1"){
+            $("#lessWord").hide();
+           $("#moreWord").hide();
+           $("#bg3").hide();
+           $("#bg5").hide();
+            for(var i=0;i<data['name'].length;i++){ 
+         var tbody = document.getElementById('bo').lastChild;  
+         var tr = document.createElement('tr');           
+         var td = document.createElement("td");
+         td.innerHTML = i+1;
+         tr.appendChild(td);
+         td = document.createElement("td");   
+         td.innerHTML = data['id'][i];
+         tr.appendChild(td);
+         td = document.createElement("td");   
+         td.innerHTML = data['name'][i];
+         tr.appendChild(td);         
+         td = document.createElement("td");  /*真.js*/
+         td.innerHTML = data['speed'][i];
+         tr.appendChild(td);
+         td = document.createElement("td");  /*真.js*/
+         td.innerHTML = (data['correct'][i])+"%";
+         tr.appendChild(td);
+         
+         td = document.createElement("td");  /*真.js*/
+         td.innerHTML = (data['backDelete'][i]);
+         tr.appendChild(td);
+         bo.appendChild(tr);          
+        }
+         }else {
+           $("#lessWord").show();
+           $("#moreWord").show();
+           $("#bg3").show();
+           $("#bg5").show();
+           for(var i=0;i<data['name'].length;i++){ 
          var tbody = document.getElementById('bo').lastChild;  
          var tr = document.createElement('tr');           
          var td = document.createElement("td");
@@ -730,13 +768,16 @@ function ShowSuiteRank(workID,exerciseID,type,choice){
          td.innerHTML = (data['backDelete'][i]);
          tr.appendChild(td);
          bo.appendChild(tr);          
-        } 
+        }
+         }
+          
     document.getElementById("exerciseID").value=exerciseID;
     document.getElementById("workID").value=workID;
     document.getElementById("type").value=type;
     document.getElementById("isExam").value=isexam;
 //    document.getElementById("type").value=choice;
     document.getElementById("div11").style.display='block';
+    
 //                 document.getElementById("Diligence").style.display='block';;
     document.getElementById("Diligence").style.display='none';
              },
@@ -761,7 +802,41 @@ function ShowExamRank(workID,exerciseID,type,choice){
              },
          success: function(data){
          $("#bo").children().filter('tr').remove();
-         for(var i=0;i<data['name'].length;i++){ 
+         if(type === 1  || type === "1"){
+            $("#lessWord").hide();
+           $("#moreWord").hide();
+           $("#bg3").hide();
+           $("#bg5").hide();
+            for(var i=0;i<data['name'].length;i++){ 
+         var tbody = document.getElementById('bo').lastChild;  
+         var tr = document.createElement('tr');           
+         var td = document.createElement("td");
+         td.innerHTML = i+1;
+         tr.appendChild(td);
+         td = document.createElement("td");   
+         td.innerHTML = data['id'][i];
+         tr.appendChild(td);
+         td = document.createElement("td");   
+         td.innerHTML = data['name'][i];
+         tr.appendChild(td);         
+         td = document.createElement("td");  /*真.js*/
+         td.innerHTML = data['speed'][i];
+         tr.appendChild(td);
+         td = document.createElement("td");  /*真.js*/
+         td.innerHTML = (data['correct'][i])+"%";
+         tr.appendChild(td);
+         
+         td = document.createElement("td");  /*真.js*/
+         td.innerHTML = (data['backDelete'][i]);
+         tr.appendChild(td);
+         bo.appendChild(tr);          
+        }
+         }else {
+           $("#lessWord").show();
+           $("#moreWord").show();
+           $("#bg3").show();
+           $("#bg5").show();
+           for(var i=0;i<data['name'].length;i++){ 
          var tbody = document.getElementById('bo').lastChild;  
          var tr = document.createElement('tr');           
          var td = document.createElement("td");
@@ -789,7 +864,8 @@ function ShowExamRank(workID,exerciseID,type,choice){
          td.innerHTML = (data['backDelete'][i]);
          tr.appendChild(td);
          bo.appendChild(tr);          
-        } 
+        }
+         } 
     document.getElementById("exerciseID").value=exerciseID;
     document.getElementById("workID").value=workID;
     document.getElementById("type").value=type;
@@ -860,12 +936,6 @@ function ShowExerciseRank(workID,exerciseID,choice){
          td.innerHTML = (data['correct'][i])+"%";
          tr.appendChild(td);
          td = document.createElement("td");  /*真.js*/
-         td.innerHTML = (data['missing'][i]);
-         tr.appendChild(td);
-         td = document.createElement("td");  /*真.js*/
-         td.innerHTML = (data['redundant'][i]);
-         tr.appendChild(td);
-         td = document.createElement("td");  /*真.js*/
          td.innerHTML = (data['backDelete'][i]);
          tr.appendChild(td);
          bo.appendChild(tr);          
@@ -880,6 +950,8 @@ function ShowExerciseRank(workID,exerciseID,choice){
      document.getElementById("isExam").value=isexam;
 //    document.getElementById("type").value=choice;
     document.getElementById("div11").style.display='block';
+    $("#lessWord").hide();
+    $("#moreWord").hide();
     document.getElementById("Diligence").style.display='none';        
     
     
@@ -899,7 +971,7 @@ function changeshow(i){
 function daochuexc(){
     var exerciseID = document.getElementById("exerciseID").value;
     var isExam = document.getElementById("isExam").value;
-    var workID = document.getElementById("workID").value
+    var workID = document.getElementById("workID").value;
     var type = document.getElementById("type").value;
     if (isExam==2){
     window.location.href="./index.php?r=teacher/Guidetable&&workID="+workID+"&&isExam="+isExam+"&&type="+type+"&&exerciseID="+exerciseID;}

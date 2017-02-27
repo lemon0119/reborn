@@ -1,12 +1,12 @@
 ﻿<div class="span3">
     <div class="well-bottomnoradius" style="padding: 8px 0;">
-	<li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>班级列表</li>
+	<li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>班级列表</li>
 	
         <ul class="nav nav-list" style = "overflow:auto;height:93px;margin-top:10px">                     
             
 
             <?php foreach ($array_class as $class): ?>
-                <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $class['className']; ?></a></li>
+                <li <?php if (Yii::app()->session['currentClass'] == $class['classID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo $class['classID']; ?>"><i class="icon-list" style="position:relative;bottom:6px;left:"></i><?php echo $class['className']; ?></a></li>
             <?php endforeach; ?>
 
         </ul></div>
@@ -15,20 +15,20 @@
             <li class="divider"></li>
             <?php //if (Yii::app()->session['currentClass'] && Yii::app()->session['currentLesson']) { ?>
 
-                <li class="nav-header" ><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>新建作业</li>
+                <li class="nav-header" ><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>新建作业</li>
                 <input name= "title" type="text" class="search-query span2" placeholder="作业题目" id="title" value="" />
                 <li style="margin-top:10px">
                     <button onclick="chkIt()" class="btn_4superbig">创&nbsp;&nbsp;&nbsp;建</button>
                 </li>
             <?php //} ?>
             <li class="divider"></li>
-            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:5px;left:"></i>课时列表</li>
+            <li class="nav-header"><i class="icon-knowlage" style="position:relative;bottom:6px;left:"></i>课时列表</li>
         </ul>
     </div>
     <div class="well-topnoradius" style="padding:0;height:303px;overflow:auto; top:-40px;">
         <ul class="nav nav-list">
             <?php foreach ($array_lesson as $lesson): ?>
-                <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list" style="position:relative;bottom:5px;left:"></i><?php echo $lesson['lessonName']; ?></a></li>
+                <li <?php if (Yii::app()->session['currentLesson'] == $lesson['lessonID']) echo "class='active'"; ?> ><a href="./index.php?r=teacher/assignWork&&classID=<?php echo Yii::app()->session['currentClass']; ?>&&lessonID=<?php echo $lesson['lessonID']; ?>"><i class="icon-list" style="position:relative;bottom:6px;left:"></i><?php echo $lesson['lessonName']; ?></a></li>
             <?php endforeach; ?> 
     </div>
 
