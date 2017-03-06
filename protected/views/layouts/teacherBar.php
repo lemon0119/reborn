@@ -133,13 +133,17 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
         window.open("./index.php?r=teacher/getHelp");
     }
     function contact(){
-        window.open("./index.php?r=teacher/contact", 'newwindow', 'height=360,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=teacher/contact", obj, 'dialogHeight =360px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
     function legalNotice() {
         window.open("./index.php?r=teacher/legalNotice");
     }
     function shutDown(){
-        window.open("./index.php?r=teacher/shutDown", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=teacher/shutDown", obj, 'dialogHeight =400px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
 //    window.onbeforeunload = onbeforeunload_handler;
 //    window.onunload = onunload_handler;

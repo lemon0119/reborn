@@ -195,7 +195,9 @@ $this->widget('CLinkPager', array('pages' => $pages));
         location.reload();
     }
     function release (suiteID) {
-        window.open("./index.php?r=teacher/changeSuiteClassIn&&suiteID="+suiteID+"&&page=<?php echo $pages->currentPage + 1; ?>", 'newwindow', 'height=400,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1"; 
+        window.showModalDialog("./index.php?r=teacher/changeSuiteClassIn&&suiteID="+suiteID+"&&page=<?php echo $pages->currentPage + 1; ?>",obj , 'dialogHeight =400px;dialogWidth = 400px;dialogLeft=500px;dialogTop =200px;');
     }
     function changeWorkName(workID, workName) {
         window.wxc.xcConfirm("原作业名为“" + workName + "”请重新命名：", window.wxc.xcConfirm.typeEnum.input, {

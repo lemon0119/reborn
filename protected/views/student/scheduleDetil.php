@@ -131,6 +131,8 @@
 </div>
 <script>
     function changeClass(s, d) {
-        window.open("./index.php?r=student/editSchedule&&sequence=" + s + "&day=" + d + "", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=student/editSchedule&&sequence=" + s + "&day=" + d + "", obj, 'dialogHeight =400px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
 </script>

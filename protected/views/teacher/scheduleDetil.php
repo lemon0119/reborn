@@ -248,10 +248,14 @@ echo $courseName; ?></h3>
 </div>
 <script>
     function change(s, d) {
-        window.open("./index.php?r=teacher/editSchedule&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['userid_now']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=teacher/editSchedule&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['userid_now']; ?>", obj, 'dialogHeight =400px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
     function changeClass(s, d) {
-        window.open("./index.php?r=teacher/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['currentClass']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=teacher/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['currentClass']; ?>", obj, 'dialogHeight =400px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }    
     function changeCourseName(courseName,number,courseID,classID){
         var txt=  "原课名:"+courseName;

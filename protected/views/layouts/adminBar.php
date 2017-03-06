@@ -104,7 +104,9 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now']=
 <?php } ?>
   <script type="text/javascript"> 
     function contact(){
-        window.open("./index.php?r=admin/contact", 'newwindow', 'height=360,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=admin/contact", obj, 'dialogHeight =360px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
     function legalNotice() {
         window.open("./index.php?r=admin/legalNotice");

@@ -88,7 +88,9 @@
 <script>
 
     function startClassExercise(exerciseID) {
-        window.open("./index.php?r=teacher/selectLevel&&exerciseID="+exerciseID+"&&classID=<?php echo $classID;?>&&lessonID=<?php echo $lessonID;?>", 'newwindow', 'height=400,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=teacher/selectLevel&&exerciseID="+exerciseID+"&&classID=<?php echo $classID;?>&&lessonID=<?php echo $lessonID;?>", obj, 'dialogHeight =400px;dialogWidth = 400px;dialogLeft=500px;dialogTop =200px;');
         window.parent.exitNowOn();
 //        window.parent.startNow(exerciseID);
     }
@@ -110,7 +112,13 @@
         }
     }
     function openLevel(check){
-         window.open("./index.php?r=teacher/selectLevelSome&&check="+check+"&&classID=<?php echo $classID;?>&&lessonID=<?php echo $lessonID;?>", 'newwindow', 'height=400,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        if(check !==""){
+           window.showModalDialog("./index.php?r=teacher/selectLevelSome&&check="+check+"&&classID=<?php echo $classID;?>&&lessonID=<?php echo $lessonID;?>", obj, 'dialogHeight =400px;dialogWidth = 400px;dialogLeft=500px;dialogTop =200px;');
+        }else {
+           alert("没有选中题目");
+        }
     }
     function checkBoxStartExercise() {
         

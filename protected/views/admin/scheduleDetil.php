@@ -182,15 +182,23 @@
 </div>
 <script>
     function change(s, d) {
-        window.open("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['teacherId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new2"; 
+        window.showModalDialog("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['teacherId']; ?>", obj, 'dialogHeight =400px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
     function changeClass(s, d) {
-        window.open("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['classId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new3";
+        window.showModalDialog("./index.php?r=admin/editSchedule&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['classId']; ?>", obj, 'dialogHeight =400px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
     function changeOne(s,d){
-        window.open("./index.php?r=admin/editScheduleOne&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['teacherId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new4";
+        window.showModalDialog("./index.php?r=admin/editScheduleOne&&sequence=" + s + "&day=" + d + "&teacherID=<?php echo Yii::app()->session['teacherId']; ?>", obj, 'dialogHeight =400px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
     function changeClassOne(s,d){
-        window.open("./index.php?r=admin/editScheduleOne&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['classId']; ?>", 'newwindow', 'height=400,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');        
+        var obj = new Object();
+        obj.name="new5";
+        window.showModalDialog("./index.php?r=admin/editScheduleOne&&sequence=" + s + "&day=" + d + "&classID=<?php echo Yii::app()->session['classId']; ?>", obj, 'dialogHeight =400px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');        
     }
 </script>

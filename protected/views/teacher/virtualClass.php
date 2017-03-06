@@ -2020,7 +2020,9 @@ $dir->close();
     ;
 
     function checkforbid() {
-        window.open("./index.php?r=teacher/checkforbid&&classID=<?php echo $classID; ?>", 'newwindow', 'height=480,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=teacher/checkforbid&&classID=<?php echo $classID; ?>", obj, 'dialogHeight =480px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
 
     function WebSocketConnect(absl_path) {
@@ -2294,7 +2296,9 @@ $dir->close();
       window.open("./index.php?r=teacher/addVo&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>", 'newwindow', 'width=' + (window.screen.availWidth - 10) + ',height=' + (window.screen.availHeight - 30) + 'alwaysRaised=yes,top=0,left=0,toolbar=yes,z-look=yes,menubar=yes,scrollbars=yes,resizable=yes,location=no,status=no,');
     }
     function addNewClassExercise() {
-        window.open("./index.php?r=teacher/classExercise4Type&&nobar=yes&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>", 'newwindow', 'width=' + (window.screen.availWidth - 10) + ',height=' + (window.screen.availHeight - 30) + 'alwaysRaised=yes,top=0,left=0,toolbar=yes,z-look=yes,menubar=yes,scrollbars=yes,resizable=yes,location=no,status=no,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=teacher/classExercise4Type&&nobar=yes&&classID=<?php echo $_GET['classID']; ?>&&progress=<?php echo $_GET['on']; ?>&&on=<?php echo $_GET['on']; ?>", obj, 'dialogWidth=' + (window.screen.availWidth - 10) + 'px;dialogHeight=' + (window.screen.availHeight - 30)+'px;');
     }
 
     function iframReload() {
@@ -2626,9 +2630,11 @@ function showAbsence(){
 //      document.getElementById("queqin"). innerHTML = data['studentAbsence'].length;         
 //            }
 //        });  
-window.open("./index.php?r=teacher/showAbsence&&classID=<?php echo $classID; ?>&&lessonID=<?php 
+        var obj = new Object();
+        obj.name="new1";
+      window.showModalDialog("./index.php?r=teacher/showAbsence&&classID=<?php echo $classID; ?>&&lessonID=<?php 
             $less = Lesson::model()->find('classID=? and number=?', array($classID, $on));
-            echo $less['lessonID'];?>", 'newwindow', 'height=500,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,')   
+            echo $less['lessonID'];?>", obj, 'dialogHeight =500px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;')   
    
 }
 	//	关闭对话框
