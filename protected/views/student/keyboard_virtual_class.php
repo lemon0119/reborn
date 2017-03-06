@@ -54,8 +54,8 @@
     
     $(document).ready(function(){
       document.getElementById("typeOCX").SetTextSize(8);
-      document.getElementById("typeOCX").HideToolBar();
-      document.getElementById("typeOCX").HideSecondToolBar();
+//      document.getElementById("typeOCX").HideToolBar();
+//      document.getElementById("typeOCX").HideSecondToolBar();
    });
     
     function keySet(keyID,isRight){
