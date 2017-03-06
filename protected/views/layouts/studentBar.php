@@ -96,7 +96,9 @@ if (isset(Yii::app()->session['userid_now']) && Yii::app()->session['role_now'] 
         window.open("./index.php?r=student/getHelp");
     }
     function contact(){
-        window.open("./index.php?r=student/contact", 'newwindow', 'height=360,width=600,top=0,left=0,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no,left=500,top=200,');
+        var obj = new Object();
+        obj.name="new1";
+        window.showModalDialog("./index.php?r=student/contact", obj, 'dialogHeight =360px;dialogWidth = 600px;dialogLeft=500px;dialogTop =200px;');
     }
     function legalNotice() {
         window.open("./index.php?r=student/legalNotice");
